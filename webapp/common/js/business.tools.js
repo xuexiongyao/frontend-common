@@ -1,6 +1,6 @@
 /**
- * 业务公共方法 
- * author : redstorm 
+ * 业务公共方法
+ * author : redstorm
  * create time : 2014-08-28
  */
 
@@ -42,7 +42,7 @@ function initComboBox(comboID, dictUrl) {
 						for (var i = 0; i < data.length; i++) {
 							var row = data[i];
 							var returnValue = false;
-							if (/[(0-9)*]/.test(str)) { 
+							if (/[(0-9)*]/.test(str)) {
 								returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0;
 							}
 							else {
@@ -65,19 +65,19 @@ function initComboBox(comboID, dictUrl) {
 					}
 					else {
 						var resultData = [];
-						if (dataFilter.indexOf("^") == -1 && dataFilter.indexOf("*") == -1 && dataFilter.indexOf("|") == -1 && dataFilter.indexOf("+") == -1 
-								&& dataFilter.indexOf("?") == -1 && dataFilter.indexOf("$") == -1 && dataFilter.indexOf("(") == -1 && dataFilter.indexOf(")") == -1 
-								&& dataFilter.indexOf("{") == -1 && dataFilter.indexOf("}") == -1 && dataFilter.indexOf("[") == -1 && dataFilter.indexOf("]") == -1 
-								&& dataFilter.indexOf(".") == -1) {
+						if (dataFilter.indexOf("^") == -1 && dataFilter.indexOf("*") == -1 && dataFilter.indexOf("|") == -1 && dataFilter.indexOf("+") == -1
+							&& dataFilter.indexOf("?") == -1 && dataFilter.indexOf("$") == -1 && dataFilter.indexOf("(") == -1 && dataFilter.indexOf(")") == -1
+							&& dataFilter.indexOf("{") == -1 && dataFilter.indexOf("}") == -1 && dataFilter.indexOf("[") == -1 && dataFilter.indexOf("]") == -1
+							&& dataFilter.indexOf(".") == -1) {
 							dataFilter = "^" + dataFilter;
 						}
-						var regExp = new RegExp(dataFilter); 
+						var regExp = new RegExp(dataFilter);
 						for (var i = 0; i < data.length; i++) {
 							var row = data[i];
 							var v = row[opts.valueField] + '';
 							if (regExp.test(v)) {
 								var returnValue = false;
-								if (/[(0-9)*]/.test(str)) { 
+								if (/[(0-9)*]/.test(str)) {
 									returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0;
 								}
 								else {
@@ -118,7 +118,7 @@ function initComboBox(comboID, dictUrl) {
 								for (var i = 0; i < data.length; i++) {
 									var row = data[i];
 									var returnValue = false;
-									if (/[(0-9)*]/.test(str)) { 
+									if (/[(0-9)*]/.test(str)) {
 										returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0;
 									}
 									else {
@@ -141,19 +141,19 @@ function initComboBox(comboID, dictUrl) {
 							}
 							else {
 								var resultData = [];
-								if (dataFilter.indexOf("^") == -1 && dataFilter.indexOf("*") == -1 && dataFilter.indexOf("|") == -1 && dataFilter.indexOf("+") == -1 
-										&& dataFilter.indexOf("?") == -1 && dataFilter.indexOf("$") == -1 && dataFilter.indexOf("(") == -1 && dataFilter.indexOf(")") == -1 
-										&& dataFilter.indexOf("{") == -1 && dataFilter.indexOf("}") == -1 && dataFilter.indexOf("[") == -1 && dataFilter.indexOf("]") == -1 
-										&& dataFilter.indexOf(".") == -1) {
+								if (dataFilter.indexOf("^") == -1 && dataFilter.indexOf("*") == -1 && dataFilter.indexOf("|") == -1 && dataFilter.indexOf("+") == -1
+									&& dataFilter.indexOf("?") == -1 && dataFilter.indexOf("$") == -1 && dataFilter.indexOf("(") == -1 && dataFilter.indexOf(")") == -1
+									&& dataFilter.indexOf("{") == -1 && dataFilter.indexOf("}") == -1 && dataFilter.indexOf("[") == -1 && dataFilter.indexOf("]") == -1
+									&& dataFilter.indexOf(".") == -1) {
 									dataFilter = "^" + dataFilter;
 								}
-								var regExp = new RegExp(dataFilter); 
+								var regExp = new RegExp(dataFilter);
 								for (var i = 0; i < data.length; i++) {
 									var row = data[i];
 									var v = row[opts.valueField] + '';
 									if (regExp.test(v)) {
 										var returnValue = false;
-										if (/[(0-9)*]/.test(str)) { 
+										if (/[(0-9)*]/.test(str)) {
 											returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0;
 										}
 										else {
@@ -223,17 +223,17 @@ function initComboBox(comboID, dictUrl) {
 								}
 							}
 						}
-						$(this).combobox("setValues", valueArray);						
+						$(this).combobox("setValues", valueArray);
 					}
 				}
 				if (clearData) {
 					$(this).combobox('clear');
 				}
 			}
-		}		
-	
+		}
+
 	});
-	
+
 	$(document).ready(function() {
 		var comboText = $('#' + comboID).next(".combo").children(".combo-text");
 		var tempValue = comboText.val();
@@ -250,7 +250,7 @@ function initComboBox(comboID, dictUrl) {
 			}
 		});
 	});
-	
+
 }
 
 // 列表字典多选对话框
@@ -289,18 +289,18 @@ function dict_multiSelectList(isCache, windowID, parentWindow, dictName, dictInp
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;字典选择',
-		url: dictName, 
+		url: dictName,
 		dataFilter: dataFilter,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -322,7 +322,7 @@ function dict_multiSelectList(isCache, windowID, parentWindow, dictName, dictInp
 						eval("parentWinObject." + onOkMethod + "()");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -384,19 +384,19 @@ function dict_multiSelectTree(isCache, windowID, parentWindow, dictName, dictInp
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;字典选择',
-		url: dictName, 
-		onlyLeaf: onlyLeaf, 
+		url: dictName,
+		onlyLeaf: onlyLeaf,
 		dataFilter: dataFilter,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -418,7 +418,7 @@ function dict_multiSelectTree(isCache, windowID, parentWindow, dictName, dictInp
 						eval("parentWinObject." + onOkMethod + "()");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -451,7 +451,7 @@ function public_getOrgName(orgCodeInputID, orgNameInputID) {
 						$('#' + orgNameInputID).val(data);
 					}
 				}
-			});				
+			});
 		}
 	}
 }
@@ -508,16 +508,16 @@ function public_singleSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgC
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -539,7 +539,7 @@ function public_singleSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgC
 							eval("parentWinObject." + onOkMethod + "(orgCodeInputID)");
 						}
 						catch (err) {
-							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 						}
 					}
 				}
@@ -564,7 +564,7 @@ function public_singleSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgC
 						eval("parentWinObject." + onOkMethod + "(orgCodeInputID)");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -654,16 +654,16 @@ function public_multiSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgCo
 	paramArray['otherOrgCode'] = otherOrgCode;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -685,7 +685,7 @@ function public_multiSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgCo
 						eval("parentWinObject." + onOkMethod + "(orgCodeInputID)");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -780,16 +780,16 @@ function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, 
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -811,7 +811,7 @@ function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, 
 							eval("parentWinObject." + onOkMethod + "(userIDInputID)");
 						}
 						catch (err) {
-							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 						}
 					}
 				}
@@ -836,7 +836,7 @@ function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, 
 						eval("parentWinObject." + onOkMethod + "(userIDInputID)");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -931,16 +931,16 @@ function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, u
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -962,7 +962,7 @@ function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, u
 						eval("parentWinObject." + onOkMethod + "(userIDInputID)");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -1047,16 +1047,16 @@ function public_singleSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, p
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -1078,7 +1078,7 @@ function public_singleSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, p
 							eval("parentWinObject." + onOkMethod + "(posIDInputID)");
 						}
 						catch (err) {
-							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 						}
 					}
 				}
@@ -1103,7 +1103,7 @@ function public_singleSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, p
 						eval("parentWinObject." + onOkMethod + "(posIDInputID)");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -1192,16 +1192,16 @@ function public_multiSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, po
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
-		width: 800,   
-	    height: 400,  
-		collapsible: false, 
-		minimizable: false, 
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
 		maximizable: false,
 		closable: true,
-	    closed: false,    
-	    cache: false,
-	    inline: false,
-	    modal: true
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
 	};
 	dataOptions.buttons = [
 		{
@@ -1223,7 +1223,7 @@ function public_multiSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, po
 						eval("parentWinObject." + onOkMethod + "(posIDInputID)");
 					}
 					catch (err) {
-						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 					}
 				}
 			}
@@ -1340,7 +1340,7 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 					if (IE && IE_VERSION <= 9) {
 						itemHeight = 18;
 					}
-					$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 2});	
+					$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 2});
 				}
 				return row[opts.textField];
 			},
@@ -1364,7 +1364,7 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 					}
 				}
 				catch (err) {
-					$.messager.alert('页面错误', "执行事件 "+ onSelectAfterMplhXz + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+					$.messager.alert('页面错误', "执行事件 "+ onSelectAfterMplhXz + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 				}
 			},
 			onHidePanel: function() {
@@ -1540,7 +1540,7 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 				if (IE && IE_VERSION <= 9) {
 					itemHeight = 18;
 				}
-				$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 2});	
+				$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 2});
 			}
 			return row[opts.textField];
 		},
@@ -1580,13 +1580,13 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 				}
 			}
 			catch (err) {
-				$.messager.alert('页面错误', "执行事件 "+ onSelectAfterMplh + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error'); 
+				$.messager.alert('页面错误', "执行事件 "+ onSelectAfterMplh + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
 			}
 		},
 		onHidePanel: function() {
 		}
 	});
-	
+
 	if (mlphXzComboID) { // 门楼牌号名称为空但地址详址不为空时，门楼牌号的值为地址详址，门楼牌号详址为空
 		$(document).ready(function() {
 			var comboText1 = $('#' + mlphComboID).next(".combo").children(".combo-text");
@@ -1675,7 +1675,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 			var i = 10;     //首次次加载的条数
 			getAddrssInfo(i);
 
-            //后面将函数提取出来:getAddrssInfo2
+			//后面将函数提取出来:getAddrssInfo2
 			function getAddrssInfo(page_size){
 				submitParam['pagenum'] = 1;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
@@ -1760,7 +1760,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 			}
 		},
 		onHidePanel: function() {
-			if($(this).attr('choose') == 'no'){
+			if($(this).attr('choose') !== 'yes'){
 				$(this).combobox('setValue','');
 				for (var item in returnFieldData) {
 					$('#' + returnFieldData[item]).val('');
@@ -1778,39 +1778,39 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 
 //获取地址信息(提取出来)
 function getAddrssInfo2(opts,page_start,page_size,submitParam,success){
-    submitParam['pagenum'] = page_start;//起始页数
-    submitParam['rownum'] = page_size;//每页条数
-    $.ajax({
-        type: opts.method,
-        url: opts.url,
-        data: submitParam,
-        dataType: 'json',
-        success: function(data) {
-            opts.loaded = true;
-            success(data.rows);
-            var count = data.total;
-            //每次加载10条地址
-            if(count > 10 && i <= count - 10){
-                var down_btn = $('<div class="address-more" id="address-more"><i class="fa fa-angle-double-down"></i></div>');
-                $('.combo-p').each(function(){
-                    var _this = $(this);
-                    var _display = _this.css('display');
-                    //当前显示的combobox的panel
-                    if(_display == 'block'){
-                        down_btn.appendTo(_this.children());
-                        $('#address-more').click(function(){
-                            i += 10;
+	submitParam['pagenum'] = page_start;//起始页数
+	submitParam['rownum'] = page_size;//每页条数
+	$.ajax({
+		type: opts.method,
+		url: opts.url,
+		data: submitParam,
+		dataType: 'json',
+		success: function(data) {
+			opts.loaded = true;
+			success(data.rows);
+			var count = data.total;
+			//每次加载10条地址
+			if(count > 10 && i <= count - 10){
+				var down_btn = $('<div class="address-more" id="address-more"><i class="fa fa-angle-double-down"></i></div>');
+				$('.combo-p').each(function(){
+					var _this = $(this);
+					var _display = _this.css('display');
+					//当前显示的combobox的panel
+					if(_display == 'block'){
+						down_btn.appendTo(_this.children());
+						$('#address-more').click(function(){
+							i += 10;
 
-                            getAddrssInfo(opts,0,i,submitParam,success);
-                        });
-                    }
-                });
-            }
-        },
-        error: function() {
-            console.log('ajax err');
-        }
-    });
+							getAddrssInfo(opts,0,i,submitParam,success);
+						});
+					}
+				});
+			}
+		},
+		error: function() {
+			console.log('ajax err');
+		}
+	});
 }
 
 
@@ -1893,7 +1893,7 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 			var i = 10;     //首次次加载的条数
 			getDepartmentInfo(i);
 
-            //后面将函数提取出来:getDepartmentInfo2
+			//后面将函数提取出来:getDepartmentInfo2
 			function getDepartmentInfo(page_size){
 				submitParam['pagenum'] = 0;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
@@ -1975,13 +1975,13 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 					$('#' + returnFieldData[item]).val(record[item]);
 				}
 			}
-			
+
 			//执行返回函数
-		
-				if (typeof onSelectedFun == 'function') {
-					onSelectedFun();
-				}
-			
+
+			if (typeof onSelectedFun == 'function') {
+				onSelectedFun();
+			}
+
 		},
 		onHidePanel: function() {
 		}
@@ -2002,7 +2002,7 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 // isTopOpen 是否在顶层页面打开（'1'=顶层页面打开，'0'=本面页打开，默认在本页面打开）
 // winTitle  弹出页面窗口标题
 function uploadFileEdit(lybm, lyid, lyms, fileType, fileOnly, isTopOpen, winTitle) {
-	if ("undefined" == typeof lybm || lybm == null || lybm == "" || 
+	if ("undefined" == typeof lybm || lybm == null || lybm == "" ||
 		"undefined" == typeof lyid || lyid == null || lyid == "") {
 		topMessager.alert('', '管理附件传入参数错误！');
 		return;
@@ -2021,11 +2021,11 @@ function uploadFileEdit(lybm, lyid, lyms, fileType, fileOnly, isTopOpen, winTitl
 		winTitle = "附件信息";
 	}
 	var dataOptions = {
-   		title: winTitle,
-   		url: basePath + '/zpfjFjxxb/edit?lybm='+ lybm + '&lyid=' + lyid + '&lyms=' + lyms + '&fileType=' + fileType + '&fileOnly=' + fileOnly,
-   		width: 850,
-   		height: 531
-   	};
+		title: winTitle,
+		url: basePath + '/zpfjFjxxb/edit?lybm='+ lybm + '&lyid=' + lyid + '&lyms=' + lyms + '&fileType=' + fileType + '&fileOnly=' + fileOnly,
+		width: 850,
+		height: 531
+	};
 	if ("undefined" == typeof isTopOpen) {
 		isTopOpen = "0";
 	}
@@ -2043,7 +2043,7 @@ function uploadFileEdit(lybm, lyid, lyms, fileType, fileOnly, isTopOpen, winTitl
 // isTopOpen 是否在顶层页面打开（'1'=顶层页面打开，'0'=本面页打开，默认在本页面打开）
 // winTitle  弹出页面窗口标题
 function uploadFileView(lybm, lyid, isTopOpen, winTitle) {
-	if ("undefined" == typeof lybm || lybm == null || lybm == "" || 
+	if ("undefined" == typeof lybm || lybm == null || lybm == "" ||
 		"undefined" == typeof lyid || lyid == null || lyid == "") {
 		topMessager.alert('', '查看附件传入参数错误！');
 		return;
@@ -2052,11 +2052,11 @@ function uploadFileView(lybm, lyid, isTopOpen, winTitle) {
 		winTitle = "附件信息";
 	}
 	var dataOptions = {
-   		title: winTitle,
-   		url: basePath + '/zpfjFjxxb/query?lybm='+ lybm + '&lyid=' + lyid,
-   		width: 850,
-   		height: 417
-   	};
+		title: winTitle,
+		url: basePath + '/zpfjFjxxb/query?lybm='+ lybm + '&lyid=' + lyid,
+		width: 850,
+		height: 417
+	};
 	if ("undefined" == typeof isTopOpen) {
 		isTopOpen = "0";
 	}
@@ -2076,8 +2076,8 @@ function uploadFileView(lybm, lyid, isTopOpen, winTitle) {
 // imgHeight  图片高度
 // emptyImage 无图片时显示的照片
 function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage) {
-	if ("undefined" == typeof lybm || lybm == null || lybm == "" || 
-		"undefined" == typeof lyid || lyid == null || lyid == "" || 
+	if ("undefined" == typeof lybm || lybm == null || lybm == "" ||
+		"undefined" == typeof lyid || lyid == null || lyid == "" ||
 		"undefined" == typeof divID || divID == null || divID == "") {
 		topMessager.alert('', '查看附件图片查传入参数错误！');
 		return;
@@ -2166,7 +2166,7 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 // oldPageObject   执行onSubmitSuccess方法时返回原页面的参数（如：原页面的某个动太对象{oldObject:this}）
 function ptryzpEdit(ryid, lybm, lyid, lyms, isTopOpen, onSubmitSuccess, oldPageObject) {
 	if ("undefined" == typeof ryid || ryid == null || ryid == "" ||
-		"undefined" == typeof lybm || lybm == null || lybm == "" || 
+		"undefined" == typeof lybm || lybm == null || lybm == "" ||
 		"undefined" == typeof lyid || lyid == null || lyid == "") {
 		topMessager.alert('', '管理人员照片传入参数错误！');
 		return;
@@ -2196,26 +2196,26 @@ function ptryzpEdit(ryid, lybm, lyid, lyms, isTopOpen, onSubmitSuccess, oldPageO
 // lxdh_id 联系电话输入框ID
 // ryid_id 人员ID输入框ID
 function checkLxdh(lxdh_id, ryid_id) {
-	var obj = document.getElementById(lxdh_id).value;  
+	var obj = document.getElementById(lxdh_id).value;
 	var regTel1 = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/.test(obj);//带区号的固定电话     
 	var regTel2 = /^(\d{7,8})(-(\d{3,}))?$/.test(obj);//不带区号的固定电话
 	var regTel3 = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/.test(obj);//移动电话号
 	if(obj !=""){
-	if(!regTel1 && !regTel2 && !regTel3){
-		alert("请输入正确的电话号码 (固定电话或移动电话)\r例：024-6677XXXX或6677XXXX或1516688XXXX");
-		document.getElementById(lxdh_id).focus();
-        return;
-	}}
+		if(!regTel1 && !regTel2 && !regTel3){
+			alert("请输入正确的电话号码 (固定电话或移动电话)\r例：024-6677XXXX或6677XXXX或1516688XXXX");
+			document.getElementById(lxdh_id).focus();
+			return;
+		}}
 	if (!$("#" + lxdh_id).validatebox("isValid")) {
 		return;
-	}	
+	}
 	if ($("#" + lxdh_id).val() == "") {
 		return;
 	}
 	var _lxdh = $("#" + lxdh_id).attr("lxdh");
 	if (!_lxdh) {
 		_lxdh = "";
-	} 
+	}
 	if ($("#" + lxdh_id).val() != _lxdh) {
 		$.ajax({
 			type: "POST",
@@ -2228,7 +2228,7 @@ function checkLxdh(lxdh_id, ryid_id) {
 						topMessagerAlert('数据质量提醒', '电话号码：'+data.lxfs+'<br><br>已于'+data.djsj+'在办理业务中<br><br>登记为【'+data.xm+'】的联系电话，<br><br>与当前录入信息不符');
 					}
 				}
-				
+
 			}
 		});
 		$("#" + lxdh_id).attr("lxdh", $("#" + lxdh_id).val());

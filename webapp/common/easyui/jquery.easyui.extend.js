@@ -564,7 +564,7 @@ function getIEVersion() {
 			var opts = $(this).combobox('options');
 			var oldValue = $(this).combobox("getValues");
 
-			if($(this).attr('choose') == 'no'){
+			if($(this).attr('choose') !== 'yes'){
 				$(this).combobox('setValue','');
 			}
 
