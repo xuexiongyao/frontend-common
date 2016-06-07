@@ -16,11 +16,8 @@ $(function(){
     }
     //优化页面渲染效果,避免出现easyui渲染过程
     $('body').css('visibility','visible');
-    $('.easyui-combobox').combobox({
-        panelHeight : 'auto'
-    });
 
-    clickWindow();//点击子框架页面document
+    //clickWindow();//点击子框架页面document
 
     //接收父框架的请求
     var iframeWindow = new Messenger('iframe','toIframe');
@@ -490,8 +487,14 @@ function openUrlForm(options,btn_diy){
     var _buttons = btn_diy || default_btn;
     var _width = options.width || '90%';
     var _height = options.height || 'auto';
-    var _top = options.top || 200;
     var _title = options.title || '弹框标题';
+    var surplus_height_ = window.innerHeight - _height;
+    var self_top = 0;
+    if(surplus_height_ >0){
+        self_top = parseInt(surplus_height_/2);
+    }
+    //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
+    var _top = self_top; //自适应高度
     dlg_div.dialog({
         modal :true,
         title : _title,
@@ -515,31 +518,31 @@ function openUrlForm(options,btn_diy){
  * */
 function openDivForm(options,btn_diy){
     /*参数使用说明举例
-     openDivForm({
-     id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
-     title: '表单提交',
-     width: 800,
-     height: 200,
-     top: 200,
-     beforeSubmit: function () {
-     }, //return false,阻止提交
-     afterSubmit: function (data) {
-     }, //提交成功,data为返回的数据
-     onClose: function () {
-     },             //关闭时提交的函数
-     }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
-     {
-     text: '确定',
-     handler: function () {
-     $('#div_id').dialog('close');
-     }
-     }, {
-     text: '关闭',
-     handler: function () {
-     $('#div_id').dialog('close');
-     }
-     },
-     ]);*/
+    openDivForm({
+        id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+        title: '表单提交',
+        width: 800,
+        height: 200,
+        top: 200,
+        beforeSubmit: function () {
+        }, //return false,阻止提交
+        afterSubmit: function (data) {
+        }, //提交成功,data为返回的数据
+        onClose: function () {
+        },             //关闭时提交的函数
+    }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
+        {
+            text: '确定',
+            handler: function () {
+                $('#div_id').dialog('close');
+            }
+        }, {
+            text: '关闭',
+            handler: function () {
+                $('#div_id').dialog('close');
+            }
+        },
+    ]);*/
     var dlg_id = options.id;
     var dlg_div = $('#'+dlg_id);
     var defualt_beforeSubmit = function(){
@@ -590,7 +593,13 @@ function openDivForm(options,btn_diy){
     var _title =  options.title || '弹框';
     var _width =  options.width || 800;
     var _height =  options.height || 'auto';
-    var _top =  options.top || 200;
+    var surplus_height_ = window.innerHeight - _height;
+    var self_top = 0;
+    if(surplus_height_ >0){
+        self_top = parseInt(surplus_height_/2);
+    }
+    //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
+    var _top = self_top; //自适应高度
     dlg_div.dialog({
         cache : true,
         modal :true,
@@ -827,3 +836,5 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
         }
     });
 }
+
+

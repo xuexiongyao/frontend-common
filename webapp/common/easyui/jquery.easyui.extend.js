@@ -30,6 +30,7 @@ function getIEVersion() {
 	return 0;
 }
 
+//combobox
 (function ($) {
 
 	function setValues(target, values, remainText) {
@@ -171,6 +172,10 @@ function getIEVersion() {
 
 	var defaults = $.extend({}, $.fn.combobox.defaults, {
 
+		panelHeight : 'auto',
+
+		panelMaxHeight : 250,
+
 		isTopLoad: true,
 
 		maxValueLength: 0,
@@ -268,6 +273,8 @@ function getIEVersion() {
 					type: opts.method,
 					url: opts.url,
 					data: param,
+					xhrFields:{withCredentials:true},
+					crossDomain:true,
 					dataType: 'json',
 					success: function(data) {
 						opts.loaded = true;
@@ -331,6 +338,11 @@ function getIEVersion() {
 		onHidePanel: function() {
 			var opts = $(this).combobox('options');
 			var oldValue = $(this).combobox("getValues");
+
+			if($(this).attr('choose') == 'no'){
+				$(this).combobox('setValue','');
+			}
+
 			if (oldValue.length == 1 && oldValue[0] == "") {
 				setValues(this, []);
 			}
@@ -343,8 +355,13 @@ function getIEVersion() {
 				}
 			}
 			this.value = oldValue;
+		},
+		onSelect:function(){
+			$(this).attr('choose','yes');
+		},
+		onChange: function (n, o) {
+			$(this).attr('choose','no');
 		}
-
 	});
 
 	var methods = $.extend({}, $.fn.combobox.methods, {
@@ -412,7 +429,7 @@ function getIEVersion() {
 
 })(jQuery);
 
-
+//tree
 (function ($) {
 
 	function getDataFilterData(data, regExp) {
@@ -628,6 +645,8 @@ function getIEVersion() {
 						async: false,
 						url: url,
 						dataType: 'json',
+						xhrFields:{withCredentials:true},
+						crossDomain:true,
 						data: "searchKey=" + searchKey,
 						success: function(data) {
 							if (data) {
@@ -654,7 +673,7 @@ function getIEVersion() {
 
 })(jQuery);
 
-
+//combotree
 (function ($) {
 
 	function setValues(target, values) {
@@ -899,12 +918,46 @@ function getIEVersion() {
 	}
 
 	var defaults = $.extend({}, $.fn.combotree.defaults, {
+		panelHeight : 'auto',
+
+		panelMaxHeight : 200,
+
+		editable : true,
+
+		lines : true,
 
 		keyHandler: {
 			up: function(e) {nav(this,'prev');e.preventDefault()},
 			down: function(e) {nav(this,'next');e.preventDefault()},
 			enter: function(e) {doEnter(this, e)},
 			query: function(q,e) {doQuery(this, q)}
+		},
+
+		filter: function(q, row) {
+			if (q == "") {
+				return true;
+			}
+			var opts = $(this).combotree('options');
+			var str = q.toUpperCase();
+			var returnValue = false;
+			if (/[(0-9)*]/.test(str)) {
+				returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0;
+			}
+			else {
+				var wb = row['wb'];//五笔
+				var py = row['py'];//拼音
+				var fz = row['fz'];//分组
+				if (py) {
+					returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0 || row['py'].indexOf(str) >= 0;
+				}else if (wb) {
+					returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0 || row['wb'].indexOf(str) >= 0;
+				}else if (fz) {
+					returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0 || row['fz'].indexOf(str) >= 0;
+				}else{
+					returnValue = row[opts.valueField].indexOf(str) == 0 || row[opts.textField].toUpperCase().indexOf(str) >= 0;
+				}
+			}
+			return returnValue;
 		},
 
 		onBeforeSelect: function(node) {
@@ -960,6 +1013,10 @@ function getIEVersion() {
 
 		onHidePanel: function() {
 			var opts = $(this).combotree('options');
+
+			if($(this).attr('choose') == 'no'){
+				$(this).combotree('setValue','');
+			}
 			if (!opts.multiple) {
 				var tree = $(this).combotree('tree');
 				var selectNode = tree.tree('getSelected');
@@ -990,6 +1047,13 @@ function getIEVersion() {
 					$(this).combotree('clear');
 				}
 			}
+		},
+
+		onSelect:function(){
+			$(this).attr('choose','yes');
+		},
+		onChange: function (n, o) {
+			$(this).attr('choose','no');
 		}
 
 	});
@@ -1046,6 +1110,7 @@ function getIEVersion() {
 
 })(jQuery);
 
+//form
 (function ($) {
 	function ajaxSubmit(target, options){
 		var opts = $.data(target, 'form').options;
@@ -1146,6 +1211,8 @@ function getIEVersion() {
 			$.ajax({
 				url: data,
 				data: param,
+				xhrFields:{withCredentials:true},
+				crossDomain:true,
 				dataType: 'json',
 				success: function(data){
 					_load(data);
@@ -1424,6 +1491,7 @@ function getIEVersion() {
 
 })(jQuery);
 
+//datagrid
 (function ($) {
 
 	var defaults = $.extend({}, $.fn.datagrid.defaults, {
@@ -1458,6 +1526,8 @@ function getIEVersion() {
 							$.ajax({
 								url: opts.delayCountUrl,
 								type: 'POST',
+								xhrFields:{withCredentials:true},
+								crossDomain:true,
 								data: opts.queryParams
 							}).done(function(result) {
 
@@ -2592,6 +2662,8 @@ function datagridDeletePatch(toolbarButton, windowID, submitFields, dataOptions,
 			$.ajax({
 				url: dataOptions.url,
 				type: 'POST',
+				xhrFields:{withCredentials:true},
+				crossDomain:true,
 				dataType: "json",
 				contentType: "application/json",
 				data: JSON.stringify(postData)
@@ -3194,6 +3266,8 @@ function beforeTableLoad(data,tableId){
 					$.ajax({
 						url: opts.delayCountUrl,
 						type: 'POST',
+						xhrFields:{withCredentials:true},
+						crossDomain:true,
 						data: opts.queryParams
 					}).done(function(result) {
 						if (result) {

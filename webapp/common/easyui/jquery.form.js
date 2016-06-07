@@ -886,7 +886,7 @@ $.fn.fieldSerialize = function(successful) {
  *
  * The successful argument controls whether or not the field element must be 'successful'
  * (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
- * The scjz-jwzh value of the successful argument is true.  If this value is false the value(s)
+ * The default value of the successful argument is true.  If this value is false the value(s)
  * for each element is returned.
  *
  * Note: This method *always* returns an array.  If no valid value can be determined the

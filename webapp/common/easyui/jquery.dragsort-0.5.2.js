@@ -30,7 +30,7 @@
 				container: cont,
 
 				init: function() {
-					//set options to scjz-jwzh values if not set
+					//set options to default values if not set
 					opts.tagName = $(this.container).children().size() == 0 ? "li" : $(this.container).children().get(0).tagName.toLowerCase();
 					if (opts.itemSelector == "")
 						opts.itemSelector = opts.tagName;
@@ -68,7 +68,7 @@
 						return;
 
 					//prevents selection, stops issue on Fx where dragging hyperlink doesn't work and on IE where it triggers mousemove even though mouse hasn't moved,
-					//does also stop being able to click text boxes hence dragging on text boxes by scjz-jwzh is disabled in dragSelectorExclude
+					//does also stop being able to click text boxes hence dragging on text boxes by default is disabled in dragSelectorExclude
 					e.preventDefault();
 
 					//change cursor to move while dragging

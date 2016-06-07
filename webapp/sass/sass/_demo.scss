@@ -1,0 +1,17 @@
+@charset "utf-8";
+body{
+    @include attrMarginPadding(10px);
+    font-family:fontFamily(cn);
+    color: colors(textColor);
+}
+//container
+.container{
+    @include size(auto,auto);
+    @include containerBox;
+    @include attrPaddingBorder;
+    margin:0 auto;
+}
+.h-blank{
+    display: block;
+    @include size(100%,20px);
+}

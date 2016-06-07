@@ -1610,6 +1610,7 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 }
 //根据四川的需求对上面的函数进行精简优化(下拉框地址ID,过滤字段,回填字段)
 function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
+
 	$('#' + mlphComboID).combobox({
 		delay: 600,
 		unValidClear: false,
@@ -1684,8 +1685,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 					data: submitParam,
 					dataType: 'json',
 					success: function(data) {
-						console.log("地址信息查询：");
-						console.log(data);
+						console.log('正在加载');
 						opts.loaded = true;
 						success(data.rows);
 						var count = data.total;
@@ -1705,6 +1705,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 								}
 							});
 						}
+						console.log('加载出来了');
 					},
 					error: function() {
 						console.log('getAddrssInfo ajax err');
@@ -1743,7 +1744,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 				if (IE && IE_VERSION <= 9) {
 					itemHeight = 18;
 				}
-				$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 2});
+				$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 50});
 			}
 			return row[opts.textField];
 		},
