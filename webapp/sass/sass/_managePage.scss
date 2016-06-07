@@ -194,6 +194,13 @@
             color: colors(textColor);
             margin-right: 10px;
             font-weight:bold;
+            text-align: right;
+            width:100px;
+            i{
+                color: colors(red);
+                margin-right:5px;
+            }
+
         }
         .select-reason {
             margin-bottom: 20px;
