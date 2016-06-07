@@ -14,23 +14,20 @@
         padding-bottom: 40px;
         .photo-info {
             float: left;
-            width: 185px;
-            height: 300px;
+            @include size(185px,300px);
             position: relative;
             .img-div {
                 margin: 25px;
                 border: 1px colors(borderColor) solid;
                 img {
-                    width: 133px;
-                    height: 165px;
+                    @include size(133px,165px);
                 }
             }
             .edit-div {
-                position: absolute;
+                @include positionDisplay;
                 top: 220px;
                 width: 100%;
                 text-align: center;
-                display: none;
             }
         }
         .person-info {
@@ -38,6 +35,7 @@
             width: 1012px;
             height: auto;
             margin-top: 25px;
+            position: relative;
             .title {
                 @include clearfix;
                 width: 100%;
@@ -60,41 +58,42 @@
                 }
             }
             .person-top-right{
-                float: right;
-                margin-top: -67px;
-                color: #0e6595;
                 position: absolute;
-                margin-left: 800px;
-                z-index: 11;
+                right: 25px;
+                top: -25px;
+                color: colors(primary);
+                z-index: 10;
+                @include clearfix;
                 .ywbl{
                     margin-right: 20px;
                     float: left;
-                    background: #ffffff;
+                    background: colors(white);
                     &:hover{
                         cursor: pointer;
-                        box-shadow: 0px 2px 5px #888888;
+                        box-shadow: 0 2px 5px #888;
                     }
                     &:hover .ywbl-content{
-                        display: block;
+                        visibility: visible;
                     }
                     .ywbl-title{
+                        padding: 0 10px;
                         line-height: 30px;
-                        width: 126px;
+                        @include text-align(right);
                         .ywbl-title-text{
                             font-size: 14px;
-                            margin: 0 5px 0 41px;
+                            margin-right:5px;
                         }
                     }
                     .ywbl-content{
-                        display: none;
+                        visibility: hidden;
                         p{
+                            @include text-align(right);
                             margin: 0;
-                            padding: 0;
                             line-height: 30px;
-                            padding: 0 15px;
+                            padding: 0 10px;
                             &:hover{
-                                background: #0e6595;
-                                color: #ffffff;
+                                background: colors(primary);
+                                color: colors(white);
                             }
                         }
                     }
@@ -115,6 +114,8 @@
                 width: 100%;
                 .item {
                     float: left;
+                    //width:326px;
+                    margin-right:10px;
                     min-height: 30px;
                     line-height:30px;
                     height:auto;
@@ -156,9 +157,9 @@
     }
     .tabs-header{
         border: none;
-        background: #ffffff;
+        background: colors(white);
         .tabs-inner{
-            background: #e0e0e0;
+            background: darken(colors(white),10%);
         }
     }
     .tabs-panels{
@@ -170,7 +171,7 @@
         width: 100%;
         border: none;
         .person-add{
-            margin: 20px 50px 0 50px;
+            margin: 20px 0 0;
             font-size: 12px;
             width: 35px;
             padding: 2px 5px;
@@ -201,7 +202,7 @@
             }
         }
         .content {
-            @include size(1100px, auto);
+            @include size(auto, auto);
             margin: 25px auto 40px;
             //表单样式
             .form-content{
