@@ -1248,6 +1248,10 @@ function getIEVersion() {
 
 		onHidePanel: function() {
 			var opts = $(this).combotree('options');
+
+			if($(this).attr('choose') == 'no'){
+				$(this).combotree('setValue','');
+			}
 			if (!opts.multiple) {
 				var tree = $(this).combotree('tree');
 				var selectNode = tree.tree('getSelected');
@@ -1278,7 +1282,15 @@ function getIEVersion() {
 					$(this).combotree('clear');
 				}
 			}
+		},
+
+		onSelect:function(){
+			$(this).attr('choose','yes');
+		},
+		onChange: function (n, o) {
+			$(this).attr('choose','no');
 		}
+
 	});
 
 	var methods = $.extend({}, $.fn.combotree.methods, {
@@ -2456,6 +2468,30 @@ function setComboRequired(comboID, isRequired) {
 	if (comboText.length) {
 		comboText.validatebox({required:isRequired});
 	}
+}
+
+function setComboboxRequired(id,isRequired){
+	$('#'+id).combobox({
+		required : isRequired
+	});
+}
+
+function setTextboxRequired(id,isRequired){
+	$('#'+id).textbox({
+		required : isRequired
+	});
+}
+
+function setDateboxRequired(id,isRequired){
+	$('#'+id).datebox({
+		required : isRequired
+	});
+}
+
+function setCombotreeRequired(id,isRequired){
+	$('#'+id).combotree({
+		required : isRequired
+	});
 }
 
 
