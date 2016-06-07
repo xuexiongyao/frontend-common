@@ -307,6 +307,10 @@ function normalSubmit(form_id,call_back,url){
         success: function (data) {
             var json = eval('('+data+')');
             formTips(json,call_back,'tips');
+        },
+        error : function(data){
+            restToken();
+            console.log('submit ajax error');
         }
     });
 }
@@ -323,7 +327,7 @@ function formTips(json,success_fn,type){
         if(success_fn){
             try{
                 var fn = eval(success_fn);
-                if(type == 'tips'){
+                if(type == 'tips' && json.message){
                     $.messager.show({
                         title : '提示信息',
                         msg : json.message
@@ -344,7 +348,14 @@ function formTips(json,success_fn,type){
             })
         }
     }else{
-        if(json.message &&  json.message.indexOf('{')== -1){   //系统异常错误抛出
+        restToken();
+        if(data.status==308){
+            $.messager.alert({
+                title: '提示信息',
+                msg  : '数据处理中，请耐心等待！',
+                top : 200
+            });
+        }else if(json.message &&  json.message.indexOf('{')== -1){   //系统异常错误抛出
             $.messager.alert({
                 title: '提示信息',
                 msg  : json.message,
@@ -486,8 +497,18 @@ function openUrlForm(options,btn_diy){
 
     var _buttons = btn_diy || default_btn;
     var _width = options.width || '90%';
-    var _height = options.height || 'auto';
     var _title = options.title || '弹框标题';
+    var _height =  options.height || 'auto';
+    var blank_height = _height;
+    if (blank_height == 'auto') {
+        blank_height = dlg_div.height();
+        if(blank_height > 0){
+            setCookie(dlg_id + 'dialog_height',blank_height);
+        }else{
+            blank_height = parseInt(getCookie(dlg_id + 'dialog_height'));
+        }
+        blank_height = blank_height + 200;
+    }
     var surplus_height_ = window.innerHeight - _height;
     var self_top = 0;
     if(surplus_height_ >0){
@@ -518,31 +539,31 @@ function openUrlForm(options,btn_diy){
  * */
 function openDivForm(options,btn_diy){
     /*参数使用说明举例
-    openDivForm({
-        id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
-        title: '表单提交',
-        width: 800,
-        height: 200,
-        top: 200,
-        beforeSubmit: function () {
-        }, //return false,阻止提交
-        afterSubmit: function (data) {
-        }, //提交成功,data为返回的数据
-        onClose: function () {
-        },             //关闭时提交的函数
-    }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
-        {
-            text: '确定',
-            handler: function () {
-                $('#div_id').dialog('close');
-            }
-        }, {
-            text: '关闭',
-            handler: function () {
-                $('#div_id').dialog('close');
-            }
-        },
-    ]);*/
+     openDivForm({
+     id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+     title: '表单提交',
+     width: 800,
+     height: 200,
+     top: 200,
+     beforeSubmit: function () {
+     }, //return false,阻止提交
+     afterSubmit: function (data) {
+     }, //提交成功,data为返回的数据
+     onClose: function () {
+     },             //关闭时提交的函数
+     }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
+     {
+     text: '确定',
+     handler: function () {
+     $('#div_id').dialog('close');
+     }
+     }, {
+     text: '关闭',
+     handler: function () {
+     $('#div_id').dialog('close');
+     }
+     },
+     ]);*/
     var dlg_id = options.id;
     var dlg_div = $('#'+dlg_id);
     var defualt_beforeSubmit = function(){
@@ -593,11 +614,23 @@ function openDivForm(options,btn_diy){
     var _title =  options.title || '弹框';
     var _width =  options.width || 800;
     var _height =  options.height || 'auto';
-    var surplus_height_ = window.innerHeight - _height;
+    var blank_height = _height;
+    if (blank_height == 'auto') {
+        blank_height = dlg_div.height();
+        if(blank_height > 0){
+            setCookie(dlg_id + 'dialog_height',blank_height);
+        }else{
+            blank_height = parseInt(getCookie(dlg_id + 'dialog_height'));
+        }
+        blank_height = blank_height + 160;
+    }
+
+    var surplus_height_ = window.innerHeight - blank_height;
     var self_top = 0;
     if(surplus_height_ >0){
         self_top = parseInt(surplus_height_/2);
     }
+    console.log(window.innerHeight,dlg_div.height(),blank_height);
     //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
     var _top = self_top; //自适应高度
     dlg_div.dialog({
@@ -629,10 +662,10 @@ function editSwitch(bool,border_class,box_class){
     //启用编辑
     if(bool){
         /*后面完善
-        $('.combo').on('click.showPanel',function(){
-            $(this).prev().combobox("showPanel");
-        });
-        */
+         $('.combo').on('click.showPanel',function(){
+         $(this).prev().combobox("showPanel");
+         });
+         */
         box.each(function(){
             var _this = $(this);
             if(_this.hasClass('easyui-combobox')){
@@ -651,6 +684,8 @@ function editSwitch(bool,border_class,box_class){
             _this.next().find('span.textbox-addon').show();//显示按钮
         });
         //禁用编辑
+
+        $(".fa-asterisk").show();
     }else{
         //$('.combo').off('click.showPanel'); //后面完善
         box.each(function(){
@@ -670,6 +705,9 @@ function editSwitch(bool,border_class,box_class){
             }
             _this.next().find('span.textbox-addon').hide();//隐藏按钮
         });
+
+        //清除“*”
+        $(".fa-asterisk").hide();
     }
 }
 
@@ -837,4 +875,18 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
     });
 }
 
-
+function restToken(){
+    $.ajax({
+        url: basePath + '/submitToken/new',
+        type: 'get',
+        dataType: 'json',
+        success: function (json) {
+            if(json.token){
+                $("#token").val(json.token);
+            }
+        },
+        error: function () {
+            console.log('token reset error!');
+        }
+    });
+}
