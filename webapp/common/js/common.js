@@ -17,7 +17,7 @@ $(function(){
     //优化页面渲染效果,避免出现easyui渲染过程
     $('body').css('visibility','visible');
 
-    //clickWindow();//点击子框架页面document
+    clickWindow();//点击子框架页面document
 
     //接收父框架的请求
     var iframeWindow = new Messenger('iframe','toIframe');

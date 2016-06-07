@@ -170,6 +170,224 @@ function getIEVersion() {
 		}
 	}
 
+	function getRowIndex(target, value){
+		var state = $.data(target, 'combobox');
+		var opts = state.options;
+		var data = state.data;
+		for(var i=0; i<data.length; i++){
+			if (data[i][opts.valueField] == value){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	function nav(target, dir){
+		var opts = $.data(target, 'combobox').options;
+		var panel = $(target).combobox('panel');
+		var item = panel.children('div.combobox-item-hover');
+		if (!item.length){
+			item = panel.children('div.combobox-item-selected');
+		}
+		item.removeClass('combobox-item-hover');
+		var firstSelector = 'div.combobox-item:visible:not(.combobox-item-disabled):first';
+		var lastSelector = 'div.combobox-item:visible:not(.combobox-item-disabled):last';
+		if (!item.length){
+			item = panel.children(dir=='next' ? firstSelector : lastSelector);
+//			item = panel.children('div.combobox-item:visible:' + (dir=='next'?'first':'last'));
+		} else {
+			if (dir == 'next'){
+				item = item.nextAll(firstSelector);
+//				item = item.nextAll('div.combobox-item:visible:first');
+				if (!item.length){
+					item = panel.children(firstSelector);
+//					item = panel.children('div.combobox-item:visible:first');
+				}
+			} else {
+				item = item.prevAll(firstSelector);
+//				item = item.prevAll('div.combobox-item:visible:first');
+				if (!item.length){
+					item = panel.children(lastSelector);
+//					item = panel.children('div.combobox-item:visible:last');
+				}
+			}
+		}
+		if (item.length){
+			item.addClass('combobox-item-hover');
+			var row = opts.finder.getRow(target, item);
+			if (row){
+				scrollTo(target, row[opts.valueField]);
+				if (opts.selectOnNavigation){
+					select(target, row[opts.valueField]);
+				}
+			}
+		}
+	}
+
+	function loadData(target, data, remainText){
+		var state = $.data(target, 'combobox');
+		var opts = state.options;
+		state.data = opts.loadFilter.call(target, data);
+		state.groups = [];
+		data = state.data;
+
+		var selected = $(target).combobox('getValues');
+		var dd = [];
+		var group = undefined;
+		for(var i=0; i<data.length; i++){
+			var row = data[i];
+			var v = row[opts.valueField]+'';
+			var s = row[opts.textField];
+			var g = row[opts.groupField];
+
+			if (g){
+				if (group != g){
+					group = g;
+					state.groups.push(g);
+					dd.push('<div id="' + (state.groupIdPrefix+'_'+(state.groups.length-1)) + '" class="combobox-group">');
+					dd.push(opts.groupFormatter ? opts.groupFormatter.call(target, g) : g);
+					dd.push('</div>');
+				}
+			} else {
+				group = undefined;
+			}
+
+			var cls = 'combobox-item' + (row.disabled ? ' combobox-item-disabled' : '') + (g ? ' combobox-gitem' : '');
+			dd.push('<div id="' + (state.itemIdPrefix+'_'+i) + '" class="' + cls + '">');
+			dd.push(opts.formatter ? opts.formatter.call(target, row) : s);
+			dd.push('</div>');
+
+//			if (item['selected']){
+//				(function(){
+//					for(var i=0; i<selected.length; i++){
+//						if (v == selected[i]) return;
+//					}
+//					selected.push(v);
+//				})();
+//			}
+			if (row['selected'] && $.inArray(v, selected) == -1){
+				selected.push(v);
+			}
+		}
+		$(target).combo('panel').html(dd.join(''));
+
+		if(!(opts.address)){
+			if (opts.multiple){
+				setValues(target, selected, remainText);
+			} else {
+				setValues(target, selected.length ? [selected[selected.length-1]] : [], remainText);
+			}
+		}
+		opts.onLoadSuccess.call(target, data);
+	}
+
+	function select(target, value){
+		var opts = $.data(target, 'combobox').options;
+		var values = $(target).combo('getValues');
+		if ($.inArray(value+'', values) == -1){
+			if (opts.multiple){
+				values.push(value);
+			} else {
+				values = [value];
+			}
+			setValues(target, values);
+			opts.onSelect.call(target, opts.finder.getRow(target, value));
+		}
+	}
+
+	function request(target, url, param, remainText){
+		var opts = $.data(target, 'combobox').options;
+		if (url){
+			opts.url = url;
+		}
+		param = $.extend({}, opts.queryParams, param||{});
+//		param = param || {};
+
+		if (opts.onBeforeLoad.call(target, param) == false) return;
+
+		opts.loader.call(target, param, function(data){
+			loadData(target, data, remainText);
+		}, function(){
+			opts.onLoadError.apply(this, arguments);
+		});
+	}
+
+	function doQuery(target, q){
+		var state = $.data(target, 'combobox');
+		var opts = state.options;
+
+		var qq = opts.multiple ? q.split(opts.separator) : [q];
+		if (opts.mode == 'remote'){
+			_setValues(qq);
+			request(target, null, {q:q}, true);
+		} else {
+			var panel = $(target).combo('panel');
+			panel.find('div.combobox-item-selected,div.combobox-item-hover').removeClass('combobox-item-selected combobox-item-hover');
+			panel.find('div.combobox-item,div.combobox-group').hide();
+			var data = state.data;
+			var vv = [];
+			$.map(qq, function(q){
+				q = $.trim(q);
+				var value = q;
+				var group = undefined;
+				for(var i=0; i<data.length; i++){
+					var row = data[i];
+					if (opts.filter.call(target, q, row)){
+						var v = row[opts.valueField];
+						var s = row[opts.textField];
+						var g = row[opts.groupField];
+						var item = opts.finder.getEl(target, v).show();
+						if (s.toLowerCase() == q.toLowerCase()){
+							value = v;
+							item.addClass('combobox-item-selected');
+							opts.onSelect.call(target, row);
+						}
+						if (opts.groupField && group != g){
+							$('#'+state.groupIdPrefix+'_'+$.inArray(g, state.groups)).show();
+							group = g;
+						}
+					}
+				}
+				vv.push(value);
+			});
+			_setValues(vv);
+		}
+		function _setValues(vv){
+			setValues(target, opts.multiple ? (q?vv:[]) : vv, true);
+		}
+	}
+
+	function doEnter(target){
+		var t = $(target);
+		var opts = t.combobox('options');
+		var panel = t.combobox('panel');
+		var item = panel.children('div.combobox-item-hover');
+		if (item.length){
+			var row = opts.finder.getRow(target, item);
+			var value = row[opts.valueField];
+			if (opts.multiple){
+				if (item.hasClass('combobox-item-selected')){
+					t.combobox('unselect', value);
+				} else {
+					t.combobox('select', value);
+				}
+			} else {
+				t.combobox('select', value);
+			}
+		}
+		var vv = [];
+		$.map(t.combobox('getValues'), function(v){
+			if (getRowIndex(target, v) >= 0){
+				vv.push(v);
+				opts.onSelect.call(target, opts.finder.getRow(target, v));
+			}
+		});
+		t.combobox('setValues', vv);
+		if (!opts.multiple){
+			t.combobox('hidePanel');
+		}
+	}
+
 	var defaults = $.extend({}, $.fn.combobox.defaults, {
 
 		panelHeight : 'auto',
@@ -189,6 +407,15 @@ function getIEVersion() {
 		dataFilter: '',
 
 		unValidClear: true,
+
+		keyHandler: {
+			up: function(e){nav(this,'prev');e.preventDefault()},
+			down: function(e){nav(this,'next');e.preventDefault()},
+			left: function(e){},
+			right: function(e){},
+			enter: function(e){doEnter(this)},
+			query: function(q,e){doQuery(this, q)}
+		},
 
 		filter: function(q, row) {
 			if (q == "") {
@@ -273,8 +500,6 @@ function getIEVersion() {
 					type: opts.method,
 					url: opts.url,
 					data: param,
-					xhrFields:{withCredentials:true},
-					crossDomain:true,
 					dataType: 'json',
 					success: function(data) {
 						opts.loaded = true;
@@ -645,8 +870,6 @@ function getIEVersion() {
 						async: false,
 						url: url,
 						dataType: 'json',
-						xhrFields:{withCredentials:true},
-						crossDomain:true,
 						data: "searchKey=" + searchKey,
 						success: function(data) {
 							if (data) {
@@ -1211,8 +1434,6 @@ function getIEVersion() {
 			$.ajax({
 				url: data,
 				data: param,
-				xhrFields:{withCredentials:true},
-				crossDomain:true,
 				dataType: 'json',
 				success: function(data){
 					_load(data);
@@ -1526,8 +1747,6 @@ function getIEVersion() {
 							$.ajax({
 								url: opts.delayCountUrl,
 								type: 'POST',
-								xhrFields:{withCredentials:true},
-								crossDomain:true,
 								data: opts.queryParams
 							}).done(function(result) {
 
@@ -2662,8 +2881,6 @@ function datagridDeletePatch(toolbarButton, windowID, submitFields, dataOptions,
 			$.ajax({
 				url: dataOptions.url,
 				type: 'POST',
-				xhrFields:{withCredentials:true},
-				crossDomain:true,
 				dataType: "json",
 				contentType: "application/json",
 				data: JSON.stringify(postData)
@@ -3266,8 +3483,6 @@ function beforeTableLoad(data,tableId){
 					$.ajax({
 						url: opts.delayCountUrl,
 						type: 'POST',
-						xhrFields:{withCredentials:true},
-						crossDomain:true,
 						data: opts.queryParams
 					}).done(function(result) {
 						if (result) {

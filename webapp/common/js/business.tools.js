@@ -1610,8 +1610,8 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 }
 //根据四川的需求对上面的函数进行精简优化(下拉框地址ID,过滤字段,回填字段)
 function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
-
 	$('#' + mlphComboID).combobox({
+		address:true,
 		delay: 600,
 		unValidClear: false,
 		//url: basePath + '/dzContextSearch/searchAddressIncludeMlpXz',
@@ -1752,6 +1752,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 			return data;
 		},
 		onSelect: function(record) {
+			$(this).attr('choose','yes');
 			for (var item in returnFieldData) {
 				if (record[item]) {
 					$('#' + returnFieldData[item]).val(record[item]);
@@ -1759,7 +1760,14 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 			}
 		},
 		onHidePanel: function() {
+			if($(this).attr('choose') == 'no'){
+				$(this).combobox('setValue','');
+				for (var item in returnFieldData) {
+					$('#' + returnFieldData[item]).val('');
+				}
+			}
 		}
+
 	});
 
 	$(function(){
