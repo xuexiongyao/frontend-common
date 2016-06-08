@@ -1248,10 +1248,6 @@ function getIEVersion() {
 
 		onHidePanel: function() {
 			var opts = $(this).combotree('options');
-
-			if($(this).attr('choose') == 'no'){
-				$(this).combotree('setValue','');
-			}
 			if (!opts.multiple) {
 				var tree = $(this).combotree('tree');
 				var selectNode = tree.tree('getSelected');
@@ -1282,13 +1278,6 @@ function getIEVersion() {
 					$(this).combotree('clear');
 				}
 			}
-		},
-
-		onSelect:function(){
-			$(this).attr('choose','yes');
-		},
-		onChange: function (n, o) {
-			$(this).attr('choose','no');
 		}
 
 	});
