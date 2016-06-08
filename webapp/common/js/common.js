@@ -32,7 +32,7 @@ $(function(){
                     eval(content);
                 }catch(e){
                     alert('请确认页面中'+ content +'函数是否定义');
-                    console.log('toIframe提示:',content + ' is not a function');
+                    //console.log('toIframe提示:',content + ' is not a function');
                 }
             }else if(status == 'get_tab_id'){
                 var content_arr = content.split(',');
@@ -467,7 +467,7 @@ function openUrlForm(options,btn_diy){
                         return isValid; // 返回false终止表单提交*/
                     },
                     success: function(data){
-                        console.log(data);
+                        //console.log(data);
                         //dlg_div.dialog('close');
                     },
                     error : function(){
@@ -630,7 +630,6 @@ function openDivForm(options,btn_diy){
     if(surplus_height_ >0){
         self_top = parseInt(surplus_height_/2);
     }
-    console.log(window.innerHeight,dlg_div.height(),blank_height);
     //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
     var _top = self_top; //自适应高度
     dlg_div.dialog({
@@ -820,7 +819,7 @@ function getFmImage(lyid, lybm, add_btn, manage_btn) {
             rows: 1
         },
         success: function (json) {
-            console.log(json);
+            //console.log(json);
             var data = json.rows;
             if (data.length > 0) {
                 var src = 'data:image/jpeg;base64,' + data[0]['slt'];
@@ -874,7 +873,7 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
         }
     });
 }
-
+//刷新token,防止重复提交
 function restToken(){
     $.ajax({
         url: basePath + '/submitToken/new',
