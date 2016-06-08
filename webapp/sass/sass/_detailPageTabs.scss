@@ -128,6 +128,10 @@
                         color: colors(grayBgcolor);
                         position: relative;
                         top:3px;
+                        i{
+                            color:colors(red);
+                            margin-right:5px;
+                        }
                     }
                     .val {
                         @extend .pro;

@@ -861,27 +861,32 @@
   position: relative;
   top: 3px;
 }
-/* line 130, ../sass/sass/_detailPageTimeline.scss */
+/* line 129, ../sass/sass/_detailPageTimeline.scss */
+.info-main .base-info .person-info .content .item .pro i, .info-main #export_panel .relation-info .person-info .content .item .pro i, #export_panel .info-main .relation-info .person-info .content .item .pro i, .info-main .base-info .person-info .content .item .val i, .info-main #export_panel .relation-info .person-info .content .item .val i, #export_panel .info-main .relation-info .person-info .content .item .val i {
+  color: #ed4848;
+  margin-right: 5px;
+}
+/* line 134, ../sass/sass/_detailPageTimeline.scss */
 .info-main .base-info .person-info .content .item .val, .info-main #export_panel .relation-info .person-info .content .item .val, #export_panel .info-main .relation-info .person-info .content .item .val {
   vertical-align: middle;
   width: 240px;
 }
-/* line 135, ../sass/sass/_detailPageTimeline.scss */
+/* line 139, ../sass/sass/_detailPageTimeline.scss */
 .info-main .base-info .person-info .content .item .clear-border, .info-main #export_panel .relation-info .person-info .content .item .clear-border, #export_panel .info-main .relation-info .person-info .content .item .clear-border {
   border: 1px solid #fff;
 }
-/* line 140, ../sass/sass/_detailPageTimeline.scss */
+/* line 144, ../sass/sass/_detailPageTimeline.scss */
 .info-main .base-info .person-info .content .item-title, .info-main #export_panel .relation-info .person-info .content .item-title, #export_panel .info-main .relation-info .person-info .content .item-title {
   border-bottom: 1px solid #ccc;
 }
-/* line 142, ../sass/sass/_detailPageTimeline.scss */
+/* line 146, ../sass/sass/_detailPageTimeline.scss */
 .info-main .base-info .person-info .content .item-title .pro, .info-main #export_panel .relation-info .person-info .content .item-title .pro, #export_panel .info-main .relation-info .person-info .content .item-title .pro, .info-main .base-info .person-info .content .item-title .item .val, .info-main .base-info .person-info .content .item .item-title .val, .info-main #export_panel .relation-info .person-info .content .item-title .item .val, .info-main #export_panel .relation-info .person-info .content .item .item-title .val, #export_panel .info-main .relation-info .person-info .content .item-title .item .val, #export_panel .info-main .relation-info .person-info .content .item .item-title .val {
   font-weight: bold;
   font-size: 14px;
   color: #000;
   margin: 10px 0 0;
 }
-/* line 152, ../sass/sass/_detailPageTimeline.scss */
+/* line 156, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info {
   *zoom: 1;
   height: auto;
@@ -898,7 +903,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 157, ../sass/sass/_detailPageTimeline.scss */
+/* line 161, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title, .info-main .other-info #logout_panel .living-info .living-table-div, #logout_panel .living-info .info-main .other-info .living-table-div {
   width: 100%;
   *zoom: 1;
@@ -913,7 +918,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 160, ../sass/sass/_detailPageTimeline.scss */
+/* line 164, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title .tip, .info-main .other-info #logout_panel .living-info .living-table-div .tip, #logout_panel .living-info .info-main .other-info .living-table-div .tip {
   position: relative;
   left: -10px;
@@ -927,7 +932,7 @@
   font-size: 18px;
   font-family: "Microsoft Yahei", "微软雅黑";
 }
-/* line 172, ../sass/sass/_detailPageTimeline.scss */
+/* line 176, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title .tip:before, .info-main .other-info #logout_panel .living-info .living-table-div .tip:before, #logout_panel .living-info .info-main .other-info .living-table-div .tip:before {
   position: absolute;
   border-top: 10px solid #07364f;
@@ -935,19 +940,19 @@
   border-left: 10px solid transparent;
   left: 0;
 }
-/* line 176, ../sass/sass/_detailPageTimeline.scss */
+/* line 180, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title .edit-btn, .info-main .other-info #logout_panel .living-info .living-table-div .edit-btn, #logout_panel .living-info .info-main .other-info .living-table-div .edit-btn {
   float: right;
   margin-right: 30px;
   margin-bottom: 0;
 }
-/* line 182, ../sass/sass/_detailPageTimeline.scss */
+/* line 186, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content {
   width: 900px;
   height: auto;
   margin: 25px auto 40px;
 }
-/* line 186, ../sass/sass/_detailPageTimeline.scss */
+/* line 190, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content {
   list-style-type: none;
   margin: 0;
@@ -964,7 +969,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 191, ../sass/sass/_detailPageTimeline.scss */
+/* line 195, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li {
   background-color: #eef1f6;
   width: 440px;
@@ -986,7 +991,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 200, ../sass/sass/_detailPageTimeline.scss */
+/* line 204, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li label {
   cursor: default;
   display: inline-block;
@@ -998,35 +1003,35 @@
   color: #5a5a5a;
   font-weight: bold;
 }
-/* line 210, ../sass/sass/_detailPageTimeline.scss */
+/* line 214, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li .textbox {
   background: transparent;
   border: 1px solid #eef1f6;
 }
-/* line 214, ../sass/sass/_detailPageTimeline.scss */
+/* line 218, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li input {
   background: transparent;
 }
-/* line 218, ../sass/sass/_detailPageTimeline.scss */
+/* line 222, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li:nth-child(2n) {
   margin-left: 20px;
 }
-/* line 221, ../sass/sass/_detailPageTimeline.scss */
+/* line 225, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li.li-full {
   width: 900px;
   margin: 0 0 10px !important;
 }
 
-/* line 232, ../sass/sass/_detailPageTimeline.scss */
+/* line 236, ../sass/sass/_detailPageTimeline.scss */
 .info-edit .base-info, .info-edit #export_panel .relation-info, #export_panel .info-edit .relation-info {
   border: none;
   width: auto;
 }
-/* line 235, ../sass/sass/_detailPageTimeline.scss */
+/* line 239, ../sass/sass/_detailPageTimeline.scss */
 .info-edit .base-info .person-info, .info-edit #export_panel .relation-info .person-info, #export_panel .info-edit .relation-info .person-info {
   margin-left: 40px;
 }
-/* line 238, ../sass/sass/_detailPageTimeline.scss */
+/* line 242, ../sass/sass/_detailPageTimeline.scss */
 .info-edit .base-info .person-info .item span.pro-right, .info-edit #export_panel .relation-info .person-info .item span.pro-right, #export_panel .info-edit .relation-info .person-info .item span.pro-right {
   margin-left: 30px;
 }
