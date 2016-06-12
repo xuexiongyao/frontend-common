@@ -513,6 +513,8 @@ function getIEVersion() {
 					url: opts.url,
 					data: param,
 					dataType: 'json',
+					xhrFields:{withCredentials:true},
+					crossDomain:true,
 					success: function(data) {
 						opts.loaded = true;
 						success(data);
@@ -881,6 +883,8 @@ function getIEVersion() {
 						type: "POST",
 						async: false,
 						url: url,
+						xhrFields:{withCredentials:true},
+						crossDomain:true,
 						dataType: 'json',
 						data: "searchKey=" + searchKey,
 						success: function(data) {
@@ -1436,6 +1440,8 @@ function getIEVersion() {
 				url: data,
 				data: param,
 				dataType: 'json',
+				xhrFields:{withCredentials:true},
+				crossDomain:true,
 				success: function(data){
 					_load(data);
 				},
@@ -1746,6 +1752,8 @@ function getIEVersion() {
 						if (data.total == opts.pageSize) { // 满一页延时统计
 							var pager = $(this).datagrid('getPager');
 							$.ajax({
+								xhrFields:{withCredentials:true},
+								crossDomain:true,
 								url: opts.delayCountUrl,
 								type: 'POST',
 								data: opts.queryParams
@@ -2904,6 +2912,8 @@ function datagridDeletePatch(toolbarButton, windowID, submitFields, dataOptions,
 				postData.push(dataArray);
 			}
 			$.ajax({
+				xhrFields:{withCredentials:true},
+				crossDomain:true,
 				url: dataOptions.url,
 				type: 'POST',
 				dataType: "json",
@@ -3506,6 +3516,8 @@ function beforeTableLoad(data,tableId){
 				if (data.total == opts.pageSize) { // 满一页延时统计
 					var pager = $('#'+tableId).datagrid('getPager');
 					$.ajax({
+						xhrFields:{withCredentials:true},
+						crossDomain:true,
 						url: opts.delayCountUrl,
 						type: 'POST',
 						data: opts.queryParams
