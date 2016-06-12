@@ -309,7 +309,7 @@ function normalSubmit(form_id,call_back,url){
             formTips(json,call_back,'tips');
         },
         error : function(data){
-            restToken();
+            resetToken();
             console.log('submit ajax error');
         }
     });
@@ -874,7 +874,7 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
     });
 }
 //刷新token,防止重复提交
-function restToken(){
+function resetToken(){
     $.ajax({
         url: basePath + '/submitToken/new',
         type: 'get',
