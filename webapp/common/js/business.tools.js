@@ -104,6 +104,8 @@ function initComboBox(comboID, dictUrl) {
 			}
 			else {
 				$.ajax({
+					xhrFields: {withCredentials: true},
+					crossDomain: true,
 					type: opts.method,
 					url: opts.url,
 					data: param,
@@ -442,6 +444,8 @@ function public_getOrgName(orgCodeInputID, orgNameInputID) {
 		var orgCodeValue = $('#' + orgCodeInputID).val();
 		if (orgCodeValue != "") {
 			$.ajax({
+				xhrFields: {withCredentials: true},
+				crossDomain: true,
 				type: "POST",
 				url: basePath + "/orgPublicSelect/getOrgName",
 				dataType: "json",
@@ -1297,6 +1301,8 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 				submitParam['id'] = $('#' + mlphID).val();
 				submitParam['searchKey'] = param.q;
 				$.ajax({
+					xhrFields: {withCredentials: true},
+					crossDomain: true,
 					type: opts.method,
 					url: opts.url,
 					data: submitParam,
@@ -1497,6 +1503,8 @@ function initAddressSearch(mlphComboID, filterData, mlphID, mlphmcID, mlphXzComb
 			}
 			submitParam['searchKey'] = param.q;
 			$.ajax({
+				xhrFields: {withCredentials: true},
+				crossDomain: true,
 				type: opts.method,
 				url: opts.url,
 				data: submitParam,
@@ -1680,6 +1688,8 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 				submitParam['pagenum'] = 1;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
 				$.ajax({
+					xhrFields: {withCredentials: true},
+					crossDomain: true,
 					type: opts.method,
 					url: opts.url,
 					data: submitParam,
@@ -1781,6 +1791,8 @@ function getAddrssInfo2(opts,page_start,page_size,submitParam,success){
 	submitParam['pagenum'] = page_start;//起始页数
 	submitParam['rownum'] = page_size;//每页条数
 	$.ajax({
+		xhrFields: {withCredentials: true},
+		crossDomain: true,
 		type: opts.method,
 		url: opts.url,
 		data: submitParam,
@@ -1898,12 +1910,12 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 				submitParam['pagenum'] = 0;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
 				$.ajax({
+					xhrFields: {withCredentials: true},
+					crossDomain: true,
 					type: opts.method,
 					url: opts.url,
 					data: submitParam,
 					dataType: 'json',
-					xhrFields: {withCredentials: true},
-					crossDomain: true,
 					success: function(data) {
 						opts.loaded = true;
 						success(data.rows);
@@ -2083,6 +2095,8 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 		return;
 	}
 	$.ajax({
+		xhrFields: {withCredentials: true},
+		crossDomain: true,
 		type: "POST",
 		url: basePath + "/zpfjFjxxb/queryZpfjIdList",
 		dataType: "json",
@@ -2218,6 +2232,8 @@ function checkLxdh(lxdh_id, ryid_id) {
 	}
 	if ($("#" + lxdh_id).val() != _lxdh) {
 		$.ajax({
+			xhrFields: {withCredentials: true},
+			crossDomain: true,
 			type: "POST",
 			url: basePath + "/ryRylxfsxxb/check",
 			dataType: "json",
