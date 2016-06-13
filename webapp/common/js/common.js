@@ -349,7 +349,7 @@ function formTips(json, success_fn, type) {
             })
         }
     } else {
-        restToken();
+        resetToken();
         if (data.status == 308) {
             $.messager.alert({
                 title: '提示信息',

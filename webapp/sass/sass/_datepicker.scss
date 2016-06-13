@@ -149,15 +149,15 @@
     .WwdayOn {
         cursor: pointer;
         color: colors(white);
-        background-color: colors(lightBlueBg);
+        background-color: colors(red);
     }
     .Wtoday {
         cursor: pointer;
         color: colors(white);
-        background-color: colors(primary);
+        background-color: colors(green);
     }
     .Wselday {
-        background-color: colors(primary);
+        background-color: colors(green);
         color: colors(white);
     }
     .WspecialDay {
