@@ -217,7 +217,7 @@
                 @include clearfix;
                 li{
                     background-color: #eef1f6;
-                    width:440px;
+                    width:564px;
                     @include float(left);
                     line-height: 22px;
                     min-height:22px;
@@ -251,6 +251,9 @@
                 }
             }
         }
+    }
+    #base_table{
+        margin:0 25px;
     }
 }
 
