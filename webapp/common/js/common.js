@@ -8,16 +8,24 @@ var return_tab_id = null;
 $(function () {
     //加载完成后,发送消息到父框架获取当前TabID和上一个TabID
     if (typeof window_type == 'undefined') {
-        crossRequestParent('getTabIdToIframe()');
+        try {
+            crossRequestParent('getTabIdToIframe()');
+        }catch(e) {
+            console.log('getTabIdToIframe not defined')
+        }
     } else {
         if (window_type != 'open_url') {
-            crossRequestParent('getTabIdToIframe()');
+            try {
+                crossRequestParent('getTabIdToIframe()');
+            }catch(e) {
+                console.log('getTabIdToIframe not defined')
+            }
         }
     }
     //优化页面渲染效果,避免出现easyui渲染过程
     $('body').css('visibility', 'visible');
 
-    clickWindow();//点击子框架页面document
+    //clickWindow();//点击子框架页面document
 
     //接收父框架的请求
     var iframeWindow = new Messenger('iframe', 'toIframe');
