@@ -6,11 +6,14 @@ function setuErrorHandler(msg,errFun){
     var errorJsonStr=msg.responseText.match(/var errorInfo=([\w\W]+);/)[1];
     if(errorJsonStr!=undefined){
         var errorJson=eval('('+errorJsonStr+')');
+        //自定义状态处理方式
         if(errorJson.errorCode=="-202"){
-            window.top.location.href="../loginpage";
+            console.log('errorJson:',errorJson);
+            //window.top.location.href="../loginpage";
         }else{
-            window.top.location.href="../loginpage";
-            alert(errorJson.message);
+
+            //window.top.location.href="../loginpage";
+            //alert(errorJson.message);
         }
     }else{
         errFun(msg);
