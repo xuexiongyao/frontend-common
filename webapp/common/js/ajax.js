@@ -6,9 +6,11 @@ function setuErrorHandler(msg,errFun){
     var errorJsonStr=msg.responseText.match(/var errorInfo=([\w\W]+);/)[1];
     if(errorJsonStr!=undefined){
         var errorJson=eval('('+errorJsonStr+')');
+        console.log('errorJson:',errorJson);
         //自定义状态处理方式
         if(errorJson.errorCode=="-202"){
-            console.log('errorJson:',errorJson);
+            crossRequestParent('reLogin()');
+            window.parent.crossRequestParent('reLogin()');
             //window.top.location.href="../loginpage";
         }else{
 
