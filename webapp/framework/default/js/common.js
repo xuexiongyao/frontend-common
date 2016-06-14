@@ -53,7 +53,7 @@ function iframJump(tab_id){
  * 5.此方法会在跨域打开中执行
  * */
 function addTab(title,url,tab_id,return_tab_id,fn_name){
-    console.log('addTab参数:',arguments);
+    //console.log('addTab参数:',arguments);
     if(!title || !url || !tab_id){
         alert('addTab 缺少必要参数!');
         return false;

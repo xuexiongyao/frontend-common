@@ -49,7 +49,6 @@ $(function () {
                 //console.log('当前tabID:',current_tab_id,'返回tabID:',return_tab_id);
             } else if (status == 'page_jump') {
                 location.href = msg.content;
-                ;
             } else {
                 alert('msg.status err');
             }
