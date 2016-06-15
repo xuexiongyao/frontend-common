@@ -2157,8 +2157,12 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 			}
 			else {
 				if ("undefined" == typeof emptyImage || emptyImage == null || emptyImage == "") {
-					var divHtml = "<div style='width:100%; padding-top:10px; padding-bottom:10px; color: #666666'>暂无照片</div>";
+					var emptyImage = staticPath + '/common/images/no_pic.jpg';
+					var divHtml = "<img alt='静态无图片资源' id='"+ divID +"Img' src='"+ emptyImage +"' width='100%' height='100%' border='0'/>";
 					$('#' + divID).html(divHtml);
+					//css生成无图片样式
+					/*var divHtml = "<div style='width:100%; padding-top:10px; padding-bottom:10px; color: #666666'>暂无照片</div>";
+					$('#' + divID).html(divHtml);*/
 				}
 				else {
 					var divHtml = "<img id='"+ divID +"Img' src='"+ emptyImage +"' width='100%' height='100%' border='0'/>";
