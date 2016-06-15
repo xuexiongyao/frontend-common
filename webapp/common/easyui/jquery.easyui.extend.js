@@ -402,7 +402,7 @@ function getIEVersion() {
 
 	var defaults = $.extend({}, $.fn.combobox.defaults, {
 
-		mode:'remote',
+		//mode:'remote',
 
 		panelHeight : 'auto',
 
@@ -750,7 +750,7 @@ function getIEVersion() {
 
 	var defaults = $.extend({}, $.fn.tree.defaults, {
 
-		mode:'remote',
+		//mode:'remote',
 
 		onlyLeaf: true,
 
@@ -1161,7 +1161,7 @@ function getIEVersion() {
 	}
 
 	var defaults = $.extend({}, $.fn.combotree.defaults, {
-		mode:'remote',
+		//mode:'remote',
 
 		panelHeight : 'auto',
 
