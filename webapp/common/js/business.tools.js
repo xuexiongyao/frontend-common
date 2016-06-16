@@ -1846,7 +1846,7 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 	$('#' + dwComboID).combobox({
 		delay: 600,
 		unValidClear: false,
-		url: 'http://sydw.jwzh.com:9015/jwzh-sydw/api/sydw/query/downlist',
+		url: sydwPath + '/api/sydw/query/downlist',
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
 			if (!opts.url) return false;
