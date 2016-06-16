@@ -395,7 +395,7 @@ function submitImg(form_id, callback_fn) {
     if (img_input.val() == '') {
         $.messager.alert('添加失败', '请添加图片!');
         return false;
-    } else if (!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(img_input.val())) {
+    } else if (!/.(gif|jpg|jpeg|png|GIF|JPG|png|PNG)$/.test(img_input.val())) {
         $.messager.alert('上传失败', '图片类型必须是.gif,jpeg,jpg,png中的一种');
         return false;
     } else {
