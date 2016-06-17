@@ -596,8 +596,8 @@
 }
 /* line 56, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .pro, .add-main .infos-main .content .info-main .base-info .person-info .info-item .content .item .val, .info-main .base-info .add-main .infos-main .content .person-info .info-item .content .item .val, .add-main .infos-main .content .info-main .base-info .person-info .content .item .info-item .val, .info-main .base-info .add-main .infos-main .content .person-info .content .item .info-item .val, .add-main .infos-main .content .info-main #export_panel .relation-info .person-info .info-item .content .item .val, .info-main #export_panel .relation-info .add-main .infos-main .content .person-info .info-item .content .item .val, .add-main .infos-main .content .info-main #export_panel .relation-info .person-info .content .item .info-item .val, .info-main #export_panel .relation-info .add-main .infos-main .content .person-info .content .item .info-item .val, .add-main .infos-main .content #export_panel .info-main .relation-info .person-info .info-item .content .item .val, #export_panel .info-main .relation-info .add-main .infos-main .content .person-info .info-item .content .item .val, .add-main .infos-main .content #export_panel .info-main .relation-info .person-info .content .item .info-item .val, #export_panel .info-main .relation-info .add-main .infos-main .content .person-info .content .item .info-item .val {
-  width: 110px;
-  padding-right: 20px;
+  width: 120px;
+  padding-right: 10px;
   display: inline-block;
   color: #5a5a5a;
   font-weight: bold;

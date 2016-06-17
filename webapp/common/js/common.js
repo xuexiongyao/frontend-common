@@ -172,7 +172,11 @@ function clickShowPanel(box_id, bool) {
     if (box_id) {
         if (bool) {
             $('#' + box_id).next().on('click.showPanel', function () {
-                $(this).prev().combobox("showPanel");
+                if($(this).hasClass('inputReadonly')){
+                    $(this).prev().combobox("hidePanel");
+                }else{
+                    $(this).prev().combobox("showPanel");
+                }
             });
         } else {
             $('#' + box_id).next().on('click.showPanel', function () {
@@ -180,8 +184,12 @@ function clickShowPanel(box_id, bool) {
             });
         }
     } else {
-        $('.combo').on('click.showPanel', function () {
-            $(this).prev().combobox("showPanel");
+        $(".combo").on('click.showPanel', function () {
+            if($(this).hasClass('inputReadonly')){
+                $(this).prev().combobox("hidePanel");
+            }else{
+                $(this).prev().combobox("showPanel");
+            }
         });
     }
 

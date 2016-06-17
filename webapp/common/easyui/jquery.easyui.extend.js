@@ -2377,7 +2377,9 @@ function formReadonly(formID, isReadonly) {
 	if (isReadonly) {
 		$('#'+ formID).form('disableValidation');
 		$('#'+ formID +' input:not(:button,:hidden)').prop('readonly', isReadonly).addClass("inputReadonly");
-		$('#'+ formID +' input').next(".combo").addClass("inputReadonly");
+		$('#'+ formID +' input').next(".combo").addClass("inputReadonly textbox-readonly");
+        $('#'+ formID +' input').next(".combo").find('span a').addClass('textbox-icon-disabled');
+        $('#'+ formID +' input').next(".combo").find('input').attr('readonly','readonly');
 		$('#'+ formID +' input:button').prop('disabled', isReadonly);
 		$('#'+ formID +' input:reset').prop('disabled', isReadonly);
 		$('#'+ formID +' input:submit').prop('disabled', isReadonly);
@@ -2388,7 +2390,9 @@ function formReadonly(formID, isReadonly) {
 	}
 	else {
 		$('#'+ formID +' input:not(:button,:hidden)').prop('readonly', isReadonly).removeClass("inputReadonly");
-		$('#'+ formID +' input').next(".combo").removeClass("inputReadonly");
+		$('#'+ formID +' input').next(".combo").removeClass("inputReadonly textbox-readonly");
+        $('#'+ formID +' input').next(".combo").find('span a').removeClass('textbox-icon-disabled');
+        $('#'+ formID +' input').next(".combo").find('input').removeAttr('readonly');
 		$('#'+ formID +' input:button').prop('disabled', isReadonly);
 		$('#'+ formID +' input:reset').prop('disabled', isReadonly);
 		$('#'+ formID +' input:submit').prop('disabled', isReadonly);
