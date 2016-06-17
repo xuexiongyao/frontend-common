@@ -2450,7 +2450,9 @@ function setInputDisabled(inputID, isDisabled) {
 		if (isDisabled) {
 			$('#'+ inputID).validatebox({novalidate:true});
 			$('#'+ inputID).prop('disabled', isDisabled).addClass("inputReadonly");
-			$('#'+ inputID).next(".combo").addClass("inputReadonly");
+			$('#'+ inputID).next(".combo").addClass("inputReadonly textbox-disabled");
+            $('#'+ inputID).next(".combo").find('span a').addClass('textbox-icon-disabled');
+            $('#'+ inputID).next(".combo").find('input').attr('disabled','disabled');
 			var comboText = $('#'+ inputID).next(".combo").children(".combo-text");
 			comboText.validatebox({novalidate:true});
 			comboText.prop('disabled', isDisabled).addClass("inputReadonly");
@@ -2458,7 +2460,9 @@ function setInputDisabled(inputID, isDisabled) {
 		else {
 			$('#'+ inputID).prop('disabled', isDisabled).removeClass("inputReadonly");
 			$('#'+ inputID).validatebox({novalidate:false});
-			$('#'+ inputID).next(".combo").removeClass("inputReadonly");
+			$('#'+ inputID).next(".combo").removeClass("inputReadonly textbox-disabled");
+            $('#'+ inputID).next(".combo").find('span a').removeClass('textbox-icon-disabled');
+            $('#'+ inputID).next(".combo").find('input').removeAttr('disabled');
 			var comboText = $('#'+ inputID).next(".combo").children(".combo-text");
 			comboText.validatebox({novalidate:false});
 			comboText.prop('disabled', isDisabled).removeClass("inputReadonly");
