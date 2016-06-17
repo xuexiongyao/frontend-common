@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实有房屋管理</title>
+    <link rel="stylesheet" href="../../framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="../../common/gridly/jquery.gridly.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../css/managerPage.css">
+</head>
+<body>
+
+<div class="query-list-main">
+    <div class="query-panel" id="query_panel">
+        <div class="ajbl-nav">
+            <a class="title">三台合一警情（<span class="jq-num">2</span>）</a><span class="gap">|</span>
+            <a class="title">自接警情</a><span class="gap">|</span>
+            <a class="title">我的管辖</a><span class="gap">|</span>
+            <a class="title">导出</a><span class="gap">|</span>
+            <a class="title">打印</a>
+        </div>
+        <div class="easyui-panel"  title="搜索条件" data-options="width:'100%',collapsible:true,">
+            <div class="query-item"></div>
+            <div class="query-btn">
+                <a class="easyui-linkbutton c6" id="submit_query">查询</a>
+                <a class="easyui-linkbutton c6" id="add">清空</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-table">
+            <table id="list_table"></table>
+        </div>
+    </div>
+</div>
+
+<div id="other_condition_panel" style="display: none;">
+    <div class="query-condition"></div>
+</div>
+</body>
+<script src="../../common/easyui/jquery.min.js"></script>
+<script src="../../common/easyui/jquery.dragsort-0.5.2.js"></script>
+<script src="../../common/easyui/jquery.easyui.min.js"></script>
+<script src="../../common/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script src="../../common/easyui/jquery.easyui.extend.js"></script>
+<script src="../../common/easyui/jquery.easyui.extend.validatebox.js"></script>
+<script src="../../common/easyui/jquery.easyui.extend.tabs.js"></script>
+<script src="../../common/easyui/jquery.form.js"></script>
+<script src="../../common/js/tools.js"></script>
+<script src="../../common/js/business.tools.js"></script>
+<script src="../../common/js/windowTopPage.js"></script>
+<script src="../../common/js/messenger.js"></script>
+<script src="../../common/js/common.js"></script>
+<script src="../js/managerPage.js"></script>
+</html>

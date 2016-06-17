@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit"><%--360默认极速模式--%>
+    <title>(main)四川省警务信息综合应用平台</title>
+    <link rel="shortcut icon" href="framework/default/favicon.ico" />
+    <link rel="bookmark" href="framework/default/favicon.ico" type="image/x-icon"/>
+
+    <!--css loader-->
+    <link rel="stylesheet" href="framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="common/gridly/jquery.gridly.css">
+    <link rel="stylesheet" href="stylesheets/common.css">
+    <link rel="stylesheet" href="framework/default/css/frame.css">
+    <link rel="stylesheet" href="framework/default/css/index.css">
+
+</head>
+<body class="easyui-layout" data-options="fit:true">
+<!--js脚本支持-->
+<noscript>
+    <div style="position:absolute; z-index:100000; height:2046px;top:0;left:0; width:100%; background:white; text-align:center;">
+        <img src="framework/default/images/noscript.gif" alt='抱歉，请开启脚本支持！'/>
+    </div>
+</noscript>
+
+<!--loading mask-->
+<div id="loadingMsk">
+    <div class="loadingPage">
+        <img src="framework/default/images/loading.gif" alt="loading">
+        <span>正在加载中，请稍等....</span>
+    </div>
+</div>
+
+<div data-options="region:'north',border:false," style="overflow: hidden;height: 50px;min-width: 1200px;">
+    <!--header-->
+    <div class="sc_header">
+        <div class="m-left" title="四川省警务信息应用综合应用平台">
+            <img src="framework/default/images/title_2.png" alt="logo">
+            <!--<span>四川省警务信息应用综合平台</span>-->
+        </div>
+        <div class="m-right">
+            <div class="quickModel">
+                <a href="javascript:;">
+                    <img src="framework/default/images/quick_search.png" title="快速查询" alt="quick_search">
+                </a>
+                <a href="javascript:;">
+                    <img src="framework/default/images/quick_input.png" title="快速录入" alt="quick_input">
+                </a>
+                <a href="javascript:;">
+                    <img src="framework/default/images/quick_manage.png" title="快速管理" alt="quick_manage">
+                </a>
+            </div>
+            <div class="menuModel" id="menu_btn">
+                <a href="javascript:;">
+                    <span>
+                        <img src="framework/default/images/menu.png" alt="menu">
+                    </span>
+                    <span>
+                        <em>菜单</em><br>
+                        <em>导航</em>
+                    </span>
+                </a>
+            </div>
+            <div class="userCenterModel">
+                <div class="userHead">
+                    <img src="framework/default/images/userHead.jpg" title="用户头像" alt="userhead">
+                </div>
+                <div class="userInfo">
+                    <div class="userName">
+                        <span>${session.userName}</span>
+                    </div>
+                    <div class="userZone">
+                        <span>${session.userOrgName}</span>
+                        <a id="branchChange" class="change" href="javascript:;">[切换]</a>
+                    </div>
+                </div>
+            </div>
+            <div class="loginOut">
+                <a title="注销" id="logout">
+                    <img src="framework/default/images/loginout.png" alt="loginout">
+                    <span>注销</span>
+                </a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div data-options="region:'center',border:false" style="overflow: hidden;">
+    <div id="frameTabs"  class="easyui-tabs" style="width:100%;height: 100%;">
+        <div  class="indexPage" id="home_page" title="主页"  style="overflow: auto;">
+            <div class="mainContainer">
+                <div class="boxes">
+                    <ul class="gridly">
+                        <li class="rectangleBox">
+                            <a href="javascript:;">
+                                <div class="boxTitle">综合查询</div>
+                            </a>
+                        </li>
+                        <li class="m-squareBox">
+                            <a href="javascript:;">
+                                <div class="boxTitle">
+                        <span class="boxText">
+                            <i>业务提醒</i>
+                            <em class="sm_tips">9</em>
+                        </span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="m-squareBox">
+                            <a href="javascript:;">
+                                <div class="boxTitle">
+                        <span class="boxText">
+                            <i>待办事项</i>
+                            <em class="sm_tips">2</em>
+                        </span>
+                                </div>
+                            </a>
+                            <div class="textTmp">
+                                <a href="javascript:;">
+                                    <p>[撤管审批结果]</p>
+                                    <p class="infoText">
+                                        白山路派出所杨希武审批不同意重点人员张杰撤管为其他关注对象的申请
+                                    </p>
+                                    <p class="newData">
+                                        2016-03-03 14:51:50
+                                    </p>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;">
+                                <img src="framework/default/images/icon_4.png" alt="icon">
+                                <div class="boxTitle">涉环保重点人员管理</div>
+                            </a>
+                        </li>
+                        <li class="rectangleBox">
+                            <a href="javascript:;">
+                                <div class="boxTitle">辖区概况统计</div>
+                            </a>
+                            <div class="textTmp"></div>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;">
+                                <img src="framework/default/images/icon_2.png" alt="icon">
+                                <div class="boxTitle">工作统计</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;">
+                                <img src="framework/default/images/icon_3.png" alt="icon">
+                                <div class="boxTitle">犬只管理</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;">
+                                <img src="framework/default/images/icon_4.png" alt="icon">
+                                <div class="boxTitle">涉环保重点人员管理</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;" onclick="addTab('实有人口管理',syrkPath+'/syrk/managerPage','syrkgl_id','home_page')">
+                                <img src="framework/default/images/icon_6.png" alt="icon">
+                                <div class="boxTitle">实有人口管理</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;" onclick="addTab('实有房屋',syfwPath+'/syfwGl/syfwGl','syfwgl_id','home_page')">
+                                <img src="framework/default/images/icon_5.png" alt="icon">
+                                <div class="boxTitle">实有房屋</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;" onclick="addTab('实有单位',sydwPath+'/sydwgl/sydwGl','sydwgl_id','home_page')">
+                                <img src="framework/default/images/icon_5.png" alt="icon">
+                                <div class="boxTitle">实有单位</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;" onclick="addTab('案件','anjian/html/managerPage.html','ajgl_id','home_page')">
+                                <img src="framework/default/images/icon_6.png" alt="icon">
+                                <div class="boxTitle">案件</div>
+                            </a>
+                        </li>
+                        <li class="s-squareBox">
+                            <a href="javascript:;" onclick="addTab('接处警','jcj/html/managerPage.html','jcjgl_id','home_page')">
+                                <img src="framework/default/images/icon_6.png" alt="icon">
+                                <div class="boxTitle">接处警</div>
+                            </a>
+                        </li>
+                        <li id="addNewModel" class="s-squareBox addNewModel">
+                            <a href="javascript:;">
+                                <img src="framework/default/images/add_newmetro.png" alt="icon">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="bgiChange" class="bgiChange">
+                <img src="framework/default/images/bgiChange.png" title="更换皮肤" alt="bgiChange">
+            </div>
+
+            <!--弹出窗口-->
+            <div id="bgiWindow" class="easyui-window" title="背景设置"
+                 data-options="modal:true,closed:true" style="width: 50%;height: 500px;padding: 10px;">
+                <a href="#" id="changeBgi">更换背景</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--branch exchange window-->
+<div id="branchChangeWin" class="branchChange">
+    <a href="javascript:;">武侯区分局1</a>
+    <a href="javascript:;">武侯区分局2</a>
+    <a href="javascript:;">武侯区分局3</a>
+    <a href="javascript:;">武侯区分局4</a>
+    <a href="javascript:;">武侯区分局5</a>
+</div>
+
+<!--right keyword tabs-->
+<div id="rightKeyTab" class="easyui-menu" style="width:120px;display: none;">
+    <div id="closeCurrentTab">关闭</div>
+    <div class="menu-sep"></div>
+    <div id="closeRight">关闭右边窗口</div>
+    <div id="closeLeft">关闭左边窗口</div>
+    <div id="closeNotCurrent">关闭其他窗口</div>
+    <div id="closeAll">全部关闭</div>
+    <div class="menu-sep"></div>
+    <div id="exit">退出</div>
+</div>
+
+<!--menu nav window-->
+<div id="menuNavWin" class="menuNavWin">
+    <ul class="menuUl" id="menu_ul"></ul>
+    <div class="iptBox">
+        <div class="ipt-l"></div>
+        <div class="ipt-r"></div>
+        <div class="ipt-container">
+            <div>
+                <input id="iptSearch" style="width:70%;" placeholder="输入名称检索某功能" maxlength="70" >
+                <i id="clear_words" class="fa fa-times"></i><span>|</span><i id="search_btn" class="fa fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div id="searchBox">
+        <ul>
+            <li>
+                <span class="titleSpan"><i class="fa fa-th-list"></i>搜索结果</span>
+            </li>
+            <li>
+                <a href="javascript:;">实有人口管理</a>
+            </li>
+            <li>
+                <a href="javascript:;">实有人口管理</a>
+            </li>
+            <li>
+                <a href="javascript:;">实有人口管理</a>
+            </li>
+            <li>
+                <a href="javascript:;">实有人口管理</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="common/easyui/jquery.min.js"></script>
+<script src="common/easyui/jquery.easyui.min.js"></script>
+<script src="common/easyui/jquery.easyui.extend.tabs.js"></script>
+<script src="common/easyui/json2.js"></script>
+<script src="common/gridly/jquery.gridly.js"></script>
+<script src="common/js/messenger.js"></script>
+<script src="framework/default/js/common.js"></script>
+<script src="framework/default/js/index.js"></script>
+</body>
+</html>

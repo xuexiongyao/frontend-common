@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link rel="stylesheet" href="../../framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="../../common/gridly/jquery.gridly.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="../css/deal.css">
+</head>
+    <body class="anjian-deal">
+        <div class="anjian-content slide-ff" id="anjian-content">
+            <div class="slide-ss">
+                <div class="one content-panel" no="0" id="panel_one">
+                    <div class="one-case-left">
+                        <div class="base-info" floor="0">
+                            <form id="base_info_form" method="post" action="">
+                                <input type="hidden" sb_status="1" name="syrkid" value="">
+                                <div class="person-info" id="person_info">
+                                    <div class="title">
+                                        <div class="name-info">
+                                            <span class="name" id="xm">南苑小区汽车被盗案（Z6581273812300111）</span>
+                                            <a class="l-btn edit" id="person_edit">编辑</a>
+                                        </div>
+                                    </div>
+                                    <div class="content" id="syrkinfo_edit">
+                                        <!-- 有证人员 -->
+                                        <div class="item">
+                                            <span class="pro">证件类型</span>
+                                            <input id="cyzjdm" class="val easyui-combobox" value="" readonly
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+                                        <div class="item">
+                                            <span class="pro">证件号码</span>
+                                            <input id="zjhm" class="val easyui-textbox" value="" readonly
+                                                   data-options="width:190">
+                                        </div>
+
+                                        <!-- 无证人员 -->
+                                        <div class="item">
+                                            <span class="pro">国家地区</span>
+                                            <input name="xxzb.gjdqdm" class="val easyui-combobox" value=""
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+                                        <div class="item">
+                                            <span class="pro">性别</span>
+                                            <input class="val easyui-combobox" value="" readonly
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+
+                                        <div class="item">
+                                            <span class="pro">出生日期</span>
+                                            <input name="xxzb.csrq" class="val easyui-datebox" value=""
+                                                   data-options="width:190">
+                                        </div>
+                                        <!-- 无证人员 -->
+                                        <div class="item">
+                                            <span class="pro">至</span>
+                                            <input name="xxzb.csrqend" class="val easyui-datebox" value=""
+                                                   data-options="width:190">
+                                        </div>
+                                        <div class="item">
+                                            <span class="pro">入境日期</span>
+                                            <input name="xxzb.csrqend" class="val easyui-datebox" value=""
+                                                   data-options="width:190">
+                                        </div>
+                                        <div class="item">
+                                            <span class="pro">出境日期</span>
+                                            <input name="xxzb.csrqend" class="val easyui-datebox" value=""
+                                                   data-options="width:190">
+                                        </div>
+
+
+                                        <!-- 有证人员 -->
+                                        <div class="item">
+                                            <span class="pro">国家地区</span>
+                                            <input name="xxzb.gjdqdm" class="val easyui-combobox" value=""
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+                                        <div class="item">
+                                            <span class="pro">性别</span>
+                                            <input class="val easyui-combobox" value="" readonly
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+
+                                        <div class="item">
+                                            <span class="pro">籍贯</span>
+                                            <input name="xxzb.jgssxdm" class="val easyui-combobox" value=""
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+                                        <div class="item">
+                                            <span class="pro">身份</span>
+                                            <input name="xxbcb.sfdm" class="val easyui-combobox" value=""
+                                                   data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                        </div>
+                                        <div class="info-hide" id="info_hide">
+                                            <div class="item">
+                                                <span class="pro">曾用名</span>
+                                                <input name="xxzb.cym" class="val easyui-textbox" value=""
+                                                       data-options="width:190">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">民族</span>
+                                                <input name="xxzb.mzdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">别名绰号</span>
+                                                <input name="xxbcb.bmch" class="val easyui-textbox" value=""
+                                                       data-options="width:190">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">联系电话</span>
+                                                <input name="xxbcb.lxdh" class="val easyui-textbox" value=""
+                                                       data-options="width:190">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">婚姻状况</span>
+                                                <input name="xxbcb.hyzkdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">政治面貌</span>
+                                                <input name="xxbcb.zzmmdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">宗教信仰</span>
+                                                <input name="xxbcb.zjxydm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">身高(cm)</span>
+                                                <input name="xxbcb.sg" class="val easyui-textbox" value=""
+                                                       data-options="width:190">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">血型</span>
+                                                <input name="xxbcb.xxdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">兵役情况</span>
+                                                <input name="xxbcb.byzkdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">文化程度</span>
+                                                <input name="xxbcb.xldm" class="val easyui-combotree" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">专长</span>
+                                                <input name="xxbcb.zcdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,valueField:'id',textField:'text',method:'get'">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">职业</span>
+                                                <input name="xxbcb.zylbdm" class="val easyui-combobox" value=""
+                                                       data-options="width:190,panelMaxHeight:200,panelHeight:'auto',valueField:'id',textField:'text',method:'get'">
+                                            </div>
+
+                                            <div class="item">
+                                                <span class="pro">服务处所</span>
+                                                <textarea id="" name="" class="textarea easyui-validatebox" ></textarea>
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">户籍地址</span>
+                                                <input name="xxzb.hjd_dzxz" class="val hjdz easyui-textbox" value="" data-options="width:567">
+                                            </div>
+                                            <div class="item">
+                                                <span class="pro">出生地</span>
+                                                <input name="xxbcb.csd" class="val easyui-textbox" value="" data-options="width:567">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="zhan-kai" id="zhan_kai"><span>展开</span><i class="fa fa-caret-down"></i></div>
+                            <div class="shou-qi" id="shou_qi"><span>收起</span><i class="fa fa-caret-up"></i></div>
+                            <div class="btn-area" id="btn_area">
+                                <a class="easyui-linkbutton c6" id="save_info">保存</a>
+                                <a class="easyui-linkbutton c6" id="return_tab">取消</a>
+                            </div>
+                        </div>
+                        <div class="detail-info">
+                            <div class="detail-title" floor="1">案件相关人员</div>
+                            <div class="l-btn add-btn"><i class="fa fa-plus"></i><span>新增</span></div>
+                            <div class="detail-content">
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src="../../framework/default/images/icon_1.png"/>
+                                        <p>aaa</p>
+                                    </div>
+
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src="../../framework/default/images/icon_2.png"/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src="../../framework/default/images/icon_3.png"/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src="../../framework/default/images/icon_4.png"/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src="../../framework/default/images/icon_5.png"/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="detail-title" floor="2">被害人</div>
+                            <div class="l-btn add-btn"><i class="fa fa-plus"></i><span>新增</span></div>
+                            <div class="detail-content">
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src=""/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src=""/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src=""/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src=""/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                                <div class="photo-part">
+                                    <div class="person-photo">
+                                        <img src=""/>
+                                        <p>aaa</p>
+                                    </div>
+                                    <div class="operate">
+                                        <i class="fa fa-eye details" title="详情"></i>
+                                        <i class="fa fa-edit edit" title="修改"></i>
+                                        <i class="fa fa-remove remove" title="注销"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="detail-title" floor="3">案件相关单位</div>
+                            <div class="l-btn add-btn"><i class="fa fa-plus"></i><span>新增</span></div>
+                            <div class="detail-content">
+                                <table id="table"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="one-case-right">
+                        <!--固定导航-->
+                        <div class="info-nav" id="info_nav">
+                            <div class="nav-btn">
+                                <div  style="position:absolute;top:10px;" >
+                                    <input class="easyui-slider" id="nav_slider" data-options="disabled:true,reversed:true,mode :'v',showTip:false,range:false">
+                                </div>
+                                <ul class="btn" id="nav_btn">
+                                    <li fl="0">案件基本信息</li>
+                                    <li fl="1">人员</li>
+                                    <li class="second">案件相关人员</li>
+                                    <li class="second">被害人</li>
+                                    <li class="second">违法可疑人员</li>
+                                    <li class="second">违法嫌疑人</li>
+                                    <li fl="2">单位</li>
+                                    <li class="second">案件相关单位</li>
+                                    <li class="second">被害单位信息</li>
+                                    <li class="second">违法可疑单位</li>
+                                    <li class="second">违法嫌疑人</li>
+                                    <li fl="3">物品信息</li>
+                                    <li fl="4">现场勘查</li>
+                                    <li fl="5">案件合并</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="two content-panel" no="1" id="panel_two">
+                    <div class="process-floor0">
+                        <p class="process-title">业务办理</p>
+                        <div class="process-nav">
+                            <a class="btn-base active" no="0">公共文书</a>
+                            <a class="btn-base" no="1">受案</a>
+                            <a class="btn-base" no="2">调查措施</a>
+                            <a class="btn-base" no="3">案件处理</a>
+                            <a class="btn-base" no="4">行政处罚</a>
+                            <a class="btn-base" no="5">出入境处理</a>
+                            <a class="btn-base" no="6">案件执行</a>
+                            <a class="btn-base" no="7">案件管理</a>
+                            <span class="search">
+                                <input class="search-input"/>
+                                <i class="fa fa-search search-logo"></i>
+                            </span>
+                        </div>
+                        <div class="process-detail" id="process_panel"></div>
+                    </div>
+                    <div class="process-floor1">
+                        <div class="wait-to-do">
+                            <p class="work-title">待办任务</p>
+                            <div class="each-work">
+                                <p>2016年4月2日，南苑小区入室盗窃案：</p>
+                                <div class="gap-xian">
+                                    <p>已确定三位违法嫌疑人，请采取下一步措施。</p>
+                                    <div class="each-work-footer">
+                                        <a class="l-btn work-to-do-btn">编辑</a>
+                                        <a class="l-btn work-to-do-btn">编辑</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="each-work">
+                                <p>2016年4月2日，南苑小区入室盗窃案：</p>
+                                <div class="gap-xian">
+                                    <p>已确定三位违法嫌疑人，请采取下一步措施。</p>
+                                    <div class="each-work-footer">
+                                        <a class="l-btn work-to-do-btn">编辑</a>
+                                        <a class="l-btn work-to-do-btn">编辑</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="each-work">
+                                <p>2016年4月2日，南苑小区入室盗窃案：</p>
+                                <div class="gap-xian">
+                                    <p>已确定三位违法嫌疑人，请采取下一步措施。</p>
+                                    <div class="each-work-footer">
+                                        <a class="l-btn work-to-do-btn">编辑</a>
+                                        <a class="l-btn work-to-do-btn">编辑</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="case-list">
+                            <div class="nav-btn"><a class="case-down active">已办任务</a><a class="fellow-process">流程跟踪</a></div>
+                            <div>
+                                <table id="case_table"></table>
+                                <table id="fellow_table"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="thr content-panel" no="2" id="panel_thr">
+                    <div class="nav">
+                        <div class="ajbl-nav">
+                            <a class="title active" no="0">呈请报告</a><span class="gap">|</span>
+                            <a class="title" no="1">行政处罚决定书</a><span class="gap">|</span>
+                            <a class="gray" no="2">没收财物清单</a></div>
+                        <div class="nav-right">
+                            <a class="btn-base">打印</a>
+                            <a class="btn-base active">送审</a>
+                        </div>
+                    </div>
+                    <div class="thr-panel" id="thr_0">
+                        <div class="s-suspect">
+                            <p class="s-title">违法嫌疑人</p>
+                            <ul class="s-list">
+                                <li><input type="checkbox"/><span>张三</span></li>
+                                <li><input type="checkbox"/><span>张三</span></li>
+                                <li><input type="checkbox"/><span>张三</span></li>
+                                <li><input type="checkbox"/><span>张三</span></li>
+                                <li><input type="checkbox"/><span>张三</span></li>
+                                <li><input type="checkbox"/><span>张三</span></li>
+                                <li><input type="checkbox"/><span>张三</span></li>
+                            </ul>
+                        </div>
+                        <div class="l-suspect" style="display: none">
+                            <a></a>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="thr-panel" id="thr_1">
+                        <div class="s-suspect">
+                            <p class="s-title">违法嫌疑人</p>
+                            <ul class="choose-list">
+                                <li class="active">张三</li>
+                                <li>张三</li>
+                                <li>张三</li>
+                                <li>张三</li>
+                                <li>张三</li>
+                                <li>张三</li>
+                                <li>张三</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="thr-panel" id="thr_2">
+                        <div>
+                            <table id="goods_table"></table>
+                            <a class="btn-base active">生成</a>
+                        </div>
+                        <div>
+                            <p>没收违法所得、非法财物清单</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>名称</th>
+                                        <th>数量</th>
+                                        <th>特征</th>
+                                        <th>备注</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="deal-nav">
+
+        </div>
+
+        <script src="../../common/easyui/jquery.min.js"></script>
+        <script src="../../common/easyui/jquery.easyui.min.js"></script>
+        <script src="../../common/js/messenger.js"></script>
+        <script src="../../common/js/common.js"></script>
+        <script src="../js/list_config.js"></script>
+        <script src="../js/deal.js"></script>
+    </body>
+</html>

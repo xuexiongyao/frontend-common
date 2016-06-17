@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实有人口管理</title>
+    <link rel="stylesheet" href="../../framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="../../common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="../../common/gridly/jquery.gridly.css">
+    <link rel="stylesheet" href="../../stylesheets/common.css">
+    <link rel="stylesheet" href="../css/managerPage.css">
+</head>
+<body>
+<div class="anjian-list">
+    <div class="query-list-main">
+        <div class="ajbl-nav">
+            <a class="title active">全部</a><span class="gap">|</span>
+            <a class="title">盗窃</a><span class="gap">|</span>
+            <a class="title">赌博</a>
+        </div>
+
+        <div class="query-panel" id="query_panel">
+            <div class="easyui-panel"  title="搜索条件" data-options="width:'100%',collapsible:true,">
+                <div class="query-item"></div>
+                <div class="query-btn">
+                    <a class="easyui-linkbutton c6" id="submit_query">查询</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="query-content">
+            <div class="content-table">
+                <table id="list_table"></table>
+            </div>
+        </div>
+    </div>
+    <div class="wait-to-do">
+        <div class="ajbl-nav">
+            <span class="title">待办任务</span>
+        </div>
+        <div class="each-work">
+            <p>2016年4月2日，南苑小区入室盗窃案：</p>
+            <div class="gap-xian">
+                <p>已确定三位违法嫌疑人，请采取下一步措施。</p>
+                <div class="each-work-footer">
+                    <a class="l-btn work-to-do-btn">编辑</a>
+                    <a class="l-btn work-to-do-btn">编辑</a>
+                </div>
+            </div>
+        </div>
+        <div class="each-work">
+            <p>2016年4月2日，南苑小区入室盗窃案：</p>
+            <div class="gap-xian">
+                <p>已确定三位违法嫌疑人，请采取下一步措施。</p>
+                <div class="each-work-footer">
+                    <a class="l-btn work-to-do-btn">编辑</a>
+                    <a class="l-btn work-to-do-btn">编辑</a>
+                </div>
+            </div>
+        </div>
+        <div class="each-work">
+            <p>2016年4月2日，南苑小区入室盗窃案：</p>
+            <div class="gap-xian">
+                <p>已确定三位违法嫌疑人，请采取下一步措施。</p>
+                <div class="each-work-footer">
+                    <a class="l-btn work-to-do-btn">编辑</a>
+                    <a class="l-btn work-to-do-btn">编辑</a>
+                </div>
+            </div>
+        </div>
+        <div id="pp" class="easyui-pagination" data-options="total:2000,pageSize:10" style="background:#efefef;border:1px solid #ccc;"></div>
+    </div>
+
+    <div id="other_condition_panel" style="display: none;">
+        <div class="query-condition"></div>
+    </div>
+</div>
+</body>
+</html>
+<script src="../../common/easyui/jquery.min.js"></script>
+<script src="../../common/easyui/jquery.dragsort-0.5.2.js"></script>
+<script src="../../common/easyui/jquery.easyui.min.js"></script>
+<script src="../../common/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script src="../../common/easyui/jquery.easyui.extend.js"></script>
+<script src="../../common/easyui/jquery.easyui.extend.validatebox.js"></script>
+<script src="../../common/easyui/jquery.easyui.extend.tabs.js"></script>
+<script src="../../common/easyui/jquery.form.js"></script>
+<script src="../../common/js/tools.js"></script>
+<script src="../../common/js/business.tools.js"></script>
+<script src="../../common/js/windowTopPage.js"></script>
+<script src="../../common/js/messenger.js"></script>
+<script src="../../common/js/common.js"></script>
+<script src="../js/list_config.js"></script>
+<script src="../js/managerPage.js"></script>
