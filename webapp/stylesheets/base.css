@@ -559,24 +559,50 @@
   margin-top: 10px;
 }
 /* line 32, ../sass/sass/_addPage.scss */
+.add-main .infos-main .photo-info {
+  width: 265px;
+  height: 300px;
+  float: left;
+  _display: inline;
+  position: relative;
+}
+/* line 37, ../sass/sass/_addPage.scss */
+.add-main .infos-main .photo-info .img-div {
+  position: absolute;
+  left: 36px;
+  border: 1px #ccc solid;
+}
+/* line 41, ../sass/sass/_addPage.scss */
+.add-main .infos-main .photo-info .img-div img {
+  width: 185px;
+  height: 230px;
+}
+/* line 46, ../sass/sass/_addPage.scss */
+.add-main .infos-main .photo-info .edit-div {
+  position: absolute;
+  top: 220px;
+  width: 100%;
+  text-align: center;
+}
+/* line 53, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content {
   position: relative;
   width: 933px;
   float: right;
   _display: inline;
 }
-/* line 36, ../sass/sass/_addPage.scss */
+/* line 57, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .top-btn {
   text-align: right;
   width: 100%;
   height: 25px;
   line-height: 25px;
 }
-/* line 41, ../sass/sass/_addPage.scss */
+/* line 62, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info {
   font-size: 12px;
 }
-/* line 43, ../sass/sass/_addPage.scss */
+/* line 64, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item {
   min-height: 30px;
   line-height: 30px;
@@ -585,16 +611,16 @@
   /*实有房屋----产权人信息*/
   /*隐藏照片上传框*/
 }
-/* line 49, ../sass/sass/_addPage.scss */
+/* line 70, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item label {
   line-height: 30px;
   margin-right: 20px;
 }
-/* line 52, ../sass/sass/_addPage.scss */
+/* line 73, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item label input {
   vertical-align: -2px;
 }
-/* line 56, ../sass/sass/_addPage.scss */
+/* line 77, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .pro, .add-main .infos-main .content .info-main .base-info .person-info .info-item .content .item .val, .info-main .base-info .add-main .infos-main .content .person-info .info-item .content .item .val, .add-main .infos-main .content .info-main .base-info .person-info .content .item .info-item .val, .info-main .base-info .add-main .infos-main .content .person-info .content .item .info-item .val, .add-main .infos-main .content .info-main #export_panel .relation-info .person-info .info-item .content .item .val, .info-main #export_panel .relation-info .add-main .infos-main .content .person-info .info-item .content .item .val, .add-main .infos-main .content .info-main #export_panel .relation-info .person-info .content .item .info-item .val, .info-main #export_panel .relation-info .add-main .infos-main .content .person-info .content .item .info-item .val, .add-main .infos-main .content #export_panel .info-main .relation-info .person-info .info-item .content .item .val, #export_panel .info-main .relation-info .add-main .infos-main .content .person-info .info-item .content .item .val, .add-main .infos-main .content #export_panel .info-main .relation-info .person-info .content .item .info-item .val, #export_panel .info-main .relation-info .add-main .infos-main .content .person-info .content .item .info-item .val {
   width: 120px;
   padding-right: 10px;
@@ -604,57 +630,57 @@
   height: 30px;
   text-align: right;
 }
-/* line 64, ../sass/sass/_addPage.scss */
+/* line 85, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .pro i, .add-main .infos-main .content .info-main .base-info .person-info .info-item .content .item .val i, .info-main .base-info .add-main .infos-main .content .person-info .info-item .content .item .val i, .add-main .infos-main .content .info-main .base-info .person-info .content .item .info-item .val i, .info-main .base-info .add-main .infos-main .content .person-info .content .item .info-item .val i, .add-main .infos-main .content .info-main #export_panel .relation-info .person-info .info-item .content .item .val i, .info-main #export_panel .relation-info .add-main .infos-main .content .person-info .info-item .content .item .val i, .add-main .infos-main .content .info-main #export_panel .relation-info .person-info .content .item .info-item .val i, .info-main #export_panel .relation-info .add-main .infos-main .content .person-info .content .item .info-item .val i, .add-main .infos-main .content #export_panel .info-main .relation-info .person-info .info-item .content .item .val i, #export_panel .info-main .relation-info .add-main .infos-main .content .person-info .info-item .content .item .val i, .add-main .infos-main .content #export_panel .info-main .relation-info .person-info .content .item .info-item .val i, #export_panel .info-main .relation-info .add-main .infos-main .content .person-info .content .item .info-item .val i {
   color: #ed4848;
   padding-right: 5px;
 }
-/* line 69, ../sass/sass/_addPage.scss */
+/* line 90, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item span.textbox {
   line-height: 30px;
   vertical-align: -6px;
 }
-/* line 74, ../sass/sass/_addPage.scss */
+/* line 95, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .remark {
   vertical-align: top;
 }
-/* line 77, ../sass/sass/_addPage.scss */
+/* line 98, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item textarea {
   margin-top: 4px;
 }
-/* line 81, ../sass/sass/_addPage.scss */
+/* line 102, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .item-title {
   font-weight: bold;
   font-size: 14px;
   color: #000;
-  margin: 30px 40px 0;
+  margin: 30px 40px 0 0;
   border-bottom: 1px dashed #ccc;
 }
-/* line 88, ../sass/sass/_addPage.scss */
+/* line 109, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item a {
   height: 20px;
   vertical-align: -6px;
 }
-/* line 91, ../sass/sass/_addPage.scss */
+/* line 112, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item a i {
   line-height: 20px;
 }
-/* line 95, ../sass/sass/_addPage.scss */
+/* line 116, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .h-blank {
   width: 20px;
   display: inline-block;
 }
-/* line 99, ../sass/sass/_addPage.scss */
+/* line 120, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .val {
   font-weight: normal;
   color: #000;
   padding: 0;
 }
-/* line 106, ../sass/sass/_addPage.scss */
+/* line 127, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item #upload_img {
   display: none;
 }
-/* line 113, ../sass/sass/_addPage.scss */
+/* line 134, ../sass/sass/_addPage.scss */
 .add-main .add-save-btn {
   width: 100%;
   text-align: center;
@@ -662,7 +688,7 @@
   line-height: 30px;
   margin-top: 20px;
 }
-/* line 118, ../sass/sass/_addPage.scss */
+/* line 139, ../sass/sass/_addPage.scss */
 .add-main .add-save-btn a {
   margin: 0 10px;
 }

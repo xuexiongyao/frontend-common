@@ -29,6 +29,27 @@
                 }
             }
         }
+        .photo-info{
+            width: 265px;
+            height:300px;
+            @include float(left);
+            position: relative;
+            .img-div {
+                position: absolute;
+                left: 36px;
+                border: 1px colors(borderColor) solid;
+                img {
+                    width: 185px;
+                    height: 230px;
+                }
+            }
+            .edit-div {
+                position: absolute;
+                top: 220px;
+                width: 100%;
+                text-align: center;
+            }
+        }
         .content {
             position: relative;
             width:933px;
@@ -82,7 +103,7 @@
                         font-weight:bold;
                         font-size: fontSize(base);
                         color: colors(black);
-                        margin: 30px 40px 0;
+                        margin: 30px 40px 0 0;
                         border-bottom:1px dashed colors(borderColor);
                     }
                     a{
