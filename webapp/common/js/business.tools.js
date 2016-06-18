@@ -1846,7 +1846,7 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 	$('#' + dwComboID).combobox({
 		delay: 600,
 		unValidClear: false,
-		url: sydwPath + '/api/sydw/query/downlist',
+		url: sydwPath+'/api/sydw/querySydwWithDwdzDownlist',
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
 			if (!opts.url) return false;
@@ -1900,15 +1900,15 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 					}
 				}
 			}
-			submitParam['searchKey'] = param.q;
+			submitParam['dwmc'] = param.q;
 
 			var i = 10;     //首次次加载的条数
 			getDepartmentInfo(i);
 
 			//后面将函数提取出来:getDepartmentInfo2
 			function getDepartmentInfo(page_size){
-				submitParam['pagenum'] = 0;//起始页数
-				submitParam['rownum'] = page_size;//加载条数
+				submitParam['page'] = 1;//起始页数
+				submitParam['rows'] = page_size;//加载条数
 				$.ajax({
 					xhrFields: {withCredentials: true},
 					crossDomain: true,
@@ -1991,7 +1991,8 @@ function initDepartmentSearch(dwComboID, filterData,returnFieldData,onSelectedFu
 			//执行返回函数
 
 			if (typeof onSelectedFun == 'function') {
-				onSelectedFun();
+				var fn = eval(onSelectedFun);
+				fn(record);
 			}
 
 		},
