@@ -172,7 +172,7 @@ function clickShowPanel(box_id, bool) {
     if (box_id) {
         if (bool) {
             $('#' + box_id).next().on('click.showPanel', function () {
-                if($(this).hasClass('inputReadonly')){
+                if($(this).hasClass('inputReadonly') || $(this).hasClass('textbox-readonly')){
                     $(this).prev().combobox("hidePanel");
                 }else{
                     $(this).prev().combobox("showPanel");
@@ -185,7 +185,7 @@ function clickShowPanel(box_id, bool) {
         }
     } else {
         $(".combo").on('click.showPanel', function () {
-            if($(this).hasClass('inputReadonly')){
+            if($(this).hasClass('inputReadonly') || $(this).hasClass('textbox-readonly')){
                 $(this).prev().combobox("hidePanel");
             }else{
                 $(this).prev().combobox("showPanel");
