@@ -12,7 +12,6 @@ body{
     .item-container{
         list-style-type: none;
         @include attrMarginPaddingBorder;
-        //background: #f5f5f5;
         @include square(auto);
         @include clearfix;
         li{
@@ -84,10 +83,10 @@ body{
                 width:84%;
             }
             .ipt-twoThree{
-                width:78.666%;
+                width:78.6666%;
             }
             .ipt-fullThree{
-                width:89.333%;
+                width:89.3333%;
             }
         }
         .item-full{//一行一个
@@ -119,4 +118,3 @@ body{
         @include size(100%,20px);
     }
 }
-

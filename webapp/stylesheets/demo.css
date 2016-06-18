@@ -81,7 +81,7 @@ body {
   clear: both;
   overflow: hidden;
 }
-/* line 18, ../sass/sass/_demo.scss */
+/* line 17, ../sass/sass/_demo.scss */
 .container .item-container li {
   float: left;
   *zoom: 1;
@@ -97,7 +97,7 @@ body {
   clear: both;
   overflow: hidden;
 }
-/* line 22, ../sass/sass/_demo.scss */
+/* line 21, ../sass/sass/_demo.scss */
 .container .item-container li > p {
   margin: 0;
   padding: 0;
@@ -109,62 +109,62 @@ body {
   line-height: 27px;
   font-weight: bold;
 }
-/* line 28, ../sass/sass/_demo.scss */
+/* line 27, ../sass/sass/_demo.scss */
 .container .item-container li > p i {
   color: #ed4848;
   margin-right: 3px;
 }
-/* line 33, ../sass/sass/_demo.scss */
+/* line 32, ../sass/sass/_demo.scss */
 .container .item-container li .pro {
   width: 30%;
 }
-/* line 36, ../sass/sass/_demo.scss */
+/* line 35, ../sass/sass/_demo.scss */
 .container .item-container li .pro-twoThree {
   width: 20%;
 }
-/* line 39, ../sass/sass/_demo.scss */
+/* line 38, ../sass/sass/_demo.scss */
 .container .item-container li .pro-fullTwo {
   width: 15%;
 }
-/* line 42, ../sass/sass/_demo.scss */
+/* line 41, ../sass/sass/_demo.scss */
 .container .item-container li .pro-fullThree {
   width: 10%;
 }
-/* line 45, ../sass/sass/_demo.scss */
+/* line 44, ../sass/sass/_demo.scss */
 .container .item-container li > div {
   float: right;
   _display: inline;
   line-height: 2;
 }
-/* line 48, ../sass/sass/_demo.scss */
+/* line 47, ../sass/sass/_demo.scss */
 .container .item-container li > div > label {
   cursor: pointer;
   margin-right: 10px;
 }
-/* line 51, ../sass/sass/_demo.scss */
+/* line 50, ../sass/sass/_demo.scss */
 .container .item-container li > div > label input {
   vertical-align: -2px;
 }
-/* line 54, ../sass/sass/_demo.scss */
+/* line 53, ../sass/sass/_demo.scss */
 .container .item-container li > div > label input[type="checkbox"] {
   margin-left: 0;
 }
-/* line 58, ../sass/sass/_demo.scss */
+/* line 57, ../sass/sass/_demo.scss */
 .container .item-container li > div > a {
   display: inline-block;
   height: 20px;
   line-height: 20px;
 }
-/* line 61, ../sass/sass/_demo.scss */
+/* line 60, ../sass/sass/_demo.scss */
 .container .item-container li > div > a span {
   height: 20px;
   line-height: 20px;
 }
-/* line 63, ../sass/sass/_demo.scss */
+/* line 62, ../sass/sass/_demo.scss */
 .container .item-container li > div > a span i {
   line-height: 20px;
 }
-/* line 68, ../sass/sass/_demo.scss */
+/* line 67, ../sass/sass/_demo.scss */
 .container .item-container li > div > textarea {
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -176,7 +176,7 @@ body {
   text-indent: 5px;
   resize: none;
 }
-/* line 74, ../sass/sass/_demo.scss */
+/* line 73, ../sass/sass/_demo.scss */
 .container .item-container li > div > textarea:focus {
   border-color: #66afe9;
   -webkit-box-shadow: 0 0 3px 0 #66afe9;
@@ -185,53 +185,53 @@ body {
   -ms-box-shadow: 0 0 3px 0 #66afe9;
   box-shadow: 0 0 3px 0 #66afe9;
 }
-/* line 80, ../sass/sass/_demo.scss */
+/* line 79, ../sass/sass/_demo.scss */
 .container .item-container li .ipt {
   width: 68%;
 }
-/* line 83, ../sass/sass/_demo.scss */
+/* line 82, ../sass/sass/_demo.scss */
 .container .item-container li .ipt-fullTwo {
   width: 84%;
 }
-/* line 86, ../sass/sass/_demo.scss */
+/* line 85, ../sass/sass/_demo.scss */
 .container .item-container li .ipt-twoThree {
-  width: 78.666%;
+  width: 78.6666%;
 }
-/* line 89, ../sass/sass/_demo.scss */
+/* line 88, ../sass/sass/_demo.scss */
 .container .item-container li .ipt-fullThree {
-  width: 89.333%;
+  width: 89.3333%;
 }
-/* line 93, ../sass/sass/_demo.scss */
+/* line 92, ../sass/sass/_demo.scss */
 .container .item-container .item-full {
   width: 100%;
 }
-/* line 96, ../sass/sass/_demo.scss */
+/* line 95, ../sass/sass/_demo.scss */
 .container .item-container .item-two {
   width: 50%;
 }
-/* line 99, ../sass/sass/_demo.scss */
+/* line 98, ../sass/sass/_demo.scss */
 .container .item-container .item-three {
   width: 33.3333%;
 }
-/* line 103, ../sass/sass/_demo.scss */
+/* line 102, ../sass/sass/_demo.scss */
 .container .btn-area {
   width: 100%;
   margin-top: 30px;
   text-align: center;
 }
-/* line 108, ../sass/sass/_demo.scss */
+/* line 107, ../sass/sass/_demo.scss */
 .container .h-blank {
   display: block;
   width: 100%;
   height: 20px;
   border-bottom: 1px dashed #000;
 }
-/* line 112, ../sass/sass/_demo.scss */
+/* line 111, ../sass/sass/_demo.scss */
 .container .h-blank span {
   font-weight: bold;
   padding-left: 10px;
 }
-/* line 117, ../sass/sass/_demo.scss */
+/* line 116, ../sass/sass/_demo.scss */
 .container .h-blank-noborder {
   display: block;
   width: 100%;
