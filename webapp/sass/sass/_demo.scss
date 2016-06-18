@@ -23,7 +23,7 @@ body{
                 @include attrMarginPaddingBorder;
                 @include float(left);
                 @include text-align(right);
-                @include text-vertical-center(22px);
+                @include text-vertical-center(27px);
                 font-weight:bold;
                 i{
                     color: colors(red);
