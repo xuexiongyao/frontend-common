@@ -580,7 +580,7 @@
 /* line 46, ../sass/sass/_addPage.scss */
 .add-main .infos-main .photo-info .edit-div {
   position: absolute;
-  top: 220px;
+  bottom: 0;
   width: 100%;
   text-align: center;
 }
