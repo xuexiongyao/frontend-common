@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../../../common/easyuiDiy/easyui.css">
-    <link rel="stylesheet" href="../../../common/easyuiDiy/icon.css">
-    <link rel="stylesheet" href="../../../framework/default/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../../common/datepicker/skin/christ/datepicker.css">
-    <link rel="stylesheet" href="../../../stylesheets/newItemStyle.css">
-    <script src="../../../common/easyui/jquery.min.js"></script>
-    <script src="../../../common/easyui/jquery.dragsort-0.5.2.js"></script>
-    <script src="../../../common/easyui/jquery.easyui.min.js"></script>
-    <script src="../../../common/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script src="../../../common/easyui/jquery.easyui.extend.js"></script>
-    <script src="../../../common/easyui/jquery.easyui.extend.validatebox.js"></script>
-    <script src="../../../common/easyui/jquery.easyui.extend.tabs.js"></script>
-    <script src="../../../common/easyui/jquery.form.js"></script>
-    <script src="../../../common/js/tools.js"></script>
-    <script src="../../../common/js/business.tools.js"></script>
-    <script src="../../../common/js/windowTopPage.js"></script>
-    <script src="../../../common/js/messenger.js"></script>
-    <script src="../../../common/js/common.js"></script>
-    <script src="../../../common/js/ajax.js"></script>
-    <script src="../../../common/datepicker/WdatePicker.js"></script>
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/datepicker/skin/christ/datepicker.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css">
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.min.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.dragsort-0.5.2.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.min.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.validatebox.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.tabs.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.form.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/tools.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/business.tools.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/windowTopPage.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/messenger.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/common.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/ajax.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/datepicker/WdatePicker.js"></script>
 </head>
 <body style="margin: 50px;">
 
@@ -36,7 +36,7 @@
                 <div class="ipt-fullTwo">
                     <input type="text" name="xb" id="xb" value="1" class="easyui-combobox"
                            data-options="
-                       url: portal + '/common/dict/xb.json',
+                       url: staticPath + '/common/dict/xb.js',
                        dataFilter: '1|2|3|4',
                        required:true,
                        method:'get',
@@ -54,7 +54,7 @@
                 <div class="ipt-fullTwo">
                     <input type="text" name="xzqh11" id="xzqh11" class="easyui-combobox"
                            data-options="
-                            url: portal + '/common/dict/D_BZ_XZQHLIST_MUNICIPAL.js',
+                            url: staticPath + '/common/dict/D_BZ_XZQHLIST_MUNICIPAL.js',
                             prompt:'过滤掉以00结尾的',
                             dataFilter:'.*[^00]$',
                             required:true,
@@ -72,7 +72,7 @@
                 <div class="ipt-fullTwo">
                     <input type="text" name="xzqh12" id="xzqh12" class="easyui-combobox"
                            data-options="
-                       url: portal + '/common/dict/BD_D_XZQH.json',
+                       url: staticPath + '/common/dict/BD_D_XZQH.js',
                        prompt:'过滤掉以00结尾的',
                        dataFilter:'.*[^00]$',
                        required:true,
@@ -90,7 +90,7 @@
                 <div class="ipt-fullTwo">
                     <input type="text" name="xzqh13" id="xzqh13" class="easyui-combobox"
                            data-options="
-                       url: portal + '/common/dict/XZQHLIST.json',
+                       url: staticPath + '/common/dict/XZQHLIST.js',
                        prompt:'过滤掉除四川省以为的其他省份',
                        method:'get',
                        dataFilter:'^51',
@@ -108,7 +108,7 @@
                 <div class="ipt-fullTwo">
                     <input type="text" name="xzqh13" id="xzqh14" class="easyui-combobox"
                            data-options="
-                       url: portal + '/common/dict/XZQHLIST.json',
+                       url: staticPath + '/common/dict/XZQHLIST.js',
                        prompt:'无过滤条件',
                        method:'get',
                        dataFilter:'',
@@ -126,7 +126,7 @@
                 <div class="ipt-fullTwo">
                     <input type="text" name="xzqh21" id="xzqh21" class="easyui-combotree"
                            data-options="
-                       url: portal + '/common/dict/D_BZ_XZQH_MUNICIPAL.js',
+                       url: staticPath + '/common/dict/D_BZ_XZQH_MUNICIPAL.js',
                        onlyLeaf:true,
                        dataFilter:'',
                        required:true,
@@ -154,7 +154,7 @@
             <!--<div class="ipt-fullTwo">-->
             <!--<input type="text" name="xzqh23" id="xzqh23" onclick="" class="easyui-textbox"-->
             <!--data-options="-->
-            <!--url: portal + '/common/dict/BD_D_CLLX.js',-->
+            <!--url: staticPath + '/common/dict/BD_D_CLLX.js',-->
             <!--prompt:'点击延时解析',-->
             <!--onlyLeaf:true,-->
             <!--dataFilter:'',-->
@@ -314,11 +314,11 @@
 
     });
 
-    var portal = '../../..';
+    var staticPath = 'http://static.jwzh.com:7777/jwzh';
 
-    //    initComboBox('xzqh13', portal + '/common/dict/BD_D_XZQH.json');
-    //    initComboBox('xzqh14', portal + '/common/dict/BD_D_XZQH.json');
-    //    initComboBox('xzqh15', portal + '/common/dict/BD_D_XZQH.json');
+    //    initComboBox('xzqh13', staticPath + '/common/dict/BD_D_XZQH.js');
+    //    initComboBox('xzqh14', staticPath + '/common/dict/BD_D_XZQH.js');
+    //    initComboBox('xzqh15', staticPath + '/common/dict/BD_D_XZQH.js');
 
     //改变性别
     function xbOnchange(newValue, oldValue) {
@@ -380,7 +380,7 @@
 
     //combobox重新加载字典
     function comboBoxReload() {
-        $('#xzqh13').combobox('reload', portal + '/common/dict/XZQHLIST.json')
+        $('#xzqh13').combobox('reload', staticPath + '/common/dict/XZQHLIST.js')
     }
 
     //表单数据填充到span

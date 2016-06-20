@@ -237,3 +237,35 @@ body {
   width: 100%;
   height: 20px;
 }
+/* line 120, ../sass/sass/_demo.scss */
+.container .h-blank-pre {
+  display: none;
+  width: 100%;
+  height: auto;
+  border-top: 10px solid red;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  background: #ededed;
+  color: #000;
+  overflow: auto;
+  font-size: 12px;
+}
+/* line 129, ../sass/sass/_demo.scss */
+.container .h-blank-pre pre, .container .h-blank-pre code {
+  font-family: "Microsoft Yahei", "微软雅黑";
+}
+/* line 133, ../sass/sass/_demo.scss */
+.container .h-blank-pre-show {
+  width: 100%;
+  height: auto;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+}
+/* line 138, ../sass/sass/_demo.scss */
+.container .h-blank-pre-show pre, .container .h-blank-pre-show code {
+  font-family: "Microsoft Yahei", "微软雅黑";
+}

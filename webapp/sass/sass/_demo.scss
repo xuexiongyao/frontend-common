@@ -117,4 +117,26 @@ body{
         display: block;
         @include size(100%,20px);
     }
+    .h-blank-pre{
+        display: none;
+        @include size(100%,auto);
+        border-top: 10px solid red;
+        @include prefix(border,radius,3px);
+        background: #ededed;
+        color: #000;
+        overflow: auto;
+        font-size: fontSize(small);
+        pre,code{
+            font-family:fontFamily(yh);
+        }
+    }
+    .h-blank-pre-show{
+        @include size(100%,auto);
+        background: colors(black);
+        color:colors(white);
+        font-size: fontSize(small);
+        pre,code{
+            font-family:fontFamily(yh);
+        }
+    }
 }
