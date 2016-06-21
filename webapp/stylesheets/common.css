@@ -52,7 +52,7 @@
 /****************公共页面基本框架样式**********************/
 /* line 5, ../sass/sass/_common.scss */
 body {
-  background: url("../framework/default/images/general_bg.jpg");
+  background: url("../framework/scjz-jwzh/images/general_bg.jpg");
   visibility: hidden;
 }
 
@@ -206,6 +206,47 @@ label {
 /* line 103, ../sass/sass/_common.scss */
 .clear-border {
   border: 1px solid #fff;
+}
+
+/* line 106, ../sass/sass/_common.scss */
+#loadingMsk {
+  font-family: "SimSun";
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+}
+/* line 114, ../sass/sass/_common.scss */
+#loadingMsk .loadingPage {
+  background: #fff;
+  text-align: center;
+  width: 300px;
+  height: 100px;
+  line-height: 100px;
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
+  top: 50%;
+  margin-top: -50px;
+}
+/* line 124, ../sass/sass/_common.scss */
+#loadingMsk .loadingPage img {
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *dispaly: inline;
+}
+/* line 127, ../sass/sass/_common.scss */
+#loadingMsk .loadingPage span {
+  margin-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 
 /******************弹出iframe(url)窗口公共样式*********************/

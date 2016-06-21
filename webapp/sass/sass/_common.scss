@@ -101,3 +101,32 @@ label{
 
 //easyui组件只读 无边框
 .clear-border{border: 1px solid colors(white);}
+
+//全局蒙层
+#loadingMsk {
+    font-family: "SimSun";
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.3);
+    @include square(100%);
+    .loadingPage {
+        background: colors(white);
+        text-align: center;
+        @include size(300px,100px);
+        line-height: 100px;
+        position: absolute;
+        left: 50%;
+        margin-left: -150px;
+        top: 50%;
+        margin-top: -50px;
+        img {
+            @include inline-block;
+        }
+        span{
+            margin-left:10px;
+            @include text-overflow;
+        }
+    }
+}
