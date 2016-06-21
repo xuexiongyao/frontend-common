@@ -513,6 +513,84 @@
   color: #999;
 }
 
+/*小区选择面板*/
+/* line 307, ../sass/sass/_managePage.scss */
+#xqmc_panel .query-div {
+  margin: 20px 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #ccc;
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .query-div:before, #xqmc_panel .query-div:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .query-div:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 312, ../sass/sass/_managePage.scss */
+#xqmc_panel .query-div > a {
+  float: right;
+  _display: inline;
+  margin-left: 5px;
+}
+/* line 317, ../sass/sass/_managePage.scss */
+#xqmc_panel .content-table {
+  margin: 10px;
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .content-table:before, #xqmc_panel .content-table:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .content-table:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 321, ../sass/sass/_managePage.scss */
+#xqmc_panel .tip {
+  padding: 10px 10px 0;
+  *zoom: 1;
+  color: #999;
+  font-size: 12px;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .tip:before, #xqmc_panel .tip:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .tip:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 326, ../sass/sass/_managePage.scss */
+#xqmc_panel .tip i {
+  margin-right: 5px;
+}
+/* line 330, ../sass/sass/_managePage.scss */
+#xqmc_panel .tips {
+  padding: 0 10px 20px;
+  *zoom: 1;
+  color: #ed4848;
+  text-align: right;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .tips:before, #xqmc_panel .tips:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#xqmc_panel .tips:after {
+  clear: both;
+  overflow: hidden;
+}
+
 /*****************新增页面样式***********************/
 /* line 7, ../sass/sass/_addPage.scss */
 .add-main .infos-main {
@@ -655,32 +733,71 @@
   color: #000;
   margin: 30px 40px 0 0;
   border-bottom: 1px dashed #ccc;
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.add-main .infos-main .content .person-info .info-item .item-title:before, .add-main .infos-main .content .person-info .info-item .item-title:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.add-main .infos-main .content .person-info .info-item .item-title:after {
+  clear: both;
+  overflow: hidden;
 }
 /* line 109, ../sass/sass/_addPage.scss */
+.add-main .infos-main .content .person-info .info-item .item-title a {
+  float: right;
+  _display: inline;
+  height: 24px;
+  margin: 0 2px;
+  font-weight: normal;
+  font-size: 12px;
+}
+/* line 115, ../sass/sass/_addPage.scss */
+.add-main .infos-main .content .person-info .info-item .item-title a i {
+  line-height: 24px;
+}
+/* line 120, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item a {
   height: 20px;
   vertical-align: -6px;
 }
-/* line 112, ../sass/sass/_addPage.scss */
+/* line 123, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item a i {
   line-height: 20px;
 }
-/* line 116, ../sass/sass/_addPage.scss */
+/* line 127, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .h-blank {
   width: 20px;
   display: inline-block;
 }
-/* line 120, ../sass/sass/_addPage.scss */
+/* line 131, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item .val {
   font-weight: normal;
   color: #000;
   padding: 0;
 }
-/* line 127, ../sass/sass/_addPage.scss */
+/* line 138, ../sass/sass/_addPage.scss */
 .add-main .infos-main .content .person-info .info-item #upload_img {
   display: none;
 }
-/* line 134, ../sass/sass/_addPage.scss */
+/* line 142, ../sass/sass/_addPage.scss */
+.add-main .infos-main .content .person-info .mphbox {
+  margin-right: 7px;
+  background-color: #eee;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+/* line 147, ../sass/sass/_addPage.scss */
+.add-main .infos-main .content .person-info .mphbox a {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  padding: 0;
+}
+/* line 157, ../sass/sass/_addPage.scss */
 .add-main .add-save-btn {
   width: 100%;
   text-align: center;
@@ -688,7 +805,7 @@
   line-height: 30px;
   margin-top: 20px;
 }
-/* line 139, ../sass/sass/_addPage.scss */
+/* line 162, ../sass/sass/_addPage.scss */
 .add-main .add-save-btn a {
   margin: 0 10px;
 }

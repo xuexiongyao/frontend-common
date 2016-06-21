@@ -302,3 +302,35 @@
     }
 }
 
+/*小区选择面板*/
+#xqmc_panel{
+    .query-div{
+        margin: 20px 10px;
+        padding-bottom: 20px;
+        border-bottom:1px dashed colors(borderColor);
+        @include clearfix;
+        >a{
+            @include float(right);
+            margin-left:5px;
+        }
+    }
+    .content-table{
+        margin: 10px;
+        @include clearfix;
+    }
+    .tip{
+        padding: 10px 10px 0;
+        @include clearfix;
+        color: colors(gray);
+        font-size: fontSize(small);
+        i{
+            margin-right:5px;
+        }
+    }
+    .tips{
+        padding: 0 10px 20px;
+        @include clearfix;
+        color: colors(red);
+        @include text-align(right);
+    }
+}

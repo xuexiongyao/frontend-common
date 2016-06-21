@@ -105,6 +105,17 @@
                         color: colors(black);
                         margin: 30px 40px 0 0;
                         border-bottom:1px dashed colors(borderColor);
+                        @include clearfix;
+                        a{
+                            @include float(right);
+                            height:24px;
+                            margin:0 2px;
+                            font-weight: normal;
+                            font-size: fontSize(small);
+                            i{
+                                line-height:24px;
+                            }
+                        }
                     }
                     a{
                         height:20px;
@@ -126,6 +137,18 @@
                     /*隐藏照片上传框*/
                     #upload_img {
                         display: none;
+                    }
+                }
+                .mphbox{
+                    margin-right:7px;
+                    background-color: colors(tableBgcolor);
+                    @include containerBox;
+                    margin-bottom:5px;
+                    a{
+                        position: absolute;
+                        right:3px;
+                        top:3px;
+                        padding: 0;
                     }
                 }
             }
