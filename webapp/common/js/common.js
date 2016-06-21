@@ -94,9 +94,9 @@ function loading(type,msg){
         $('body').append(loading_html);
     }
     if(type == 'open'){
-        $('#loadingMsk').show(30);
+        $('#loadingMsk').fadeIn('fast');
     }else if(type == 'close'){
-        $('#loadingMsk').hide(30);
+        $('#loadingMsk').fadeOut('fast');
     }
 }
 
