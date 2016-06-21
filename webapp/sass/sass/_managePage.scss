@@ -216,6 +216,30 @@
                 @include size(680px, 60px);
                 overflow: auto;
             }
+            //warning tips
+            ul.warning{
+                padding: 0 27px 0 70px;
+                list-style-type: none;
+                margin:20px 0 0;
+                @include clearfix;
+                font-size: fontSize(small);
+                color: colors(gray);
+                li{
+                    width:50%;
+                    @include float(left);
+                    @include text-vertical-center(20px);
+                    margin-bottom:3px;
+                    i{
+                        padding-right:5px;
+                    }
+                }
+                li.li-full{
+                    width:100%;
+                }
+                li.li-warning{
+                    color: colors(red);
+                }
+            }
         }
         .tips{
             padding:0 10px;

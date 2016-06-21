@@ -395,6 +395,46 @@
   overflow: auto;
 }
 /* line 220, ../sass/sass/_managePage.scss */
+#logout_panel .logout-reason .remark-reason ul.warning {
+  padding: 0 27px 0 70px;
+  list-style-type: none;
+  margin: 20px 0 0;
+  *zoom: 1;
+  font-size: 12px;
+  color: #999;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#logout_panel .logout-reason .remark-reason ul.warning:before, #logout_panel .logout-reason .remark-reason ul.warning:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#logout_panel .logout-reason .remark-reason ul.warning:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 227, ../sass/sass/_managePage.scss */
+#logout_panel .logout-reason .remark-reason ul.warning li {
+  width: 50%;
+  float: left;
+  _display: inline;
+  height: 20px;
+  line-height: 20px;
+  margin-bottom: 3px;
+}
+/* line 232, ../sass/sass/_managePage.scss */
+#logout_panel .logout-reason .remark-reason ul.warning li i {
+  padding-right: 5px;
+}
+/* line 236, ../sass/sass/_managePage.scss */
+#logout_panel .logout-reason .remark-reason ul.warning li.li-full {
+  width: 100%;
+}
+/* line 239, ../sass/sass/_managePage.scss */
+#logout_panel .logout-reason .remark-reason ul.warning li.li-warning {
+  color: #ed4848;
+}
+/* line 244, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .tips {
   padding: 0 10px;
   text-align: right;
@@ -403,23 +443,23 @@
   height: 20px;
   line-height: 20px;
 }
-/* line 228, ../sass/sass/_managePage.scss */
+/* line 252, ../sass/sass/_managePage.scss */
 #logout_panel .living-info {
   height: 100%;
 }
-/* line 230, ../sass/sass/_managePage.scss */
+/* line 254, ../sass/sass/_managePage.scss */
 #logout_panel .living-info .title, #logout_panel .living-info .living-table-div {
   padding: 0 10px;
   margin: 10px auto;
   color: #5a5a5a;
   font-weight: bold;
 }
-/* line 236, ../sass/sass/_managePage.scss */
+/* line 260, ../sass/sass/_managePage.scss */
 #logout_panel .living-info .living-table-div {
   height: 100%;
   width: 778px;
 }
-/* line 241, ../sass/sass/_managePage.scss */
+/* line 265, ../sass/sass/_managePage.scss */
 #logout_panel .living-info .tips {
   padding: 0 10px;
   margin: 10px auto;
@@ -430,20 +470,20 @@
   line-height: 30px;
 }
 
-/* line 254, ../sass/sass/_managePage.scss */
+/* line 278, ../sass/sass/_managePage.scss */
 #export_panel .base-info, #export_panel .relation-info {
   width: 760px;
   margin: 10px auto 0;
 }
-/* line 257, ../sass/sass/_managePage.scss */
+/* line 281, ../sass/sass/_managePage.scss */
 #export_panel .base-info input, #export_panel .relation-info input {
   vertical-align: middle;
 }
-/* line 260, ../sass/sass/_managePage.scss */
+/* line 284, ../sass/sass/_managePage.scss */
 #export_panel .base-info span, #export_panel .relation-info span {
   font-size: 12px;
 }
-/* line 263, ../sass/sass/_managePage.scss */
+/* line 287, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title, #export_panel .relation-info .title, #export_panel .base-info #logout_panel .living-info .living-table-div, #logout_panel .living-info #export_panel .base-info .living-table-div, #export_panel .relation-info #logout_panel .living-info .living-table-div, #logout_panel .living-info #export_panel .relation-info .living-table-div {
   *zoom: 1;
   border-bottom: 1px dashed #ccc;
@@ -459,20 +499,20 @@
   clear: both;
   overflow: hidden;
 }
-/* line 267, ../sass/sass/_managePage.scss */
+/* line 291, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title .title-name, #export_panel .relation-info .title .title-name, #export_panel .base-info #logout_panel .living-info .living-table-div .title-name, #logout_panel .living-info #export_panel .base-info .living-table-div .title-name, #export_panel .relation-info #logout_panel .living-info .living-table-div .title-name, #logout_panel .living-info #export_panel .relation-info .living-table-div .title-name {
   float: left;
   font-weight: bold;
 }
-/* line 268, ../sass/sass/_managePage.scss */
+/* line 292, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title .title-name span, #export_panel .relation-info .title .title-name span, #export_panel .base-info #logout_panel .living-info .living-table-div .title-name span, #logout_panel .living-info #export_panel .base-info .living-table-div .title-name span, #export_panel .relation-info #logout_panel .living-info .living-table-div .title-name span, #logout_panel .living-info #export_panel .relation-info .living-table-div .title-name span {
   font-size: 18px;
 }
-/* line 274, ../sass/sass/_managePage.scss */
+/* line 298, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title .title-btn, #export_panel .relation-info .title .title-btn, #export_panel .base-info #logout_panel .living-info .living-table-div .title-btn, #logout_panel .living-info #export_panel .base-info .living-table-div .title-btn, #export_panel .relation-info #logout_panel .living-info .living-table-div .title-btn, #logout_panel .living-info #export_panel .relation-info .living-table-div .title-btn {
   float: right;
 }
-/* line 278, ../sass/sass/_managePage.scss */
+/* line 302, ../sass/sass/_managePage.scss */
 #export_panel .base-info .content, #export_panel .relation-info .content {
   *zoom: 1;
   padding: 10px 0;
@@ -487,18 +527,18 @@
   clear: both;
   overflow: hidden;
 }
-/* line 281, ../sass/sass/_managePage.scss */
+/* line 305, ../sass/sass/_managePage.scss */
 #export_panel .base-info .content .item, #export_panel .relation-info .content .item {
   float: left;
   width: 120px;
   margin-bottom: 5px;
 }
-/* line 291, ../sass/sass/_managePage.scss */
+/* line 315, ../sass/sass/_managePage.scss */
 #export_panel .tips {
   width: 760px;
   margin: 10px auto 0;
 }
-/* line 294, ../sass/sass/_managePage.scss */
+/* line 318, ../sass/sass/_managePage.scss */
 #export_panel .tips i {
   color: #999;
   display: inline-block;
@@ -507,14 +547,14 @@
   zoom: 1;
   *dispaly: inline;
 }
-/* line 298, ../sass/sass/_managePage.scss */
+/* line 322, ../sass/sass/_managePage.scss */
 #export_panel .tips span {
   font-size: 12px;
   color: #999;
 }
 
 /*小区选择面板*/
-/* line 307, ../sass/sass/_managePage.scss */
+/* line 331, ../sass/sass/_managePage.scss */
 #xqmc_panel .query-div {
   margin: 20px 10px;
   padding-bottom: 20px;
@@ -531,13 +571,13 @@
   clear: both;
   overflow: hidden;
 }
-/* line 312, ../sass/sass/_managePage.scss */
+/* line 336, ../sass/sass/_managePage.scss */
 #xqmc_panel .query-div > a {
   float: right;
   _display: inline;
   margin-left: 5px;
 }
-/* line 317, ../sass/sass/_managePage.scss */
+/* line 341, ../sass/sass/_managePage.scss */
 #xqmc_panel .content-table {
   margin: 10px;
   *zoom: 1;
@@ -552,7 +592,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 321, ../sass/sass/_managePage.scss */
+/* line 345, ../sass/sass/_managePage.scss */
 #xqmc_panel .tip {
   padding: 10px 10px 0;
   *zoom: 1;
@@ -569,11 +609,11 @@
   clear: both;
   overflow: hidden;
 }
-/* line 326, ../sass/sass/_managePage.scss */
+/* line 350, ../sass/sass/_managePage.scss */
 #xqmc_panel .tip i {
   margin-right: 5px;
 }
-/* line 330, ../sass/sass/_managePage.scss */
+/* line 354, ../sass/sass/_managePage.scss */
 #xqmc_panel .tips {
   padding: 0 10px 20px;
   *zoom: 1;
