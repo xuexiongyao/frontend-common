@@ -77,6 +77,29 @@ function pageJump() {
     crossRequestParent('iframJump("' + current_tab_id + '")');
 }
 
+/*页面铺满加载中样式
+* 1.type: open,打开;close,关闭
+* 2.msg : 显示的文字,默认为加载中...
+* */
+function loading(type,msg){
+    var msg = msg || '加载中...';
+    var loading_img_url = staticPath + '/framework/default/images/loading.gif';
+    var loading_html='<div id="loadingMsk" style="display:none">'
+        +'<div class="loadingPage">'
+        +'<img src="'+loading_img_url+'" alt="loading">'
+        +'<span>'+msg+'</span>'
+        +'</div>'
+        +'</div>';
+    if($('#loadingMsk').length == 0){
+        $('body').append(loading_html);
+    }
+    if(type == 'open'){
+        $('#loadingMsk').show();
+    }else if(type == 'close'){
+        $('#loadingMsk').hide();
+    }
+}
+
 //跨域添加Tab
 function crossAddTab(tab_title, tab_url, tab_id) {
 
