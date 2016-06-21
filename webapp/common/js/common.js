@@ -700,6 +700,10 @@ function editSwitch(bool, border_class, box_class) {
          */
         box.each(function () {
             var _this = $(this);
+
+            //show“*”
+            _this.parent().prev().find('i').show();
+
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: false}).next().removeClass(_border_class);//移除样式还原边框
             } else if (_this.hasClass('easyui-textbox')) {
@@ -715,13 +719,14 @@ function editSwitch(bool, border_class, box_class) {
             }
             _this.next().find('span.textbox-addon').show();//显示按钮
         });
-        //禁用编辑
-
-        $(".fa-asterisk").show();
     } else {
         //$('.combo').off('click.showPanel'); //后面完善
         box.each(function () {
             var _this = $(this);
+
+            //清除“*”
+            _this.parent().prev().find('i').hide();
+
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: true}).next().addClass(_border_class);//添加样式取消边框
             } else if (_this.hasClass('easyui-textbox')) {
@@ -737,9 +742,6 @@ function editSwitch(bool, border_class, box_class) {
             }
             _this.next().find('span.textbox-addon').hide();//隐藏按钮
         });
-
-        //清除“*”
-        $(".fa-asterisk").hide();
     }
 }
 
