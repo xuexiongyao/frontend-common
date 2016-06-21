@@ -907,7 +907,12 @@ function getIEVersion() {
 				}
 			}
 			return resultNode;
-		}
+		},
+        //获得数的层级
+        getLevel:function(jq,target){
+            var l = $(target).parentsUntil("ul.tree","ul");
+            return l.length+1;
+        }
 
 	});
 
