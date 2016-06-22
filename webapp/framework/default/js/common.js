@@ -175,3 +175,116 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
         }
     }
 }
+/*自定义的div弹框方法
+ * 1.options : 对象参数(各项配置)
+ * 2.btn_diy : 数组参数(自定义按钮操作)
+ * */
+function openDivForm(options, btn_diy) {
+    /*参数使用说明举例
+     openDivForm({
+     id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+     title: '表单提交',
+     width: 800,
+     height: 200,
+     top: 200,
+     beforeSubmit: function () {
+     }, //return false,阻止提交
+     afterSubmit: function (data) {
+     }, //提交成功,data为返回的数据
+     onClose: function () {
+     },             //关闭时提交的函数
+     }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
+     {
+     text: '确定',
+     handler: function () {
+     $('#div_id').dialog('close');
+     }
+     }, {
+     text: '关闭',
+     handler: function () {
+     $('#div_id').dialog('close');
+     }
+     },
+     ]);*/
+    var dlg_id = options.id;
+    var dlg_div = $('#' + dlg_id);
+    var defualt_beforeSubmit = function () {
+        //验证表单
+        var isValid = $(this).form('validate');
+        return isValid; // 返回false终止表单提交
+    };
+    var default_afterSubmit = function (data) {
+        if (data) {
+            dlg_div.dialog('close');
+        }
+    };
+    var beforeSubmit = options.beforeSubmit || defualt_beforeSubmit;
+    var afterSubmit = options.afterSubmit || default_afterSubmit;
+
+    var default_btn = [{
+        text: '保存',
+        handler: function () {
+            var form = dlg_div.find('form');
+            var submitUrl = options.url || form.action;
+            if (form.length > 0) {
+                $(form[0]).form('submit', {
+                    url: submitUrl,
+                    onSubmit: beforeSubmit,
+                    success: afterSubmit
+                });
+            } else {
+                $.messager.alert('提示', '无法获取表单元素,无法提交', 'warning');
+            }
+        }
+    }, {
+        text: '重置',
+        handler: function () {
+            var form = dlg_div.find('form');
+            if (form.length > 0) {
+                $(form[0]).form('reset');
+            } else {
+                $.messager.alert('提示', '无法获取表单元素,无法提交', 'warning');
+            }
+        }
+    }, {
+        text: '关闭',
+        handler: function () {
+            dlg_div.dialog('close');
+        }
+    }];
+    var _buttons = btn_diy || default_btn;
+    var _title = options.title || '弹框';
+    var _width = options.width || 800;
+    var _height = options.height || 'auto';
+    var blank_height = _height;
+    if (blank_height == 'auto') {
+        blank_height = dlg_div.height();
+        if (blank_height > 0) {
+            setCookie(dlg_id + 'dialog_height', blank_height);
+        } else {
+            blank_height = parseInt(getCookie(dlg_id + 'dialog_height'));
+        }
+        blank_height = blank_height + 160;
+    }
+
+    var surplus_height_ = window.innerHeight - blank_height;
+    var self_top = 0;
+    if (surplus_height_ > 0) {
+        self_top = parseInt(surplus_height_ / 2);
+    }
+    //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
+    var _top = self_top; //自适应高度
+    dlg_div.dialog({
+        cache: true,
+        modal: true,
+        novalidate: true,  //验证表单元素
+        title: _title,
+        width: _width,
+        height: _height,
+        top: _top,
+        buttons: _buttons,
+        onClose: options.onClose
+    });
+    dlg_div.dialog('move', {top: $(document).scrollTop() + _top});
+    dlg_div.show().dialog('open');
+}
