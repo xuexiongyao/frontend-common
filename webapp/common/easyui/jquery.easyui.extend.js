@@ -793,8 +793,20 @@ function getIEVersion() {
 			else {
 				return data;
 			}
-		}
+		},
 
+        //点击节点展开收缩开关
+        onClick: function (node) {
+            $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
+            //点击节点展开收缩
+            //if (node.children) {
+            //    if (node.state == 'closed') {
+            //        $(this).tree('expand', node.target);
+            //    }else{
+            //        $(this).tree('collapse', node.target);
+            //    }
+            //}
+        }
 	});
 
 	var methods = $.extend({}, $.fn.tree.methods, {
@@ -908,7 +920,8 @@ function getIEVersion() {
 			}
 			return resultNode;
 		},
-        //获得数的层级
+
+        //获得树的层级
         getLevel:function(jq,target){
             var l = $(target).parentsUntil("ul.tree","ul");
             return l.length+1;
