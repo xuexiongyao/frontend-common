@@ -25,6 +25,8 @@
     <script src="http://static.jwzh.com:7777/jwzh/common/js/common.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/js/ajax.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/datepicker/WdatePicker.js"></script>
+
+    <script src="../../../common/tools/tree.extend.js"></script>
 </head>
 <body>
     <div class="container">
@@ -67,9 +69,15 @@
         </div>
 
         <h2>树的层级判断</h2>
-        <div class="easyui-panel" style="padding:5px">
-            <ul id="tree" class="easyui-tree"></ul>
-        </div>
+        <form action="" method="post" id="dataform">
+            <div class="easyui-panel" style="padding:5px">
+                <ul id="tree" class="easyui-tree"></ul>
+            </div>
+
+            <div class="btn-area">
+                <input type="submit" value="提交">
+            </div>
+        </form>
 
         <div class="h-blank-pre">
             <pre>
@@ -107,6 +115,7 @@
             </pre>
         </div>
 
+
     </div>
 
     <!--查看源代码-->
@@ -132,8 +141,34 @@
             showCode();
 
             initTree();
-
+            formUpdate()
         });
+
+        //表单提交
+        function formUpdate(){
+            $('#dataform').form({
+                onSubmit: function () {
+                    //选中实心节点
+                    var slidNode = treeObject.tree('getSolidExt');
+
+                    //选中所有节点
+                    var checkNode = treeObject.tree('getCheckedExt');
+                    var data = [];
+                    for(var i=0;i<checkNode.length;i++){
+                        var ids = checkNode[i].id;
+                        data.push(ids).splice(0,1);
+
+                    }
+
+                    console.log(data);
+
+                    return $(this).form('validate');
+                },
+                success: function (data) {
+//                    console.log(data);
+                }
+            });
+        }
 
         //树的加载
         function initTree(){
@@ -146,13 +181,15 @@
                 onSelect: function (node) {
                     var lv =  treeObject.tree("getLevel",node.target);
                     //提示
-                    $.messager.show({
-                        title: '提示',
-                        msg: '当前层级是'+lv+'级'
-                    });
-
+//                    $.messager.show({
+//                        title: '提示',
+//                        msg: '当前层级是'+lv+'级'
+//                    });
+//                    $(this).tree('check',node.target);
                 }
             });
+
+
         }
 
         //查看源代码

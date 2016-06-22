@@ -269,3 +269,17 @@ body {
 .container .h-blank-pre-show pre, .container .h-blank-pre-show code {
   font-family: "Microsoft Yahei", "微软雅黑";
 }
+
+/* line 144, ../sass/sass/_demo.scss */
+label {
+  cursor: pointer;
+  margin-right: 10px;
+}
+/* line 147, ../sass/sass/_demo.scss */
+label input {
+  vertical-align: -2px;
+}
+/* line 150, ../sass/sass/_demo.scss */
+label input[type="checkbox"] {
+  margin-left: 0;
+}

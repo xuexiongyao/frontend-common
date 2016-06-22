@@ -140,3 +140,14 @@ body{
         }
     }
 }
+
+label{
+    cursor: pointer;
+    margin-right:10px;
+    input{
+        vertical-align: -2px;
+    }
+    input[type="checkbox"]{
+        margin-left:0;
+    }
+}
