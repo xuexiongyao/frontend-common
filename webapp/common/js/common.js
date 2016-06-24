@@ -924,3 +924,14 @@ function resetToken() {
         }
     });
 }
+
+//combobox下拉显示,只显示textValue
+//页面直接引用,并在组件中添加show-text样式
+function comboboxShowText(){
+    $('.show-text').combobox({
+        formatter: function(row){
+            var opts = $(this).combobox('options');
+            return row[opts.textField];
+        }
+    });
+}
