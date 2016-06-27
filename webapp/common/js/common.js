@@ -702,7 +702,7 @@ function editSwitch(bool, border_class, box_class) {
             var _this = $(this);
 
             //show“*”
-            _this.parent().prev().find('i').show();
+            _this.prev().find('i').show();
 
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: false}).next().removeClass(_border_class);//移除样式还原边框
@@ -725,7 +725,7 @@ function editSwitch(bool, border_class, box_class) {
             var _this = $(this);
 
             //清除“*”
-            _this.parent().prev().find('i').hide();
+            _this.prev().find('i').hide();
 
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: true}).next().addClass(_border_class);//添加样式取消边框
