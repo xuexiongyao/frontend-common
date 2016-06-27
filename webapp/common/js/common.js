@@ -935,3 +935,29 @@ function comboboxShowText(){
         }
     });
 }
+/*统一获取组件的值
+ * 1.input:组件对象
+ * 2.input_type:组件类型
+ * 3.multiple:是否获取去多选值数组结果
+ * */
+function getInputValue(input,input_type,multiple){
+    if(input_type == 'textbox'){
+        return input.textbox('getValue');
+    }else if(input_type == 'datebox'){
+        return input.datebox('getValue');
+    }else if(input_type == 'combobox'){
+        if(multiple){
+            return input.combobox('getValues');
+        }else{
+            return input.combobox('getValue');
+        }
+    }else if(input_type == 'combotree'){
+        if(multiple){
+            return input.combobox('getValues');
+        }else{
+            return input.combobox('getValue');
+        }
+    }else{
+        alert('请输入正确的组件类型');
+    }
+}
