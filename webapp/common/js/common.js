@@ -648,6 +648,7 @@ function openDivForm(options, btn_diy) {
     var _title = options.title || '弹框';
     var _width = options.width || 800;
     var _height = options.height || 'auto';
+    var _left = options.left || null;
     var blank_height = _height;
     if (blank_height == 'auto') {
         blank_height = dlg_div.height();
@@ -664,8 +665,8 @@ function openDivForm(options, btn_diy) {
     if (surplus_height_ > 0) {
         self_top = parseInt(surplus_height_ / 2);
     }
-    //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
-    var _top = self_top; //自适应高度
+    var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置,不输入自适应
+    //var _top = self_top; //自适应高度
     dlg_div.dialog({
         cache: true,
         modal: true,
@@ -674,6 +675,7 @@ function openDivForm(options, btn_diy) {
         width: _width,
         height: _height,
         top: _top,
+        left: _left,
         buttons: _buttons,
         onClose: options.onClose
     });
