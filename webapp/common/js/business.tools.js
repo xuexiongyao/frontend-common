@@ -2108,13 +2108,14 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 				var id = idArray[0];
 				var imgUrl = basePath + "/zpfjFjxxb/queryZpfjById.jpg?id=" + id;
 				var divHtml = "<img id='"+ divID +"Img' src='"+ imgUrl +"' width='"+imgWidth+"' height='"+imgHeight+"' border='0' idString='"+ data +"' idIndex='1' style='cursor:pointer'/>";
-				divHtml += "<div style='width:100%; padding-top:2px; padding-bottom:2px;'><span id='"+ divID +"ImgIndex'>1</span> / " + idArray.length + " 张</span>&nbsp;&nbsp;";
-				divHtml += "<input type='button' id='"+ divID +"ImgPrev' value='上一张' disabled='disabled' style='cursor:pointer'/>&nbsp;";
+				divHtml += "<div style='width:100%; padding-top:2px;text-align: center; padding-bottom:2px;font-family: \'Microsoft Himalaya\';'>" +
+					"<input type='button' id='"+ divID +"ImgPrev' value='←' disabled='disabled' style='cursor:pointer;color:#fff;background: #0e6595;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>&nbsp;"+
+					"<span id='"+ divID +"ImgIndex' style='color:#ed4848;'>1</span> / " + idArray.length + "</span>&nbsp;&nbsp;";
 				if (idArray.length == 1) {
-					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='下一张' disabled='disabled' style='cursor:pointer'/>";
+					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='→' disabled='disabled' style='cursor:pointer;color:#fff;background: #0e6595;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>";
 				}
 				else {
-					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='下一张' style='cursor:pointer'/>";
+					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='→' style='cursor:pointer;color:#fff;background: #0e6595;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>";
 				}
 				divHtml += "</div>";
 				$('#' + divID).html(divHtml);
@@ -2163,7 +2164,7 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 					$('#' + divID).html(divHtml);
 					//css生成无图片样式
 					/*var divHtml = "<div style='width:100%; padding-top:10px; padding-bottom:10px; color: #666666'>暂无照片</div>";
-					$('#' + divID).html(divHtml);*/
+					 $('#' + divID).html(divHtml);*/
 				}
 				else {
 					var divHtml = "<img id='"+ divID +"Img' src='"+ emptyImage +"' width='100%' height='100%' border='0'/>";
@@ -2216,7 +2217,7 @@ function ptryzpEdit(ryid, lybm, lyid, lyms, isTopOpen, onSubmitSuccess, oldPageO
 // ryid_id 人员ID输入框ID
 function checkLxdh(lxdh_id, ryid_id) {
 	var obj = document.getElementById(lxdh_id).value;
-	var regTel1 = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/.test(obj);//带区号的固定电话     
+	var regTel1 = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/.test(obj);//带区号的固定电话
 	var regTel2 = /^(\d{7,8})(-(\d{3,}))?$/.test(obj);//不带区号的固定电话
 	var regTel3 = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/.test(obj);//移动电话号
 	if(obj !=""){
