@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/icon.css">
     <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/framework/default/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/datepicker/skin/christ/datepicker.css">
-    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css">
+    <link rel="stylesheet" href="../../../stylesheets/newItemStyle.css">
+    <!--<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css">-->
     <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.min.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.dragsort-0.5.2.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.min.js"></script>
@@ -148,6 +149,7 @@
         <!--组件样式 2:2-->
         <h2>Item Style 2/2</h2>
         <ul class="item-container">
+            <li class="h-blank"><span class="title">efefee</span></li>
             <li class="item-two">
                 <p class="pro"><i class="fa fa-asterisk"></i>性别</p>
                 <div class="ipt">
@@ -1129,6 +1131,13 @@
                     <a href="javascript:;" class="easyui-linkbutton c3"><i class="fa fa-times"></i></a>
                 </div>
             </li>
+            <li class="item-full">
+                <p class="pro-fullThree"><i class="fa fa-asterisk"></i>性别</p>
+                <div class="ipt-fullThree">
+                    <input class="easyui-textbox" style="width: 1029px" data-options="">
+                    <a href="javascript:;" class="easyui-linkbutton c3"><i class="fa fa-times"></i></a>
+                </div>
+            </li>
         </ul>
 
         <div class="h-blank-pre">
@@ -1194,8 +1203,8 @@
 
     });
 
-    var staticPath = 'http://static.jwzh.com:7777/jwzh';//静态资源路径
-//    var staticPath = '../../..';//静态资源路径
+//    var staticPath = 'http://static.jwzh.com:7777/jwzh';//静态资源路径
+    var staticPath = '../../..';//静态资源路径
 
     //查看源代码
     function showCode() {

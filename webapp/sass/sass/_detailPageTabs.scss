@@ -242,8 +242,18 @@
                         background: transparent;
                     }
                 }
-                li:nth-child(2n){
+                li.li-two:nth-child(2n){
                     margin-left:20px;
+                }
+                li.li-three{
+                    width:369px;
+                    margin-right:20px!important;
+                }
+                li.li-three:nth-child(3n){
+                    margin-right:0 !important;
+                }
+                li.li-three:nth-child(2n){
+                    margin-left:0!important;
                 }
                 li.li-full{
                     width:900px;

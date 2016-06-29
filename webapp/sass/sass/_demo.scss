@@ -22,7 +22,7 @@ body{
                 @include attrMarginPaddingBorder;
                 @include float(left);
                 @include text-align(right);
-                @include text-vertical-center(27px);
+                @include text-vertical-center(24px);
                 font-weight:bold;
                 i{
                     color: colors(red);
@@ -106,11 +106,15 @@ body{
     }
     .h-blank{
         display: block;
-        @include size(100%,20px);
+        @include size(100%,auto);
+        padding-bottom:7px;
         border-bottom: 1px dashed #000;
         span{
             font-weight:bold;
-            padding-left:10px;
+            //padding-left:10px;
+        }
+        span.title{
+            font-size: 18px;
         }
     }
     .h-blank-noborder{

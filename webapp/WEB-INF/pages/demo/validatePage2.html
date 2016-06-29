@@ -89,9 +89,8 @@
             <li class="item-full">
                 <p class="pro-fullTwo">行政区划列表（四川省）：</p>
                 <div class="ipt-fullTwo">
-                    <input type="text" name="xzqh13" id="xzqh13" class="easyui-combobox"
+                    <input type="text" name="xzqh13" id="test" class="easyui-combobox"
                            data-options="
-                       url: staticPath + '/common/dict/XZQHLIST.js',
                        prompt:'过滤掉除四川省以为的其他省份',
                        method:'get',
                        dataFilter:'^51',
@@ -325,7 +324,7 @@
 
     var staticPath = 'http://static.jwzh.com:7777/jwzh';
 
-    //    initComboBox('xzqh13', staticPath + '/common/dict/BD_D_XZQH.js');
+    initComboBox('test', staticPath + '/common/dict/BD_D_XZQH.js');
     //    initComboBox('xzqh14', staticPath + '/common/dict/BD_D_XZQH.js');
     //    initComboBox('xzqh15', staticPath + '/common/dict/BD_D_XZQH.js');
 
