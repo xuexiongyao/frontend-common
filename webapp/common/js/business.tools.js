@@ -2109,10 +2109,10 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 				var imgUrl = basePath + "/zpfjFjxxb/queryZpfjById.jpg?id=" + id;
 				var divHtml = "<img id='"+ divID +"Img' src='"+ imgUrl +"' width='"+imgWidth+"' height='"+imgHeight+"' border='0' idString='"+ data +"' idIndex='1' style='cursor:pointer'/>";
 				divHtml += "<div style='width:100%; padding-top:2px;text-align: center; padding-bottom:2px;font-family: \'Microsoft Himalaya\';'>" +
-					"<input type='button' id='"+ divID +"ImgPrev' value='←' disabled='disabled' style='cursor:pointer;color:#fff;background: #0e6595;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>&nbsp;"+
+					"<input type='button' id='"+ divID +"ImgPrev' value='←' disabled='disabled' style='cursor:pointer;color:#fff;background: #747474;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>&nbsp;"+
 					"<span id='"+ divID +"ImgIndex' style='color:#ed4848;'>1</span> / " + idArray.length + "</span>&nbsp;&nbsp;";
 				if (idArray.length == 1) {
-					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='→' disabled='disabled' style='cursor:pointer;color:#fff;background: #0e6595;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>";
+					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='→' disabled='disabled' style='cursor:pointer;color:#fff;background: #747474;outline: none;border:0;line-height: 18px;border-radius: 3px;'/>";
 				}
 				else {
 					divHtml += "<input type='button' id='"+ divID +"ImgNext' value='→' style='cursor:pointer;color:#fff;background: #0e6595;outline: none;border: 0;line-height: 18px;border-radius: 3px;'/>";
@@ -2128,6 +2128,7 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 				});
 				$('#' + divID + 'ImgPrev').bind("click",function() {
 					$('#' + divID + 'ImgNext').prop('disabled', false);
+					$('#' + divID + 'ImgNext').css('background','#0e6595');
 					var idString = $('#' + divID + 'Img').attr('idString');
 					var idArray = idString.split(",");
 					var idIndex = $('#' + divID + 'Img').attr('idIndex');
@@ -2139,10 +2140,12 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 					$('#' + divID + 'Img').attr('src', imgUrl);
 					if (idIndex == 1) {
 						$('#' + divID + 'ImgPrev').prop('disabled', true);
+						$('#' + divID + 'ImgPrev').css('background','#747474');
 					}
 				});
 				$('#' + divID + 'ImgNext').bind("click",function() {
 					$('#' + divID + 'ImgPrev').prop('disabled', false);
+					$('#' + divID + 'ImgPrev').css('background','#0e6595');
 					var idString = $('#' + divID + 'Img').attr('idString');
 					var idArray = idString.split(",");
 					var idIndex = $('#' + divID + 'Img').attr('idIndex');
@@ -2154,6 +2157,7 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 					$('#' + divID + 'Img').attr('src', imgUrl);
 					if (idIndex == idArray.length) {
 						$('#' + divID + 'ImgNext').prop('disabled', true);
+						$('#' + divID + 'ImgNext').css('background','#747474');
 					}
 				});
 			}
