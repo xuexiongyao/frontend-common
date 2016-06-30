@@ -1687,6 +1687,8 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 			function getAddrssInfo(page_size){
 				submitParam['pagenum'] = 1;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
+				//console.log('正在加载',data);
+				loading('open','地址加载中...');
 				$.ajax({
 					xhrFields: {withCredentials: true},
 					crossDomain: true,
@@ -1695,27 +1697,26 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 					data: submitParam,
 					dataType: 'json',
 					success: function(data) {
-						console.log('正在加载');
 						opts.loaded = true;
 						success(data.rows);
+						loading('close');
 						var count = data.total;
 						//每次加载10条地址
-						if(count > 10 && i <= count - 10){
-							var down_btn = $('<div class="address-more" id="address-more"><i class="fa fa-angle-double-down"></i></div>');
+						if(count > i){
+							var down_btn = $('<div class="address-more" id="address_more_btn"><i class="fa fa-angle-double-down"></i></div>');
 							$('.combo-p').each(function(){
 								var _this = $(this);
 								var _display = _this.css('display');
 								//当前显示的combobox的panel
 								if(_display == 'block'){
 									down_btn.appendTo(_this.children());
-									$('#address-more').click(function(){
+									$('#address_more_btn').off('click').on('click',function(){
 										i += 10;
 										getAddrssInfo(i);
 									});
 								}
 							});
 						}
-						console.log('加载出来了');
 					},
 					error: function() {
 						console.log('getAddrssInfo ajax err');
