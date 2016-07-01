@@ -870,6 +870,11 @@ function getIEVersion() {
 		serverSearchTreeNode: function(jq, param) {
 			var searchKey = param.searchKey;
 			var url = param.url;
+			var postData=param.postData;
+			if(!postData){
+				postData={};
+			}
+			postData['searchKey'] = searchKey;
 			var opts = jq.tree('options');
 			var searchResultKey = opts.searchResultKey;
 			var searchResultArray = opts.searchResultArray;
@@ -902,7 +907,7 @@ function getIEVersion() {
 						xhrFields:{withCredentials:true},
 						crossDomain:true,
 						dataType: 'json',
-						data: "searchKey=" + searchKey,
+						data: postData,
 						success: function(data) {
 							if (data) {
 								searchResultArray = data;
