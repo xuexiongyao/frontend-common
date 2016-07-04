@@ -1187,6 +1187,8 @@ function getIEVersion() {
 	var defaults = $.extend({}, $.fn.combotree.defaults, {
 		//mode:'remote',
 
+		cascadeCheck : false,
+
 		panelHeight : 'auto',
 
 		panelMaxHeight : 200,
@@ -1227,6 +1229,14 @@ function getIEVersion() {
 				}
 			}
 			return returnValue;
+		},
+
+		formatter : function(node){
+			if(node.id != "ROOT" && node.id != "root"){
+				return node.id  + "\xA0|\xA0" + node.text;
+			}else{
+				return  node.text;
+			}
 		},
 
 		onBeforeSelect: function(node) {
@@ -1312,8 +1322,11 @@ function getIEVersion() {
 					$(this).combotree('clear');
 				}
 			}
+		},
+		//点击节点展开收缩开关
+		onClick: function (node) {
+			$(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
 		}
-
 	});
 
 	var methods = $.extend({}, $.fn.combotree.methods, {
