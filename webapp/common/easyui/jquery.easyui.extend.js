@@ -579,10 +579,11 @@ function getIEVersion() {
 		onHidePanel: function() {
 			var opts = $(this).combobox('options');
 			var oldValue = $(this).combobox("getValues");
+			setValues(this, oldValue);
 
-			if($(this).attr('choose') !== 'yes'){
+			/*if($(this).attr('choose') !== 'yes'){
 				$(this).combobox('setValue','');
-			}
+			}*/
 
 			if (oldValue.length == 1 && oldValue[0] == "") {
 				setValues(this, []);
@@ -597,12 +598,12 @@ function getIEVersion() {
 			}
 			this.value = oldValue;
 		},
-		onSelect:function(){
+		/*onSelect:function(){
 			$(this).attr('choose','yes');
 		},
 		onChange: function (n, o) {
 			$(this).attr('choose','no');
-		}
+		}*/
 	});
 
 	var methods = $.extend({}, $.fn.combobox.methods, {
