@@ -966,3 +966,24 @@ function getInputValue(input,input_type,multiple){
         alert('请输入正确的组件类型');
     }
 }
+
+//批量清除组件数据
+function clearInput(input_class){
+    $('.'+input_class).each(function(){
+        var _this = $(this);
+        try{
+            _this.combobox('setValue','');
+        }catch(e){
+            try{
+                _this.textbox('setValue','');
+            }catch(e){
+                try{
+                    _this.datebox('setValue','');
+                }catch(e){
+                    _this.combotree('setValue','');
+
+                }
+            }
+        }
+    })
+}
