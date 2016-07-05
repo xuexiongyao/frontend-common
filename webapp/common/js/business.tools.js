@@ -1719,6 +1719,7 @@ function initAddressSearch2(mlphComboID, filterData, returnFieldData) {
 						}
 					},
 					error: function() {
+						loading('close');
 						console.log('getAddrssInfo ajax err');
 					}
 				});

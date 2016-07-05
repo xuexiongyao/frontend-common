@@ -4,6 +4,7 @@
 
 var current_tab_id = null;
 var return_tab_id = null;
+var staticPath = 'http://static.jwzh.com:7777/jwzh';
 
 $(function () {
     //加载完成后,发送消息到父框架获取当前TabID和上一个TabID
@@ -83,7 +84,7 @@ function pageJump() {
 * */
 function loading(type,msg){
     var msg = msg || '加载中...';
-    var loading_img_url = staticPath + '/framework/default/images/loading.gif';
+    var loading_img_url = staticPath +'/framework/default/images/loading.gif';
     var loading_html='<div id="loadingMsk" style="display:none">'
             +'<div class="loadingPage">'
                 +'<img src="'+loading_img_url+'" alt="loading">'
