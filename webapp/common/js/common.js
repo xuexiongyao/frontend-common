@@ -974,6 +974,7 @@ function clearInput(input_class){
         var _this = $(this);
         try{
             _this.combobox('setValue','');
+            _this.combobox('select','');
         }catch(e){
             try{
                 _this.textbox('setValue','');
