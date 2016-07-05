@@ -981,7 +981,6 @@ function clearInput(input_class){
                     _this.datebox('setValue','');
                 }catch(e){
                     _this.combotree('setValue','');
-
                 }
             }
         }
