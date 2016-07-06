@@ -874,7 +874,7 @@ function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, 
 // parentWindow       调用页面的window对象
 // onOkMethod         对话中点击确认后执行原页面中的方法（如：“orgUserSelect_onOk”）
 // dialogTitle        对话框的标题
-function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, userPositions, initFocusOrgCode, userIDInputID, userNameInputID, userTableIDInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, userPositions, initFocusOrgCode, userIDInputID, userNameInputID, userTableIDInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle,listOptions) {
 	if (isCache) {
 		if (windowID == null || windowID == "") {
 			$.messager.alert('页面错误','组织机构人员选择public_multiSelectOrgUser()方法：<br><br>参数 windowID 不能为空！','error');
@@ -909,7 +909,10 @@ function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, u
 	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
 		dialogTitle = "组织机构人员选择";
 	}
-	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType + "&userPositions=" + userPositions + "&initFocusOrgCode=" + initFocusOrgCode;
+	if ("undefined" == typeof listOptions || listOptions == null || listOptions == "") {
+		listOptions = "";
+	}
+	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType + "&userPositions=" + userPositions + "&initFocusOrgCode=" + initFocusOrgCode+"&listOptions="+listOptions;
 	var userIdString = "";
 	var parentWinObject = parentWindow;
 	if (parentWinObject.contentWindow) {
@@ -933,6 +936,7 @@ function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, u
 	paramArray['orgNameInputID'] = orgNameInputID;
 	paramArray['orgIDInputID'] = orgIDInputID;
 	paramArray['onOkMethod'] = onOkMethod;
+	paramArray['listOptions'] = listOptions;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
 		width: 800,
