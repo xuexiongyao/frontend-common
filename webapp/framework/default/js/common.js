@@ -52,18 +52,25 @@ function iframJump(tab_id){
  * 4.return_tab_id
  * 5.此方法会在跨域打开中执行
  * */
-function addTab(title,url,tab_id,return_tab_id,fn_name){
+function addTab(title,url,tab_id,return_tab_id,repeat){
+    loading('open','正在打开页面,请稍候...');
     //console.log('addTab参数:',arguments);
     if(!title || !url || !tab_id){
         alert('addTab 缺少必要参数!');
         return false;
     }
     //判断title是否存在,存在的话添加标示符号
-    var new_title = returnTitle(title);
+    //var new_title = returnTitle(title);
+    var new_title = title;
+    //是否重复打开
+    if(repeat){
+        tab_id = returnTabID(tab_id);
+    }
     //判断tab_id是否存在和选择
-    if ($('#frameTabs').tabs('existsById', tab_id)){ //存在,切换
+    if ($('#frameTabs').tabs('existsById', tab_id)){    //存在,切换
         $('#frameTabs').tabs('selectById', tab_id);
-    } else {                                    //不存在,新建
+        loading('close');
+    } else {                                            //不存在,新建
         var content = '' +
             '<iframe scrolling="hidden" frameborder="0" return_tab_id="'+return_tab_id+'"' +
             'src="'+url+'" style="width:100%;height: 100%;"> ' +
@@ -77,7 +84,7 @@ function addTab(title,url,tab_id,return_tab_id,fn_name){
         });
     }
 
-    //调用打开或选择的tab中的方法
+    /*//调用打开或选择的tab中的方法
     if(fn_name){
         //添加或选择的iframe
         var iframe = $('#'+tab_id).find('iframe')[0];
@@ -90,8 +97,9 @@ function addTab(title,url,tab_id,return_tab_id,fn_name){
             };
             crossRequestIframe(msg,iframe);
         }
-    }
+    }*/
     handleTab();        //绑定菜单事件:右键,双击等
+    setTimeout(function(){loading('close');},5000);
 }
 
 //递归方式给Tab的相同title +1,以示区分;
@@ -112,6 +120,23 @@ function returnTitle(title){
     }
 }
 
+//递归方式给Tab的相同ID +1,以示区分;
+function returnTabID(title){
+    var new_title = title;
+    if ($('#frameTabs').tabs('existsById', title)){
+        var plus_pos = title.indexOf('_');
+        if(plus_pos == -1){
+            new_title = title + '_new';
+        }else{
+            var title_last_num = (title.substring(title.length - 1)).toString();
+            var title_pre = title.substr(0,title.length - 1);
+            new_title = title_pre + (title_last_num + '_new');
+        }
+        return returnTabID(new_title);
+    }else{
+        return new_title;
+    }
+}
 //获取当前tabID,上个tabID发送到子框架,该方法由子框架加载完成后发送的消息来调用
 function getTabIdToIframe(){
     $('#frameTabs>.tabs-panels>.panel').each(function(){
@@ -128,6 +153,7 @@ function getTabIdToIframe(){
             crossRequestIframe(msg,iframe);
         }
     });
+    loading('close');
 }
 
 /*关闭当前窗口,切换到自定义窗口并执行目的窗口中的函数
@@ -148,7 +174,9 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
     var currentTabTitle = allTitles[currentTabIndex];             //当前tab标题(title)
 
     if(return_tab_id == '' || return_tab_id == false || return_tab_id == 'undefind' || return_tab_id == 'null'){
-        alert('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id');
+        fraTabs.tabs('close',currentTabTitle);//关闭当前标签
+        console.log('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id');
+        //alert('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id');
     }else{
         if(fraTabs.tabs('existsById',return_tab_id)){
             fraTabs.tabs('selectById',return_tab_id);
@@ -156,7 +184,6 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
                 var return_iframe = $('#'+return_tab_id).find('iframe')[0];
                 //同域下调用iframe中的某个方法
                 //return_iframe[0].contentWindow['return_fn'][return_fn_name]();
-
                 //使用跨域方法执行返回后的方法,多个方法名用","隔开
                 var fn_name = return_fn_name.split(',');
                 for(var i=0;i<fn_name.length;i++){
@@ -287,4 +314,31 @@ function openDivForm(options, btn_diy) {
     });
     dlg_div.dialog('move', {top: $(document).scrollTop() + _top});
     dlg_div.show().dialog('open');
+}
+
+/*页面铺满加载中样式
+ * 1.type: open,打开;close,关闭
+ * 2.msg : 显示的文字,默认为加载中...
+ * */
+function loading(type,msg){
+    var staticPath = 'http://static.jwzh.com:7777/jwzh';
+    var msg = msg || '加载中...';
+    var loading_img_url = staticPath +'/framework/default/images/loading.gif';
+    var loading_html='<div id="loadingMsk" style="display:none">'
+        +'<div class="loadingPage">'
+        +'<img src="'+loading_img_url+'" alt="loading">'
+        +'<span class="msg">'+msg+'</span>'
+        +'</div>'
+        +'</div>';
+    if($('#loadingMsk').length == 0){
+        $('body').append(loading_html);
+    }
+    if(type == 'open'){
+        $('#loadingMsk').fadeIn('fast');
+    }else if(type == 'close'){
+        $('#loadingMsk').fadeOut('fast').remove();
+    }else{
+        alert('加载效果处理方式参数错误!');
+        return false;
+    }
 }
