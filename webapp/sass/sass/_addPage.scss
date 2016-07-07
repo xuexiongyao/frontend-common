@@ -164,3 +164,23 @@
         }
     }
 }
+
+/*实有人口新增在逃弹框样式*/
+.ztxx-panel{
+    .zt-div{
+        margin: 25px 0;
+        .item{
+            margin: 8px 0;
+            .zt-warning{
+                text-align: right;
+                display: inline-block;
+                width: 80px;
+                color: red;
+                margin-right: 5px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+

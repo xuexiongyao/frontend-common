@@ -73,7 +73,8 @@
                         box-shadow: 0 2px 5px #888;
                     }
                     &:hover .ywbl-content{
-                        visibility: visible;
+                        display: block;
+                        //visibility: visible;
                     }
                     .ywbl-title{
                         padding: 0 10px;
@@ -85,7 +86,8 @@
                         }
                     }
                     .ywbl-content{
-                        visibility: hidden;
+                        //visibility: hidden;
+                        display: none;
                         p{
                             @include text-align(right);
                             margin: 0;

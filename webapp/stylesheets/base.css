@@ -850,6 +850,26 @@
   margin: 0 10px;
 }
 
+/*实有人口新增在逃弹框样式*/
+/* line 170, ../sass/sass/_addPage.scss */
+.ztxx-panel .zt-div {
+  margin: 25px 0;
+}
+/* line 172, ../sass/sass/_addPage.scss */
+.ztxx-panel .zt-div .item {
+  margin: 8px 0;
+}
+/* line 174, ../sass/sass/_addPage.scss */
+.ztxx-panel .zt-div .item .zt-warning {
+  text-align: right;
+  display: inline-block;
+  width: 80px;
+  color: red;
+  margin-right: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 /****************详情页面  时间轴风格样式*******************/
 /* line 7, ../sass/sass/_detailPageTimeline.scss */
 .info-nav {

@@ -850,6 +850,26 @@
   margin: 0 10px;
 }
 
+/*实有人口新增在逃弹框样式*/
+/* line 170, ../sass/sass/_addPage.scss */
+.ztxx-panel .zt-div {
+  margin: 25px 0;
+}
+/* line 172, ../sass/sass/_addPage.scss */
+.ztxx-panel .zt-div .item {
+  margin: 8px 0;
+}
+/* line 174, ../sass/sass/_addPage.scss */
+.ztxx-panel .zt-div .item .zt-warning {
+  text-align: right;
+  display: inline-block;
+  width: 80px;
+  color: red;
+  margin-right: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
 /****************详情页面  tabs风格样式*******************/
 /* line 7, ../sass/sass/_detailPageTabs.scss */
 .info-main {
@@ -983,46 +1003,46 @@
 }
 /* line 75, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl:hover .ywbl-content, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl:hover .ywbl-content, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl:hover .ywbl-content {
-  visibility: visible;
+  display: block;
 }
-/* line 78, ../sass/sass/_detailPageTabs.scss */
+/* line 79, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-title, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-title, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-title {
   padding: 0 10px;
   line-height: 30px;
   text-align: right;
 }
-/* line 82, ../sass/sass/_detailPageTabs.scss */
+/* line 83, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-title .ywbl-title-text, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-title .ywbl-title-text, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-title .ywbl-title-text {
   font-size: 14px;
   margin-right: 5px;
 }
-/* line 87, ../sass/sass/_detailPageTabs.scss */
+/* line 88, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-content, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-content, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-content {
-  visibility: hidden;
+  display: none;
 }
-/* line 89, ../sass/sass/_detailPageTabs.scss */
+/* line 91, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-content p, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-content p, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-content p {
   text-align: right;
   margin: 0;
   line-height: 30px;
   padding: 0 10px;
 }
-/* line 94, ../sass/sass/_detailPageTabs.scss */
+/* line 96, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-content p:hover, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-content p:hover, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-content p:hover {
   background: #0e6595;
   color: #fff;
 }
-/* line 102, ../sass/sass/_detailPageTabs.scss */
+/* line 104, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .help, .info-main #export_panel .relation-info .person-info .person-top-right .help, #export_panel .info-main .relation-info .person-info .person-top-right .help {
   float: left;
   line-height: 30px;
   cursor: pointer;
 }
-/* line 106, ../sass/sass/_detailPageTabs.scss */
+/* line 108, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .help span, .info-main #export_panel .relation-info .person-info .person-top-right .help span, #export_panel .info-main .relation-info .person-info .person-top-right .help span {
   margin-left: 5px;
 }
-/* line 111, ../sass/sass/_detailPageTabs.scss */
+/* line 113, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content, .info-main #export_panel .relation-info .person-info .content, #export_panel .info-main .relation-info .person-info .content {
   *zoom: 1;
   margin-top: 30px;
@@ -1038,7 +1058,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 115, ../sass/sass/_detailPageTabs.scss */
+/* line 117, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item, .info-main #export_panel .relation-info .person-info .content .item, #export_panel .info-main .relation-info .person-info .content .item {
   float: left;
   margin-right: 10px;
@@ -1047,7 +1067,7 @@
   height: auto;
   border-bottom: 1px dashed #ccc;
 }
-/* line 123, ../sass/sass/_detailPageTabs.scss */
+/* line 125, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item .pro, .info-main #export_panel .relation-info .person-info .content .item .pro, #export_panel .info-main .relation-info .person-info .content .item .pro, .info-main .base-info .person-info .content .item .val, .info-main #export_panel .relation-info .person-info .content .item .val, #export_panel .info-main .relation-info .person-info .content .item .val {
   display: inline-block;
   vertical-align: baseline;
@@ -1061,51 +1081,51 @@
   position: relative;
   top: 3px;
 }
-/* line 131, ../sass/sass/_detailPageTabs.scss */
+/* line 133, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item .pro i, .info-main #export_panel .relation-info .person-info .content .item .pro i, #export_panel .info-main .relation-info .person-info .content .item .pro i, .info-main .base-info .person-info .content .item .val i, .info-main #export_panel .relation-info .person-info .content .item .val i, #export_panel .info-main .relation-info .person-info .content .item .val i {
   color: #ed4848;
   margin-right: 5px;
 }
-/* line 136, ../sass/sass/_detailPageTabs.scss */
+/* line 138, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item .val, .info-main #export_panel .relation-info .person-info .content .item .val, #export_panel .info-main .relation-info .person-info .content .item .val {
   vertical-align: middle;
   width: 240px;
 }
-/* line 141, ../sass/sass/_detailPageTabs.scss */
+/* line 143, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item .clear-border, .info-main #export_panel .relation-info .person-info .content .item .clear-border, #export_panel .info-main .relation-info .person-info .content .item .clear-border {
   border: 1px solid #fff;
 }
-/* line 146, ../sass/sass/_detailPageTabs.scss */
+/* line 148, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item-title, .info-main #export_panel .relation-info .person-info .content .item-title, #export_panel .info-main .relation-info .person-info .content .item-title {
   border-bottom: 1px solid #ccc;
   width: 98%;
 }
-/* line 149, ../sass/sass/_detailPageTabs.scss */
+/* line 151, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item-title .pro, .info-main #export_panel .relation-info .person-info .content .item-title .pro, #export_panel .info-main .relation-info .person-info .content .item-title .pro, .info-main .base-info .person-info .content .item-title .item .val, .info-main .base-info .person-info .content .item .item-title .val, .info-main #export_panel .relation-info .person-info .content .item-title .item .val, .info-main #export_panel .relation-info .person-info .content .item .item-title .val, #export_panel .info-main .relation-info .person-info .content .item-title .item .val, #export_panel .info-main .relation-info .person-info .content .item .item-title .val {
   font-weight: bold;
   font-size: 14px;
   color: #000;
   margin: 10px 0 0;
 }
-/* line 159, ../sass/sass/_detailPageTabs.scss */
+/* line 161, ../sass/sass/_detailPageTabs.scss */
 .info-main .btn-area {
   margin: 0 auto 80px;
   display: none;
 }
-/* line 163, ../sass/sass/_detailPageTabs.scss */
+/* line 165, ../sass/sass/_detailPageTabs.scss */
 .info-main .tabs-header {
   border: none;
   background: #fff;
 }
-/* line 166, ../sass/sass/_detailPageTabs.scss */
+/* line 168, ../sass/sass/_detailPageTabs.scss */
 .info-main .tabs-header .tabs-inner {
   background: #e6e6e6;
 }
-/* line 170, ../sass/sass/_detailPageTabs.scss */
+/* line 172, ../sass/sass/_detailPageTabs.scss */
 .info-main .tabs-panels {
   border: none;
 }
-/* line 173, ../sass/sass/_detailPageTabs.scss */
+/* line 175, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info {
   *zoom: 1;
   height: auto;
@@ -1122,14 +1142,14 @@
   clear: both;
   overflow: hidden;
 }
-/* line 178, ../sass/sass/_detailPageTabs.scss */
+/* line 180, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .person-add {
   margin: 20px 0 0;
   font-size: 12px;
   width: 35px;
   padding: 2px 5px;
 }
-/* line 184, ../sass/sass/_detailPageTabs.scss */
+/* line 186, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .title, .info-main .other-info #logout_panel .living-info .living-table-div, #logout_panel .living-info .info-main .other-info .living-table-div {
   width: 100%;
   *zoom: 1;
@@ -1144,7 +1164,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 187, ../sass/sass/_detailPageTabs.scss */
+/* line 189, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .title .tip, .info-main .other-info #logout_panel .living-info .living-table-div .tip, #logout_panel .living-info .info-main .other-info .living-table-div .tip {
   position: relative;
   left: -10px;
@@ -1158,7 +1178,7 @@
   font-size: 18px;
   font-family: "Microsoft Yahei", "微软雅黑";
 }
-/* line 199, ../sass/sass/_detailPageTabs.scss */
+/* line 201, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .title .tip:before, .info-main .other-info #logout_panel .living-info .living-table-div .tip:before, #logout_panel .living-info .info-main .other-info .living-table-div .tip:before {
   position: absolute;
   border-top: 10px solid #07364f;
@@ -1166,19 +1186,19 @@
   border-left: 10px solid transparent;
   left: 0;
 }
-/* line 203, ../sass/sass/_detailPageTabs.scss */
+/* line 205, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .title .edit-btn, .info-main .other-info #logout_panel .living-info .living-table-div .edit-btn, #logout_panel .living-info .info-main .other-info .living-table-div .edit-btn {
   float: right;
   margin-right: 30px;
   margin-bottom: 0;
 }
-/* line 209, ../sass/sass/_detailPageTabs.scss */
+/* line 211, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content {
   width: auto;
   height: auto;
   margin: 25px auto 40px;
 }
-/* line 213, ../sass/sass/_detailPageTabs.scss */
+/* line 215, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content {
   list-style-type: none;
   margin: 0;
@@ -1195,7 +1215,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 218, ../sass/sass/_detailPageTabs.scss */
+/* line 220, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li {
   background-color: #eef1f6;
   width: 564px;
@@ -1217,7 +1237,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 227, ../sass/sass/_detailPageTabs.scss */
+/* line 229, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li label {
   cursor: default;
   display: inline-block;
@@ -1229,52 +1249,52 @@
   color: #5a5a5a;
   font-weight: bold;
 }
-/* line 237, ../sass/sass/_detailPageTabs.scss */
+/* line 239, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li .textbox {
   background: transparent;
   border: 1px solid #eef1f6;
 }
-/* line 241, ../sass/sass/_detailPageTabs.scss */
+/* line 243, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li input {
   background: transparent;
 }
-/* line 245, ../sass/sass/_detailPageTabs.scss */
+/* line 247, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li.li-two:nth-child(2n) {
   margin-left: 20px;
 }
-/* line 248, ../sass/sass/_detailPageTabs.scss */
+/* line 250, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li.li-three {
   width: 369px;
   margin-right: 20px !important;
 }
-/* line 252, ../sass/sass/_detailPageTabs.scss */
+/* line 254, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li.li-three:nth-child(3n) {
   margin-right: 0 !important;
 }
-/* line 255, ../sass/sass/_detailPageTabs.scss */
+/* line 257, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li.li-three:nth-child(2n) {
   margin-left: 0 !important;
 }
-/* line 258, ../sass/sass/_detailPageTabs.scss */
+/* line 260, ../sass/sass/_detailPageTabs.scss */
 .info-main .other-info .content .form-content li.li-full {
   width: 900px;
   margin: 0 0 10px !important;
 }
-/* line 265, ../sass/sass/_detailPageTabs.scss */
+/* line 267, ../sass/sass/_detailPageTabs.scss */
 .info-main #base_table {
   margin: 0 25px;
 }
 
-/* line 272, ../sass/sass/_detailPageTabs.scss */
+/* line 274, ../sass/sass/_detailPageTabs.scss */
 .info-edit .base-info, .info-edit #export_panel .relation-info, #export_panel .info-edit .relation-info {
   border: none;
   width: auto;
 }
-/* line 275, ../sass/sass/_detailPageTabs.scss */
+/* line 277, ../sass/sass/_detailPageTabs.scss */
 .info-edit .base-info .person-info, .info-edit #export_panel .relation-info .person-info, #export_panel .info-edit .relation-info .person-info {
   margin-left: 40px;
 }
-/* line 278, ../sass/sass/_detailPageTabs.scss */
+/* line 280, ../sass/sass/_detailPageTabs.scss */
 .info-edit .base-info .person-info .item span.pro-right, .info-edit #export_panel .relation-info .person-info .item span.pro-right, #export_panel .info-edit .relation-info .person-info .item span.pro-right {
   margin-left: 30px;
 }
