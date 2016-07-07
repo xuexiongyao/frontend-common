@@ -117,6 +117,7 @@
         }
         #add_file{
             width:170px;
+            height:260px;
             cursor:pointer;
             @include border(5px,solid,#cecece);
             background: url(../images/add_image.png) no-repeat center;
