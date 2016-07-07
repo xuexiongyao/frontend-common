@@ -195,12 +195,12 @@
 }
 /* line 84, ../sass/sass/_managePage.scss */
 .query-list-main .content .content-table {
-  margin: 20px auto 0;
+  margin: 5px auto 0;
   width: 1100px;
 }
 /* line 88, ../sass/sass/_managePage.scss */
 .query-list-main .content .bottom-btn {
-  margin: 30px auto 0;
+  margin: 5px auto 0;
   width: 1100px;
   *zoom: 1;
 }
