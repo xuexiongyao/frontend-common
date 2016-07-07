@@ -31,7 +31,7 @@
                     @include square(54px);
                     left: 0;
                     bottom: 0;
-                    background: url(../../common/uploadfiles/images/img_cover.png) no-repeat;
+                    background: url(../images/img_cover.png) no-repeat;
                 }
             }
             .diyCancel{//取消
@@ -40,11 +40,11 @@
                 top:0;
                 right:0;
                 cursor:pointer;
-                background: url(../../common/uploadfiles/images/x_alt.png) no-repeat;
+                background: url(../images/x_alt.png) no-repeat;
             }
             .diySuccess{//确认
                 @extend .diyCancel;
-                background: url(../../common/uploadfiles/images/check_alt.png) no-repeat;
+                background: url(../images/check_alt.png) no-repeat;
             }
             .diyFileName{
                 margin-top:10px;
@@ -66,8 +66,12 @@
                     font-size:fontSize(base);
                     text-align:center;
                     color:colors(primary);
-                    position:relative;
                     z-index:99;
+                    position:absolute;
+                    left:0;
+                    top:50%;
+                    margin-top:-12px;
+                    height:24px;
                 }
                 .diyProgress {
                     display: block;
@@ -89,7 +93,7 @@
             width:170px;
             cursor:pointer;
             @include border(5px,solid,#cecece);
-            background: url(../../common/uploadfiles/images/add_image.png) no-repeat center;
+            background: url(../images/add_image.png) no-repeat center;
             &:hover{
                 @include box-shadow(0 0 10px rgba(0,0,0,0.25));
             }
@@ -121,31 +125,31 @@
     background-repeat:no-repeat;
 }
 .avi_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/avi.png);
+    background-image:url(../images/filebg/avi.png);
 }
 .txt_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/txt.png);
+    background-image:url(../images/filebg/txt.png);
 }
 .doc_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/doc.png);
+    background-image:url(../images/filebg/doc.png);
 }
 .zip_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/zip.png);
+    background-image:url(../images/filebg/zip.png);
 }
 .csv_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/csv.png);
+    background-image:url(../images/filebg/csv.png);
 }
 .xls_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/xls.png);
+    background-image:url(../images/filebg/xls.png);
 }
 .mp3_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/mp3.png);
+    background-image:url(../images/filebg/mp3.png);
 }
 .pdf_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/pdf.png);
+    background-image:url(../images/filebg/pdf.png);
 }
 .rar_diy_bg {
-    background-image:url(../../common/uploadfiles/images/filebg/rar.png);
+    background-image:url(../images/filebg/rar.png);
 }
 
 /*展示页面css*/
@@ -183,11 +187,11 @@
         }
         a.prev{
             left:0;
-            background:url(../../common/uploadfiles/images/prev.png) no-repeat center;
+            background:url(../images/prev.png) no-repeat center;
         }
         a.next{
             right:0;
-            background:url(../../common/uploadfiles/images/next.png) no-repeat center;
+            background:url(../images/next.png) no-repeat center;
         }
         &:hover a{
             display: block;
