@@ -60,8 +60,7 @@
 /**************主页面框架样式*******************/
 /* line 6, ../sass/sass/_base.scss */
 .main, .query-list-main, .add-main, .info-main {
-  margin: 30px auto 0;
-  padding: 1px 0 30px;
+  margin: 15px auto 0;
   width: 1198px;
   height: auto;
   background-color: #fff;
