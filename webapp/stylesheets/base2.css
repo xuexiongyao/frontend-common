@@ -93,9 +93,11 @@
 /* line 11, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .top-btn {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  height: 30px;
+  line-height: 30px;
 }
-/* line 14, ../sass/sass/_managePage.scss */
+/* line 16, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .top-btn .help {
   position: absolute;
   right: 0;
@@ -104,19 +106,19 @@
   cursor: pointer;
   color: #0e6595;
 }
-/* line 25, ../sass/sass/_managePage.scss */
+/* line 27, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .panel .panel-header .panel-title {
   height: 25px;
   line-height: 25px;
 }
-/* line 27, ../sass/sass/_managePage.scss */
+/* line 29, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .panel .panel-header .panel-title .add-btn {
   padding-left: 10px;
   font-family: "Microsoft Yahei", "微软雅黑";
   color: #5a5a5a;
   font-weight: bold;
 }
-/* line 32, ../sass/sass/_managePage.scss */
+/* line 34, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .panel .panel-header .panel-title .add-btn input {
   cursor: pointer;
   margin-right: 5px;
@@ -131,16 +133,16 @@
   padding: 5px 10px;
   outline: none;
 }
-/* line 42, ../sass/sass/_managePage.scss */
+/* line 44, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .panel .panel-header .panel-title .add-btn .short:hover, .query-list-main .query-panel .panel .panel-header .panel-title .add-btn .add-other {
   background-color: #0e6595;
   color: #fff;
 }
-/* line 46, ../sass/sass/_managePage.scss */
+/* line 48, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .panel .panel-header .panel-title .add-btn .add-other {
   margin-left: 15px;
 }
-/* line 53, ../sass/sass/_managePage.scss */
+/* line 55, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item {
   padding-top: 10px;
   *zoom: 1;
@@ -155,7 +157,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 56, ../sass/sass/_managePage.scss */
+/* line 58, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item .item {
   display: none;
   float: left;
@@ -166,7 +168,7 @@
   font-size: 12px;
   padding: 0 15px;
 }
-/* line 63, ../sass/sass/_managePage.scss */
+/* line 65, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item .item .pro, .query-list-main .query-panel .query-item .info-main .base-info .person-info .content .item .val, .info-main .base-info .person-info .content .query-list-main .query-panel .query-item .item .val, .query-list-main .query-panel .query-item .info-main #export_panel .relation-info .person-info .content .item .val, .info-main #export_panel .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val, .query-list-main .query-panel .query-item #export_panel .info-main .relation-info .person-info .content .item .val, #export_panel .info-main .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val {
   color: #5a5a5a;
   font-weight: bold;
@@ -178,12 +180,12 @@
   white-space: nowrap;
   width: 100%;
 }
-/* line 71, ../sass/sass/_managePage.scss */
+/* line 73, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item .item .pro i, .query-list-main .query-panel .query-item .info-main .base-info .person-info .content .item .val i, .info-main .base-info .person-info .content .query-list-main .query-panel .query-item .item .val i, .query-list-main .query-panel .query-item .info-main #export_panel .relation-info .person-info .content .item .val i, .info-main #export_panel .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val i, .query-list-main .query-panel .query-item #export_panel .info-main .relation-info .person-info .content .item .val i, #export_panel .info-main .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val i {
   color: #ed4848;
   padding-right: 5px;
 }
-/* line 76, ../sass/sass/_managePage.scss */
+/* line 78, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item .item .val {
   border: none;
   outline: none;
@@ -196,22 +198,22 @@
   height: 20px;
   line-height: 20px;
 }
-/* line 85, ../sass/sass/_managePage.scss */
+/* line 87, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-btn {
   margin: 20px 0;
   text-align: center;
 }
-/* line 88, ../sass/sass/_managePage.scss */
+/* line 90, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-btn a {
   width: 60px;
   margin: 0 10px;
 }
-/* line 96, ../sass/sass/_managePage.scss */
+/* line 98, ../sass/sass/_managePage.scss */
 .query-list-main .content .content-table {
   margin: 5px auto 0;
   width: 1100px;
 }
-/* line 100, ../sass/sass/_managePage.scss */
+/* line 102, ../sass/sass/_managePage.scss */
 .query-list-main .content .bottom-btn {
   margin: 5px auto 0;
   width: 1100px;
@@ -227,13 +229,13 @@
   clear: both;
   overflow: hidden;
 }
-/* line 104, ../sass/sass/_managePage.scss */
+/* line 106, ../sass/sass/_managePage.scss */
 .query-list-main .content .bottom-btn a#set_table_btn {
   float: right;
   _display: inline;
 }
 
-/* line 113, ../sass/sass/_managePage.scss */
+/* line 115, ../sass/sass/_managePage.scss */
 #other_condition_panel .query-condition {
   *zoom: 1;
   padding: 15px;
@@ -248,20 +250,20 @@
   clear: both;
   overflow: hidden;
 }
-/* line 116, ../sass/sass/_managePage.scss */
+/* line 118, ../sass/sass/_managePage.scss */
 #other_condition_panel .query-condition .item {
   font-size: 12px;
   float: left;
   width: 142px;
   margin-bottom: 10px;
 }
-/* line 121, ../sass/sass/_managePage.scss */
+/* line 123, ../sass/sass/_managePage.scss */
 #other_condition_panel .query-condition .item input {
   cursor: pointer;
   vertical-align: middle;
 }
 
-/* line 131, ../sass/sass/_managePage.scss */
+/* line 133, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag {
   width: 100%;
   height: auto;
@@ -269,7 +271,7 @@
   /*已选表头*/
   /*待选表头*/
 }
-/* line 135, ../sass/sass/_managePage.scss */
+/* line 137, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag ul {
   width: 100%;
   list-style-type: none;
@@ -287,13 +289,13 @@
   clear: both;
   overflow: hidden;
 }
-/* line 141, ../sass/sass/_managePage.scss */
+/* line 143, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag ul li {
   float: left;
   margin: 2px;
   cursor: pointer;
 }
-/* line 145, ../sass/sass/_managePage.scss */
+/* line 147, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag ul li div {
   text-align: center;
   padding: 0 20px;
@@ -307,12 +309,12 @@
   -o-border-radius: 3px;
   -ms-border-radius: 3px;
 }
-/* line 156, ../sass/sass/_managePage.scss */
+/* line 158, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag ul .placeHolder div {
   background-color: #fff !important;
   border: dashed 1px #999 !important;
 }
-/* line 163, ../sass/sass/_managePage.scss */
+/* line 165, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag .selected-header {
   *zoom: 1;
   padding: 10px;
@@ -327,16 +329,16 @@
   clear: both;
   overflow: hidden;
 }
-/* line 168, ../sass/sass/_managePage.scss */
+/* line 170, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag .selected-header ul li div {
   background-color: #ed4848;
 }
-/* line 173, ../sass/sass/_managePage.scss */
+/* line 175, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag .selected-header > div {
   padding-bottom: 5px;
   border-bottom: 1px dashed #ccc;
 }
-/* line 180, ../sass/sass/_managePage.scss */
+/* line 182, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag .waiting-header {
   *zoom: 1;
   padding: 10px;
@@ -351,12 +353,12 @@
   clear: both;
   overflow: hidden;
 }
-/* line 183, ../sass/sass/_managePage.scss */
+/* line 185, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag .waiting-header > div {
   padding-bottom: 5px;
   border-bottom: 1px dashed #ccc;
 }
-/* line 188, ../sass/sass/_managePage.scss */
+/* line 190, ../sass/sass/_managePage.scss */
 #set_table_panel .table-header-drag .tips {
   width: auto;
   margin: 10px auto;
@@ -367,13 +369,13 @@
   line-height: 30px;
 }
 
-/* line 201, ../sass/sass/_managePage.scss */
+/* line 203, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason {
   padding: 0 10px;
   margin: 20px auto;
   font-size: 14px;
 }
-/* line 205, ../sass/sass/_managePage.scss */
+/* line 207, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason span.title, #logout_panel .logout-reason .living-info span.living-table-div, #logout_panel .living-info .logout-reason span.living-table-div {
   color: #5a5a5a;
   margin-right: 10px;
@@ -381,20 +383,20 @@
   text-align: right;
   width: 100px;
 }
-/* line 211, ../sass/sass/_managePage.scss */
+/* line 213, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason span.title i, #logout_panel .logout-reason .living-info span.living-table-div i, #logout_panel .living-info .logout-reason span.living-table-div i {
   color: #ed4848;
   margin-right: 5px;
 }
-/* line 217, ../sass/sass/_managePage.scss */
+/* line 219, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .select-reason {
   margin-bottom: 20px;
 }
-/* line 221, ../sass/sass/_managePage.scss */
+/* line 223, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason span {
   vertical-align: top;
 }
-/* line 224, ../sass/sass/_managePage.scss */
+/* line 226, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason textarea {
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -407,7 +409,7 @@
   height: 60px;
   overflow: auto;
 }
-/* line 232, ../sass/sass/_managePage.scss */
+/* line 234, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason ul.warning {
   padding: 0 27px 0 70px;
   list-style-type: none;
@@ -426,7 +428,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 239, ../sass/sass/_managePage.scss */
+/* line 241, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason ul.warning li {
   width: 50%;
   float: left;
@@ -435,19 +437,19 @@
   line-height: 20px;
   margin-bottom: 3px;
 }
-/* line 244, ../sass/sass/_managePage.scss */
+/* line 246, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason ul.warning li i {
   padding-right: 5px;
 }
-/* line 248, ../sass/sass/_managePage.scss */
+/* line 250, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason ul.warning li.li-full {
   width: 100%;
 }
-/* line 251, ../sass/sass/_managePage.scss */
+/* line 253, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .remark-reason ul.warning li.li-warning {
   color: #ed4848;
 }
-/* line 256, ../sass/sass/_managePage.scss */
+/* line 258, ../sass/sass/_managePage.scss */
 #logout_panel .logout-reason .tips {
   padding: 0 10px;
   text-align: right;
@@ -456,23 +458,23 @@
   height: 20px;
   line-height: 20px;
 }
-/* line 264, ../sass/sass/_managePage.scss */
+/* line 266, ../sass/sass/_managePage.scss */
 #logout_panel .living-info {
   height: 100%;
 }
-/* line 266, ../sass/sass/_managePage.scss */
+/* line 268, ../sass/sass/_managePage.scss */
 #logout_panel .living-info .title, #logout_panel .living-info .living-table-div {
   padding: 0 10px;
   margin: 10px auto;
   color: #5a5a5a;
   font-weight: bold;
 }
-/* line 272, ../sass/sass/_managePage.scss */
+/* line 274, ../sass/sass/_managePage.scss */
 #logout_panel .living-info .living-table-div {
   height: 100%;
   width: 778px;
 }
-/* line 277, ../sass/sass/_managePage.scss */
+/* line 279, ../sass/sass/_managePage.scss */
 #logout_panel .living-info .tips {
   padding: 0 10px;
   margin: 10px auto;
@@ -483,20 +485,20 @@
   line-height: 30px;
 }
 
-/* line 290, ../sass/sass/_managePage.scss */
+/* line 292, ../sass/sass/_managePage.scss */
 #export_panel .base-info, #export_panel .relation-info {
   width: 760px;
   margin: 10px auto 0;
 }
-/* line 293, ../sass/sass/_managePage.scss */
+/* line 295, ../sass/sass/_managePage.scss */
 #export_panel .base-info input, #export_panel .relation-info input {
   vertical-align: middle;
 }
-/* line 296, ../sass/sass/_managePage.scss */
+/* line 298, ../sass/sass/_managePage.scss */
 #export_panel .base-info span, #export_panel .relation-info span {
   font-size: 12px;
 }
-/* line 299, ../sass/sass/_managePage.scss */
+/* line 301, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title, #export_panel .relation-info .title, #export_panel .base-info #logout_panel .living-info .living-table-div, #logout_panel .living-info #export_panel .base-info .living-table-div, #export_panel .relation-info #logout_panel .living-info .living-table-div, #logout_panel .living-info #export_panel .relation-info .living-table-div {
   *zoom: 1;
   border-bottom: 1px dashed #ccc;
@@ -512,20 +514,20 @@
   clear: both;
   overflow: hidden;
 }
-/* line 303, ../sass/sass/_managePage.scss */
+/* line 305, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title .title-name, #export_panel .relation-info .title .title-name, #export_panel .base-info #logout_panel .living-info .living-table-div .title-name, #logout_panel .living-info #export_panel .base-info .living-table-div .title-name, #export_panel .relation-info #logout_panel .living-info .living-table-div .title-name, #logout_panel .living-info #export_panel .relation-info .living-table-div .title-name {
   float: left;
   font-weight: bold;
 }
-/* line 304, ../sass/sass/_managePage.scss */
+/* line 306, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title .title-name span, #export_panel .relation-info .title .title-name span, #export_panel .base-info #logout_panel .living-info .living-table-div .title-name span, #logout_panel .living-info #export_panel .base-info .living-table-div .title-name span, #export_panel .relation-info #logout_panel .living-info .living-table-div .title-name span, #logout_panel .living-info #export_panel .relation-info .living-table-div .title-name span {
   font-size: 18px;
 }
-/* line 310, ../sass/sass/_managePage.scss */
+/* line 312, ../sass/sass/_managePage.scss */
 #export_panel .base-info .title .title-btn, #export_panel .relation-info .title .title-btn, #export_panel .base-info #logout_panel .living-info .living-table-div .title-btn, #logout_panel .living-info #export_panel .base-info .living-table-div .title-btn, #export_panel .relation-info #logout_panel .living-info .living-table-div .title-btn, #logout_panel .living-info #export_panel .relation-info .living-table-div .title-btn {
   float: right;
 }
-/* line 314, ../sass/sass/_managePage.scss */
+/* line 316, ../sass/sass/_managePage.scss */
 #export_panel .base-info .content, #export_panel .relation-info .content {
   *zoom: 1;
   padding: 10px 0;
@@ -540,18 +542,18 @@
   clear: both;
   overflow: hidden;
 }
-/* line 317, ../sass/sass/_managePage.scss */
+/* line 319, ../sass/sass/_managePage.scss */
 #export_panel .base-info .content .item, #export_panel .relation-info .content .item {
   float: left;
   width: 120px;
   margin-bottom: 5px;
 }
-/* line 327, ../sass/sass/_managePage.scss */
+/* line 329, ../sass/sass/_managePage.scss */
 #export_panel .tips {
   width: 760px;
   margin: 10px auto 0;
 }
-/* line 330, ../sass/sass/_managePage.scss */
+/* line 332, ../sass/sass/_managePage.scss */
 #export_panel .tips i {
   color: #999;
   display: inline-block;
@@ -560,14 +562,14 @@
   zoom: 1;
   *dispaly: inline;
 }
-/* line 334, ../sass/sass/_managePage.scss */
+/* line 336, ../sass/sass/_managePage.scss */
 #export_panel .tips span {
   font-size: 12px;
   color: #999;
 }
 
 /*小区选择面板*/
-/* line 343, ../sass/sass/_managePage.scss */
+/* line 345, ../sass/sass/_managePage.scss */
 #xqmc_panel .query-div {
   margin: 20px 10px;
   padding-bottom: 20px;
@@ -584,13 +586,13 @@
   clear: both;
   overflow: hidden;
 }
-/* line 348, ../sass/sass/_managePage.scss */
+/* line 350, ../sass/sass/_managePage.scss */
 #xqmc_panel .query-div > a {
   float: right;
   _display: inline;
   margin-left: 5px;
 }
-/* line 353, ../sass/sass/_managePage.scss */
+/* line 355, ../sass/sass/_managePage.scss */
 #xqmc_panel .content-table {
   margin: 10px;
   *zoom: 1;
@@ -605,7 +607,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 357, ../sass/sass/_managePage.scss */
+/* line 359, ../sass/sass/_managePage.scss */
 #xqmc_panel .tip {
   padding: 10px 10px 0;
   *zoom: 1;
@@ -622,11 +624,11 @@
   clear: both;
   overflow: hidden;
 }
-/* line 362, ../sass/sass/_managePage.scss */
+/* line 364, ../sass/sass/_managePage.scss */
 #xqmc_panel .tip i {
   margin-right: 5px;
 }
-/* line 366, ../sass/sass/_managePage.scss */
+/* line 368, ../sass/sass/_managePage.scss */
 #xqmc_panel .tips {
   padding: 0 10px 20px;
   *zoom: 1;
