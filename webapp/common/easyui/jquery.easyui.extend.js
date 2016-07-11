@@ -931,7 +931,33 @@ function getIEVersion() {
         getLevel:function(jq,target){
             var l = $(target).parentsUntil("ul.tree","ul");
             return l.length+1;
-        }
+        },
+
+		//获取树选中节点（子节点）
+		getCheckedExt: function(jq){
+			var checked = $(jq).tree("getChecked");
+			var checkbox2 = $(jq).find("span.tree-checkbox2").parent();
+			$.each(checkbox2,function(){
+				var node = $.extend({}, $.data(this, "tree-node"), {
+					target : this
+				});
+				checked.push(node);
+			});
+			return checked;
+		},
+
+		//获取树实心节点(父节点)
+		getSolidExt:function(jq){
+			var checked =[];
+			var checkbox2 = $(jq).find("span.tree-checkbox2").parent();
+			$.each(checkbox2,function(){
+				var node = $.extend({}, $.data(this, "tree-node"), {
+					target : this
+				});
+				checked.push(node);
+			});
+			return checked;
+		}
 
 	});
 
