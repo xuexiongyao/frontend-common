@@ -957,7 +957,14 @@ function getIEVersion() {
 				checked.push(node);
 			});
 			return checked;
-		}
+		},
+
+        //unSelect
+        unSelect:function(jq,target){
+            return jq.each(function(){
+                $(target).removeClass("tree-node-selected");
+            });
+        }
 
 	});
 
