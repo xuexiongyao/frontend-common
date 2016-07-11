@@ -340,7 +340,12 @@ function normalSubmit(form_id, call_back, url) {
         },
 
         success: function (data) {
-            var json = eval('(' + data + ')');
+            try{
+                var json = eval('(' + data + ')');
+            }catch(e){
+                var json=data;
+            }
+
             formTips(json, call_back, 'tips');
         },
         error: function (data) {
