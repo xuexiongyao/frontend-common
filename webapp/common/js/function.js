@@ -25,6 +25,7 @@ function pageJump() {
  * 2.msg : 显示的文字,默认为加载中...
  * */
 function loading(type,msg){
+    var staticPath = 'http://static.jwzh.com:7777/jwzh';
     var msg = msg || '加载中...';
     var loading_img_url = staticPath +'/framework/default/images/loading.gif';
     var loading_html='<div id="loadingMsk" style="display:none">'

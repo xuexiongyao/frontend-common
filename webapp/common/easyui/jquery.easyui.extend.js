@@ -10,6 +10,7 @@
  * create time : 2014-05-01
  *
  */
+//全局初始化,在底部区域
 
 var IE = window.navigator.appVersion.toUpperCase().indexOf('MSIE') == -1 ? false : true;
 var IE_VERSION = getIEVersion();
@@ -1864,11 +1865,6 @@ function getIEVersion() {
 // 全局初始化
 // ****************************************************************************************************
 (function() {
-	$.ajaxSetup({
-		cache: false, // 禁用cache
-		data: {}
-	})
-
 	// 初始化 datagrid 默认属性
 	$.extend($.fn.datagrid.defaults, {
 		striped: true,
@@ -1882,7 +1878,6 @@ function getIEVersion() {
 		fit: true,
 		resizeHandle: 'right'
 	});
-
 	if (!window.console) { // 防止浏览器不支持console报错
 		window.console = {};
 		var funs = ["profiles", "memory", "_commandLineAPI", "debug", "error", "info", "log", "warn", "dir", "dirxml", "trace", "assert", "count", "markTimeline", "profile", "profileEnd", "time", "timeEnd", "timeStamp", "group", "groupCollapsed", "groupEnd"];
@@ -1890,10 +1885,13 @@ function getIEVersion() {
 			console[funs[i]] = function() {};
 		}
 	}
-
 	// 全局ajax处理
 	$(document).ajaxError(function(event, request, settings, thrownError) { // 请求失败处理
-		if (request.status == 418) {
+		console.log('global ajaxError info:',event, request, settings, thrownError);
+		//document.write(event.responseText);
+		alert('ajax请求错误\n\n url：'+settings.url+'\n 状态：'+request.status+'\n 错误信息：'+request.statusText);
+		return false;
+		/*if (request.status == 418) {
 			topMessager.alert(MESSAGER_TITLE, '用户操作超时，请重新登录！', 'error', function() {
 				window.location.href = basePath + "/index.jsp";
 			});
@@ -1907,9 +1905,13 @@ function getIEVersion() {
 			} else {
 				topMessager.alert(MESSAGER_TITLE, request.status+ ' ' + (result.message ? result.message : '操作失败'), 'error');
 			}
-		}
+		}*/
 	});
-
+	// ajax默认配置
+	$.ajaxSetup({
+		cache: false, // 禁用cache
+		data: {}
+	});
 })();
 
 // 顶层页面的 message 封装
