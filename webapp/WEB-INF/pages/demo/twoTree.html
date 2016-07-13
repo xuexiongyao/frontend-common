@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit"><!--默认360极速模式-->
+    <title>测试验证页面主页</title>
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/datepicker/skin/christ/datepicker.css">
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css">
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.min.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.dragsort-0.5.2.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.min.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <!--<script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.js"></script>-->
+    <script src="../../../common/easyui/jquery.easyui.extend.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.validatebox.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.tabs.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.form.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/tools.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/business.tools.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/windowTopPage.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/messenger.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/common.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/ajax.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/datepicker/WdatePicker.js"></script>
+    <script src="../../../common/tools/tree.extend.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <h2>树的层级判断</h2>
+    <div style="float: left;width: 50%;">
+        <div class="easyui-panel" style="padding:5px;height: 400px;">
+            <ul id="leftTree" class="easyui-tree"
+                data-options="
+                url: 'tree_data1.json',
+                method:'get',
+                lines:true,
+                checkbox:true">
+            </ul>
+        </div>
+    </div>
+    <div style="float: left;width: 50%;">
+        <div class="easyui-panel" style="padding:5px;height: 400px;">
+            <ul id="rightTree" class="easyui-tree"
+                data-options="
+                url: 'tree_data2.json',
+                method:'get',
+                lines:true,
+                checkbox:true,">
+            </ul>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="javascript:;" class="easyui-linkbutton" id="save">创建归属</a>
+        <a href="javascript:;" class="easyui-linkbutton" id="cancel">解除归属</a>
+        <a href="javascript:;" class="easyui-linkbutton" id="change">门楼牌更名</a>
+    </div>
+    <div id="gbq" style="width: 40%;border: 1px solid #ccc;float: left;min-height: 200px;">
+        <p>改变前</p>
+    </div>
+    <div id="gbh" style="width: 40%;border: 1px solid #ccc;float: right;min-height: 200px;">
+        <p>改变后</p>
+    </div>
+
+
+</div>
+
+<script>
+    var window_type = 'open_url';
+    var treeObject = $("#tree");
+
+    //        var staticPath = 'http://static.jwzh.com:7777/jwzh';//静态资源路径
+    var staticPath = '../../..';//静态资源路径
+
+    $(function () {
+        /*初始化*/
+        expandAllNode("leftTree");
+        expandAllNode("rightTree");
+        editSwitch(false,'clear-border','readonly');
+
+        /*函数执行*/
+        leftTreeLoad();
+        rightTreeLoad();
+
+        save();
+        jcgs();
+
+
+
+    });
+
+    //获得选中节点(子节点)
+    function getCheckedNode(){
+        var solids = $("#leftTree").tree("getCheckedExt");
+        var nodes = [];
+        $.each(solids,function(){
+            nodes.push(this.text);
+            //nodes.remove(undefined);//移除undefined
+        });
+        console.log(nodes);
+//        $.messager.show({
+//            title:'选择的节点是',
+//            msg: nodes.join(",")
+//        });
+    }
+
+    //左侧树加载
+    function leftTreeLoad(){
+        $("#leftTree").tree({
+            onCheck: function (node,checked) {
+                if(checked) {
+                    var $this = $(this);
+                    var lev = $this.tree('getLevel', node.target);
+                    if (lev != 3) {//只能选择门牌号级别
+                        $.messager.alert({
+                            title: "温馨提示",
+                            msg: "待编辑街路巷拆分/合并只能勾选街路巷下级门牌号",
+                            fn: function () {
+                                $this.tree("uncheck", node.target);
+                            }
+                        })
+                    }
+                    getCheckedNode();
+                }
+            }
+        })
+    }
+
+    //右侧树加载
+    function rightTreeLoad(){
+        $("#rightTree").tree({
+            onCheck: function (node,checked) {
+                //判断是否为叶子结点
+                if(checked){
+                    var $this = $(this);
+                    var isLeaf = $this.tree('isLeaf',node.target);
+                    var lev = $this.tree('getLevel',node.target);
+                    var solids = $("#rightTree").tree("getSolidExt");
+                    console.log(solids);
+                    var nodes = [];
+                    $.each(solids,function(){
+                        nodes.push(this.target.innerText);
+                    });
+                    console.log(nodes);
+                    //只能选择街路巷
+//                    if(lev != 5){
+//                        $.messager.alert({
+//                            title: "温馨提示",
+//                            msg: "编辑为街路巷只能勾选街路巷这一级",
+//                            fn: function () {
+//                                $this.tree("uncheck",node.target);
+//                            }
+//                        })
+//                    }
+//                    else{
+//                        //判断该街路巷下是否有门牌号，如果有门牌号，则不能选择为被归属街路巷
+//                        if(!isLeaf){
+//                            $.messager.alert({
+//                                title: "提示",
+//                                msg: "该街路巷下已有门牌号，不能选择为被归属对象",
+//                                fn: function () {
+//                                    $this.tree("uncheck",node.target);
+//                                }
+//                            });
+//                        }
+//                    }
+                }
+            }
+        });
+    }
+
+    //展开所有节点
+    function expandAllNode(treeId){
+        $("#"+treeId).tree({
+            onLoadSuccess: function (node,data) {
+                var $this = $(this);
+                if(data){
+                    $this.tree("expandAll");
+                }
+            }
+        });
+    }
+
+    var leftNodes = [];
+    //获取选择节点
+    function getLeftTreeCheckedNode(treeId){
+        var solids = $("#"+treeId).tree("getCheckedExt");
+        leftNodes = [];
+        $.each(solids,function(i,o){
+            var tree_node_obj = {};
+
+            tree_node_obj.id = o.id;
+            tree_node_obj.text = o.text;
+
+            leftNodes.push(tree_node_obj);
+        });
+    }
+
+    //创建归属
+    function save(){
+        $("#save").off("click").on("click", function () {
+            //获取左侧选中节点
+            //getLeftTreeCheckedNode("leftTree");
+            var nodeLeft = $('#leftTree').tree('getChecked');
+            var nodeRight = $('#rightTree').tree('getChecked');
+            var parentNode = nodeRight[0].target;
+            //console.log(nodeLeft);
+
+            /*树的操作*/
+            if (nodeRight){
+                //左侧树移除
+                for(var j=0;j<nodeLeft.length;j++){
+                    $('#leftTree').tree("pop",nodeLeft[j].target);
+                }
+                //右侧树添加
+                $('#rightTree').tree('append', {
+                    parent: parentNode,
+                    data: nodeLeft
+                })/*.tree("uncheck",parentNode)*/;
+
+
+                //更名
+                //检测同名
+                var mphNameArr = [];
+                //var new_nodeLeft = [];
+                for(var i = 0;i<nodeLeft.length;i++){
+                    var mphName = nodeLeft[i]['text'];
+//                    var new_name = mphName;
+                    if($.inArray(mphName,mphNameArr) != -1){
+                        $.messager.alert({
+                            title: "提示",
+                            msg: "拆分/合并后门牌号重名,请点击‘门楼牌更名’按钮修改门楼牌名称"
+                        });
+                        //alert('gaiming');
+                        //nodeLeft[i]['text'] = nodeLeft[i]['text'] + 'haha';
+                        //new_nodeLeft[i] = nodeLeft[i];
+                        //new_name = nodeLeft[i]['text'];
+                    }
+                    mphNameArr.push(mphName);
+                }
+                //console.log(mphNameArr)
+
+
+
+
+                /*预览区*/
+                //改变前
+                for(var i=0;i<nodeLeft.length;i++){
+                    var strL = '<input class="val easyui-textbox readonly" style="width: 100%;" value='+nodeLeft[i].text+'>';
+                    $("#gbq").append(strL);
+                    //easyui 初始化
+                    $("#gbq .easyui-textbox").textbox();
+                }
+                //改变后
+                for(var h=0;h<nodeRight.length;h++){
+                    var strR = '<input class="val easyui-textbox readonly" style="width: 100%;" value='+nodeRight[h].text+'>';
+                    $("#gbh").append(strR);
+                    //easyui 初始化
+                    $("#gbh .easyui-textbox").textbox();
+                }
+            }
+        })
+    }
+    //解除归属
+    function jcgs(){
+        $("#cancel").off('click').on('click', function () {
+            $('#leftTree').tree("reload");
+            $('#rightTree').tree("reload");
+        })
+    }
+
+    mphNameChange();
+    //门牌号更名
+    function mphNameChange(){
+        $("#change").off('click').on('click', function () {
+           console.log($('#rightTree').tree("getChecked"))
+    })
+    }
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+[{
+	"id":1,
+	"text":"My Documents",
+	"children":[{
+		"id":11,
+		"text":"天府大道",
+		"state":"closed",
+		"children":[{
+			"id":111,
+			"text":"1号"
+		},{
+			"id":112,
+			"text":"2号"
+		},{
+			"id":113,
+			"text":"3号"
+		}]
+	},{
+		"id":12,
+		"text":"总府路",
+		"children":[{
+			"id":121,
+			"text":"1号"
+		},{
+			"id":122,
+			"text":"4号",
+			"attributes":{
+				"p1":"Custom Attribute1",
+				"p2":"Custom Attribute2"
+			}
+		},{
+			"id":123,
+			"text":"5号"
+		},{
+			"id":124,
+			"text":"2号"
+		}]
+	},{
+		"id":13,
+		"text":"index.html",
+		"children":[{
+			"id":1278,
+			"text":"1号"
+		},{
+			"id":1223,
+			"text":"4号",
+			"attributes":{
+				"p1":"Custom Attribute1",
+				"p2":"Custom Attribute2"
+			}
+		},{
+			"id":1234,
+			"text":"5号"
+		},{
+			"id":1243,
+			"text":"2号"
+		}]
+	},{
+		"id":14,
+		"text":"about.html"
+	},{
+		"id":15,
+		"text":"welcome.html"
+	}]
+}]
