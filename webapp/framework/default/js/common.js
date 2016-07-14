@@ -99,7 +99,7 @@ function addTab(title,url,tab_id,return_tab_id,repeat){
         }
     }*/
     handleTab();        //绑定菜单事件:右键,双击等
-    setTimeout(function(){loading('close');},5000);
+    setTimeout(function(){loading('close');},1000);
 }
 
 //递归方式给Tab的相同title +1,以示区分;

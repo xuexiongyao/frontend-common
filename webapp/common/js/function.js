@@ -521,32 +521,40 @@ function openUrlForm(options, btn_diy) {
  * 2.btn_diy : 数组参数(自定义按钮操作)
  * */
 function openDivForm(options, btn_diy) {
-    /*参数使用说明举例
-     openDivForm({
-     id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
-     title: '表单提交',
-     width: 800,
-     height: 200,
-     top: 200,
-     beforeSubmit: function () {
-     }, //return false,阻止提交
-     afterSubmit: function (data) {
-     }, //提交成功,data为返回的数据
-     onClose: function () {
-     },             //关闭时提交的函数
-     }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
-     {
-     text: '确定',
-     handler: function () {
-     $('#div_id').dialog('close');
-     }
-     }, {
-     text: '关闭',
-     handler: function () {
-     $('#div_id').dialog('close');
-     }
-     },
-     ]);*/
+    //参数使用说明举例
+    //只弹窗的用法
+    /*openDivForm({
+        id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+        title: '表单提交',
+        width: 800,
+        height: 200,
+    }, []);*/
+    //提交表单的用法
+    /*openDivForm({
+        id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+        title: '表单提交',
+        width: 800,
+        height: 200,
+        top: 200,
+        beforeSubmit: function () {
+        }, //return false,阻止提交
+        afterSubmit: function (data) {
+        }, //提交成功,data为返回的数据
+        onClose: function () {
+        },             //关闭时提交的函数
+    }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
+        {
+            text: '确定',
+            handler: function () {
+                $('#div_id').dialog('close');
+            }
+        }, {
+            text: '关闭',
+            handler: function () {
+                $('#div_id').dialog('close');
+            }
+        },
+    ]);*/
     var dlg_id = options.id;
     var dlg_div = $('#' + dlg_id);
     var defualt_beforeSubmit = function () {
