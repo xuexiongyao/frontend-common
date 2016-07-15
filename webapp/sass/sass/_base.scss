@@ -4,9 +4,10 @@
 
 //main框架
 .main {
-    margin: 15px auto 0;
+    margin: 15px auto;
     //padding: 1px 0 30px;
     width: 1198px;
+    padding-bottom:15px;
     height: auto;
     //@include border(1px, solid, colors(borderColor));
     background-color: colors(white);

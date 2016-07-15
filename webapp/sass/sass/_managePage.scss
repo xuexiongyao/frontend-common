@@ -10,16 +10,15 @@
         width: 1100px;
         .top-btn{
             position: relative;
-            margin-bottom:5px;
-            height: 30px;
-            line-height: 30px;
+            margin-bottom:10px;
+            padding-top: 20px;
+            @include text-vertical-center(30px);
+            @include clearfix;
             .help{
-                position: absolute;
-                right: 0;
-                top:0;
+                @include float(right);
                 line-height: 30px;
                 cursor: pointer;
-                color: #0e6595;
+                color: colors(primary);
             }
         }
         .panel {
