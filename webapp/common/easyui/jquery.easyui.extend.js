@@ -1887,10 +1887,10 @@ function getIEVersion() {
 	}
 	// 全局ajax处理
 	$(document).ajaxError(function(event, request, settings, thrownError) { // 请求失败处理
-		console.log('global ajaxError info:',event, request, settings, thrownError);
+		console.log('ajax请求错误:',event, request, settings, thrownError);
 		//document.write(event.responseText);
-		alert('ajax请求错误\n\n url：'+settings.url+'\n 状态：'+request.status+'\n 错误信息：'+request.statusText);
-		return false;
+		//alert('ajax请求错误\n\n url：'+settings.url+'\n 状态：'+request.status+'\n 错误信息：'+request.statusText);
+		//return false;
 		/*if (request.status == 418) {
 			topMessager.alert(MESSAGER_TITLE, '用户操作超时，请重新登录！', 'error', function() {
 				window.location.href = basePath + "/index.jsp";
