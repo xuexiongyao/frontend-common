@@ -57,7 +57,7 @@ function addTab(title,url,tab_id,return_tab_id,repeat){
     //console.log('addTab参数:',arguments);
     if(!title || !url || !tab_id){
         loading('close');
-        alert('addTab 缺少必要参数!');
+        console.log('addTab 缺少必要参数!');
         return false;
     }
     //判断title是否存在,存在的话添加标示符号
@@ -339,7 +339,7 @@ function loading(type,msg){
     }else if(type == 'close'){
         $('#loadingMsk').fadeOut('fast').remove();
     }else{
-        alert('加载效果处理方式参数错误!');
+        console.log('加载效果处理方式参数错误!');
         return false;
     }
 }

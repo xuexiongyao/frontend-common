@@ -42,7 +42,7 @@ function loading(type,msg){
     }else if(type == 'close'){
         $('#loadingMsk').fadeOut('fast').remove();
     }else{
-        alert('加载效果处理方式参数错误!');
+        console.log('加载效果处理方式参数错误!');
         return false;
     }
 }
@@ -52,9 +52,8 @@ function crossAddTab(tab_title, tab_url, tab_id) {
 
     //将当前tabID作为下一个tab的返回ID
     var return_tab_id = window.current_tab_id;
-    //alert(return_tab_id);
     if (!tab_title || !tab_url || !tab_id) {
-        alert('crossAddTab(tab_title,tab_url,tab_id) 缺少必要参数!');
+        console.log('crossAddTab(tab_title,tab_url,tab_id) 缺少必要参数!');
         return false;
     }
     //添加tab时,通过全局获取返回的tab_id,并存放在iframe的DOM属性中
@@ -322,7 +321,7 @@ function formTips(json, success_fn, type) {
                     fn(json);
                 }
             } catch (e) {
-                alert('请确认函数success_fn,是否存在');
+                console.log('请确认函数success_fn,是否存在');
             }
         } else {
             $.messager.show({

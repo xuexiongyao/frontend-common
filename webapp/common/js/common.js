@@ -40,8 +40,7 @@ $(function () {
                 try {
                     eval(content);
                 } catch (e) {
-                    alert('请确认页面中' + content + '函数是否定义');
-                    //console.log('toIframe提示:',content + ' is not a function');
+                    console.log('toIframe提示:,请确认页面中 ' + content + ' is not a function');
                 }
             } else if (status == 'get_tab_id') {
                 var content_arr = content.split(',');

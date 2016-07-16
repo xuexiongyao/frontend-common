@@ -1911,7 +1911,7 @@ function getIEVersion() {
 				topMessager.alert(MESSAGER_TITLE, request.status+ ' ' + (result.message ? result.message : '操作失败'), 'error');
 			}
 		}*/
-	});
+	}).ajaxComplete(function() {loading('close');});
 	// ajax默认配置
 	$.ajaxSetup({
 		cache: false, // 禁用cache
