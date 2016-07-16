@@ -808,7 +808,12 @@ function getIEVersion() {
             //        $(this).tree('collapse', node.target);
             //    }
             //}
-        }
+        },
+		//阻止右键菜单
+		onContextMenu: function(e, node){
+			e.preventDefault();
+		}
+
 	});
 
 	var methods = $.extend({}, $.fn.tree.methods, {

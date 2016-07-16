@@ -56,6 +56,7 @@ function addTab(title,url,tab_id,return_tab_id,repeat){
     loading('open','正在打开页面,请稍候...');
     //console.log('addTab参数:',arguments);
     if(!title || !url || !tab_id){
+        loading('close');
         alert('addTab 缺少必要参数!');
         return false;
     }
