@@ -648,21 +648,11 @@ function openDivForm(options, btn_diy) {
 function editSwitch(bool, border_class, box_class) {
     var _border_class = border_class || 'clear-border';
     var box = $('.val');
-    if (box_class) {
-        box = $('.' + box_class);
-    }
-
+    if (box_class) {box = $('.' + box_class);}
     //启用编辑
     if (bool) {
-        /*后面完善
-         $('.combo').on('click.showPanel',function(){
-         $(this).prev().combobox("showPanel");
-         });
-         */
         box.each(function () {
             var _this = $(this);
-
-            //show“*”
             _this.prev().find('i').show();
 
             if (_this.hasClass('easyui-combobox')) {
@@ -681,7 +671,6 @@ function editSwitch(bool, border_class, box_class) {
             _this.next().find('span.textbox-addon').show();//显示按钮
         });
     } else {
-        //$('.combo').off('click.showPanel'); //后面完善
         box.each(function () {
             var _this = $(this);
 
