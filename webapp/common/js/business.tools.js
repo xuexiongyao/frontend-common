@@ -874,3 +874,818 @@ function checkLxdh(lxdh_id, ryid_id) {
 		$("#" + lxdh_id).attr("lxdh", $("#" + lxdh_id).val());
 	}
 }
+
+
+
+/**************************************组织机构相关函数**********************************/
+//组织机构部门名称初始化（用于数据库只保存部门代码，初始化显示部门名称时用）
+// orgCodeInputID  部门代码输入框的ID
+// orgNameInputID  部门显示输入框的ID
+function public_getOrgName(orgCodeInputID, orgNameInputID) {
+	if (orgCodeInputID && orgNameInputID) {
+		var orgCodeValue = $('#' + orgCodeInputID).val();
+		if (orgCodeValue != "") {
+			$.ajax({
+				xhrFields: {withCredentials: true},
+				crossDomain: true,
+				type: "POST",
+				url: basePath + "/orgPublicSelect/getOrgName",
+				dataType: "json",
+				data: "orgCodes="+orgCodeValue,
+				success: function(data) {
+					if (data) {
+						$('#' + orgNameInputID).val(data);
+					}
+				}
+			});
+		}
+	}
+}
+
+// 组织机构部门选择（单选）
+// rootOrgCode     部门树根结点代码（为空时为整个部门树）
+// orgType         部门类型（=01只能选择部门；=02只能选择工作组，为空可以选择部门和工作组）
+// orgLevel        部门等级过滤（多个时用逗号分隔）
+// orgBizType      部门业务类型过滤（多个时用逗号分隔）
+// orgCodeInputID  部门代码输入框的ID
+// orgNameInputID  部门显示输入框的ID
+// orgIDInputID    部门ID输入框的ID（不需要返回部门ID该参数时为''或null）
+// allExcludeChild 该参数在单选中无用
+// isCache         是否缓存页面（默认为false不缓存）
+// windowID        窗口的ID（isCache=true，windowID确保在同一个页面中唯一；isCache=false，windowID可以不指定；）
+// parentWindow    调用页面的window对象
+// onOkMethod      对话中点击确认后执行原页面中的方法（如：“orgSelect_onOk”）
+// dialogTitle     对话框的标题
+function public_singleSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgCodeInputID, orgNameInputID, orgIDInputID, allExcludeChild, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+	if (isCache) {
+		if (windowID == null || windowID == "") {
+			$.messager.alert('页面错误','组织机构部门选择public_singleSelectOrg()方法：<br><br>参数 windowID 不能为空！','error');
+			return;
+		}
+	}
+	if (!windowID) {
+		var myTime = (new Date()).getTime();
+		windowID = "win_" + myTime;
+	}
+	if ("undefined" == typeof rootOrgCode || rootOrgCode == null) {
+		rootOrgCode = "";
+	}
+	if ("undefined" == typeof orgType || orgType == null) {
+		orgType = "";
+	}
+	if ("undefined" == typeof orgLevel || orgLevel == null) {
+		orgLevel = "";
+	}
+	if ("undefined" == typeof orgBizType || orgBizType == null) {
+		orgBizType = "";
+	}
+	if ("undefined" == typeof onOkMethod || onOkMethod == null) {
+		onOkMethod = "";
+	}
+	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
+		dialogTitle = "组织机构部门选择";
+	}
+	var openURL = basePath + "/orgPublicSelect/singleSelect?rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType;
+	var paramArray = [];
+	paramArray['parentWindow'] = parentWindow;
+	paramArray['orgCodeInputID'] = orgCodeInputID;
+	paramArray['orgNameInputID'] = orgNameInputID;
+	paramArray['orgIDInputID'] = orgIDInputID;
+	paramArray['onOkMethod'] = onOkMethod;
+	var dataOptions = {
+		title: '&nbsp;' + dialogTitle,
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
+		maximizable: false,
+		closable: true,
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
+	};
+	dataOptions.buttons = [
+		{
+			text: '确定',
+			iconCls: 'icon-ok',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				if (iframeObject.ok_execute()) {
+					$('#' + windowID).dialog('close');
+					if (onOkMethod != null && onOkMethod != "") {
+						try {
+							var parentWinObject = parentWindow;
+							if (parentWinObject.contentWindow) {
+								parentWinObject = parentWinObject.contentWindow;
+							}
+							eval("parentWinObject." + onOkMethod + "(orgCodeInputID)");
+						}
+						catch (err) {
+							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+						}
+					}
+				}
+			}
+		},
+		{
+			text: '清空',
+			iconCls: 'icon-remove',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				iframeObject.clear_execute();
+				$('#' + windowID).dialog('close');
+				if (onOkMethod != null && onOkMethod != "") {
+					try {
+						var parentWinObject = parentWindow;
+						if (parentWinObject.contentWindow) {
+							parentWinObject = parentWinObject.contentWindow;
+						}
+						eval("parentWinObject." + onOkMethod + "(orgCodeInputID)");
+					}
+					catch (err) {
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+					}
+				}
+			}
+		},
+		{
+			text: '关闭',
+			iconCls: 'icon-cancel',
+			handler: function() {
+				$('#' + windowID).dialog('close');
+			}
+		}
+	];
+	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
+}
+
+// 组织机构部门选择（多选）
+// rootOrgCode     部门树根结点代码（为空时为整个部门树）
+// orgType         部门类型（=01只能选择部门；=02只能选择工作组，为空可以选择部门和工作组）
+// orgLevel        部门等级过滤（多个时用逗号分隔）
+// orgBizType      部门业务类型过滤（多个时用逗号分隔）
+// orgCodeInputID  部门代码输入框的ID
+// orgNameInputID  部门显示输入框的ID
+// orgIDInputID    部门ID输入框的ID（不需要返回部门ID该参数时为''或null）
+// allExcludeChild 父结点选中了就不包括子结点（默认为false）
+// isCache         是否缓存页面（默认为false不缓存）
+// windowID        窗口的ID（isCache=true，windowID确保在同一个页面中唯一；isCache=false，windowID可以不指定；）
+// parentWindow    调用页面的window对象
+// onOkMethod      对话中点击确认后执行原页面中的方法（如：“orgSelect_onOk”）
+// dialogTitle     对话框的标题
+function public_multiSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgCodeInputID, orgNameInputID, orgIDInputID, allExcludeChild, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+	if (isCache) {
+		if (windowID == null || windowID == "") {
+			$.messager.alert('页面错误','组织机构部门选择public_multiSelectOrg()方法：<br><br>参数 windowID 不能为空！','error');
+			return;
+		}
+	}
+	if (!windowID) {
+		var myTime = (new Date()).getTime();
+		windowID = "win_" + myTime;
+	}
+	if ("undefined" == typeof rootOrgCode || rootOrgCode == null) {
+		rootOrgCode = "";
+	}
+	if ("undefined" == typeof orgType || orgType == null) {
+		orgType = "";
+	}
+	if ("undefined" == typeof orgLevel || orgLevel == null) {
+		orgLevel = "";
+	}
+	if ("undefined" == typeof orgBizType || orgBizType == null) {
+		orgBizType = "";
+	}
+	if ("undefined" == typeof allExcludeChild || allExcludeChild == null) {
+		allExcludeChild = false;
+	}
+	if ("undefined" == typeof onOkMethod || onOkMethod == null) {
+		onOkMethod = "";
+	}
+	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
+		dialogTitle = "组织机构部门选择";
+	}
+	var orgCodeString = "";
+	var parentWinObject = parentWindow;
+	if (parentWinObject.contentWindow) {
+		parentWinObject = parentWinObject.contentWindow;
+	}
+	if (orgCodeInputID && parentWinObject.$('#' + orgCodeInputID).length > 0) {
+		orgCodeString = parentWinObject.$('#' + orgCodeInputID).val();
+	}
+	var otherOrgCode = "";
+	if (orgCodeString.length > 1900) { // IE最大支持2048个字符
+		var tempString = orgCodeString.substring(0, 1900);
+		var atI = tempString.lastIndexOf(",");
+		otherOrgCode = orgCodeString.substr(atI + 1);
+		orgCodeString = orgCodeString.substring(0, atI);
+	}
+	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType;
+	urlParameter += "&orgCodeString=" + orgCodeString;
+	var openURL = basePath + "/orgPublicSelect/multiSelect?" + urlParameter;
+	var paramArray = [];
+	paramArray['parentWindow'] = parentWindow;
+	paramArray['orgCodeInputID'] = orgCodeInputID;
+	paramArray['orgNameInputID'] = orgNameInputID;
+	paramArray['orgIDInputID'] = orgIDInputID;
+	paramArray['allExcludeChild'] = allExcludeChild;
+	paramArray['onOkMethod'] = onOkMethod;
+	paramArray['otherOrgCode'] = otherOrgCode;
+	var dataOptions = {
+		title: '&nbsp;' + dialogTitle,
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
+		maximizable: false,
+		closable: true,
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
+	};
+	dataOptions.buttons = [
+		{
+			text: '确定',
+			iconCls: 'icon-ok',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				iframeObject.ok_execute();
+				$('#' + windowID).dialog('close');
+				if (onOkMethod != null && onOkMethod != "") {
+					try {
+						var parentWinObject = parentWindow;
+						if (parentWinObject.contentWindow) {
+							parentWinObject = parentWinObject.contentWindow;
+						}
+						eval("parentWinObject." + onOkMethod + "(orgCodeInputID)");
+					}
+					catch (err) {
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+					}
+				}
+			}
+		},
+		{
+			text: '关闭',
+			iconCls: 'icon-cancel',
+			handler: function() {
+				$('#' + windowID).dialog('close');
+			}
+		}
+	];
+	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
+}
+
+// 组织机构人员选择（单选）
+// rootOrgCode        部门树根结点代码（为空时为整个部门树）
+// orgType            部门类型（=01只能选择部门；=02只能选择工作组，为空可以选择部门和工作组）
+// orgLevel           部门等级过滤（多个时用逗号分隔）
+// orgBizType         部门业务类型过滤（多个时用逗号分隔）
+// userPositions      人员虚拟岗位表POSID过滤（多个时用逗号分隔）
+// initFocusOrgCode   无已选择的人员时，初始定位部门代码
+// userIDInputID      人员userID输入框的ID
+// userNameInputID    人员显示输入框的ID
+// userTableIDInputID 人员ID输入框的ID（不需要返回人员ID该参数时为''或null）
+// orgCodeInputID     部门代码输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgNameInputID     部门显示输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgIDInputID       部门ID输入框的ID（不需要返回部门ID该参数时为''或null）
+// isCache            是否缓存页面（默认为false不缓存）
+// windowID           窗口的ID（isCache=true，windowID确保在同一个页面中唯一；isCache=false，windowID可以不指定；）
+// parentWindow       调用页面的window对象
+// onOkMethod         对话中点击确认后执行原页面中的方法（如：“orgUserSelect_onOk”）
+// dialogTitle        对话框的标题
+function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, userPositions, initFocusOrgCode, userIDInputID, userNameInputID, userTableIDInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+	if (isCache) {
+		if (windowID == null || windowID == "") {
+			$.messager.alert('页面错误','组织机构人员选择public_singleSelectOrgUser()方法：<br><br>参数 windowID 不能为空！','error');
+			return;
+		}
+	}
+	if (!windowID) {
+		var myTime = (new Date()).getTime();
+		windowID = "win_" + myTime;
+	}
+	if ("undefined" == typeof rootOrgCode || rootOrgCode == null) {
+		rootOrgCode = "";
+	}
+	if ("undefined" == typeof orgType || orgType == null) {
+		orgType = "";
+	}
+	if ("undefined" == typeof orgLevel || orgLevel == null) {
+		orgLevel = "";
+	}
+	if ("undefined" == typeof orgBizType || orgBizType == null) {
+		orgBizType = "";
+	}
+	if ("undefined" == typeof userPositions || userPositions == null) {
+		userPositions = "";
+	}
+	if ("undefined" == typeof initFocusOrgCode || initFocusOrgCode == null) {
+		initFocusOrgCode = "";
+	}
+	if ("undefined" == typeof onOkMethod || onOkMethod == null) {
+		onOkMethod = "";
+	}
+	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
+		dialogTitle = "组织机构人员选择";
+	}
+	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType + "&userPositions=" + userPositions + "&initFocusOrgCode=" + initFocusOrgCode;
+	var userIdString = "";
+	var parentWinObject = parentWindow;
+	if (parentWinObject.contentWindow) {
+		parentWinObject = parentWinObject.contentWindow;
+	}
+	if (userIDInputID && parentWinObject.$('#' + userIDInputID).length > 0) {
+		userIdString = parentWinObject.$('#' + userIDInputID).val();
+	}
+	var userTableIdString = "";
+	if (userTableIDInputID && parentWinObject.$('#' + userTableIDInputID).length > 0) {
+		userTableIdString = parentWinObject.$('#' + userTableIDInputID).val();
+	}
+	urlParameter += "&userIdString=" + userIdString + "&userTableIdString=" + userTableIdString;
+	var openURL = basePath + "/orgUserPublicSelect/singleSelect?" + urlParameter;
+	var paramArray = [];
+	paramArray['parentWindow'] = parentWindow;
+	paramArray['userIDInputID'] = userIDInputID;
+	paramArray['userNameInputID'] = userNameInputID;
+	paramArray['userTableIDInputID'] = userTableIDInputID;
+	paramArray['orgCodeInputID'] = orgCodeInputID;
+	paramArray['orgNameInputID'] = orgNameInputID;
+	paramArray['orgIDInputID'] = orgIDInputID;
+	paramArray['onOkMethod'] = onOkMethod;
+	var dataOptions = {
+		title: '&nbsp;' + dialogTitle,
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
+		maximizable: false,
+		closable: true,
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
+	};
+	dataOptions.buttons = [
+		{
+			text: '确定',
+			iconCls: 'icon-ok',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				if (iframeObject.ok_execute()) {
+					$('#' + windowID).dialog('close');
+					if (onOkMethod != null && onOkMethod != "") {
+						try {
+							var parentWinObject = parentWindow;
+							if (parentWinObject.contentWindow) {
+								parentWinObject = parentWinObject.contentWindow;
+							}
+							eval("parentWinObject." + onOkMethod + "(userIDInputID)");
+						}
+						catch (err) {
+							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+						}
+					}
+				}
+			}
+		},
+		{
+			text: '清空',
+			iconCls: 'icon-remove',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				iframeObject.clear_execute();
+				$('#' + windowID).dialog('close');
+				if (onOkMethod != null && onOkMethod != "") {
+					try {
+						var parentWinObject = parentWindow;
+						if (parentWinObject.contentWindow) {
+							parentWinObject = parentWinObject.contentWindow;
+						}
+						eval("parentWinObject." + onOkMethod + "(userIDInputID)");
+					}
+					catch (err) {
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+					}
+				}
+			}
+		},
+		{
+			text: '关闭',
+			iconCls: 'icon-cancel',
+			handler: function() {
+				$('#' + windowID).dialog('close');
+			}
+		}
+	];
+	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
+}
+
+// 组织机构人员选择（多选）
+// rootOrgCode        部门树根结点代码（为空时为整个部门树）
+// orgType            部门类型（=01只能选择部门；=02只能选择工作组，为空可以选择部门和工作组）
+// orgLevel           部门等级过滤（多个时用逗号分隔）
+// orgBizType         部门业务类型过滤（多个时用逗号分隔）
+// userPositions      人员虚拟岗位表POSID过滤（多个时用逗号分隔）
+// initFocusOrgCode   无已选择的人员时，初始定位部门代码
+// userIDInputID      人员userID输入框的ID
+// userNameInputID    人员显示输入框的ID
+// userTableIDInputID 人员ID输入框的ID（不需要返回人员ID该参数时为''或null）
+// orgCodeInputID     部门代码输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgNameInputID     部门显示输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgIDInputID       部门ID输入框的ID（不需要返回部门ID该参数时为''或null）
+// isCache            是否缓存页面（默认为false不缓存）
+// windowID           窗口的ID（isCache=true，windowID确保在同一个页面中唯一；isCache=false，windowID可以不指定；）
+// parentWindow       调用页面的window对象
+// onOkMethod         对话中点击确认后执行原页面中的方法（如：“orgUserSelect_onOk”）
+// dialogTitle        对话框的标题
+function public_multiSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, userPositions, initFocusOrgCode, userIDInputID, userNameInputID, userTableIDInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle,listOptions) {
+	if (isCache) {
+		if (windowID == null || windowID == "") {
+			$.messager.alert('页面错误','组织机构人员选择public_multiSelectOrgUser()方法：<br><br>参数 windowID 不能为空！','error');
+			return;
+		}
+	}
+	if (!windowID) {
+		var myTime = (new Date()).getTime();
+		windowID = "win_" + myTime;
+	}
+	if ("undefined" == typeof rootOrgCode || rootOrgCode == null) {
+		rootOrgCode = "";
+	}
+	if ("undefined" == typeof orgType || orgType == null) {
+		orgType = "";
+	}
+	if ("undefined" == typeof orgLevel || orgLevel == null) {
+		orgLevel = "";
+	}
+	if ("undefined" == typeof orgBizType || orgBizType == null) {
+		orgBizType = "";
+	}
+	if ("undefined" == typeof userPositions || userPositions == null) {
+		userPositions = "";
+	}
+	if ("undefined" == typeof initFocusOrgCode || initFocusOrgCode == null) {
+		initFocusOrgCode = "";
+	}
+	if ("undefined" == typeof onOkMethod || onOkMethod == null) {
+		onOkMethod = "";
+	}
+	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
+		dialogTitle = "组织机构人员选择";
+	}
+	if ("undefined" == typeof listOptions || listOptions == null || listOptions == "") {
+		listOptions = "";
+	}
+	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType + "&userPositions=" + userPositions + "&initFocusOrgCode=" + initFocusOrgCode+"&listOptions="+listOptions;
+	var userIdString = "";
+	var parentWinObject = parentWindow;
+	if (parentWinObject.contentWindow) {
+		parentWinObject = parentWinObject.contentWindow;
+	}
+	if (userIDInputID && parentWinObject.$('#' + userIDInputID).length > 0) {
+		userIdString = parentWinObject.$('#' + userIDInputID).val();
+	}
+	var userTableIdString = "";
+	if (userTableIDInputID && parentWinObject.$('#' + userTableIDInputID).length > 0) {
+		userTableIdString = parentWinObject.$('#' + userTableIDInputID).val();
+	}
+	urlParameter += "&userIdString=" + userIdString + "&userTableIdString=" + userTableIdString;
+	var openURL = basePath + "/orgUserPublicSelect/multiSelect?" + urlParameter;
+	var paramArray = [];
+	paramArray['parentWindow'] = parentWindow;
+	paramArray['userIDInputID'] = userIDInputID;
+	paramArray['userNameInputID'] = userNameInputID;
+	paramArray['userTableIDInputID'] = userTableIDInputID;
+	paramArray['orgCodeInputID'] = orgCodeInputID;
+	paramArray['orgNameInputID'] = orgNameInputID;
+	paramArray['orgIDInputID'] = orgIDInputID;
+	paramArray['onOkMethod'] = onOkMethod;
+	paramArray['listOptions'] = listOptions;
+	var dataOptions = {
+		title: '&nbsp;' + dialogTitle,
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
+		maximizable: false,
+		closable: true,
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
+	};
+	dataOptions.buttons = [
+		{
+			text: '确定',
+			iconCls: 'icon-ok',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				iframeObject.ok_execute();
+				$('#' + windowID).dialog('close');
+				if (onOkMethod != null && onOkMethod != "") {
+					try {
+						var parentWinObject = parentWindow;
+						if (parentWinObject.contentWindow) {
+							parentWinObject = parentWinObject.contentWindow;
+						}
+						eval("parentWinObject." + onOkMethod + "(userIDInputID)");
+					}
+					catch (err) {
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+					}
+				}
+			}
+		},
+		{
+			text: '关闭',
+			iconCls: 'icon-cancel',
+			handler: function() {
+				$('#' + windowID).dialog('close');
+			}
+		}
+	];
+	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
+}
+
+// 组织机构岗位选择（单选）
+// rootOrgCode        部门树根结点代码（为空时为整个部门树）
+// orgType            部门类型（=01只能选择部门；=02只能选择工作组，为空可以选择部门和工作组）
+// orgLevel           部门等级过滤（多个时用逗号分隔）
+// orgBizType         部门业务类型过滤（多个时用逗号分隔）
+// posids             人员虚拟岗位表POSID过滤（多个时用逗号分隔）
+// initFocusOrgCode   无已选择的人员时，初始定位部门代码
+// posIDInputID       岗位ID（实体岗位）输入框的ID
+// posNameInputID     岗位人员显示输入框的ID
+// orgCodeInputID     部门代码输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgNameInputID     部门显示输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgIDInputID       部门ID输入框的ID（不需要返回部门ID该参数时为''或null）
+// isCache            是否缓存页面（默认为false不缓存）
+// windowID           窗口的ID（isCache=true，windowID确保在同一个页面中唯一；isCache=false，windowID可以不指定；）
+// parentWindow       调用页面的window对象
+// onOkMethod         对话中点击确认后执行原页面中的方法（如：“orgPosSelect_onOk”）
+// dialogTitle        对话框的标题
+function public_singleSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, posids, initFocusOrgCode, posIDInputID, posNameInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+	if (isCache) {
+		if (windowID == null || windowID == "") {
+			$.messager.alert('页面错误','组织机构岗位选择public_singleSelectOrgPos()方法：<br><br>参数 windowID 不能为空！','error');
+			return;
+		}
+	}
+	if (!windowID) {
+		var myTime = (new Date()).getTime();
+		windowID = "win_" + myTime;
+	}
+	if ("undefined" == typeof rootOrgCode || rootOrgCode == null) {
+		rootOrgCode = "";
+	}
+	if ("undefined" == typeof orgType || orgType == null) {
+		orgType = "";
+	}
+	if ("undefined" == typeof orgLevel || orgLevel == null) {
+		orgLevel = "";
+	}
+	if ("undefined" == typeof orgBizType || orgBizType == null) {
+		orgBizType = "";
+	}
+	if ("undefined" == typeof posids || posids == null) {
+		posids = "";
+	}
+	if ("undefined" == typeof initFocusOrgCode || initFocusOrgCode == null) {
+		initFocusOrgCode = "";
+	}
+	if ("undefined" == typeof onOkMethod || onOkMethod == null) {
+		onOkMethod = "";
+	}
+	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
+		dialogTitle = "组织机构岗位选择";
+	}
+	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType + "&posids=" + posids + "&initFocusOrgCode=" + initFocusOrgCode;
+	var realPosIdString = "";
+	if (posIDInputID && $('#' + posIDInputID).length > 0) {
+		realPosIdString = $('#' + posIDInputID).val();
+	}
+	urlParameter += "&realPosIdString=" + realPosIdString;
+	var openURL = basePath + "/orgPosPublicSelect/singleSelect?" + urlParameter;
+	var paramArray = [];
+	paramArray['parentWindow'] = parentWindow;
+	paramArray['posIDInputID'] = posIDInputID;
+	paramArray['posNameInputID'] = posNameInputID;
+	paramArray['orgCodeInputID'] = orgCodeInputID;
+	paramArray['orgNameInputID'] = orgNameInputID;
+	paramArray['orgIDInputID'] = orgIDInputID;
+	paramArray['onOkMethod'] = onOkMethod;
+	var dataOptions = {
+		title: '&nbsp;' + dialogTitle,
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
+		maximizable: false,
+		closable: true,
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
+	};
+	dataOptions.buttons = [
+		{
+			text: '确定',
+			iconCls: 'icon-ok',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				if (iframeObject.ok_execute()) {
+					$('#' + windowID).dialog('close');
+					if (onOkMethod != null && onOkMethod != "") {
+						try {
+							var parentWinObject = parentWindow;
+							if (parentWinObject.contentWindow) {
+								parentWinObject = parentWinObject.contentWindow;
+							}
+							eval("parentWinObject." + onOkMethod + "(posIDInputID)");
+						}
+						catch (err) {
+							$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+						}
+					}
+				}
+			}
+		},
+		{
+			text: '清空',
+			iconCls: 'icon-remove',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				iframeObject.clear_execute();
+				$('#' + windowID).dialog('close');
+				if (onOkMethod != null && onOkMethod != "") {
+					try {
+						var parentWinObject = parentWindow;
+						if (parentWinObject.contentWindow) {
+							parentWinObject = parentWinObject.contentWindow;
+						}
+						eval("parentWinObject." + onOkMethod + "(posIDInputID)");
+					}
+					catch (err) {
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+					}
+				}
+			}
+		},
+		{
+			text: '关闭',
+			iconCls: 'icon-cancel',
+			handler: function() {
+				$('#' + windowID).dialog('close');
+			}
+		}
+	];
+	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
+}
+
+// 组织机构岗位选择（多选）
+// rootOrgCode        部门树根结点代码（为空时为整个部门树）
+// orgType            部门类型（=01只能选择部门；=02只能选择工作组，为空可以选择部门和工作组）
+// orgLevel           部门等级过滤（多个时用逗号分隔）
+// orgBizType         部门业务类型过滤（多个时用逗号分隔）
+// posids             人员虚拟岗位表POSID过滤（多个时用逗号分隔）
+// initFocusOrgCode   无已选择的人员时，初始定位部门代码
+// posIDInputID       岗位ID（实体岗位）输入框的ID
+// posNameInputID     岗位人员显示输入框的ID
+// orgCodeInputID     部门代码输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgNameInputID     部门显示输入框的ID（不需要返回部门ID该参数时为''或null）
+// orgIDInputID       部门ID输入框的ID（不需要返回部门ID该参数时为''或null）
+// isCache            是否缓存页面（默认为false不缓存）
+// windowID           窗口的ID（isCache=true，windowID确保在同一个页面中唯一；isCache=false，windowID可以不指定；）
+// parentWindow       调用页面的window对象
+// onOkMethod         对话中点击确认后执行原页面中的方法（如：“orgPosSelect_onOk”）
+// dialogTitle        对话框的标题
+function public_multiSelectOrgPos(rootOrgCode, orgType, orgLevel, orgBizType, posids, initFocusOrgCode, posIDInputID, posNameInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+	if (isCache) {
+		if (windowID == null || windowID == "") {
+			$.messager.alert('页面错误','组织机构岗位选择public_multiSelectOrgPos()方法：<br><br>参数 windowID 不能为空！','error');
+			return;
+		}
+	}
+	if (!windowID) {
+		var myTime = (new Date()).getTime();
+		windowID = "win_" + myTime;
+	}
+	if ("undefined" == typeof rootOrgCode || rootOrgCode == null) {
+		rootOrgCode = "";
+	}
+	if ("undefined" == typeof orgType || orgType == null) {
+		orgType = "";
+	}
+	if ("undefined" == typeof orgLevel || orgLevel == null) {
+		orgLevel = "";
+	}
+	if ("undefined" == typeof orgBizType || orgBizType == null) {
+		orgBizType = "";
+	}
+	if ("undefined" == typeof posids || posids == null) {
+		posids = "";
+	}
+	if ("undefined" == typeof initFocusOrgCode || initFocusOrgCode == null) {
+		initFocusOrgCode = "";
+	}
+	if ("undefined" == typeof onOkMethod || onOkMethod == null) {
+		onOkMethod = "";
+	}
+	if ("undefined" == typeof dialogTitle || dialogTitle == null || dialogTitle == "") {
+		dialogTitle = "组织机构岗位选择";
+	}
+	var urlParameter = "rootOrgCode=" + rootOrgCode + "&orgType=" + orgType + "&orgLevel=" + orgLevel + "&orgBizType=" + orgBizType + "&posids=" + posids + "&initFocusOrgCode=" + initFocusOrgCode;
+	var realPosIdString = "";
+	var parentWinObject = parentWindow;
+	if (parentWinObject.contentWindow) {
+		parentWinObject = parentWinObject.contentWindow;
+	}
+	if (posIDInputID && parentWindow.$('#' + posIDInputID).length > 0) {
+		realPosIdString = parentWindow.$('#' + posIDInputID).val();
+	}
+	urlParameter += "&realPosIdString=" + realPosIdString;
+	var openURL = basePath + "/orgPosPublicSelect/multiSelect?" + urlParameter;
+	var paramArray = [];
+	paramArray['parentWindow'] = parentWindow;
+	paramArray['posIDInputID'] = posIDInputID;
+	paramArray['posNameInputID'] = posNameInputID;
+	paramArray['orgCodeInputID'] = orgCodeInputID;
+	paramArray['orgNameInputID'] = orgNameInputID;
+	paramArray['orgIDInputID'] = orgIDInputID;
+	paramArray['onOkMethod'] = onOkMethod;
+	var dataOptions = {
+		title: '&nbsp;' + dialogTitle,
+		width: 800,
+		height: 400,
+		collapsible: false,
+		minimizable: false,
+		maximizable: false,
+		closable: true,
+		closed: false,
+		cache: false,
+		inline: false,
+		modal: true
+	};
+	dataOptions.buttons = [
+		{
+			text: '确定',
+			iconCls: 'icon-ok',
+			handler: function() {
+				var iframeObject = window.frames[windowID + '_iframe'];
+				if (iframeObject.contentWindow) {
+					iframeObject = iframeObject.contentWindow;
+				}
+				iframeObject.ok_execute();
+				$('#' + windowID).dialog('close');
+				if (onOkMethod != null && onOkMethod != "") {
+					try {
+						var parentWinObject = parentWindow;
+						if (parentWinObject.contentWindow) {
+							parentWinObject = parentWinObject.contentWindow;
+						}
+						eval("parentWinObject." + onOkMethod + "(posIDInputID)");
+					}
+					catch (err) {
+						$.messager.alert('页面错误', "执行事件 "+ onOkMethod + " 有错误发生：<br/><br/>错误名称: " + err.name + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误行号:" + (err.number & 0xFFFF ) + "<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误信息:" + err.message, 'error');
+					}
+				}
+			}
+		},
+		{
+			text: '关闭',
+			iconCls: 'icon-cancel',
+			handler: function() {
+				$('#' + windowID).dialog('close');
+			}
+		}
+	];
+	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
+}
+
