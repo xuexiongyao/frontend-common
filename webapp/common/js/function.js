@@ -28,7 +28,7 @@ function loading(type,msg){
     var staticPath = 'http://static.jwzh.com:7777/jwzh';
     var msg = msg || '加载中...';
     var loading_img_url = staticPath +'/framework/default/images/loading.gif';
-    var loading_html='<div id="loadingMsk" style="display:none">'
+    var loading_html='<div id="loadingMsk">'
         +'<div class="loadingPage">'
         +'<img src="'+loading_img_url+'" alt="loading">'
         +'<span class="msg">'+msg+'</span>'
