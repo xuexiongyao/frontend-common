@@ -51,7 +51,35 @@
            class="easyui-linkbutton easyui-tooltip" title="formItem.html">
             输入框只读/编辑状态切换
         </a>
+    </div>
+    <div class="easyui-panel" style="padding: 30px;">
+        <h3>公共JS方法使用说明</h3>
+        <h4>1.loading(type,msg); 加载中的提示遮罩</h4>
+        <pre>
+            注:在提交请求事件之前调用loading('open','显示的信息'),请求成功后调用loading('close);
 
+            例: $('#btn').on(click,function(){
+                    loading('open','正在加载中,请稍候...');
+                    $.ajax({
+                        success : function(){
+                            loading('close');
+                        }
+                    });
+                });
+        </pre>
+        <h4>2.crossAddTab(tab_title,tab_url,tab_id); 打开新的标签页面</h4>
+        <pre>
+            注: tab_title : 新标签页的title,(尽量保证title为唯一)
+                tab_url : 新标签页面的url,
+                tab_id : 新标签的ID,(作为切换,关闭刷新页面的标示,必须确保为唯一)
+
+            例: $('#btn').on(click,function(){
+                    crossAddTab('实有人口新增',basePath + '/syrkGl/syrkAdd','syrkAdd_tab_id');
+                });
+        </pre>
     </div>
 </body>
+<script>
+    var window_type = 'open_url';
+</script>
 </html>
