@@ -77,6 +77,16 @@
                     crossAddTab('实有人口新增',basePath + '/syrkGl/syrkAdd','syrkAdd_tab_id');
                 });
         </pre>
+        <h4>3.comboAutoComplete(combobox_id,url); combobox自动完成数据填入</h4>
+        <pre>
+            注: combobox_id : combox的ID
+                url : 下拉框字典数据地址
+                当下框的值只有一条时,调用该方法,自动完成填写,组件生成后调用
+
+            例: $(function(){
+                    comboAutoComplete('combox_id',basePath + '/syrkGl/syrkAdd');
+                })
+        </pre>
     </div>
 </body>
 <script>

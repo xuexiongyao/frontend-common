@@ -932,3 +932,18 @@ function clearInput(input_class){
         }
     })
 }
+
+//combobox自动填值
+function comboAutoComplete(combobox_id,url){
+    var _combobox = $('#'+combobox_id);
+    $.ajax({
+        url : url,
+        type:'get',
+        dataType:'json',
+        success : function(data){
+            if(data.length === 1){
+                _combobox.combobox('select',data[0]['id']);
+            }
+        }
+    });
+}
