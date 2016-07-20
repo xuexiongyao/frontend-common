@@ -435,23 +435,23 @@ function dict_multiSelectTree(isCache, windowID, parentWindow, dictName, dictInp
 	];
 	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
 }
-function initAddressSearch2(comboID, filterData, returnFieldData){
+function initAddressSearch2(comboID, filterData, returnFieldData,onSelectedFun){
 	var url=basePath + '/solrSearcher/doBzdzSelect';
-	initSolrSearch(comboID, filterData, returnFieldData,url);
+	initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun);
 }
 
-function initCompanySearch(comboID, filterData, returnFieldData){
+function initCompanySearch(comboID, filterData, returnFieldData,onSelectedFun){
 	var url=basePath + '/solrSearcher/doSydwSelect';
-	initSolrSearch(comboID, filterData, returnFieldData,url);
+	initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun);
 }
 
-function initHouseSearch(comboID, filterData, returnFieldData){
+function initHouseSearch(comboID, filterData, returnFieldData,onSelectedFun){
 	var url=basePath + '/solrSearcher/doSyfwSelect';
-	initSolrSearch(comboID, filterData, returnFieldData,url);
+	initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun);
 }
 
 //根据四川的需求对上面的函数进行精简优化(下拉框地址ID,过滤字段,回填字段)
-function initSolrSearch(comboID, filterData, returnFieldData,url) {
+function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) {
 	$('#' + comboID).combobox({
 		address:true,
 		delay: 600,
@@ -601,6 +601,12 @@ function initSolrSearch(comboID, filterData, returnFieldData,url) {
 				if (record[item]) {
 					$('#' + returnFieldData[item]).val(record[item]);
 				}
+			}
+
+			//执行回调函数
+			if (typeof onSelectedFun == 'function') {
+				var fn = eval(onSelectedFun);
+				fn(record);
 			}
 		},
 		onHidePanel: function() {
