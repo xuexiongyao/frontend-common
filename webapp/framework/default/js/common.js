@@ -176,7 +176,8 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
 
     if(return_tab_id == '' || return_tab_id == false || return_tab_id == 'undefind' || return_tab_id == 'null'){
         fraTabs.tabs('close',currentTabTitle);//关闭当前标签
-        console.log('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id');
+        //fraTabs.tabs('close',currentTabIndex);//关闭当前标签
+        console.log('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id',currentTabTitle);
         //alert('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id');
     }else{
         if(fraTabs.tabs('existsById',return_tab_id)){

@@ -60,6 +60,10 @@
                 @include text-vertical-center(25px);
             }
             .person-info {
+                .address-title{
+                    font-size:24px;
+                    margin-top:20px;
+                }
                 font-size: fontSize(small);
                 .info-item {
                     min-height: 30px;
