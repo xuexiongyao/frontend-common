@@ -459,7 +459,7 @@ function openUrlForm(options) {
     //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
     var _top = self_top; //自适应高度
     dlg_div.dialog({
-        //href:options.url,
+        //href:options.url,1
         cache:_cache,
         modal: true,
         title: _title,
