@@ -24,6 +24,10 @@
     <script src="http://static.jwzh.com:7777/jwzh/common/js/common.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/js/ajax.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/datepicker/WdatePicker.js"></script>
+    <style>
+        .other-content>div{overflow:auto;float:left;}
+        .other-content>div>.content{width:auto;margin-left:10px;}
+    </style>
 </head>
 <body>
     <div class="easyui-panel" style="padding: 30px;">
@@ -52,41 +56,56 @@
             输入框只读/编辑状态切换
         </a>
     </div>
-    <div class="easyui-panel" style="padding: 30px;">
-        <h3>公共JS方法使用说明</h3>
-        <h4>1.loading(type,msg); 加载中的提示遮罩</h4>
-        <pre>
-            注:在提交请求事件之前调用loading('open','显示的信息'),请求成功后调用loading('close);
+    <div class="easyui-panel other-content">
+        <div class="function_api" style="width:60%;border-right: 1px solid #ccc;">
+            <div class="content">
+                <h3>公共JS方法使用说明：</h3>
+                <h4>1.loading(type,msg); 加载中的提示遮罩</h4>
+                <pre>
+    注:在提交请求事件之前调用loading('open','显示的信息'),请求成功后调用loading('close);
 
-            例: $('#btn').on(click,function(){
-                    loading('open','正在加载中,请稍候...');
-                    $.ajax({
-                        success : function(){
-                            loading('close');
-                        }
-                    });
-                });
-        </pre>
-        <h4>2.crossAddTab(tab_title,tab_url,tab_id); 打开新的标签页面</h4>
-        <pre>
-            注: tab_title : 新标签页的title,(尽量保证title为唯一)
-                tab_url : 新标签页面的url,
-                tab_id : 新标签的ID,(作为切换,关闭刷新页面的标示,必须确保为唯一)
+    例: $('#btn').on(click,function(){
+            loading('open','正在加载中,请稍候...');
+            $.ajax({
+                success : function(){
+                    loading('close');
+                }
+            });
+        });
+                </pre>
+                        <h4>2.crossAddTab(tab_title,tab_url,tab_id); 打开新的标签页面</h4>
+                <pre>
+    注: tab_title : 新标签页的title,(尽量保证title为唯一)
+        tab_url : 新标签页面的url,
+        tab_id : 新标签的ID,(作为切换,关闭刷新页面的标示,必须确保为唯一)
 
-            例: $('#btn').on(click,function(){
-                    crossAddTab('实有人口新增',basePath + '/syrkGl/syrkAdd','syrkAdd_tab_id');
-                });
-        </pre>
-        <h4>3.comboAutoComplete(combobox_id,url); combobox自动完成数据填入</h4>
-        <pre>
-            注: combobox_id : combox的ID
-                url : 下拉框字典数据地址
-                当下框的值只有一条时,调用该方法,自动完成填写,组件生成后调用
+    例: $('#btn').on(click,function(){
+            crossAddTab('实有人口新增',basePath + '/syrkGl/syrkAdd','syrkAdd_tab_id');
+        });
+                </pre>
+                        <h4>3.comboAutoComplete(combobox_id,url); combobox自动完成数据填入</h4>
+                <pre>
+    注: combobox_id : combox的ID
+        url : 下拉框字典数据地址
+        当下框的值只有一条时,调用该方法,自动完成填写,组件生成后调用
 
-            例: $(function(){
-                    comboAutoComplete('combox_id',basePath + '/syrkGl/syrkAdd');
-                })
-        </pre>
+    例: $(function(){
+            comboAutoComplete('combox_id',basePath + '/syrkGl/syrkAdd');
+        });
+                </pre>
+            </div>
+
+        </div>
+        <div class="notice" style="width:auto">
+            <div class="content">
+                <h3>注意事项：</h3>
+                <h4>1.所有easyui的input组件,请添加val类以提高批量处理的效率</h4>
+                <pre>
+    例: &lt;input type="text" class="easyui-combobox val"&gt;
+                </pre>
+            </div>
+        </div>
+        <div class="clear"></div>
     </div>
 </body>
 <script>
