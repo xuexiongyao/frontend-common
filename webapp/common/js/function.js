@@ -331,7 +331,7 @@ function formTips(json, success_fn, type) {
         }
     } else {
         resetToken();
-        if (data.status == 308) {
+        if (json.status == 308) {
             $.messager.alert({
                 title: '提示信息',
                 msg: '数据处理中，请耐心等待！',
