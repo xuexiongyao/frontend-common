@@ -725,7 +725,6 @@ function setComboxOnlyText(combox_id) {
  * 3.fn_name:关闭后执行父框架中函数名
  * */
 function closeWindow(dialog_id, msg, fn_name) {
-    window.parent.$('#' + dialog_id, window.parent.document).dialog('close');
     if (msg) {
         window.parent.$.messager.show({
             title: '提示',
@@ -735,6 +734,7 @@ function closeWindow(dialog_id, msg, fn_name) {
     if (fn_name) {
         window.parent.return_fn[fn_name]();
     }
+    window.parent.$('#' + dialog_id, window.parent.document).dialog('close');
 }
 
 //获取对象实例属性的个数
