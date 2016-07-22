@@ -1097,7 +1097,6 @@
   min-height: 30px;
   line-height: 30px;
   height: auto;
-  border-bottom: 1px dashed #ccc;
 }
 /* line 125, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .content .item .pro, .info-main #export_panel .relation-info .person-info .content .item .pro, #export_panel .info-main .relation-info .person-info .content .item .pro, .info-main .base-info .person-info .content .item .val, .info-main #export_panel .relation-info .person-info .content .item .val, #export_panel .info-main .relation-info .person-info .content .item .val {
