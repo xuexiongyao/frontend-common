@@ -702,18 +702,16 @@ function editSwitch(bool, border_class, box_class) {
  * */
 //1.记录FORM中input的提交状态
 function markInputStatus(form_id) {
-    $('#' + form_id + ' span.textbox').off('click').on('click', function () {
-        var input_module = $(this).prev();  //组件input
-        if (input_module.hasClass('readonly') == false || input_module.attr('sb_status' != '1')) {
-            var textboxname = input_module.attr('textboxname'); //获取组件name
+    $('#' + form_id + ' span.textbox input').off('focus.status').on('focus.status', function () {
+        var input_module = $(this).parent().prev();  //组件input
+        if(input_module.hasClass('readonly') == false){
             input_module.attr('sb_status', 1);
         }
     });
-
 }
 
 //2.提交之前更改input的disable状态,并判断返回是否有修改
-function changeInputStatus(form_id) {
+function changeInputStatus(form_id,return_status) {
     var i = 0;
     $('#' + form_id + ' span.textbox').each(function () { //所有上传到后台的隐藏输入框
         //处理组件下面的input
@@ -731,6 +729,13 @@ function changeInputStatus(form_id) {
         console.log('未能获取一个修改项');
         return false;
     }
+}
+//3.未作任何修改还原input状态
+function returnInputStatus(form_id){
+    $('#' + form_id + ' span.textbox').each(function () { //所有上传到后台的隐藏输入框
+        var input_module = $(this).prev();  //组件input
+        input_module.next().find('input').prop("disabled", false);
+    });
 }
 
 /*combobox下拉菜单中,只显示中文描述,不显示代码

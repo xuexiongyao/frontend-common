@@ -364,14 +364,14 @@
 
 		phone: {
 			validator : function(value) {
-				return /(^([0][1-9]{1}[0-9]{1,2}[-]?)?\d{3,8}(-\d{1,6})?$)|(^[1][3|4|5|7|8]{1}\d{9,}$)|(^\d{3,8}$)/.test(value);
+				return /(^([0][1-9]{1}[0-9]{1,2}[-]?)?\d{7,8}(-\d{1,4})?$)|(^[1][3|4|5|7|8]{1}\d{9}$)|(^\d{3,8}$)/.test(value);
 			},
 			message : "请输入正确的电话号码（固定电话或移动电话）"
 		},
 
 		manyPhones:{
 			validator : function(value) {
-				var pattern=/(^([0][1-9]{1}[0-9]{1,2}[-]?)?\d{3,8}(-\d{1,6})?$)|(^[1][3|4|5|7|8]{1}\d{9,}$)|(^\d{3,8}$)/;
+				var pattern=/(^([0][1-9]{1}[0-9]{1,2}[-]?)?\d{7,8}(-\d{1,4})?$)|(^[1][3|4|5|7|8]{1}\d{9}$)|(^\d{3,8}$)/;
 				var phoneArray=value.split('/');
 				var bSuccess=true;
 				for(var i=0;i<phoneArray.length;i++){
