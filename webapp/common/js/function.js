@@ -410,77 +410,37 @@ function submitImg(form_id, callback_fn) {
  * 1.options : 对象参数(各项配置)
  * 2.btn_diy : 数组参数(自定义按钮操作)
  * */
-function openUrlForm(options, btn_diy) {
-
+function openUrlForm(options) {
     //参数使用说明(子页面能够调用父页面的事件函数)
     /*openUrlForm({
-     id: 'dlg_id', //自定义ID,防止重复添加DOM
-     url: '2.html', //需要放入弹框的页面URL,此页面中设置好form属性,自动提交第一个form
-     title: '表单提交', //模态框标题
-     width: 800,        //模态框宽度
+     id: 'dlg_id',       //自定义ID,防止重复添加DOM
+     url: '2.html',      //需要放入弹框的页面URL,此页面中设置好form属性,自动提交第一个form
+     title: '表单提交',   //模态框标题
+     width: 800,         //模态框宽度
      height: 600,        //模态框高度
-     }, []);*/
-
-
+     cache:true,         //是否缓存
+     });*/
     //只创建一次DIV
-    if ($('#' + options.id).length == 0) {
+    if($('#' + options.id).length > 0 && options.cache){
+        //缓存窗口
+        options.open_status = options.cache;
+        var dlg_div = $('#' + options.id);
+    }else{
         var dlg_div = $('<div id="' + options.id + '"></div>').css({
             overflow: 'hidden'
         });
-        var iframe = $('<iframe id="' + options.id + '_iframe" name="' + options.id + '_iframe"  frameborder="0"></iframe>').css({
+        var iframe = $('<iframe src="" id="' + options.id + '_iframe" name="' + options.id + '_iframe"  frameborder="0"></iframe>').css({
             width: '100%',
-            height: '100%',
+            height: '100%'
         });
         $('body').append(dlg_div);
         dlg_div.append(iframe);
-    } else {
-        var dlg_div = $('#' + options.id);
     }
-    var default_btn = [{
-        text: '保存',
-        handler: function () {
-            var form = $(window.frames[options.id + '_iframe'].document).find('form');
-            //console.log(form[0]);
-            if (form.length > 0) {
-                $(form[0]).form('submit', {
-                    onSubmit: function () {
-                        var isValid = $(form[0]).form('validate');
-                        //console.log(isValid);
-                        return isValid; // 返回false终止表单提交*/
-                    },
-                    success: function (data) {
-                        //console.log(data);
-                        //dlg_div.dialog('close');
-                    },
-                    error: function () {
-                        console.log('ajax err');
-                    }
-                });
-            } else {
-                $.messager.alert('提示', '未获取表单信息', 'warning');
-            }
-        }
-    }, {
-        text: '重置',
-        handler: function () {
-            var form = $(window.frames[options.id + '_iframe'].document).find('form');
-            if (form.length > 0) {
-                $(form[0]).form('reset');
-            } else {
-                $.messager.alert('提示', '未获取表单信息', 'warning');
-            }
-        }
-    }, {
-        text: '关闭',
-        handler: function () {
-            dlg_div.dialog('close');
-        }
-    }];
-
-    var _buttons = btn_diy || default_btn;
+    //var _buttons = btn_diy || default_btn;
     var _width = options.width || '90%';
     var _title = options.title || '弹框标题';
     var _height = options.height || 'auto';
+    var _cache = options.open_status || false;
     var blank_height = _height;
     if (blank_height == 'auto') {
         blank_height = dlg_div.height();
@@ -499,14 +459,24 @@ function openUrlForm(options, btn_diy) {
     //var _top = options.top || self_top;   //如果需要强行定制高度,使用此项设置
     var _top = self_top; //自适应高度
     dlg_div.dialog({
+        //href:options.url,
+        cache:_cache,
         modal: true,
         title: _title,
         width: _width,
         height: _height,
         top: _top,
         //buttons: _buttons,   //打开url的弹框暂时不使用面板按钮
-        onBeforeOpen: function () {
-            $('#' + options.id + '_iframe').prop('src', options.url);
+        onBeforeOpen:function(){
+            //没有缓存,重新加载
+            if(options.open_status != true){
+                $('#' + options.id + '_iframe').prop('src', options.url);
+            }
+        },
+        onClose:function(){
+            if(options.open_status != true){
+                dlg_div.remove();
+            }
         }
     });
     //弹框高度自适应
