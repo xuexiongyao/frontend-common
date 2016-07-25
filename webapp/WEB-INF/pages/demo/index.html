@@ -60,7 +60,15 @@
         <div class="function_api" style="width:60%;border-right: 1px solid #ccc;">
             <div class="content">
                 <h3>公共JS方法使用说明：</h3>
-                <h4>1.loading(type,msg); 加载中的提示遮罩</h4>
+                <h4>添加jquery插件:linkCss();</h4>
+                <pre>
+    注:统一页面中所有链接的样式
+
+    例: &lt;span id="link_address" &gt 地址链接 &lt;/span&gt
+
+        JS调用: $('#link_address').linkCss();
+                </pre>
+                <h4>loading(type,msg); 加载中的提示遮罩</h4>
                 <pre>
     注:在提交请求事件之前调用loading('open','显示的信息'),请求成功后调用loading('close);
 
@@ -74,7 +82,7 @@
         });
                 </pre>
 
-                <h4>2.crossAddTab(tab_title,tab_url,tab_id); 打开新的标签页面</h4>
+                <h4>crossAddTab(tab_title,tab_url,tab_id); 打开新的标签页面</h4>
                 <pre>
     注: tab_title : 新标签页的title,(尽量保证title为唯一)
         tab_url : 新标签页面的url,
@@ -85,7 +93,7 @@
         });
                 </pre>
 
-                <h4>3.comboAutoComplete(combobox_id,url); combobox自动完成数据填入</h4>
+                <h4>comboAutoComplete(combobox_id,url); combobox自动完成数据填入</h4>
                 <pre>
     注: combobox_id : combox的ID
         url : 下拉框字典数据地址
@@ -96,7 +104,7 @@
         });
                 </pre>
 
-                <h4>4.打开远程页面(URL)加载的弹窗的方法</h4>
+                <h4>打开远程页面(URL)加载的弹窗的方法</h4>
                 <pre>
     例:  openUrlForm({
              id: 'dlg_id',       //自定义ID,确保唯一性,防止重复添加DOM
