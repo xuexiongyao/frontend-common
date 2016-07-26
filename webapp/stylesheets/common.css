@@ -259,7 +259,7 @@ label {
 /******************弹出iframe(url)窗口公共样式*********************/
 /* line 5, ../sass/sass/_frameWindowCommon.scss */
 .frame-window {
-  margin: 30px auto 0;
+  margin: 0 auto;
   padding-bottom: 30px;
   height: auto;
   width: 100%;
@@ -268,7 +268,7 @@ label {
 /* line 11, ../sass/sass/_frameWindowCommon.scss */
 .frame-window .frame-window-con {
   width: 100%;
-  margin: 40px auto 0;
+  margin: 0 auto;
   font-size: 12px;
   *zoom: 1;
 }
