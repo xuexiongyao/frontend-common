@@ -591,7 +591,6 @@ function getIEVersion() {
 
 			//combobox值为空时,添加value=""发送给后台
 			$(this).parent().find('input.add-null').remove();
-			console.log(oldValue);
 			if(oldValue.length == 0 || oldValue[0] == ""){
 				var input_name = $(this).attr('textboxname');
 				var hidden_input = '<input type="hidden" class="add-null" name="'+input_name+'" value="">';
@@ -1351,7 +1350,6 @@ function getIEVersion() {
 			}else{
 				$(this).parent().find('input.add-null').remove();
 			}
-			console.log(new_v,old_v);
 		},
 
 		onHidePanel: function() {
