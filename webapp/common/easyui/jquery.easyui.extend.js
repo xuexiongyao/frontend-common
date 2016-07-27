@@ -585,16 +585,24 @@ function getIEVersion() {
 			var opts = $(this).combobox('options');
 			var oldValue = $(this).combobox("getValues");
 			setValues(this, oldValue);
-			console.log('值:',oldValue);
 			/*if($(this).attr('choose') !== 'yes'){
 				$(this).combobox('setValue','');
 			}*/
 
-			if (oldValue.length == 1 && oldValue[0] == "") {
-				setValues(this, []);
-				console.log('空?');
+			//combobox值为空时,添加value=""发送给后台
+			$(this).parent().find('input.add-null').remove();
+			console.log(oldValue);
+			if(oldValue.length == 0 || oldValue[0] == ""){
+				var input_name = $(this).attr('textboxname');
+				var hidden_input = '<input type="hidden" class="add-null" name="'+input_name+'" value="">';
+				$(this).parent().append(hidden_input);
+			}else{
+				$(this).parent().find('input.add-null').remove();
 			}
-			else {
+
+			if(oldValue.length == 1 && oldValue[0] == "") {
+				setValues(this, []);
+			}else{
 				if (opts.mode == "remote") {
 					setValues(this, oldValue);
 				}
@@ -1322,7 +1330,8 @@ function getIEVersion() {
 			}
 		},
 
-		onShowPanel: function() {
+		/*onShowPanel: function() {
+
 			var opts = $(this).combotree('options');
 			if (!opts.multiple) {
 				var tree = $(this).combotree('tree');
@@ -1332,10 +1341,22 @@ function getIEVersion() {
 					tree.tree('scrollTo', selectNode.target);
 				}
 			}
+		},*/
+		onChange:function(new_v,old_v){
+			$(this).parent().find('input.add-null').remove();
+			if(new_v == '' || new_v == undefined || new_v == [] ||  new_v == [""]){
+				var input_name = $(this).attr('textboxname');
+				var hidden_input = '<input type="hidden" class="add-null" name="'+input_name+'" value="">';
+				$(this).parent().append(hidden_input);
+			}else{
+				$(this).parent().find('input.add-null').remove();
+			}
+			console.log(new_v,old_v);
 		},
 
 		onHidePanel: function() {
 			var opts = $(this).combotree('options');
+
 			if (!opts.multiple) {
 				var tree = $(this).combotree('tree');
 				var selectNode = tree.tree('getSelected');

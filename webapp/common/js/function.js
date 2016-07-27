@@ -278,10 +278,14 @@ function normalSubmit(form_id, call_back, url) {
         url: submit_url,
         onSubmit: function () {
             var isValid = $(this).form('validate');
+            if(isValid){
+                loading('open','数据处理中,请稍候...');//验证通过提交后台，开始....转圈！
+            }
             return isValid;	// 返回false终止表单提交
         },
 
         success: function (data) {
+            loading('close');//完成后关闭...转圈
             try{
                 var json = eval('(' + data + ')');
             }catch(e){
@@ -291,8 +295,10 @@ function normalSubmit(form_id, call_back, url) {
             formTips(json, call_back, 'tips');
         },
         error: function (data) {
+            loading('close');//完成后关闭...转圈
             resetToken();
             console.log('submit ajax error');
+
         }
     });
 }
