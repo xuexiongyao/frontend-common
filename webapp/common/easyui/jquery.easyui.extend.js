@@ -493,7 +493,11 @@ function getIEVersion() {
 				$(this).combo('panel').panel('resize',{width:autoPanelWidth ,height: autoPanelHeight * itemHeight + 2});
 			}
 			var emptyString = getReapeatString("\xA0", opts.maxValueLength - row[opts.valueField].length);
-			return row[opts.valueField] + emptyString + "\xA0|\xA0" + row[opts.textField];
+			if(opts.showText){
+				return row[opts.textField];
+			}else{
+				return row[opts.valueField] + emptyString + "\xA0|\xA0" + row[opts.textField];
+			}
 		},
 
 		onBeforeLoad: function(param) {
@@ -581,13 +585,14 @@ function getIEVersion() {
 			var opts = $(this).combobox('options');
 			var oldValue = $(this).combobox("getValues");
 			setValues(this, oldValue);
-
+			console.log('值:',oldValue);
 			/*if($(this).attr('choose') !== 'yes'){
 				$(this).combobox('setValue','');
 			}*/
 
 			if (oldValue.length == 1 && oldValue[0] == "") {
 				setValues(this, []);
+				console.log('空?');
 			}
 			else {
 				if (opts.mode == "remote") {
