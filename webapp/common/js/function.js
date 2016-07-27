@@ -630,7 +630,6 @@ function editSwitch(bool, border_class, box_class) {
         box.each(function () {
             var _this = $(this);
             _this.prev().find('i').show();
-
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: false}).next().removeClass(_border_class);//移除样式还原边框
             } else if (_this.hasClass('easyui-textbox')) {
@@ -649,10 +648,8 @@ function editSwitch(bool, border_class, box_class) {
     } else {
         box.each(function () {
             var _this = $(this);
-
             //清除“*”
             _this.prev().find('i').hide();
-
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: true}).next().addClass(_border_class);//添加样式取消边框
             } else if (_this.hasClass('easyui-textbox')) {
@@ -669,6 +666,56 @@ function editSwitch(bool, border_class, box_class) {
             _this.next().find('span.textbox-addon').hide();//隐藏按钮
         });
     }
+}
+
+//input禁用编辑(easyui组件)
+function editDisable(input_class){
+    var box = $('.'+input_class);
+    var border_class = 'clear-border';//确保此样式已经加载
+    box.each(function () {
+        var _this = $(this);
+        //隐藏“*”
+        _this.prev().find('i').hide();
+        if (_this.hasClass('easyui-combobox')) {
+            _this.combobox({readonly: true}).next().addClass(border_class);//添加样式取消边框
+        } else if (_this.hasClass('easyui-textbox')) {
+            _this.textbox({readonly: true}).next().addClass(border_class);
+        } else if (_this.hasClass('easyui-datebox')) {
+            _this.datebox({readonly: true}).next().addClass(border_class);
+        } else if (_this.hasClass('easyui-datetimebox')) {
+            _this.datetimebox({readonly: true}).next().addClass(border_class);
+        } else if (_this.hasClass('easyui-combotree')) {
+            _this.combotree({readonly: true}).next().addClass(border_class);
+        } else if (_this.hasClass('easyui-validatebox')) {
+            _this.validatebox({readonly: true}).next().addClass(border_class);
+        }
+        _this.next().find('span.textbox-addon').hide();//隐藏按钮
+    });
+}
+
+//input启用编辑(easyui组件)
+function editEnable(input_class){
+    var box = $('.'+input_class);
+    var border_class = 'clear-border';//确保此样式已经加载
+    box.each(function () {
+        var _this = $(this);
+        //显示"*"
+        _this.prev().find('i').show();
+        if (_this.hasClass('easyui-combobox')) {
+            _this.combobox({readonly: false}).next().removeClass(border_class);//移除样式还原边框
+        } else if (_this.hasClass('easyui-textbox')) {
+            _this.textbox({readonly: false}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyui-datebox')) {
+            _this.datebox({readonly: false}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyui-datetimebox')) {
+            _this.datetimebox({readonly: false}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyui-combotree')) {
+            _this.combotree({readonly: false}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyui-validatebox')) {
+            _this.validatebox({readonly: false}).next().removeClass(border_class);
+        }
+        _this.next().find('span.textbox-addon').show();//显示按钮
+    });
 }
 
 /*表单修改,只提交点击过的input框(easyui组件)

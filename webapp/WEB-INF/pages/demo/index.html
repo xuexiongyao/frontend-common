@@ -60,6 +60,14 @@
         <div class="function_api" style="width:60%;border-right: 1px solid #ccc;">
             <div class="content">
                 <h3>公共JS方法使用说明：</h3>
+                <h4>输入框编辑状态和查看状态切换函数</h4>
+                <pre>
+    注: 指定组件使用: 启用编辑:editEnable(input_class);  禁用编辑:editDisable(input_class); //效率高
+        全局使用: 启用编辑:editSwitch(true);  禁用编辑:editSwitch(false); //效率略低
+
+    例: &lt;input class="easyui-combobox input" data-options="showText:true" &gt
+    JS调用 : editEnable('input'); editDisable('input'); editSwitch(true); editSwitch(false);
+                </pre>
                 <h4>combobox不显示前面的ID,只显示文字</h4>
                 <pre>
     注:在combobox中组件中添加showText:true属性即可
