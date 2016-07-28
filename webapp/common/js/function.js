@@ -336,14 +336,13 @@ function formTips(json, success_fn, type) {
             })
         }
     } else {
-        resetToken();
-        if (json.status == 308) {
-            $.messager.alert({
-                title: '提示信息',
-                msg: '数据处理中，请耐心等待！',
-                top: 200
-            });
-        } else if (json.message && json.message.indexOf('{') == -1) {   //系统异常错误抛出
+
+        //if (json.status == 308) {
+        if (json){//有错误信息，不是重复提交，无错误信息，则是重复提交
+            resetToken();
+        }
+
+        if (json.message && json.message.indexOf('{') == -1) {   //系统异常错误抛出
             $.messager.alert({
                 title: '提示信息',
                 msg: json.message,
