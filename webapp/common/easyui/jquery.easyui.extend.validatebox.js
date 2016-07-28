@@ -67,7 +67,7 @@
 							returnValue = /(^-?|^\+?|\d)\d+$/.test(value);
 							break;
 						case "+i": // 正整数
-							returnValue = /(^\d+$)|(^\+?\d+$)/.test(value);
+							returnValue = /^\+?[1-9]\d*$/.test(value);
 							break;
 						case "-i": // 负整数
 							returnValue = /^[-]\d+$/.test(value);
