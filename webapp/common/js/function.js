@@ -447,6 +447,7 @@ function openUrlForm(options) {
     var _title = options.title || '弹框标题';
     var _height = options.height || 'auto';
     var _cache = options.open_status || false;
+    var _close = options.onClose;
     var blank_height = _height;
     if (blank_height == 'auto') {
         blank_height = dlg_div.height();
@@ -483,6 +484,9 @@ function openUrlForm(options) {
             if(options.open_status != true){
                 dlg_div.remove();
             }
+            try{
+                _close();
+            }catch(e){}
         }
     });
     //弹框高度自适应

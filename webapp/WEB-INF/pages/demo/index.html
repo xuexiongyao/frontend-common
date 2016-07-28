@@ -60,10 +60,17 @@
         <div class="function_api" style="width:60%;border-right: 1px solid #ccc;">
             <div class="content">
                 <h3>公共JS方法使用说明：</h3>
+                <h4>clickShowPanel(box_id, bool);点击combo输入框直接弹出下拉菜单</h4>
+                <pre>
+    注: 全局点击生效: clickShowPanel(); 指定ID生效: clickShowPanel(box_id, bool);
+
+    例: &lt;input class="easyui-combobox input" id="input_id" data-options="showText:true" &gt
+    JS调用 : 启用: clickShowPanel('input_id', true);   禁用:clickShowPanel('input_id', false);
+                </pre>
                 <h4>输入框编辑状态和查看状态切换函数</h4>
                 <pre>
-    注: 指定组件使用: 启用编辑:editEnable(input_class);  禁用编辑:editDisable(input_class); //效率高
-        全局使用: 启用编辑:editSwitch(true);  禁用编辑:editSwitch(false); //效率略低
+    注: 指定class生效: 启用编辑:editEnable(input_class);  禁用编辑:editDisable(input_class); //效率高
+        全局生效: 启用编辑:editSwitch(true);  禁用编辑:editSwitch(false); //效率略低
 
     例: &lt;input class="easyui-combobox input" data-options="showText:true" &gt
     JS调用 : editEnable('input'); editDisable('input'); editSwitch(true); editSwitch(false);
