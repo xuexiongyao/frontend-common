@@ -568,7 +568,15 @@
 				return true;
 			},
 			message: "请输入该数据"
-		}
+		},
+
+		cphm: {
+			validator: function (value) {
+				var re=/^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$/;
+				return re.test(value);
+			},
+			message: "请输入正确的车牌号码"
+		},
 
 	};
 
