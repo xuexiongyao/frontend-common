@@ -57,13 +57,20 @@
   color: #0e6595;
 }
 
-/* line 9, ../sass/sass/_common.scss */
+/* line 10, ../sass/sass/_common.scss */
+.link-css-red {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #ed4848;
+}
+
+/* line 15, ../sass/sass/_common.scss */
 body {
   background: url("../framework/default/images/general_bg.jpg");
   visibility: hidden;
 }
 
-/* line 13, ../sass/sass/_common.scss */
+/* line 19, ../sass/sass/_common.scss */
 textarea {
   overflow: auto;
   resize: none;
@@ -76,12 +83,12 @@ textarea {
   border-color: #ccc;
 }
 
-/* line 20, ../sass/sass/_common.scss */
+/* line 26, ../sass/sass/_common.scss */
 label {
   cursor: pointer;
 }
 
-/* line 23, ../sass/sass/_common.scss */
+/* line 29, ../sass/sass/_common.scss */
 .main {
   margin: 30px auto 0;
   padding: 1px 0 30px;
@@ -90,7 +97,7 @@ label {
   background-color: #fff;
 }
 
-/* line 31, ../sass/sass/_common.scss */
+/* line 37, ../sass/sass/_common.scss */
 .content-area {
   width: 1100px;
   margin: 40px auto 0;
@@ -108,7 +115,7 @@ label {
   clear: both;
   overflow: hidden;
 }
-/* line 37, ../sass/sass/_common.scss */
+/* line 43, ../sass/sass/_common.scss */
 .content-area .item {
   margin: 0 20px 10px;
   width: 510px;
@@ -117,22 +124,22 @@ label {
   _display: inline;
   *zoom: 1;
 }
-/* line 42, ../sass/sass/_common.scss */
+/* line 48, ../sass/sass/_common.scss */
 .content-area .item textarea {
   height: 60px;
 }
-/* line 45, ../sass/sass/_common.scss */
+/* line 51, ../sass/sass/_common.scss */
 .content-area .item a {
   float: left;
   _display: inline;
 }
-/* line 48, ../sass/sass/_common.scss */
+/* line 54, ../sass/sass/_common.scss */
 .content-area .item .control-btn {
   float: right;
   _display: inline;
   margin-right: 3px;
 }
-/* line 51, ../sass/sass/_common.scss */
+/* line 57, ../sass/sass/_common.scss */
 .content-area .item .control-btn i {
   line-height: 20px;
 }
@@ -146,25 +153,25 @@ label {
   clear: both;
   overflow: hidden;
 }
-/* line 57, ../sass/sass/_common.scss */
+/* line 63, ../sass/sass/_common.scss */
 .content-area .item-full {
   width: 1060px;
 }
-/* line 60, ../sass/sass/_common.scss */
+/* line 66, ../sass/sass/_common.scss */
 .content-area .item-title {
   margin: 0 0 20px;
   padding-bottom: 5px;
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
-/* line 65, ../sass/sass/_common.scss */
+/* line 71, ../sass/sass/_common.scss */
 .content-area .item-title .pro {
   width: 100%;
   margin: 0;
   font-size: 18px;
   text-align: left;
 }
-/* line 72, ../sass/sass/_common.scss */
+/* line 78, ../sass/sass/_common.scss */
 .content-area .pro {
   display: inline-block;
   vertical-align: top;
@@ -179,43 +186,43 @@ label {
   float: left;
   _display: inline;
 }
-/* line 80, ../sass/sass/_common.scss */
+/* line 86, ../sass/sass/_common.scss */
 .content-area .pro i {
   color: #ed4848;
   margin-right: 5px;
 }
-/* line 86, ../sass/sass/_common.scss */
+/* line 92, ../sass/sass/_common.scss */
 .content-area .radio-box {
   text-align: left;
 }
-/* line 88, ../sass/sass/_common.scss */
+/* line 94, ../sass/sass/_common.scss */
 .content-area .radio-box input {
   vertical-align: -2px;
 }
 
-/* line 93, ../sass/sass/_common.scss */
+/* line 99, ../sass/sass/_common.scss */
 .btn-area {
   width: 1100px;
   margin: 40px auto 0;
   text-align: center;
   font-size: 14px;
 }
-/* line 98, ../sass/sass/_common.scss */
+/* line 104, ../sass/sass/_common.scss */
 .btn-area a.easyui-linkbutton {
   margin: 0 10px;
 }
 
-/* line 102, ../sass/sass/_common.scss */
+/* line 108, ../sass/sass/_common.scss */
 .clear {
   clear: both;
 }
 
-/* line 107, ../sass/sass/_common.scss */
+/* line 113, ../sass/sass/_common.scss */
 .clear-border {
   border: 1px solid #fff;
 }
 
-/* line 110, ../sass/sass/_common.scss */
+/* line 116, ../sass/sass/_common.scss */
 #loadingMsk {
   font-family: "SimSun";
   position: fixed;
@@ -226,7 +233,7 @@ label {
   width: 100%;
   height: 100%;
 }
-/* line 118, ../sass/sass/_common.scss */
+/* line 124, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage {
   background: #fff;
   text-align: center;
@@ -239,7 +246,7 @@ label {
   top: 50%;
   margin-top: -50px;
 }
-/* line 128, ../sass/sass/_common.scss */
+/* line 134, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage img {
   display: inline-block;
   vertical-align: middle;
@@ -247,7 +254,7 @@ label {
   zoom: 1;
   *dispaly: inline;
 }
-/* line 131, ../sass/sass/_common.scss */
+/* line 137, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage span {
   margin-left: 10px;
   overflow: hidden;

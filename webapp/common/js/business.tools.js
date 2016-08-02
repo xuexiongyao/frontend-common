@@ -528,7 +528,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 					data: submitParam,
 					dataType: 'json',
 					success: function(data) {
-						console.log('地址信息:',data);
+						//console.log('地址信息:',data);
 						opts.loaded = true;
 						success(data.rows);
 						loading('close');
@@ -595,6 +595,8 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			return data;
 		},
 		onSelect: function(record) {
+			console.log('选择的地址:',record);
+			selectAddressTeam(record);
 			for (var item in returnFieldData) {
 				if (record[item]) {
 					$('#' + returnFieldData[item]).val(record[item]);
@@ -623,6 +625,37 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 		var comboText1 = $('#' + comboID).next(".combo").children(".combo-text");
 		comboText1.attr('maxlength', 80); // 设置门楼牌号选择输入框只能输入80个汉字
 	});
+}
+
+//地址管辖信息选择
+function selectAddressTeam(record){
+	var dialog_div =
+		'<div id="selectAddressTeam">'+
+			'<div><label><input type="radio" name="address_team"><span>'+record.fxjmc+'</span></label></div>'+
+			'<div><label><input type="radio" name="address_team"><span>'+record.pcsmc+'</span></label></div>'+
+		'</div>';
+	$('body').append(dialog_div);
+	openDivForm({
+		id: 'selectAddressTeam', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+		title: '选择地址',
+		width: 400,
+		height: 'auto',
+		onClose: function () {
+			$('#selectAddressTeam').remove();
+		}
+	}, [
+		{
+			text: '确定',
+			handler: function () {
+				$('#selectAddressTeam').dialog('close');
+			}
+		}, {
+			text: '关闭',
+			handler: function () {
+				$('#selectAddressTeam').dialog('close');
+			}
+		}
+	]);
 }
 
 // 附件管理
