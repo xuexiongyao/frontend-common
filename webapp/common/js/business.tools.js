@@ -460,9 +460,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
 			if (!opts.url) return false;
-
 			if ("undefined" == typeof param.q) {
-				//console.log('没值!!');
 				var data = [];
 				success(data);
 				return;
@@ -530,6 +528,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 					data: submitParam,
 					dataType: 'json',
 					success: function(data) {
+						console.log('地址信息:',data);
 						opts.loaded = true;
 						success(data.rows);
 						loading('close');
