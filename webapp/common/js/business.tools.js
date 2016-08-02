@@ -595,7 +595,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			return data;
 		},
 		onSelect: function(record) {
-			console.log('选择的地址:',record);
+			//console.log('选择的地址:',record);
 			selectAddressTeam(record);
 			for (var item in returnFieldData) {
 				if (record[item]) {
@@ -629,6 +629,8 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 
 //地址管辖信息选择
 function selectAddressTeam(record){
+	console.log('你选择的地址是:',record);
+	return;
 	var dialog_div =
 		'<div id="selectAddressTeam">'+
 			'<div><label><input type="radio" name="address_team"><span>'+record.fxjmc+'</span></label></div>'+
