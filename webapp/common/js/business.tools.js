@@ -462,6 +462,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			if (!opts.url) return false;
 
 			if ("undefined" == typeof param.q) {
+				//console.log('没值!!');
 				var data = [];
 				success(data);
 				return;
@@ -557,8 +558,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 				});
 			}
 		},
-		onLoadSuccess: function() {
-		},
+		onLoadSuccess: function() {},
 		filter: function(q, row) {
 			return true;
 		},
@@ -596,28 +596,28 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			return data;
 		},
 		onSelect: function(record) {
-			$(this).attr('choose','yes');
 			for (var item in returnFieldData) {
 				if (record[item]) {
 					$('#' + returnFieldData[item]).val(record[item]);
 				}
 			}
-
 			//执行回调函数
 			if (typeof onSelectedFun == 'function') {
 				var fn = eval(onSelectedFun);
 				fn(record);
 			}
 		},
-		onHidePanel: function() {
-			if($(this).attr('choose') !== 'yes'){
-				$(this).combobox('setValue','');
-				for (var item in returnFieldData) {
-					$('#' + returnFieldData[item]).val('');
-				}
+		//展示面板时,清空input的值并执行不带参数的回调函数
+		onShowPanel :function(){
+			for (var item in returnFieldData) {
+				$('#' + returnFieldData[item]).val('');
+			}
+			//执行回调函数
+			if (typeof onSelectedFun == 'function') {
+				var fn = eval(onSelectedFun);
+				try{fn();}catch(e){console.log(e)}
 			}
 		}
-
 	});
 
 	$(function(){
