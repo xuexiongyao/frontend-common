@@ -6,10 +6,12 @@ html{
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    body {
-        background: url("../framework/default/images/general_bg.jpg");
-        visibility: hidden;
-    }
+
+}
+
+body {
+    background: url("../framework/default/images/general_bg.jpg");
+    visibility: hidden;
 }
 
 textarea{
