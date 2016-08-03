@@ -50,27 +50,19 @@
 
 /***********************************/
 /****************公共页面基本框架样式**********************/
-/* line 4, ../sass/sass/_common.scss */
-.link-css {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #0e6595;
+/* line 5, ../sass/sass/_common.scss */
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-
-/* line 10, ../sass/sass/_common.scss */
-.link-css-red {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #ed4848;
-}
-
-/* line 15, ../sass/sass/_common.scss */
-body {
+/* line 9, ../sass/sass/_common.scss */
+html body {
   background: url("../framework/default/images/general_bg.jpg");
   visibility: hidden;
 }
 
-/* line 19, ../sass/sass/_common.scss */
+/* line 15, ../sass/sass/_common.scss */
 textarea {
   overflow: auto;
   resize: none;
@@ -83,12 +75,12 @@ textarea {
   border-color: #ccc;
 }
 
-/* line 26, ../sass/sass/_common.scss */
+/* line 22, ../sass/sass/_common.scss */
 label {
   cursor: pointer;
 }
 
-/* line 29, ../sass/sass/_common.scss */
+/* line 25, ../sass/sass/_common.scss */
 .main {
   margin: 30px auto 0;
   padding: 1px 0 30px;
@@ -97,7 +89,7 @@ label {
   background-color: #fff;
 }
 
-/* line 37, ../sass/sass/_common.scss */
+/* line 33, ../sass/sass/_common.scss */
 .content-area {
   width: 1100px;
   margin: 40px auto 0;
@@ -115,7 +107,7 @@ label {
   clear: both;
   overflow: hidden;
 }
-/* line 43, ../sass/sass/_common.scss */
+/* line 39, ../sass/sass/_common.scss */
 .content-area .item {
   margin: 0 20px 10px;
   width: 510px;
@@ -124,22 +116,22 @@ label {
   _display: inline;
   *zoom: 1;
 }
-/* line 48, ../sass/sass/_common.scss */
+/* line 44, ../sass/sass/_common.scss */
 .content-area .item textarea {
   height: 60px;
 }
-/* line 51, ../sass/sass/_common.scss */
+/* line 47, ../sass/sass/_common.scss */
 .content-area .item a {
   float: left;
   _display: inline;
 }
-/* line 54, ../sass/sass/_common.scss */
+/* line 50, ../sass/sass/_common.scss */
 .content-area .item .control-btn {
   float: right;
   _display: inline;
   margin-right: 3px;
 }
-/* line 57, ../sass/sass/_common.scss */
+/* line 53, ../sass/sass/_common.scss */
 .content-area .item .control-btn i {
   line-height: 20px;
 }
@@ -153,25 +145,25 @@ label {
   clear: both;
   overflow: hidden;
 }
-/* line 63, ../sass/sass/_common.scss */
+/* line 59, ../sass/sass/_common.scss */
 .content-area .item-full {
   width: 1060px;
 }
-/* line 66, ../sass/sass/_common.scss */
+/* line 62, ../sass/sass/_common.scss */
 .content-area .item-title {
   margin: 0 0 20px;
   padding-bottom: 5px;
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
-/* line 71, ../sass/sass/_common.scss */
+/* line 67, ../sass/sass/_common.scss */
 .content-area .item-title .pro {
   width: 100%;
   margin: 0;
   font-size: 18px;
   text-align: left;
 }
-/* line 78, ../sass/sass/_common.scss */
+/* line 74, ../sass/sass/_common.scss */
 .content-area .pro {
   display: inline-block;
   vertical-align: top;
@@ -186,43 +178,43 @@ label {
   float: left;
   _display: inline;
 }
-/* line 86, ../sass/sass/_common.scss */
+/* line 82, ../sass/sass/_common.scss */
 .content-area .pro i {
   color: #ed4848;
   margin-right: 5px;
 }
-/* line 92, ../sass/sass/_common.scss */
+/* line 88, ../sass/sass/_common.scss */
 .content-area .radio-box {
   text-align: left;
 }
-/* line 94, ../sass/sass/_common.scss */
+/* line 90, ../sass/sass/_common.scss */
 .content-area .radio-box input {
   vertical-align: -2px;
 }
 
-/* line 99, ../sass/sass/_common.scss */
+/* line 95, ../sass/sass/_common.scss */
 .btn-area {
   width: 1100px;
   margin: 40px auto 0;
   text-align: center;
   font-size: 14px;
 }
-/* line 104, ../sass/sass/_common.scss */
+/* line 100, ../sass/sass/_common.scss */
 .btn-area a.easyui-linkbutton {
   margin: 0 10px;
 }
 
-/* line 108, ../sass/sass/_common.scss */
+/* line 104, ../sass/sass/_common.scss */
 .clear {
   clear: both;
 }
 
-/* line 113, ../sass/sass/_common.scss */
+/* line 109, ../sass/sass/_common.scss */
 .clear-border {
   border: 1px solid #fff;
 }
 
-/* line 116, ../sass/sass/_common.scss */
+/* line 112, ../sass/sass/_common.scss */
 #loadingMsk {
   font-family: "SimSun";
   position: fixed;
@@ -233,7 +225,7 @@ label {
   width: 100%;
   height: 100%;
 }
-/* line 124, ../sass/sass/_common.scss */
+/* line 120, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage {
   background: #fff;
   text-align: center;
@@ -246,7 +238,7 @@ label {
   top: 50%;
   margin-top: -50px;
 }
-/* line 134, ../sass/sass/_common.scss */
+/* line 130, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage img {
   display: inline-block;
   vertical-align: middle;
@@ -254,13 +246,27 @@ label {
   zoom: 1;
   *dispaly: inline;
 }
-/* line 137, ../sass/sass/_common.scss */
+/* line 133, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage span {
   margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+}
+
+/* line 140, ../sass/sass/_common.scss */
+.link-css {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #0e6595;
+}
+
+/* line 146, ../sass/sass/_common.scss */
+.link-css-red {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #ed4848;
 }
 
 /******************弹出iframe(url)窗口公共样式*********************/

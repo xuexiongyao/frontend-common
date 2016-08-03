@@ -225,8 +225,8 @@
         }
     }
     .infos-area-right{//信息展示区域
-        @include float(left);
-        @include size(348px,520px);
+        @include float(right);
+        @include size(347px,520px);
         position: relative;
         ul{
             //background: #3f973c;
@@ -241,6 +241,7 @@
                     margin-right:10px;
                     width: 56px;
                     min-height:19px;
+                    font-size: fontSize(small);
                     font-weight:bold;
                     color: colors(textColor);
                 }
