@@ -29,7 +29,7 @@
 
 		naturalNumber: {
 			validator: function (value) {
-				return /^[+]?[1-9]+\d*$/i.test(value);
+				return /^[+]?[0-9]+\d*$/i.test(value);
 			},
 			message: "请输入正确的自然数格式"
 		},
