@@ -265,6 +265,42 @@ function ltToday(start_id, end_id) {
     });
 }
 
+/*form提交,依赖easyui [不带提示信息],
+* 1.form_id : 表单ID
+* 2.call_back : 提交成功后的回调函数处理
+* 3.url : 提交表单地址,默认为form上的action属性
+* */
+function formSubmit(form_id, call_back, url){
+    var submit_form = $('#' + form_id);
+    var submit_url = url || submit_form.action;
+    submit_form.form('submit', {
+        url: submit_url,
+        onSubmit: function () {
+            var isValid = $(this).form('validate');
+            if(isValid){
+                loading('open','数据提交中,请稍候...');
+            }
+            return isValid;	// 返回false终止表单提交
+        },
+        success: function (data) {
+            loading('close');//完成后关闭...转圈
+            try{
+                var json = eval('(' + data + ')');
+            }catch(e){
+                var json=data;
+            }
+            if(json.status == 'success'){
+                if(typeof call_back == 'function'){
+                    call_back();
+                }else{
+                    alert(call_back+'is not a function');
+                }
+            }else{
+                $.messager.alert('提示',json.message);
+            }
+        }
+    });
+}
 
 /*普通form提交,依赖easyui
  * 1.form_id : 表单ID
@@ -322,7 +358,7 @@ function formTips(json, success_fn, type) {
                     });
                     setTimeout(function () {
                         fn(json);
-                    }, 1000);
+                    }, 3000);
                 } else {
                     fn(json);
                 }
