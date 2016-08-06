@@ -509,12 +509,25 @@ function getIEVersion() {
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
 			if (!opts.url) return false;
-			if (opts.isTopLoad && window && window.publicDictArray) {
-				data = window.getPublicDict(opts.url);
+			$.ajax({
+				type: opts.method,
+				url: opts.url,
+				data: param,
+				dataType: 'json',
+				xhrFields:{withCredentials:true},
+				crossDomain:true,
+				success: function(data) {
+					opts.loaded = true;
+					success(data);
+				}
+			});
+			//之前的处理方式
+			//if (opts.isTopLoad && window && window.publicDictArray) {
+				/*data = window.getPublicDict(opts.url);
 				opts.loaded = true;
-				success(data);
-			}
-			else {
+				success(data);*/
+			//}
+			/*else {
 				$.ajax({
 					type: opts.method,
 					url: opts.url,
@@ -530,7 +543,7 @@ function getIEVersion() {
 						error.apply(this, arguments);
 					}
 				});
-			}
+			}*/
 		},
 
 		loadFilter: function(data) {
@@ -1967,7 +1980,7 @@ var topMessager = {
 	progress : function(optionsOrMethod) {
 		window.$.messager.progress(optionsOrMethod);
 	}
-}
+};
 
 // 顶层页面弹出消息窗口
 function topMessagerShow(title, msg, timeout) {
