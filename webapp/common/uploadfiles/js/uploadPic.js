@@ -329,7 +329,7 @@
 			
 		//添加子容器;
 		var li = '<li id="fileBox_'+file_id+'" class="diyUploadHover"> \
-					<div class="viewThumb"></div> \
+					<div class="viewThumb"><span style="font-size:14px;font-weight:bold;">图片加载中,请稍等...</span></div> \
 					<div class="diyCancel"></div> \
 					<div class="diySuccess"></div> \
 					<div class="diyFileName">'+file.name+'</div>\
@@ -376,7 +376,7 @@
 		//生成预览缩略图;
 		webUploader.makeThumb( file, function( error, dataSrc ) {
 			if ( !error ) {	
-				$fileBox.find('.viewThumb').append('<img src="'+dataSrc+'" >');
+				$fileBox.find('.viewThumb').html('<img src="'+dataSrc+'" >');
 			}
 		});	
 	}

@@ -749,6 +749,7 @@ function uploadFileImageView(lybm, lyid, divID, imgWidth, imgHeight, emptyImage)
 		topMessager.alert('', '查看附件图片查传入参数错误！');
 		return;
 	}
+	$('#' + divID).html('<span>图片加载中,请稍候...</span>');
 	$.ajax({
 		xhrFields: {withCredentials: true},
 		crossDomain: true,
