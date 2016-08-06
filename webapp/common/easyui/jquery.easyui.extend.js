@@ -508,12 +508,12 @@ function getIEVersion() {
 
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
-			var sessionStorageData = sessionStorage[opts.url];
+			/*var sessionStorageData = sessionStorage[opts.url];
 			if (!opts.url) return false;
 			if(sessionStorageData){
 				//console.log('取缓存:',JSON.parse(localStorageUrl));
 				success(eval('('+sessionStorageData+')'));
-			}else{
+			}else{*/
 				$.ajax({
 					type: opts.method,
 					url: opts.url,
@@ -530,7 +530,7 @@ function getIEVersion() {
 						sessionStorage[opts.url] = JSON.stringify(data);
 					}
 				});
-			}
+			//}
 
 			/*data = localStorageDict(opts.url);
 			 opts.loaded = true;
