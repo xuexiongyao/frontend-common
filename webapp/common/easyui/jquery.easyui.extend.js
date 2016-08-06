@@ -508,19 +508,34 @@ function getIEVersion() {
 
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
+			var sessionStorageData = sessionStorage[opts.url];
 			if (!opts.url) return false;
-			$.ajax({
-				type: opts.method,
-				url: opts.url,
-				data: param,
-				dataType: 'json',
-				xhrFields:{withCredentials:true},
-				crossDomain:true,
-				success: function(data) {
-					opts.loaded = true;
-					success(data);
-				}
-			});
+			if(sessionStorageData){
+				//console.log('取缓存:',JSON.parse(localStorageUrl));
+				success(eval('('+sessionStorageData+')'));
+			}else{
+				$.ajax({
+					type: opts.method,
+					url: opts.url,
+					data: param,
+					dataType: 'json',
+					xhrFields:{withCredentials:true},
+					crossDomain:true,
+					beforeSend: function(xhr) {
+						xhr.withCredentials = true;
+					},
+					success: function(data) {
+						opts.loaded = true;
+						success(data);
+						sessionStorage[opts.url] = JSON.stringify(data);
+					}
+				});
+			}
+
+			/*data = localStorageDict(opts.url);
+			 opts.loaded = true;
+			 success(data);
+			 console.log(data);*/
 			//之前的处理方式
 			//if (opts.isTopLoad && window && window.publicDictArray) {
 				/*data = window.getPublicDict(opts.url);

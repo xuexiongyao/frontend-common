@@ -7,6 +7,7 @@
 // 初始化下拉列表（大数据的下拉列表用，如全国行政区划）
 // comboID 下拉框ID
 // dictUrl 对应字典的Url，如：portal+'/common/dict/GB_D_XZQHDMLIST.js'
+//window.top有问题
 function initComboBox(comboID, dictUrl) {
 	$('#' + comboID).combobox({
 		clientLoad: true,
