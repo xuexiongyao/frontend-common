@@ -514,6 +514,7 @@ function getIEVersion() {
 				//console.log('取缓存:',JSON.parse(localStorageUrl));
 				success(eval('('+sessionStorageData+')'));
 			}else{*/
+			if(opts.url){
 				$.ajax({
 					type: opts.method,
 					url: opts.url,
@@ -530,6 +531,8 @@ function getIEVersion() {
 						sessionStorage[opts.url] = JSON.stringify(data);
 					}
 				});
+			}
+
 			//}
 
 			/*data = localStorageDict(opts.url);
