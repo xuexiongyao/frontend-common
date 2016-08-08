@@ -605,6 +605,9 @@ function getSfzh18(sfzh15) {
 // 判断是否为正确的身份证号码
 // 验证通过返回true,否则返回false
 function isCorrectSfzh(sfzh18) {
+	if(sfzh18 != "" && sfzh18.length == 15){
+		sfzh18 = getSfzh18(sfzh18);
+	}
 	if (sfzh18 != "" && sfzh18.length == 18) {
 		for (var i = 0; i < 17; i++) {
 			var bitChar = sfzh18.substring(i, i + 1);
