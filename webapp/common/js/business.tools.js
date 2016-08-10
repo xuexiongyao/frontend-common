@@ -698,10 +698,10 @@ function uploadFileEdit(lybm, lyid, lyms, fileType, fileOnly, isTopOpen, winTitl
 		isTopOpen = "0";
 	}
 	if (isTopOpen == "1") {
-		window.top.openWindowWithSave(false, "", window, null, dataOptions, "您是否要上传附件？", "");
+		window.top.openWindowNoSave(false, "", window, null, dataOptions, "您是否要上传附件？", "");
 	}
 	else {
-		openWindowWithSave(false, "", window, null, dataOptions, "您是否要上传附件？", "");
+		openWindowNoSave(false, "", window, null, dataOptions, "您是否要上传附件？", "");
 	}
 }
 
