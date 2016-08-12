@@ -458,6 +458,7 @@
 
 		length: {
 			validator : function(value, param) {
+				// data-options="validType:['length[8,16,/',/']']" : 根据逗号分开的字符长度验证
 				if(param[2]){
 					var arr = value.split(param[2]);
 					return arr.length >= param[0] && arr.length <= param[1];
