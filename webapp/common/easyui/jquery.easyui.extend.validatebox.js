@@ -458,9 +458,15 @@
 
 		length: {
 			validator : function(value, param) {
+				if(param[2]){
+					var arr = value.split(param[2]);
+					return arr.length >= param[0] && arr.length <= param[1];
+				}
+
 				var len = $.trim(value).length;
 				return len >= param[0] && len <= param[1];
 			},
+
 			message: "输入的长度在 {0} 与 {1} 之间"
 		},
 
