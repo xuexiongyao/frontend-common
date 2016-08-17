@@ -174,11 +174,10 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
     var currentTabIndex = fraTabs.tabs('getTabIndex',currentTab); //当前tab索引(index)
     var currentTabTitle = allTitles[currentTabIndex];             //当前tab标题(title)
 
-    if(return_tab_id == '' || return_tab_id == false || return_tab_id == 'undefind' || return_tab_id == 'null'){
+    if(return_tab_id == '' || return_tab_id == false || return_tab_id == 'undefined' || return_tab_id == 'null'){
         fraTabs.tabs('close',currentTabTitle);//关闭当前标签
         //fraTabs.tabs('close',currentTabIndex);//关闭当前标签
-        console.log('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id',currentTabTitle);
-        //alert('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id');
+        console.log('closeTabRefreshOther(return_tab_id,return_fn_name)中没有return_tab_id。','currentTabTitle:'+currentTabTitle);
     }else{
         if(fraTabs.tabs('existsById',return_tab_id)){
             fraTabs.tabs('selectById',return_tab_id);
@@ -200,7 +199,7 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
             fraTabs.tabs('close',currentTabTitle);//关闭当前标签
         }else{
             //返回的页面被人为关闭
-            console.log('本该返回的Tab被您手动关掉了!!!',return_tab_id);
+            console.log('本该返回的Tab被您手动关掉了!!!','return_tab_id:'+return_tab_id);
         }
     }
 }
