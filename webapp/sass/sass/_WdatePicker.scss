@@ -4,7 +4,8 @@
     padding: 0;
     text-indent: 5px;
     outline: none;
-    height:20px;
+    height:24px;
+    line-height:24px;
     border: 1px solid colors(borderColor);
     @include prefix(border,radius,3px);
     background:#fff url(christ/datePicker.png) no-repeat right;

@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/icon.css">
     <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/framework/default/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/datepicker/skin/christ/datepicker.css">
-    <link rel="stylesheet" href="../../../stylesheets/newItemStyle.css">
-    <!--<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css">-->
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css">
     <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.min.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.dragsort-0.5.2.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.min.js"></script>
@@ -149,21 +148,13 @@
         <!--组件样式 2:2-->
         <h2>Item Style 2/2</h2>
         <ul class="item-container">
-            <li class="h-blank"><span class="title">efefee</span></li>
+            <li class="h-blank"><span class="title"></span></li>
             <li class="item-two">
-                <p class="pro"><i class="fa fa-asterisk"></i>性别</p>
+                <p class="pro"><i class="fa fa-asterisk"></i>日期</p>
                 <div class="ipt">
-                    <input class="easyui-combobox" value="1" data-options="
-                    url: staticPath + '/common/dict/xb.js',
-                    method: 'get',
-                    valueField: 'id',
-                    textField: 'text',
-                    panelWidth: 'auto',
-                    panelMaxHeight: 200,
-                    panelHeight: 'auto',
-                    required: true,
-                    fit:true
-                ">
+                    <input class="easyui-validatebox Wdate" style="width:99.7%" placeholder="yyyy-MM-dd"
+                           onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd',errDealMode:2,autoPickDate:true});"
+                           data-options="validType:['date[\'yyyy-MM-dd\']']">
                 </div>
             </li>
             <li class="item-two">
@@ -183,19 +174,18 @@
                 </div>
             </li>
             <li class="item-two">
-                <p class="pro"><i class="fa fa-asterisk"></i>性别</p>
+                <p class="pro"><i class="fa fa-asterisk"></i>textbox</p>
                 <div class="ipt">
-                    <input class="easyui-combobox" value="1" data-options="
-                    url: staticPath + '/common/dict/xb.js',
-                    method: 'get',
-                    valueField: 'id',
-                    textField: 'text',
-                    panelWidth: 'auto',
-                    panelMaxHeight: 200,
-                    panelHeight: 'auto',
-                    required: true,
-                    fit:true
-                ">
+                    <input class="easyui-textbox" style="width: 100%"
+                           data-options="validType:['contains[\'founder\']'],prompt:'输入的内容包含founder',fit:true">
+                </div>
+            </li>
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>日期</p>
+                <div class="ipt">
+                    <input class="easyui-validatebox Wdate" style="width:99.7%" placeholder="yyyy-MM-dd"
+                           onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd',errDealMode:2,autoPickDate:true});"
+                           data-options="validType:['date[\'yyyy-MM-dd\']']">
                 </div>
             </li>
             <li class="item-two">
@@ -221,68 +211,60 @@
             <code>
                 &lt;h2&gt;Item Style 2/2&lt;/h2&gt;
                 &lt;ul class="item-container"&gt;
+                    &lt;li class="h-blank"&gt;&lt;span class="title"&gt;&lt;/span&gt;&lt;/li&gt;
                     &lt;li class="item-two"&gt;
-                        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别&lt;/p&gt;
+                        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;日期&lt;/p&gt;
                         &lt;div class="ipt"&gt;
-                            &lt;input class="easyui-combobox" value="1" data-options="
-                            url: staticPath + '/common/dict/xb.js',
-                            method: 'get',
-                            valueField: 'id',
-                            textField: 'text',
-                            panelWidth: 'auto',
-                            panelMaxHeight: 200,
-                            panelHeight: 'auto',
-                            required: true,
-                            fit:true
-                            "&gt;
+                            &lt;input class="easyui-validatebox Wdate" style="width:99.7%" placeholder="yyyy-MM-dd"
+                                   onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd',errDealMode:2,autoPickDate:true});"
+                                   data-options="validType:['date[\'yyyy-MM-dd\']']"&gt;
                         &lt;/div&gt;
                     &lt;/li&gt;
                     &lt;li class="item-two"&gt;
                         &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别&lt;/p&gt;
                         &lt;div class="ipt"&gt;
                             &lt;input class="easyui-combobox" value="1" data-options="
-                            url: staticPath + '/common/dict/xb.js',
-                            method: 'get',
-                            valueField: 'id',
-                            textField: 'text',
-                            panelWidth: 'auto',
-                            panelMaxHeight: 200,
-                            panelHeight: 'auto',
-                            required: true,
-                            fit:true
-                            "&gt;
+                    url: staticPath + '/common/dict/xb.js',
+                    method: 'get',
+                    valueField: 'id',
+                    textField: 'text',
+                    panelWidth: 'auto',
+                    panelMaxHeight: 200,
+                    panelHeight: 'auto',
+                    required: true,
+                    fit:true
+                "&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="item-two"&gt;
+                        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;textbox&lt;/p&gt;
+                        &lt;div class="ipt"&gt;
+                            &lt;input class="easyui-textbox" style="width: 100%"
+                                   data-options="validType:['contains[\'founder\']'],prompt:'输入的内容包含founder',fit:true"&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="item-two"&gt;
+                        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;日期&lt;/p&gt;
+                        &lt;div class="ipt"&gt;
+                            &lt;input class="easyui-validatebox Wdate" style="width:99.7%" placeholder="yyyy-MM-dd"
+                                   onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd',errDealMode:2,autoPickDate:true});"
+                                   data-options="validType:['date[\'yyyy-MM-dd\']']"&gt;
                         &lt;/div&gt;
                     &lt;/li&gt;
                     &lt;li class="item-two"&gt;
                         &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别&lt;/p&gt;
                         &lt;div class="ipt"&gt;
                             &lt;input class="easyui-combobox" value="1" data-options="
-                            url: staticPath + '/common/dict/xb.js',
-                            method: 'get',
-                            valueField: 'id',
-                            textField: 'text',
-                            panelWidth: 'auto',
-                            panelMaxHeight: 200,
-                            panelHeight: 'auto',
-                            required: true,
-                            fit:true
-                            "&gt;
-                        &lt;/div&gt;
-                    &lt;/li&gt;
-                    &lt;li class="item-two"&gt;
-                        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别&lt;/p&gt;
-                        &lt;div class="ipt"&gt;
-                            &lt;input class="easyui-combobox" value="1" data-options="
-                            url: staticPath + '/common/dict/xb.js',
-                            method: 'get',
-                            valueField: 'id',
-                            textField: 'text',
-                            panelWidth: 'auto',
-                            panelMaxHeight: 200,
-                            panelHeight: 'auto',
-                            required: true,
-                            fit:true
-                            "&gt;
+                    url: staticPath + '/common/dict/xb.js',
+                    method: 'get',
+                    valueField: 'id',
+                    textField: 'text',
+                    panelWidth: 'auto',
+                    panelMaxHeight: 200,
+                    panelHeight: 'auto',
+                    required: true,
+                    fit:true
+                "&gt;
                         &lt;/div&gt;
                     &lt;/li&gt;
                 &lt;/ul&gt;
@@ -1102,7 +1084,7 @@
             <li class="item-full">
                 <p class="pro-fullThree"><i class="fa fa-asterisk"></i>性别</p>
                 <div class="ipt-fullThree">
-                    <input class="easyui-combobox" style="width: 1029px" value="1" data-options="
+                    <input class="easyui-combobox" style="height:26px;width: 1029px" value="1" data-options="
                     url: staticPath + '/common/dict/xb.js',
                     method: 'get',
                     valueField: 'id',
@@ -1110,7 +1092,7 @@
                     panelWidth: 'auto',
                     panelMaxHeight: 200,
                     panelHeight: 'auto',
-                    required: true
+                    required: true,
                 ">
                     <a href="javascript:;" class="easyui-linkbutton c1"><i class="fa fa-plus"></i></a>
                 </div>
@@ -1118,7 +1100,7 @@
             <li class="item-full">
                 <p class="pro-fullThree"><i class="fa fa-asterisk"></i>性别</p>
                 <div class="ipt-fullThree">
-                    <input class="easyui-combobox" style="width: 1029px" value="1" data-options="
+                    <input class="easyui-combobox" style="height:26px;width: 1029px" value="1" data-options="
                     url: staticPath + '/common/dict/xb.js',
                     method: 'get',
                     valueField: 'id',
@@ -1134,7 +1116,7 @@
             <li class="item-full">
                 <p class="pro-fullThree"><i class="fa fa-asterisk"></i>性别</p>
                 <div class="ipt-fullThree">
-                    <input class="easyui-textbox" style="width: 1029px" data-options="">
+                    <input class="easyui-textbox" style="height:26px;width: 1029px" data-options="">
                     <a href="javascript:;" class="easyui-linkbutton c3"><i class="fa fa-times"></i></a>
                 </div>
             </li>
@@ -1148,7 +1130,7 @@
                     &lt;li class="item-full"&gt;
                     &lt;p class="pro-fullThree"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别&lt;/p&gt;
                     &lt;div class="ipt-fullThree"&gt;
-                    &lt;input class="easyui-combobox" style="width: 1029px" value="1" data-options="
+                    &lt;input class="easyui-combobox" style="height:26px;width: 1029px" value="1" data-options="
                     url: staticPath + '/common/dict/xb.js',
                     method: 'get',
                     valueField: 'id',
@@ -1164,7 +1146,7 @@
                     &lt;li class="item-full"&gt;
                     &lt;p class="pro-fullThree"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别&lt;/p&gt;
                     &lt;div class="ipt-fullThree"&gt;
-                    &lt;input class="easyui-combobox" style="width: 1029px" value="1" data-options="
+                    &lt;input class="easyui-combobox" style="height:26px;width: 1029px" value="1" data-options="
                     url: staticPath + '/common/dict/xb.js',
                     method: 'get',
                     valueField: 'id',
@@ -1177,6 +1159,33 @@
                     &lt;a href="javascript:;" class="easyui-linkbutton c3"&gt;&lt;i class="fa fa-times"&gt;&lt;/i&gt;&lt;/a&gt;
                     &lt;/div&gt;
                     &lt;/li&gt;
+                    &lt;/ul&gt;
+                </code>
+            </pre>
+        </div>
+        <!--textarea-->
+        <h2>TEXTAREA</h2>
+        <ul class="item-container">
+            <li class="item-full">
+                <p class="pro-fullTwo">文本框</p>
+                <div class="ipt-fullTwo textarea">
+                    <textarea class="easyui-validatebox" style="width: 99.333%;height: 100px;" placeholder="最多输20个字"
+                              data-options="validType:['maxLength[20]']"></textarea>
+                </div>
+            </li>
+        </ul>
+        <div class="h-blank-pre">
+            <pre>
+                <code>
+                    &lt;h2&gt;TEXTAREA&lt;/h2&gt;
+                    &lt;ul class="item-container"&gt;
+                        &lt;li class="item-full"&gt;
+                            &lt;p class="pro-fullTwo"&gt;文本框&lt;/p&gt;
+                            &lt;div class="ipt-fullTwo textarea"&gt;
+                    &lt;textarea class="easyui-validatebox" style="width: 99.333%;height: 100px;" placeholder="最多输20个字"
+                              data-options="validType:['maxLength[20]']"&gt;&lt;/textarea&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
                     &lt;/ul&gt;
                 </code>
             </pre>

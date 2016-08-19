@@ -22,7 +22,7 @@ body{
                 @include attrMarginPaddingBorder;
                 @include float(left);
                 @include text-align(right);
-                @include text-vertical-center(24px);
+                @include text-vertical-center(26px);
                 font-weight:bold;
                 i{
                     color: colors(red);
@@ -43,6 +43,7 @@ body{
             }
             >div{
                 @include float(right);
+                height:26px;
                 line-height:2;
                 >label{
                     cursor: pointer;
@@ -56,11 +57,11 @@ body{
                 }
                 >a{
                     display: inline-block;
-                    @include text-vertical-center(20px);
+                    @include text-vertical-center(24px);
                     span{
-                        @include text-vertical-center(20px);
+                        @include text-vertical-center(24px);
                         i{
-                            line-height:20px;
+                            line-height:24px;
                         }
                     }
                 }
@@ -75,6 +76,13 @@ body{
                         @include box-shadow(0 0 3px 0 colors(borderFocus));
                     }
                 }
+            }
+            >div.panel-noscroll{
+                overflow: inherit;
+            }
+            >div.textarea{
+                min-height:26px;
+                height: auto;
             }
             .ipt{
                 width:68%;
