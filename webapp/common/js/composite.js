@@ -1,5 +1,5 @@
 ﻿//var staticPath = './webapp';
-var window_type = 'open_url';
+//var window_type = 'open_url';
 var condition_obj = {mainTable:search_config.main_type};
 var table_header_info=[];
 var	config=[];
@@ -692,6 +692,8 @@ var t2 = {
 		}
 	]
 };
+
+
 //console.log(t2);
 
 

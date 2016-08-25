@@ -3,16 +3,19 @@
 .main{
     .title{
         color:colors(primary);
-        font-size: fontSize(h3);
+        font-size: fontSize(h4);
         font-weight: bold;
-        text-align: center;
+        //text-align: center;
         font-family: fontFamily(cn);
-        margin-top: 15px;
+        //margin-top: 15px;
+        margin-right: 10px;
     }
     .search-btn-box{
-        width:535px;
+        width:580px;
         margin:auto;
         margin-top:15px;
+        height: 40px;
+        line-height:40px;
         .search-btn{
             display: inline-block;
             position: relative;
@@ -75,8 +78,8 @@
                     width:33.33333%;
                     .pro{
                         display: inline-block;
-                        font-size: fontSize(base);
-                        font-weight: bold;
+                        font-size: fontSize(small);
+                        //font-weight: bold;
                         margin:  0 5px;
                         text-align: right;
                         width:84px;
