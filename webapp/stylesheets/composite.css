@@ -418,3 +418,25 @@
   height: 30px;
   line-height: 30px;
 }
+
+/* line 264, ../sass/sass/_composite.scss */
+#other_table_dialog .title {
+  font-size: 14px;
+  border-bottom: 1px #ccc dashed;
+  color: #0D6193;
+  margin-bottom: 2px;
+}
+/* line 270, ../sass/sass/_composite.scss */
+#other_table_dialog .item-table {
+  margin: 5px 15px 10px 15px;
+}
+/* line 274, ../sass/sass/_composite.scss */
+#other_table_dialog .item-check label {
+  font-size: 12px;
+  display: inline-block;
+  min-width: 120px;
+}
+/* line 278, ../sass/sass/_composite.scss */
+#other_table_dialog .item-check label input {
+  vertical-align: middle;
+}

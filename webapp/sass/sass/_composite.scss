@@ -258,3 +258,26 @@
         }
     }
 }
+
+//子表查询选项
+#other_table_dialog{
+    .title{
+        font-size:14px;
+        border-bottom:1px #ccc dashed;
+        color:#0D6193;
+        margin-bottom:2px;
+    }
+    .item-table{
+        margin:5px 15px 10px 15px;
+    }
+    .item-check{
+        label{
+            font-size: 12px;
+            display: inline-block;
+            min-width: 120px;
+            input{
+                vertical-align: middle;
+            }
+        }
+    }
+}
