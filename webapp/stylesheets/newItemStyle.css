@@ -252,6 +252,18 @@ body {
   height: 20px;
 }
 /* line 132, ../sass/sass/_demo.scss */
+.container .h-blank-noborder-s {
+  display: block;
+  width: 100%;
+  height: 10px;
+}
+/* line 136, ../sass/sass/_demo.scss */
+.container .h-blank-noborder-l {
+  display: block;
+  width: 100%;
+  height: 30px;
+}
+/* line 140, ../sass/sass/_demo.scss */
 .container .h-blank-pre {
   display: none;
   width: 100%;
@@ -267,11 +279,11 @@ body {
   overflow: auto;
   font-size: 12px;
 }
-/* line 141, ../sass/sass/_demo.scss */
+/* line 149, ../sass/sass/_demo.scss */
 .container .h-blank-pre pre, .container .h-blank-pre code {
   font-family: "Microsoft Yahei", "微软雅黑";
 }
-/* line 145, ../sass/sass/_demo.scss */
+/* line 153, ../sass/sass/_demo.scss */
 .container .h-blank-pre-show {
   width: 100%;
   height: auto;
@@ -279,21 +291,21 @@ body {
   color: #fff;
   font-size: 12px;
 }
-/* line 150, ../sass/sass/_demo.scss */
+/* line 158, ../sass/sass/_demo.scss */
 .container .h-blank-pre-show pre, .container .h-blank-pre-show code {
   font-family: "Microsoft Yahei", "微软雅黑";
 }
 
-/* line 156, ../sass/sass/_demo.scss */
+/* line 164, ../sass/sass/_demo.scss */
 label {
   cursor: pointer;
   margin-right: 10px;
 }
-/* line 159, ../sass/sass/_demo.scss */
+/* line 167, ../sass/sass/_demo.scss */
 label input {
   vertical-align: -2px;
 }
-/* line 162, ../sass/sass/_demo.scss */
+/* line 170, ../sass/sass/_demo.scss */
 label input[type="checkbox"] {
   margin-left: 0;
 }

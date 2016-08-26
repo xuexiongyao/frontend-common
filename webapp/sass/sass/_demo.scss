@@ -129,6 +129,14 @@ body{
         display: block;
         @include size(100%,20px);
     }
+    .h-blank-noborder-s{
+        display: block;
+        @include size(100%,10px);
+    }
+    .h-blank-noborder-l{
+        display: block;
+        @include size(100%,30px);
+    }
     .h-blank-pre{
         display: none;
         @include size(100%,auto);
