@@ -235,7 +235,7 @@ body {
   width: 100%;
   height: auto;
   padding-bottom: 7px;
-  border-bottom: 1px dashed #000;
+  border-bottom: 1px dashed #ccc;
 }
 /* line 120, ../sass/sass/_demo.scss */
 .container .h-blank span {
