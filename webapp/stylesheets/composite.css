@@ -428,15 +428,21 @@
 }
 /* line 270, ../sass/sass/_composite.scss */
 #other_table_dialog .item-table {
-  margin: 5px 15px 10px 15px;
+  margin: 5px 10px 10px 10px;
+  padding: 5px;
+  border: 2px #fff solid;
 }
-/* line 274, ../sass/sass/_composite.scss */
+/* line 275, ../sass/sass/_composite.scss */
+#other_table_dialog .item-check-border {
+  border: 2px #ccc solid;
+}
+/* line 279, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label {
   font-size: 12px;
   display: inline-block;
   min-width: 120px;
 }
-/* line 278, ../sass/sass/_composite.scss */
+/* line 283, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label input {
   vertical-align: middle;
 }

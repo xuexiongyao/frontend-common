@@ -268,7 +268,12 @@
         margin-bottom:2px;
     }
     .item-table{
-        margin:5px 15px 10px 15px;
+        margin: 5px 10px 10px 10px;
+        padding: 5px;
+        border: 2px #fff solid;
+    }
+    .item-check-border{
+        border: 2px #ccc solid;
     }
     .item-check{
         label{
