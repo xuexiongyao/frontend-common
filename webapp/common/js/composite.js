@@ -5,35 +5,235 @@ var table_header_info=[];
 var	config=[];
 
 $(function(){
-	changeName();   //更名
-	pagination();   //分页
-	setTable();      //表格配置
-	getTableSetDom();
+	changeName();       //页面展示的模块更名
+	pagination();       //初始化分页
+	setTable();         //初始化表格设置按钮
+	getTableSetDom();   //生成表头配置信息,并实现拖动
+	createDatagrid();    //初始化表格
+	btnEvent();         //按钮事件
 });
 //更改页面显示的标题内容
 function changeName(){
 	$('#title_name').text(search_config.query_title);
+	var search_config_arr1 = [search_config_arr[0]];
+	createAdInput(search_config_arr1);//初始化高级查询框
+}
+
+//初始化高级查询框
+function createAdInput(search_config_arr){
+	$('#advanced_box').empty();
 	var type_html = '';
+	//通过配置生成多表查询条件
 	for(var i=0;i<search_config_arr.length;i++){
 		var type = search_config_arr[i];
 		type_html += ''
 			+'<div id="'+type+'">'
-				+'<div>'
-					+'<span class="search-title">'+search_config[type+'_title']+'</span>'
-						+'<span class="search-add">'
-						+'<a class="easyui-linkbutton c1 add-condition" data-options="height:20"><i class="fa fa-plus"></i></a>'
-					+'</span>'
-				+'</div>'
-				+'<ul></ul>'
+			+'<div>'
+			+'<span class="search-title">'+search_config[type+'_title']+'</span>'
+			+'<span class="search-add">'
+			+'<a class="easyui-linkbutton c2" style="margin-right:10px;" id="otherTable" data-options="height:20">子表查询</a>'
+			+'<a class="easyui-linkbutton c1 add-condition" data-options="height:20"><i class="fa fa-plus"></i></a>'
+			+'</span>'
+			+'</div>'
+			+'<ul></ul>'
 			+'</div>';
 	}
 	type_html += '<div class="bottom-btn">'
-					+'<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
-					+'<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
-					+'<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
-				+'</div>';
+		+'<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
+		+'<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
+		+'<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
+		+'</div>';
 	$('#advanced_box').append(type_html);
-	btnEvent();     //按钮事件
+	for(var i=0;i<search_config_arr.length;i++){
+		//生成查询条件输入框
+		createSearchInput(search_config_arr[i]);
+	}
+	addOtherTable();//添加子表查询模块
+}
+
+//通过勾选生成查询框
+function createAdInputByCheck(search_config_obj){
+	$('#advanced_box').empty();
+	for(var k in search_config_obj){
+		var otherTableBtn = '';
+		var module_k = search_config_obj[k];
+		if(k == search_config_arr[0]){
+			otherTableBtn = '<a class="easyui-linkbutton c2" style="margin-right:10px;" id="otherTable" data-options="height:20">子表查询</a>';
+		}
+		var type = k;
+		var type_html = ''
+			+'<div id="'+type+'">'
+			+'<div>'
+			+'<span class="search-title">'+search_config[type+'_title']+'</span>'
+			+'<span class="search-add">'
+			+ otherTableBtn
+			+'<a class="easyui-linkbutton c1 add-condition" data-options="height:20"><i class="fa fa-plus"></i></a>'
+			+'</span>'
+			+'</div>'
+			+'<ul></ul>'
+			+'</div>';
+		$('#advanced_box').append(type_html);
+		for(var i= 0,len=module_k.length;i<len;i++){
+			var module_i = module_k[i];
+			var config_i;
+			var search_arr = search_config[k];
+			if(module_i){
+				for(var j= 0,len=search_arr.length;j<len;j++){
+					if(search_arr[j]['field'] == module_i){
+						config_i = search_arr[j];
+					}
+				}
+				var search_li = '<li field="'+config_i.field+'" input_type="'+config_i.input+'">'
+					+'<span class="pro">'+config_i.text+'</span>'
+					+'<input id="'+type+'judge_input'+i+'" class="judge">'
+					+'<input id="'+type+'condition_input'+i+'" class="condition">'
+					+'</li>';
+				$('#'+type+' ul').append(search_li);
+				parseInput(config_i,type+'judge_input'+i,type+'condition_input'+i); //初始化input组件
+			}
+		}
+	}
+	var bottomBtn = '<div class="bottom-btn">'
+		+'<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
+		+'<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
+		+'<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
+		+'</div>';
+	$('#advanced_box').append(bottomBtn);
+	$('.easyui-linkbutton').linkbutton();
+	//console.log(search_config_obj);
+	addOtherTable();//添加子表查询模块
+	btnEvent();
+}
+
+//添加子表查询模块
+function addOtherTable(){
+	$('#otherTable').off('click').on('click',function(){
+		openOtherTable(false);
+	});
+}
+
+//打开多表查询条件
+function openOtherTable(isExport){
+	var title = '添加子表查询条件';
+	var text = '确认';
+	var start = 1;
+	if(isExport){
+		title = '批量导出选项';
+		text = '导出';
+		start = 0;
+	}
+	//通过勾选获取查询配置条件
+	var search_config_obj = {};
+	$('#other_table_dialog').empty();
+	//var search_config_arr = [];
+	for(var i=start;i<search_config_arr.length;i++){
+		var isMaster = false;
+		if(i==0) isMaster = true;
+		var for_i = search_config_arr[i];
+		var module_i = search_config[search_config_arr[i]];
+		var html = ''
+			+'<div class="item-table" isMaster="'+isMaster+'">'
+			+'<div class="title">'+search_config[for_i+'_title']+'</div>'
+			+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
+			+'</div>';
+		$('#other_table_dialog').append(html);
+		//console.log(module_i);
+		for(var j=0;j<module_i.length;j++){
+			var module_i_j = module_i[j];
+			var html_check = ''
+				+'<label><input type="checkbox" field="'+module_i_j.field+'">'+module_i_j.text+'</label>';
+			$('#item_check'+i).append(html_check);
+		}
+	}
+	openDivForm({
+		id: 'other_table_dialog',
+		title: title,
+		width: 800,
+		height: 'auto'
+	},[
+		{
+			text: text,
+			handler: function () {
+				//添加子表信息数据
+				if(!isExport) search_config_obj[search_config_arr[0]] = search_config[search_config_arr[0]+'_init'];
+				$('#other_table_dialog input:checked').each(function(){
+					var module = $(this).parent().parent().attr('module');
+					var field = $(this).attr('field');
+					if(search_config_obj[module]){
+						(search_config_obj[module]).push(field);
+					}else{
+						search_config_obj[module] = [field];
+					}
+				});
+				$('#other_table_dialog').dialog('close');
+				if(isExport){
+					batchExprot(search_config_obj);
+				}else{
+					createAdInputByCheck(search_config_obj);
+				}
+			}
+		}, {
+			text: '取消',
+			handler: function () {
+				$('#other_table_dialog').dialog('close');
+			}
+		}
+	]);
+
+	if(isExport){
+		$('#other_table_dialog input').off('click').on('click',function(){
+			var $this = $(this);
+			var isChecked = $this.prop('checked');
+			var $parent = $this.parent().parent().parent();
+			if(isChecked){
+				$parent.siblings().each(function(){
+					var $this = $(this);
+					var isMaster = $this.attr('isMaster');
+					if(isMaster === 'false'){
+						$this.removeClass('item-check-border').find('input').prop('checked',false);
+					}
+				});
+				$parent.addClass('item-check-border');
+			}else{
+				var checked = $parent.find('input:checked');
+				if(checked.length == 0){
+					$parent.removeClass('item-check-border');
+				}
+			}
+		});
+	}
+}
+
+//批量导出
+function batchExprot(search_config_obj){
+	//将查询条件赋给导出查询条件
+	var export_condition_obj = {};
+	for(var k in condition_obj){
+		export_condition_obj[k] = condition_obj[k];
+	}
+	var query = export_condition_obj.query || [];
+	for(var k in search_config_obj){
+		//判断导出的条件查询条件中是否存在
+		var isrepeat = false;
+		for(var i=0;i<query.length;i++){
+			if(k.toUpperCase() == query[i]['type'].toUpperCase()) isrepeat = true;
+		}
+		//不存在
+		if(!isrepeat){
+			query.push({
+				condition : [],
+				type : k
+			});
+		}
+	}
+	export_condition_obj.query = query;
+	//表格内容
+	var tableData = $('#result_table').datagrid('getChecked');
+
+	console.log('表格内容:',tableData);
+	console.log('查询条件:',condition_obj);
+	console.log('导出的查询条件:',export_condition_obj);
+	console.log('导出条件:',search_config_obj);
 }
 
 //表格设置
@@ -69,7 +269,6 @@ function setTable(){
 			}]
 		});
 		$('#set_table_panel').dialog('open').show();
-		//getTableSetDom();
 	});
 
 	//拖放排序插件
@@ -81,27 +280,27 @@ function setTable(){
 	});
 }
 
-// 生成表头配置信息,并实现拖动
+//生成表头配置信息,并实现拖动
 function getTableSetDom(){
 	$('#selected_ul,#waiting_ul').empty();
 	for(var i=0;i<search_config_arr.length;i++){
 		config = config.concat(search_config[search_config_arr[i]]);
 		table_header_info = table_header_info.concat(search_config[search_config_arr[i]+'_init']);
 	}
-/*
+	/*
 
 
-	var base_info = search_config.base_info;
-	var relation_info = search_config.relation_info;
+	 var base_info = search_config.base_info;
+	 var relation_info = search_config.relation_info;
 
-	var base_info_init = search_config.base_info_init;
-	var relation_info_init = search_config.relation_info_init;
+	 var base_info_init = search_config.base_info_init;
+	 var relation_info_init = search_config.relation_info_init;
 
-	var init_arr = (base_info_init).concat(relation_info_init); //默认配置
-	table_header_info = init_arr;
-	config = (base_info).concat(relation_info);         //所有配置
+	 var init_arr = (base_info_init).concat(relation_info_init); //默认配置
+	 table_header_info = init_arr;
+	 config = (base_info).concat(relation_info);         //所有配置
 
-*/
+	 */
 
 	var config_arr = getConfigArr(config); //默认配置
 
@@ -111,7 +310,6 @@ function getTableSetDom(){
 		var html_li = '<li><div rel="'+rel_val+'">'+getConfigObj(rel_val,config)['text']+'</div></li>';
 		$('#selected_ul').append(html_li);
 	}
-	//return;
 	//加载未显示的表格数据
 	for(var i = 0;i < config_arr.length;i++){
 		var config_i = config_arr[i];
@@ -133,6 +331,7 @@ function getConfigObj(field,config){
 	}
 	return null;
 }
+
 //根据字段名获取字段数组
 function getConfigArr(config){
 	var arr = [];
@@ -147,7 +346,7 @@ function btnEvent(){
 	//$('#advanced_box').hide();
 	//点击搜索图标(普通查询)
 	$('.easyui-linkbutton').linkbutton();
-	$('#search_all').click(function(){
+	$('#search_all').off('click').on('click',function(){
 		var keywords = $.trim($('#keywords').val());
 		if(keywords == ''){
 			$.messager.alert('提示','请输入关键字!','warning',function(){
@@ -169,8 +368,9 @@ function btnEvent(){
 		//console.log(keywords,condition_obj);
 	});
 	//点击高级
-	$('#advanced').click(function(){
+	$('#advanced').off('click').on('click',function(){
 		var _this = $(this);
+		//按钮样式变化,展开/折叠搜索框
 		if(_this.find('.fa').hasClass('fa-angle-double-down')){
 			$('#advanced_box').fadeIn(function(){
 				_this.find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
@@ -180,18 +380,23 @@ function btnEvent(){
 				_this.find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
 			});
 		}
-		$('#advanced_box .add-condition').off('click').on('click',function(){
+
+		//点击各个子模块的添加按钮(事件委托)
+		$('#advanced_box').off('click.add').on('click.add','.add-condition',function(){
 			var type = $(this).parent().parent().parent().attr('id');
 			addCondition(type);
-			//console.log(1,type);
 		});
 	});
 	//点击查询(高级查询)
-	$('#search_submit').click(function(){
+	$('#search_submit').off('click').on('click',function(){
 		var null_status = 0;
 		var query = [];
 		for(var i=0;i<search_config_arr.length;i++){
-			query.push(getBaseInfoObj(search_config_arr[i]));
+			//if((search_config_arr[i])['condition'].length){
+			var query_item = getBaseInfoObj(search_config_arr[i]);
+			if((query_item.condition).length){
+				query.push(query_item);
+			}
 		}
 		condition_obj.query = query;
 		condition_obj.option = 'ad';
@@ -216,40 +421,36 @@ function btnEvent(){
 		}
 	});
 	//点击清空
-	$('#search_clear').click(function(){
+	$('#search_clear').off('click').on('click',function(){
 		//移除添加查询条件
 		$('#advanced_box li[condition_type="add"]').remove();
 		//清除查询条件的值
 		clearInput('condition');
 	});
 	//点击关闭
-	$('#search_close').click(function(){$('#advanced_box').fadeOut(function(){
+	$('#search_close').off('click').on('click',function(){$('#advanced_box').fadeOut(function(){
 		$('#advanced').find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
 	});});
 	//点击全选
-	$('#all_select').click(function(){
+	$('#all_select').off('click').on('click',function(){
 		if($(this).prop('checked')){
 			$('#result_table').datagrid('checkAll');
 		}else{
 			$('#result_table').datagrid('uncheckAll');
 		}
 	});
+	//点击批量导出
+	$('#export').off('click').on('click',function(){
+		openOtherTable(true);
+	});
 	//详情事件(事件委托)
-	$('#table_content').on('click','.details',function(){
+	$('#table_content').off('click.details').on('click.details','.details',function(){
 		gotoDetail($(this));
 	});
-
-	//创建查询条件输入框
-	for(var i=0;i<search_config_arr.length;i++){
-		createSearchInput(search_config_arr[i]);
-	}
-	//初始化查询结果表格
-	creatDatagrid();
 }
 
 //初始化表格
-function creatDatagrid(){
-
+function createDatagrid(){
 	$('#result_table').datagrid({
 		showHeader:false,
 		fitColumns:true,
@@ -269,18 +470,19 @@ function creatDatagrid(){
 	});
 }
 
-//生成查询条件
+//生成查询条件输入框
 function createSearchInput(type){
 	var init = search_config[type+'_init'];
 	var config = search_config[type];
 	for(var i=0;i<config.length;i++){
 		var config_i = config[i];
 		if($.inArray(config_i['field'],init) != -1){
+			var isOrg = config_i.isOrganization || false;
 			var search_li = '<li field="'+config_i.field+'" input_type="'+config_i.input+'">'
-					+'<span class="pro">'+config_i.text+'</span>'
-					+'<input id="'+type+'judge_input'+i+'" class="judge">'
-					+'<input id="'+type+'condition_input'+i+'" class="condition">'
-					+'</li>';
+				+'<span class="pro">'+config_i.text+'</span>'
+				+'<input id="'+type+'judge_input'+i+'" class="judge">'
+				+'<input id="'+type+'condition_input'+i+'" isOrg="'+isOrg+'" class="condition">'
+				+'</li>';
 			$('#advanced_box #'+type+' ul').append(search_li);
 			parseInput(config_i,type+'judge_input'+i,type+'condition_input'+i); //初始化input组件
 		}
@@ -293,6 +495,7 @@ function parseInput(config,judge_id,condition_id){
 	var valid_type = config.valid_type || '';
 	var default_value = config.judge_default || '=';
 	var multiple = config.multiple || false;
+	var field = config.field;
 	//判断条件组件初始化
 	$('#'+judge_id).combobox({
 		editable: false,
@@ -323,7 +526,7 @@ function parseInput(config,judge_id,condition_id){
 			valueField: 'id',
 			textField: 'text',
 			panelWidth: 180,
-			width:180,
+			width:180
 		});
 		clickShowPanel(condition_id, true);
 	}else if(condition_type == 'textbox'){
@@ -332,6 +535,13 @@ function parseInput(config,judge_id,condition_id){
 			width:180,
 			validType:valid_type
 		});
+	}else if(condition_type == 'textbox_org'){
+		$('#'+condition_id).textbox({
+			panelWidth: 180,
+			width:180
+		});
+		$('#'+condition_id).parent().append('<input type="hidden" id="'+field+'_org">');
+		initMultiSelectOrg(condition_id,null,{text:condition_id,id:field+'_org'},null);
 	}else if(condition_type == 'datebox'){
 		//日期段的处理?
 		//console.log(date_id);
@@ -349,7 +559,7 @@ function parseInput(config,judge_id,condition_id){
 			valueField: 'id',
 			textField: 'text',
 			panelWidth: 180,
-			width:180,
+			width:180
 		});
 	}
 }
@@ -388,8 +598,12 @@ function getSearchData($this){
 	data_info[0] = getInputValue($this.find('.judge'),'combobox',false);
 	if(data_info[0] == 'null'){ //为空
 		data_info[1] = 'null';
-	}else{                      //不为空
-		data_info[1] = getInputValue(input,input_type,true);
+	}else{//不为空
+		if(input_type == 'textbox_org'){
+			data_info[1] = $('#'+field+'_org').val();
+		}else{
+			data_info[1] = getInputValue(input,input_type,true);
+		}
 	}
 	if(data_info[1] != '' && data_info[1] != null && data_info[1] != undefined){
 		//多个条件用空格隔开
@@ -406,15 +620,14 @@ function getSearchData($this){
 function ajaxQuery(condition_obj){
 	//查询成功,展示查询内容
 	loading('open','查询中...');
-	//console.log(condition_obj);
-	console.log(JSON.stringify(condition_obj));
+	console.log('查询条件:',condition_obj);
+	//console.log(JSON.stringify(condition_obj));
 	var condition = JSON.stringify(condition_obj);
 	$.ajax({
 		url : search_config.url + condition,
 		type : 'get',
 		dataType : 'json',
 		success : function(data){
-
 			console.log('查询结果:',data);
 			//加载分页
 			$('#pagination').pagination({
@@ -426,7 +639,6 @@ function ajaxQuery(condition_obj){
 		error:function(e){
 			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
 			console.log(e);
-
 			$('#pagination').pagination({
 				total:998
 			}).show();
@@ -437,22 +649,22 @@ function ajaxQuery(condition_obj){
 
 }
 
-//添加查询条件
+//子模块添加查询条件
 function addCondition(type){
-	console.log(type);
 	var config = search_config[type];
 	var j = Date.parse(new Date());
 	$('#condition_dialog ul').empty();
 	for(var i=0;i<config.length;i++){
 		var config_i = config[i];
+		//console.log(config_i);
 		//未显示的项作为添加项
 		//if($.inArray(config.field,module_init) == -1){
 		var li_html = '<li module="'+config_i.field+'">'
-				+'<label><input type="checkbox"><span>'+config_i.text+'</span></label>'
-				+'</li>';
+			+'<label><input type="checkbox"><span>'+config_i.text+'</span></label>'
+			+'</li>';
+
 		$('#condition_dialog ul').append(li_html);
 		//}
-		//console.log(li_html);
 	}
 	openDivForm({
 		id: 'condition_dialog',
@@ -474,10 +686,10 @@ function addCondition(type){
 					//添加勾选的项
 					if($.inArray(config_i.field,input_checked_arr) != -1){
 						var li_html = '<li field="'+config_i.field+'" multi="'+config_i.multiple+'" input_type="'+config_i.input+'" condition_type="add">'
-								+'<span class="pro">'+config_i.text+'</span>'
-								+'<input id="'+type+'judge_input_'+j+'" class="judge">'
-								+'<input id="'+type+'condition_input_'+j+'" class="condition">'
-								+'</li>';
+							+'<span class="pro">'+config_i.text+'</span>'
+							+'<input id="'+type+'judge_input_'+j+'" class="judge">'
+							+'<input id="'+type+'condition_input_'+j+'" class="condition">'
+							+'</li>';
 						var $li = $('#advanced_box #'+type+' li[field="'+config_i.field+'"]');
 						//相同条件添加到旁边
 						if($li.length > 0){
@@ -535,16 +747,16 @@ function tableContent(val, row, index){
 	//console.log(table_header_info,config);
 	var test_img = './images/ryzp_test.jpg';
 	/*return '<div class="table-content">'
-				//'<div class="img-dsc"><img src="'+test_img+'" alt="img"></div>'+
-				+'<div class="content-dsc">'
-					+'<div class="item"><span class="pro">姓名</span><span class="val">'+row.XT_LRRXM+'</span></div>'
-					+'<div class="item"><span class="pro">性别</span><span class="val">'+row.XBDMMC+'</span></div>'
-					+'<div class="item"><span class="pro">籍贯</span><span class="val">'+row.JGSSXDMMC+'</span></div>'
-					+'<div class="item"><span class="pro">证件类型</span><span class="val">'+row.CYZJDMMC+'</span></div>'
-					+'<div class="item"><span class="pro">证件号码</span><span class="val">'+row.ZJHM+'</span></div>'
-					+'<div class="item"><span class="pro">现住址</span><span class="val">'+row['ry_ryjzgjxxb'][0]['JZD_DZXZ']+'</span></div>'
-				+'</div>'
-			+'</div>';*/
+	 //'<div class="img-dsc"><img src="'+test_img+'" alt="img"></div>'+
+	 +'<div class="content-dsc">'
+	 +'<div class="item"><span class="pro">姓名</span><span class="val">'+row.XT_LRRXM+'</span></div>'
+	 +'<div class="item"><span class="pro">性别</span><span class="val">'+row.XBDMMC+'</span></div>'
+	 +'<div class="item"><span class="pro">籍贯</span><span class="val">'+row.JGSSXDMMC+'</span></div>'
+	 +'<div class="item"><span class="pro">证件类型</span><span class="val">'+row.CYZJDMMC+'</span></div>'
+	 +'<div class="item"><span class="pro">证件号码</span><span class="val">'+row.ZJHM+'</span></div>'
+	 +'<div class="item"><span class="pro">现住址</span><span class="val">'+row['ry_ryjzgjxxb'][0]['JZD_DZXZ']+'</span></div>'
+	 +'</div>'
+	 +'</div>';*/
 	var html  = '<div class="table-content"><div class="content-dsc">';
 	for(var i= 0,len=table_header_info.length;i<len;i++){
 		var field_i = table_header_info[i];
@@ -558,10 +770,10 @@ function tableContent(val, row, index){
 //表格操作按钮
 function tableHandle(val, row, index){
 	return '<div class="table-handle">'+
-			'<i class="fa fa-eye details" ryid="'+row.RYID+'"></i>'+
-			'<i class="fa fa-edit edit"></i>'+
-			'<i class="fa fa-remove "></i>'+
-			'</div>';
+		'<i class="fa fa-eye details" ryid="'+row.RYID+'"></i>'+
+		'<i class="fa fa-edit edit"></i>'+
+		'<i class="fa fa-remove "></i>'+
+		'</div>';
 }
 
 //高度自适应
@@ -574,7 +786,7 @@ function selfHeight(){
 
 
 
-/****************************************************/
+/*********************以下为测试数据,可删除*******************************/
 
 
 
