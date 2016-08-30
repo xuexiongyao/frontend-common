@@ -150,3 +150,31 @@ label{
     cursor : pointer;
     color : colors(red);
 }
+
+.buttonAddAll {
+    width: 18px;
+    height : 18px;
+    background: url('../common/images/but_leftRight1.gif') no-repeat top;
+    cursor: pointer;
+}
+
+.buttonAddSelect {
+    width: 18px;
+    height : 18px;
+    background: url('../common/images/but_leftRight2.gif') no-repeat top;
+    cursor: pointer;
+}
+
+.buttonRemoveSelect {
+    width: 18px;
+    height : 18px;
+    background: url('../common/images/but_leftRight3.gif') no-repeat top;
+    cursor: pointer;
+}
+
+.buttonRemoveAll {
+    width: 18px;
+    height : 18px;
+    background: url('../common/images/but_leftRight4.gif') no-repeat top;
+    cursor: pointer;
+}

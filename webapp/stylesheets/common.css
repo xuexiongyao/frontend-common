@@ -269,6 +269,38 @@ label {
   color: #ed4848;
 }
 
+/* line 154, ../sass/sass/_common.scss */
+.buttonAddAll {
+  width: 18px;
+  height: 18px;
+  background: url("../common/images/but_leftRight1.gif") no-repeat top;
+  cursor: pointer;
+}
+
+/* line 161, ../sass/sass/_common.scss */
+.buttonAddSelect {
+  width: 18px;
+  height: 18px;
+  background: url("../common/images/but_leftRight2.gif") no-repeat top;
+  cursor: pointer;
+}
+
+/* line 168, ../sass/sass/_common.scss */
+.buttonRemoveSelect {
+  width: 18px;
+  height: 18px;
+  background: url("../common/images/but_leftRight3.gif") no-repeat top;
+  cursor: pointer;
+}
+
+/* line 175, ../sass/sass/_common.scss */
+.buttonRemoveAll {
+  width: 18px;
+  height: 18px;
+  background: url("../common/images/but_leftRight4.gif") no-repeat top;
+  cursor: pointer;
+}
+
 /******************弹出iframe(url)窗口公共样式*********************/
 /* line 5, ../sass/sass/_frameWindowCommon.scss */
 .frame-window {
