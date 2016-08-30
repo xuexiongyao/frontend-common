@@ -7,12 +7,12 @@ var normalHtmlDivId="public_multiSelectOrg_";//组织机构多选的HTML DIV标�
 /**
  * 组织机构多选初始方法
  * @param textboxID 弹出框触发和显示的textbox对象ID
- * @param filterData 过滤条件
- * @param returnFieldData 返回数据存储对象
+ * @param filterData 过滤条件：orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
+ * @param returnFieldData 返回数据存储对象：ID 部门编号、TEXT 部门名称
  * @param onSelectedFun 回掉方法
  */
 function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun){
-	initHtmlDiv(textboxID);
+	initHtmlDiv(textboxID,filterData);
 	
 	//初始化弹出框
 	$("#"+normalHtmlDivId+textboxID).dialog({
@@ -61,7 +61,7 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun
  * 
  * @param textboxID 弹出框触发和显示的textbox对象ID
  */
-function initHtmlDiv(textboxID){
+function initHtmlDiv(textboxID,filterData){
 	//添加DIV标签
 	if($("#"+normalHtmlDivId+textboxID).length > 0){
 		//console.log("组织机构多选DIV已存在");
@@ -78,7 +78,7 @@ function initHtmlDiv(textboxID){
 		$('#searchKey_'+textboxID).textbox();
 		$('#searchBtn_'+textboxID).linkbutton();
 		$('#treeDiv_'+textboxID).panel();
-		initTree(textboxID);
+		initTree(textboxID,filterData);
 	}
 }
 
@@ -88,7 +88,7 @@ function initHtmlDiv(textboxID){
  * 初始化选择树
  * @param textboxID 弹出框触发和显示的textbox对象ID
  */
-function initTree(textboxID){
+function initTree(textboxID,filterData){
 	$.ajax({
 		  url: managerPath +'/orgPublicSelect/queryComboTree',
 		  dataType: 'json',
@@ -98,8 +98,7 @@ function initTree(textboxID){
 			  withCredentials: true
 		  },
 		  crossDomain: true,
-		  data: {				  
-		  },
+		  data: filterData,
 		  success: function (data) {
 			  $('#treeSelect_'+textboxID).tree({
 					onlyLeaf: false,
@@ -109,7 +108,7 @@ function initTree(textboxID){
 						console.log(1121);
 						if (node.id != "ROOT") { // 根结点不变
 							if(!node.loaded || node.loaded == '0'){//未加载
-								loadExpandNode(node,textboxID); // 异步加载子节点数据
+								loadExpandNode(node,textboxID,filterData); // 异步加载子节点数据
 							}
 						
 							/*
@@ -146,7 +145,8 @@ function initTree(textboxID){
  *逐步加载子节点
  *@param textboxID 弹出框触发和显示的textbox对象ID
 */
-function loadExpandNode(node,textboxID) {
+function loadExpandNode(node,textboxID,filterData) {
+	filterData.rootOrgCode=node.id;
 	$.ajax({
 		url: managerPath +'/orgPublicSelect/queryComboTree',
 		type: 'GET',
@@ -156,9 +156,7 @@ function loadExpandNode(node,textboxID) {
 		  withCredentials: true
 		},
 		crossDomain: true,
-		data: {	
-			rootOrgCode:node.id
-		},
+		data: filterData,
 		success: function (data) {
 			node.loaded='1';
 			$('#treeSelect_'+textboxID).tree('append', {
@@ -314,6 +312,19 @@ function searchOrgByCondition(textboxID) {
 	searchKeyValue = searchKeyValue.replace(/(^\s*)|(\s*$)/g, "");
 	$('#searchKey_'+textboxID).textbox('setValue',searchKeyValue) ;
 	if (searchKeyValue != "") {
-  		alert("敬请期待！");
+		var treeObject = $('#treeSelect_'+textboxID);
+		var node = treeObject.tree('searchTreeNode', {searchKey:searchKeyValue.toUpperCase()});
+   		if (node != null) {
+			var locateNode = treeObject.tree('find', node['id']);
+			treeObject.tree('expandTo', locateNode.target);
+			treeObject.tree('scrollTo', locateNode.target);
+			treeObject.tree('select', locateNode.target);
+		}
+		else {
+			$.messager.show({
+                title : '搜索结果',
+                msg : '无匹配的数据项！'
+            });
+		}
 	}
 }
