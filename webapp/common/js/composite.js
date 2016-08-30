@@ -600,7 +600,7 @@ function getSearchData($this){
 		data_info[1] = 'null';
 	}else{//不为空
 		if(input_type == 'textbox_org'){
-			data_info[1] = $('#'+field+'_org').val();
+			data_info[1] = ($('#'+field+'_org').val()).replace(/,/g, ' ');
 		}else{
 			data_info[1] = getInputValue(input,input_type,true);
 		}
