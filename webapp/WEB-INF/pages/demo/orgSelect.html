@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../../common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="../../../common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="../../../framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../common/datepicker/skin/christ/datepicker.css">
+    <link rel="stylesheet" href="../../../stylesheets/newItemStyle.css">
+    <link rel="stylesheet" href="../../../stylesheets/common.css">
+    <script src="../../../common/easyui/jquery.min.js"></script>
+    <script src="../../../common/easyui/jquery.dragsort-0.5.2.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.min.js"></script>
+    <script src="../../../common/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.extend.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.extend.validatebox.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.extend.tabs.js"></script>
+    <script src="../../../common/easyui/jquery.form.js"></script>
+    <script src="../../../common/js/tools.js"></script>
+    <script src="../../../common/js/business.tools.js"></script>
+    <script src="../../../common/js/orgSelectTools.js"></script>
+    <script src="../../../common/js/windowTopPage.js"></script>
+    <script src="../../../common/js/messenger.js"></script>
+    <script src="../../../common/js/common.js"></script>
+    <script src="../../../common/js/ajax.js"></script>
+    <script src="../../../common/datepicker/WdatePicker.js"></script>
+</head>
+<body>
+<div class="container">
+    <!--css loader-->
+    <h2>css依赖</h2>
+    <div class="h-blank-pre-show">
+            <pre>
+                <code>
+                    &lt;link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/common.css"&gt;
+                </code>
+            </pre>
+    </div>
+
+    <!--js loader-->
+    <h2>js依赖</h2>
+    <div class="h-blank-pre-show">
+            <pre>
+                <code>
+                    &lt;script src="http://static.jwzh.com:7777/jwzh/common/js/orgSelectTools.js"&gt;&lt;/script&gt;
+                    &lt;script&gt; var managerPath = "http://manage.jwzh.com:9017/jwzh-manage";//建议从系统参数表取 &lt;/script&gt;                   
+                </code>
+            </pre>
+    </div>
+
+    <form id="formdata" action="#" method="post">
+        <!--组件样式 2:2-->
+        <h2>多选样例</h2>
+        <ul class="item-container">
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>多选（无任何限制）</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="selectOrgName" data-options="width:200">
+            		<input id="selectOrgCode">
+                </div>
+            </li>
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>多选（只选治安（04）部门）</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="selectOrgName04" data-options="width:200">
+            		<input id="selectOrgCode04">
+                </div>
+            </li>
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>多选（只选成都市公安局下的（510100000000）部门）</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="selectOrgName510100000000" data-options="width:200">
+            		<input id="selectOrgCode510100000000">
+                </div>
+            </li>
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>多选（只选派出所（32））</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="selectOrgName32" data-options="width:200">
+            		<input id="selectOrgCode32">
+                </div>
+            </li>
+        </ul>
+        
+
+    </form>
+
+    <div class="h-blank-noborder"></div>
+
+    <!--返回主页-->
+    <a id="backHome" href="http://static.jwzh.com:7777/jwzh/WEB-INF/pages/demo/index.html"
+       style="position: fixed;right: 10px;top: 320px;width: 60px;height: 100px;line-height: 100px;background: green;text-align: center;cursor: pointer;color: #fff;padding: 0 10px;text-decoration: none;">
+        返回主页
+    </a>
+</div>
+</body>
+<script type="text/javascript">
+	var window_type = 'open_url';//和组织机构选择无关
+	
+	
+	var managerPath = "http://manage.jwzh.com:9017/jwzh-manage"; 
+	$(function(){
+		initMultiSelectOrg('selectOrgName',{},{text:'selectOrgName',id:'selectOrgCode'},null);
+		initMultiSelectOrg('selectOrgName04',{orgBizType:'04'},{text:'selectOrgName04',id:'selectOrgCode04'},null);
+		initMultiSelectOrg('selectOrgName510100000000',{rootOrgCode:'510100000000'},{text:'selectOrgName510100000000',id:'selectOrgCode510100000000'},null);
+		initMultiSelectOrg('selectOrgName32',{rootOrgCode:'511011000000',orgLevel:'32'},{text:'selectOrgName32',id:'selectOrgCode32'},null);
+	});
+</script>
+</html>
