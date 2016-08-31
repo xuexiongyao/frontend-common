@@ -13,6 +13,8 @@ var filterDataAry={};
  * @param onSelectedFun 回掉方法
  */
 function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData)
+		filterData={};
 	filterDataAry[textboxID]=filterData;
 	initHtmlDiv(textboxID,filterData);
 	
@@ -105,7 +107,8 @@ function initTree(textboxID,filterData){
 			  $('#treeSelect_'+textboxID).tree({
 					onlyLeaf: false,
 					cascadeCheck : false,
-					data: data,					
+					data: data,
+					
 					onClick:function(node) { // 在点击的时候执行
 						
 						if (node.id != "ROOT") { // 根结点不变
@@ -348,6 +351,7 @@ function searchTree(textboxID) {
 		url+="?"+urlParam.substr(1);
 		
 		var resultObject = treeObject.tree('serverSearchTreeNode', {searchKey:searchKeyValue.toUpperCase(), url: url});
+		
 		if (resultObject != null) {
 			var parentPath = resultObject.parentPath;
 			var tempArray = [];
@@ -377,7 +381,6 @@ function searchTree(textboxID) {
 			}
 			if (loadNode != null) {
 				filterData['loadCodeString']=loadCodeString;
-				
 				loading('open','数据加载中,请稍候...');
 				$.ajax({
 					url: managerPath + '/orgOrganization/queryOrgCodeTreeSearchLoadJson',
