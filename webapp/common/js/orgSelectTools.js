@@ -3,15 +3,17 @@
  */
 
 var normalHtmlDivId="public_multiSelectOrg_";//组织机构多选的HTML DIV标签的ID前缀
+var filterDataAry={};
 
 /**
  * 组织机构多选初始方法
  * @param textboxID 弹出框触发和显示的textbox对象ID
- * @param filterData 过滤条件：orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
+ * @param filterData 过滤条件：rootOrgCode 根节点orgcode、orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
  * @param returnFieldData 返回数据存储对象：ID 部门编号、TEXT 部门名称
  * @param onSelectedFun 回掉方法
  */
 function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun){
+	filterDataAry[textboxID]=filterData;
 	initHtmlDiv(textboxID,filterData);
 	
 	//初始化弹出框
@@ -103,35 +105,24 @@ function initTree(textboxID,filterData){
 			  $('#treeSelect_'+textboxID).tree({
 					onlyLeaf: false,
 					cascadeCheck : false,
-					data: data,
-					onBeforeExpand: function(node) { // 在点击的时候执行
-						console.log(1121);
+					data: data,					
+					onClick:function(node) { // 在点击的时候执行
+						
 						if (node.id != "ROOT") { // 根结点不变
 							if(!node.loaded || node.loaded == '0'){//未加载
 								loadExpandNode(node,textboxID,filterData); // 异步加载子节点数据
-							}
-						
-							/*
-							if (node.children) { // 中间结点自动展开与折叠当前结点
-								if (node.state == 'closed') {
-									//$(this).tree('expand', node.target);
-								}
-								else {
-									$(this).tree('collapse', node.target);
-								}
-							}
-							else {
-								if (node.checked) {
-									$(this).tree('uncheck',  node.target);
-								}
-								else {
-									$(this).tree('check',  node.target);
+							}else{
+								if(!$(this).tree('isLeaf', node.target)){
+									if (node.state == 'closed') {
+										$(this).tree('expand', node.target);
+									}
+									else {
+										$(this).tree('collapse', node.target);
+									}
 								}
 							}
-							*/
 						}
 					}
-					
 				});	
 			  
 		  },
@@ -145,25 +136,36 @@ function initTree(textboxID,filterData){
  *逐步加载子节点
  *@param textboxID 弹出框触发和显示的textbox对象ID
 */
-function loadExpandNode(node,textboxID,filterData) {
-	filterData.rootOrgCode=node.id;
+function loadExpandNode(node,textboxID,filterData) {	
+	node.loaded='1';//只请求一次
+	if(!filterData)
+		filterData={};
+	
+	filterData['rootOrgCode']=node.id;
+	
+	loading('open','数据加载中,请稍候...');
 	$.ajax({
 		url: managerPath +'/orgPublicSelect/queryComboTree',
 		type: 'GET',
-		async: false,
+		async: true,
 		dataType: 'json', 
 		xhrFields: {
 		  withCredentials: true
 		},
 		crossDomain: true,
 		data: filterData,
-		success: function (data) {
-			node.loaded='1';
-			$('#treeSelect_'+textboxID).tree('append', {
-				parent: node.target,
-				data: data
-			});
-		}
+		success: function (data) {	
+			if(data){
+				$('#treeSelect_'+textboxID).tree('append', {
+					parent: node.target,
+					data: data
+				});						
+			}
+			
+		},
+        complete : function(){
+        	loading('close');
+        }
 	});
 }
 
@@ -251,7 +253,7 @@ function getDivHtml(textboxID){
 				+'		<table border="0" cellspacing="0" cellpadding="0">'
 				+'		<tr>'
 				+'			<td><input id="searchKey_'+textboxID+'" class="val easyui-textbox" data-options="width:290,prompt:\'匹配部门名称、部门代码、部门拼音\'" /></td>'
-				+'			<td style="padding-left:4px;"><a class="easyui-linkbutton c6" id="searchBtn_'+textboxID+'" onclick="searchOrgByCondition(\''+textboxID+'\')">搜索</a></td>'
+				+'			<td style="padding-left:4px;"><a class="easyui-linkbutton c6" id="searchBtn_'+textboxID+'" onclick="searchTree(\''+textboxID+'\')">搜索</a></td>'
 				+'		</tr>'
 				+'		</table>'
 				+'	</td>'
@@ -273,7 +275,7 @@ function getDivHtml(textboxID){
 				+'</table>'
 			+'</td>'
 			+'<td align="right" valign="top">'
-				+'<select id="select_valid_'+textboxID+'" size="10" tabindex="10" class="multiSelect" style="width: 340px; height: 269px;" multiple ondblclick="right_ondblclick(1)">'
+				+'<select id="select_valid_'+textboxID+'" size="10" tabindex="10" class="multiSelect" style="width: 340px; height: 269px;" multiple>'
 				+'</select>'
 			+'</td>'
 			+'</tr>'
@@ -325,6 +327,98 @@ function searchOrgByCondition(textboxID) {
                 title : '搜索结果',
                 msg : '无匹配的数据项！'
             });
+		}
+	}
+}
+
+function searchTree(textboxID) {
+	var filterData = filterDataAry[textboxID];
+	var searchKeyValue = $('#searchKey_'+textboxID).textbox('getValue');
+	searchKeyValue = searchKeyValue.replace(/(^\s*)|(\s*$)/g, "");
+	$('#searchKey_'+textboxID).textbox('setValue',searchKeyValue) ;
+	if (searchKeyValue != "") {
+		var treeObject = $('#treeSelect_'+textboxID);
+		var url = managerPath + '/orgPublicSelect/queryPublicOrgTreeSearchResultByOrgCode';
+		filterData['rootOrgCode']=treeObject.tree('getRoot').id
+		
+		var urlParam="";
+		for(var item in filterData){
+			urlParam+="&"+item+"="+filterData[item];
+		}
+		url+="?"+urlParam.substr(1);
+		
+		var resultObject = treeObject.tree('serverSearchTreeNode', {searchKey:searchKeyValue.toUpperCase(), url: url});
+		if (resultObject != null) {
+			var parentPath = resultObject.parentPath;
+			var tempArray = [];
+			if (parentPath != "") {
+				tempArray = parentPath.split(",");
+			}
+			tempArray.push(resultObject.id);
+			var loadNode = null;
+			var loadCodeString = "";
+			for (var i = 0; i < tempArray.length; i++) {
+				var tempNode = treeObject.tree('find', tempArray[i]);
+				if (tempNode != null) {
+					var loaded = tempNode.loaded;
+					if(!loaded || loaded == '0'){//未加载
+						loadNode = tempNode;
+						for (var j = i; j < tempArray.length; j++) {
+							if (tempArray[j].indexOf("_") == -1) { // 部门结点
+								loadCodeString += tempArray[j] + ",";
+							}
+						}
+						if (loadCodeString != "") {
+							loadCodeString = loadCodeString.substring(0, loadCodeString.length - 1);
+						}
+						break;
+					}
+				}
+			}
+			if (loadNode != null) {
+				filterData['loadCodeString']=loadCodeString;
+				
+				loading('open','数据加载中,请稍候...');
+				$.ajax({
+					url: managerPath + '/orgOrganization/queryOrgCodeTreeSearchLoadJson',
+					type: 'POST',
+					async: true,
+					xhrFields: {
+						  withCredentials: true
+					  },
+					crossDomain: true,
+					data: filterData
+				}).done(function(result) {
+					loading('close');
+					if (result) {
+						result = parseReturn(result);
+						treeObject.tree('append', {
+							parent: loadNode.target,
+							data: result
+						});
+					}
+					var nodeText = loadNode['text'];
+					treeObject.tree('update', {
+						target: loadNode.target,
+						text: nodeText
+					});
+					loadNode.loaded = "1";
+				});
+			}
+			var locateNode = treeObject.tree('find', resultObject.id);
+			if (locateNode != null) {
+				treeObject.tree('expandTo', locateNode.target);
+				treeObject.tree('scrollTo', locateNode.target);
+				treeObject.tree('select', locateNode.target);
+			}
+		}
+		else {
+			$.messager.show({
+				title: '搜索结果',
+				msg: '搜索无匹配的结果！',
+				timeout: 1500,
+				showType: 'show'
+			});
 		}
 	}
 }
