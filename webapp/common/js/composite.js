@@ -137,7 +137,6 @@ function openOtherTable(isExport){
 			+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
 			+'</div>';
 		$('#other_table_dialog').append(html);
-		//console.log(module_i);
 		for(var j=0;j<module_i.length;j++){
 			var module_i_j = module_i[j];
 			var html_check = ''
@@ -212,16 +211,29 @@ function batchExprot(search_config_obj){
 		export_condition_obj[k] = condition_obj[k];
 	}
 	var query = export_condition_obj.query || [];
+    //alert();
 	for(var k in search_config_obj){
 		//判断导出的条件查询条件中是否存在
 		var isrepeat = false;
+		var repeat_fields = [];
 		for(var i=0;i<query.length;i++){
-			if(k.toUpperCase() == query[i]['type'].toUpperCase()) isrepeat = true;
+			if(k.toUpperCase() == query[i]['type'].toUpperCase()){
+				isrepeat = true;
+			}
 		}
 		//不存在
 		if(!isrepeat){
+			alert(k+'添加默认查询条件');
+
+            var condition = search_config_obj[k][0];
+            console.log(condition);
+
 			query.push({
-				condition : [],
+				condition : [{
+                    "op": "=",
+                    "k": condition,
+                    "v": "默认值"
+                }],
 				type : k
 			});
 		}
@@ -283,27 +295,12 @@ function setTable(){
 //生成表头配置信息,并实现拖动
 function getTableSetDom(){
 	$('#selected_ul,#waiting_ul').empty();
-	for(var i=0;i<search_config_arr.length;i++){
+	//只显示主表字段
+	for(var i=0;i<1;i++){
 		config = config.concat(search_config[search_config_arr[i]]);
 		table_header_info = table_header_info.concat(search_config[search_config_arr[i]+'_init']);
 	}
-	/*
-
-
-	 var base_info = search_config.base_info;
-	 var relation_info = search_config.relation_info;
-
-	 var base_info_init = search_config.base_info_init;
-	 var relation_info_init = search_config.relation_info_init;
-
-	 var init_arr = (base_info_init).concat(relation_info_init); //默认配置
-	 table_header_info = init_arr;
-	 config = (base_info).concat(relation_info);         //所有配置
-
-	 */
-
 	var config_arr = getConfigArr(config); //默认配置
-
 	//加载显示的表头数据
 	for(var i = 0;i < table_header_info.length;i++){
 		var rel_val = table_header_info[i];
@@ -341,31 +338,41 @@ function getConfigArr(config){
 	return arr;
 }
 
+//普通查询
+function normalQuery(){
+	var keywords = $.trim($('#keywords').val());
+	if(keywords == ''){
+		$.messager.alert('提示','请输入关键字!','warning',function(){
+			$('#keywords').next().find('input').focus();
+		});
+		return false;
+	}else{
+		delete condition_obj.query;
+		condition_obj.key = keywords;
+		condition_obj.option = 'all';
+		condition_obj.start = 0;
+		condition_obj.limit = 5;
+		$('#pagination').pagination({
+			pageNumber:1,
+			pageSize:5
+		});
+		ajaxQuery(condition_obj);
+	}
+}
+
 //初始按钮事件
 function btnEvent(){
 	//$('#advanced_box').hide();
 	//点击搜索图标(普通查询)
 	$('.easyui-linkbutton').linkbutton();
 	$('#search_all').off('click').on('click',function(){
-		var keywords = $.trim($('#keywords').val());
-		if(keywords == ''){
-			$.messager.alert('提示','请输入关键字!','warning',function(){
-				$('#keywords').next().find('input').focus();
-			});
-			return false;
-		}else{
-			delete condition_obj.query;
-			condition_obj.key = keywords;
-			condition_obj.option = 'all';
-			condition_obj.start = 0;
-			condition_obj.limit = 5;
-			$('#pagination').pagination({
-				pageNumber:1,
-				pageSize:5
-			});
-			ajaxQuery(condition_obj);
+		normalQuery();
+	});
+	//回车事件
+	$('#keywords').next().find('input').keydown(function(e){
+		if(e.keyCode == 13){
+			normalQuery();
 		}
-		//console.log(keywords,condition_obj);
 	});
 	//点击高级
 	$('#advanced').off('click').on('click',function(){
@@ -744,24 +751,29 @@ function searchResult(data){
 
 //表格内容
 function tableContent(val, row, index){
-	//console.log(table_header_info,config);
-	var test_img = './images/ryzp_test.jpg';
-	/*return '<div class="table-content">'
-	 //'<div class="img-dsc"><img src="'+test_img+'" alt="img"></div>'+
-	 +'<div class="content-dsc">'
-	 +'<div class="item"><span class="pro">姓名</span><span class="val">'+row.XT_LRRXM+'</span></div>'
-	 +'<div class="item"><span class="pro">性别</span><span class="val">'+row.XBDMMC+'</span></div>'
-	 +'<div class="item"><span class="pro">籍贯</span><span class="val">'+row.JGSSXDMMC+'</span></div>'
-	 +'<div class="item"><span class="pro">证件类型</span><span class="val">'+row.CYZJDMMC+'</span></div>'
-	 +'<div class="item"><span class="pro">证件号码</span><span class="val">'+row.ZJHM+'</span></div>'
-	 +'<div class="item"><span class="pro">现住址</span><span class="val">'+row['ry_ryjzgjxxb'][0]['JZD_DZXZ']+'</span></div>'
-	 +'</div>'
-	 +'</div>';*/
+    //alert()
+    //console.log(1,row,table_header_info);
 	var html  = '<div class="table-content"><div class="content-dsc">';
 	for(var i= 0,len=table_header_info.length;i<len;i++){
 		var field_i = table_header_info[i];
+        //console.log(field_i);
 		var pro_name = getConfigObj(field_i,config)['text'];
-		html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field_i]+'</span></div>';
+		var inputType = getConfigObj(field_i,config)['input'];
+		var field = getConfigObj(field_i,config)['field'];
+        //console.log(config[i].field)
+		if(inputType == 'combobox'){
+			if(!row[field]){
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
+			}else{
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
+			}
+		}else{
+			if(!row[field]){
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
+			}else{
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field]+'</span></div>';
+			}
+		}
 	}
 	html += '</div></div>';
 	return html;
