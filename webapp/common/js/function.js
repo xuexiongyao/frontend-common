@@ -1020,7 +1020,7 @@ function getParamLinkUrl(paramName) {
     var paramValue = "";
     var isFound = false;
     if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
-        var arrSource = unescape(this.location.search).substring(1, this.location.search.length).split("&");
+        var arrSource = decodeURI(this.location.search).substring(1, this.location.search.length).split("&");
         i = 0;
         while (i < arrSource.length && !isFound) {
             if (arrSource[i].indexOf("=") > 0) {
