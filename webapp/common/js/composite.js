@@ -140,7 +140,7 @@ function openOtherTable(isExport){
 		for(var j=0;j<module_i.length;j++){
 			var module_i_j = module_i[j];
 			var html_check = ''
-				+'<label><input type="checkbox" field="'+module_i_j.field+'">'+module_i_j.text+'</label>';
+				+'<label><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
 			$('#item_check'+i).append(html_check);
 		}
 	}
@@ -158,10 +158,20 @@ function openOtherTable(isExport){
 				$('#other_table_dialog input:checked').each(function(){
 					var module = $(this).parent().parent().attr('module');
 					var field = $(this).attr('field');
+					var text = $(this).attr('text');
 					if(search_config_obj[module]){
-						(search_config_obj[module]).push(field);
+						if(isExport){
+							(search_config_obj[module]).push(field+'|'+text);
+						}else{
+							(search_config_obj[module]).push(field);
+						}
+						
 					}else{
-						search_config_obj[module] = [field];
+						if(isExport){
+							search_config_obj[module] = [field+'|'+text];
+						}else{
+							search_config_obj[module] = [field];
+						}
 					}
 				});
 				$('#other_table_dialog').dialog('close');
@@ -223,15 +233,12 @@ function batchExprot(search_config_obj){
 		}
 		//不存在
 		if(!isrepeat){
-			alert(k+'添加默认查询条件');
-
             var condition = search_config_obj[k][0];
-            console.log(condition);
 
 			query.push({
 				condition : [{
                     "op": "=",
-                    "k": condition,
+                    "k": condition.split('|')[0],
                     "v": "默认值"
                 }],
 				type : k
@@ -246,6 +253,46 @@ function batchExprot(search_config_obj){
 	console.log('查询条件:',condition_obj);
 	console.log('导出的查询条件:',export_condition_obj);
 	console.log('导出条件:',search_config_obj);
+	console.log('导出URL:',search_config.export_url);
+	
+	loading('open','数据处理中,请稍候...');
+    $.ajax({
+        url  : search_config.export_url,
+        type : 'post',
+        dataType : 'json',
+        data : {
+        	query_condition : JSON.stringify(export_condition_obj),
+        	export_param    : JSON.stringify(search_config_obj)
+        },
+        success : function(data){
+            //console.log('导出返回参数:',data);
+            if(data.status == 'success'){
+                location.href = search_config.basePath+"/"+data.message;
+                //$('#'+init.export_panel).dialog('close');
+                
+                var noticeMsg;
+                if(data.maxNum<data.totalNum){
+                	noticeMsg="系统最大允许导出"+data.maxNum+"条，本次导出"+data.exportNum+"条";
+                }else{
+                	noticeMsg="本次导出"+data.exportNum+"条";
+                }
+                
+                $.messager.show({
+                    title : '导出提示',
+                    msg : noticeMsg
+                });
+            }else{
+                $.messager.show({
+                    title : '导出失败',
+                    msg : data.message,
+                });
+            }
+        },
+        complete : function(){
+        	loading('close');
+        }
+        
+    });
 }
 
 //表格设置
