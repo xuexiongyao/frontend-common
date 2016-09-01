@@ -10,12 +10,16 @@ $(function () {
     //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
     var test_version = window.localStorage.jwzhVersion;
     var pathname = location.pathname;
-    console.log(localStorage[pathname],test_version);
-    if(window.localStorage[pathname] != test_version){
-        window.localStorage[pathname] = test_version;
-        alert('调试: 版本已经升级,页面将重新加载一次最新资源文件');
-        location.reload(true);
+    //console.log(pathname,localStorage[pathname],test_version);
+    if(test_version){
+        //console.log('test_version存在',test_version);
+        if(!window.localStorage[pathname] || window.localStorage[pathname] != test_version){
+            window.localStorage[pathname] = test_version;
+            alert('调试: 版本已经升级,页面将重新加载一次最新资源文件');
+            location.reload(true);
+        }
     }
+
 
 
     //加载完成后,发送消息到父框架获取当前TabID和上一个TabID

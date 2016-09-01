@@ -1,5 +1,5 @@
 /*js*/
-var jwzhVersion = '1.0.0.0'; //手动修改版本号
+var jwzhVersion = '1.0.0.t4'; //手动修改版本号
 window.localStorage.jwzhVersion = jwzhVersion;
 document.write('<script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.js?v='+jwzhVersion+'"></script>');
 document.write('<script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.extend.validatebox.js?v='+jwzhVersion+'"></script>');
