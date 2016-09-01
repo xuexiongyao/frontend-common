@@ -102,8 +102,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
  * @parm $k 颜色的key值
  */
 body{
-  background: url("../images/bgi_1.jpg");
-  filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+  /*background: url("../images/bgi_1.jpg");*/
+  /*filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";*/
 }
 /* line 9, ../sass/scjz/_common.scss */
 a {
