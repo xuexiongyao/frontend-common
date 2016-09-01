@@ -264,6 +264,8 @@ function batchExprot(search_config_obj){
         	query_condition : JSON.stringify(export_condition_obj),
         	export_param    : JSON.stringify(search_config_obj)
         },
+        xhrFields:{withCredentials:true},                           
+        crossDomain:true,
         success : function(data){
             //console.log('导出返回参数:',data);
             if(data.status == 'success'){
@@ -824,15 +826,6 @@ function tableContent(val, row, index){
 	}
 	html += '</div></div>';
 	return html;
-}
-
-//表格操作按钮
-function tableHandle(val, row, index){
-	return '<div class="table-handle">'+
-		'<i class="fa fa-eye details" ryid="'+row.RYID+'"></i>'+
-		'<i class="fa fa-edit edit"></i>'+
-		'<i class="fa fa-remove "></i>'+
-		'</div>';
 }
 
 //高度自适应
