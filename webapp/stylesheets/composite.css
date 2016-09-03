@@ -422,22 +422,50 @@
 
 /* line 264, ../sass/sass/_composite.scss */
 #other_table_dialog .title {
+  *zoom: 1;
   font-size: 14px;
   border-bottom: 1px #ccc dashed;
   color: #0D6193;
   margin-bottom: 2px;
 }
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#other_table_dialog .title:before, #other_table_dialog .title:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#other_table_dialog .title:after {
+  clear: both;
+  overflow: hidden;
+}
 /* line 270, ../sass/sass/_composite.scss */
+#other_table_dialog .title .text {
+  float: left;
+}
+/* line 273, ../sass/sass/_composite.scss */
+#other_table_dialog .title .fold {
+  float: right;
+  text-align: center;
+  background-color: #ddd;
+  padding: 2px 15px;
+  cursor: pointer;
+}
+/* line 279, ../sass/sass/_composite.scss */
+#other_table_dialog .title .fold:hover {
+  background: #0D6193;
+  color: #fff;
+}
+/* line 286, ../sass/sass/_composite.scss */
 #other_table_dialog .item-table {
   margin: 5px 10px 10px 10px;
   padding: 5px;
   border: 2px #fff solid;
 }
-/* line 275, ../sass/sass/_composite.scss */
+/* line 291, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check-border {
   border: 2px #ccc solid;
 }
-/* line 279, ../sass/sass/_composite.scss */
+/* line 295, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label {
   font-size: 12px;
   display: inline-block;
@@ -446,7 +474,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-/* line 286, ../sass/sass/_composite.scss */
+/* line 302, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label input {
   vertical-align: middle;
 }

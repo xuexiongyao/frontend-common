@@ -262,10 +262,26 @@
 //子表查询选项
 #other_table_dialog{
     .title{
+        @include clearfix;
         font-size:14px;
         border-bottom:1px #ccc dashed;
         color:#0D6193;
         margin-bottom:2px;
+        .text{
+            float:left;
+        }
+        .fold{
+            float:right;
+            text-align: center;
+            background-color: #ddd;
+            padding: 2px 15px;
+            cursor: pointer;
+            &:hover{
+                background: #0D6193;
+                color: colors(white);
+            }
+        }
+
     }
     .item-table{
         margin: 5px 10px 10px 10px;

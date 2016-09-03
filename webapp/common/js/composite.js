@@ -138,8 +138,10 @@ function openOtherTable(isExport){
 		if($.inArray(for_i,tableArr) == -1){
 			var html = ''
 				+'<div class="item-table" isMaster="'+isMaster+'">'
-				+'<div class="title">'+search_config[for_i+'_title']+'</div><div class="fold">展开</div>'
-				+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
+					+'<div class="title">'
+						+'<div class="text">'+search_config[for_i+'_title']+'</div>'
+						+'<div class="fold"><span><i class="fa fa-angle-double-down"></i></span></div></div>'
+					+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
 				+'</div>';
 			$('#other_table_dialog').append(html);
 			for(var j=0;j<module_i.length;j++){
