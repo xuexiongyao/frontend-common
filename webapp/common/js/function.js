@@ -993,7 +993,15 @@ function clearInput(input_class){
                 try{
                     _this.datebox('setValue','');
                 }catch(e){
-                    _this.combotree('setValue','');
+                    try{
+                        _this.combotree('setValue','');
+                    }catch(e){
+                        try{
+                            _this.validate('setValue','');
+                        }catch(e){
+                            _this.val('');
+                        }
+                    }
                 }
             }
         }
