@@ -406,13 +406,21 @@ function searchTree(textboxID) {
 						text: nodeText
 					});
 					loadNode.loaded = "1";
+					
+					var locateNode = treeObject.tree('find', resultObject.id);
+					if (locateNode != null) {
+						treeObject.tree('expandTo', locateNode.target);
+						treeObject.tree('scrollTo', locateNode.target);
+						treeObject.tree('select', locateNode.target);
+					}
 				});
-			}
-			var locateNode = treeObject.tree('find', resultObject.id);
-			if (locateNode != null) {
-				treeObject.tree('expandTo', locateNode.target);
-				treeObject.tree('scrollTo', locateNode.target);
-				treeObject.tree('select', locateNode.target);
+			}else{
+				var locateNode = treeObject.tree('find', resultObject.id);
+				if (locateNode != null) {
+					treeObject.tree('expandTo', locateNode.target);
+					treeObject.tree('scrollTo', locateNode.target);
+					treeObject.tree('select', locateNode.target);
+				}
 			}
 		}
 		else {
