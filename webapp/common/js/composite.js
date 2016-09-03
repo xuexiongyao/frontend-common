@@ -53,7 +53,7 @@ function createAdInput(search_config_arr){
 
 //通过勾选生成查询框
 function createAdInputByCheck(search_config_obj){
-	$('#advanced_box').empty();
+	//$('#advanced_box').empty();
 	for(var k in search_config_obj){
 		var otherTableBtn = '';
 		var module_k = search_config_obj[k];
@@ -72,7 +72,7 @@ function createAdInputByCheck(search_config_obj){
 			+'</div>'
 			+'<ul></ul>'
 			+'</div>';
-		$('#advanced_box').append(type_html);
+		$('#advanced_box .bottom-btn').before(type_html);
 		for(var i= 0,len=module_k.length;i<len;i++){
 			var module_i = module_k[i];
 			var config_i;
@@ -93,14 +93,12 @@ function createAdInputByCheck(search_config_obj){
 			}
 		}
 	}
-	var bottomBtn = '<div class="bottom-btn">'
+	/*var bottomBtn = '<div class="bottom-btn">'
 		+'<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
 		+'<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
 		+'<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
 		+'</div>';
-	$('#advanced_box').append(bottomBtn);
-	$('.easyui-linkbutton').linkbutton();
-	//console.log(search_config_obj);
+	$('#advanced_box').append(bottomBtn);*/
 	addOtherTable();//添加子表查询模块
 	btnEvent();
 }
@@ -117,10 +115,16 @@ function openOtherTable(isExport){
 	var title = '添加子表查询条件';
 	var text = '确认';
 	var start = 1;
+	var tableArr = [];
 	if(isExport){
 		title = '批量导出选项';
 		text = '导出';
 		start = 0;
+	}else{
+		$('#advanced_box>div').each(function(){
+			var thisId = $(this).attr('id');
+			if(thisId) tableArr.push(thisId);
+		});
 	}
 	//通过勾选获取查询配置条件
 	var search_config_obj = {};
@@ -131,17 +135,19 @@ function openOtherTable(isExport){
 		if(i==0) isMaster = true;
 		var for_i = search_config_arr[i];
 		var module_i = search_config[search_config_arr[i]];
-		var html = ''
-			+'<div class="item-table" isMaster="'+isMaster+'">'
-			+'<div class="title">'+search_config[for_i+'_title']+'</div>'
-			+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
-			+'</div>';
-		$('#other_table_dialog').append(html);
-		for(var j=0;j<module_i.length;j++){
-			var module_i_j = module_i[j];
-			var html_check = ''
-				+'<label><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
-			$('#item_check'+i).append(html_check);
+		if($.inArray(for_i,tableArr) == -1){
+			var html = ''
+				+'<div class="item-table" isMaster="'+isMaster+'">'
+				+'<div class="title">'+search_config[for_i+'_title']+'</div><div class="fold">展开</div>'
+				+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
+				+'</div>';
+			$('#other_table_dialog').append(html);
+			for(var j=0;j<module_i.length;j++){
+				var module_i_j = module_i[j];
+				var html_check = ''
+					+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
+				$('#item_check'+i).append(html_check);
+			}
 		}
 	}
 	openDivForm({
@@ -153,8 +159,8 @@ function openOtherTable(isExport){
 		{
 			text: text,
 			handler: function () {
-				//添加子表信息数据
-				if(!isExport) search_config_obj[search_config_arr[0]] = search_config[search_config_arr[0]+'_init'];
+				//添加主表信息数据
+				//if(!isExport) search_config_obj[search_config_arr[0]] = search_config[search_config_arr[0]+'_init'];
 				$('#other_table_dialog input:checked').each(function(){
 					var module = $(this).parent().parent().attr('module');
 					var field = $(this).attr('field');
@@ -165,7 +171,7 @@ function openOtherTable(isExport){
 						}else{
 							(search_config_obj[module]).push(field);
 						}
-						
+
 					}else{
 						if(isExport){
 							search_config_obj[module] = [field+'|'+text];
@@ -217,7 +223,7 @@ function openOtherTable(isExport){
 function batchExprot(search_config_obj){
 	//将查询条件赋给导出查询条件
 	var export_condition_obj = {};
-	
+
 	var tableData = $('#result_table').datagrid('getChecked');//勾选的导出项
 	if(tableData.length>0){//有勾选的
 		var main_type_primary_key=[];
@@ -231,15 +237,15 @@ function batchExprot(search_config_obj){
 		export_condition_obj['mainTable']=search_config.main_type;
 		export_condition_obj['key']='';
 		export_condition_obj['option']='ad';
-		
+
 		export_condition_obj.query=[{"type":search_config.main_type,"condition":[{"k":search_config.primary_key,"v":main_type_primary_key.join(' '),"op":"="}]}];
-		
+
 	}else{//没有勾选的
 		for(var k in condition_obj){
 			export_condition_obj[k] = condition_obj[k];
 		}
 	}
-	
+
 	var query = export_condition_obj.query || [];
 	for(var k in search_config_obj){
 		//判断导出的条件查询条件中是否存在
@@ -252,14 +258,14 @@ function batchExprot(search_config_obj){
 		}
 		//不存在，添加子表的默认查询条件
 		if(!isrepeat){
-            var condition = search_config_obj[k][0];
+			var condition = search_config_obj[k][0];
 
 			query.push({
 				condition : [{
-                    "op": "=",
-                    "k": '_all',
-                    "v": "*"
-                }],
+					"op": "=",
+					"k": '_all',
+					"v": "*"
+				}],
 				type : k
 			});
 		}
@@ -269,49 +275,54 @@ function batchExprot(search_config_obj){
 	export_condition_obj['start']=0;
 	export_condition_obj['limit']=10;
 
+	console.log('表格内容:',tableData);
+	console.log('查询条件:',condition_obj);
 	console.log('导出的查询条件:',export_condition_obj);
 	console.log('导出条件:',search_config_obj);
-	
+	console.log('导出URL:',search_config.export_url);
+
+
+
 	loading('open','数据处理中,请稍候...');
-    $.ajax({
-        url  : search_config.export_url,
-        type : 'post',
-        dataType : 'json',
-        data : {
-        	query_condition : JSON.stringify(export_condition_obj),
-        	export_param    : JSON.stringify(search_config_obj)
-        },
-        xhrFields:{withCredentials:true},                           
-        crossDomain:true,
-        success : function(data){
-            //console.log('导出返回参数:',data);
-            if(data.status == 'success'){
-                location.href = search_config.basePath+"/"+data.message;
-                //$('#'+init.export_panel).dialog('close');
-                
-                var noticeMsg;
-                if(data.maxNum<data.totalNum){
-                	noticeMsg="系统最大允许导出"+data.maxNum+"条，本次导出"+data.exportNum+"条";
-                }else{
-                	noticeMsg="本次导出"+data.exportNum+"条";
-                }
-                
-                $.messager.show({
-                    title : '导出提示',
-                    msg : noticeMsg
-                });
-            }else{
-                $.messager.show({
-                    title : '导出失败',
-                    msg : data.message,
-                });
-            }
-        },
-        complete : function(){
-        	loading('close');
-        }
-        
-    });
+	$.ajax({
+		url  : search_config.export_url,
+		type : 'post',
+		dataType : 'json',
+		data : {
+			query_condition : JSON.stringify(export_condition_obj),
+			export_param    : JSON.stringify(search_config_obj)
+		},
+		xhrFields:{withCredentials:true},
+		crossDomain:true,
+		success : function(data){
+			//console.log('导出返回参数:',data);
+			if(data.status == 'success'){
+				location.href = search_config.basePath+"/"+data.message;
+				//$('#'+init.export_panel).dialog('close');
+
+				var noticeMsg;
+				if(data.maxNum<data.totalNum){
+					noticeMsg="系统最大允许导出"+data.maxNum+"条，本次导出"+data.exportNum+"条";
+				}else{
+					noticeMsg="本次导出"+data.exportNum+"条";
+				}
+
+				$.messager.show({
+					title : '导出提示',
+					msg : noticeMsg
+				});
+			}else{
+				$.messager.show({
+					title : '导出失败',
+					msg : data.message,
+				});
+			}
+		},
+		complete : function(){
+			loading('close');
+		}
+
+	});
 }
 
 //表格设置
@@ -428,9 +439,7 @@ function normalQuery(){
 
 //初始按钮事件
 function btnEvent(){
-	//$('#advanced_box').hide();
-	//点击搜索图标(普通查询)
-	$('.easyui-linkbutton').linkbutton();
+	$('.easyui-linkbutton:not(.c7)').linkbutton();
 	$('#search_all').off('click').on('click',function(){
 		normalQuery();
 	});
@@ -700,8 +709,8 @@ function ajaxQuery(condition_obj){
 		url : search_config.url + condition,
 		type : 'get',
 		dataType : 'json',
-		xhrFields:{withCredentials:true},                           
-        crossDomain:true,
+		xhrFields:{withCredentials:true},
+		crossDomain:true,
 		success : function(data){
 			console.log('查询结果:',data);
 			//加载分页
@@ -745,7 +754,8 @@ function addCondition(type){
 		id: 'condition_dialog',
 		title: '添加查询条件',
 		width: 600,
-		height: 200,
+		height: 'auto',
+		top:100
 	}, [
 		{
 			text: '添加',
@@ -819,16 +829,16 @@ function searchResult(data){
 
 //表格内容
 function tableContent(val, row, index){
-    //alert()
-    //console.log(1,row,table_header_info);
+	//alert()
+	//console.log(1,row,table_header_info);
 	var html  = '<div class="table-content"><div class="content-dsc">';
 	for(var i= 0,len=table_header_info.length;i<len;i++){
 		var field_i = table_header_info[i];
-        //console.log(field_i);
+		//console.log(field_i);
 		var pro_name = getConfigObj(field_i,config)['text'];
 		var inputType = getConfigObj(field_i,config)['input'];
 		var field = getConfigObj(field_i,config)['field'];
-        //console.log(config[i].field)
+		//console.log(config[i].field)
 		if(inputType == 'combobox'){
 			if(!row[field]){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';

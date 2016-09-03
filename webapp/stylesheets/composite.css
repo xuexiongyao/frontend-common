@@ -310,7 +310,8 @@
 /* line 185, ../sass/sass/_composite.scss */
 .condition-dialog ul li {
   float: left;
-  margin: 5px 0;
+  margin-bottom: 5px;
+  min-width: 120px;
 }
 
 /* line 194, ../sass/sass/_composite.scss */
@@ -440,9 +441,12 @@
 #other_table_dialog .item-check label {
   font-size: 12px;
   display: inline-block;
-  min-width: 120px;
+  width: 140px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-/* line 283, ../sass/sass/_composite.scss */
+/* line 286, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label input {
   vertical-align: middle;
 }

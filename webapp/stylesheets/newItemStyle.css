@@ -230,7 +230,7 @@ body {
   width: 100%;
 }
 /* line 113, ../sass/sass/_demo.scss */
-.container .item-container .item-add-li a {
+.container .item-container .item-add-li > a {
   position: absolute;
   right: -42px;
   top: 0;

@@ -184,8 +184,8 @@
         @include clearfix;
         li{
             float: left;
-            margin: 5px 0;
-            //width:33.33333%;
+            margin-bottom: 5px;
+            min-width:120px;
         }
     }
 }
@@ -279,7 +279,10 @@
         label{
             font-size: 12px;
             display: inline-block;
-            min-width: 120px;
+            width: 140px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             input{
                 vertical-align: middle;
             }
