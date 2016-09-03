@@ -140,7 +140,7 @@ function openOtherTable(isExport){
 		for(var j=0;j<module_i.length;j++){
 			var module_i_j = module_i[j];
 			var html_check = ''
-				+'<label><input type="checkbox" field="'+module_i_j.field+'">'+module_i_j.text+'</label>';
+				+'<label><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
 			$('#item_check'+i).append(html_check);
 		}
 	}
@@ -158,10 +158,20 @@ function openOtherTable(isExport){
 				$('#other_table_dialog input:checked').each(function(){
 					var module = $(this).parent().parent().attr('module');
 					var field = $(this).attr('field');
+					var text = $(this).attr('text');
 					if(search_config_obj[module]){
-						(search_config_obj[module]).push(field);
+						if(isExport){
+							(search_config_obj[module]).push(field+'|'+text);
+						}else{
+							(search_config_obj[module]).push(field);
+						}
+						
 					}else{
-						search_config_obj[module] = [field];
+						if(isExport){
+							search_config_obj[module] = [field+'|'+text];
+						}else{
+							search_config_obj[module] = [field];
+						}
 					}
 				});
 				$('#other_table_dialog').dialog('close');
@@ -207,11 +217,30 @@ function openOtherTable(isExport){
 function batchExprot(search_config_obj){
 	//将查询条件赋给导出查询条件
 	var export_condition_obj = {};
-	for(var k in condition_obj){
-		export_condition_obj[k] = condition_obj[k];
+	
+	var tableData = $('#result_table').datagrid('getChecked');//勾选的导出项
+	if(tableData.length>0){//有勾选的
+		var main_type_primary_key=[];
+		for(var item in tableData){
+			console.log(item);
+			console.log();
+			var selectedId=tableData[item][search_config.primary_key];
+			if(selectedId)
+				main_type_primary_key.push(selectedId);
+		}
+		export_condition_obj['mainTable']=search_config.main_type;
+		export_condition_obj['key']='';
+		export_condition_obj['option']='ad';
+		
+		export_condition_obj.query=[{"type":search_config.main_type,"condition":[{"k":search_config.primary_key,"v":main_type_primary_key.join(' '),"op":"="}]}];
+		
+	}else{//没有勾选的
+		for(var k in condition_obj){
+			export_condition_obj[k] = condition_obj[k];
+		}
 	}
+	
 	var query = export_condition_obj.query || [];
-    //alert();
 	for(var k in search_config_obj){
 		//判断导出的条件查询条件中是否存在
 		var isrepeat = false;
@@ -221,18 +250,15 @@ function batchExprot(search_config_obj){
 				isrepeat = true;
 			}
 		}
-		//不存在
+		//不存在，添加子表的默认查询条件
 		if(!isrepeat){
-			alert(k+'添加默认查询条件');
-
             var condition = search_config_obj[k][0];
-            console.log(condition);
 
 			query.push({
 				condition : [{
                     "op": "=",
-                    "k": condition,
-                    "v": "默认值"
+                    "k": '_all',
+                    "v": "*"
                 }],
 				type : k
 			});
@@ -240,12 +266,52 @@ function batchExprot(search_config_obj){
 	}
 	export_condition_obj.query = query;
 	//表格内容
-	var tableData = $('#result_table').datagrid('getChecked');
+	export_condition_obj['start']=0;
+	export_condition_obj['limit']=10;
 
-	console.log('表格内容:',tableData);
-	console.log('查询条件:',condition_obj);
 	console.log('导出的查询条件:',export_condition_obj);
 	console.log('导出条件:',search_config_obj);
+	
+	loading('open','数据处理中,请稍候...');
+    $.ajax({
+        url  : search_config.export_url,
+        type : 'post',
+        dataType : 'json',
+        data : {
+        	query_condition : JSON.stringify(export_condition_obj),
+        	export_param    : JSON.stringify(search_config_obj)
+        },
+        xhrFields:{withCredentials:true},                           
+        crossDomain:true,
+        success : function(data){
+            //console.log('导出返回参数:',data);
+            if(data.status == 'success'){
+                location.href = search_config.basePath+"/"+data.message;
+                //$('#'+init.export_panel).dialog('close');
+                
+                var noticeMsg;
+                if(data.maxNum<data.totalNum){
+                	noticeMsg="系统最大允许导出"+data.maxNum+"条，本次导出"+data.exportNum+"条";
+                }else{
+                	noticeMsg="本次导出"+data.exportNum+"条";
+                }
+                
+                $.messager.show({
+                    title : '导出提示',
+                    msg : noticeMsg
+                });
+            }else{
+                $.messager.show({
+                    title : '导出失败',
+                    msg : data.message,
+                });
+            }
+        },
+        complete : function(){
+        	loading('close');
+        }
+        
+    });
 }
 
 //表格设置
@@ -634,6 +700,8 @@ function ajaxQuery(condition_obj){
 		url : search_config.url + condition,
 		type : 'get',
 		dataType : 'json',
+		xhrFields:{withCredentials:true},                           
+        crossDomain:true,
 		success : function(data){
 			console.log('查询结果:',data);
 			//加载分页
@@ -777,15 +845,6 @@ function tableContent(val, row, index){
 	}
 	html += '</div></div>';
 	return html;
-}
-
-//表格操作按钮
-function tableHandle(val, row, index){
-	return '<div class="table-handle">'+
-		'<i class="fa fa-eye details" ryid="'+row.RYID+'"></i>'+
-		'<i class="fa fa-edit edit"></i>'+
-		'<i class="fa fa-remove "></i>'+
-		'</div>';
 }
 
 //高度自适应
