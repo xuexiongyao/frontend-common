@@ -196,7 +196,14 @@ function openOtherTable(isExport){
 			}
 		}
 	]);
+	$('#other_table_dialog .item-table:first-child').find('.item-check').slideDown();
+	//折叠样式修改
+	$('.fold').off('click').on('click',function(){
+		$(this).parent().parent().siblings().find('.item-check').slideUp();
+		$(this).parent().next().stop().slideDown();
+	});
 
+	//导出选项的勾选操作
 	if(isExport){
 		$('#other_table_dialog input').off('click').on('click',function(){
 			var $this = $(this);

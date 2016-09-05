@@ -83,6 +83,7 @@
                         margin:  0 5px;
                         text-align: right;
                         width:84px;
+                        vertical-align: top;
                     }
                     .condition{
                         margin-left: 10px;
@@ -276,6 +277,7 @@
             background-color: #ddd;
             padding: 2px 15px;
             cursor: pointer;
+            border-radius: 3px;
             &:hover{
                 background: #0D6193;
                 color: colors(white);
@@ -284,14 +286,14 @@
 
     }
     .item-table{
-        margin: 5px 10px 10px 10px;
-        padding: 5px;
+        margin: 0 15px;
         border: 2px #fff solid;
     }
     .item-check-border{
         border: 2px #ccc solid;
     }
     .item-check{
+        display: none;
         label{
             font-size: 12px;
             display: inline-block;
