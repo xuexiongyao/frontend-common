@@ -144,10 +144,27 @@ function openOtherTable(isExport){
 					+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
 				+'</div>';
 			$('#other_table_dialog').append(html);
+			var chineseArr = [];
+			var new_module_i = [];
+			//获取汉字
 			for(var j=0;j<module_i.length;j++){
 				var module_i_j = module_i[j];
+				chineseArr.push(module_i_j.text);
+			}
+			//根据字段名称首汉字排序
+			chineseArr.sort(function(a,b){return a.localeCompare(b)});//汉字拼音排序
+			//根据排序重新生成条件数组
+			for(var k=0;k<chineseArr.length;k++){
+				var _text = chineseArr[k];
+				for(var l=0;l<module_i.length;l++){
+					if(module_i[l].text == _text) new_module_i.push(module_i[l]);
+				}
+			}
+			//排序后生成查询条件勾选框
+			for(var m=0;m<new_module_i.length;m++){
+				var module_i_j = new_module_i[m];
 				var html_check = ''
-					+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
+				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
 				$('#item_check'+i).append(html_check);
 			}
 		}
@@ -747,17 +764,29 @@ function addCondition(type){
 	var config = search_config[type];
 	var j = Date.parse(new Date());
 	$('#condition_dialog ul').empty();
+	var chineseArr = [];
+	var newConfig = [];
+	//获取汉字
 	for(var i=0;i<config.length;i++){
 		var config_i = config[i];
-		//console.log(config_i);
-		//未显示的项作为添加项
-		//if($.inArray(config.field,module_init) == -1){
-		var li_html = '<li module="'+config_i.field+'">'
-			+'<label><input type="checkbox"><span>'+config_i.text+'</span></label>'
+		chineseArr.push(config_i.text);
+	}
+	//根据汉字拼音排序
+	chineseArr.sort(function(a,b){return a.localeCompare(b)});
+	//根据排序重新生成条件数组
+	for(var k=0;k<chineseArr.length;k++){
+		var _text = chineseArr[k];
+		for(var l=0;l<config.length;l++){
+			if(config[l].text == _text) newConfig.push(config[l]);
+		}
+	}
+	//排序后生成查询条件勾选框
+	for(var m=0;m<newConfig.length;m++){
+		var newConfig_m = newConfig[m];
+		var li_html = '<li module="'+newConfig_m.field+'">'
+			+'<label><input type="checkbox"><span>'+newConfig_m.text+'</span></label>'
 			+'</li>';
-
 		$('#condition_dialog ul').append(li_html);
-		//}
 	}
 	openDivForm({
 		id: 'condition_dialog',
@@ -774,7 +803,7 @@ function addCondition(type){
 				$( "#condition_dialog input:checked").each(function(){
 					input_checked_arr.push($(this).parent().parent().attr('module'));
 				});
-				console.log(input_checked_arr);
+				//console.log(input_checked_arr);
 				for(var i=0;i<config.length;i++){
 					var config_i = config[i];
 					//添加勾选的项
