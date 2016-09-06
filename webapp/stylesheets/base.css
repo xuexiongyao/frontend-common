@@ -182,15 +182,13 @@
 }
 /* line 64, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item .item .pro, .query-list-main .query-panel .query-item .info-main .base-info .person-info .content .item .val, .info-main .base-info .person-info .content .query-list-main .query-panel .query-item .item .val, .query-list-main .query-panel .query-item .info-main #export_panel .relation-info .person-info .content .item .val, .info-main #export_panel .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val, .query-list-main .query-panel .query-item #export_panel .info-main .relation-info .person-info .content .item .val, #export_panel .info-main .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val {
+  display: inline-block;
+  text-align: right;
+  width: 60px;
+  vertical-align: top;
   color: #5a5a5a;
   font-weight: bold;
   margin-right: 10px;
-  height: 20px;
-  line-height: 20px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
 }
 /* line 72, ../sass/sass/_managePage.scss */
 .query-list-main .query-panel .query-item .item .pro i, .query-list-main .query-panel .query-item .info-main .base-info .person-info .content .item .val i, .info-main .base-info .person-info .content .query-list-main .query-panel .query-item .item .val i, .query-list-main .query-panel .query-item .info-main #export_panel .relation-info .person-info .content .item .val i, .info-main #export_panel .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val i, .query-list-main .query-panel .query-item #export_panel .info-main .relation-info .person-info .content .item .val i, #export_panel .info-main .relation-info .person-info .content .query-list-main .query-panel .query-item .item .val i {
