@@ -140,7 +140,9 @@ function openOtherTable(isExport){
 				+'<div class="item-table" isMaster="'+isMaster+'">'
 					+'<div class="title">'
 						+'<div class="text">'+search_config[for_i+'_title']+'</div>'
-						+'<div class="fold"><span><i class="fa fa-angle-double-down"></i></span></div></div>'
+						+'<div class="fold"><span><i class="fa fa-angle-double-down"></i></span></div>'
+						+'<div class="select-all"><label><input type="checkbox"><span>全选/反选</span></label></div>'
+					+'</div>'
 					+'<div class="item-check" id="item_check'+i+'" module="'+for_i+'"></div>'
 				+'</div>';
 			$('#other_table_dialog').append(html);
@@ -180,7 +182,7 @@ function openOtherTable(isExport){
 			handler: function () {
 				//添加主表信息数据
 				//if(!isExport) search_config_obj[search_config_arr[0]] = search_config[search_config_arr[0]+'_init'];
-				$('#other_table_dialog input:checked').each(function(){
+				$('#other_table_dialog .item-check>label>input:checked').each(function(){
 					var module = $(this).parent().parent().attr('module');
 					var field = $(this).attr('field');
 					var text = $(this).attr('text');
@@ -218,6 +220,15 @@ function openOtherTable(isExport){
 	$('.fold').off('click').on('click',function(){
 		$(this).parent().parent().siblings().find('.item-check').slideUp();
 		$(this).parent().next().stop().slideDown();
+	});
+	//全选,反选
+	$('#other_table_dialog .select-all input').off('click').on('click',function(){
+		var isChecked = $(this).prop('checked');
+		if(isChecked){
+			$(this).parent().parent().parent().next().find('input').prop('checked',true);
+		}else{
+			$(this).parent().parent().parent().next().find('input').prop('checked',false);
+		}
 	});
 
 	//导出选项的勾选操作
@@ -480,11 +491,11 @@ function btnEvent(){
 		var _this = $(this);
 		//按钮样式变化,展开/折叠搜索框
 		if(_this.find('.fa').hasClass('fa-angle-double-down')){
-			$('#advanced_box').fadeIn(function(){
+			$('#advanced_box').slideDown(function(){
 				_this.find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
 			});
 		}else{
-			$('#advanced_box').fadeOut(function(){
+			$('#advanced_box').slideUp(function(){
 				_this.find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
 			});
 		}
@@ -536,7 +547,7 @@ function btnEvent(){
 		clearInput('condition');
 	});
 	//点击关闭
-	$('#search_close').off('click').on('click',function(){$('#advanced_box').fadeOut(function(){
+	$('#search_close').off('click').on('click',function(){$('#advanced_box').slideUp(function(){
 		$('#advanced').find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
 	});});
 	//点击全选

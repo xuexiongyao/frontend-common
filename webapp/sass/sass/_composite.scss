@@ -60,7 +60,6 @@
                     font-size: fontSize(base);
                 }
                 .search-add{
-                    margin-top: -4px;
                     float:right;
                 }
             }
@@ -283,7 +282,11 @@
                 color: colors(white);
             }
         }
-
+        .select-all{
+            float: right;
+            font-size: fontSize(small);
+            color: colors(textColor);
+        }
     }
     .item-table{
         margin: 0 15px;

@@ -149,7 +149,7 @@ function getTableData(get_header_info){
     var table_header_info = get_header_info || getTableHeaderCookie(tableCookieName) || listConfig.init;
     var length = table_header_info.length;
     var thead_arr = [];//表头数组
-    thead_arr[0] = {title : '编号',field : 'id',sortable : true,width : 100,checkbox:true};
+    thead_arr[0] = {title : '编号',field : '_num',sortable : true,width : 100,checkbox:true};
     if(init.isHandle){
         thead_arr[length + 1] = {
             title : '操作',
