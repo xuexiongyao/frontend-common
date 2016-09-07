@@ -354,11 +354,12 @@ function formTips(json, success_fn, type) {
                 if (type == 'tips' && json.message) {
                     $.messager.show({
                         title: '提示信息',
-                        msg: json.message
+                        msg: json.message,
+                        height:'auto'
                     });
                     setTimeout(function () {
                         fn(json);
-                    }, 3000);
+                    }, 5000);
                 } else {
                     fn(json);
                 }
