@@ -16,7 +16,7 @@ $(function () {
         if(!window.localStorage[pathname] || window.localStorage[pathname] != test_version){
             window.localStorage[pathname] = test_version;
             console.log('调试测试: 版本已经升级,页面将重新加载一次最新资源文件');
-            //location.reload(true);
+            location.reload(true);
         }
     }
 
