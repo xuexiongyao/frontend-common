@@ -62,13 +62,13 @@
                 font-size: fontSize(small);
                 padding: 0 15px;
                 .pro {
-                    //display: inline-block;
-                    //width: 70px;
+                    display:inline-block;
+                    text-align:right;
+                    width:60px;
+                    vertical-align: top;
                     color: colors(textColor);
                     font-weight: bold;
                     margin-right:10px;
-                    @include text-vertical-center(20px);
-                    @include text-overflow;
                     i{
                         color: colors(red);
                         padding-right:5px;

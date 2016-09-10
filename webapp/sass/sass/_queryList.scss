@@ -1,0 +1,154 @@
+@charset "utf-8";
+.query-com-main{
+    .query-top-btn{
+        margin-top:15px;
+        .help{
+            float: right;
+            line-height: 30px;
+            cursor: pointer;
+            color: #0e6595;
+        }
+    }
+    .query-panel{
+        .panel-title {
+            height: 25px;
+            line-height: 25px;
+            .add-btn {
+                padding-left: 10px;
+                font-family: "Microsoft Yahei", "微软雅黑";
+                color: #5a5a5a;
+                font-weight: bold;
+                input {
+                    margin-right: 5px;
+                    border: none;
+                    border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    -o-border-radius: 3px;
+                    -ms-border-radius: 3px;
+                    font-weight: bold;
+                    color: #5a5a5a;
+                    padding: 5px 10px;
+                    outline: none;
+                }
+                .add-other {
+                    background-color: #0e6595;
+                    color: #fff;
+                    cursor: pointer;
+                }
+            }
+        }
+        .query-item{
+            @include clearfix;
+            margin-bottom: 10px;
+            .item {
+                @include clearfix;
+                display: none;
+                float: left;
+                width:33.333%;
+                margin-top:10px;
+                font-size: 12px;
+                .pro{
+                    min-width:80px;
+                    text-align: right;
+                    display: inline-block;
+                    margin-right:5px;
+                }
+                .val{
+                    width:240px;
+                    height: 20px;
+                    line-height: 20px;
+                }
+            }
+        }
+        .query-btn{
+            text-align: center;
+            margin-bottom: 10px;
+            a{
+                margin:0 10px;
+            }
+        }
+        margin-bottom:5px;
+    }
+    .query-result{
+        .table-setting{
+            text-align: right;
+            margin-bottom:5px;
+        }
+    }
+}
+
+/*更多条件查询面板样式*/
+#other_condition_panel{
+    .query-condition{
+        @include clearfix;
+        margin:10px 0 0 15px;
+        .item {
+            font-size: 12px;
+            float: left;
+            min-width: 140px;
+            margin-bottom: 5px;
+        }
+    }
+}
+/*表头配置面板样式*/
+#set_table_panel{
+    .table-header-drag {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+        .selected-header {
+            padding: 10px;
+            >div {
+                padding-bottom: 5px;
+                border-bottom: 1px dashed #ccc;
+            }
+            ul{
+                div{
+                    background-color: #ed4848;
+                }
+            }
+        }
+        .waiting-header {
+            padding: 10px;
+            >div {
+                padding-bottom: 5px;
+                border-bottom: 1px dashed #ccc;
+            }
+        }
+        ul{
+            @include clearfix;
+            width: 100%;
+            list-style-type: none;
+            margin: 5px 0;
+            padding: 0;
+            li {
+                float: left;
+                margin: 2px;
+                cursor: pointer;
+                div {
+                    text-align: center;
+                    padding: 0 20px;
+                    background-color: #39980f;
+                    color: #fff;
+                    height: 30px;
+                    line-height: 30px;
+                    border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    -o-border-radius: 3px;
+                    -ms-border-radius: 3px;
+                }
+            }
+        }
+        .tips{
+            width: auto;
+            margin: 10px auto;
+            padding: 0 10px;
+            color: #999;
+            font-size: 12px;
+            height: 30px;
+            line-height: 30px;
+        }
+    }
+}

@@ -8,14 +8,13 @@ var staticPath = 'http://static.jwzh.com:7777/jwzh';
 document.write('<script src="'+staticPath+'/common/js/function.js?v=1.0.0.1"></script>');
 $(function () {
     //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
-    var test_version = window.localStorage.jwzhVersion;
+    var version = getCookie('jwzhVersion');
     var pathname = location.pathname;
-    //console.log(pathname,localStorage[pathname],test_version);
-    if(test_version){
-        //console.log('test_version存在',test_version);
-        if(!window.localStorage[pathname] || window.localStorage[pathname] != test_version){
-            window.localStorage[pathname] = test_version;
-            alert('调试: 版本已经升级,页面将重新加载一次最新资源文件');
+    //console.log(pathname,getCookie(pathname),version);
+    if(version){
+        if(!getCookie(pathname) || getCookie(pathname) != version){
+            setCookie(pathname,version,300);
+            console.log('测试版本提示: 版本已经升级,页面将重新加载一次最新资源文件');
             location.reload(true);
         }
     }

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询列表公共页面</title>
+
+    <!--公共静态CSS资源-->
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/includeCSS.js"></script>
+    <link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/queryList.css">
+</head>
+<body>
+<div class="main">
+    <!--查询页面顶部按钮-->
+    <div class="query query-top-btn">
+        <a class="easyui-linkbutton c6" id="btn1">btn1</a>
+        <a class="easyui-linkbutton c6" id="btn2">btn2</a>
+        <a class="easyui-linkbutton c6" id="btn3">btn3</a>
+        <!--帮助-->
+        <div class="help"><i class="fa fa-question-circle"></i><span> 帮助</span></div>
+    </div>
+    <!--查询输入框面板-->
+    <div class="query query-panel" id="query_panel">
+        <div class="easyui-panel"  title="搜索条件" data-options="width:'100%',collapsible:true,">
+            <div class="query-item"></div>
+            <div class="query-btn">
+                <a class="easyui-linkbutton c6" id="query_btn">查询</a>
+                <a class="easyui-linkbutton c6" id="reset_btn">重置</a>
+            </div>
+        </div>
+    </div>
+    <!--查询结果列表-->
+    <div class="query query-result">
+        <!--表头设置-->
+        <div class="table-setting">
+            <a class="easyui-linkbutton c2" id="set_table_btn" data-options="plain:true" title="表格设置"><i class="fa fa-gear"></i></a>
+        </div>
+        <div class="table-content">
+            <table id="list_table"></table>
+        </div>
+    </div>
+</div>
+
+<!---------------弹出层面板--------------------->
+<!--查询条件面板-->
+<div id="other_condition_panel" style="display: none;">
+    <div class="query-condition"></div>
+</div>
+
+<!--表格设置面板-->
+<div id="set_table_panel" style="display: none">
+    <div class="table-header-drag">
+        <div class="selected-header">
+            <div>已选表头</div>
+            <ul id="selected_ul"></ul>
+        </div>
+        <div class="waiting-header">
+            <div>待选表头</div>
+            <ul id="waiting_ul"></ul>
+        </div>
+        <div class="tips">
+            <i class="fa fa-info-circle"></i>
+            <span>亲，可以通过拖动来配置表格</span>
+        </div>
+    </div>
+</div>
+
+<!--注销面板-->
+<div id="logout_panel" style="display: none">
+    <!--注销原因-->
+    <div class="logout-reason">
+        <div class="select-reason">
+            <span class="title"><i class="fa fa-asterisk"></i>注销原因</span>
+            <!--<input id="xt_zxyy" class="val easyui-combobox" data-options="width:240,required:true,panelMaxHeight:200,panelHeight:'auto',url: portal+'/common/dict/BD_D_JZGJZXYY.js',valueField:'id',textField:'text',method:'get'">-->
+        </div>
+        <div class="remark-reason">
+            <span class="title">备注信息</span>
+            <textarea class="easyui-validatebox" id="xt_zxyybz"></textarea>
+        </div>
+        <!--提示信息,js动态生成text-->
+        <div class="tips"><span id="tipsSpan"></span></div>
+    </div>
+</div>
+
+<!--导出选项面板-->
+<div id="export_panel" style="display: none">
+    <div class="base-info">
+        <div class="title">
+            <div class="title-name"><span>基本信息</span></div>
+            <div class="title-btn"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>
+        </div>
+        <div class="content"></div>
+    </div>
+    <div class="tips">
+        <i class="fa fa-info-circle"></i>
+        <span>请勾选需要导出的数据项</span>
+    </div>
+</div>
+</body>
+
+<!--公共静态JS资源-->
+<script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.min.js"></script>
+<script src="http://static.jwzh.com:7777/jwzh/common/easyui/jquery.easyui.min.js"></script>
+<script src="http://static.jwzh.com:7777/jwzh/common/js/includeJS.js"></script>
+
+<!--表格字段,查询条件配置文件-->
+<script src="http://static.jwzh.com:7777/jwzh/common/js/queryList_config.js"></script>
+
+<!--公共查询列表页面静态JS-->
+<script src="http://static.jwzh.com:7777/jwzh/common/js/queryList.js"></script>
+
+<!--自定义配置部分-->
+<script>
+    //console.log(location.pathname);
+    /****变量配置****/
+    var init = {
+        tableUrl : 'http://syrk.jwzh.com:9013/jwzh-syrk/api/syrk/queryPageList', //获取表格数据的url
+        isHandle : true,                 //是否显示操作列
+        //表格属性和事件继承
+        tableOptions : {
+            onClickRow : function(index,row){
+                console.log('单击行:',index,row);
+            },
+            onDblClickRow : function(index,row){
+                console.log('双击行:',index,row);
+            }
+        }
+    };
+
+    /****函数配置****/
+    //操作列按钮选项函数
+    function datagridProcessFormater(val,row,index){
+        return '<i class="fa fa-eye details" title="详情" onclick="click1(\''+row.id+'\',\''+row.xm+'\')"></i>'
+                +'<i class="fa fa-edit edit" title="修改" onclick="click2(\''+row.id+'\',\''+row.xm+'\')"></i>'
+                +'<i class="fa fa-remove remove" title="注销" onclick="click3(\''+row.id+'\')"></i>';
+    }
+    //逐项配置操作中的点击事件
+    function click1(){
+        console.log('参数:',arguments);
+    }
+</script>
+</html>

@@ -60,7 +60,6 @@
                     font-size: fontSize(base);
                 }
                 .search-add{
-                    margin-top: -4px;
                     float:right;
                 }
             }
@@ -83,6 +82,7 @@
                         margin:  0 5px;
                         text-align: right;
                         width:84px;
+                        vertical-align: top;
                     }
                     .condition{
                         margin-left: 10px;
@@ -184,8 +184,8 @@
         @include clearfix;
         li{
             float: left;
-            margin: 5px 0;
-            //width:33.33333%;
+            margin-bottom: 5px;
+            min-width:120px;
         }
     }
 }
@@ -262,24 +262,48 @@
 //子表查询选项
 #other_table_dialog{
     .title{
+        @include clearfix;
         font-size:14px;
         border-bottom:1px #ccc dashed;
         color:#0D6193;
         margin-bottom:2px;
+        .text{
+            float:left;
+        }
+        .fold{
+            float:right;
+            text-align: center;
+            background-color: #ddd;
+            padding: 2px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            &:hover{
+                background: #0D6193;
+                color: colors(white);
+            }
+        }
+        .select-all{
+            float: right;
+            font-size: fontSize(small);
+            color: colors(textColor);
+        }
     }
     .item-table{
-        margin: 5px 10px 10px 10px;
-        padding: 5px;
+        margin: 0 15px;
         border: 2px #fff solid;
     }
     .item-check-border{
         border: 2px #ccc solid;
     }
     .item-check{
+        display: none;
         label{
             font-size: 12px;
             display: inline-block;
-            min-width: 120px;
+            width: 140px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             input{
                 vertical-align: middle;
             }
