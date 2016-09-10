@@ -615,6 +615,8 @@ function parseInput(config,judge_id,condition_id){
 		});
 		$('#'+condition_id).parent().append('<input type="hidden" id="'+field+'_org">');
 		initMultiSelectOrg(condition_id,null,{text:condition_id,id:field+'_org'},null);
+		$('#'+judge_id).combobox('select','IN');
+		$('#'+judge_id).combobox('setValue','IN');
 	}else if(condition_type == 'datebox'){
 		//日期段的处理?
 		//console.log(date_id);
