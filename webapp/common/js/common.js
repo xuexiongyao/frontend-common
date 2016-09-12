@@ -6,20 +6,20 @@ var current_tab_id = null;
 var return_tab_id = null;
 var staticPath = 'http://static.jwzh.com:7777/jwzh';
 document.write('<script src="'+staticPath+'/common/js/function.js?v=1.0.0.1"></script>');
+//document.write('<script src="'+pathConfig.staticPath+'/common/js/function.js?v=1.0.0.1"></script>');
 $(function () {
     //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
-    var version = getCookie('jwzhVersion');
+    //var version = getCookie('jwzhVersion');
+    var version = '1.0.0.t8';                   //修改版本号
     var pathname = location.pathname;
     //console.log(pathname,getCookie(pathname),version);
     if(version){
         if(!getCookie(pathname) || getCookie(pathname) != version){
             setCookie(pathname,version,300);
-            console.log('测试版本提示: 版本已经升级,页面将重新加载一次最新资源文件');
+            console.log('测试版本提示: 版本已经升级,页面将重新加载一次最新资源文件..版本号:'+version);
             location.reload(true);
         }
     }
-
-
 
     //加载完成后,发送消息到父框架获取当前TabID和上一个TabID
     if (typeof window_type == 'undefined') {

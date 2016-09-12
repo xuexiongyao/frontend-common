@@ -26,6 +26,7 @@ function pageJump() {
  * */
 function loading(type,msg){
     var staticPath = 'http://static.jwzh.com:7777/jwzh';
+    //var staticPath = pathConfig.staticPath;
     var msg = msg || '加载中...';
     var loading_img_url = staticPath +'/framework/default/images/loading.gif';
     var loading_html='<div id="loadingMsk">'

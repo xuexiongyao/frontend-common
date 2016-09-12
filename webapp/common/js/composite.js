@@ -1,4 +1,4 @@
-﻿﻿//var staticPath = './webapp';
+﻿//var staticPath = './webapp';
 //var window_type = 'open_url';
 var condition_obj = {mainTable:search_config.main_type};
 var table_header_info=[];
@@ -223,17 +223,32 @@ function openOtherTable(isExport){
 	});
 	//全选,反选
 	$('#other_table_dialog .select-all input').off('click').on('click',function(){
-		var isChecked = $(this).prop('checked');
+		var $this = $(this);
+		var $parent = $this.parent().parent().parent().parent();
+		var isChecked = $this.prop('checked');
 		if(isChecked){
-			$(this).parent().parent().parent().next().find('input').prop('checked',true);
+			$this.parent().parent().parent().next().find('input').prop('checked',true);
+			if(isExport){
+				$parent.siblings().each(function(){
+					var $this = $(this);
+					var isMaster = $this.attr('isMaster');
+					if(isMaster === 'false'){
+						$this.removeClass('item-check-border').find('input').prop('checked',false);
+					}
+				});
+				$parent.addClass('item-check-border');
+			}
 		}else{
-			$(this).parent().parent().parent().next().find('input').prop('checked',false);
+			if(isExport){
+				$parent.removeClass('item-check-border');
+			}
+			$this.parent().parent().parent().next().find('input').prop('checked',false);
 		}
 	});
 
 	//导出选项的勾选操作
 	if(isExport){
-		$('#other_table_dialog input').off('click').on('click',function(){
+		$('#other_table_dialog .item-check input').off('click').on('click',function(){
 			var $this = $(this);
 			var isChecked = $this.prop('checked');
 			var $parent = $this.parent().parent().parent();

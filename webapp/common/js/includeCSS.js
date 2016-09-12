@@ -1,7 +1,12 @@
 /*css*/
-document.write('<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/easyui.css?v=1.0.0.1">');
-document.write('<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/icon.css?v=1.0.0.1">');
-document.write('<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/easyuiDiy/font-awesome.min.css?v=1.0.0.1">');
-document.write('<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/common/datepicker/skin/christ/datepicker.css?v=1.0.0.1">');
-document.write('<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/newItemStyle.css?v=1.0.0.1">');
-document.write('<link rel="stylesheet" href="http://static.jwzh.com:7777/jwzh/stylesheets/common.css?v=1.0.0.1">');
+var pathConfig = {
+    jwzhVersion : '1.0.0.t8',
+    staticPath : 'http://static.jwzh.com:7777'
+};
+
+document.write('<link rel="stylesheet" href="'+pathConfig.staticPath+'/jwzh/common/easyuiDiy/easyui.css?v='+pathConfig.jwzhVersion+'">');
+document.write('<link rel="stylesheet" href="'+pathConfig.staticPath+'/jwzh/common/easyuiDiy/icon.css?v='+pathConfig.jwzhVersion+'">');
+document.write('<link rel="stylesheet" href="'+pathConfig.staticPath+'/jwzh/common/easyuiDiy/font-awesome.min.css?v='+pathConfig.jwzhVersion+'">');
+document.write('<link rel="stylesheet" href="'+pathConfig.staticPath+'/jwzh/common/datepicker/skin/christ/datepicker.css?v='+pathConfig.jwzhVersion+'">');
+document.write('<link rel="stylesheet" href="'+pathConfig.staticPath+'/jwzh/stylesheets/newItemStyle.css?v='+pathConfig.jwzhVersion+'">');
+document.write('<link rel="stylesheet" href="'+pathConfig.staticPath+'/jwzh/stylesheets/common.css?v='+pathConfig.jwzhVersion+'">');
