@@ -1026,21 +1026,16 @@ function comboAutoComplete(combobox_id,url){
 }
 
 //html页面参数获取
-function getParamLinkUrl(paramName) {
-    var paramValue = "";
-    var isFound = false;
+function getParamLinkUrl() {
+    var pathObj = {};
     if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
         var arrSource = decodeURI(this.location.search).substring(1, this.location.search.length).split("&");
-        i = 0;
-        while (i < arrSource.length && !isFound) {
-            if (arrSource[i].indexOf("=") > 0) {
-                if (arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase()) {
-                    paramValue = arrSource[i].split("=")[1];
-                    isFound = true;
-                }
-            }
-            i++;
+
+        for(var i=0;i<arrSource.length;i++){
+            var paramName = arrSource[i].split("=")[0];//参数名称
+            var paramVal = arrSource[i].split("=")[1];//参数值
+            pathObj[paramName] = paramVal;
         }
     }
-    return paramValue;
+    return pathObj;
 }
