@@ -1039,3 +1039,21 @@ function getParamLinkUrl() {
     }
     return pathObj;
 }
+
+//获取当前location对象
+function getThisLocationObj(){
+    var locaObj = this.location;
+    var locaTmp = {
+        hash:locaObj.hash,//锚点
+        host:locaObj.host,//主机
+        hostname:locaObj.hostname,//域名
+        href: locaObj.href,//url字符串
+        origin: locaObj.origin,//完整域名
+        pathname : locaObj.pathname,//参数(查询)部分,
+        port: locaObj.port,//端口
+        protocol: locaObj.protocol,//协议
+        proname: locaObj.pathname.substr(0,locaObj.pathname.substr(1).indexOf("/")+1)//项目名称
+    };
+
+    return locaTmp;
+}
