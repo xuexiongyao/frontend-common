@@ -316,7 +316,6 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 		}else{
 			var checkNode = $('#treeSelect_'+textboxID).tree('getChecked');
 			if(checkNode.length>0){
-				console.log(checkNode[0]);
 				selectedOrgCode=checkNode[0].id;
 				selectedOrgName=checkNode[0].text
 			}
