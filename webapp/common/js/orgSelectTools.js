@@ -2,7 +2,7 @@
  * 组织机构选择工具JS
  */
 
-var normalHtmlDivId="public_multiSelectOrg_";//组织机构多选的HTML DIV标签的ID前缀
+var normalHtmlDivId="public_selectOrg_";//组织机构多选的HTML DIV标签的ID前缀
 var filterDataAry={};
 
 /**
@@ -16,7 +16,7 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun
 	if(!filterData)
 		filterData={};
 	filterDataAry[textboxID]=filterData;
-	initHtmlDiv(textboxID,filterData);
+	initHtmlDiv(textboxID,filterData,'multi');
 	
 	//初始化弹出框
 	$("#"+normalHtmlDivId+textboxID).dialog({
@@ -29,7 +29,7 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun
         buttons:[{
             text:'确定',
             handler:function(){
-            	returnSelected(textboxID,returnFieldData);
+            	returnSelected(textboxID,returnFieldData,'multi');
             	$("#"+normalHtmlDivId+textboxID).dialog('close');
             	
             	if (typeof onSelectedFun == 'function') {
@@ -61,11 +61,13 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun
 }
 
 
+
+
 /**
  * 
  * @param textboxID 弹出框触发和显示的textbox对象ID
  */
-function initHtmlDiv(textboxID,filterData){
+function initHtmlDiv(textboxID,filterData,multi_single){
 	//添加DIV标签
 	if($("#"+normalHtmlDivId+textboxID).length > 0){
 		//console.log("组织机构多选DIV已存在");
@@ -78,11 +80,17 @@ function initHtmlDiv(textboxID,filterData){
 		 
 		var body = document.getElementsByTagName('body'); 
 		body[0].appendChild(orgDiv); 
-		$("#"+normalHtmlDivId+textboxID).html(getDivHtml(textboxID));
+		if(multi_single == 'multi'){
+			$("#"+normalHtmlDivId+textboxID).html(getMultiDivHtml(textboxID));
+			initMultiTree(textboxID,filterData);
+		}else{
+			$("#"+normalHtmlDivId+textboxID).html(getSingleDivHtml(textboxID));
+			initSingleTree(textboxID,filterData);
+		}
+			
 		$('#searchKey_'+textboxID).textbox();
 		$('#searchBtn_'+textboxID).linkbutton();
 		$('#treeDiv_'+textboxID).panel();
-		initTree(textboxID,filterData);
 	}
 }
 
@@ -92,7 +100,8 @@ function initHtmlDiv(textboxID,filterData){
  * 初始化选择树
  * @param textboxID 弹出框触发和显示的textbox对象ID
  */
-function initTree(textboxID,filterData){
+function initMultiTree(textboxID,filterData){
+	filterData['loadType']='initTree';//返回包括当前结点的树
 	$.ajax({
 		  url: managerPath +'/orgPublicSelect/queryComboTree',
 		  dataType: 'json',
@@ -145,6 +154,7 @@ function loadExpandNode(node,textboxID,filterData) {
 		filterData={};
 	
 	filterData['rootOrgCode']=node.id;
+	filterData['loadType']='loadExpandNode';//返回不包括当前结点的树
 	
 	loading('open','数据加载中,请稍候...');
 	$.ajax({
@@ -246,7 +256,7 @@ function org_removeall_select(textboxID){
 	}
 }
 
-function getDivHtml(textboxID){
+function getMultiDivHtml(textboxID){
 	var html='<table border="0" cellspacing="0" cellpadding="0" width="100%">'
 			+'<tr>'
 			+'<td width="40%">'
@@ -278,7 +288,7 @@ function getDivHtml(textboxID){
 				+'</table>'
 			+'</td>'
 			+'<td align="right" valign="top">'
-				+'<select id="select_valid_'+textboxID+'" size="10" tabindex="10" class="multiSelect" style="width: 340px; height: 269px;" multiple>'
+				+'<select id="select_valid_'+textboxID+'" size="10" tabindex="10" class="multiSelect" style="width: 340px; height: 269px;">'
 				+'</select>'
 			+'</td>'
 			+'</tr>'
@@ -286,20 +296,32 @@ function getDivHtml(textboxID){
 	return html;
 }
 
+
 /**
  * 设置选择的值
  * @param returnFieldData
  */
-function returnSelected(textboxID,returnFieldData){
+function returnSelected(textboxID,returnFieldData,multi_single){
 	if (returnFieldData) {
 		var selectedOrgCode = [];
 		var selectedOrgName = [];
-		var options = $('#select_valid_'+textboxID+'>option');
-		for (var i=0;i < options.length;i++) {
-			var option = options[i];
-			selectedOrgCode.push(option.value);
-			selectedOrgName.push(option.getAttribute('optionname'));
+		
+		if(multi_single == 'multi'){//多选
+			var options = $('#select_valid_'+textboxID+'>option');
+			for (var i=0;i < options.length;i++) {
+				var option = options[i];
+				selectedOrgCode.push(option.value);
+				selectedOrgName.push(option.getAttribute('optionname'));
+			}
+		}else{
+			var checkNode = $('#treeSelect_'+textboxID).tree('getChecked');
+			if(checkNode.length>0){
+				console.log(checkNode[0]);
+				selectedOrgCode=checkNode[0].id;
+				selectedOrgName=checkNode[0].text
+			}
 		}
+		
 		
 		for (var item in returnFieldData) {
 			if (item == "text") {
@@ -432,4 +454,154 @@ function searchTree(textboxID) {
 			});
 		}
 	}
+}
+
+
+/**
+ * 组织机构单选初始方法
+ * @param textboxID 弹出框触发和显示的textbox对象ID
+ * @param filterData 过滤条件：rootOrgCode 根节点orgcode、orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
+ * @param returnFieldData 返回数据存储对象：ID 部门编号、TEXT 部门名称
+ * @param onSelectedFun 回掉方法
+ */
+function initSingleSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData)
+		filterData={};
+	filterDataAry[textboxID]=filterData;
+	initHtmlDiv(textboxID,filterData,'single');
+	
+	//初始化弹出框
+	$("#"+normalHtmlDivId+textboxID).dialog({
+        title: '组织机构单选',	        
+        height: 'auto',
+        width:450,
+        resizable: true,
+        modal: true,
+        closed: true,
+        buttons:[{
+            text:'确定',
+            handler:function(){
+            	returnSelected(textboxID,returnFieldData,'single');
+            	$("#"+normalHtmlDivId+textboxID).dialog('close');
+            	
+            	if (typeof onSelectedFun == 'function') {
+    				var fn = eval(onSelectedFun);
+    				fn();
+    			}
+            }
+            	
+        },
+        {
+            text:'关闭',
+            handler:function(){
+            	$("#"+normalHtmlDivId+textboxID).dialog('close');
+            }
+            	
+        }]
+    });
+	
+	//绑定弹出事件
+	$('#'+textboxID).textbox({
+		'editable':false,
+		'prompt':'点击”选择“可弹出选择框',
+		'buttonText':'选择',
+    	'onClickButton' : function(){
+    		$("#"+normalHtmlDivId+textboxID).show().dialog('open');
+    	}
+    });
+	
+}
+
+/**
+ * 单选得HTML
+ * @param textboxID
+ * @returns {String}
+ */
+function getSingleDivHtml(textboxID){
+	var html='<table border="0" cellspacing="0" cellpadding="0" width="100%">'
+			+'<tr>'
+			+'<td width="100%">'
+				+'<table border="0" cellspacing="0" cellpadding="0" width="100%">'
+				+'<tr>'
+				+'	<td align="center" style="padding-bottom:1px;">'
+				+'		<table border="0" cellspacing="0" cellpadding="0">'
+				+'		<tr>'
+				+'			<td><input id="searchKey_'+textboxID+'" class="val easyui-textbox" data-options="width:390,prompt:\'匹配部门名称、部门代码、部门拼音\'" /></td>'
+				+'			<td style="padding-left:4px;"><a class="easyui-linkbutton c6" id="searchBtn_'+textboxID+'" onclick="searchTree(\''+textboxID+'\')">搜索</a></td>'
+				+'		</tr>'
+				+'		</table>'
+				+'	</td>'
+				+'</tr>'
+				+'<tr>'
+				+'	<td align="center">'
+				+'		<div id="treeDiv_'+textboxID+'" class="easyui-panel" style="padding:5px; width: 440px; height: 248px;" onselectstart="return false;">'
+				+'			<ul class="easyui-tree" id="treeSelect_'+textboxID+'" data-options="method:\'get\',lines:true,checkbox:true,searchServer:true"></ul>'
+				+'		</div>'
+				+'	</td>'
+				+'</tr>'
+				+'</table>'
+			+'</td>'
+			+'</tr>'
+			+'</table>';
+	return html;
+}
+
+/**
+ * 初始化单选选择树
+ * @param textboxID 弹出框触发和显示的textbox对象ID
+ */
+function initSingleTree(textboxID,filterData){
+	filterData['loadType']='initTree';//返回包括当前结点的树
+	$.ajax({
+		  url: managerPath +'/orgPublicSelect/queryComboTree',
+		  dataType: 'json',
+		  type: 'get',
+		  async: true,	 
+		  xhrFields: {
+			  withCredentials: true
+		  },
+		  crossDomain: true,
+		  data: filterData,
+		  success: function (data) {
+			  $('#treeSelect_'+textboxID).tree({
+					onlyLeaf: false,
+					cascadeCheck : false,
+					data: data,
+					onClick:function(node) { // 在点击的时候执行
+						
+						if (node.id != "ROOT") { // 根结点不变
+							if(!node.loaded || node.loaded == '0'){//未加载
+								loadExpandNode(node,textboxID,filterData); // 异步加载子节点数据
+							}else{
+								if(!$(this).tree('isLeaf', node.target)){
+									if (node.state == 'closed') {
+										$(this).tree('expand', node.target);
+									}
+									else {
+										$(this).tree('collapse', node.target);
+									}
+								}
+							}
+						}
+					},
+					onBeforeCheck: function(node,checked){
+	                    if(checked){
+	                    	var orgTreeObject = $('#treeSelect_'+textboxID);
+	                        var checkNode = orgTreeObject.tree('getChecked');
+	                        if(checkNode.length > 0){
+	                            orgTreeObject.tree('uncheck',checkNode[0].target);
+	                        }
+
+	                    }
+	                },
+					onCheck: function(node,checked){
+	                    
+	                }
+				});	
+			  
+		  },
+		  error: function () {
+		      console.log('queryByOrgcode ajax err');
+		  }
+	});
 }

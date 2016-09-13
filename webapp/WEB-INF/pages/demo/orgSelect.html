@@ -83,6 +83,31 @@
             </li>
         </ul>
         
+        <h2>单选样例</h2>
+        <ul class="item-container">
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>单选（无任何限制）</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="singleSelectOrgName" data-options="width:200">
+            		<input id="singleSelectOrgCode">
+                </div>
+            </li>
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>单选（只选成都市公安局下的（510100000000）部门）</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="singleSelectOrgName510100000000" data-options="width:200">
+            		<input id="singleSelectOrgCode510100000000">
+                </div>
+            </li>
+            <li class="item-two">
+                <p class="pro"><i class="fa fa-asterisk"></i>单选（只选派出所（32））</p>
+                <div class="ipt">
+                    <input class="easyui-textbox" id="singleSelectOrgName32" data-options="width:200">
+            		<input id="singleSelectOrgCode32">
+                </div>
+            </li>
+        </ul>
+        
 
     </form>
 
@@ -105,6 +130,10 @@
 		initMultiSelectOrg('selectOrgName04',{orgBizType:'04'},{text:'selectOrgName04',id:'selectOrgCode04'},null);
 		initMultiSelectOrg('selectOrgName510100000000',{rootOrgCode:'510100000000'},{text:'selectOrgName510100000000',id:'selectOrgCode510100000000'},null);
 		initMultiSelectOrg('selectOrgName32',{rootOrgCode:'511011000000',orgLevel:'32'},{text:'selectOrgName32',id:'selectOrgCode32'},null);
+		
+		initSingleSelectOrg('singleSelectOrgName',{},{text:'singleSelectOrgName',id:'singleSelectOrgCode'},null);
+		initSingleSelectOrg('singleSelectOrgName510100000000',{rootOrgCode:'510100000000'},{text:'singleSelectOrgName510100000000',id:'singleSelectOrgCode510100000000'},null);
+		initSingleSelectOrg('singleSelectOrgName32',{rootOrgCode:'511011000000',orgLevel:'32'},{text:'singleSelectOrgName32',id:'singleSelectOrgCode32'},null);
 	});
 </script>
 </html>
