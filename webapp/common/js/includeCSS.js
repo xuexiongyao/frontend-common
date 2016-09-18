@@ -1,8 +1,9 @@
 
 /******静态资源路径,和版本号配置********/
-var staticPath = 'http://static.jwzh.com:7777/jwzh';
 var jwzhVersion = '1.0.0.t11';
-//console.log('静态资源链接和版本号:',staticPath,jwzhVersion);
+
+var staticPath = 'http://static.jwzh.com:7777/jwzh';
+var portal = 'http://www.jwzh.com:9016/jwzh-main';
 /*********END***********************/
 
 //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
