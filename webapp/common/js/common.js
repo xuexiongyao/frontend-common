@@ -4,9 +4,6 @@
 
 var current_tab_id = null;
 var return_tab_id = null;
-var staticPath = 'http://static.jwzh.com:7777/jwzh';
-document.write('<script src="'+staticPath+'/common/js/function.js?v=1.0.0.1"></script>');
-//document.write('<script src="'+pathConfig.staticPath+'/common/js/function.js?v=1.0.0.1"></script>');
 $(function () {
     //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
     //var version = getCookie('jwzhVersion');

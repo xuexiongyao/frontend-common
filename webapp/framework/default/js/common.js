@@ -316,30 +316,3 @@ function openDivForm(options, btn_diy) {
     dlg_div.dialog('move', {top: $(document).scrollTop() + _top});
     dlg_div.show().dialog('open');
 }
-
-/*页面铺满加载中样式
- * 1.type: open,打开;close,关闭
- * 2.msg : 显示的文字,默认为加载中...
- * */
-function loading(type,msg){
-    var staticPath = 'http://static.jwzh.com:7777/jwzh';
-    var msg = msg || '加载中...';
-    var loading_img_url = staticPath +'/framework/default/images/loading.gif';
-    var loading_html='<div id="loadingMsk" style="display:none">'
-        +'<div class="loadingPage">'
-        +'<img src="'+loading_img_url+'" alt="loading">'
-        +'<span class="msg">'+msg+'</span>'
-        +'</div>'
-        +'</div>';
-    if($('#loadingMsk').length == 0){
-        $('body').append(loading_html);
-    }
-    if(type == 'open'){
-        $('#loadingMsk').fadeIn('fast');
-    }else if(type == 'close'){
-        $('#loadingMsk').fadeOut('fast').remove();
-    }else{
-        console.log('加载效果处理方式参数错误!');
-        return false;
-    }
-}
