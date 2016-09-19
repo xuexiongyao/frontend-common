@@ -54,6 +54,17 @@ function queryModule(){
                 panelHeight:'auto',
                 panelMaxHeight:200
             });
+        }else if(list_config[k][0] == 'combotree'){
+            $('#query_input_'+k_mark).combotree({
+                prompt:'请选择'+list_config[k][1],
+                url:list_config[k][2],
+                valueField:'id',
+                textField:'text',
+                method:'get',
+                panelHeight:'auto',
+                panelMaxHeight:200,
+                panelWidth: 'auto'
+            });
         }
 
         //显示查询勾选项
