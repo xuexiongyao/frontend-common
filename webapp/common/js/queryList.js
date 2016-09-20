@@ -11,7 +11,7 @@ $(function(){
 
 var listConfig = new ListConfig();
 var tableCookieName = (location.pathname).substr(0,location.pathname.indexOf('.')) + '_tableHeaderC';
-var queryListParam = {};    //查询条件
+var queryListParam = init.queryListParam || {};    //查询条件
 //生成查询条件模块
 function queryModule(){
     //查询条件输入框,勾选项
@@ -137,7 +137,7 @@ function queryModule(){
 
     //点击查询
     $('#query_btn').on('click',function(){
-        queryListParam = {};
+        queryListParam = init.queryListParam || {};
         $('#query_panel input[name]').each(function(){
             var _this = $(this);
             var pro = _this.prop('name');
