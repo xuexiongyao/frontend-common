@@ -1056,3 +1056,20 @@ function getThisLocationObj(){
 
     return locaTmp;
 }
+
+//获取当前时间并格式化为'yyyy-MM-dd HH:mm:ss'
+function getCurrentTime(){
+    var myDate = new Date();
+    var yyyy = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+    var MM = myDate.getMonth() + 1;       //获取当前月份(0-11,0代表1月)
+    var dd = myDate.getDate();        //获取当前日(1-31)
+    var HH = myDate.getHours();       //获取当前小时数(0-23)
+    var mm = myDate.getMinutes();     //获取当前分钟数(0-59)
+    var ss = myDate.getSeconds();     //获取当前秒数(0-59)
+    if(MM < 10) MM = '0' + MM;
+    if(dd < 10) dd = '0' + dd;
+    if(HH < 10) HH = '0' + HH;
+    if(mm < 10) mm = '0' + mm;
+    if(ss < 10) ss = '0' + ss;
+    return yyyy+'-'+MM+'-'+dd+' '+HH+':'+mm+':'+ss;
+}
