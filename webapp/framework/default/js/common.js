@@ -182,7 +182,8 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
         if(fraTabs.tabs('existsById',return_tab_id)){
             fraTabs.tabs('selectById',return_tab_id);
             if(return_fn_name){
-                var return_iframe = $('#'+return_tab_id).find('iframe')[0];
+                callIframeFn(return_tab_id,return_fn_name);
+                /*var return_iframe = $('#'+return_tab_id).find('iframe')[0];
                 //同域下调用iframe中的某个方法
                 //return_iframe[0].contentWindow['return_fn'][return_fn_name]();
                 //使用跨域方法执行返回后的方法,多个方法名用","隔开
@@ -194,7 +195,7 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
                         content : 'window.return_fn.'+_fn_name+'()'
                     };
                     crossRequestIframe(msg,return_iframe);
-                }
+                }*/
             }
             fraTabs.tabs('close',currentTabTitle);//关闭当前标签
         }else{
@@ -203,6 +204,24 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
         }
     }
 }
+
+//调用其他tab的方法
+function callIframeFn(tabID,fnName){
+    var return_iframe = $('#'+tabID).find('iframe')[0];
+    //同域下调用iframe中的某个方法
+    //return_iframe[0].contentWindow['return_fn'][return_fn_name]();
+    //使用跨域方法执行返回后的方法,多个方法名用","隔开
+    var fn_name = fnName.split(',');
+    for(var i=0;i<fn_name.length;i++){
+        var _fn_name = fn_name[i];
+        var msg = {
+            status : 'run_fn',
+            content : 'window.return_fn.'+_fn_name+'()'
+        };
+        crossRequestIframe(msg,return_iframe);
+    }
+}
+
 /*自定义的div弹框方法
  * 1.options : 对象参数(各项配置)
  * 2.btn_diy : 数组参数(自定义按钮操作)
