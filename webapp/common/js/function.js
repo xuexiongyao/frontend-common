@@ -1009,6 +1009,32 @@ function clearInput(input_class){
     })
 }
 
+//设置组件的值
+function setInputValue($input,val){
+    try{
+        $input.combobox('setValue',val);
+        $input.combobox('select',val);
+    }catch(e){
+        try{
+            $input.textbox('setValue',val);
+        }catch(e){
+            try{
+                $input.datebox('setValue',val);
+            }catch(e){
+                try{
+                    $input.combotree('setValue',val);
+                }catch(e){
+                    try{
+                        $input.validate('setValue',val);
+                    }catch(e){
+                        $input.val(val);
+                    }
+                }
+            }
+        }
+    }
+}
+
 //combobox自动填值
 function comboAutoComplete(combobox_id,url){
     var _combobox = $('#'+combobox_id);
