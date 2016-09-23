@@ -10,7 +10,7 @@ document.write('<script src="'+staticPath+'/common/js/common.js?v='+jwzhVersion+
 document.write('<script src="'+staticPath+'/common/js/ajax.js?v='+jwzhVersion+'"></script>');
 document.write('<script src="'+staticPath+'/common/datepicker/WdatePicker.js?v='+jwzhVersion+'"></script>');
 document.write('<script src="'+staticPath+'/common/easyui/jquery.dragsort-0.5.2.js?v='+jwzhVersion+'"></script>');
-document.write('<script src="'+staticPath+'/common/easyui/jquery.linkCss.js?v='+jwzhVersion+'"></script>');
+document.write('<script src="'+staticPath+'/common/easyui/jquery.linkcss.js?v='+jwzhVersion+'"></script>');
 document.write('<script src="'+staticPath+'/common/easyui/jquery.easyui.extend.tabs.js?v='+jwzhVersion+'"></script>');
 document.write('<script src="'+staticPath+'/common/easyui/jquery.form.js?v='+jwzhVersion+'"></script>');
 document.write('<script src="'+staticPath+'/common/map/map.js"></script>');
