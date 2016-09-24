@@ -118,8 +118,24 @@ em, i {
 }
 
 /*自定义浏览器前缀*/
-/*header*/
-/* line 5, ../sass/scjz/_frame.scss */
+/* line 40, ../sass/scjz/_common.scss */
+::-webkit-scrollbar {
+  background-color: #fff;
+  width: 5px;
+  height: 10px;
+}
+
+/* line 46, ../sass/scjz/_common.scss */
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+/* line 50, ../sass/scjz/_common.scss */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.65);
+}
+
+/* line 5, ../sass/scjz/_header.scss */
 .sc_header {
   background: #24618c;
   height: 50px;
@@ -312,45 +328,64 @@ em, i {
 }
 /* line 174, ../sass/scjz/_frame.scss */
 .menuNavWin .menuUl {
-  width: 150px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  width: 350px;
   height: 520px;
   background: url("../images/menu_bg1.png");
-  position: absolute;
-  right: 0;
+  overflow-y: auto;
+  position: relative;
 }
-/* line 180, ../sass/scjz/_frame.scss */
+/* line 43, ../sass/scjz/_menu.scss */
 .menuNavWin .menuUl li {
-  width: 90%;
-  border-radius: 0 3px 3px 0;
-}
-/* line 183, ../sass/scjz/_frame.scss */
-.menuNavWin .menuUl li a {
-  font-family: "Microsoft Yahei", SimSun, Tahoma, arial, SimHei, sans-serif;
-  padding: 7px 0 7px 15px;
+  width: 100%;
+  height: 30px;
   display: block;
+}
+/* line 47, ../sass/scjz/_menu.scss */
+.menuNavWin .menuUl li > a {
+  display: block;
+  width: 125px;
+  padding-left: 10px;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  left: 200px;
+  font-family: "Microsoft Yahei", SimSun, Tahoma, arial, SimHei, sans-serif;
   color: #fff;
   font-size: 14px;
+  border-radius: 0 3px 3px 0;
 }
-/* line 190, ../sass/scjz/_frame.scss */
+/* line 59, ../sass/scjz/_menu.scss */
+.menuNavWin .menuUl li > a:hover {
+  background: url("../images/menu_bg2.png");
+}
+/* line 61, ../sass/scjz/_menu.scss */
+.menuNavWin .menuUl li > a:hover .listTitle {
+  color: #0f6596 !important;
+}
+/* line 66, ../sass/scjz/_menu.scss */
 .menuNavWin .menuUl li .liListAll {
   width: 200px;
   height: 520px;
   display: none;
-  background: url("../images/menu_bg2.png");
-  position: absolute;
+  position: fixed;
   overflow-y: auto;
-  left: -200px;
-  top: 0;
+  background: url("../images/menu_bg2.png");
 }
 /* line 199, ../sass/scjz/_frame.scss */
 .menuNavWin .menuUl li .liListAll a {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
   font-family: "SimSun";
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 12px;
   color: #000;
-  padding: 10px 0 10px 30px;
 }
 /* line 207, ../sass/scjz/_frame.scss */
 .menuNavWin .menuUl li .liListAll a:hover {
@@ -365,24 +400,17 @@ em, i {
 .menuNavWin .menuUl li .liListAll-active {
   display: block;
 }
-/* line 219, ../sass/scjz/_frame.scss */
-.menuNavWin .menuUl li:hover {
-  background: url("../images/menu_bg2.png");
-}
-/* line 221, ../sass/scjz/_frame.scss */
-.menuNavWin .menuUl li:hover .listTitle {
-  color: #0f6596 !important;
-}
-/* line 226, ../sass/scjz/_frame.scss */
+/* line 97, ../sass/scjz/_menu.scss */
 .menuNavWin .menuUl .li-first {
   margin-top: 10px;
 }
-/* line 229, ../sass/scjz/_frame.scss */
-.menuNavWin .menuUl .li-active {
+/* line 101, ../sass/scjz/_menu.scss */
+.menuNavWin .menuUl .li-active > a {
   background: url("../images/menu_bg2.png");
+  color: #0a71ba;
 }
-/* line 231, ../sass/scjz/_frame.scss */
-.menuNavWin .menuUl .li-active .listTitle {
+/* line 104, ../sass/scjz/_menu.scss */
+.menuNavWin .menuUl .li-active > a .listTitle {
   color: #0f6596 !important;
 }
 /* line 236, ../sass/scjz/_frame.scss */
