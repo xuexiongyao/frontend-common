@@ -1099,3 +1099,21 @@ function getCurrentTime(){
     if(ss < 10) ss = '0' + ss;
     return yyyy+'-'+MM+'-'+dd+' '+HH+':'+mm+':'+ss;
 }
+
+//获取sessionbean
+function getSessionBean(){
+    var sessionBean = null;
+    $.ajax({
+        url: managerPath+'/api/userLogin/getSetuSession',
+        type: 'get',
+        dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        async: false,
+        success: function(json){
+            sessionBean = json.sessionBean;
+            console.log('sessionbean:',json);
+        }
+    });
+    return sessionBean;
+}
