@@ -178,7 +178,7 @@ body {
   resize: none;
 }
 /* line 74, ../sass/sass/_demo.scss */
-.container .item-container li > div > textarea:focus {
+.container .item-container li > div > textarea:hover {
   border-color: #66afe9;
   -webkit-box-shadow: 0 0 3px 0 #66afe9;
   -moz-box-shadow: 0 0 3px 0 #66afe9;
