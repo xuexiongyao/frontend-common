@@ -1,9 +1,10 @@
 
 /******静态资源路径,和版本号配置********/
-var jwzhVersion = '1.0.0.t11';
+var jwzhVersion = '1.0.0';
 
-var staticPath = 'http://static.jwzh.com:7777/jwzh';
-var portal = 'http://www.jwzh.com:9016/jwzh-main';
+var staticPath = staticPath || 'http://static.jwzh.com:7777/jwzh';
+var portal = portal || 'http://www.jwzh.com:9016/jwzh-main';
+var managerPath = managerPath || 'http://manage.jwzh.com:9017/jwzh-manage';
 /*********END***********************/
 
 //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
@@ -11,7 +12,7 @@ var pathname = location.pathname;
 if(jwzhVersion){
     if(!getCookie(pathname) || getCookie(pathname) != jwzhVersion){
         setCookie(pathname,jwzhVersion,300);
-        console.log('测试版本提示: 版本已经升级,页面将重新加载一次最新资源文件..版本号:'+jwzhVersion);
+        console.log('系统升级, 当前版本号为:'+jwzhVersion);
         location.reload(true);
     }
 }

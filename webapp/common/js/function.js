@@ -1099,3 +1099,52 @@ function getCurrentTime(){
     if(ss < 10) ss = '0' + ss;
     return yyyy+'-'+MM+'-'+dd+' '+HH+':'+mm+':'+ss;
 }
+
+//获取sessionbean
+function getSessionBean(){
+    var sessionBean = null;
+    $.ajax({
+        url: managerPath+'/api/userLogin/getSetuSession',
+        type: 'get',
+        dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        async: false,
+        success: function(json){
+            sessionBean = json.sessionBean;
+            console.log('sessionbean:',json);
+        }
+    });
+    return sessionBean;
+}
+
+/**
+ * 打开帮助文档的页面
+ * @param tag_id 放置帮助链接的DIV的ID
+ * @param type 帮助文档类型
+ */
+function openHelpWindow(tag_id,type){
+	$.ajax({
+		url : managerPath+'/api/sysXtcsGlobal/queryPage',
+		type : 'post',
+		dataType : 'json',
+		xhrFields:{withCredentials:true},
+		crossDomain:true,
+		data :{
+			cslb : '13',
+			csmc :'helpUrlAry'
+		},
+		success : function(data){
+			if(data && data.length>0){
+				var csz=data[0].csz;
+				var json = eval('(' + csz + ')');
+				var fileUrl = json[type];
+				if(fileUrl)
+					$("#"+tag_id).html('<a href="'+fileUrl+'" target="_blank"><i class="fa fa-question-circle"></i><span>帮助</span></a>');
+			}
+		},
+		error:function(e){
+			
+		}
+	});
+}
