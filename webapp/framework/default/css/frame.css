@@ -524,7 +524,7 @@ em, i {
 }
 
 /* line 329, ../sass/scjz/_frame.scss */
-.indexPage {
+/*.indexPage {
   background: url("../images/bgi_1.jpg");
   filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
   -webkit-background-size: 100% 100%;
@@ -532,7 +532,7 @@ em, i {
   -o-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   background-size: 100% 100%;
-}
+}*/
 
 /* line 337, ../sass/scjz/_frame.scss */
 #loadingMsk {
