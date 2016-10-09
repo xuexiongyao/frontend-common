@@ -1,6 +1,4 @@
 //1.2.3在includeCSS.js中
-console.log(pathConfig);
-
 var jwzhVersionIJS = jwzhVersion;
 var staticPathIJS = staticPath || pathConfig.staticPath || 'http://static.jwzh.com:7777/jwzh';
 //3.easyui相关资源文件
