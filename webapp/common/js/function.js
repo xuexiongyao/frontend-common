@@ -27,6 +27,8 @@ function pageJump() {
  * */
 function loading(type,msg){
     var msg = msg || '加载中...';
+    //var staticPath = staticPath;
+    //if(!staticPath) alert('loading()方法无法获取静态资源路径');
     var loading_img_url = staticPath +'/framework/default/images/loading.gif';
     var loading_html='<div id="loadingMsk">'
         +'<div class="loadingPage">'
@@ -1067,7 +1069,7 @@ function getParamLinkUrl() {
 
 //获取当前location对象
 function getThisLocationObj(){
-    var locaObj = this.location;
+    var locaObj = location;
     var locaTmp = {
         hash:locaObj.hash,//锚点
         host:locaObj.host,//主机
