@@ -6,7 +6,7 @@ var pathConfig = {
     staticPath : staticPath || 'http://static.jwzh.com:7777/jwzh',    //注意:静态资源路径请同步修改includeCSS.js中的路径!!!
 
     //本项目路径
-    basePath : location.origin,
+    basePath : location.origin + location.pathname.substr(0,location.pathname.substr(1).indexOf("/")+1),
 
     //各个子项目路径
     bzdzPath : 'http://bzdz.jwzh.com:9012/jwzh-bzdz',
