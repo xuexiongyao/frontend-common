@@ -320,6 +320,7 @@ em, i {
 /* line 167, ../sass/scjz/_frame.scss */
 .menuNavWin {
   width: 350px;
+  height: 590px;
   overflow-y: auto;
   position: absolute;
   z-index: 1100;
