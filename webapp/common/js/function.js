@@ -1106,7 +1106,7 @@ function getCurrentTime(){
 function getSessionBean(){
     var sessionBean = null;
     $.ajax({
-        url: managerPath+'/api/userLogin/getSetuSession',
+        url: pathConfig.managePath+'/api/userLogin/getSetuSession',
         type: 'get',
         dataType: 'json',
         xhrFields: {withCredentials: true},
