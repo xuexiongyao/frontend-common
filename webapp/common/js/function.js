@@ -1151,3 +1151,21 @@ function openHelpWindow(tag_id,type){
 		}
 	});
 }
+
+//1.绑定storage事件函数
+function onStorage(fn){
+    localStorage.setItem('storageStatus','true');
+    $(window).off('storage').on('storage',function(){
+        if(typeof fn == 'function'){
+            fn();
+            $(window).off('storage');
+            localStorage.setItem('storageStatus','true');
+        }else{
+            alert('onStorage的参数不合法,请传递回调函数.');
+        }
+    });
+}
+//2.改变storage的状态
+function changeStorage(){
+    localStorage.setItem('storageStatus','false');
+}
