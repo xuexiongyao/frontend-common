@@ -984,6 +984,7 @@ function getInputValue(input,input_type,multiple){
 
 //批量清除组件数据
 function clearInput(input_class){
+    $('.Wdate').val('');
     $('.'+input_class).each(function(){
         var _this = $(this);
         try{
