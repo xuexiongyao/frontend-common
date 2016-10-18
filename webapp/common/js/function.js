@@ -1169,3 +1169,12 @@ function onStorage(fn){
 function changeStorage(){
     localStorage.setItem('storageStatus','false');
 }
+
+/**
+ * wdate时间控件内容校验
+ * @param obj:当前对象this
+ */
+function wdateValidate(obj){
+    var $this = $(obj);
+    $this.validatebox();
+}
