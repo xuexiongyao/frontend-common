@@ -102,6 +102,7 @@ function initHtmlDiv(textboxID,filterData,multi_single){
  */
 function initMultiTree(textboxID,filterData){
 	filterData['loadType']='initTree';//返回包括当前结点的树
+	var managerPath=managerPath || pathConfig.managePath;
 	$.ajax({
 		  url: managerPath +'/orgPublicSelect/queryComboTree',
 		  dataType: 'json',
@@ -155,7 +156,7 @@ function loadExpandNode(node,textboxID,filterData) {
 	
 	filterData['rootOrgCode']=node.id;
 	filterData['loadType']='loadExpandNode';//返回不包括当前结点的树
-	
+	var managerPath=managerPath || pathConfig.managePath;
 	loading('open','数据加载中,请稍候...');
 	$.ajax({
 		url: managerPath +'/orgPublicSelect/queryComboTree',
@@ -356,6 +357,7 @@ function searchOrgByCondition(textboxID) {
 }
 
 function searchTree(textboxID) {
+	var managerPath=managerPath || pathConfig.managePath;
 	var filterData = filterDataAry[textboxID];
 	var searchKeyValue = $('#searchKey_'+textboxID).textbox('getValue');
 	searchKeyValue = searchKeyValue.replace(/(^\s*)|(\s*$)/g, "");
@@ -551,6 +553,7 @@ function getSingleDivHtml(textboxID){
  */
 function initSingleTree(textboxID,filterData){
 	filterData['loadType']='initTree';//返回包括当前结点的树
+	var managerPath=managerPath || pathConfig.managePath;
 	$.ajax({
 		  url: managerPath +'/orgPublicSelect/queryComboTree',
 		  dataType: 'json',
