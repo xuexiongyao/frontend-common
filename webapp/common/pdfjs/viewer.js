@@ -4408,7 +4408,7 @@ var PDFViewer = (function pdfViewer() {
 
     _setScaleUpdatePages: function pdfViewer_setScaleUpdatePages(
         newScale, newValue, noScroll, preset) {
-      console.log('缩放信息:',newScale, newValue, noScroll, preset);
+      PDFZoom(newScale, newValue, noScroll, preset);
       this._currentScaleValue = newValue;
       if (newScale === this._currentScale) {
         if (preset) {
