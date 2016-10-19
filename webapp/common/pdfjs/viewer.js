@@ -29,7 +29,7 @@
 
 //var DEFAULT_URL = 'file:///C:/Users/zhuwei/Desktop/testpdf.pdf';
 //var DEFAULT_URL = 'testpdf.pdf';
-var DEFAULT_URL ='';//'http://static.jwzh.com:7777/jwzh/common/pdfjs/testpdf.pdf';
+//var DEFAULT_URL ='';
 
 var DEFAULT_SCALE_DELTA = 1.1;
 var MIN_SCALE = 0.25;
@@ -6872,7 +6872,7 @@ function webViewerInitialized() {
   }
 }
 
-//document.addEventListener('DOMContentLoaded', webViewerLoad, true);
+document.addEventListener('DOMContentLoaded', webViewerLoad, true);
 
 document.addEventListener('pagerendered', function (e) {
   var pageNumber = e.detail.pageNumber;
