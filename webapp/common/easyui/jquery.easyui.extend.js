@@ -1911,8 +1911,11 @@ function getIEVersion() {
 					}
 				}
 			}
+		},
+		onLoadError: function(){
+			//加载失败时,显示空数据
+			$(this).datagrid('loadData',[]);
 		}
-
 	});
 
 	$.extend($.fn.datagrid.defaults, defaults);
