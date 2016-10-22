@@ -3,7 +3,7 @@
  */
 var judge1 = [
     {"id": "=","text": "等于"},
-    {"id": "!=","text": "不等于"},
+    {"id": "<>","text": "不等于"},
     {"id": "IN","text": "包含" },
     {"id": "NL","text": "为空"},
     {"id": "NN","text": "不为空"}
@@ -20,7 +20,7 @@ var judge3 = [
 ];
 var judge4 = [
     {"id": "=","text": "等于"},
-    {"id": "!=","text": "不等于"}
+    {"id": "<>","text": "不等于"}
 ];
 var judge5 = [
     {"id": "=","text": "等于"},
@@ -28,7 +28,7 @@ var judge5 = [
 ];
 var judge6 = [
     {"id": "=","text": "等于"},
-    {"id": "!=","text": "不等于"},
+    {"id": "<>","text": "不等于"},
     {"id": "NL","text": "为空"},
     {"id": "NN","text": "不为空"}
 ];
@@ -58,7 +58,7 @@ var judge10 = [
 ];
 var judge11 = [
     {"id": "=","text": "等于"},
-    {"id": "!=","text": "不等于"},
+    {"id": "<>","text": "不等于"},
     {"id": "IN","text": "包含" }
 ];
 
