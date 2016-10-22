@@ -667,12 +667,17 @@ function parseInput(config,judge_id,condition_id){
 			validType:valid_type
 		});
 	}else if(condition_type == 'textbox_org'){
-		$('#'+condition_id).textbox({
+		var field_time = (new Date()).getTime();
+		var new_condition_id = condition_id+'_'+field_time;
+		$('#'+condition_id).attr('id',new_condition_id);
+		$('#'+new_condition_id).textbox({
 			panelWidth: 180,
 			width:180
 		});
-		$('#'+condition_id).parent().append('<input type="hidden" id="'+field+'_org">');
-		initMultiSelectOrg(condition_id,null,{text:condition_id,id:field+'_org'},null);
+		
+		$('#'+new_condition_id).parent().attr('field_time',field_time)
+		$('#'+new_condition_id).parent().append('<input type="hidden" class="condition" id="'+field+'_org_'+field_time+'">');
+		initMultiSelectOrg(new_condition_id,null,{text:new_condition_id,id:field+'_org_'+field_time},null);
 		$('#'+judge_id).combobox('select','IN');
 		$('#'+judge_id).combobox('setValue','IN');
 	}else if(condition_type == 'datebox'){
@@ -733,7 +738,8 @@ function getSearchData($this){
 		data_info[1] = 'null';
 	}else{//不为空
 		if(input_type == 'textbox_org'){
-			data_info[1] = ($('#'+field+'_org').val()).replace(/,/g, ' ');
+			var field_time = $this.attr('field_time');
+			data_info[1] = ($('#'+field+'_org_'+field_time).val()).replace(/,/g, ' ');
 		}else{
 			data_info[1] = getInputValue(input,input_type,true);
 		}
