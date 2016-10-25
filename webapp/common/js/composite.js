@@ -1,4 +1,4 @@
-﻿﻿//var staticPath = './webapp';
+﻿//var staticPath = './webapp';
 //var window_type = 'open_url';
 var condition_obj = {mainTable:search_config.main_type};
 var table_header_info=[];
@@ -681,13 +681,20 @@ function parseInput(config,judge_id,condition_id){
 		$('#'+judge_id).combobox('select','IN');
 		$('#'+judge_id).combobox('setValue','IN');
 	}else if(condition_type == 'datebox'){
-		//日期段的处理?
-		//console.log(date_id);
-		$('#'+condition_id).datebox({
-			panelWidth: 180,
-			width:180,
-			validType:'date[\'yyyy-MM-dd\']'
-		});
+		//日期段处理
+		/*$('#'+condition_id).datebox({
+		 panelWidth: 180,
+		 width:180,
+		 validType:'date[\'yyyy-MM-dd\']'
+		 });*/
+
+		var $parent = $('#'+condition_id).parent();
+		$('#'+condition_id).remove();
+		var dateDom = '<input id="'+condition_id+'" class="condition easyui-validatebox Wdate validatebox-text"'
+			+' style="height:22px;line-height:22px;width:180px;margin:0;position:relative;top:2px;"'
+			+'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',autoPickDate:true});"'
+			+'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
+		$parent.append(dateDom);
 	}else if(condition_type == 'combotree'){
 		$('#'+condition_id).combotree({
 			multiple:multiple,

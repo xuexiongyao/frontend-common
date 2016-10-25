@@ -964,7 +964,8 @@ function getInputValue(input,input_type,multiple){
     if(input_type == 'textbox'){
         return input.textbox('getValue');
     }else if(input_type == 'datebox'){
-        return input.datebox('getValue');
+        return input.val();
+        //return input.datebox('getValue');
     }else if(input_type == 'combobox'){
         if(multiple){
             return input.combobox('getValues');
