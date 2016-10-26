@@ -1971,7 +1971,9 @@ function getIEVersion() {
 	}).ajaxComplete(function() {loading('close');});*/
 	// ajax默认配置
 	$.ajaxSetup({
-		cache: true, // 启用cache
+		xhrFields:{withCredentials:true},
+		crossDomain:true,
+		cache: true, // 禁,启用cache
 		data: {},
 		type: "POST",
 		error: function(jqXHR, textStatus, errorThrown){
