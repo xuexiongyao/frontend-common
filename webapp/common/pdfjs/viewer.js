@@ -6269,13 +6269,14 @@ var PDFViewerApplication = {
       var info = data.info, metadata = data.metadata;
       self.documentInfo = info;
       self.metadata = metadata;
-
+      PDFComplete(PDFJS);
+      //PDF信息展示
       // Provides some basic debug information
-      console.log('PDF ' + pdfDocument.fingerprint + ' [' +
+      /*console.log('PDF ' + pdfDocument.fingerprint + ' [' +
           info.PDFFormatVersion + ' ' + (info.Producer || '-').trim() +
           ' / ' + (info.Creator || '-').trim() + ']' +
           ' (PDF.js: ' + (PDFJS.version || '-') +
-          (!PDFJS.disableWebGL ? ' [WebGL]' : '') + ')');
+          (!PDFJS.disableWebGL ? ' [WebGL]' : '') + ')');*/
 
       var pdfTitle;
       if (metadata && metadata.has('dc:title')) {
