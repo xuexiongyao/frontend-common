@@ -526,7 +526,6 @@ function btnEvent(){
 		var null_status = 0;
 		var query = [];
 		for(var i=0;i<search_config_arr.length;i++){
-			//if((search_config_arr[i])['condition'].length){
 			var query_item = getBaseInfoObj(search_config_arr[i]);
 			if((query_item.condition).length){
 				query.push(query_item);
@@ -546,7 +545,6 @@ function btnEvent(){
 		if(null_status == 0){
 			$.messager.alert('提示','查询条件为空,请输入查询条件!','warning');
 		}else{
-			//pagination();
 			$('#pagination').pagination({
 				pageNumber:1,
 				pageSize:5
@@ -720,8 +718,7 @@ function getBaseInfoObj(type){
 		var $this = $(this);
 		var search_data = getSearchData($this);//获取单个查询条件数据
 		var field = $this.attr('field');
-		var multi_condition = [];
-		if(search_data[1]){
+		if(search_data[1] || search_data[0] == 'NL' || search_data[0] == 'NN'){
 			var module_obj = {
 				k : field,
 				v : search_data[1],
@@ -741,8 +738,8 @@ function getSearchData($this){
 	var input_type = $this.attr('input_type');
 	var input = $this.find('.condition');
 	data_info[0] = getInputValue($this.find('.judge'),'combobox',false);
-	if(data_info[0] == 'null'){ //为空
-		data_info[1] = 'null';
+	if(data_info[0] == 'NL' || data_info[0] == 'NN'){ //为空,不为空
+		data_info[1] = data_info[0];
 	}else{//不为空
 		if(input_type == 'textbox_org'){
 			var field_time = $this.attr('field_time');
