@@ -1971,7 +1971,7 @@ function getIEVersion() {
 	}).ajaxComplete(function() {loading('close');});*/
 	// ajax默认配置
 	$.ajaxSetup({
-		cache: false, // 禁用cache
+		cache: true, // 启用cache
 		data: {},
 		type: "POST",
 		error: function(jqXHR, textStatus, errorThrown){
@@ -2741,7 +2741,7 @@ var dictFormatter = function(value, row, index) {
 		catch (err) {}
 	}
 	return value;
-}
+};
 
 
 // datagrid中的每页记录数，自动适应屏幕分辨率
