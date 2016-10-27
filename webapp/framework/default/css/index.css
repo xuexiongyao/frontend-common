@@ -168,12 +168,14 @@ em, i {
   bottom: 0;
   width: 100%;
   padding: 10px 0;
-  color: #000;
+  color: #555;
   text-align: center;
-  background: #bbbdbe;
+  background: #d6d8dd;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 30px;
+  font:12px/30px "微软雅黑";
 }
 /* line 44, ../sass/scjz/_index.scss */
 .mainContainer .boxes li a .boxTitle .boxText {
@@ -198,9 +200,9 @@ em, i {
   overflow: hidden;
 }
 /* line 65, ../sass/scjz/_index.scss */
-.mainContainer .boxes li a img {
+/*.mainContainer .boxes li a img {
   margin-top: 26px;
-}
+}*/
 /* line 68, ../sass/scjz/_index.scss */
 .mainContainer .boxes li a .textBox {
   width: 100%;
@@ -254,8 +256,14 @@ em, i {
 }
 /* line 111, ../sass/scjz/_index.scss */
 .mainContainer .s-squareBox {
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  opacity: 0.83;
+}
+.mainContainer .s-squareBox img {
+  width:70%;
+  height: 70%;
 }
 /* line 116, ../sass/scjz/_index.scss */
 .mainContainer .s-squareBox img {
@@ -263,35 +271,52 @@ em, i {
 }
 /* line 120, ../sass/scjz/_index.scss */
 .mainContainer .d-squareBox {
-  width: 300px;
-  height: 140px;
+  width: 200px;
+  height: 100px;
+  background-color: #fff;
+  opacity: 0.83;
 }
 /* line 125, ../sass/scjz/_index.scss */
 .mainContainer .d-squareBox img {
-  margin-top: 26px;
+  max-height:70%;
+  max-width: 70%;
+  margin: 5px auto 0 auto;
+  text-align: center;
 }
 /* line 129, ../sass/scjz/_index.scss */
 .mainContainer .q-squareBox {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
 }
 /* line 132, ../sass/scjz/_index.scss */
 .mainContainer .q-squareBox img {
-  margin-top: 100px;
+  max-width:70%;
+  max-height: 70%;
+  margin: 50px auto 0 auto;
+  text-align: center;
 }
 /* line 136, ../sass/scjz/_index.scss */
 .mainContainer .sx-squareBox {
-  width: 460px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
 }
 /* line 139, ../sass/scjz/_index.scss */
 .mainContainer .sx-squareBox img {
-  margin-top: 100px;
+  max-width:70%;
+  max-height: 70%;
+  margin: 50px auto 0 auto;
+  text-align: center;
 }
 /* line 143, ../sass/scjz/_index.scss */
 .mainContainer .eg-squareBox {
-  width: 620px;
-  height: 300px;
+  width: 516px;
+  height: 308px;
+}
+.mainContainer .eg-squareBox img {
+  max-width:70%;
+  max-height: 70%;
+  margin: 100px auto 0 auto;
+  text-align: center;
 }
 /* line 146, ../sass/scjz/_index.scss */
 .mainContainer .eg-squareBox img {
@@ -299,28 +324,28 @@ em, i {
 }
 /* line 150, ../sass/scjz/_index.scss */
 .mainContainer .hf-squareBox {
-  width: 140px;
-  height: 60px;
+  width: 100px;
+  height: 50px;
 }
 /* line 153, ../sass/scjz/_index.scss */
 .mainContainer .hf-squareBox img {
-  height: 35px;
-  margin-top: 16px;
+  max-width:70%;
+  max-height: 70%;
 }
 /* line 158, ../sass/scjz/_index.scss */
 .mainContainer .fr-squareBox {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
 }
 /* line 161, ../sass/scjz/_index.scss */
 .mainContainer .fr-squareBox img {
-  height: 35px;
-  margin-top: 10px;
+  max-width:70%;
+  max-height: 70%;
 }
 /* line 168, ../sass/scjz/_index.scss */
-.mainContainer .addNewModel a img {
+/*.mainContainer .addNewModel a img {
   margin-top: 42px !important;
-}
+}*/
 
 /* line 143, ../sass/scjz/_index.scss */
 .bgiChange {
