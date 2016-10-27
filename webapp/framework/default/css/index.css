@@ -150,7 +150,6 @@ em, i {
 }
 /* line 20, ../sass/scjz/_index.scss */
 .mainContainer .boxes li {
-  background: url("../images/metro_bgi.png");
   position: relative;
 }
 /* line 25, ../sass/scjz/_index.scss */
@@ -167,7 +166,6 @@ em, i {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 10px 0;
   color: #555;
   text-align: center;
   background: #d6d8dd;
@@ -266,9 +264,9 @@ em, i {
   height: 70%;
 }
 /* line 116, ../sass/scjz/_index.scss */
-.mainContainer .s-squareBox img {
+/*.mainContainer .s-squareBox img {
   margin-top: 26px;
-}
+}*/
 /* line 120, ../sass/scjz/_index.scss */
 .mainContainer .d-squareBox {
   width: 200px;
