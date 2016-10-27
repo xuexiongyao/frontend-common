@@ -48,7 +48,7 @@ function createAdInput(search_config_arr){
 		//生成查询条件输入框
 		createSearchInput(search_config_arr[i]);
 	}
-	addOtherTable();//添加子表查询模块
+	addOtherTable();//添加查询模块
 }
 
 //通过勾选生成查询框
@@ -99,11 +99,11 @@ function createAdInputByCheck(search_config_obj){
 		+'<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
 		+'</div>';
 	$('#advanced_box').append(bottomBtn);*/
-	addOtherTable();//添加子表查询模块
+	addOtherTable();//添加查询模块
 	btnEvent();
 }
 
-//添加子表查询模块
+//添加查询模块
 function addOtherTable(){
 	$('#otherTable').off('click').on('click',function(){
 		openOtherTable(false);
@@ -112,7 +112,7 @@ function addOtherTable(){
 
 //打开多表查询条件
 function openOtherTable(isExport){
-	var title = '添加子表查询条件';
+	var title = '添加查询条件';
 	var text = '确认';
 	var start = 1;
 	var tableArr = [];
@@ -308,7 +308,7 @@ function batchExprot(search_config_obj){
 				isrepeat = true;
 			}
 		}
-		//不存在，添加子表的默认查询条件
+		//不存在，添加的默认查询条件
 		if(!isrepeat){
 			var condition = search_config_obj[k][0];
 
