@@ -111,7 +111,7 @@ label{
 .clear-border{border: 1px solid colors(white);}
 
 //全局蒙层
-#loadingMsk {
+#loadingMsk,.loadingMsk {
     font-family: "SimSun";
     position: fixed;
     z-index: 999999;

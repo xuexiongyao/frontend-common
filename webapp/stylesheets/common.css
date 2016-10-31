@@ -215,7 +215,7 @@ label {
 }
 
 /* line 114, ../sass/sass/_common.scss */
-#loadingMsk {
+#loadingMsk, .loadingMsk {
   font-family: "SimSun";
   position: fixed;
   z-index: 999999;
@@ -226,7 +226,7 @@ label {
   height: 100%;
 }
 /* line 122, ../sass/sass/_common.scss */
-#loadingMsk .loadingPage {
+#loadingMsk .loadingPage, .loadingMsk .loadingPage {
   background: #fff;
   text-align: center;
   width: 300px;
@@ -239,7 +239,7 @@ label {
   margin-top: -50px;
 }
 /* line 132, ../sass/sass/_common.scss */
-#loadingMsk .loadingPage img {
+#loadingMsk .loadingPage img, .loadingMsk .loadingPage img {
   display: inline-block;
   vertical-align: middle;
   *vertical-align: auto;
@@ -247,7 +247,7 @@ label {
   *dispaly: inline;
 }
 /* line 135, ../sass/sass/_common.scss */
-#loadingMsk .loadingPage span {
+#loadingMsk .loadingPage span, .loadingMsk .loadingPage span {
   margin-left: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
