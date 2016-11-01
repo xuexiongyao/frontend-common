@@ -1767,7 +1767,7 @@ SWFUpload.Console.writeLine = function (d) {
             for (var n in this.queueData.files) {
                 queuedFile = this.queueData.files[n];
                 if (queuedFile.uploaded != true && queuedFile.name == file.name) {
-                    var replaceQueueItem = confirm('The file named "' + file.name + '" is already in the queue.\nDo you want to replace the existing item in the queue?');
+                    var replaceQueueItem = confirm('"' + file.name + '" 已经存在。\n您确认要替换存在的文件吗？');
                     if (!replaceQueueItem) {
                         this.cancelUpload(file.id);
                         this.queueData.filesCancelled++;
