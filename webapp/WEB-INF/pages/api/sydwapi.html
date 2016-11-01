@@ -1,0 +1,980 @@
+<!DOCTYPE HTML><html><head><title>SYDWAPI API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/kevinrenskers/raml2html 2.4.0"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>SYDWAPI API documentation <small>version 1.0.0</small></h1><p>http://sydw.jwzh.com:9015/jwzh-sydw</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw_sydwgl" class="panel-title">实有单位管理</h3></div><div class="panel-body"><div class="top-resource-description"><p>实有单位管理</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_update"><span class="parent">/api/sydw/sydwgl</span>/update</a> <span class="methods"><a href="#api_sydw_sydwgl_update_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_update" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>实有单位信息保存</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_update_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_update_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/sydwgl</span>/update</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_update_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_update_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_update_post_request"><h3>Query Parameters</h3><ul><li><strong>sydwAddVO</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.SydwAddVO</p><p><strong>Example</strong>:</p><pre>type is {sydwaddvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_update_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_save"><span class="parent">/api/sydw/sydwgl</span>/save</a> <span class="methods"><a href="#api_sydw_sydwgl_save_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_save" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>实有单位信息保存</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_save_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_save_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/sydwgl</span>/save</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_save_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_save_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_save_get_request"><h3>Query Parameters</h3><ul><li><strong>sydwAddVO</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.SydwAddVO</p><p><strong>Example</strong>:</p><pre>type is {sydwaddvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_save_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_delete"><span class="parent">/api/sydw/sydwgl</span>/delete</a> <span class="methods"><a href="#api_sydw_sydwgl_delete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_delete" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>实有单位信息保存</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_delete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_delete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/sydwgl</span>/delete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_delete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_delete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_delete_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em><p>实有单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>xt_zxyy</strong>: <em>required (string)</em><p>注销原因</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>bz</strong>: <em>(string)</em><p>备注</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_delete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_checkHasDwOnDz"><span class="parent">/api/sydw/sydwgl</span>/checkHasDwOnDz</a> <span class="methods"><a href="#api_sydw_sydwgl_checkHasDwOnDz_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_checkHasDwOnDz" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>验证标准地址上是否有单位存在</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_checkHasDwOnDz_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_checkHasDwOnDz_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/sydwgl</span>/checkHasDwOnDz</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_checkHasDwOnDz_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_checkHasDwOnDz_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_checkHasDwOnDz_get_request"><h3>Query Parameters</h3><ul><li><strong>bzdzIds</strong>: <em>required (string)</em><p>标准地址ids,用&#39;,&#39;分割</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_checkHasDwOnDz_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_queryManagerList"><span class="parent">/api/sydw/sydwgl</span>/queryManagerList</a> <span class="methods"><a href="#api_sydw_sydwgl_queryManagerList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_queryManagerList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>实有单位列表查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_queryManagerList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_queryManagerList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/sydwgl</span>/queryManagerList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_queryManagerList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_queryManagerList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_queryManagerList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.model.SydwDwjbxxb</p><p><strong>Example</strong>:</p><pre>type is {sydwdwjbxxb}</pre></li><li><strong>ymjzbz</strong>: <em>(string)</em><p>java.lang.String</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>bzdzmc</strong>: <em>(string)</em><p>标准地址名称</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_queryManagerList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_exportExcel2003"><span class="parent">/api/sydw/sydwgl</span>/exportExcel2003</a> <span class="methods"><a href="#api_sydw_sydwgl_exportExcel2003_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_exportExcel2003" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>批量导出实有单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_exportExcel2003_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_exportExcel2003_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/sydwgl</span>/exportExcel2003</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_exportExcel2003_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_exportExcel2003_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_exportExcel2003_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>封装的参数值</p><p><strong>Example</strong>:</p><pre>type is {sydwlistvo}</pre></li><li><strong>headNameAryStr</strong>: <em>required (string)</em><p>标题名称数组</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>paramNameAryStr</strong>: <em>required (string)</em><p>参数名称数组</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>checkedIdAryStr</strong>: <em>(string)</em><p>勾选的ID数组</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_exportExcel2003_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_batchDeleteSydw"><span class="parent">/api/sydw/sydwgl</span>/batchDeleteSydw</a> <span class="methods"><a href="#api_sydw_sydwgl_batchDeleteSydw_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_batchDeleteSydw" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>批量注销实有单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_batchDeleteSydw_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_batchDeleteSydw_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/sydwgl</span>/batchDeleteSydw</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_batchDeleteSydw_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_batchDeleteSydw_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_batchDeleteSydw_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em><p>实有单位ID</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>xt_zxyy</strong>: <em>required (string)</em><p>注销原因</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>bz</strong>: <em>(string)</em><p>备注</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_batchDeleteSydw_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_getDwmcByDwid"><span class="parent">/api/sydw/sydwgl</span>/getDwmcByDwid</a> <span class="methods"><a href="#api_sydw_sydwgl_getDwmcByDwid_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_getDwmcByDwid" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据单位id，获取单位名称</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_getDwmcByDwid_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_getDwmcByDwid_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/sydwgl</span>/getDwmcByDwid</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_getDwmcByDwid_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_getDwmcByDwid_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_getDwmcByDwid_get_request"><h3>Query Parameters</h3><ul><li><strong>dwid</strong>: <em>required (string)</em><p>单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_getDwmcByDwid_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>""</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_queryById"><span class="parent">/api/sydw/sydwgl</span>/queryById</a> <span class="methods"><a href="#api_sydw_sydwgl_queryById_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_queryById" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>通过单位id查询实有单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_queryById_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_queryById_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/sydwgl</span>/queryById</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_queryById_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_queryById_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_queryById_get_request"><h3>Query Parameters</h3><ul><li><strong>dwid</strong>: <em>required (string)</em><p>单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_queryById_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwgl_dwxxReuse"><span class="parent">/api/sydw/sydwgl</span>/dwxxReuse</a> <span class="methods"><a href="#api_sydw_sydwgl_dwxxReuse_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_sydwgl_dwxxReuse" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>单位名称复用</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwgl_dwxxReuse_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwgl_dwxxReuse_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/sydwgl</span>/dwxxReuse</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwgl_dwxxReuse_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwgl_dwxxReuse_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwgl_dwxxReuse_post_request"><h3>Query Parameters</h3><ul><li><strong>dwmc</strong>: <em>required (string)</em><p>单位名称</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwgl_dwxxReuse_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw" class="panel-title">实有单位提供的原外部接口</h3></div><div class="panel-body"><div class="top-resource-description"><p>实有单位提供的原外部接口</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_bzdz_update"><span class="parent">/api/sydw</span>/bzdz/update</a> <span class="methods"><a href="#api_sydw_bzdz_update_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_bzdz_update" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>据标准地址模块传递的参数，修改实有单位因需求需要冗余的地址相关消息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_bzdz_update_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_bzdz_update_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/bzdz/update</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_bzdz_update_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_bzdz_update_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_bzdz_update_post_request"><h3>Query Parameters</h3><ul><li><strong>bzdzIds</strong>: <em>required (string)</em><p>标准地址ＩＤs, 用&#39;,&#39;分割</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_bzdz_update_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>false</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_getCqdwList"><span class="parent">/api/sydw</span>/getCqdwList</a> <span class="methods"><a href="#api_sydw_getCqdwList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_getCqdwList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询超期数据</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_getCqdwList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_getCqdwList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/getCqdwList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_getCqdwList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_getCqdwList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_getCqdwList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.model.SswhSscqxxb</p><p><strong>Example</strong>:</p><pre>type is {sswhsscqxxb}</pre></li></ul></div><div class="tab-pane" id="api_sydw_getCqdwList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_query_dwmc"><span class="parent">/api/sydw</span>/query/dwmc</a> <span class="methods"><a href="#api_sydw_query_dwmc_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_query_dwmc" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>通过单位名称，模糊查询实有单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_query_dwmc_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_query_dwmc_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/query/dwmc</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_query_dwmc_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_query_dwmc_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_query_dwmc_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>dwmc</strong>: <em>required (string)</em><p>单位名称</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.model.SydwDwjbxxb</p><p><strong>Example</strong>:</p><pre>type is {sydwdwjbxxb}</pre></li></ul></div><div class="tab-pane" id="api_sydw_query_dwmc_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_query_bzdz"><span class="parent">/api/sydw</span>/query/bzdz</a> <span class="methods"><a href="#api_sydw_query_bzdz_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_query_bzdz" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据标准地址，查询并返回实有单位信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_query_bzdz_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_query_bzdz_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/query/bzdz</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_query_bzdz_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_query_bzdz_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_query_bzdz_post_request"><h3>Query Parameters</h3><ul><li><strong>bzdzId</strong>: <em>required (string)</em><p>标准地址ID</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_query_bzdz_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_query_downlist"><span class="parent">/api/sydw</span>/query/downlist</a> <span class="methods"><a href="#api_sydw_query_downlist_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_query_downlist" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>返回单位下拉列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_query_downlist_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_query_downlist_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/query/downlist</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_query_downlist_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_query_downlist_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_query_downlist_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>dwmc</strong>: <em>(string)</em><p>java.lang.String</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.model.SydwDwjbxxb</p><p><strong>Example</strong>:</p><pre>type is {sydwdwjbxxb}</pre></li></ul></div><div class="tab-pane" id="api_sydw_query_downlist_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_querySydwWithDwdzDownlist"><span class="parent">/api/sydw</span>/querySydwWithDwdzDownlist</a> <span class="methods"><a href="#api_sydw_querySydwWithDwdzDownlist_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_querySydwWithDwdzDownlist" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>返回单位地址下拉列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_querySydwWithDwdzDownlist_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_querySydwWithDwdzDownlist_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/querySydwWithDwdzDownlist</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_querySydwWithDwdzDownlist_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_querySydwWithDwdzDownlist_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_querySydwWithDwdzDownlist_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>dwmc</strong>: <em>required (string)</em><p>单位名称</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_querySydwWithDwdzDownlist_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_bzdz_delete"><span class="parent">/api/sydw</span>/bzdz/delete</a> <span class="methods"><a href="#api_sydw_bzdz_delete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_bzdz_delete" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据标志地址注销实有单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_bzdz_delete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_bzdz_delete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/bzdz/delete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_bzdz_delete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_bzdz_delete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_bzdz_delete_post_request"><h3>Query Parameters</h3><ul><li><strong>bzdzIds</strong>: <em>required (string)</em><p>标准地址IDs,用‘，’分开</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_bzdz_delete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>false</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_query_bzdz_easyui"><span class="parent">/api/sydw</span>/query/bzdz/easyui</a> <span class="methods"><a href="#api_sydw_query_bzdz_easyui_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_query_bzdz_easyui" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>据标准地址查询实有单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_query_bzdz_easyui_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_query_bzdz_easyui_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/query/bzdz/easyui</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_query_bzdz_easyui_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_query_bzdz_easyui_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_query_bzdz_easyui_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>bzdzId</strong>: <em>required (string)</em><p>标准地址ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_query_bzdz_easyui_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_query_jyzQuery"><span class="parent">/api/sydw</span>/query/jyzQuery</a> <span class="methods"><a href="#api_sydw_query_jyzQuery_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_query_jyzQuery" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据人员编号查询加油站</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_query_jyzQuery_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_query_jyzQuery_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/query/jyzQuery</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_query_jyzQuery_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_query_jyzQuery_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_query_jyzQuery_post_request"><h3>Query Parameters</h3><ul><li><strong>rownum</strong>: <em>required (number)</em><p>每页记录条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>page</strong>: <em>required (number)</em><p>页码</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>rybh</strong>: <em>required (string)</em><p>人员编号</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_query_jyzQuery_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_queryDjcdwPageList"><span class="parent">/api/sydw</span>/queryDjcdwPageList</a> <span class="methods"><a href="#api_sydw_queryDjcdwPageList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_queryDjcdwPageList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询待检查的单位分页信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_queryDjcdwPageList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_queryDjcdwPageList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/queryDjcdwPageList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_queryDjcdwPageList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_queryDjcdwPageList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_queryDjcdwPageList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.vo.SydwListVO</p><p><strong>Example</strong>:</p><pre>type is {sydwlistvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_queryDjcdwPageList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_insert_szqyjyry"><span class="parent">/api/sydw</span>/insert/szqyjyry</a> <span class="methods"><a href="#api_sydw_insert_szqyjyry_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_insert_szqyjyry" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>提供给散装汽油加油系统调用服务</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_insert_szqyjyry_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_insert_szqyjyry_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/insert/szqyjyry</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_insert_szqyjyry_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_insert_szqyjyry_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_insert_szqyjyry_post_request"><h3>Query Parameters</h3><ul><li><strong>request</strong>: <em>(string)</em><p>javax.servlet.http.HttpServletRequest</p><p><strong>Example</strong>:</p><pre>type is {httpservletrequest}</pre></li><li><strong>response</strong>: <em>(string)</em><p>javax.servlet.http.HttpServletResponse</p><p><strong>Example</strong>:</p><pre>type is {httpservletresponse}</pre></li></ul></div><div class="tab-pane" id="api_sydw_insert_szqyjyry_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>""</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_querySydwComboxPagination"><span class="parent">/api/sydw</span>/querySydwComboxPagination</a> <span class="methods"><a href="#api_sydw_querySydwComboxPagination_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_querySydwComboxPagination" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>获取带分页功能的combobox列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_querySydwComboxPagination_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_querySydwComboxPagination_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw</span>/querySydwComboxPagination</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_querySydwComboxPagination_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_querySydwComboxPagination_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_querySydwComboxPagination_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>dwmc</strong>: <em>required (string)</em><p>单位名称</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_querySydwComboxPagination_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_queryDjcdwNum"><span class="parent">/api/sydw</span>/queryDjcdwNum</a> <span class="methods"><a href="#api_sydw_queryDjcdwNum_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_queryDjcdwNum" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>统计待检查的单位总和</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_queryDjcdwNum_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_queryDjcdwNum_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw</span>/queryDjcdwNum</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_queryDjcdwNum_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_queryDjcdwNum_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_queryDjcdwNum_get_request"><h3>Query Parameters</h3><ul><li><strong>gldj</strong>: <em>required (string)</em><p>管理等级</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_queryDjcdwNum_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>0</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_queryDwdzByDwid"><span class="parent">/api/sydw</span>/queryDwdzByDwid</a> <span class="methods"><a href="#api_sydw_queryDwdzByDwid_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_queryDwdzByDwid" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询单位对应的地址列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_queryDwdzByDwid_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_queryDwdzByDwid_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw</span>/queryDwdzByDwid</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_queryDwdzByDwid_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_queryDwdzByDwid_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_queryDwdzByDwid_get_request"><h3>Query Parameters</h3><ul><li><strong>dwid</strong>: <em>required (string)</em><p>单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_queryDwdzByDwid_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_getRemainedDays"><span class="parent">/api/sydw</span>/getRemainedDays</a> <span class="methods"><a href="#api_sydw_getRemainedDays_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_getRemainedDays" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>统计待检查的单位剩余的检查天数</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_getRemainedDays_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_getRemainedDays_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw</span>/getRemainedDays</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_getRemainedDays_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_getRemainedDays_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_getRemainedDays_get_request"><h3>Query Parameters</h3><ul><li><strong>gldj</strong>: <em>required (string)</em><p>管理等级</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_getRemainedDays_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>0</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw_sydwCombo" class="panel-title">单位动态字典管理</h3></div><div class="panel-body"><div class="top-resource-description"><p>单位动态字典管理</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwCombo_queryDownListComboBoxByParentCode"><span class="parent">/api/sydw/sydwCombo</span>/queryDownListComboBoxByParentCode</a> <span class="methods"><a href="#api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_sydwCombo_queryDownListComboBoxByParentCode" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询当前用户下指定等级的组织机构列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/sydwCombo</span>/queryDownListComboBoxByParentCode</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get_request"><h3>Query Parameters</h3><ul><li><strong>orgCode</strong>: <em>(string)</em><p>组织机构代码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>orgLevel</strong>: <em>(string)</em><p>组织机构等级</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>orgType</strong>: <em>(string)</em><p>组织机构类型</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>orgBizType</strong>: <em>(string)</em><p>组织机构业务类型</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwCombo_queryDownListComboBoxByParentCode_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+
+    {
+        "id": "511011210000",
+        "text": "永兴派出所",
+        "py": null
+    },
+    {
+        "id": "511011400000",
+        "text": "东兴派出所",
+        "py": null
+    },
+    {
+        "id": "511011410000",
+        "text": "西林派出所",
+        "py": null
+    },
+    {
+        "id": "511011420000",
+        "text": "桐梓坝派出所",
+        "py": null
+    },
+    {
+        "id": "511011430000",
+        "text": "新江派出所",
+        "py": null
+    },
+    {
+        "id": "511011440000",
+        "text": "胜利派出所",
+        "py": null
+    },
+    {
+        "id": "511011450000",
+        "text": "双才派出所",
+        "py": null
+    },
+    {
+        "id": "511011460000",
+        "text": "同福派出所",
+        "py": null
+    },
+    {
+        "id": "511011470000",
+        "text": "三烈派出所",
+        "py": null
+    },
+    {
+        "id": "511011480000",
+        "text": "富溪派出所",
+        "py": null
+    },
+    {
+        "id": "511011490000",
+        "text": "双桥派出所",
+        "py": null
+    },
+    {
+        "id": "511011500000",
+        "text": "新店派出所",
+        "py": null
+    },
+    {
+        "id": "511011510000",
+        "text": "高梁派出所",
+        "py": null
+    },
+    {
+        "id": "511011520000",
+        "text": "大治派出所",
+        "py": null
+    },
+    {
+        "id": "511011530000",
+        "text": "永福派出所",
+        "py": null
+    },
+    {
+        "id": "511011540000",
+        "text": "太安派出所",
+        "py": null
+    },
+    {
+        "id": "511011550000",
+        "text": "田家派出所",
+        "py": null
+    },
+    {
+        "id": "511011560000",
+        "text": "高桥派出所",
+        "py": null
+    },
+    {
+        "id": "511011570000",
+        "text": "柳桥派出所",
+        "py": null
+    },
+    {
+        "id": "511011580000",
+        "text": "白合派出所",
+        "py": null
+    },
+    {
+        "id": "511011590000",
+        "text": "杨家派出所",
+        "py": null
+    },
+    {
+        "id": "511011600000",
+        "text": "苏家派出所",
+        "py": null
+    },
+    {
+        "id": "511011610000",
+        "text": "石子派出所",
+        "py": null
+    },
+    {
+        "id": "511011620000",
+        "text": "顺河派出所",
+        "py": null
+    },
+    {
+        "id": "511011630000",
+        "text": "平坦派出所",
+        "py": null
+    },
+    {
+        "id": "511011650000",
+        "text": "郭北派出所",
+        "py": null
+    },
+    {
+        "id": "511011660000",
+        "text": "小河口派出所",
+        "py": null
+    },
+    {
+        "id": "511011670000",
+        "text": "碑木派出所",
+        "py": null
+    },
+    {
+        "id": "511011680000",
+        "text": "碑南派出所",
+        "py": null
+    },
+    {
+        "id": "511011690000",
+        "text": "中山派出所",
+        "py": null
+    }
+
+]
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_sydwCombo_ryjcDwdzCombobx"><span class="parent">/api/sydw/sydwCombo</span>/ryjcDwdzCombobx</a> <span class="methods"><a href="#api_sydw_sydwCombo_ryjcDwdzCombobx_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_sydwCombo_ryjcDwdzCombobx" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>日常检查模块查询单位地址下拉列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_sydwCombo_ryjcDwdzCombobx_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_sydwCombo_ryjcDwdzCombobx_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/sydwCombo</span>/ryjcDwdzCombobx</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_sydwCombo_ryjcDwdzCombobx_get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_sydwCombo_ryjcDwdzCombobx_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_sydwCombo_ryjcDwdzCombobx_get_request"><h3>Query Parameters</h3><ul><li><strong>dwid</strong>: <em>required (string)</em><p>单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_sydwCombo_ryjcDwdzCombobx_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+
+    {
+        "id": "e46f5779f0874f96911eb0dd22fbc300",
+        "text": "四川省内江市东兴区平安路164号1栋2单元",
+        "py": null
+    },
+    {
+        "id": "5664165917334bc8a50973f437049826",
+        "text": "四川省内江市东兴区中兴路120号1栋1单元",
+        "py": null
+    }
+
+]
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw_cyrygl" class="panel-title">从业人员管理</h3></div><div class="panel-body"><div class="top-resource-description"><p>从业人员管理</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_delete"><span class="parent">/api/sydw/cyrygl</span>/delete</a> <span class="methods"><a href="#api_sydw_cyrygl_delete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_delete" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>注销从业人员</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_delete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_delete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/delete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_delete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_delete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_delete_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em><p>从业人员ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>xt_zxyy</strong>: <em>required (string)</em><p>注销原因</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>bz</strong>: <em>(string)</em><p>备注</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>dwid</strong>: <em>(string)</em><p>实有单位ID</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_delete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>false</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_queryManagerList"><span class="parent">/api/sydw/cyrygl</span>/queryManagerList</a> <span class="methods"><a href="#api_sydw_cyrygl_queryManagerList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_queryManagerList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询从业人员列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_queryManagerList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_queryManagerList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/queryManagerList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_queryManagerList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_queryManagerList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_queryManagerList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>当前页码</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录条数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.model.SydwCyryxxb</p><p><strong>Example</strong>:</p><pre>type is {sydwcyryxxb}</pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_queryManagerList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+
+    "page": 1,
+    "begin": 0,
+    "end": 2,
+    "total": 107,
+    "sort": null,
+    "order": null,
+    "rownum": 0,
+    "rows": [
+        {
+            "xt_cjsj": "2016-10-20 16:51:37",
+            "xt_lrsj": "2016-10-20 16:51:37",
+            "xt_lrrxm": "朱世杰",
+            "xt_lrrid": "510102196802144336",
+            "xt_lrrbm": "内江市公安局东兴区分局东兴派出所大千责任区",
+            "xt_lrrbmid": "5110114000002012082402422",
+            "xt_lrip": null,
+            "xt_zhxgsj": "2016-10-28 17:55:51",
+            "xt_zhxgrxm": "朱世杰",
+            "xt_zhxgrid": "510102196802144336",
+            "xt_zhxgrbm": "内江市公安局东兴区分局东兴派出所大千责任区",
+            "xt_zhxgrbmid": "5110114000002012082402422",
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "98829c4339904c9e83701b13dc08953b",
+            "jzd_zbx": "0.000",
+            "jzd_zby": "0.000",
+            "dwid": "7e2b48c9e47a4d6aac96a0eed445a177",
+            "ryid": null,
+            "zjlxdm": "111",
+            "zjhm": "511025201410258784",
+            "xm": "夏语欣",
+            "csrq": 1477584000000,
+            "xb": "2",
+            "gjdm": "156",
+            "jgdm": "511025",
+            "lxdh": "18000000000",
+            "jzd_xzqhdm": "511011",
+            "jzd_dzxz": "四川省内江市东兴区江家街10号1栋1单元4楼1号",
+            "szbm": null,
+            "szgw": null,
+            "zwlbdm": "30",
+            "bgzksrq": null,
+            "bgzjsrq": null,
+            "sjly": null,
+            "rybh": null,
+            "dz_dwdzdm": null,
+            "dz_dwdzssxdm": null,
+            "dz_dwdzxz": null,
+            "dz_dwdzmlpdm": null,
+            "dz_dwdzmlpxz": null,
+            "cjrlbdm": "02",
+            "cjyjdm": "08",
+            "bmjb": null,
+            "scbj": null,
+            "xzbj": null,
+            "bz": null,
+            "jzd_mlpdm": null,
+            "jzd_mlpxz": null,
+            "jzd_dzid": "511011400000201409251815119629",
+            "dwmc": "大概",
+            "dwfl": "10300,10500",
+            "dwdzmc": "四川省内江市东兴区江家街10号1栋1单元",
+            "bgrq": null,
+            "mzdm": "01",
+            "kyjx": null,
+            "kyxw": null,
+            "ldrkid": null,
+            "sfclsyrk": "0",
+            "sfztry": "0",
+            "sjdm": null,
+            "ssfjdm": null,
+            "sspcsdm": null,
+            "sszrqdm": null,
+            "cygj_qrbz": "0",
+            "dwdzid": "511011400000201409251815119625",
+            "dwdzxz": "四川省内江市东兴区江家街10号1栋1单元",
+            "maxnum": null
+        },
+        {
+            "xt_cjsj": "2016-10-19 17:07:57",
+            "xt_lrsj": "2016-10-19 17:07:57",
+            "xt_lrrxm": "朱世杰",
+            "xt_lrrid": "510102196802144336",
+            "xt_lrrbm": "内江市公安局东兴区分局东兴派出所大千责任区",
+            "xt_lrrbmid": "5110114000002012082402422",
+            "xt_lrip": null,
+            "xt_zhxgsj": "2016-10-20 16:50:27",
+            "xt_zhxgrxm": "朱世杰",
+            "xt_zhxgrid": "510102196802144336",
+            "xt_zhxgrbm": "内江市公安局东兴区分局东兴派出所大千责任区",
+            "xt_zhxgrbmid": "5110114000002012082402422",
+            "xt_zhxgip": null,
+            "xt_zxbz": "1",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "c28591c9574f4fd0b4c3a699939d6cbb",
+            "jzd_zbx": null,
+            "jzd_zby": null,
+            "dwid": "7e2b48c9e47a4d6aac96a0eed445a177",
+            "ryid": null,
+            "zjlxdm": "111",
+            "zjhm": "511025201410258784",
+            "xm": "夏语欣",
+            "csrq": 1414166400000,
+            "xb": "2",
+            "gjdm": "156",
+            "jgdm": "511025",
+            "lxdh": "18000000000",
+            "jzd_xzqhdm": null,
+            "jzd_dzxz": null,
+            "szbm": null,
+            "szgw": null,
+            "zwlbdm": "20",
+            "bgzksrq": null,
+            "bgzjsrq": null,
+            "sjly": null,
+            "rybh": null,
+            "dz_dwdzdm": null,
+            "dz_dwdzssxdm": null,
+            "dz_dwdzxz": null,
+            "dz_dwdzmlpdm": null,
+            "dz_dwdzmlpxz": null,
+            "cjrlbdm": "02",
+            "cjyjdm": "07",
+            "bmjb": null,
+            "scbj": null,
+            "xzbj": null,
+            "bz": null,
+            "jzd_mlpdm": null,
+            "jzd_mlpxz": null,
+            "jzd_dzid": null,
+            "dwmc": "大概",
+            "dwfl": "10300,10500",
+            "dwdzmc": "四川省内江市东兴区江家街10号1栋1单元",
+            "bgrq": null,
+            "mzdm": "01",
+            "kyjx": null,
+            "kyxw": null,
+            "ldrkid": null,
+            "sfclsyrk": "0",
+            "sfztry": "0",
+            "sjdm": null,
+            "ssfjdm": null,
+            "sspcsdm": null,
+            "sszrqdm": null,
+            "cygj_qrbz": "0",
+            "dwdzid": "511011400000201409251815119625",
+            "dwdzxz": "四川省内江市东兴区江家街10号1栋1单元",
+            "maxnum": null
+        }
+    ],
+    "flag": null,
+    "pagePara": null
+
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_exportExcel2003"><span class="parent">/api/sydw/cyrygl</span>/exportExcel2003</a> <span class="methods"><a href="#api_sydw_cyrygl_exportExcel2003_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_exportExcel2003" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>从业人员批量导出</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_exportExcel2003_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_exportExcel2003_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/exportExcel2003</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_exportExcel2003_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_exportExcel2003_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_exportExcel2003_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>封装的从业人员信息</p><p><strong>Example</strong>:</p><pre>type is {com.founder.sydwgl.base.model.SydwCyryxxb}</pre></li><li><strong>headNameAryStr</strong>: <em>required (string)</em><p>标题名称数组</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>paramNameAryStr</strong>: <em>required (string)</em><p>参数数组</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>checkedIdAryStr</strong>: <em>(string)</em><p>选中的ID数组</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_exportExcel2003_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_batchDeleteCyry"><span class="parent">/api/sydw/cyrygl</span>/batchDeleteCyry</a> <span class="methods"><a href="#api_sydw_cyrygl_batchDeleteCyry_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_batchDeleteCyry" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>批量注销从业人员</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_batchDeleteCyry_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_batchDeleteCyry_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/batchDeleteCyry</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_batchDeleteCyry_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_batchDeleteCyry_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_batchDeleteCyry_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em><p>从业人员ID</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>xt_zxyy</strong>: <em>required (string)</em><p>注销原因</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>bz</strong>: <em>(string)</em><p>备注信息</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_batchDeleteCyry_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+
+    "message": "删除数据成功",
+    "status": "success"
+
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_bwfzr__sydwId_"><span class="parent">/api/sydw/cyrygl</span>/bwfzr/{sydwId}</a> <span class="methods"><a href="#api_sydw_cyrygl_bwfzr__sydwId__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_bwfzr__sydwId_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>验证保卫负责人是否存在</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_bwfzr__sydwId__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_bwfzr__sydwId__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/bwfzr/{sydwId}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_bwfzr__sydwId__post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_bwfzr__sydwId__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_bwfzr__sydwId__post_request"><h3>URI Parameters</h3><ul><li><strong>sydwId</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>sydwId</strong>: <em>required (string)</em><p>实有单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>cyryId</strong>: <em>required (string)</em><p>从业人员ID</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_bwfzr__sydwId__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>1
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_fddbr__sydwId_"><span class="parent">/api/sydw/cyrygl</span>/fddbr/{sydwId}</a> <span class="methods"><a href="#api_sydw_cyrygl_fddbr__sydwId__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_fddbr__sydwId_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>验证法定代表人是否存在</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_fddbr__sydwId__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_fddbr__sydwId__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/fddbr/{sydwId}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_fddbr__sydwId__post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_fddbr__sydwId__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_fddbr__sydwId__post_request"><h3>URI Parameters</h3><ul><li><strong>sydwId</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>sydwId</strong>: <em>required (string)</em><p>单位ID</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>cyryId</strong>: <em>required (string)</em><p>从业人员ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_fddbr__sydwId__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>1
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyrygl_updateCyry"><span class="parent">/api/sydw/cyrygl</span>/updateCyry</a> <span class="methods"><a href="#api_sydw_cyrygl_updateCyry_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyrygl_updateCyry" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>从业人员信息修改</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyrygl_updateCyry_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyrygl_updateCyry_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyrygl</span>/updateCyry</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyrygl_updateCyry_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyrygl_updateCyry_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyrygl_updateCyry_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>glxxVO={&#39;cyryxxb&#39;:{&#39;dwid&#39;:&#39;7e2b48c9e47a4d6aac96a0eed445a177&#39;,&#39;id&#39;:&#39;98829c4339904c9e83701b13dc08953b&#39;,&#39;ldrkid&#39;:&#39;&#39;,&#39;zjlxdm&#39;:&#39;111&#39;,&#39;zjhm&#39;:&#39;511025201410258784&#39;,&#39;xm&#39;:&#39;夏语欣&#39;,&#39;xb&#39;:&#39;2&#39;,&#39;csrq&#39;:&#39;2016-10-28&#39;,&#39;gjdm&#39;:&#39;156&#39;,&#39;jgdm&#39;:&#39;511025&#39;,&#39;zwlbdm&#39;:&#39;30&#39;,&#39;szbm&#39;:&#39;&#39;,&#39;szgw&#39;:&#39;&#39;,&#39;lxdh&#39;:&#39;18000000000&#39;,&#39;bgzksrq&#39;:&#39;&#39;,&#39;bgzjsrq&#39;:&#39;&#39;,&#39;cjyjdm&#39;:&#39;08&#39;,&#39;cjrlbdm&#39;:&#39;02&#39;,&#39;jzd_dzms&#39;:&#39;四川省内江市东兴区江家街10号1栋1单元4楼1号&#39;,&#39;jzd_dzxz&#39;:&#39;四川省内江市东兴区江家街10号1栋1单元4楼1号&#39;,&#39;jzd_xzqhdm&#39;:&#39;511011&#39;,&#39;jzd_mlpdm&#39;:&#39;&#39;,&#39;jzd_mlpxz&#39;:&#39;&#39;,&#39;jzd_dzid&#39;:&#39;511011400000201409251815119629&#39;,&#39;jzd_zbx&#39;:&#39;0.000&#39;,&#39;jzd_zby&#39;:&#39;0.000&#39;,&#39;bz&#39;:&#39;&#39;},&#39;token&#39;:&#39;3bce938e-5948-4365-9872-aecb790ca3f4&#39;} </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyrygl_updateCyry_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message":"更新从业人员成功","status":"success"}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw_cyry" class="panel-title">从业人员模块提供的原外部接口</h3></div><div class="panel-body"><div class="top-resource-description"><p>从业人员模块提供的原外部接口</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_delete__cyryId_"><span class="parent">/api/sydw/cyry</span>/delete/{cyryId}</a> <span class="methods"><a href="#api_sydw_cyry_delete__cyryId__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_delete__cyryId_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>注销从业人员</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_delete__cyryId__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_delete__cyryId__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/delete/{cyryId}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_delete__cyryId__post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_delete__cyryId__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_delete__cyryId__post_request"><h3>URI Parameters</h3><ul><li><strong>cyryId</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>cyryId</strong>: <em>required (string)</em><p>从业人员ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_delete__cyryId__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>false</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_tjcyry__dwid_"><span class="parent">/api/sydw/cyry</span>/tjcyry/{dwid}</a> <span class="methods"><a href="#api_sydw_cyry_tjcyry__dwid__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_tjcyry__dwid_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>统计从业人员数</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_tjcyry__dwid__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_tjcyry__dwid__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/tjcyry/{dwid}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_tjcyry__dwid__post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_tjcyry__dwid__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_tjcyry__dwid__post_request"><h3>URI Parameters</h3><ul><li><strong>dwid</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>dwid</strong>: <em>required (string)</em><p>单位ID</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_tjcyry__dwid__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>0</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_sfcz"><span class="parent">/api/sydw/cyry</span>/sfcz</a> <span class="methods"><a href="#api_sydw_cyry_sfcz_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_sfcz" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>判断该人员是否在某单位</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_sfcz_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_sfcz_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/sfcz</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_sfcz_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_sfcz_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_sfcz_post_request"><h3>Query Parameters</h3><ul><li><strong>zjlxdm</strong>: <em>required (string)</em><p>证件类型</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>zjhm</strong>: <em>required (string)</em><p>证件号码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>dwid</strong>: <em>required (string)</em><p>单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_sfcz_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>false</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_getCyryxx"><span class="parent">/api/sydw/cyry</span>/getCyryxx</a> <span class="methods"><a href="#api_sydw_cyry_getCyryxx_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_getCyryxx" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>获取指定从业人员信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_getCyryxx_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_getCyryxx_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/getCyryxx</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_getCyryxx_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_getCyryxx_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_getCyryxx_post_request"><h3>Query Parameters</h3><ul><li><strong>zjhm</strong>: <em>required (string)</em><p>证件号码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>zjlx</strong>: <em>required (string)</em><p>证件类型</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_getCyryxx_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_getCyryxx_jzdz"><span class="parent">/api/sydw/cyry</span>/getCyryxx/jzdz</a> <span class="methods"><a href="#api_sydw_cyry_getCyryxx_jzdz_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_getCyryxx_jzdz" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据zjlx,zjhm,居住地址ID或居住地详址查询从业人员</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_getCyryxx_jzdz_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_getCyryxx_jzdz_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/getCyryxx/jzdz</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_getCyryxx_jzdz_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_getCyryxx_jzdz_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_getCyryxx_jzdz_post_request"><h3>Query Parameters</h3><ul><li><strong>zjhm</strong>: <em>required (string)</em><p>证件号码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>zjlx</strong>: <em>required (string)</em><p>证件类型</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>jzdzid</strong>: <em>(string)</em><p>居住地地址</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>jzdzxz</strong>: <em>(string)</em><p>居住地详址</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_getCyryxx_jzdz_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_cyrygj"><span class="parent">/api/sydw/cyry</span>/cyrygj</a> <span class="methods"><a href="#api_sydw_cyry_cyrygj_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_cyrygj" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询从业轨迹</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_cyrygj_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_cyrygj_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/cyrygj</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_cyrygj_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_cyrygj_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_cyrygj_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>当前页码</p><p><strong>Example</strong>:</p><pre>type is {com.founder.framework.utils.EasyUIPage}</pre></li><li><strong>rows</strong>: <em>required (string)</em><p>每页返回记录数</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>zjlxdm</strong>: <em>required (string)</em><p>证件类型代码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>zjhm</strong>: <em>required (string)</em><p>证件号码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>xt_zxbz</strong>: <em>(string)</em><p>注销标志</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_cyrygj_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_cyry_markCyrywzyrk"><span class="parent">/api/sydw/cyry</span>/markCyrywzyrk</a> <span class="methods"><a href="#api_sydw_cyry_markCyrywzyrk_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_cyry_markCyrywzyrk" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据czlx,更新从业人员信息（供实有人口调用）</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_cyry_markCyrywzyrk_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_cyry_markCyrywzyrk_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/cyry</span>/markCyrywzyrk</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_cyry_markCyrywzyrk_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_cyry_markCyrywzyrk_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_cyry_markCyrywzyrk_post_request"><h3>Query Parameters</h3><ul><li><strong>zjhm</strong>: <em>required (string)</em><p>证件号码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>zjlx</strong>: <em>required (string)</em><p>证件类型</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>gxdw</strong>: <em>required (string)</em><p>管辖单位</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>czlx</strong>: <em>required (string)</em><p>操作类型，add 或者delete</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_cyry_markCyrywzyrk_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>""</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw_glxx" class="panel-title">单位关联信息管理</h3></div><div class="panel-body"><div class="top-resource-description"><p>单位关联信息管理</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_update"><span class="parent">/api/sydw/glxx</span>/update</a> <span class="methods"><a href="#api_sydw_glxx_update_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_update" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>关联信息修改</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_update_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_update_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/update</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_update_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_update_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_update_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_update_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_save"><span class="parent">/api/sydw/glxx</span>/save</a> <span class="methods"><a href="#api_sydw_glxx_save_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_save" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>关联信息保存</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_save_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_save_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/save</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_save_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_save_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_save_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_save_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_queryCount"><span class="parent">/api/sydw/glxx</span>/queryCount</a> <span class="methods"><a href="#api_sydw_glxx_queryCount_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_queryCount" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询指定关联类型的数量</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_queryCount_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_queryCount_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/queryCount</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_queryCount_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_queryCount_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_queryCount_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_queryCount_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_queryPageList"><span class="parent">/api/sydw/glxx</span>/queryPageList</a> <span class="methods"><a href="#api_sydw_glxx_queryPageList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_queryPageList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询关联信息的分页列表</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_queryPageList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_queryPageList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/queryPageList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_queryPageList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_queryPageList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_queryPageList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>当前页数</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_queryPageList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx__entityName_"><span class="parent">/api/sydw/glxx</span>/{entityName}</a> <span class="methods"><a href="#api_sydw_glxx__entityName__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx__entityName_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>关联信息查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx__entityName__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx__entityName__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/{entityName}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx__entityName__post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx__entityName__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx__entityName__post_request"><h3>URI Parameters</h3><ul><li><strong>entityName</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>entityName</strong>: <em>required (string)</em><p>实体名称</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>glxxId</strong>: <em>required (string)</em><p>关联信息ID</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx__entityName__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_saveCyry"><span class="parent">/api/sydw/glxx</span>/saveCyry</a> <span class="methods"><a href="#api_sydw_glxx_saveCyry_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_saveCyry" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>从业人员信息保存</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_saveCyry_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_saveCyry_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/saveCyry</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_saveCyry_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_saveCyry_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_saveCyry_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_saveCyry_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_delete"><span class="parent">/api/sydw/glxx</span>/delete</a> <span class="methods"><a href="#api_sydw_glxx_delete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_delete" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>关联信息查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_delete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_delete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/delete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_delete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_delete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_delete_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li><li><strong>deleteType</strong>: <em>required (string)</em><p>java.lang.String</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_delete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_saveJwry"><span class="parent">/api/sydw/glxx</span>/saveJwry</a> <span class="methods"><a href="#api_sydw_glxx_saveJwry_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_saveJwry" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>警务人员信息保存</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_saveJwry_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_saveJwry_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/saveJwry</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_saveJwry_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_saveJwry_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_saveJwry_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_saveJwry_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_hasPrivilege"><span class="parent">/api/sydw/glxx</span>/hasPrivilege</a> <span class="methods"><a href="#api_sydw_glxx_hasPrivilege_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_hasPrivilege" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>检查当前用户的权限</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_hasPrivilege_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_hasPrivilege_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/hasPrivilege</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_hasPrivilege_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_hasPrivilege_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_hasPrivilege_post_request"><h3>Query Parameters</h3><ul><li><strong>lrrbmdm</strong>: <em>(string)</em><p>录入人部门代码</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>dwid</strong>: <em>required (string)</em><p>单位ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_hasPrivilege_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>""</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_saveRcjc"><span class="parent">/api/sydw/glxx</span>/saveRcjc</a> <span class="methods"><a href="#api_sydw_glxx_saveRcjc_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_saveRcjc" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>保存日常检查信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_saveRcjc_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_saveRcjc_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/saveRcjc</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_saveRcjc_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_saveRcjc_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_saveRcjc_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_saveRcjc_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_queryFddbrPageList"><span class="parent">/api/sydw/glxx</span>/queryFddbrPageList</a> <span class="methods"><a href="#api_sydw_glxx_queryFddbrPageList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_queryFddbrPageList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询法定代表人轨迹列表信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_queryFddbrPageList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_queryFddbrPageList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/queryFddbrPageList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_queryFddbrPageList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_queryFddbrPageList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_queryFddbrPageList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>当前页数</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>每页记录数</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_queryFddbrPageList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"begin":0,"end":0,"page":1,"rownum":20,"rows":[],"total":0}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_glxx_saveCygj"><span class="parent">/api/sydw/glxx</span>/saveCygj</a> <span class="methods"><a href="#api_sydw_glxx_saveCygj_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_glxx_saveCygj" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>保存从业轨迹信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_glxx_saveCygj_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_glxx_saveCygj_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/glxx</span>/saveCygj</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_glxx_saveCygj_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_glxx_saveCygj_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_glxx_saveCygj_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.vo.GlxxVO</p><p><strong>Example</strong>:</p><pre>type is {glxxvo}</pre></li></ul></div><div class="tab-pane" id="api_sydw_glxx_saveCygj_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_sydw_szqyjyrygl" class="panel-title">散装汽油加油人员管理</h3></div><div class="panel-body"><div class="top-resource-description"><p>散装汽油加油人员管理</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_szqyjyrygl_queryManagerList"><span class="parent">/api/sydw/szqyjyrygl</span>/queryManagerList</a> <span class="methods"><a href="#api_sydw_szqyjyrygl_queryManagerList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_szqyjyrygl_queryManagerList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>散装汽油加油人员列表查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_szqyjyrygl_queryManagerList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_szqyjyrygl_queryManagerList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/szqyjyrygl</span>/queryManagerList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_szqyjyrygl_queryManagerList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_szqyjyrygl_queryManagerList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_szqyjyrygl_queryManagerList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>com.founder.framework.utils.EasyUIPage</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (number)</em><p>java.lang.Integer</p><p><strong>Example</strong>:</p><pre><code>0 </code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>com.founder.sydwgl.base.model.SydwSzqyjyry</p><p><strong>Example</strong>:</p><pre>type is {sydwszqyjyry}</pre></li></ul></div><div class="tab-pane" id="api_sydw_szqyjyrygl_queryManagerList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+
+    "page": 1,
+    "begin": 0,
+    "end": 5,
+    "total": 435379,
+    "sort": null,
+    "order": null,
+    "rownum": 0,
+    "rows": [
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201504241644455504",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "自贡市公安局汇东新区分局板仓派出所",
+            "gyxxzt": "1",
+            "cyryxm": "倪念勤",
+            "cyrysfzh": "510322198805300424",
+            "cyrydh": null,
+            "jzrksj": 1429865085000,
+            "dwid": "510398430000201309012001042037",
+            "ryid": "511722411000201205050058020344",
+            "syrkid": null,
+            "ytjbh": "018821000861",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "510398430000",
+            "bzx": null,
+            "cyryid": 35083,
+            "sfzzpid": "500000560",
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "513022199506015253",
+            "xm": "张春林",
+            "xb": "1",
+            "mz": "01",
+            "xjd": null,
+            "csrq": 801936000000,
+            "hjd": "四川省宣汉县厂溪乡老林村1组55号",
+            "lxfs": "13550756761",
+            "gmsl": 16,
+            "gmlx": "2",
+            "gmrq": 801936000000,
+            "gmyt": "4",
+            "gmdw": null,
+            "gm_rq": "3",
+            "jtgj": "3",
+            "pzh": null,
+            "sfwxjdqsf": "0",
+            "jyzmc": "自贡市宏忠贸易有限公司平安加油站",
+            "jyzbh": "51039809036",
+            "jyzdz": "四川省自贡市汇东新区板仓路129号",
+            "ids": null,
+            "rowNum": 0,
+            "gxdw": null
+        },
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201504241644455505",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "四川省资阳市公安局雁江区分局滨河路派出所",
+            "gyxxzt": "1",
+            "cyryxm": "魏申英",
+            "cyrysfzh": "513901198512235220",
+            "cyrydh": null,
+            "jzrksj": 1429865085000,
+            "dwid": "512002430000201403191701584565",
+            "ryid": "511102106000201205041940028686",
+            "syrkid": null,
+            "ytjbh": "null",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "512002430000",
+            "bzx": null,
+            "cyryid": 33490,
+            "sfzzpid": null,
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "511102197108183031",
+            "xm": "高安才",
+            "xb": "1",
+            "mz": "01",
+            "xjd": "四川省l乐山市市中区棉竹镇高坝村1组44号",
+            "csrq": 51292800000,
+            "hjd": "四川省l乐山市市中区棉竹镇高坝村1组44号",
+            "lxfs": "13194777659",
+            "gmsl": 14,
+            "gmlx": "2",
+            "gmrq": 51292800000,
+            "gmyt": "1",
+            "gmdw": null,
+            "gm_rq": "3",
+            "jtgj": "1",
+            "pzh": "川LU8226",
+            "sfwxjdqsf": "0",
+            "jyzmc": "中国石油化工股份有限公司四川资阳石油分公司昭岩加油站",
+            "jyzbh": "51200209171",
+            "jyzdz": "四川省资阳市雁江区娇子大道二段416号",
+            "ids": null,
+            "rowNum": 0,
+            "gxdw": null
+        },
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201504241714456674",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "自贡市公安局汇东新区分局板仓派出所",
+            "gyxxzt": "1",
+            "cyryxm": "杨玉芬",
+            "cyrysfzh": "510311197811302385",
+            "cyrydh": "3861301",
+            "jzrksj": 1429866885000,
+            "dwid": "510398430000201309181537192635",
+            "ryid": "511123193000201205050033238120",
+            "syrkid": null,
+            "ytjbh": "null",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "510398430000",
+            "bzx": null,
+            "cyryid": 500000107,
+            "sfzzpid": "500000561",
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "511123197406074273",
+            "xm": "吴清华",
+            "xb": "1",
+            "mz": "01",
+            "xjd": null,
+            "csrq": 139766400000,
+            "hjd": "四川省犍为县金石井镇青松村2组10号",
+            "lxfs": "13990090351",
+            "gmsl": 7,
+            "gmlx": "2",
+            "gmrq": 139766400000,
+            "gmyt": "2",
+            "gmdw": null,
+            "gm_rq": "3",
+            "jtgj": "1",
+            "pzh": null,
+            "sfwxjdqsf": "0",
+            "jyzmc": "延长壳牌（四川）石油有限公司自贡沿滩卫坪加油站",
+            "jyzbh": "51039809037",
+            "jyzdz": "四川省自贡市汇东新区沙坪街47号",
+            "ids": null,
+            "rowNum": 0,
+            "gxdw": null
+        },
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201504241759457891",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "自贡市公安局大安区分局凤凰派出所",
+            "gyxxzt": "1",
+            "cyryxm": "刘涌泉",
+            "cyrysfzh": "511025197108318812",
+            "cyrydh": null,
+            "jzrksj": 1429869585000,
+            "dwid": "510304490000201307260912316300",
+            "ryid": "510311082000201205050228203030",
+            "syrkid": null,
+            "ytjbh": "null",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "510304490000",
+            "bzx": null,
+            "cyryid": 34869,
+            "sfzzpid": "500000562",
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "522635197811162424",
+            "xm": "杨在兰",
+            "xb": "2",
+            "mz": "06",
+            "xjd": null,
+            "csrq": 279993600000,
+            "hjd": "四川省自贡市沿滩区仙市镇蕉湾村六组14号",
+            "lxfs": "15284828439",
+            "gmsl": 10,
+            "gmlx": "2",
+            "gmrq": 279993600000,
+            "gmyt": "4",
+            "gmdw": null,
+            "gm_rq": "1",
+            "jtgj": "3",
+            "pzh": null,
+            "sfwxjdqsf": "0",
+            "jyzmc": "中国石油天然气股份有限公司四川川南销售分公司马吃水加油站",
+            "jyzbh": "51030409073",
+            "jyzdz": "四川省自贡市大安区马吃水路216号",
+            "ids": null,
+            "rowNum": 0,
+            "gxdw": null
+        },
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201504251529456559",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "自贡市公安局汇东新区分局板仓派出所",
+            "gyxxzt": "1",
+            "cyryxm": "吴裕龙",
+            "cyrysfzh": "330821198203142075",
+            "cyrydh": "3861301",
+            "jzrksj": 1429946985000,
+            "dwid": "510398430000201309181537192635",
+            "ryid": "510112991300201204290357272692",
+            "syrkid": null,
+            "ytjbh": "null",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "510398430000",
+            "bzx": null,
+            "cyryid": 500000104,
+            "sfzzpid": "500000576",
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "51011219391011001X",
+            "xm": "游开书",
+            "xb": "1",
+            "mz": "01",
+            "xjd": null,
+            "csrq": -953884800000,
+            "hjd": "成都市龙泉驿区龙泉龙都南路２０５号附１号",
+            "lxfs": "18040331705",
+            "gmsl": 5,
+            "gmlx": "2",
+            "gmrq": -953884800000,
+            "gmyt": "1",
+            "gmdw": null,
+            "gm_rq": "3",
+            "jtgj": "1",
+            "pzh": null,
+            "sfwxjdqsf": "0",
+            "jyzmc": "延长壳牌（四川）石油有限公司自贡沿滩卫坪加油站",
+            "jyzbh": "51039809037",
+            "jyzdz": "四川省自贡市汇东新区沙坪街47号",
+            "ids": null,
+            "rowNum": 0,
+            "gxdw": null
+        }
+    ],
+    "flag": null,
+    "pagePara": null
+
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_szqyjyrygl_exportExcel2003"><span class="parent">/api/sydw/szqyjyrygl</span>/exportExcel2003</a> <span class="methods"><a href="#api_sydw_szqyjyrygl_exportExcel2003_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_szqyjyrygl_exportExcel2003" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>批量导出</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_szqyjyrygl_exportExcel2003_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_szqyjyrygl_exportExcel2003_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/szqyjyrygl</span>/exportExcel2003</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_szqyjyrygl_exportExcel2003_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_szqyjyrygl_exportExcel2003_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_szqyjyrygl_exportExcel2003_post_request"><h3>Query Parameters</h3><ul><li><strong>entity</strong>: <em>required (string)</em><p>com.founder.sydwgl.base.model.SydwSzqyjyry</p><p><strong>Example</strong>:</p><pre>type is {sydwszqyjyry}</pre></li><li><strong>headNameAryStr</strong>: <em>required (string)</em><p>标题名称数组</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>paramNameAryStr</strong>: <em>required (string)</em><p>参数名数组</p><p><strong>Example</strong>:</p><pre>string </pre></li><li><strong>checkedIdAryStr</strong>: <em>(string)</em><p>选中的对象ID数组</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_szqyjyrygl_exportExcel2003_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_szqyjyrygl_insert_szqyjyry"><span class="parent">/api/sydw/szqyjyrygl</span>/insert/szqyjyry</a> <span class="methods"><a href="#api_sydw_szqyjyrygl_insert_szqyjyry_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_szqyjyrygl_insert_szqyjyry" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>保存散装汽油加油人员</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_szqyjyrygl_insert_szqyjyry_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_szqyjyrygl_insert_szqyjyry_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/szqyjyrygl</span>/insert/szqyjyry</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_szqyjyrygl_insert_szqyjyry_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_szqyjyrygl_insert_szqyjyry_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_szqyjyrygl_insert_szqyjyry_post_request"><h3>Query Parameters</h3><ul><li><strong>request</strong>: <em>required (string)</em><p>javax.servlet.http.HttpServletRequest</p><p><strong>Example</strong>:</p><pre>type is {httpservletrequest}</pre></li><li><strong>response</strong>: <em>required (string)</em><p>javax.servlet.http.HttpServletResponse</p><p><strong>Example</strong>:</p><pre>type is {httpservletresponse}</pre></li></ul></div><div class="tab-pane" id="api_sydw_szqyjyrygl_insert_szqyjyry_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>""</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_szqyjyrygl_queryJyrqByJyzbh"><span class="parent">/api/sydw/szqyjyrygl</span>/queryJyrqByJyzbh</a> <span class="methods"><a href="#api_sydw_szqyjyrygl_queryJyrqByJyzbh_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_sydw_szqyjyrygl_queryJyrqByJyzbh" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>通过加油站编号查询加油人员</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_szqyjyrygl_queryJyrqByJyzbh_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_szqyjyrygl_queryJyrqByJyzbh_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/sydw/szqyjyrygl</span>/queryJyrqByJyzbh</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_szqyjyrygl_queryJyrqByJyzbh_post_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_szqyjyrygl_queryJyrqByJyzbh_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_szqyjyrygl_queryJyrqByJyzbh_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>required (string)</em><p>com.founder.framework.utils.EasyUIPage</p><p><strong>Example</strong>:</p><pre>type is {easyuipage}</pre></li><li><strong>rows</strong>: <em>required (string)</em><p>每页返回数量</p><p><strong>Example</strong>:</p><pre>type is {int}</pre></li><li><strong>jyzbh</strong>: <em>required (string)</em><p>加油站编号</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_szqyjyrygl_queryJyrqByJyzbh_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+
+    "page": 1,
+    "begin": 0,
+    "end": 0,
+    "total": 198,
+    "sort": null,
+    "order": null,
+    "rownum": 2,
+    "rows": [
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201506291845008780",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "四川省资阳市公安局雁江区分局滨河路派出所",
+            "gyxxzt": "1",
+            "cyryxm": "魏申英",
+            "cyrysfzh": "513901198512235220",
+            "cyrydh": null,
+            "jzrksj": 1435574700000,
+            "dwid": "512002430000201403191701584565",
+            "ryid": "512002031000201204290218318579",
+            "syrkid": null,
+            "ytjbh": "null",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "512002430000",
+            "bzx": null,
+            "cyryid": 33490,
+            "sfzzpid": null,
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "512002199706060618",
+            "xm": "李学鹏",
+            "xb": "1",
+            "mz": "01",
+            "xjd": null,
+            "csrq": 865526400000,
+            "hjd": "四川省资阳市雁江区雁江区镇花椒村七组33号",
+            "lxfs": "13547298834",
+            "gmsl": 30,
+            "gmlx": "2",
+            "gmrq": 865526400000,
+            "gmyt": "4",
+            "gmdw": null,
+            "gm_rq": "3",
+            "jtgj": "1",
+            "pzh": "川MP5569",
+            "sfwxjdqsf": "0",
+            "jyzmc": "中国石油化工股份有限公司四川资阳石油分公司昭岩加油站",
+            "jyzbh": "51200209171",
+            "jyzdz": "四川省资阳市雁江区娇子大道二段416号",
+            "ids": null,
+            "rowNum": 172,
+            "gxdw": null
+        },
+        {
+            "xt_cjsj": null,
+            "xt_lrsj": null,
+            "xt_lrrxm": null,
+            "xt_lrrid": null,
+            "xt_lrrbm": null,
+            "xt_lrrbmid": null,
+            "xt_lrip": null,
+            "xt_zhxgsj": null,
+            "xt_zhxgrxm": null,
+            "xt_zhxgrid": null,
+            "xt_zhxgrbm": null,
+            "xt_zhxgrbmid": null,
+            "xt_zhxgip": null,
+            "xt_zxbz": "0",
+            "xt_zxyy": null,
+            "xt_zxyybz": null,
+            "id": "510000000000201506191545005980",
+            "jyzfzr": null,
+            "jyzlxdh": null,
+            "jyzssgxdw": "四川省资阳市公安局雁江区分局滨河路派出所",
+            "gyxxzt": "1",
+            "cyryxm": "余绍先",
+            "cyrysfzh": "511081198210041042",
+            "cyrydh": "26095933",
+            "jzrksj": 1434699900000,
+            "dwid": "512002430000201403191701584565",
+            "ryid": "512002094000201204290219189273",
+            "syrkid": null,
+            "ytjbh": "null",
+            "xczpid": null,
+            "xczp": null,
+            "jyzssgxdwbm": "512002430000",
+            "bzx": null,
+            "cyryid": 500000082,
+            "sfzzpid": null,
+            "sfzzp": null,
+            "old_id": null,
+            "old_dwid": null,
+            "old_ryid": null,
+            "old_syrkid": null,
+            "old_cyryid": null,
+            "ssdq": null,
+            "sfzh": "513901199601280618",
+            "xm": "李涛",
+            "xb": "1",
+            "mz": "01",
+            "xjd": null,
+            "csrq": 822758400000,
+            "hjd": "四川省资阳市雁江区狮子山办事处槐树村三组40号",
+            "lxfs": "18328233302",
+            "gmsl": 8,
+            "gmlx": "2",
+            "gmrq": 822758400000,
+            "gmyt": "1",
+            "gmdw": null,
+            "gm_rq": "3",
+            "jtgj": "1",
+            "pzh": null,
+            "sfwxjdqsf": "0",
+            "jyzmc": "中国石油化工股份有限公司四川资阳石油分公司昭岩加油站",
+            "jyzbh": "51200209171",
+            "jyzdz": "四川省资阳市雁江区娇子大道二段416号",
+            "ids": null,
+            "rowNum": 149,
+            "gxdw": null
+        }
+    ],
+    "flag": null,
+    "pagePara": null
+
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_sydw_szqyjyrygl__szqyjyryid_"><span class="parent">/api/sydw/szqyjyrygl</span>/{szqyjyryid}</a> <span class="methods"><a href="#api_sydw_szqyjyrygl__szqyjyryid__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_sydw_szqyjyrygl__szqyjyryid_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>散装汽油加油人员详情</p></div><div class="list-group"><div onclick="window.location.href = '#api_sydw_szqyjyrygl__szqyjyryid__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_sydw_szqyjyrygl__szqyjyryid__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/sydw/szqyjyrygl</span>/{szqyjyryid}</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_sydw_szqyjyrygl__szqyjyryid__get_request" data-toggle="tab">Request</a></li><li><a href="#api_sydw_szqyjyrygl__szqyjyryid__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_sydw_szqyjyrygl__szqyjyryid__get_request"><h3>URI Parameters</h3><ul><li><strong>szqyjyryid</strong>: <em>required (string)</em></li></ul><h3>Query Parameters</h3><ul><li><strong>szqyjyryid</strong>: <em>required (string)</em><p>散装汽油加油人员ＩＤ</p><p><strong>Example</strong>:</p><pre>string </pre></li></ul></div><div class="tab-pane" id="api_sydw_szqyjyrygl__szqyjyryid__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api_sydw_sydwgl">实有单位管理</a></li><li><a href="#api_sydw">实有单位提供的原外部接口</a></li><li><a href="#api_sydw_sydwCombo">单位动态字典管理</a></li><li><a href="#api_sydw_cyrygl">从业人员管理</a></li><li><a href="#api_sydw_cyry">从业人员模块提供的原外部接口</a></li><li><a href="#api_sydw_glxx">单位关联信息管理</a></li><li><a href="#api_sydw_szqyjyrygl">散装汽油加油人员管理</a></li></ul></div></div></div></div></body></html>

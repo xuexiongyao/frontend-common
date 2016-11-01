@@ -1,0 +1,449 @@
+<!DOCTYPE HTML><html><head><title>syfwapi API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/kevinrenskers/raml2html 2.4.0"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>syfwapi API documentation <small>version 1.0.5</small></h1><p>http://syfw.jwzh.com:9014/jwzh-syfw</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_queryFwxxByDzxx" class="panel-title">实有房屋分页查询API</h3></div><div class="panel-body"><div class="top-resource-description"><p>实有房屋分页查询，根据地址描述查询</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_queryFwxxByDzxx"><span class="parent"></span>/api/syfw/queryFwxxByDzxx</a> <span class="methods"><a href="#api_syfw_queryFwxxByDzxx_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_queryFwxxByDzxx" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_queryFwxxByDzxx_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_queryFwxxByDzxx_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/queryFwxxByDzxx</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_queryFwxxByDzxx_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_queryFwxxByDzxx_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_queryFwxxByDzxx_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rownum</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>当前第几条</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>dzxz</strong>: <em>(string)</em><p>地址描述</p></li></ul></div><div class="tab-pane" id="api_syfw_queryFwxxByDzxx_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin": 0,
+  "end": 2,
+  "flag": "",
+  "order": "",
+  "page": 1,
+  "pagePara": "",
+  "rownum": 20,
+  "rows": [
+    {
+      "bz": "",
+      "dwOrryid": "",
+      "fw_cqlxdm": "",
+      "fw_gldjdm": "3",
+      "fw_jczq": "",
+      "fw_jglxdm": "1",
+      "fw_js": "",
+      "fw_lxdm": "1",
+      "fw_mj": "",
+      "fw_scid": "",
+      "fw_sylxdm": "1",
+      "fw_ytdm": "1",
+      "fw_zylxdm": "",
+      "fwdz_dzid": "510105440000201605230910576544",
+      "fwdz_dzjb": "4",
+      "fwdz_dzxz": "四川省成都市青羊区羊市街28号15栋",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "",
+      "gxzrqdm": "510105000000",
+      "id": "c337132788ba415892feae869bad32d0",
+      "jczq_begin": null,
+      "jczq_end": null,
+      "ssxq_id": "",
+      "ssxq_mc": "",
+      "xt_cjsj": "2016-06-27 10:25:50",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局",
+      "xt_lrrbmid": "510105000000",
+      "xt_lrrid": "51010319641120481X",
+      "xt_lrrxm": "谢军",
+      "xt_lrsj": "2016-06-27 10:25:50",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局",
+      "xt_zhxgrbmid": "510105000000",
+      "xt_zhxgrid": "51010319641120481X",
+      "xt_zhxgrxm": "谢军",
+      "xt_zhxgsj": "2016-06-27 10:25:50",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": ""
+    },
+    {
+      "bz": "",
+      "dwOrryid": "",
+      "fw_cqlxdm": "",
+      "fw_gldjdm": "",
+      "fw_jczq": "",
+      "fw_jglxdm": "",
+      "fw_js": "",
+      "fw_lxdm": "",
+      "fw_mj": "",
+      "fw_scid": "",
+      "fw_sylxdm": "",
+      "fw_ytdm": "",
+      "fw_zylxdm": "",
+      "fwdz_dzid": "37a088dcef0f426ca8d7334ef7f44e83",
+      "fwdz_dzjb": "3",
+      "fwdz_dzxz": "四川省四川省成都市青羊区风舞都尉101号",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "510105460000",
+      "gxzrqdm": "5101054600002012091803196",
+      "id": "05860051c58e40a588aac5d29a1f01ab",
+      "jczq_begin": null,
+      "jczq_end": null,
+      "ssxq_id": "",
+      "ssxq_mc": "",
+      "xt_cjsj": "2016-06-27 10:02:41",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局",
+      "xt_lrrbmid": "510105000000",
+      "xt_lrrid": "510214196906131717",
+      "xt_lrrxm": "金琪",
+      "xt_lrsj": "2016-06-27 10:02:41",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局",
+      "xt_zhxgrbmid": "510105000000",
+      "xt_zhxgrid": "510214196906131717",
+      "xt_zhxgrxm": "金琪",
+      "xt_zhxgsj": "2016-06-27 10:02:41",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": ""
+    }
+  ],
+  "sort": "",
+  "total": 35
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_queryGdListByFwid" class="panel-title">根据房屋ID查询归栋列表</h3></div><div class="panel-body"><div class="top-resource-description"><p>根据房屋ID查询归栋列表</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_queryGdListByFwid"><span class="parent"></span>/api/syfw/queryGdListByFwid</a> <span class="methods"><a href="#api_syfw_queryGdListByFwid_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_queryGdListByFwid" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_queryGdListByFwid_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_queryGdListByFwid_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/queryGdListByFwid</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_queryGdListByFwid_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_queryGdListByFwid_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_queryGdListByFwid_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rownum</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>当前第几条</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>fwid</strong>: <em>(string)</em><p>房屋id</p></li></ul></div><div class="tab-pane" id="api_syfw_queryGdListByFwid_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin": 0,
+  "end": 2,
+  "flag": "",
+  "order": "",
+  "page": 1,
+  "pagePara": "",
+  "rownum": 20,
+  "rows": [
+    {
+      "bz": "",
+      "dwOrryid": "",
+      "fw_cqlxdm": "",
+      "fw_gldjdm": "3",
+      "fw_jczq": "",
+      "fw_jglxdm": "1",
+      "fw_js": "",
+      "fw_lxdm": "1",
+      "fw_mj": "",
+      "fw_scid": "",
+      "fw_sylxdm": "1",
+      "fw_ytdm": "1",
+      "fw_zylxdm": "",
+      "fwdz_dzid": "510105440000201605230910576544",
+      "fwdz_dzjb": "4",
+      "fwdz_dzxz": "四川省成都市青羊区羊市街28号15栋",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "",
+      "gxzrqdm": "510105000000",
+      "id": "c337132788ba415892feae869bad32d0",
+      "jczq_begin": null,
+      "jczq_end": null,
+      "ssxq_id": "",
+      "ssxq_mc": "",
+      "xt_cjsj": "2016-06-27 10:25:50",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局",
+      "xt_lrrbmid": "510105000000",
+      "xt_lrrid": "51010319641120481X",
+      "xt_lrrxm": "谢军",
+      "xt_lrsj": "2016-06-27 10:25:50",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局",
+      "xt_zhxgrbmid": "510105000000",
+      "xt_zhxgrid": "51010319641120481X",
+      "xt_zhxgrxm": "谢军",
+      "xt_zhxgsj": "2016-06-27 10:25:50",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": ""
+    },
+    {
+      "bz": "",
+      "dwOrryid": "",
+      "fw_cqlxdm": "",
+      "fw_gldjdm": "",
+      "fw_jczq": "",
+      "fw_jglxdm": "",
+      "fw_js": "",
+      "fw_lxdm": "",
+      "fw_mj": "",
+      "fw_scid": "",
+      "fw_sylxdm": "",
+      "fw_ytdm": "",
+      "fw_zylxdm": "",
+      "fwdz_dzid": "37a088dcef0f426ca8d7334ef7f44e83",
+      "fwdz_dzjb": "3",
+      "fwdz_dzxz": "四川省四川省成都市青羊区风舞都尉101号",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "510105460000",
+      "gxzrqdm": "5101054600002012091803196",
+      "id": "05860051c58e40a588aac5d29a1f01ab",
+      "jczq_begin": null,
+      "jczq_end": null,
+      "ssxq_id": "",
+      "ssxq_mc": "",
+      "xt_cjsj": "2016-06-27 10:02:41",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局",
+      "xt_lrrbmid": "510105000000",
+      "xt_lrrid": "510214196906131717",
+      "xt_lrrxm": "金琪",
+      "xt_lrsj": "2016-06-27 10:02:41",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局",
+      "xt_zhxgrbmid": "510105000000",
+      "xt_zhxgrid": "510214196906131717",
+      "xt_zhxgrxm": "金琪",
+      "xt_zhxgsj": "2016-06-27 10:02:41",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": ""
+    }
+  ],
+  "sort": "",
+  "total": 19
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_queryFwListByDzid" class="panel-title">/api/syfw/queryFwListByDzid</h3></div><div class="panel-body"><div class="top-resource-description"><p>根据地址ID查询房屋信息</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_queryFwListByDzid"><span class="parent"></span>/api/syfw/queryFwListByDzid</a> <span class="methods"><a href="#api_syfw_queryFwListByDzid_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_queryFwListByDzid" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_queryFwListByDzid_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_queryFwListByDzid_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/queryFwListByDzid</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_queryFwListByDzid_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_queryFwListByDzid_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_queryFwListByDzid_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rownum</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>当前第几条</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>dzid</strong>: <em>(string)</em><p>地址id</p></li></ul></div><div class="tab-pane" id="api_syfw_queryFwListByDzid_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin": 0,
+  "end": 1,
+  "flag": "",
+  "order": "",
+  "page": 1,
+  "pagePara": "",
+  "rownum": 1,
+  "rows": [
+    {
+      "bz": "",
+      "dwOrryid": "",
+      "fw_cqlxdm": "",
+      "fw_gldjdm": "3",
+      "fw_jczq": "",
+      "fw_jglxdm": "1",
+      "fw_js": "",
+      "fw_lxdm": "1",
+      "fw_mj": "",
+      "fw_scid": "",
+      "fw_sylxdm": "1",
+      "fw_ytdm": "1",
+      "fw_zylxdm": "",
+      "fwdz_dzid": "510105440000201605230910576544",
+      "fwdz_dzjb": "4",
+      "fwdz_dzxz": "四川省成都市青羊区羊市街28号15栋",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "",
+      "gxzrqdm": "510105000000",
+      "id": "c337132788ba415892feae869bad32d0",
+      "jczq_begin": null,
+      "jczq_end": null,
+      "ssxq_id": "",
+      "ssxq_mc": "",
+      "xt_cjsj": "2016-06-27 10:25:50",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局",
+      "xt_lrrbmid": "510105000000",
+      "xt_lrrid": "51010319641120481X",
+      "xt_lrrxm": "谢军",
+      "xt_lrsj": "2016-06-27 10:25:50",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局",
+      "xt_zhxgrbmid": "510105000000",
+      "xt_zhxgrid": "51010319641120481X",
+      "xt_zhxgrxm": "谢军",
+      "xt_zhxgsj": "2016-06-27 10:25:50",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": ""
+    }
+  ],
+  "sort": "",
+  "total": 1
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_syfwAdd" class="panel-title">/api/syfw/syfwAdd</h3></div><div class="panel-body"><div class="top-resource-description"><p>实有房屋新增</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_syfwAdd"><span class="parent"></span>/api/syfw/syfwAdd</a> <span class="methods"><a href="#api_syfw_syfwAdd_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_syfwAdd" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_syfwAdd_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_syfwAdd_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/syfwAdd</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_syfwAdd_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_syfwAdd_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_syfwAdd_post_request"><h3>Query Parameters</h3><ul><li><strong>fwdz_dzid</strong>: <em>(string)</em><p>房屋地址_地址ID</p><p><strong>Example</strong>:</p><pre>05860051c58e40a588aac5d29a1f01ab</pre></li><li><strong>fwdz_dzxz</strong>: <em>(string)</em><p>房屋地址_地址详址</p><p><strong>Example</strong>:</p><pre>四川省四川省成都市青羊区风舞都尉101号</pre></li><li><strong>gxfjdm</strong>: <em>(string)</em><p>管辖分局代码</p><p><strong>Example</strong>:</p><pre>510105000000</pre></li><li><strong>gxpcsdm</strong>: <em>(string)</em><p>管辖派出所代码</p><p><strong>Example</strong>:</p><pre>510105460000</pre></li><li><strong>gxzrqdm</strong>: <em>(string)</em><p>管辖责任区代码</p><p><strong>Example</strong>:</p><pre>5.101054600002012e+24</pre></li></ul></div><div class="tab-pane" id="api_syfw_syfwAdd_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_syfwUpdate" class="panel-title">/api/syfw/syfwUpdate</h3></div><div class="panel-body"><div class="top-resource-description"><p>实有房屋更新</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_syfwUpdate"><span class="parent"></span>/api/syfw/syfwUpdate</a> <span class="methods"><a href="#api_syfw_syfwUpdate_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_syfwUpdate" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_syfwUpdate_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_syfwUpdate_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/syfwUpdate</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_syfwUpdate_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_syfwUpdate_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_syfwUpdate_post_request"><h3>Query Parameters</h3><ul><li><strong>fwdz_dzid</strong>: <em>(string)</em><p>房屋地址_地址ID</p><p><strong>Example</strong>:</p><pre>05860051c58e40a588aac5d29a1f01ab</pre></li><li><strong>fwdz_dzxz</strong>: <em>(string)</em><p>房屋地址_地址详址</p><p><strong>Example</strong>:</p><pre>四川省四川省成都市青羊区风舞都尉101号</pre></li><li><strong>gxfjdm</strong>: <em>(string)</em><p>管辖分局代码</p><p><strong>Example</strong>:</p><pre>510105000000</pre></li><li><strong>gxpcsdm</strong>: <em>(string)</em><p>管辖派出所代码</p><p><strong>Example</strong>:</p><pre>510105460000</pre></li><li><strong>gxzrqdm</strong>: <em>(string)</em><p>管辖责任区代码</p><p><strong>Example</strong>:</p><pre>5.101054600002012e+24</pre></li></ul></div><div class="tab-pane" id="api_syfw_syfwUpdate_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_syfwDelete" class="panel-title">/api/syfw/syfwDelete</h3></div><div class="panel-body"><div class="top-resource-description"><p>实有房屋注销</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_syfwDelete"><span class="parent"></span>/api/syfw/syfwDelete</a> <span class="methods"><a href="#api_syfw_syfwDelete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_syfwDelete" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_syfwDelete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_syfwDelete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/syfwDelete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_syfwDelete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_syfwDelete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_syfwDelete_post_request"><h3>Query Parameters</h3><ul><li><strong>fwdz_dzid</strong>: <em>(string)</em><p>房屋地址_地址ID</p><p><strong>Example</strong>:</p><pre>05860051c58e40a588aac5d29a1f01ab</pre></li><li><strong>fwdz_dzxz</strong>: <em>(string)</em><p>房屋地址_地址详址</p><p><strong>Example</strong>:</p><pre>四川省四川省成都市青羊区风舞都尉101号</pre></li><li><strong>gxfjdm</strong>: <em>(string)</em><p>管辖分局代码</p><p><strong>Example</strong>:</p><pre>510105000000</pre></li><li><strong>gxpcsdm</strong>: <em>(string)</em><p>管辖派出所代码</p><p><strong>Example</strong>:</p><pre>510105460000</pre></li><li><strong>gxzrqdm</strong>: <em>(string)</em><p>管辖责任区代码</p><p><strong>Example</strong>:</p><pre>5.101054600002012e+24</pre></li></ul></div><div class="tab-pane" id="api_syfw_syfwDelete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_syfw_queryFwjbxxListByCqlxAndRyid" class="panel-title">/api/syfw/queryFwjbxxListByCqlxAndRyid</h3></div><div class="panel-body"><div class="top-resource-description"><p>根据产权类型和对应的 人员ID或者房屋ID 查询房屋列表</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_syfw_queryFwjbxxListByCqlxAndRyid"><span class="parent"></span>/api/syfw/queryFwjbxxListByCqlxAndRyid</a> <span class="methods"><a href="#api_syfw_queryFwjbxxListByCqlxAndRyid_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_syfw_queryFwjbxxListByCqlxAndRyid" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_syfw_queryFwjbxxListByCqlxAndRyid_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_syfw_queryFwjbxxListByCqlxAndRyid_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/syfw/queryFwjbxxListByCqlxAndRyid</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_syfw_queryFwjbxxListByCqlxAndRyid_post_request" data-toggle="tab">Request</a></li><li><a href="#api_syfw_queryFwjbxxListByCqlxAndRyid_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_syfw_queryFwjbxxListByCqlxAndRyid_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rownum</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>当前第几条</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>fw_cqlxdm</strong>: <em>(string)</em><p>房屋产权类型代码</p></li><li><strong>dwOrryid</strong>: <em>(string)</em><p>单位或人员id</p></li></ul></div><div class="tab-pane" id="api_syfw_queryFwjbxxListByCqlxAndRyid_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>成功</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin": 0,
+  "end": 1,
+  "flag": "",
+  "order": "",
+  "page": 1,
+  "pagePara": "",
+  "rownum": 1,
+  "rows": [
+    {
+      "bz": "",
+      "dwOrryid": "",
+      "fw_cqlxdm": "",
+      "fw_gldjdm": "3",
+      "fw_jczq": "",
+      "fw_jglxdm": "1",
+      "fw_js": "",
+      "fw_lxdm": "1",
+      "fw_mj": "",
+      "fw_scid": "",
+      "fw_sylxdm": "1",
+      "fw_ytdm": "1",
+      "fw_zylxdm": "",
+      "fwdz_dzid": "510105440000201605230910576544",
+      "fwdz_dzjb": "4",
+      "fwdz_dzxz": "四川省成都市青羊区羊市街28号15栋",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "",
+      "gxzrqdm": "510105000000",
+      "id": "c337132788ba415892feae869bad32d0",
+      "jczq_begin": null,
+      "jczq_end": null,
+      "ssxq_id": "",
+      "ssxq_mc": "",
+      "xt_cjsj": "2016-06-27 10:25:50",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局",
+      "xt_lrrbmid": "510105000000",
+      "xt_lrrid": "51010319641120481X",
+      "xt_lrrxm": "谢军",
+      "xt_lrsj": "2016-06-27 10:25:50",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局",
+      "xt_zhxgrbmid": "510105000000",
+      "xt_zhxgrid": "51010319641120481X",
+      "xt_zhxgrxm": "谢军",
+      "xt_zhxgsj": "2016-06-27 10:25:50",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": ""
+    }
+  ],
+  "sort": "",
+  "total": 1
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api_syfw_queryFwxxByDzxx">实有房屋分页查询API</a></li><li><a href="#api_syfw_queryGdListByFwid">根据房屋ID查询归栋列表</a></li><li><a href="#api_syfw_queryFwListByDzid">/api/syfw/queryFwListByDzid</a></li><li><a href="#api_syfw_syfwAdd">/api/syfw/syfwAdd</a></li><li><a href="#api_syfw_syfwUpdate">/api/syfw/syfwUpdate</a></li><li><a href="#api_syfw_syfwDelete">/api/syfw/syfwDelete</a></li><li><a href="#api_syfw_queryFwjbxxListByCqlxAndRyid">/api/syfw/queryFwjbxxListByCqlxAndRyid</a></li></ul></div></div></div></div></body></html>

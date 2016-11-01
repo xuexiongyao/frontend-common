@@ -1,0 +1,415 @@
+<!DOCTYPE HTML><html><head><title>警务日志系统 API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 3.0.1"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>警务日志系统 API documentation <small>version 1.0.5</small></h1><p>http://jwrz.jwzh.com:9020/jwzh-jwrz</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_rzxx" class="panel-title">警务日志-日志信息</h3></div><div class="panel-body"><div class="top-resource-description"><p>警务日志-日志信息API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_saveOrUpdate"><span class="parent">/api/rzxx</span>/saveOrUpdate</a> <span class="methods"><a href="#api_rzxx_saveOrUpdate_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzxx_saveOrUpdate" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>警务日志新增日志或者修改日志信息的接口</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_saveOrUpdate_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_saveOrUpdate_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzxx</span>/saveOrUpdate</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_saveOrUpdate_post_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_saveOrUpdate_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_saveOrUpdate_post_request"><h3>Query Parameters</h3><ul><li><strong>rzbt</strong>: <em>(string)</em><p>日志标题</p><p><strong>Example</strong>:</p><pre>2016年10月4日15:08:47</pre></li><li><strong>rznr</strong>: <em>(string)</em><p>日志内容</p><p><strong>Example</strong>:</p><pre>测试日志内容</pre></li><li><strong>flid</strong>: <em>(string)</em><p>日志分类</p></li><li><strong>ydqx</strong>: <em>(string)</em><p>是否公开阅读，0否，1是</p><p><strong>Example</strong>:</p><pre>测试日志内容</pre></li></ul></div><div class="tab-pane" id="api_rzxx_saveOrUpdate_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_updateFromTrash"><span class="parent">/api/rzxx</span>/updateFromTrash</a> <span class="methods"><a href="#api_rzxx_updateFromTrash_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzxx_updateFromTrash" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>更新已删除的日志</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_updateFromTrash_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_updateFromTrash_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzxx</span>/updateFromTrash</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_updateFromTrash_post_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_updateFromTrash_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_updateFromTrash_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>(string)</em><p>日志信息的id</p></li></ul></div><div class="tab-pane" id="api_rzxx_updateFromTrash_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "message": "修改成功",
+  "status": "success"
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_queryManagerList"><span class="parent">/api/rzxx</span>/queryManagerList</a> <span class="methods"><a href="#api_rzxx_queryManagerList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzxx_queryManagerList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>警务日志分页查询，管理列表查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_queryManagerList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_queryManagerList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzxx</span>/queryManagerList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_queryManagerList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_queryManagerList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_queryManagerList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>entity</strong>: <em>(string)</em><p>封装了日志信息的VO</p></li></ul></div><div class="tab-pane" id="api_rzxx_queryManagerList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin":0,
+  "end":5,
+  "flag":"",
+  "order":"",
+  "page":1,
+  "pagePara":"",
+  "rownum":20,
+  "sort":"",
+  "total":9,
+  "rows":[{
+    "bczt":"1",
+    "flid":"3698e455208b479caeb703e1f8b973a6",
+    "gxfjdm":"",
+    "gxpcsdm":"",
+    "gxsjdm":"",
+    "gxzrqdm":"",
+    "hpsl":0,
+    "id":"2dee8415be2f41cbb5a3c35fbd7ee03e",
+    "rzbt":"2016��10��4��15:08:47",
+    "rznr":"&lt;p&gt;fasdfasfasdfsdfasdfasd&lt;/p&gt;",
+    "sczt":"1",
+    "sumHpsl":0,
+    "xt_cjsj":"2016-10-27 15:08:49",
+    "xt_lrip":"",
+    "xt_lrrbm":"�ڽ��й����ֶ������־ֶ����ɳ�����ǧ������",
+    "xt_lrrbmid":"5110114000002012082402422",
+    "xt_lrrid":"510102196802144336",
+    "xt_lrrxm":"������",
+    "xt_lrsj":"2016-10-27 15:08:49",
+    "xt_zhxgip":"",
+    "xt_zhxgrbm":"�ڽ��й����ֶ������־ֶ����ɳ�����ǧ������",
+    "xt_zhxgrbmid":"5110114000002012082402422",
+    "xt_zhxgrid":"510102196802144336",
+    "xt_zhxgrxm":"������",
+    "xt_zhxgsj":"2016-10-27 15:08:49",
+    "xt_zxbz":"0",
+    "xt_zxyy":"",
+    "xt_zxyybz":"",
+    "ydcs":0,
+    "ydqx":"0"
+  }]
+
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_delete"><span class="parent">/api/rzxx</span>/delete</a> <span class="methods"><a href="#api_rzxx_delete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzxx_delete" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>警务日志删除</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_delete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_delete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzxx</span>/delete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_delete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_delete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_delete_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>(string)</em><p>日志信息的id</p></li></ul></div><div class="tab-pane" id="api_rzxx_delete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "message": "注销成功",
+  "status": "success"
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_countDzsl"><span class="parent">/api/rzxx</span>/countDzsl</a> <span class="methods"><a href="#api_rzxx_countDzsl_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzxx_countDzsl" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询好评排行榜</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_countDzsl_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_countDzsl_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzxx</span>/countDzsl</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_countDzsl_post_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_countDzsl_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_countDzsl_post_request"><h3>Query Parameters</h3><ul><li><strong>gxdm</strong>: <em>required (string)</em><p>管辖代码</p></li></ul></div><div class="tab-pane" id="api_rzxx_countDzsl_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "bczt":"",
+    "flid":"",
+    "gxfjdm":"",
+    "gxpcsdm":"",
+    "gxsjdm":"",
+    "gxzrqdm":"",
+    "hpsl":0,
+    "id":"",
+    "rzbt":"",
+    "rznr":"",
+    "sczt":"",
+    "sumHpsl":8,
+    "xt_cjsj":"",
+    "xt_lrip":"",
+    "xt_lrrbm":"成都市公安局青羊区分局草堂派出所",
+    "xt_lrrbmid":"510105470000",
+    "xt_lrrid":"510108198509152123",
+    "xt_lrrxm":"李静",
+    "xt_lrsj":"",
+    "xt_zhxgip":"",
+    "xt_zhxgrbm":"",
+    "xt_zhxgrbmid":"",
+    "xt_zhxgrid":"",
+    "xt_zhxgrxm":"",
+    "xt_zhxgsj":"",
+    "xt_zxbz":"",
+    "xt_zxyy":"",
+    "xt_zxyybz":"",
+    "ydcs":0,
+    "ydqx":""
+  },
+  {
+    "bczt":"",
+    "flid":"",
+    "gxfjdm":"",
+    "gxpcsdm":"",
+    "gxsjdm":"",
+    "gxzrqdm":"",
+    "hpsl":0,
+    "id":"",
+    "rzbt":"",
+    "rznr":"",
+    "sczt":"",
+    "sumHpsl":1,
+    "xt_cjsj":"",
+    "xt_lrip":"",
+    "xt_lrrbm":"和平责任区",
+    "xt_lrrbmid":"5110114000002012082402423",
+    "xt_lrrid":"510102196811168970",
+    "xt_lrrxm":"雷岗",
+    "xt_lrsj":"",
+    "xt_zhxgip":"",
+    "xt_zhxgrbm":"",
+    "xt_zhxgrbmid":"",
+    "xt_zhxgrid":"",
+    "xt_zhxgrxm":"",
+    "xt_zhxgsj":"",
+    "xt_zxbz":"",
+    "xt_zxyy":"",
+    "xt_zxyybz":"",
+    "ydcs":0,
+    "ydqx":""
+  }
+]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_moveRzfl"><span class="parent">/api/rzxx</span>/moveRzfl</a> <span class="methods"><a href="#api_rzxx_moveRzfl_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzxx_moveRzfl" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>移动日志</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_moveRzfl_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_moveRzfl_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzxx</span>/moveRzfl</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_moveRzfl_post_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_moveRzfl_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_moveRzfl_post_request"><h3>Query Parameters</h3><ul><li><strong>rzid</strong>: <em>required (string)</em><p>日志id</p></li><li><strong>flid</strong>: <em>required (string)</em><p>分类id</p></li></ul></div><div class="tab-pane" id="api_rzxx_moveRzfl_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message":"移动成功！","status":"success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_getSfgkByFlmc"><span class="parent">/api/rzxx</span>/getSfgkByFlmc</a> <span class="methods"><a href="#api_rzxx_getSfgkByFlmc_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_rzxx_getSfgkByFlmc" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询是否公开阅读</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_getSfgkByFlmc_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_getSfgkByFlmc_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/rzxx</span>/getSfgkByFlmc</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_getSfgkByFlmc_get_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_getSfgkByFlmc_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_getSfgkByFlmc_get_request"><h3>Query Parameters</h3><ul><li><strong>flid</strong>: <em>required (string)</em><p>分类id</p></li></ul></div><div class="tab-pane" id="api_rzxx_getSfgkByFlmc_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "flmc":"��־����1�����󷢷��ͷ�ʽ�ķ����ķ�������",
+  "id":"3698e455208b479caeb703e1f8b973a6",
+  "lybm":"JWRZ_RZXX",
+  "lyid":"510102196802144336",
+  "px":1,
+  "sfgk":"0",
+  "sfmr":"0",
+  "xt_cjsj":"2016-07-26 19:34:38",
+  "xt_lrip":"",
+  "xt_lrrbm":"��ǧ������",
+  "xt_lrrbmid":"5110114000002012082402422",
+  "xt_lrrid":"510102196802144336",
+  "xt_lrrxm":"������",
+  "xt_lrsj":"2016-07-26 19:34:38",
+  "xt_zhxgip":"",
+  "xt_zhxgrbm":"��ǧ������",
+  "xt_zhxgrbmid":"5110114000002012082402422",
+  "xt_zhxgrid":"510102196802144336",
+  "xt_zhxgrxm":"������",
+  "xt_zhxgsj":"2016-08-03 16:49:50",
+  "xt_zxbz":"0",
+  "xt_zxyy":"",
+  "xt_zxyybz":""
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_getRzflList"><span class="parent">/api/rzxx</span>/getRzflList</a> <span class="methods"><a href="#api_rzxx_getRzflList_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_rzxx_getRzflList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查出日志分类 信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_getRzflList_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_getRzflList_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/rzxx</span>/getRzflList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_getRzflList_get_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_getRzflList_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_getRzflList_get_request"><h3>Query Parameters</h3><ul><li><strong>xt_lrrid</strong>: <em>required (string)</em><p>系统录入人id</p></li></ul></div><div class="tab-pane" id="api_rzxx_getRzflList_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "id":"3698e455208b479caeb703e1f8b973a6",
+    "py":"5",
+    "text":"��־����1�����󷢷��ͷ�ʽ�ķ����ķ�������"
+  },
+  {
+    "id":"1e2221aaf55b4450a93eac1b4d585275",
+    "py":"1",
+    "text":"��־����2"
+  },
+  {
+    "id":"a3069ae8c84b4d259c57100b127a1a52",
+    "py":"1","text":"��־����3"
+  }
+]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzxx_getSjflList"><span class="parent">/api/rzxx</span>/getSjflList</a> <span class="methods"><a href="#api_rzxx_getSjflList_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_rzxx_getSjflList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>查询 时间分类 信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzxx_getSjflList_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzxx_getSjflList_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/rzxx</span>/getSjflList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzxx_getSjflList_get_request" data-toggle="tab">Request</a></li><li><a href="#api_rzxx_getSjflList_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzxx_getSjflList_get_request"><h3>Query Parameters</h3><ul><li><strong>xt_lrrid</strong>: <em>required (string)</em><p>系统录入人id</p></li></ul></div><div class="tab-pane" id="api_rzxx_getSjflList_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "bczt":"",
+    "flid":"",
+    "gxfjdm":"",
+    "gxpcsdm":"",
+    "gxsjdm":"",
+    "gxzrqdm":"",
+    "hpsl":0,
+    "id":"",
+    "rzbt":"",
+    "rznr":"",
+    "sczt":"",
+    "sumHpsl":9,
+    "xt_cjsj":"",
+    "xt_lrip":"",
+    "xt_lrrbm":"",
+    "xt_lrrbmid":"",
+    "xt_lrrid":"510102196802144336",
+    "xt_lrrxm":"",
+    "xt_lrsj":"2016",
+    "xt_zhxgip":"",
+    "xt_zhxgrbm":"",
+    "xt_zhxgrbmid":"",
+    "xt_zhxgrid":"",
+    "xt_zhxgrxm":"",
+    "xt_zhxgsj":"",
+    "xt_zxbz":"",
+    "xt_zxyy":"",
+    "xt_zxyybz":"",
+    "ydcs":0,
+    "ydqx":""
+  }
+]</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_dygxb" class="panel-title">订阅人关系表</h3></div><div class="panel-body"><div class="top-resource-description"><p>订阅人关系表API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_dygxb_saveOrUpdate"><span class="parent">/api/dygxb</span>/saveOrUpdate</a> <span class="methods"><a href="#api_dygxb_saveOrUpdate_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_dygxb_saveOrUpdate" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>新增订阅人</p></div><div class="list-group"><div onclick="window.location.href = '#api_dygxb_saveOrUpdate_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_dygxb_saveOrUpdate_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/dygxb</span>/saveOrUpdate</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_dygxb_saveOrUpdate_get_request" data-toggle="tab">Request</a></li><li><a href="#api_dygxb_saveOrUpdate_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_dygxb_saveOrUpdate_get_request"><h3>Query Parameters</h3><ul><li><strong>bdyr_id</strong>: <em>required (string)</em><p>被订阅人id</p></li><li><strong>bdyr_xm</strong>: <em>required (string)</em><p>被订阅人姓名</p></li><li><strong>bdyr_bmcode</strong>: <em>required (string)</em><p>被订阅人部门代码</p></li><li><strong>bdyr_bmmc</strong>: <em>required (string)</em><p>被订阅人部门名称</p></li><li><strong>flid</strong>: <em>required (string)</em><p>订阅分类id</p></li></ul></div><div class="tab-pane" id="api_dygxb_saveOrUpdate_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"dysl":6,"message":"订阅成功","status":"success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_dygxb_getDyflTree"><span class="parent">/api/dygxb</span>/getDyflTree</a> <span class="methods"><a href="#api_dygxb_getDyflTree_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_dygxb_getDyflTree" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>订阅分类树</p></div><div class="list-group"><div onclick="window.location.href = '#api_dygxb_getDyflTree_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_dygxb_getDyflTree_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/dygxb</span>/getDyflTree</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_dygxb_getDyflTree_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_dygxb_getDyflTree_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {
+    "attributes":{},
+    "boo":0,
+    "checked":false,
+    "children":[
+      {
+      "attributes":null,
+      "boo":0,
+      "checked":false,
+      "children":[],
+      "iconCls":"",
+      "id":"510722198712105795",
+      "state":"","text":"�η���"
+      },
+      {
+        "attributes":null,
+        "boo":0,
+        "checked":false,
+        "children":[],
+        "iconCls":"",
+        "id":"51010219680129026X",
+        "state":"","text":"����"}
+    ],
+    "iconCls":"",
+    "id":"a941d43f748e46af908142372239f556",
+    "state":"closed",
+    "text":"����1"
+  }
+]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_dygxb_deleteDyrs"><span class="parent">/api/dygxb</span>/deleteDyrs</a> <span class="methods"><a href="#api_dygxb_deleteDyrs_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_dygxb_deleteDyrs" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>取消订阅人</p></div><div class="list-group"><div onclick="window.location.href = '#api_dygxb_deleteDyrs_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_dygxb_deleteDyrs_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/dygxb</span>/deleteDyrs</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_dygxb_deleteDyrs_post_request" data-toggle="tab">Request</a></li><li><a href="#api_dygxb_deleteDyrs_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_dygxb_deleteDyrs_post_request"><h3>Query Parameters</h3><ul><li><strong>dyryid</strong>: <em>required (string)</em><p>订阅人员id</p></li></ul></div><div class="tab-pane" id="api_dygxb_deleteDyrs_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message":"取消成功！","status":"success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_dygxb_moveDyrfl"><span class="parent">/api/dygxb</span>/moveDyrfl</a> <span class="methods"><a href="#api_dygxb_moveDyrfl_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_dygxb_moveDyrfl" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>移动订阅人</p></div><div class="list-group"><div onclick="window.location.href = '#api_dygxb_moveDyrfl_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_dygxb_moveDyrfl_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/dygxb</span>/moveDyrfl</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_dygxb_moveDyrfl_post_request" data-toggle="tab">Request</a></li><li><a href="#api_dygxb_moveDyrfl_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_dygxb_moveDyrfl_post_request"><h3>Query Parameters</h3><ul><li><strong>dyryid</strong>: <em>required (string)</em><p>订阅人员id</p></li><li><strong>flid</strong>: <em>required (string)</em><p>分类id</p></li></ul></div><div class="tab-pane" id="api_dygxb_moveDyrfl_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message":"移动成功！","status":"success"}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_flxx" class="panel-title">分类信息</h3></div><div class="panel-body"><div class="top-resource-description"><p>分类信息API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_flxx_queryComboBoxList"><span class="parent">/api/flxx</span>/queryComboBoxList</a> <span class="methods"><a href="#api_flxx_queryComboBoxList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_flxx_queryComboBoxList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>分类信息下拉框</p></div><div class="list-group"><div onclick="window.location.href = '#api_flxx_queryComboBoxList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_flxx_queryComboBoxList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/flxx</span>/queryComboBoxList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_flxx_queryComboBoxList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_flxx_queryComboBoxList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_flxx_queryComboBoxList_post_request"><h3>Query Parameters</h3><ul><li><strong>lybm</strong>: <em>required (string)</em><p>来源表名</p></li></ul></div><div class="tab-pane" id="api_flxx_queryComboBoxList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {"id":"3698e455208b479caeb703e1f8b973a6","py":"","text":"��־����1�����󷢷��ͷ�ʽ�ķ����ķ�������"},
+  {"id":"1e2221aaf55b4450a93eac1b4d585275","py":"","text":"��־����2"},
+  {"id":"a3069ae8c84b4d259c57100b127a1a52","py":"","text":"��־����3"},
+  {"id":"42d144fee6a842aa91e1c40f4164c4d7","py":"","text":"��־����4"},
+  {"id":"1470f668c3f74b7ab521f4be9d0167da","py":"","text":"��־����6"},
+  {"id":"a115e66e2971435aa6f54aa43b4a5457","py":"","text":"7"},
+  {"id":"5bff36850c1845178ec1a38b59b9b8e2","py":"","text":"��־����8"}
+]</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_flxx_queryManagerList"><span class="parent">/api/flxx</span>/queryManagerList</a> <span class="methods"><a href="#api_flxx_queryManagerList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_flxx_queryManagerList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>分类信息管理</p></div><div class="list-group"><div onclick="window.location.href = '#api_flxx_queryManagerList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_flxx_queryManagerList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/flxx</span>/queryManagerList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_flxx_queryManagerList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_flxx_queryManagerList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_flxx_queryManagerList_post_request"><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>lyid</strong>: <em>required (string)</em><p>来源id</p></li><li><strong>lybm</strong>: <em>required (string)</em><p>来源表名</p></li></ul></div><div class="tab-pane" id="api_flxx_queryManagerList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin":0,
+  "end":5,
+  "flag":"",
+  "order":"",
+  "page":1,
+  "pagePara":"",
+  "rownum":20,
+  "sort":"",
+  "total":7,
+  "rows":[
+    {
+      "flmc":"��־����1�����󷢷��ͷ�ʽ�ķ����ķ�������",
+      "id":"3698e455208b479caeb703e1f8b973a6",
+      "lybm":"JWRZ_RZXX",
+      "lyid":"510102196802144336",
+      "px":1,"sfgk":"0",
+      "sfmr":"0",
+      "xt_cjsj":"2016-07-26 19:34:38",
+      "xt_lrip":"",
+      "xt_lrrbm":"��ǧ������",
+      "xt_lrrbmid":"5110114000002012082402422",
+      "xt_lrrid":"510102196802144336",
+      "xt_lrrxm":"������",
+      "xt_lrsj":"2016-07-26 19:34:38",
+      "xt_zhxgip":"",
+      "xt_zhxgrbm":"�ڽ��й����ֶ������־ֶ����ɳ�����ǧ������",
+      "xt_zhxgrbmid":"5110114000002012082402422",
+      "xt_zhxgrid":"510102196802144336",
+      "xt_zhxgrxm":"������",
+      "xt_zhxgsj":"2016-10-29 15:23:59",
+      "xt_zxbz":"0",
+      "xt_zxyy":"",
+      "xt_zxyybz":""
+    }
+  ]
+}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_flxx_delete"><span class="parent">/api/flxx</span>/delete</a> <span class="methods"><a href="#api_flxx_delete_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_flxx_delete" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>分类信息注销</p></div><div class="list-group"><div onclick="window.location.href = '#api_flxx_delete_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_flxx_delete_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/flxx</span>/delete</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_flxx_delete_post_request" data-toggle="tab">Request</a></li><li><a href="#api_flxx_delete_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_flxx_delete_post_request"><h3>Query Parameters</h3><ul><li><strong>id</strong>: <em>required (string)</em><p>分类信息id</p></li></ul></div><div class="tab-pane" id="api_flxx_delete_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message":"删除成功！","status":"success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_flxx_saveOrUpdate"><span class="parent">/api/flxx</span>/saveOrUpdate</a> <span class="methods"><a href="#api_flxx_saveOrUpdate_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_flxx_saveOrUpdate" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>分类信息新增或修改</p></div><div class="list-group"><div onclick="window.location.href = '#api_flxx_saveOrUpdate_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_flxx_saveOrUpdate_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/flxx</span>/saveOrUpdate</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_flxx_saveOrUpdate_post_request" data-toggle="tab">Request</a></li><li><a href="#api_flxx_saveOrUpdate_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_flxx_saveOrUpdate_post_request"><h3>Query Parameters</h3><ul><li><strong>flmc</strong>: <em>required (string)</em><p>分类名称</p></li><li><strong>id</strong>: <em>required (string)</em><p>分类信息id</p></li><li><strong>lyid</strong>: <em>required (string)</em><p>来源id</p></li><li><strong>lybm</strong>: <em>required (string)</em><p>来源表名</p></li><li><strong>px</strong>: <em>required (string)</em><p>排序的序号</p></li><li><strong>sfgk</strong>: <em>required (string)</em><p>是否公开</p></li><li><strong>sfmr</strong>: <em>required (string)</em><p>是否默认</p></li></ul></div><div class="tab-pane" id="api_flxx_saveOrUpdate_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"id":"a115e66e2971435aa6f54aa43b4a5457","message":"修改成功！","status":"success"}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_rzdzgxb" class="panel-title">日志点赞</h3></div><div class="panel-body"><div class="top-resource-description"><p>日志点赞API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzdzgxb_save"><span class="parent">/api/rzdzgxb</span>/save</a> <span class="methods"><a href="#api_rzdzgxb_save_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_rzdzgxb_save" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_rzdzgxb_save_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzdzgxb_save_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/rzdzgxb</span>/save</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzdzgxb_save_get_request" data-toggle="tab">Request</a></li><li><a href="#api_rzdzgxb_save_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzdzgxb_save_get_request"><h3>Query Parameters</h3><ul><li><strong>rz_id</strong>: <em>required (string)</em><p>日志id</p></li></ul></div><div class="tab-pane" id="api_rzdzgxb_save_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message":"点赞成功","status":"success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_rzdzgxb_getdzsl"><span class="parent">/api/rzdzgxb</span>/getdzsl</a> <span class="methods"><a href="#api_rzdzgxb_getdzsl_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_rzdzgxb_getdzsl" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>获取点赞数</p></div><div class="list-group"><div onclick="window.location.href = '#api_rzdzgxb_getdzsl_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_rzdzgxb_getdzsl_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/rzdzgxb</span>/getdzsl</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_rzdzgxb_getdzsl_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_rzdzgxb_getdzsl_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>2</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api_rzxx">警务日志-日志信息</a></li><li><a href="#api_dygxb">订阅人关系表</a></li><li><a href="#api_flxx">分类信息</a></li><li><a href="#api_rzdzgxb">日志点赞</a></li></ul></div></div></div></div></body></html>

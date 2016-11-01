@@ -1,0 +1,274 @@
+<!DOCTYPE HTML><html><head><title>xlpcapi API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/kevinrenskers/raml2html 2.4.0"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>xlpcapi API documentation <small>version 1.0.3</small></h1><p>http://xlpc.jwzh.com:9018/jwzh-xlpc</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_xlpc_queryPageList" class="panel-title">/api/xlpc/queryPageList</h3></div><div class="panel-body"><div class="top-resource-description"><p>巡逻盘查被盘查人员分页查询</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_xlpc_queryPageList"><span class="parent"></span>/api/xlpc/queryPageList</a> <span class="methods"><a href="#api_xlpc_queryPageList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_xlpc_queryPageList" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#api_xlpc_queryPageList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_xlpc_queryPageList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/api/xlpc/queryPageList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_xlpc_queryPageList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_xlpc_queryPageList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_xlpc_queryPageList_post_request"><h3>Query Parameters</h3><ul><li><strong>ry_id</strong>: <em>(string)</em><p>被盘查人员id</p><p><strong>Example</strong>:</p><pre>37a088dcef0f426ca8d7334ef7f44e83</pre></li><li><strong>bpcr_xm</strong>: <em>(string)</em><p>被盘查人员姓名</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li><li><strong>bpcr_xb</strong>: <em>(string)</em><p>被盘查人员性别代码</p><p><strong>Example</strong>:</p><pre>01</pre></li><li><strong>bpcr_mz</strong>: <em>(string)</em><p>被盘查人员民族代码</p><p><strong>Example</strong>:</p><pre>01</pre></li><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rownum</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>当前第几条</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li></ul></div><div class="tab-pane" id="api_xlpc_queryPageList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "begin": 0,
+  "end": 5,
+  "flag": "",
+  "order": "",
+  "page": 1,
+  "pagePara": "",
+  "rownum": 20,
+  "rows": [
+    {
+      "bczt": "1",
+      "bpcr_csrq": "2016-06-21",
+      "bpcr_hjdzid": "513233470000201412112056346811",
+      "bpcr_hjdzxz": "四川省阿坝藏族羌族自治州红原县安曲镇安曲大道64号1栋1单元1楼",
+      "bpcr_hjmlpdm": "",
+      "bpcr_hjmlpxz": "",
+      "bpcr_hjxzqhdm": "",
+      "bpcr_lxdh": "",
+      "bpcr_mz": "01",
+      "bpcr_tmtz": "啊啊啊嗄",
+      "bpcr_xb": "1",
+      "bpcr_xm": "测试人员",
+      "bpcr_xxzhz": "四川省阿坝藏族羌族自治州红原县安曲镇安曲大道17号1栋1单元1楼232",
+      "bpcr_xzhdzid": "510129450000201605231606015225",
+      "bpcr_xzhmlpdm": "",
+      "bpcr_xzhmlpxz": "",
+      "bpcr_xzhxzqhdm": "",
+      "bpcr_xzhz": "四川省成都市大邑县悦来镇惠通街21号2栋2单元2楼",
+      "bpcr_xzhzbx": "",
+      "bpcr_xzhzby": "",
+      "bpcr_zjhm": "520328198706125114",
+      "bpcr_zjlx": "111",
+      "bpcr_zjlydm": "a",
+      "cljg": "1",
+      "cljgbc": "",
+      "gxdm": "",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "510105470000",
+      "gxsjdm": "510100000000",
+      "gxzrqdm": "",
+      "id": "2a059e3a1d3f4dd0807f9ad94124ac0c",
+      "pc_id": "710087733ffd4e75bd71b2aa59dba853",
+      "ry_id": "511025400000201603170929424019",
+      "xt_cjsj": "2016-06-17 14:14:43",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局草堂派出所",
+      "xt_lrrbmid": "510105470000",
+      "xt_lrrid": "510108198509152123",
+      "xt_lrrxm": "李静",
+      "xt_lrsj": "2016-06-17 14:14:43",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局草堂派出所",
+      "xt_zhxgrbmid": "510105470000",
+      "xt_zhxgrid": "510108198509152123",
+      "xt_zhxgrxm": "李静",
+      "xt_zhxgsj": "2016-06-21 13:33:37",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": "",
+      "xxbz": "啊啊啊啊",
+      "yjbmbh": "",
+      "yjbmmc": ",,,,,,,,,,,,,,,",
+      "yjlx": "",
+      "zbx": "121.61022",
+      "zby": "38.9117",
+      "zkyy": ""
+    },
+    {
+      "bczt": "1",
+      "bpcr_csrq": "1985-08-13",
+      "bpcr_hjdzid": "510112530000201507211227459596",
+      "bpcr_hjdzxz": "四川省成都市龙泉驿区龙泉平安村5组64号附1号",
+      "bpcr_hjmlpdm": "",
+      "bpcr_hjmlpxz": "",
+      "bpcr_hjxzqhdm": "",
+      "bpcr_lxdh": "",
+      "bpcr_mz": "05",
+      "bpcr_tmtz": "aaaa",
+      "bpcr_xb": "2",
+      "bpcr_xm": "茹则妮萨·麦提尼亚孜",
+      "bpcr_xxzhz": "asdasdasd",
+      "bpcr_xzhdzid": "510109450000201605231023438393",
+      "bpcr_xzhmlpdm": "",
+      "bpcr_xzhmlpxz": "",
+      "bpcr_xzhxzqhdm": "",
+      "bpcr_xzhz": "",
+      "bpcr_xzhzbx": "",
+      "bpcr_xzhzby": "",
+      "bpcr_zjhm": "653222198508130260",
+      "bpcr_zjlx": "111",
+      "bpcr_zjlydm": "a",
+      "cljg": "1",
+      "cljgbc": "",
+      "gxdm": "",
+      "gxfjdm": "510105000000",
+      "gxpcsdm": "510105470000",
+      "gxsjdm": "510100000000",
+      "gxzrqdm": "",
+      "id": "2749541466534f4996a801f8994e5389",
+      "pc_id": "710087733ffd4e75bd71b2aa59dba853",
+      "ry_id": "510000000000201312271800150231",
+      "xt_cjsj": "2016-06-21 17:29:54",
+      "xt_lrip": "",
+      "xt_lrrbm": "成都市公安局青羊区分局草堂派出所",
+      "xt_lrrbmid": "510105470000",
+      "xt_lrrid": "510108198509152123",
+      "xt_lrrxm": "李静",
+      "xt_lrsj": "2016-06-21 17:29:54",
+      "xt_zhxgip": "",
+      "xt_zhxgrbm": "成都市公安局青羊区分局草堂派出所",
+      "xt_zhxgrbmid": "510105470000",
+      "xt_zhxgrid": "510108198509152123",
+      "xt_zhxgrxm": "李静",
+      "xt_zhxgsj": "2016-06-21 17:29:54",
+      "xt_zxbz": "0",
+      "xt_zxyy": "",
+      "xt_zxyybz": "",
+      "xxbz": "adasdas",
+      "yjbmbh": "",
+      "yjbmmc": ",",
+      "yjlx": "",
+      "zbx": "121.61022",
+      "zby": "38.9117",
+      "zkyy": ""
+    }
+  ],
+  "sort": "",
+  "total": 2
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api_xlpc_queryPageList">/api/xlpc/queryPageList</a></li></ul></div></div></div></div></body></html>

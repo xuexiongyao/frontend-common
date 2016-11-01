@@ -1,0 +1,298 @@
+<!DOCTYPE HTML><html><head><title>业务协同系统 API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 3.0.1"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>业务协同系统 API documentation <small>version 1.0.5</small></h1><p>http://hjql.jwzh.com:9011/jwzh-hjql</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_hjql" class="panel-title">业务协同户籍清理信息</h3></div><div class="panel-body"><div class="top-resource-description"><p>业务协同户籍清理信息API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjql_queryPageList"><span class="parent">/api/hjql</span>/queryPageList</a> <span class="methods"><a href="#api_hjql_queryPageList_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_hjql_queryPageList" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>业务协同分页查询，管理列表查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjql_queryPageList_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjql_queryPageList_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/hjql</span>/queryPageList</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjql_queryPageList_post_request" data-toggle="tab">Request</a></li><li><a href="#api_hjql_queryPageList_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjql_queryPageList_post_request"><h3>Query Parameters</h3><ul><li><strong>xm</strong>: <em>(string)</em><p>姓名</p><p><strong>Example</strong>:</p><pre>王丽华</pre></li><li><strong>hkszdpcs</strong>: <em>(string)</em><p>户口所在派出所代码</p><p><strong>Example</strong>:</p><pre>511011670000</pre></li><li><strong>xtpcscode</strong>: <em>(string)</em><p>协同派出所部门代码</p><p><strong>Example</strong>:</p><pre>511011670000</pre></li><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>flg</strong>: <em>(string)</em><p>导出的类型</p></li><li><strong>sfzh</strong>: <em>(string)</em><p>身份证号码</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li></ul></div><div class="tab-pane" id="api_hjql_queryPageList_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "page":1,
+  "begin":0,
+  "end":10,
+  "total":1,
+  "sort":null,
+  "order":null,
+  "rownum":20,
+  "flag":null,
+  "pagePara":null,
+  "rows":[{
+    "brdh": "13541394765",
+    "cljg": "02",
+    "cljgms": "",
+    "createdtime": null,
+    "czlx": "",
+    "endDate": "",
+    "fqdm": "",
+    "gxdw": "",
+    "hh": "001015510",
+    "hkdz": "四川省内江市玉宇路998号",
+    "hkszdpcs": "511011400000",
+    "hkszdpcsmc": "四川省内江市公安局东兴区分局东兴派出所",
+    "hkszdszmc": "内江市",
+    "hkszdxzqh": "510104",
+    "hkszdxzqhmc": "东兴区",
+    "hkxz": "非农业集体户",
+    "id": "21",
+    "jwjzgj": "",
+    "jwjzgjdm": "",
+    "lastupdatedtime": "2016-10-27",
+    "maxnum": "",
+    "nl": "48",
+    "sfsz": "失踪",
+    "sfyrh": "一人户",
+    "sfzh": "511025194212056345",
+    "sfzt": "在逃",
+    "sjzt": "05",
+    "startDate": "",
+    "swjzsheng": "",
+    "swjzshengdm": "",
+    "swjzshi": "",
+    "swjzshidm": "",
+    "swjzx": "",
+    "swjzxdm": "",
+    "sysj": "",
+    "thcs": 1,
+    "thxx": "",
+    "type": "",
+    "xb": "女性",
+    "xm": "肖碧仙",
+    "xt_cjsj": "",
+    "xt_lrip": "",
+    "xt_lrrbm": "",
+    "xt_lrrbmid": "",
+    "xt_lrrid": "",
+    "xt_lrrxm": "",
+    "xt_lrsj": "",
+    "xt_zhxgip": "",
+    "xt_zhxgrbm": "四川省内江市公安局东兴区分局碑木派出所",
+    "xt_zhxgrbmid": "511011670000",
+    "xt_zhxgrid": "511025198510082996",
+    "xt_zhxgrxm": "廖鹏宇",
+    "xt_zhxgsj": "2016-10-27 17:42:06",
+    "xt_zxbz": "0",
+    "xt_zxyy": "",
+    "xt_zxyybz": "",
+    "xtpcscode": "511011670000",
+    "xtpcsmc": "四川省内江市公安局东兴区分局碑木派出所null",
+    "zhtsr": "吴鹏",
+    "zhtsrid": "511011198212301750"
+  }]
+
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjql_exportExcel2003"><span class="parent">/api/hjql</span>/exportExcel2003</a> <span class="methods"><a href="#api_hjql_exportExcel2003_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_hjql_exportExcel2003" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>业务协同信息导出</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjql_exportExcel2003_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjql_exportExcel2003_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/hjql</span>/exportExcel2003</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjql_exportExcel2003_post_request" data-toggle="tab">Request</a></li><li><a href="#api_hjql_exportExcel2003_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjql_exportExcel2003_post_request"><h3>Query Parameters</h3><ul><li><strong>xm</strong>: <em>(string)</em><p>姓名</p><p><strong>Example</strong>:</p><pre>王丽华</pre></li><li><strong>hkszdpcs</strong>: <em>(string)</em><p>户口所在派出所代码</p><p><strong>Example</strong>:</p><pre>511011670000</pre></li><li><strong>xtpcscode</strong>: <em>(string)</em><p>协同派出所部门代码</p><p><strong>Example</strong>:</p><pre>511011670000</pre></li><li><strong>page</strong>: <em>(integer)</em><p>当前页数，从1开始</p><p><strong>Example</strong>:</p><pre><code>1</code></pre></li><li><strong>rows</strong>: <em>(integer)</em><p>每页条数</p><p><strong>Example</strong>:</p><pre><code>10</code></pre></li><li><strong>flg</strong>: <em>(string)</em><p>导出的类型</p></li><li><strong>sfzh</strong>: <em>(string)</em><p>身份证号码</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li><li><strong>headNameAryStr</strong>: <em>(string)</em><p>标题头中文数组</p></li><li><strong>paramNameAryStr</strong>: <em>(string)</em><p>标题头参数名数组</p></li><li><strong>checkedIdAryStr</strong>: <em>(string)</em><p>选中的导出行对象ID数组</p></li></ul></div><div class="tab-pane" id="api_hjql_exportExcel2003_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message": "导出成功","status": "success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjql_queryTspcsComboBox"><span class="parent">/api/hjql</span>/queryTspcsComboBox</a> <span class="methods"><a href="#api_hjql_queryTspcsComboBox_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_hjql_queryTspcsComboBox" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>业务协同推送派出所查询</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjql_queryTspcsComboBox_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjql_queryTspcsComboBox_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/hjql</span>/queryTspcsComboBox</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjql_queryTspcsComboBox_get_request" data-toggle="tab">Request</a></li><li><a href="#api_hjql_queryTspcsComboBox_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjql_queryTspcsComboBox_get_request"><h3>Query Parameters</h3><ul><li><strong>bzdzid</strong>: <em>required (string)</em><p>标准地址id</p></li><li><strong>pcsdm</strong>: <em>(string)</em><p>派出所代码</p></li><li><strong>fxjdm</strong>: <em>(string)</em><p>分县局代码</p></li><li><strong>sjdm</strong>: <em>(string)</em><p>市局代码</p></li></ul></div><div class="tab-pane" id="api_hjql_queryTspcsComboBox_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+  {"id":"511011670000",
+    "py":"",
+    "text":"四川省内江市公安局东兴区分局碑木派出所"
+  }
+]
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjql_queryBySfzh"><span class="parent">/api/hjql</span>/queryBySfzh</a> <span class="methods"><a href="#api_hjql_queryBySfzh_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_hjql_queryBySfzh" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>根据身份证号查询业务协同详细信息</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjql_queryBySfzh_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjql_queryBySfzh_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/hjql</span>/queryBySfzh</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjql_queryBySfzh_get_request" data-toggle="tab">Request</a></li><li><a href="#api_hjql_queryBySfzh_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjql_queryBySfzh_get_request"><h3>Query Parameters</h3><ul><li><strong>sfzh</strong>: <em>required (string)</em><p>身份证号</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li></ul></div><div class="tab-pane" id="api_hjql_queryBySfzh_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "hjqlxx": {
+    "brdh": "13541394765",
+    "cljg": "02",
+    "cljgms": "",
+    "createdtime": null,
+    "czlx": "",
+    "endDate": "",
+    "fqdm": "",
+    "gxdw": "",
+    "hh": "001015510",
+    "hkdz": "四川省内江市玉宇路998号",
+    "hkszdpcs": "511011400000",
+    "hkszdpcsmc": "四川省内江市公安局东兴区分局东兴派出所",
+    "hkszdszmc": "内江市",
+    "hkszdxzqh": "510104",
+    "hkszdxzqhmc": "东兴区",
+    "hkxz": "非农业集体户",
+    "id": "21",
+    "jwjzgj": "",
+    "jwjzgjdm": "",
+    "lastupdatedtime": "2016-10-27",
+    "maxnum": "",
+    "nl": "48",
+    "sfsz": "失踪",
+    "sfyrh": "一人户",
+    "sfzh": "511025194212056345",
+    "sfzt": "在逃",
+    "sjzt": "05",
+    "startDate": "",
+    "swjzsheng": "",
+    "swjzshengdm": "",
+    "swjzshi": "",
+    "swjzshidm": "",
+    "swjzx": "",
+    "swjzxdm": "",
+    "sysj": "",
+    "thcs": 1,
+    "thxx": "",
+    "type": "",
+    "xb": "女性",
+    "xm": "肖碧仙",
+    "xt_cjsj": "",
+    "xt_lrip": "",
+    "xt_lrrbm": "",
+    "xt_lrrbmid": "",
+    "xt_lrrid": "",
+    "xt_lrrxm": "",
+    "xt_lrsj": "",
+    "xt_zhxgip": "",
+    "xt_zhxgrbm": "四川省内江市公安局东兴区分局碑木派出所",
+    "xt_zhxgrbmid": "511011670000",
+    "xt_zhxgrid": "511025198510082996",
+    "xt_zhxgrxm": "廖鹏宇",
+    "xt_zhxgsj": "2016-10-27 17:42:06",
+    "xt_zxbz": "0",
+    "xt_zxyy": "",
+    "xt_zxyybz": "",
+    "xtpcscode": "511011670000",
+    "xtpcsmc": "四川省内江市公安局东兴区分局碑木派出所null",
+    "zhtsr": "吴鹏",
+    "zhtsrid": "511011198212301750"
+  }
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_hjd" class="panel-title">户籍地派出所处理</h3></div><div class="panel-body"><div class="top-resource-description"><p>户籍地派出所处理信息API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjd_checkcj"><span class="parent">/api/hjd</span>/checkcj</a> <span class="methods"><a href="#api_hjd_checkcj_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_api_hjd_checkcj" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>判断是否采集实有人口</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjd_checkcj_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjd_checkcj_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/api/hjd</span>/checkcj</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjd_checkcj_get_request" data-toggle="tab">Request</a></li><li><a href="#api_hjd_checkcj_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjd_checkcj_get_request"><h3>Query Parameters</h3><ul><li><strong>sfzh</strong>: <em>required (string)</em><p>身份证号</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li></ul></div><div class="tab-pane" id="api_hjd_checkcj_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message": "没有采集","status": "success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjd_cjsyrkHj"><span class="parent">/api/hjd</span>/cjsyrkHj</a> <span class="methods"><a href="#api_hjd_cjsyrkHj_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_hjd_cjsyrkHj" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>户籍地派出所采集实有人口</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjd_cjsyrkHj_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjd_cjsyrkHj_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/hjd</span>/cjsyrkHj</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjd_cjsyrkHj_post_request" data-toggle="tab">Request</a></li><li><a href="#api_hjd_cjsyrkHj_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjd_cjsyrkHj_post_request"><h3>Query Parameters</h3><ul><li><strong>sfzh</strong>: <em>required (string)</em><p>身份证号</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li><li><strong>cljgdm</strong>: <em>(string)</em><p>处理结果代码</p></li><li><strong>cljgms</strong>: <em>(string)</em><p>处理结果描述</p></li></ul></div><div class="tab-pane" id="api_hjd_cjsyrkHj_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message": "采集成功","status": "success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_hjd_addHj"><span class="parent">/api/hjd</span>/addHj</a> <span class="methods"><a href="#api_hjd_addHj_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_hjd_addHj" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>户籍地派出所终结，推送</p></div><div class="list-group"><div onclick="window.location.href = '#api_hjd_addHj_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_hjd_addHj_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/hjd</span>/addHj</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_hjd_addHj_post_request" data-toggle="tab">Request</a></li><li><a href="#api_hjd_addHj_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_hjd_addHj_post_request"><h3>Query Parameters</h3><ul><li><strong>sfzh</strong>: <em>required (string)</em><p>身份证号</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li><li><strong>cljgdm</strong>: <em>(string)</em><p>处理结果代码</p></li><li><strong>cljgms</strong>: <em>(string)</em><p>处理结果描述</p></li><li><strong>jzd_dzid</strong>: <em>(string)</em><p>地址id</p></li><li><strong>tspcsdm</strong>: <em>(string)</em><p>推送至派出所代码</p></li><li><strong>tsrdh</strong>: <em>(string)</em><p>推送电话</p></li><li><strong>yxwxyydm</strong>: <em>(string)</em><p>应销未销原因代码</p></li><li><strong>swjzdz</strong>: <em>(string)</em><p>省外居住地址</p></li><li><strong>jwjzgjdm</strong>: <em>(string)</em><p>出境居住所在国代码</p></li><li><strong>cjsydm</strong>: <em>(string)</em><p>出境是由代码</p></li><li><strong>mjlxdh</strong>: <em>(string)</em><p>民警联系电话</p></li></ul></div><div class="tab-pane" id="api_hjd_addHj_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message": "保存成功","status": "success"}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="api_xtd" class="panel-title">协同派出所处理</h3></div><div class="panel-body"><div class="top-resource-description"><p>协同派出所处理信息API</p></div><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_xtd_cjsyrkXt"><span class="parent">/api/xtd</span>/cjsyrkXt</a> <span class="methods"><a href="#api_xtd_cjsyrkXt_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_xtd_cjsyrkXt" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>协同派出所采集实有人口</p></div><div class="list-group"><div onclick="window.location.href = '#api_xtd_cjsyrkXt_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_xtd_cjsyrkXt_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/xtd</span>/cjsyrkXt</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_xtd_cjsyrkXt_post_request" data-toggle="tab">Request</a></li><li><a href="#api_xtd_cjsyrkXt_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_xtd_cjsyrkXt_post_request"><h3>Query Parameters</h3><ul><li><strong>sfzh</strong>: <em>required (string)</em><p>身份证号</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li><li><strong>cljgdm</strong>: <em>(string)</em><p>处理结果代码</p></li><li><strong>cljgms</strong>: <em>(string)</em><p>处理结果描述</p></li></ul></div><div class="tab-pane" id="api_xtd_cjsyrkXt_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message": "采集成功","status": "success"}</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_api_xtd_addXt"><span class="parent">/api/xtd</span>/addXt</a> <span class="methods"><a href="#api_xtd_addXt_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_api_xtd_addXt" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>协同派出所终结，退回</p></div><div class="list-group"><div onclick="window.location.href = '#api_xtd_addXt_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="api_xtd_addXt_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/api/xtd</span>/addXt</h4></div><div class="modal-body"><ul class="nav nav-tabs"><li class="active"><a href="#api_xtd_addXt_post_request" data-toggle="tab">Request</a></li><li><a href="#api_xtd_addXt_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="api_xtd_addXt_post_request"><h3>Query Parameters</h3><ul><li><strong>sfzh</strong>: <em>required (string)</em><p>身份证号</p><p><strong>Example</strong>:</p><pre>210203195410034804</pre></li><li><strong>cljgdm</strong>: <em>(string)</em><p>处理结果代码</p></li><li><strong>cljgms</strong>: <em>(string)</em><p>处理结果描述</p></li><li><strong>jzd_dzid</strong>: <em>(string)</em><p>地址id</p></li><li><strong>thdw</strong>: <em>(string)</em><p>退回至单位</p></li><li><strong>thyydm</strong>: <em>(string)</em><p>退回原因代码</p></li><li><strong>thrdh</strong>: <em>(string)</em><p>退回人电话</p></li><li><strong>yxwxyydm</strong>: <em>(string)</em><p>应销未销原因代码</p></li><li><strong>swjzdz</strong>: <em>(string)</em><p>省外居住地址</p></li><li><strong>jwjzgjdm</strong>: <em>(string)</em><p>出境居住所在国代码</p></li><li><strong>cjsydm</strong>: <em>(string)</em><p>出境是由代码</p></li><li><strong>mjlxdh</strong>: <em>(string)</em><p>民警联系电话</p></li></ul></div><div class="tab-pane" id="api_xtd_addXt_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{"message": "保存成功","status": "success"}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#api_hjql">业务协同户籍清理信息</a></li><li><a href="#api_hjd">户籍地派出所处理</a></li><li><a href="#api_xtd">协同派出所处理</a></li></ul></div></div></div></div></body></html>
