@@ -672,18 +672,18 @@ function editSwitch(bool, border_class, box_class) {
         box.each(function () {
             var _this = $(this);
             _this.prev().find('i').show();
-            if (_this.hasClass('easyui-combobox') || _this.hasClass('easyuicombobox')) {
-                _this.combobox({readonly: false,required:false}).next().removeClass(_border_class);//移除样式还原边框
-            } else if (_this.hasClass('easyui-textbox') || _this.hasClass('easyuitextbox')) {
-                _this.textbox({readonly: false,required:false}).next().removeClass(_border_class);
-            } else if (_this.hasClass('easyui-datebox') || _this.hasClass('easyuidatebox')) {
-                _this.datebox({readonly: false,required:false}).next().removeClass(_border_class);
-            } else if (_this.hasClass('easyui-datetimebox') || _this.hasClass('easyuidatetimebox')) {
-                _this.datetimebox({readonly: false,required:false}).next().removeClass(_border_class);
-            } else if (_this.hasClass('easyui-combotree') || _this.hasClass('easyuicombotree')) {
-                _this.combotree({readonly: false,required:false}).next().removeClass(_border_class);
-            } else if (_this.hasClass('easyui-validatebox') || _this.hasClass('easyuivalidatebox')) {
-                _this.validatebox({readonly: false,required:false}).next().removeClass(_border_class);
+            if (_this.hasClass('easyui-combobox')) {
+                _this.combobox({readonly: false}).next().removeClass(_border_class);//移除样式还原边框
+            } else if (_this.hasClass('easyui-textbox')) {
+                _this.textbox({readonly: false}).next().removeClass(_border_class);
+            } else if (_this.hasClass('easyui-datebox')) {
+                _this.datebox({readonly: false}).next().removeClass(_border_class);
+            } else if (_this.hasClass('easyui-datetimebox')) {
+                _this.datetimebox({readonly: false}).next().removeClass(_border_class);
+            } else if (_this.hasClass('easyui-combotree')) {
+                _this.combotree({readonly: false}).next().removeClass(_border_class);
+            } else if (_this.hasClass('easyui-validatebox')) {
+                _this.validatebox({readonly: false}).next().removeClass(_border_class);
             }
             _this.next().find('span.textbox-addon').show();//显示按钮
         });
@@ -692,18 +692,18 @@ function editSwitch(bool, border_class, box_class) {
             var _this = $(this);
             //清除“*”
             _this.prev().find('i').hide();
-            if (_this.hasClass('easyui-combobox')) {
-                _this.combobox({readonly: true}).next().addClass(_border_class);//添加样式取消边框
-            } else if (_this.hasClass('easyui-textbox')) {
-                _this.textbox({readonly: true}).next().addClass(_border_class);
-            } else if (_this.hasClass('easyui-datebox')) {
-                _this.datebox({readonly: true}).next().addClass(_border_class);
-            } else if (_this.hasClass('easyui-datetimebox')) {
-                _this.datetimebox({readonly: true}).next().addClass(_border_class);
-            } else if (_this.hasClass('easyui-combotree')) {
-                _this.combotree({readonly: true}).next().addClass(_border_class);
-            } else if (_this.hasClass('easyui-validatebox')) {
-                _this.validatebox({readonly: true}).next().addClass(_border_class);
+            if (_this.hasClass('easyui-combobox') || _this.hasClass('easyuicombobox')) {
+                _this.combobox({readonly: true,required:false}).next().addClass(_border_class);//添加样式取消边框
+            } else if (_this.hasClass('easyui-textbox') || _this.hasClass('easyuitextbox')) {
+                _this.textbox({readonly: true,required:false}).next().addClass(_border_class);
+            } else if (_this.hasClass('easyui-datebox') || _this.hasClass('easyuidatebox')) {
+                _this.datebox({readonly: true,required:false}).next().addClass(_border_class);
+            } else if (_this.hasClass('easyui-datetimebox') || _this.hasClass('easyuidatetimebox')) {
+                _this.datetimebox({readonly: true,required:false}).next().addClass(_border_class);
+            } else if (_this.hasClass('easyui-combotree') || _this.hasClass('easyuicombotree')) {
+                _this.combotree({readonly: true,required:false}).next().addClass(_border_class);
+            } else if (_this.hasClass('easyui-validatebox') || _this.hasClass('easyuivalidatebox')) {
+                _this.validatebox({readonly: true,required:false}).next().addClass(_border_class);
             }
             _this.next().find('span.textbox-addon').hide();//隐藏按钮
         });
