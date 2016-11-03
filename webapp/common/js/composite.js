@@ -349,7 +349,11 @@ function batchExprot(search_config_obj){
 		success : function(data){
 			//console.log('导出返回参数:',data);
 			if(data.status == 'success'){
-				location.href = search_config.basePath+"/"+data.message;
+				var fileurl=data.message;
+            	if(fileurl.indexOf("http")<0){
+            		fileurl=basePath + '/' + data.message;
+            	}
+                location.href = fileurl;
 				//$('#'+init.export_panel).dialog('close');
 
 				var noticeMsg;
