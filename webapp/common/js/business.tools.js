@@ -522,7 +522,6 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			function getAddrssInfo(page_size){
 				submitParam['pagenum'] = 1;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
-				//console.log('正在加载',data);
 				loading('open','数据加载中,请耐心等待...');
 				$.ajax({
 					xhrFields: {withCredentials: true},
@@ -599,8 +598,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			return data;
 		},
 		onSelect: function(record) {
-			//console.log('选择的地址:',record);
-			selectAddressTeam(record);
+			//console.log('选择的地址:',record,returnFieldData);
 			for (var item in returnFieldData) {
 				if (record[item]) {
 					$('#' + returnFieldData[item]).val(record[item]);
@@ -612,6 +610,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 				fn(record);
 			}
 		},
+		onClick: function(){return false;},
 		//展示面板时,清空input的值并执行不带参数的回调函数
 		onShowPanel :function(){
 			for (var item in returnFieldData) {
