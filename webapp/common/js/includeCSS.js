@@ -7,7 +7,7 @@ if(jwzhVersion){
     if(!getCookie(pathname) || getCookie(pathname) != jwzhVersion){
         setCookie(pathname,jwzhVersion,300);
         console.log('系统升级, 当前版本号为:'+jwzhVersion);
-        location.reload(true);
+        //location.reload(true);
     }
 }
 //静态资源路径
