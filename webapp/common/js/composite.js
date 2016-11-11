@@ -325,7 +325,7 @@ function batchExprot(search_config_obj){
 	export_condition_obj.query = query;
 	//表格内容
 	export_condition_obj['start']=0;
-	export_condition_obj['limit']=10;
+	export_condition_obj['limit']=2000;
 
 	console.log('表格内容:',tableData);
 	console.log('查询条件:',condition_obj);
