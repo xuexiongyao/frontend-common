@@ -276,21 +276,12 @@ function batchExprot(search_config_obj){
 	//将查询条件赋给导出查询条件
 	var export_condition_obj = {};
 
-	var tableData = $('#result_table').datagrid('getChecked');//勾选的导出项
-	if(tableData.length>0){//有勾选的
-		var main_type_primary_key=[];
-		for(var item in tableData){
-			console.log(item);
-			console.log();
-			var selectedId=tableData[item][search_config.primary_key];
-			if(selectedId)
-				main_type_primary_key.push(selectedId);
-		}
+	if(checked_id_arr.length>0){//有勾选的
 		export_condition_obj['mainTable']=search_config.main_type;
 		export_condition_obj['key']='';
 		export_condition_obj['option']='ad';
 
-		export_condition_obj.query=[{"type":search_config.main_type,"condition":[{"k":search_config.primary_key,"v":main_type_primary_key.join(' '),"op":"="}]}];
+		export_condition_obj.query=[{"type":search_config.main_type,"condition":[{"k":search_config.primary_key,"v":checked_id_arr.join(' '),"op":"="}]}];
 
 	}else{//没有勾选的
 		for(var k in condition_obj){
@@ -327,7 +318,6 @@ function batchExprot(search_config_obj){
 	export_condition_obj['start']=0;
 	export_condition_obj['limit']=2000;
 
-	console.log('表格内容:',tableData);
 	console.log('查询条件:',condition_obj);
 	console.log('导出的查询条件:',export_condition_obj);
 	console.log('导出条件:',search_config_obj);
@@ -473,6 +463,8 @@ function getConfigArr(config){
 
 //普通查询
 function normalQuery(){
+	checked_id_arr = [];//清空已勾选
+	
 	var keywords = $.trim($('#keywords').val());
 	if(keywords == ''){
 		$.messager.alert('提示','请输入关键字!','warning',function(){
@@ -527,6 +519,7 @@ function btnEvent(){
 	});
 	//点击查询(高级查询)
 	$('#search_submit').off('click').on('click',function(){
+		checked_id_arr = [];//清空已勾选
 		var null_status = 0;
 		var query = [];
 		for(var i=0;i<search_config_arr.length;i++){
@@ -599,8 +592,70 @@ function createDatagrid(){
 			{field: 'ID',title:'check',align:'center',width:10, checkbox: true},
 			{field:'HJD_XZQHDMMC',title:'描述',align:'center',width:80,formatter:tableContent},
 			{field:'handle',title:'操作',align:'center',width:10,formatter:tableHandle}
-		]]
+		]],
+		onCheck : function(index, row){
+        	doCheckRows(index, row,'add');
+        },
+        onCheckAll: function(rows){
+        	doCheckRows(null, rows,'add');
+        },
+        onUncheck : function(index, row){
+        	doCheckRows(index, row,'del');
+        },
+        onUncheckAll: function(rows){
+        	doCheckRows(null, rows,'del');
+        },
+        onLoadSuccess : function(data){
+        	doCheckRows(null, data.rows,'load');
+        },
 	});
+}
+
+
+var checked_id_arr = [];//已勾选的ID
+
+/**
+ * 保存勾选，分页要记录
+ * @param index 行数，不传标识全选
+ * @param rows 单行时传一行的对象，全选时传选中行的数组
+ * @param type 处理类型，load:加载,add:勾选，del:取消勾选
+ */
+function doCheckRows(index,rows,type){
+	
+	if(type=='load'){
+		for(var i=0; i<rows.length; i++){
+			var row = rows[i];
+			var idIndex=checked_id_arr.indexOf(row[search_config.primary_key]);
+		
+			if(idIndex>=0){
+				$('#result_table').datagrid('checkRow',i);
+			}
+		}
+		return;
+	}
+	
+	if(index!=null){//单行
+		var idIndex=checked_id_arr.indexOf(rows[search_config.primary_key]);
+		if(type=='add' && idIndex<0){
+			checked_id_arr[checked_id_arr.length]=rows[search_config.primary_key];
+		}
+		if(type=='del' && idIndex>=0){
+			checked_id_arr.splice(idIndex,1);
+		}
+	}else{
+		for(var i=0; i<rows.length; i++){
+			var row = rows[i];
+			var idIndex=checked_id_arr.indexOf(row[search_config.primary_key]);
+			if(type=='add' && idIndex<0){
+				checked_id_arr[checked_id_arr.length]=row[search_config.primary_key];
+			}
+			if(type=='del' && idIndex>=0){
+				checked_id_arr.splice(idIndex,1);
+			}
+		}
+	}
+	
+	console.log(checked_id_arr);
 }
 
 //生成查询条件输入框
