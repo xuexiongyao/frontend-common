@@ -971,7 +971,7 @@ function tableContent(val, row, index){
 		var inputType = getConfigObj(field_i,config)['input'];
 		var field = getConfigObj(field_i,config)['field'];
 		//console.log(config[i].field)
-		if(inputType == 'combobox'){
+		if(inputType == 'combobox' || inputType == 'combotree'){
 			if(!row[field]){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
 			}else{
