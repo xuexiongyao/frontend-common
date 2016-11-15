@@ -608,6 +608,14 @@ function createDatagrid(){
         onLoadSuccess : function(data){
         	doCheckRows(null, data.rows,'load');
         },
+        onDblClickRow : function(index, row){
+        	try {
+        		listDetail(index, row);
+            } catch (e) {
+            	console.log("未定义详情跳转方法");
+            }
+        	
+        }
 	});
 }
 
