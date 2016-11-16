@@ -271,12 +271,16 @@ function ltToday(start_id, end_id) {
 * 1.form_id : 表单ID
 * 2.call_back : 提交成功后的回调函数处理
 * 3.url : 提交表单地址,默认为form上的action属性
+* 4.queryParams : 额外的参数
 * */
-function formSubmit(form_id, call_back, url){
-    var submit_form = $('#' + form_id);
-    var submit_url = url || submit_form.action;
-    submit_form.form('submit', {
+function formSubmit(form_id, call_back, url,queryParams){
+    var $submit_form = $('#' + form_id);
+    var submit_url = url || $submit_form.action;
+    var params = {};
+    if(queryParams) params = queryParams;
+    $submit_form.form('submit', {
         url: submit_url,
+        queryParams: params,
         onSubmit: function () {
             var isValid = $(this).form('validate');
             if(isValid){
