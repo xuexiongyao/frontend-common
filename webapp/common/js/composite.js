@@ -986,9 +986,9 @@ function tableContent(val, row, index){
 			}else{
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
-		}if(inputType == 'textbox_org'){//组织机构，翻译
-			var span_id='org_format_'+(new Date()).getTime();
-			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
+		}else if(inputType == 'textbox_org'){//组织机构，翻译
+			//var span_id='org_format_'+(new Date()).getTime();
+			//html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
 		}else{
 			if(!row[field]){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
