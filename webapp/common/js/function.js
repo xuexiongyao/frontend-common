@@ -289,7 +289,6 @@ function formSubmit(form_id, call_back, url,queryParams){
             return isValid;	// 返回false终止表单提交
         },
         success: function (data) {
-            loading('close');//完成后关闭...转圈
             try{
                 var json = eval('(' + data + ')');
             }catch(e){
@@ -298,12 +297,15 @@ function formSubmit(form_id, call_back, url,queryParams){
             if(json.status == 'success'){
                 if(typeof call_back == 'function'){
                     call_back();
+                    loading('close');//完成后关闭...转圈
                 }else{
                     alert(call_back+'is not a function');
                 }
             }else{
                 $.messager.alert('提示',json.message);
+                loading('close');//完成后关闭...转圈
             }
+
         }
     });
 }
