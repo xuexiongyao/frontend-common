@@ -606,6 +606,7 @@ function createDatagrid(){
         	doCheckRows(null, rows,'del');
         },
         onLoadSuccess : function(data){
+        	clearFormate();
         	doCheckRows(null, data.rows,'load');
         },
         onDblClickRow : function(index, row){
@@ -855,7 +856,7 @@ function ajaxQuery(condition_obj){
 				total:998
 			}).show();
 			changeLinkButtonIcon();
-			searchResult();
+			searchResult(search_result_test);
 		}
 	});
 
@@ -958,7 +959,7 @@ function pagination(){
 //查询结果
 function searchResult(data){
 	loading('close');
-	var data = data || search_result_test; //测试数据
+	//var data = data || search_result_test; //测试数据
 	var datagrid_data = {
 		rows : data.result,
 		total: data.count
@@ -985,6 +986,9 @@ function tableContent(val, row, index){
 			}else{
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
+		}if(inputType == 'textbox_org'){//组织机构，翻译
+			var span_id='org_format_'+(new Date()).getTime();
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
 		}else{
 			if(!row[field]){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
@@ -1126,7 +1130,96 @@ var t2 = {
 	]
 };
 
+/**
+ * 组织机构代码翻译
+ * @param orgCodes 机构代码，多个用逗号分隔
+ * @returns {String}
+ */
+function orgCodeFormatter(val,span_id){
+	if(!val) return "";
+	else{
+		if(orgNames[val]){
+			return orgNames[val];
+		}else{
+	    	getOrgName(val,span_id);
+	    	return '加载中……';
+		}
+	}
+	
+}
 
-//console.log(t2);
+var orgNames={};//组织机构缓存
+var sendAry_org=[];//待转换机构
+var sendAry_span=[];//待转换机构存储标签
+var sendNum=10;//每多少条发送一次
+/**
+ * 每10条发送一次
+ * @param val 机构代码
+ * @param span_id spanv标签id
+ */
+function getOrgName(val,span_id){
+	if(val!=null && span_id!=null){
+		sendAry_org[sendAry_org.length]=val;
+		sendAry_span[sendAry_span.length]=span_id;
+		
+		if(sendAry_org.length<sendNum){
+			return;
+		}
+	}
+	
+	if(sendAry_span.length==0)
+		return;
+	
+	var sendAry_span_tmp=sendAry_span;//临时数组
+	var sendAry_org_tmp=sendAry_org;//临时数组
+	sendAry_span=[];
+	sendAry_org=[];
+	
+	$.ajax({
+		url: pathConfig.managePath +'/api/orgization/queryOrgNameByOrgcodes',
+		  dataType: 'text',
+		  type: 'get',
+		  async: true,	 
+		  xhrFields: {
+			  withCredentials: true
+		  },
+		  crossDomain: true,
+		  data: {
+			  'orgCodes':sendAry_org_tmp.join(',')
+		  },
+		  success: function (data) {
+			  if(data){
+				  data = data.split(',');
+			  }
+			  //将返回的名称填入对应的span
+			  for(var item in sendAry_span_tmp){
+				  span_id = sendAry_span_tmp[item];
+				  val = sendAry_org_tmp[item];//默认orgcode，有翻译才翻译
+				  
+				  if(data[item])
+					  val = data[item];
+				  
+				  orgNames[sendAry_org_tmp[item]]=val;//缓存机构名称
+				  
+				  $("#"+span_id).html(val);
+			  }
+			  
+			  //setTimeout(function () {
+              	//$("#"+span_id).html(data);
+              //},500);//延迟0.5秒执行
+		  },
+		  error: function (errorData) {//返回只有 组织机构名称，不符合json规范，所以进error
+		      console.log("queryOrgNameByOrgcodes ajax error");
+		  }
+		});
+}
+
+/**
+ * 清空未发送的翻译请求
+ */
+function clearFormate(){
+	console.log("clearFormate");
+	getOrgName(null,null);
+}
 
 
