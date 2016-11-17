@@ -979,6 +979,7 @@ function tableContent(val, row, index){
 		var pro_name = getConfigObj(field_i,config)['text'];
 		var inputType = getConfigObj(field_i,config)['input'];
 		var field = getConfigObj(field_i,config)['field'];
+		var formatter = getConfigObj(field_i,config)['formatter'];//格式化
 		//console.log(config[i].field)
 		if(inputType == 'combobox' || inputType == 'combotree'){
 			if(!row[field]){
@@ -987,8 +988,11 @@ function tableContent(val, row, index){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
 		}else if(inputType == 'textbox_org'){//组织机构，翻译
-			//var span_id='org_format_'+(new Date()).getTime();
-			//html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
+			var span_id='org_format_'+(new Date()).getTime();
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
+		}else if(inputType == 'datebox'){//日期格式化
+			var val=dateFormatter(row[field],datePattern[formatter]);
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+val+'</span></div>';
 		}else{
 			if(!row[field]){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
@@ -1222,4 +1226,38 @@ function clearFormate(){
 	getOrgName(null,null);
 }
 
+//日期格式
+var datePattern={
+		'date10':'yyyy-MM-dd',
+		'date13':'yyyy-MM-dd HH',
+		'date16':'yyyy-MM-dd HH:mm',
+		'date19':'yyyy-MM-dd HH:mm:ss'
+		};
+/**
+ * 日期字符串格式化
+ * 目前的日期格式有 yyyy-MM-dd HH:mm:ss和yyyy-MM-dd'T'HH:mm:ss这种
+ * @param val
+ * @param pattern
+ */
+function dateFormatter(val,pattern){
+	if(!val || val.length<19) return "";
+	if(!pattern) pattern = datePattern.date19;
+	
+	var year,month,date,hours,minutes,seconds
+	year=val.substr(0,4);
+	month=val.substr(5,2);
+	date=val.substr(8,2);
+	hours=val.substr(11,2);
+	minutes=val.substr(14,2);
+	seconds=val.substr(17,2);
+	
+	pattern =pattern.replace('yyyy',year);
+	pattern =pattern.replace('MM',month);
+	pattern =pattern.replace('dd',date);
+	pattern =pattern.replace('HH',hours);
+	pattern =pattern.replace('mm',minutes);
+	pattern =pattern.replace('ss',seconds);
+	
+	return pattern;
+}
 
