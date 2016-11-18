@@ -166,7 +166,7 @@ function openOtherTable(isExport){
 			for(var m=0;m<new_module_i.length;m++){
 				var module_i_j = new_module_i[m];
 				var html_check = ''
-				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
+				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'" input="'+module_i_j.input+'" formatter="'+module_i_j.formatter+'">'+module_i_j.text+'</label>';
 				$('#item_check'+i).append(html_check);
 			}
 		}
@@ -186,16 +186,21 @@ function openOtherTable(isExport){
 					var module = $(this).parent().parent().attr('module');
 					var field = $(this).attr('field');
 					var text = $(this).attr('text');
+					var input = $(this).attr('input');
+					var formatter = $(this).attr('formatter');
+					formatter = datePattern[formatter];
+					if(!formatter) 
+						formatter = datePattern.date19;
 					if(search_config_obj[module]){
 						if(isExport){
-							(search_config_obj[module]).push(field+'|'+text);
+							(search_config_obj[module]).push(field+'|'+text+'|'+input+'|'+formatter);
 						}else{
 							(search_config_obj[module]).push(field);
 						}
 
 					}else{
 						if(isExport){
-							search_config_obj[module] = [field+'|'+text];
+							search_config_obj[module] = [field+'|'+text+'|'+input+'|'+formatter];
 						}else{
 							search_config_obj[module] = [field];
 						}
