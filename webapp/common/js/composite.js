@@ -166,7 +166,7 @@ function openOtherTable(isExport){
 			for(var m=0;m<new_module_i.length;m++){
 				var module_i_j = new_module_i[m];
 				var html_check = ''
-				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'">'+module_i_j.text+'</label>';
+				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'" input="'+module_i_j.input+'" formatter="'+module_i_j.formatter+'">'+module_i_j.text+'</label>';
 				$('#item_check'+i).append(html_check);
 			}
 		}
@@ -186,16 +186,21 @@ function openOtherTable(isExport){
 					var module = $(this).parent().parent().attr('module');
 					var field = $(this).attr('field');
 					var text = $(this).attr('text');
+					var input = $(this).attr('input');
+					var formatter = $(this).attr('formatter');
+					formatter = datePattern[formatter];
+					if(!formatter) 
+						formatter = datePattern.date19;
 					if(search_config_obj[module]){
 						if(isExport){
-							(search_config_obj[module]).push(field+'|'+text);
+							(search_config_obj[module]).push(field+'|'+text+'|'+input+'|'+formatter);
 						}else{
 							(search_config_obj[module]).push(field);
 						}
 
 					}else{
 						if(isExport){
-							search_config_obj[module] = [field+'|'+text];
+							search_config_obj[module] = [field+'|'+text+'|'+input+'|'+formatter];
 						}else{
 							search_config_obj[module] = [field];
 						}
@@ -606,6 +611,7 @@ function createDatagrid(){
         	doCheckRows(null, rows,'del');
         },
         onLoadSuccess : function(data){
+        	clearFormate();
         	doCheckRows(null, data.rows,'load');
         },
         onDblClickRow : function(index, row){
@@ -631,13 +637,23 @@ var checked_id_arr = [];//已勾选的ID
 function doCheckRows(index,rows,type){
 	
 	if(type=='load'){
+		
+		var isCheckedAll=true;
 		for(var i=0; i<rows.length; i++){
 			var row = rows[i];
 			var idIndex=checked_id_arr.indexOf(row[search_config.primary_key]);
 		
 			if(idIndex>=0){
 				$('#result_table').datagrid('checkRow',i);
+			}else{
+				isCheckedAll=false;
 			}
+		}
+		
+		if(isCheckedAll){
+			$("#all_select").attr("checked",true);
+		}else{
+			$("#all_select").attr("checked",false);
 		}
 		return;
 	}
@@ -855,7 +871,7 @@ function ajaxQuery(condition_obj){
 				total:998
 			}).show();
 			changeLinkButtonIcon();
-			searchResult();
+			searchResult(search_result_test);
 		}
 	});
 
@@ -958,7 +974,7 @@ function pagination(){
 //查询结果
 function searchResult(data){
 	loading('close');
-	var data = data || search_result_test; //测试数据
+	//var data = data || search_result_test; //测试数据
 	var datagrid_data = {
 		rows : data.result,
 		total: data.count
@@ -978,6 +994,7 @@ function tableContent(val, row, index){
 		var pro_name = getConfigObj(field_i,config)['text'];
 		var inputType = getConfigObj(field_i,config)['input'];
 		var field = getConfigObj(field_i,config)['field'];
+		var formatter = getConfigObj(field_i,config)['formatter'];//格式化
 		//console.log(config[i].field)
 		if(inputType == 'combobox' || inputType == 'combotree'){
 			if(!row[field]){
@@ -985,6 +1002,12 @@ function tableContent(val, row, index){
 			}else{
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
+		}else if(inputType == 'textbox_org'){//组织机构，翻译
+			var span_id='org_format_'+(new Date()).getTime();
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
+		}else if(inputType == 'datebox'){//日期格式化
+			var val=dateFormatter(row[field],datePattern[formatter]);
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+val+'</span></div>';
 		}else{
 			if(!row[field]){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
@@ -1126,7 +1149,130 @@ var t2 = {
 	]
 };
 
+/**
+ * 组织机构代码翻译
+ * @param orgCodes 机构代码，多个用逗号分隔
+ * @returns {String}
+ */
+function orgCodeFormatter(val,span_id){
+	if(!val) return "";
+	else{
+		if(orgNames[val]){
+			return orgNames[val];
+		}else{
+	    	getOrgName(val,span_id);
+	    	return '加载中……';
+		}
+	}
+	
+}
 
-//console.log(t2);
+var orgNames={};//组织机构缓存
+var sendAry_org=[];//待转换机构
+var sendAry_span=[];//待转换机构存储标签
+var sendNum=10;//每多少条发送一次
+/**
+ * 每10条发送一次
+ * @param val 机构代码
+ * @param span_id spanv标签id
+ */
+function getOrgName(val,span_id){
+	if(val!=null && span_id!=null){
+		sendAry_org[sendAry_org.length]=val;
+		sendAry_span[sendAry_span.length]=span_id;
+		
+		if(sendAry_org.length<sendNum){
+			return;
+		}
+	}
+	
+	if(sendAry_span.length==0)
+		return;
+	
+	var sendAry_span_tmp=sendAry_span;//临时数组
+	var sendAry_org_tmp=sendAry_org;//临时数组
+	sendAry_span=[];
+	sendAry_org=[];
+	
+	$.ajax({
+		url: pathConfig.managePath +'/api/orgization/queryOrgNameByOrgcodes',
+		  dataType: 'text',
+		  type: 'get',
+		  async: true,	 
+		  xhrFields: {
+			  withCredentials: true
+		  },
+		  crossDomain: true,
+		  data: {
+			  'orgCodes':sendAry_org_tmp.join(',')
+		  },
+		  success: function (data) {
+			  if(data){
+				  data = data.split(',');
+			  }
+			  //将返回的名称填入对应的span
+			  for(var item in sendAry_span_tmp){
+				  span_id = sendAry_span_tmp[item];
+				  val = sendAry_org_tmp[item];//默认orgcode，有翻译才翻译
+				  
+				  if(data[item])
+					  val = data[item];
+				  
+				  orgNames[sendAry_org_tmp[item]]=val;//缓存机构名称
+				  
+				  $("#"+span_id).html(val);
+			  }
+			  
+			  //setTimeout(function () {
+              	//$("#"+span_id).html(data);
+              //},500);//延迟0.5秒执行
+		  },
+		  error: function (errorData) {//返回只有 组织机构名称，不符合json规范，所以进error
+		      console.log("queryOrgNameByOrgcodes ajax error");
+		  }
+		});
+}
 
+/**
+ * 清空未发送的翻译请求
+ */
+function clearFormate(){
+	console.log("clearFormate");
+	getOrgName(null,null);
+}
+
+//日期格式
+var datePattern={
+		'date10':'yyyy-MM-dd',
+		'date13':'yyyy-MM-dd HH',
+		'date16':'yyyy-MM-dd HH:mm',
+		'date19':'yyyy-MM-dd HH:mm:ss'
+		};
+/**
+ * 日期字符串格式化
+ * 目前的日期格式有 yyyy-MM-dd HH:mm:ss和yyyy-MM-dd'T'HH:mm:ss这种
+ * @param val
+ * @param pattern
+ */
+function dateFormatter(val,pattern){
+	if(!val || val.length<19) return "";
+	if(!pattern) pattern = datePattern.date19;
+	
+	var year,month,date,hours,minutes,seconds
+	year=val.substr(0,4);
+	month=val.substr(5,2);
+	date=val.substr(8,2);
+	hours=val.substr(11,2);
+	minutes=val.substr(14,2);
+	seconds=val.substr(17,2);
+	
+	pattern =pattern.replace('yyyy',year);
+	pattern =pattern.replace('MM',month);
+	pattern =pattern.replace('dd',date);
+	pattern =pattern.replace('HH',hours);
+	pattern =pattern.replace('mm',minutes);
+	pattern =pattern.replace('ss',seconds);
+	
+	return pattern;
+}
 
