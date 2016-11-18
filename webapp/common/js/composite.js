@@ -637,13 +637,23 @@ var checked_id_arr = [];//已勾选的ID
 function doCheckRows(index,rows,type){
 	
 	if(type=='load'){
+		
+		var isCheckedAll=true;
 		for(var i=0; i<rows.length; i++){
 			var row = rows[i];
 			var idIndex=checked_id_arr.indexOf(row[search_config.primary_key]);
 		
 			if(idIndex>=0){
 				$('#result_table').datagrid('checkRow',i);
+			}else{
+				isCheckedAll=false;
 			}
+		}
+		
+		if(isCheckedAll){
+			$("#all_select").attr("checked",true);
+		}else{
+			$("#all_select").attr("checked",false);
 		}
 		return;
 	}
