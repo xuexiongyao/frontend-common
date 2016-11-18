@@ -18,6 +18,7 @@ function queryModule(){
     var list_config = listConfig.config;
     var list_init = listConfig.init;
     //循环生成查询条件
+    $('#query_panel .query-item').empty();
     for(var k in list_config){
         var k_mark = k;
         if(k_mark.indexOf('.') != -1){
