@@ -306,6 +306,7 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 	if (returnFieldData) {
 		var selectedOrgCode = [];
 		var selectedOrgName = [];
+		var selectedorgLevel= [];
 		
 		if(multi_single == 'multi'){//多选
 			var options = $('#select_valid_'+textboxID+'>option');
@@ -318,7 +319,8 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 			var checkNode = $('#treeSelect_'+textboxID).tree('getChecked');
 			if(checkNode.length>0){
 				selectedOrgCode=checkNode[0].id;
-				selectedOrgName=checkNode[0].text
+				selectedOrgName=checkNode[0].text;
+				selectedorgLevel=checkNode[0].attributes.orgLevel;
 			}
 		}
 		
@@ -326,9 +328,10 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 		for (var item in returnFieldData) {
 			if (item == "text") {
 				$('#' + returnFieldData[item]).textbox('setValue',selectedOrgName);
-			}
-			if (item == "id") {
+			}else if (item == "id") {
 				$('#' + returnFieldData[item]).val(selectedOrgCode);
+			}else if (item == "orgLevel") {
+				$('#' + returnFieldData[item]).val(selectedorgLevel);
 			}
 		}
 	}						
