@@ -296,7 +296,7 @@ function formSubmit(form_id, call_back, url,queryParams){
             }
             if(json.status == 'success'){
                 if(typeof call_back == 'function'){
-                    call_back();
+                    call_back(data);
                     loading('close');//完成后关闭...转圈
                 }else{
                     alert(call_back+'is not a function');
