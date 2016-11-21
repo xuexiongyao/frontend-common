@@ -591,12 +591,7 @@ function initSingleTree(textboxID,filterData){
 					},
 					onBeforeCheck: function(node,checked){
 	                    if(checked){
-	                    	var orgTreeObject = $('#treeSelect_'+textboxID);
-	                        var checkNode = orgTreeObject.tree('getChecked');
-	                        if(checkNode.length > 0){
-	                            orgTreeObject.tree('uncheck',checkNode[0].target);
-	                        }
-
+	                    	clearOrgSelectChecked(textboxID);
 	                    }
 	                },
 					onCheck: function(node,checked){
@@ -609,4 +604,20 @@ function initSingleTree(textboxID,filterData){
 		      console.log('queryByOrgcode ajax err');
 		  }
 	});
+}
+
+/**
+ * 清除选中的结点
+ * @param textboxID
+ */
+function clearOrgSelectChecked(textboxID){
+	if(!textboxID) return
+	
+	var orgTreeObject = $('#treeSelect_'+textboxID);
+	if(!orgTreeObject)  return;
+	
+    var checkNode = orgTreeObject.tree('getChecked');
+    if(checkNode.length > 0){
+        orgTreeObject.tree('uncheck',checkNode[0].target);
+    }
 }
