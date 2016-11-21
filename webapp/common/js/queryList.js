@@ -9,8 +9,8 @@ $(function(){
     setTable();     //表头设置
 });
 
-var listConfig = new ListConfig();
-var tableCookieName = (location.pathname).substr(0,location.pathname.indexOf('.')) + '_tableHeaderC';
+var listConfig = init.listConfig || new ListConfig();
+var tableCookieName = init.cookieName || (location.pathname).substr(0,location.pathname.indexOf('.')) + '_tableHeaderC';
 var queryListParam = init.queryListParam || {};    //查询条件
 //生成查询条件模块
 function queryModule(){
