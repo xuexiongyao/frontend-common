@@ -844,6 +844,12 @@ function getSearchData($this){
 
 //提交查询请求
 function ajaxQuery(condition_obj){
+	
+	try{
+		if(!beforeSubmit(condition_obj))
+			return;
+	}catch(e){}
+	
 	//查询成功,展示查询内容
 	loading('open','查询中...');
 	console.log('查询条件:',condition_obj);
