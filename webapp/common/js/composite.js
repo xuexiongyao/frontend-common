@@ -31,7 +31,7 @@ function createAdInput(search_config_arr){
 			+'<div>'
 			+'<span class="search-title">'+search_config[type+'_title']+'</span>'
 			+'<span class="search-add">'
-			+'<a class="easyui-linkbutton c2" style="margin-right:10px;" id="otherTable" data-options="height:20">子表查询</a>'
+			+'<a class="easyui-linkbutton c6" style="margin-right:10px;" id="otherTable" data-options="height:20">扩展信息查询</a>'
 			+'<a class="easyui-linkbutton c1 add-condition" data-options="height:20"><i class="fa fa-plus"></i></a>'
 			+'</span>'
 			+'</div>'
@@ -58,7 +58,7 @@ function createAdInputByCheck(search_config_obj){
 		var otherTableBtn = '';
 		var module_k = search_config_obj[k];
 		if(k == search_config_arr[0]){
-			otherTableBtn = '<a class="easyui-linkbutton c2" style="margin-right:10px;" id="otherTable" data-options="height:20">子表查询</a>';
+			otherTableBtn = '<a class="easyui-linkbutton c6" style="margin-right:10px;" id="otherTable" data-options="height:20">扩展信息查询</a>';
 		}
 		var type = k;
 		var type_html = ''
@@ -611,6 +611,7 @@ function createDatagrid(){
         	doCheckRows(null, rows,'del');
         },
         onLoadSuccess : function(data){
+        	isLast=false;//标记为不是最后一个
         	clearFormate();
         	doCheckRows(null, data.rows,'load');
         },
@@ -679,7 +680,7 @@ function doCheckRows(index,rows,type){
 		}
 	}
 	
-	console.log(checked_id_arr);
+	//console.log(checked_id_arr);
 }
 
 //生成查询条件输入框
@@ -1009,7 +1010,7 @@ function tableContent(val, row, index){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
 		}else if(inputType == 'textbox_org'){//组织机构，翻译
-			var span_id='org_format_'+(new Date()).getTime();
+			var span_id='org_format_'+row[field]+'_'+(new Date()).getTime();
 			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
 		}else if(inputType == 'datebox'){//日期格式化
 			var val=dateFormatter(row[field],datePattern[formatter]);
@@ -1161,6 +1162,8 @@ var t2 = {
  * @returns {String}
  */
 function orgCodeFormatter(val,span_id){
+	isLast=false;//标记为不是最后一个
+	
 	if(!val) return "";
 	else{
 		if(orgNames[val]){
@@ -1224,11 +1227,19 @@ function getOrgName(val,span_id){
 				  if(data[item])
 					  val = data[item];
 				  
-				  orgNames[sendAry_org_tmp[item]]=val;//缓存机构名称
+				  if(!orgNames[sendAry_org_tmp[item]])
+					  orgNames[sendAry_org_tmp[item]]=val;//缓存机构名称
 				  
-				  $("#"+span_id).html(val);
+				 // var orgObj = $("#"+span_id);
+//				  if(orgObj.length>0){
+//					  console.log("翻译"+orgObj.html()+">"+val);
+//					  orgObj.html(val);
+//				  }else{
+					  console.log("存入待处理"+val);
+					  formateAry[formateAry.length]={span_id:span_id,val:val};//存入待处理的数组
+				 // }
 			  }
-			  
+			  orgCodeFormat();//处理未处理的翻译
 			  //setTimeout(function () {
               	//$("#"+span_id).html(data);
               //},500);//延迟0.5秒执行
@@ -1239,12 +1250,46 @@ function getOrgName(val,span_id){
 		});
 }
 
+var isLast=true;//是否是最后一个
 /**
- * 清空未发送的翻译请求
+ * 清空未发送的翻译请求，如果0.5秒后没有再使用，说明列表已经处理完毕了，此时才真正清理
  */
 function clearFormate(){
-	console.log("clearFormate");
-	getOrgName(null,null);
+	setTimeout(function () {
+		if(isLast){//如果是最后一个，开始清空
+			console.log("开始清空未发送的翻译请求");
+			getOrgName(null,null);
+		}else{
+			isLast=true;//标记为最后一个，如果0.5s之间还有新的翻译请求，会将isLast=false
+			clearFormate();
+		}
+    },500);//延迟0.5秒执行
+}
+
+var formateAry = [];//未处理的翻译
+/**
+ * 循环遍历未处理的翻译
+ */
+function orgCodeFormat(){
+	console.log("开始遍历未处理");
+	if(formateAry.length==0){
+		return;
+	}
+	for(var item in formateAry){
+		var orgObj = $("#"+formateAry[item].span_id);
+		 if(orgObj.length>0){
+			  orgObj.html(formateAry[item].val);
+			  formateAry.splice(item,1);
+		 }
+	}
+	
+	console.log("处理完毕");
+	if(formateAry.length>0){
+		setTimeout(function () {
+			orgCodeFormat();
+		},500);//延迟0.5秒执行
+	}
+	
 }
 
 //日期格式
