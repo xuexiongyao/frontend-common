@@ -306,16 +306,17 @@ function batchExprot(search_config_obj){
 		}
 		//不存在，添加的默认查询条件
 		if(!isrepeat){
-			var condition = search_config_obj[k][0];
-
-			query.push({
-				condition : [{
-					"op": "=",
-					"k": '_all',
-					"v": "*"
-				}],
-				type : k
-			});
+			//默认全部信息都返回了，不添加默认条件了
+//			var condition = search_config_obj[k][0];
+//
+//			query.push({
+//				condition : [{
+//					"op": "=",
+//					"k": '_all',
+//					"v": "*"
+//				}],
+//				type : k
+//			});
 		}
 	}
 	export_condition_obj.query = query;
