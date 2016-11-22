@@ -779,6 +779,12 @@ function markInputStatus(form_id) {
             input_module.attr('sb_status', 1);
         }
     });
+    $('#' + form_id + ' textarea').off('focus.status').on('focus.status', function () {
+        var input_module = $(this);
+        if(input_module.hasClass('readonly') == false){
+            input_module.attr('sb_status', 1);
+        }
+    });
 }
 
 //2.提交之前更改input的disable状态,并判断返回是否有修改
@@ -794,6 +800,16 @@ function changeInputStatus(form_id) {
             i++;
         }
     });
+
+    $('#' + form_id + ' textarea').each(function () {
+        var input_module = $(this);
+        if (input_module.attr('sb_status') != 1) {
+            input_module.prop("disabled", true);
+        } else {
+            input_module.prop("disabled", false);
+            i++;
+        }
+    });
     if (i >= 1) {
         return true;
     } else {
@@ -806,6 +822,10 @@ function returnInputStatus(form_id){
     $('#' + form_id + ' span.textbox').each(function () { //所有上传到后台的隐藏输入框
         var input_module = $(this).prev();  //组件input
         input_module.next().find('input').prop("disabled", false);
+    });
+    $('#' + form_id + ' textarea').each(function () {
+        var input_module = $(this)  //组件input
+        input_module.prop("disabled", false);
     });
 }
 
