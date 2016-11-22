@@ -68,13 +68,22 @@ function addTab(title,url,tab_id,return_tab_id,repeat){
         tab_id = returnTabID(tab_id);
     }
     //判断tab_id是否存在和选择
-    if ($('#frameTabs').tabs('existsById', tab_id)){    //存在,切换
+    //存在,切换
+    if ($('#frameTabs').tabs('existsById', tab_id)){
         $('#frameTabs').tabs('selectById', tab_id);
         loading('close');
-    } else {                                            //不存在,新建
+    //不存在,新建
+    } else {
+        var random = Math.random();
+        var randomUrl = url;
+        if(url.indexOf('?') == -1){
+            randomUrl = url+'?r='+random;
+        }else{
+            randomUrl = url+'&r='+random;
+        }
         var content = '' +
             '<iframe scrolling="hidden" frameborder="0" return_tab_id="'+return_tab_id+'"' +
-            'src="'+url+'" style="width:100%;height: 100%;"> ' +
+            'src="'+randomUrl+'" style="width:100%;height: 100%;"> ' +
             '</iframe>';
         $('#frameTabs').tabs('add',{
             title:new_title,

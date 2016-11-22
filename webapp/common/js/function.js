@@ -782,7 +782,7 @@ function markInputStatus(form_id) {
 }
 
 //2.提交之前更改input的disable状态,并判断返回是否有修改
-function changeInputStatus(form_id,return_status) {
+function changeInputStatus(form_id) {
     var i = 0;
     $('#' + form_id + ' span.textbox').each(function () { //所有上传到后台的隐藏输入框
         //处理组件下面的input

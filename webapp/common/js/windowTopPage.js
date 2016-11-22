@@ -24,6 +24,7 @@ function getPublicDict(url, isReload) {
 		}
 
 		$.ajax({
+			cache:true,
 			url: url,
 			type: "GET",
 			async: false,
@@ -34,8 +35,9 @@ function getPublicDict(url, isReload) {
 				publicDictArray[url] = data;
 			},
 
-			error: function() {
+			error: function(e) {
 				alert("页面字典加载错误：\n\n" + url);
+				console.log(e,url);
 			}
 		});
 
