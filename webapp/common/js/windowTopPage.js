@@ -24,7 +24,7 @@ function getPublicDict(url, isReload) {
 		}
 
 		$.ajax({
-			cache:true,
+			cache:false,
 			url: url,
 			type: "GET",
 			async: false,
