@@ -24,9 +24,9 @@ function getPublicDict(url, isReload) {
 		}
 
 		$.ajax({
-			cache:false,
+			cache:true,
 			url: url,
-			type: "GET",
+			type:'get',
 			async: false,
 			xhrFields: {withCredentials: true},
 			crossDomain: true,

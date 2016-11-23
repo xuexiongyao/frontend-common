@@ -1948,29 +1948,10 @@ function getIEVersion() {
 			console[funs[i]] = function() {};
 		}
 	}
-	// 全局ajax处理
-	/*$(document).ajaxError(function(event, request, settings, thrownError) { // 请求失败处理
-		//document.write(event.responseText);
-		//alert('ajax请求错误\n\n url：'+settings.url+'\n 状态：'+request.status+'\n 错误信息：'+request.statusText);
-		//return false;
-		/!*if (request.status == 418) {
-			topMessager.alert(MESSAGER_TITLE, '用户操作超时，请重新登录！', 'error', function() {
-				window.location.href = basePath + "/index.jsp";
-			});
-		} else if (request.status == 308) {
-			topMessager.alert(MESSAGER_TITLE, '数据处理中或已保存，请勿重复提交！', 'error');
-		} else {
-			var result = parseReturn(request.responseText);
-			if (!result) {
-				// topMessager.alert(MESSAGER_TITLE, request.status+ ' ' + (thrownError ? thrownError : '操作失败'), 'error');
-				// google浏览器下弹出0错误
-			} else {
-				topMessager.alert(MESSAGER_TITLE, request.status+ ' ' + (result.message ? result.message : '操作失败'), 'error');
-			}
-		}*!/
-	}).ajaxComplete(function() {loading('close');});*/
 	// ajax默认配置
 	$.ajaxSetup({
+		cache: false, //
+		data: {},
 		type: 'post',
 		error: function(jqXHR, textStatus, errorThrown){
 			loading('close');
