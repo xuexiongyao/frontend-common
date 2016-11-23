@@ -22,10 +22,17 @@ function getPublicDict(url, isReload) {
 				return dictData;
 			}
 		}
-
+		var domain = getThisLocationObj();
+		var hostname = domain.hostname;
+		var randomUrl = url;
+		if(url.indexOf('?') == -1){
+			randomUrl = url+'?domain='+hostname;
+		}else{
+			randomUrl = url+'&domain='+hostname;
+		}
 		$.ajax({
 			cache:true,
-			url: url,
+			url: randomUrl,
 			type:'get',
 			async: false,
 			xhrFields: {withCredentials: true},
