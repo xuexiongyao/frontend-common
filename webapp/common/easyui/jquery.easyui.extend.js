@@ -508,37 +508,39 @@ function getIEVersion() {
 
 		loader: function(param, success, error) {
 			var opts = $(this).combobox('options');
-			/*var sessionStorageData = sessionStorage[opts.url];
-			if (!opts.url) return false;
-			if(sessionStorageData){
-				//console.log('取缓存:',JSON.parse(localStorageUrl));
-				success(eval('('+sessionStorageData+')'));
-			}else{*/
-			if(opts.url){
-				$.ajax({
-					type: opts.method,
-					url: opts.url,
-					data: param,
-					dataType: 'json',
-					xhrFields:{withCredentials:true},
-					crossDomain:true,
-					beforeSend: function(xhr) {
-						xhr.withCredentials = true;
-					},
-					success: function(data) {
-						opts.loaded = true;
-						success(data);
-						sessionStorage[opts.url] = JSON.stringify(data);
-					}
-				});
+			var dictUrl = opts.url;
+			if(dictUrl){
+				/*var localStorageDict = localStorage.getItem(dictUrl);
+				if(localStorageDict){
+					var localDict = JSON.parse(localStorageDict);
+					console.log(dictUrl+'通过本地获取缓存字典:');
+					success(localDict);
+				}else{*/
+					$.ajax({
+						accepts: {
+							mycustomtype: 'application/x-some-custom-type'
+						},
+						type: opts.method,
+						url: dictUrl,
+						data: param,
+						dataType: 'json',
+						xhrFields: {withCredentials:true},
+						crossDomain: true,
+						beforeSend: function(xhr) {
+							xhr.withCredentials = true;
+						},
+						success: function(data) {
+							//console.log('远程字典:',data);
+							opts.loaded = true;
+							success(data);
+							//localStorage.setItem(dictUrl,JSON.stringify(data));
+						},
+						error: function(){
+							console.log('combobox获取字典错误,url:'+dictUrl);
+						}
+					});
+				//}
 			}
-
-			//}
-
-			/*data = localStorageDict(opts.url);
-			 opts.loaded = true;
-			 success(data);
-			 console.log(data);*/
 			//之前的处理方式
 			//if (opts.isTopLoad && window && window.publicDictArray) {
 				/*data = window.getPublicDict(opts.url);
@@ -1948,11 +1950,13 @@ function getIEVersion() {
 			console[funs[i]] = function() {};
 		}
 	}
-	// ajax默认配置
+	//全局ajax 默认配置
 	$.ajaxSetup({
-		cache: false, //
-		data: {},
+		cache: false,
 		type: 'post',
+		beforeSend: function(xhr) {
+			xhr.withCredentials = true;
+		},
 		error: function(jqXHR, textStatus, errorThrown){
 			loading('close');
 			console.log('ajax错误信息:',jqXHR, textStatus, errorThrown);
