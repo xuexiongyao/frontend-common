@@ -31,6 +31,9 @@ function getPublicDict(url, isReload) {
 			xhrFields: {withCredentials: true},
 			crossDomain: true,
 			dataType: "json",
+			beforeSend: function(xhr) {
+				xhr.withCredentials = true;
+			},
 			success: function(data) {
 				publicDictArray[url] = data;
 			},
