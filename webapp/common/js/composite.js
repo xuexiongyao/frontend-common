@@ -750,7 +750,7 @@ function parseInput(config,judge_id,condition_id){
 			validType:valid_type
 		});
 	}else if(condition_type == 'textbox_org'){
-		var field_time = (new Date()).getTime();
+		var field_time = (Math.random()+'').substr(2);
 		var new_condition_id = condition_id+'_'+field_time;
 		$('#'+condition_id).attr('id',new_condition_id);
 		$('#'+new_condition_id).textbox({
@@ -1011,7 +1011,7 @@ function tableContent(val, row, index){
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
 		}else if(inputType == 'textbox_org'){//组织机构，翻译
-			var span_id='org_format_'+row[field]+'_'+(new Date()).getTime();
+			var span_id='org_format_'+row[field]+'_'+(Math.random()+'').substr(2);
 			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
 		}else if(inputType == 'datebox'){//日期格式化
 			var val=dateFormatter(row[field],datePattern[formatter]);
@@ -1327,4 +1327,6 @@ function dateFormatter(val,pattern){
 	
 	return pattern;
 }
+
+
 
