@@ -516,12 +516,18 @@ function getIEVersion() {
 					console.log(dictUrl+'通过本地获取缓存字典:');
 					success(localDict);
 				}else{*/
+					var domain = getThisLocationObj();
+					var hostname = domain.hostname;
+					var randomUrl = dictUrl;
+					if(dictUrl.indexOf('?') == -1){
+						randomUrl = dictUrl+'?domain='+hostname;
+					}else{
+						randomUrl = dictUrl+'&domain='+hostname;
+					}
 					$.ajax({
-						accepts: {
-							mycustomtype: 'application/x-some-custom-type'
-						},
+						cache: true,
 						type: opts.method,
-						url: dictUrl,
+						url: randomUrl,
 						data: param,
 						dataType: 'json',
 						xhrFields: {withCredentials:true},
@@ -536,7 +542,7 @@ function getIEVersion() {
 							//localStorage.setItem(dictUrl,JSON.stringify(data));
 						},
 						error: function(){
-							console.log('combobox获取字典错误,url:'+dictUrl);
+							console.log('combobox跨域获取字典错误,url:'+dictUrl);
 						}
 					});
 				//}
