@@ -53,7 +53,7 @@ function iframJump(tab_id){
  * 5.此方法会在跨域打开中执行
  * */
 function addTab(title,url,tab_id,return_tab_id,repeat){
-    loading('open','正在打开页面,请稍候...');
+    //loading('open','正在打开页面,请稍候...');
     //console.log('addTab参数:',arguments);
     if(!title || !url || !tab_id){
         loading('close');
