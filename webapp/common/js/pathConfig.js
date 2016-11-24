@@ -24,5 +24,6 @@ var pathConfig = {
     workflowPath : 'http://workflow.jwzh.com:9023/jwzh-workflow',
     zhcxPath : 'http://zhcx.jwzh.com:9024/jwzh-zhcx',
     wfmanagePath : 'http://wfmanage.jwzh.com:9025/jwzh-wfmanage',
-    assistPath : 'http://assist.jwzh.com:9026/jwzh-assist'
+    assistPath : 'http://assist.jwzh.com:9026/jwzh-assist',
+    mapPath: 'http://172.29.213.201:7010/EzServerClient'
 };
