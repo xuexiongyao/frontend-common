@@ -507,45 +507,39 @@ function getIEVersion() {
 		},
 
 		loader: function(param, success, error) {
+			//combobox获取缓存字典的处理
 			var opts = $(this).combobox('options');
 			var dictUrl = opts.url;
 			if(dictUrl){
-				/*var localStorageDict = localStorage.getItem(dictUrl);
-				if(localStorageDict){
-					var localDict = JSON.parse(localStorageDict);
-					console.log(dictUrl+'通过本地获取缓存字典:');
-					success(localDict);
-				}else{*/
-					var domain = getThisLocationObj();
-					var hostname = domain.hostname;
-					var randomUrl = dictUrl;
-					if(dictUrl.indexOf('?') == -1){
-						randomUrl = dictUrl+'?domain='+hostname;
-					}else{
-						randomUrl = dictUrl+'&domain='+hostname;
+				var domain = getThisLocationObj();
+				var hostname = domain.hostname;
+				var randomUrl = dictUrl;
+				if(dictUrl.indexOf('?') == -1){
+					randomUrl = dictUrl+'?domain='+hostname;
+				}else{
+					randomUrl = dictUrl+'&domain='+hostname;
+				}
+				$.ajax({
+					cache: true,
+					type: opts.method,
+					url: randomUrl,
+					data: param,
+					dataType: 'json',
+					xhrFields: {withCredentials:true},
+					crossDomain: true,
+					beforeSend: function(xhr) {
+						xhr.withCredentials = true;
+					},
+					success: function(data) {
+						//console.log('远程字典:',data);
+						opts.loaded = true;
+						success(data);
+						//localStorage.setItem(dictUrl,JSON.stringify(data));
+					},
+					error: function(){
+						console.log('combobox跨域获取字典错误,url:'+dictUrl);
 					}
-					$.ajax({
-						cache: true,
-						type: opts.method,
-						url: randomUrl,
-						data: param,
-						dataType: 'json',
-						xhrFields: {withCredentials:true},
-						crossDomain: true,
-						beforeSend: function(xhr) {
-							xhr.withCredentials = true;
-						},
-						success: function(data) {
-							//console.log('远程字典:',data);
-							opts.loaded = true;
-							success(data);
-							//localStorage.setItem(dictUrl,JSON.stringify(data));
-						},
-						error: function(){
-							console.log('combobox跨域获取字典错误,url:'+dictUrl);
-						}
-					});
-				//}
+				});
 			}
 			//之前的处理方式
 			//if (opts.isTopLoad && window && window.publicDictArray) {
@@ -1365,6 +1359,41 @@ function getIEVersion() {
 			}
 			else {
 				return data;
+			}
+		},
+
+		loader: function(param,success,error){
+			//combotree获取缓存字典的处理
+			var opts = $(this).tree('options');
+			var dictUrl = opts.url;
+			if(dictUrl){
+				var domain = getThisLocationObj();
+				var hostname = domain.hostname;
+				var randomUrl = dictUrl;
+				if(dictUrl.indexOf('?') == -1){
+					randomUrl = dictUrl+'?domain='+hostname;
+				}else{
+					randomUrl = dictUrl+'&domain='+hostname;
+				}
+				$.ajax({
+					cache: true,
+					type: opts.method,
+					url: randomUrl,
+					data: param,
+					dataType: 'json',
+					xhrFields: {withCredentials:true},
+					crossDomain: true,
+					beforeSend: function(xhr) {
+						xhr.withCredentials = true;
+					},
+					success: function(data) {
+						opts.loaded = true;
+						success(data);
+					},
+					error: function(){
+						console.log('combotree跨域获取字典错误,url:'+dictUrl);
+					}
+				});
 			}
 		},
 
