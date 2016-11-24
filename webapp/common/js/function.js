@@ -689,7 +689,12 @@ function editSwitch(bool, border_class, box_class) {
             } else if (_this.hasClass('easyui-combotree')) {
                 _this.combotree({readonly: false}).next().removeClass(_border_class);
             } else if (_this.hasClass('easyui-validatebox')) {
-                _this.validatebox({readonly: false}).next().removeClass(_border_class);
+                if(_this.hasClass('Wdate')){
+                    _this.removeAttr('disabled');
+                    _this.css({'border':'1px solid #ccc','background':'url(http://static.jwzh.com:7777/jwzh/common/datepicker/skin/christ/datePicker.png) no-repeat right'})
+                }else{
+                    _this.validatebox({readonly: false}).next().removeClass(_border_class);
+                }
             }
             _this.next().find('span.textbox-addon').show();//显示按钮
         });
@@ -709,7 +714,12 @@ function editSwitch(bool, border_class, box_class) {
             } else if (_this.hasClass('easyui-combotree') || _this.hasClass('easyuicombotree')) {
                 _this.combotree({readonly: true,required:false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-validatebox') || _this.hasClass('easyuivalidatebox')) {
-                _this.validatebox({readonly: true,required:false}).next().addClass(_border_class);
+                if(_this.hasClass('Wdate')){
+                    _this.attr('disabled','disabled');
+                    _this.css({'border':'0','background':'#fff'})
+                }else{
+                    _this.validatebox({readonly: true,required:false}).next().addClass(_border_class);
+                }
             }
             _this.next().find('span.textbox-addon').hide();//隐藏按钮
         });
