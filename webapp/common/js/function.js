@@ -798,6 +798,36 @@ function editEnable(input_class){
     });
 }
 
+//组件的边框和图标是否显示
+function isBorder(bool,boxClass){
+    var $box = $('.'+boxClass);
+    var noBorderClass = 'clear-border';
+    //显示边框和图标
+    if(bool){
+        $box.each(function(){
+            var $this = $(this);
+            $this.next().removeClass(noBorderClass).find('span.textbox-addon').show();
+            //My97日期处理
+            if($this.hasClass('Wdate')){
+                $this.removeAttr('disabled');
+                $this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
+            }
+        });
+    //隐藏边框和图标
+    }else{
+        $box.each(function(){
+            var $this = $(this);
+            $this.next().addClass(noBorderClass).find('span.textbox-addon').hide();
+            //My97日期处理
+            if($this.hasClass('Wdate')){
+                $this.attr('disabled','disabled');
+                $this.css({'border':'0','background':'#fff'})
+            }
+        });
+    }
+}
+
+
 /*表单修改,只提交点击过的input框(easyui组件)
  * 1.页面加载完成时执行方法1(页面DOM记录点击状态)
  * 2.在表单提交之前执行方法2(获取页面点击状态,将未点击的input设置disabled,并判断返回是否有修改)
