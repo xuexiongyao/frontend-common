@@ -106,7 +106,14 @@
                     line-height: 30px;
                     cursor: pointer;
                     span{
-                        margin-left: 5px;
+                        margin-left: 2px;
+                    }
+                }
+                .help a{
+                    color: #0e6595;
+                    text-decoration: none;
+                    &:hover{
+                        text-decoration: underline;
                     }
                 }
             }

@@ -807,6 +807,7 @@ function isBorder(bool,boxClass){
         $box.each(function(){
             var $this = $(this);
             $this.next().removeClass(noBorderClass).find('span.textbox-addon').show();
+            $this.prev().find('i').show();
             //My97日期处理
             if($this.hasClass('Wdate')){
                 $this.removeAttr('disabled');
@@ -818,6 +819,7 @@ function isBorder(bool,boxClass){
         $box.each(function(){
             var $this = $(this);
             $this.next().addClass(noBorderClass).find('span.textbox-addon').hide();
+            $this.prev().find('i').hide();
             //My97日期处理
             if($this.hasClass('Wdate')){
                 $this.attr('disabled','disabled');
