@@ -333,15 +333,14 @@ function normalSubmit(form_id, call_back, url) {
             try{
                 var json = eval('(' + data + ')');
             }catch(e){
-                var json=data;
+                var json = data;
             }
-
             formTips(json, call_back, 'tips');
         },
-        error: function (data) {
-            loading('close');//完成后关闭...转圈
+        error: function () {
+            loading('close');
             resetToken();
-            console.log('submit ajax error');
+            console.log('Form: '+form_id+' submit ajax error');
 
         }
     });
@@ -360,14 +359,14 @@ function formTips(json, success_fn, type) {
             try {
                 var fn = eval(success_fn);
                 if (type == 'tips' && json.message) {
-                    $.messager.show({
+                    $.messager.alert({
                         title: '提示信息',
                         msg: json.message,
-                        height:'auto'
+                        height:'auto',
+                        fn: function(){
+                            fn(json);
+                        }
                     });
-                    setTimeout(function () {
-                        fn(json);
-                    }, 5000);
                 } else {
                     fn(json);
                 }
