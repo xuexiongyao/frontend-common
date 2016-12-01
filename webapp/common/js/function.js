@@ -359,14 +359,14 @@ function formTips(json, success_fn, type) {
             try {
                 var fn = eval(success_fn);
                 if (type == 'tips' && json.message) {
-                    $.messager.alert({
+                    $.messager.show({
                         title: '提示信息',
                         msg: json.message,
-                        height:'auto',
-                        fn: function(){
-                            fn(json);
-                        }
+                        height:'auto'
                     });
+                    setTimeout(function () {
+                        fn(json);
+                    }, 2000);
                 } else {
                     fn(json);
                 }
