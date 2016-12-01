@@ -209,6 +209,7 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
             fraTabs.tabs('close',currentTabTitle);//关闭当前标签
         }else{
             //返回的页面被人为关闭
+            fraTabs.tabs('close',currentTabTitle);//关闭当前标签
             console.log('本该返回的Tab被您手动关掉了!!!','return_tab_id:'+return_tab_id);
         }
     }
