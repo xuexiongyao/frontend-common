@@ -322,7 +322,7 @@ function batchExprot(search_config_obj){
 	export_condition_obj.query = query;
 	//表格内容
 	export_condition_obj['start']=0;
-	export_condition_obj['limit']=2000;
+	//export_condition_obj['limit']=2000;//已改为后台获取
 
 	console.log('查询条件:',condition_obj);
 	console.log('导出的查询条件:',export_condition_obj);
