@@ -1193,6 +1193,23 @@ function getCurrentTime(){
     return yyyy+'-'+MM+'-'+dd+' '+HH+':'+mm+':'+ss;
 }
 
+//将时间格式转化为yyyy年MM月dd日 HH时mm分ss秒
+function parseTimeToCN(time){
+    var newTime =  time.replace(/\-/, '年');
+    newTime =  newTime.replace(/\-/, '月');
+    newTime =  newTime.replace(/ /, '日');
+    newTime =  newTime.replace(/:/, '时');
+    newTime =  newTime.replace(/:/, '分');
+    if(newTime.indexOf('分') != -1){
+        newTime += '秒';
+    }else{
+        newTime += '日';
+    }
+    return newTime;
+}
+
+
+
 //获取sessionbean
 function getSessionBean(){
     var sessionBean = null;
