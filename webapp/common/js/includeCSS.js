@@ -9,6 +9,7 @@ var jwzhVersionOld =  localStorage.getItem(pathname);
 if(jwzhVersionOld){
     if(jwzhVersionOld != jwzhVersion){
         console.log('当前页面地址:',pathname,'版本已更新:'+jwzhVersion);
+        localStorage.setItem(pathname, jwzhVersion);
         /*if(confirm('当前系统版本已更新,是否获取最新页面?')){
             //localStorage.setItem(pathname, jwzhVersion);
             //location.reload(true);
