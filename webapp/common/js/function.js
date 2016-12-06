@@ -836,16 +836,32 @@ function isBorder(bool,boxClass){
  * */
 //1.记录FORM中input的提交状态
 function markInputStatus(form_id) {
-    $('#' + form_id + ' span.textbox input').off('focus.status').on('focus.status', function () {
-        var input_module = $(this).parent().prev();  //组件input
-        if(input_module.hasClass('readonly') == false){
-            input_module.attr('sb_status', 1);
+    $('#' + form_id + ' span.textbox input').off('focus.status').on({
+        'focus.status': function () {
+            var input_module = $(this).parent().prev();  //组件input
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
+        },
+        'change': function () {
+            var input_module = $(this).parent().prev();  //组件input
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
         }
     });
-    $('#' + form_id + ' textarea').off('focus.status').on('focus.status', function () {
-        var input_module = $(this);
-        if(input_module.hasClass('readonly') == false){
-            input_module.attr('sb_status', 1);
+    $('#' + form_id + ' textarea').off('focus.status').on({
+        'focus.status': function () {
+            var input_module = $(this);
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
+        },
+        'change': function () {
+            var input_module = $(this);
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
         }
     });
 }

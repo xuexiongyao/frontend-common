@@ -25,5 +25,7 @@ var pathConfig = {
     zhcxPath : 'http://zhcx.jwzh.com:9024/jwzh-zhcx',
     wfmanagePath : 'http://wfmanage.jwzh.com:9025/jwzh-wfmanage',
     assistPath : 'http://assist.jwzh.com:9026/jwzh-assist',
-    mapPath: 'http://172.29.213.201:7010/EzServerClient'
+    mapPath: 'http://172.29.213.201:7010/EzServerClient',
+    log_url_switch : 0,	//操作日志开关: 0代表公司本地库，1代表华云大数据库
+    huayun_logs_url : ''//华云日志url
 };
