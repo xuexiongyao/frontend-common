@@ -2,6 +2,8 @@
  *  author: QinXiaoYun
  *  description: query system operate logs
  */
+
+
 (function($){
 
     
@@ -25,10 +27,12 @@
                 var $this = $(this);
                 settings = $this.data('operatelog');
                 if(typeof (settings) == 'undefined'){
+
+                    
                     //默认参数对象
                     var defaults = {
                         tabTitle : '操作日志历史轨迹',
-                        url : managerPath+"/sysOperateLog/historyPage?conditionStr="+ $this.attr('conditionStr'),
+                        url : logs_url,
                         tab_id : $this.attr('conditionStr')
                     };
 
