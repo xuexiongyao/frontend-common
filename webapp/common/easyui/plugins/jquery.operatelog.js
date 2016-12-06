@@ -2,11 +2,7 @@
  *  author: QinXiaoYun
  *  description: query system operate logs
  */
-
-
 (function($){
-
-    
 
     // 在插件容器中，创建一个 公共变量 存储 一个私有方法
     var privateFunction = function(){
@@ -32,7 +28,7 @@
                     //默认参数对象
                     var defaults = {
                         tabTitle : '操作日志历史轨迹',
-                        url : logs_url,
+                        url : managerPath+'/sysOperateLog/historyPage?conditionStr='+$this.attr('conditionStr'),
                         tab_id : $this.attr('conditionStr')
                     };
 
