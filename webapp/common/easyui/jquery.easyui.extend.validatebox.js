@@ -464,11 +464,11 @@
 					return arr.length >= param[0] && arr.length <= param[1];
 				}
 
-				var len = $.trim(value).length;
+				var len = $.trim(value.replace(/[^\x00-\xff]/g,'aaa')).length;
 				return len >= param[0] && len <= param[1];
 			},
 
-			message: "输入的长度在 {0} 与 {1} 之间"
+			message: "输入长度在 {0} 与 {1} 之间的字符,一个汉字等于三个字符"
 		},
 
 		minLength: {
