@@ -1,10 +1,4 @@
 
-//点击子框架页面
-function clickWindow() {
-    $(document).click(function () {
-        crossRequestParent('slideUpNav()');
-    });
-}
 //跨域请求父页面(向父框架发送消息)
 function crossRequestParent(_msg) {
     var messenger = new Messenger('iframe', 'toParent');
