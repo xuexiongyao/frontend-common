@@ -1,10 +1,4 @@
 
-//点击子框架页面
-function clickWindow() {
-    $(document).click(function () {
-        crossRequestParent('slideUpNav()');
-    });
-}
 //跨域请求父页面(向父框架发送消息)
 function crossRequestParent(_msg) {
     var messenger = new Messenger('iframe', 'toParent');
@@ -836,16 +830,32 @@ function isBorder(bool,boxClass){
  * */
 //1.记录FORM中input的提交状态
 function markInputStatus(form_id) {
-    $('#' + form_id + ' span.textbox input').off('focus.status').on('focus.status', function () {
-        var input_module = $(this).parent().prev();  //组件input
-        if(input_module.hasClass('readonly') == false){
-            input_module.attr('sb_status', 1);
+    $('#' + form_id + ' span.textbox input').off('focus.status').on({
+        'focus.status': function () {
+            var input_module = $(this).parent().prev();  //组件input
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
+        },
+        'change': function () {
+            var input_module = $(this).parent().prev();  //组件input
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
         }
     });
-    $('#' + form_id + ' textarea').off('focus.status').on('focus.status', function () {
-        var input_module = $(this);
-        if(input_module.hasClass('readonly') == false){
-            input_module.attr('sb_status', 1);
+    $('#' + form_id + ' textarea').off('focus.status').on({
+        'focus.status': function () {
+            var input_module = $(this);
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
+        },
+        'change': function () {
+            var input_module = $(this);
+            if(input_module.hasClass('readonly') == false){
+                input_module.attr('sb_status', 1);
+            }
         }
     });
 }
@@ -1192,6 +1202,23 @@ function getCurrentTime(){
     if(ss < 10) ss = '0' + ss;
     return yyyy+'-'+MM+'-'+dd+' '+HH+':'+mm+':'+ss;
 }
+
+//将时间格式转化为yyyy年MM月dd日 HH时mm分ss秒
+function parseTimeToCN(time){
+    var newTime =  time.replace(/\-/, '年');
+    newTime =  newTime.replace(/\-/, '月');
+    newTime =  newTime.replace(/ /, '日');
+    newTime =  newTime.replace(/:/, '时');
+    newTime =  newTime.replace(/:/, '分');
+    if(newTime.indexOf('分') != -1){
+        newTime += '秒';
+    }else{
+        newTime += '日';
+    }
+    return newTime;
+}
+
+
 
 //获取sessionbean
 function getSessionBean(){

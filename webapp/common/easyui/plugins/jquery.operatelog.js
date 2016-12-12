@@ -4,8 +4,6 @@
  */
 (function($){
 
-    
-
     // 在插件容器中，创建一个 公共变量 存储 一个私有方法
     var privateFunction = function(){
         //TODO:私有方法
@@ -25,10 +23,12 @@
                 var $this = $(this);
                 settings = $this.data('operatelog');
                 if(typeof (settings) == 'undefined'){
+
+                    
                     //默认参数对象
                     var defaults = {
                         tabTitle : '操作日志历史轨迹',
-                        url : managerPath+"/sysOperateLog/historyPage?conditionStr="+ $this.attr('conditionStr'),
+                        url : managerPath+'/sysOperateLog/historyPage?conditionStr='+$this.attr('conditionStr'),
                         tab_id : $this.attr('conditionStr')
                     };
 
