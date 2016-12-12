@@ -329,7 +329,12 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 			if (item == "text") {
 				$('#' + returnFieldData[item]).textbox('setValue',selectedOrgName);
 			}else if (item == "id") {
-				$('#' + returnFieldData[item]).val(selectedOrgCode);
+				var dom_item = $('#' + returnFieldData[item]);
+				if(dom_item.hasClass('easyui-textbox')){
+					dom_item.textbox('setValue',selectedOrgCode)
+				}else {
+					dom_item.val(selectedOrgCode);
+				}
 			}else if (item == "orgLevel") {
 				$('#' + returnFieldData[item]).val(selectedorgLevel);
 			}
@@ -368,7 +373,7 @@ function searchTree(textboxID) {
 	if (searchKeyValue != "") {
 		var treeObject = $('#treeSelect_'+textboxID);
 		var url = managerPath + '/orgPublicSelect/queryPublicOrgTreeSearchResultByOrgCode';
-		filterData['rootOrgCode']=treeObject.tree('getRoot').id
+		filterData['rootOrgCode']=treeObject.tree('getRoot').id;
 		
 		var urlParam="";
 		for(var item in filterData){
