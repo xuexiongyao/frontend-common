@@ -787,7 +787,8 @@ function parseInput(config,judge_id,condition_id){
 			valueField: 'id',
 			textField: 'text',
 			panelWidth: 180,
-			width:180
+			width:180,
+			cascadeCheck:true
 		});
 	}
 }
