@@ -874,13 +874,15 @@ function ajaxQuery(condition_obj){
 			searchResult(data); //展示查询结果
 		},
 		error:function(e){
-			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
-			console.log(e);
-			$('#pagination').pagination({
-				total:998
-			}).show();
-			changeLinkButtonIcon();
-			searchResult(search_result_test);
+			loading('close');
+//			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
+//			console.log(e);
+//			$('#pagination').pagination({
+//				total:998
+//			}).show();
+//			changeLinkButtonIcon();
+//			searchResult(search_result_test);
+			$.messager.alert('提示','连接失败!','warning',null);
 		}
 	});
 
