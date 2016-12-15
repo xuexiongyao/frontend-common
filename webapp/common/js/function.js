@@ -739,6 +739,8 @@ function editDisable(input_class){
             _this.textbox({readonly: true,required:false,prompt:''}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-datebox')) {
             _this.datebox({readonly: true,required:false,prompt:''}).next().addClass(border_class);
+        }else if (_this.hasClass('easyui-numberbox')) {
+            _this.numberbox({readonly: true,required:false,prompt:''}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-datetimebox')) {
             _this.datetimebox({readonly: true,required:false}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-combotree')) {
@@ -770,7 +772,9 @@ function editEnable(input_class){
             _this.combobox({readonly: false}).next().removeClass(border_class);//移除样式还原边框
         } else if (_this.hasClass('easyui-textbox')) {
             _this.textbox({readonly: false}).next().removeClass(border_class);
-        } else if (_this.hasClass('easyui-datebox')) {
+        }else if (_this.hasClass('easyui-numberbox')) {
+            _this.numberbox({readonly: false}).next().removeClass(border_class);
+        }else if (_this.hasClass('easyui-datebox')) {
             _this.datebox({readonly: false}).next().removeClass(border_class);
         } else if (_this.hasClass('easyui-datetimebox')) {
             _this.datetimebox({readonly: false}).next().removeClass(border_class);
