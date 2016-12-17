@@ -60,9 +60,10 @@ html {
 /* line 12, ../sass/sass/_common.scss */
 body {
   visibility: hidden;
+  padding: 5px;
 }
 
-/* line 17, ../sass/sass/_common.scss */
+/* line 18, ../sass/sass/_common.scss */
 textarea {
   overflow: auto;
   resize: none;
@@ -75,12 +76,12 @@ textarea {
   border-color: #ccc;
 }
 
-/* line 24, ../sass/sass/_common.scss */
+/* line 25, ../sass/sass/_common.scss */
 label {
   cursor: pointer;
 }
 
-/* line 27, ../sass/sass/_common.scss */
+/* line 28, ../sass/sass/_common.scss */
 .main {
   margin: 30px auto 0 auto;
   padding: 1px 0 20px 0;
@@ -89,7 +90,7 @@ label {
   background-color: #fff;
 }
 
-/* line 35, ../sass/sass/_common.scss */
+/* line 36, ../sass/sass/_common.scss */
 .content-area {
   width: 1100px;
   margin: 40px auto 0;
@@ -107,7 +108,7 @@ label {
   clear: both;
   overflow: hidden;
 }
-/* line 41, ../sass/sass/_common.scss */
+/* line 42, ../sass/sass/_common.scss */
 .content-area .item {
   margin: 0 20px 10px;
   width: 510px;
@@ -116,22 +117,22 @@ label {
   _display: inline;
   *zoom: 1;
 }
-/* line 46, ../sass/sass/_common.scss */
+/* line 47, ../sass/sass/_common.scss */
 .content-area .item textarea {
   height: 60px;
 }
-/* line 49, ../sass/sass/_common.scss */
+/* line 50, ../sass/sass/_common.scss */
 .content-area .item a {
   float: left;
   _display: inline;
 }
-/* line 52, ../sass/sass/_common.scss */
+/* line 53, ../sass/sass/_common.scss */
 .content-area .item .control-btn {
   float: right;
   _display: inline;
   margin-right: 3px;
 }
-/* line 55, ../sass/sass/_common.scss */
+/* line 56, ../sass/sass/_common.scss */
 .content-area .item .control-btn i {
   line-height: 20px;
 }
@@ -145,25 +146,25 @@ label {
   clear: both;
   overflow: hidden;
 }
-/* line 61, ../sass/sass/_common.scss */
+/* line 62, ../sass/sass/_common.scss */
 .content-area .item-full {
   width: 1060px;
 }
-/* line 64, ../sass/sass/_common.scss */
+/* line 65, ../sass/sass/_common.scss */
 .content-area .item-title {
   margin: 0 0 20px;
   padding-bottom: 5px;
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
-/* line 69, ../sass/sass/_common.scss */
+/* line 70, ../sass/sass/_common.scss */
 .content-area .item-title .pro {
   width: 100%;
   margin: 0;
   font-size: 18px;
   text-align: left;
 }
-/* line 76, ../sass/sass/_common.scss */
+/* line 77, ../sass/sass/_common.scss */
 .content-area .pro {
   display: inline-block;
   vertical-align: top;
@@ -178,43 +179,43 @@ label {
   float: left;
   _display: inline;
 }
-/* line 84, ../sass/sass/_common.scss */
+/* line 85, ../sass/sass/_common.scss */
 .content-area .pro i {
   color: #ed4848;
   margin-right: 5px;
 }
-/* line 90, ../sass/sass/_common.scss */
+/* line 91, ../sass/sass/_common.scss */
 .content-area .radio-box {
   text-align: left;
 }
-/* line 92, ../sass/sass/_common.scss */
+/* line 93, ../sass/sass/_common.scss */
 .content-area .radio-box input {
   vertical-align: -2px;
 }
 
-/* line 97, ../sass/sass/_common.scss */
+/* line 98, ../sass/sass/_common.scss */
 .btn-area {
   width: 1100px;
   margin: 40px auto 0;
   text-align: center;
   font-size: 14px;
 }
-/* line 102, ../sass/sass/_common.scss */
+/* line 103, ../sass/sass/_common.scss */
 .btn-area a.easyui-linkbutton {
   margin: 0 10px;
 }
 
-/* line 106, ../sass/sass/_common.scss */
+/* line 107, ../sass/sass/_common.scss */
 .clear {
   clear: both;
 }
 
-/* line 111, ../sass/sass/_common.scss */
+/* line 112, ../sass/sass/_common.scss */
 .clear-border {
   border: 1px solid #fff;
 }
 
-/* line 114, ../sass/sass/_common.scss */
+/* line 115, ../sass/sass/_common.scss */
 #loadingMsk, .loadingMsk {
   font-family: "SimSun";
   position: fixed;
@@ -225,7 +226,7 @@ label {
   width: 100%;
   height: 100%;
 }
-/* line 122, ../sass/sass/_common.scss */
+/* line 123, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage, .loadingMsk .loadingPage {
   background: #fff;
   text-align: center;
@@ -238,7 +239,7 @@ label {
   top: 50%;
   margin-top: -50px;
 }
-/* line 132, ../sass/sass/_common.scss */
+/* line 133, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage img, .loadingMsk .loadingPage img {
   display: inline-block;
   vertical-align: middle;
@@ -246,7 +247,7 @@ label {
   zoom: 1;
   *dispaly: inline;
 }
-/* line 135, ../sass/sass/_common.scss */
+/* line 136, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage span, .loadingMsk .loadingPage span {
   margin-left: 10px;
   overflow: hidden;
@@ -255,21 +256,21 @@ label {
   width: 100%;
 }
 
-/* line 142, ../sass/sass/_common.scss */
+/* line 143, ../sass/sass/_common.scss */
 .link-css {
   text-decoration: underline;
   cursor: pointer;
   color: #0e6595;
 }
 
-/* line 148, ../sass/sass/_common.scss */
+/* line 149, ../sass/sass/_common.scss */
 .link-css-red {
   text-decoration: underline;
   cursor: pointer;
   color: #ed4848;
 }
 
-/* line 154, ../sass/sass/_common.scss */
+/* line 155, ../sass/sass/_common.scss */
 .buttonAddAll {
   width: 18px;
   height: 18px;
@@ -277,7 +278,7 @@ label {
   cursor: pointer;
 }
 
-/* line 161, ../sass/sass/_common.scss */
+/* line 162, ../sass/sass/_common.scss */
 .buttonAddSelect {
   width: 18px;
   height: 18px;
@@ -285,7 +286,7 @@ label {
   cursor: pointer;
 }
 
-/* line 168, ../sass/sass/_common.scss */
+/* line 169, ../sass/sass/_common.scss */
 .buttonRemoveSelect {
   width: 18px;
   height: 18px;
@@ -293,7 +294,7 @@ label {
   cursor: pointer;
 }
 
-/* line 175, ../sass/sass/_common.scss */
+/* line 176, ../sass/sass/_common.scss */
 .buttonRemoveAll {
   width: 18px;
   height: 18px;
