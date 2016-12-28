@@ -320,7 +320,11 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 			if(checkNode.length>0){
 				selectedOrgCode=checkNode[0].id;
 				selectedOrgName=checkNode[0].text;
-				selectedorgLevel=checkNode[0].attributes.orgLevel;
+				
+				if(checkNode[0].orgLevel)
+					selectedorgLevel=checkNode[0].orgLevel;
+				else
+					selectedorgLevel=checkNode[0].attributes.orgLevel;
 			}
 		}
 		
