@@ -12,6 +12,7 @@ html{
 body {
     //background: url("../framework/default/images/general_bg.jpg");
     visibility: hidden;
+    padding:5px;
 }
 
 textarea{
@@ -25,8 +26,8 @@ label{
     cursor : pointer;
 }
 .main{
-    margin: 30px auto 0;
-    padding: 1px 0 30px;
+    margin: 30px auto 0 auto;
+    padding: 1px 0 20px 0;
     width: 1198px;
     height:auto;
     //@include border(1px,solid,colors(borderColor));
