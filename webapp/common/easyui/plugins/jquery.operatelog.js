@@ -24,11 +24,10 @@
                 settings = $this.data('operatelog');
                 if(typeof (settings) == 'undefined'){
 
-                    
                     //默认参数对象
                     var defaults = {
                         tabTitle : '操作日志历史轨迹',
-                        url : managerPath+'/sysOperateLog/historyPage?conditionStr='+$this.attr('conditionStr'),
+                        url : managerPath+'/sysOperateLog/historyPage?conditionStr='+$this.attr('conditionStr')/*+'&funccodes='+$this.attr('funccodes')*/,
                         tab_id : $this.attr('conditionStr')
                     };
 
@@ -44,16 +43,20 @@
 
                 var pageLevel = "1";//默认为一级页面
                 pageLevel = $this.attr('pageLevel');
+                var pageLevelArray = pageLevel.split(',');
                 $this.on('click',function(){
-                    if("1" == pageLevel) {
-                        crossAddTab(settings.tabTitle, settings.url, settings.tab_id);
+                    for(var i=0;i<pageLevelArray.length;i++){
+                        if("1" == pageLevelArray[i]) {
+                            crossAddTab(settings.tabTitle, settings.url, settings.tab_id);
+                        }
+                        if("2" == pageLevelArray[i]) {
+                            parent.crossAddTab(settings.tabTitle,settings.url,settings.tab_id);
+                        }
+                        if("3" == pageLevelArray[i]) {
+                            parent.parent.crossAddTab(settings.tabTitle,settings.url,settings.tab_id);
+                        }
                     }
-                    if("2" == pageLevel) {
-                        parent.crossAddTab(settings.tabTitle,settings.url,settings.tab_id);
-                    }
-                    if("3" == pageLevel) {
-                        parent.parent.crossAddTab(settings.tabTitle,settings.url,settings.tab_id);
-                    }
+
                 })
             });
         },
