@@ -24,10 +24,15 @@
                 settings = $this.data('operatelog');
                 if(typeof (settings) == 'undefined'){
 
+                    var url = managerPath+'/sysOperateLog/historyPage?conditionStr='+$this.attr('conditionStr');
+                    if(typeof ($this.attr('funccodes')) != "undefined" &&  $this.attr('funccodes') != ""){
+                        url += '&funccodes='+$this.attr('funccodes');
+                    }
+
                     //默认参数对象
                     var defaults = {
                         tabTitle : '操作日志历史轨迹',
-                        url : managerPath+'/sysOperateLog/historyPage?conditionStr='+$this.attr('conditionStr')/*+'&funccodes='+$this.attr('funccodes')*/,
+                        url :url,
                         tab_id : $this.attr('conditionStr')
                     };
 
