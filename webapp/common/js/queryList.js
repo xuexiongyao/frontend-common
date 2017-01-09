@@ -36,6 +36,13 @@ function queryModule(){
                 +'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',errDealMode:2,autoPickDate:true});"'
                 +'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>'
                 +'</div>';
+        }else if(list_config[k][0] == 'datetimebox'){
+            query_item = '<div class="item '+k_mark+'" >'
+                +'<span class="pro">'+list_config[k][1]+'</span>'
+                +'<input name="'+k+'" id="query_input_'+k_mark+'" class="easyui-validatebox Wdate validatebox-text val"'
+                +'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',errDealMode:2,autoPickDate:true});"'
+                +'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd HH:mm:ss\\\']\']"/>'
+                +'</div>';
         }
 
         $('#query_panel .query-item').append(query_item);
@@ -43,7 +50,7 @@ function queryModule(){
             $('#query_input_'+k_mark).textbox({
                 prompt:'请输入'+list_config[k][1]
             })
-        }else if(list_config[k][0] == 'datebox'){
+        }else if(list_config[k][0] == 'datebox' || list_config[k][0] == 'datetimebox'){
             //不做初始化了，不用datebox
         }else if(list_config[k][0] == 'combobox'){
             $('#query_input_'+k_mark).combobox({
