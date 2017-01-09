@@ -352,13 +352,19 @@ label {
   color: #ed4848;
   margin-right: 5px;
 }
-/* line 33, ../sass/sass/_frameWindowCommon.scss */
+/* line 32, ../sass/sass/_frameWindowCommon.scss */
+.frame-window .frame-window-con .help, .frame-window .frame-window-con .operatelog {
+  text-align: right;
+  color: #0e6595;
+  cursor: pointer;
+}
+/* line 38, ../sass/sass/_frameWindowCommon.scss */
 .frame-window .frame-window-btn {
   width: 100%;
   margin: 10px 0;
   text-align: center;
 }
-/* line 37, ../sass/sass/_frameWindowCommon.scss */
+/* line 42, ../sass/sass/_frameWindowCommon.scss */
 .frame-window .frame-window-btn a.easyui-linkbutton {
   margin: 0 10px;
 }

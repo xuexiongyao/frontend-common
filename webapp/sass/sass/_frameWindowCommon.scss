@@ -29,6 +29,11 @@
                 margin-right:5px;
             }
         }
+        .help,.operatelog{
+            text-align: right;
+            color:colors(primary);
+            cursor:pointer
+        }
     }
     .frame-window-btn{
         width:100%;
