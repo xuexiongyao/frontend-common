@@ -324,10 +324,10 @@ function batchExprot(search_config_obj){
 	export_condition_obj['start']=0;
 	//export_condition_obj['limit']=2000;//已改为后台获取
 
-	console.log('查询条件:',condition_obj);
-	console.log('导出的查询条件:',export_condition_obj);
-	console.log('导出条件:',search_config_obj);
-	console.log('导出URL:',search_config.export_url);
+	//console.log('查询条件:',condition_obj);
+	//console.log('导出的查询条件:',export_condition_obj);
+	//console.log('导出条件:',search_config_obj);
+	//console.log('导出URL:',search_config.export_url);
 
 
 
@@ -976,7 +976,7 @@ function pagination(){
 		onSelectPage:function(pageNumber, pageSize){
 			condition_obj.start = (pageNumber-1)*pageSize;
 			condition_obj.limit = pageSize;
-			console.log(condition_obj);
+			//console.log(condition_obj);
 			ajaxQuery(condition_obj);
 		}
 	});
