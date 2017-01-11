@@ -197,31 +197,32 @@ label {
   text-align: right;
   color: #0e6595;
   cursor: pointer;
+  margin-top: -30px;
 }
 
-/* line 103, ../sass/sass/_common.scss */
+/* line 104, ../sass/sass/_common.scss */
 .btn-area {
   width: 1100px;
   margin: 40px auto 0;
   text-align: center;
   font-size: 14px;
 }
-/* line 108, ../sass/sass/_common.scss */
+/* line 109, ../sass/sass/_common.scss */
 .btn-area a.easyui-linkbutton {
   margin: 0 10px;
 }
 
-/* line 112, ../sass/sass/_common.scss */
+/* line 113, ../sass/sass/_common.scss */
 .clear {
   clear: both;
 }
 
-/* line 117, ../sass/sass/_common.scss */
+/* line 118, ../sass/sass/_common.scss */
 .clear-border {
   border: 1px solid #fff;
 }
 
-/* line 120, ../sass/sass/_common.scss */
+/* line 121, ../sass/sass/_common.scss */
 #loadingMsk, .loadingMsk {
   font-family: "SimSun";
   position: fixed;
@@ -232,7 +233,7 @@ label {
   width: 100%;
   height: 100%;
 }
-/* line 128, ../sass/sass/_common.scss */
+/* line 129, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage, .loadingMsk .loadingPage {
   background: #fff;
   text-align: center;
@@ -245,7 +246,7 @@ label {
   top: 50%;
   margin-top: -50px;
 }
-/* line 138, ../sass/sass/_common.scss */
+/* line 139, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage img, .loadingMsk .loadingPage img {
   display: inline-block;
   vertical-align: middle;
@@ -253,7 +254,7 @@ label {
   zoom: 1;
   *dispaly: inline;
 }
-/* line 141, ../sass/sass/_common.scss */
+/* line 142, ../sass/sass/_common.scss */
 #loadingMsk .loadingPage span, .loadingMsk .loadingPage span {
   margin-left: 10px;
   overflow: hidden;
@@ -262,21 +263,21 @@ label {
   width: 100%;
 }
 
-/* line 148, ../sass/sass/_common.scss */
+/* line 149, ../sass/sass/_common.scss */
 .link-css {
   text-decoration: underline;
   cursor: pointer;
   color: #0e6595;
 }
 
-/* line 154, ../sass/sass/_common.scss */
+/* line 155, ../sass/sass/_common.scss */
 .link-css-red {
   text-decoration: underline;
   cursor: pointer;
   color: #ed4848;
 }
 
-/* line 160, ../sass/sass/_common.scss */
+/* line 161, ../sass/sass/_common.scss */
 .buttonAddAll {
   width: 18px;
   height: 18px;
@@ -284,7 +285,7 @@ label {
   cursor: pointer;
 }
 
-/* line 167, ../sass/sass/_common.scss */
+/* line 168, ../sass/sass/_common.scss */
 .buttonAddSelect {
   width: 18px;
   height: 18px;
@@ -292,7 +293,7 @@ label {
   cursor: pointer;
 }
 
-/* line 174, ../sass/sass/_common.scss */
+/* line 175, ../sass/sass/_common.scss */
 .buttonRemoveSelect {
   width: 18px;
   height: 18px;
@@ -300,7 +301,7 @@ label {
   cursor: pointer;
 }
 
-/* line 181, ../sass/sass/_common.scss */
+/* line 182, ../sass/sass/_common.scss */
 .buttonRemoveAll {
   width: 18px;
   height: 18px;
