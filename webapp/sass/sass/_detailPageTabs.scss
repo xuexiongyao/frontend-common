@@ -64,6 +64,7 @@
                 color: colors(primary);
                 z-index: 10;
                 @include clearfix;
+                font-size: fontSize(small);
                 .ywbl{
                     margin-right: 20px;
                     float: left;
@@ -81,7 +82,6 @@
                         line-height: 30px;
                         @include text-align(right);
                         .ywbl-title-text{
-                            font-size: 14px;
                             margin-right:5px;
                         }
                     }
@@ -110,7 +110,7 @@
                     }
                 }
                 .help a{
-                    color: #0e6595;
+                    color: colors(primary);
                     text-decoration: none;
                     &:hover{
                         text-decoration: underline;

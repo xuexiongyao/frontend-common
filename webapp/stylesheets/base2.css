@@ -1018,6 +1018,7 @@
   color: #0e6595;
   z-index: 10;
   *zoom: 1;
+  font-size: 12px;
 }
 /* line 18, ../sass/sass/mixins/_clearfix.scss */
 .info-main .base-info .person-info .person-top-right:before, .info-main #export_panel .relation-info .person-info .person-top-right:before, #export_panel .info-main .relation-info .person-info .person-top-right:before, .info-main .base-info .person-info .person-top-right:after, .info-main #export_panel .relation-info .person-info .person-top-right:after, #export_panel .info-main .relation-info .person-info .person-top-right:after {
@@ -1029,30 +1030,29 @@
   clear: both;
   overflow: hidden;
 }
-/* line 67, ../sass/sass/_detailPageTabs.scss */
+/* line 68, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl {
   margin-right: 20px;
   float: left;
   background: #fff;
 }
-/* line 71, ../sass/sass/_detailPageTabs.scss */
+/* line 72, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl:hover, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl:hover, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl:hover {
   cursor: pointer;
   box-shadow: 0 2px 5px #888;
 }
-/* line 75, ../sass/sass/_detailPageTabs.scss */
+/* line 76, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl:hover .ywbl-content, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl:hover .ywbl-content, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl:hover .ywbl-content {
   display: block;
 }
-/* line 79, ../sass/sass/_detailPageTabs.scss */
+/* line 80, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-title, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-title, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-title {
   padding: 0 10px;
   line-height: 30px;
   text-align: right;
 }
-/* line 83, ../sass/sass/_detailPageTabs.scss */
+/* line 84, ../sass/sass/_detailPageTabs.scss */
 .info-main .base-info .person-info .person-top-right .ywbl .ywbl-title .ywbl-title-text, .info-main #export_panel .relation-info .person-info .person-top-right .ywbl .ywbl-title .ywbl-title-text, #export_panel .info-main .relation-info .person-info .person-top-right .ywbl .ywbl-title .ywbl-title-text {
-  font-size: 14px;
   margin-right: 5px;
 }
 /* line 88, ../sass/sass/_detailPageTabs.scss */
