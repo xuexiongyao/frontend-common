@@ -1208,7 +1208,7 @@ function flwsWclXyrCheck(bm, $this, event) {
             }
             //违法嫌疑人
             var zhxxObj = null;
-            var flwsData=DATA.FLWS[bm].flwsData;
+            var flwsData = DATA.FLWS[bm].flwsData;
 
             if (parentUl.attr("ids") == "wfxyr" && (flwsData.xyrpz != undefined || flwsData.xyrpz != '')) {//勾选嫌疑人
                 for (var key in DATA.DX.xydxData.TB_ST_RY_WFXYRY) {
@@ -1217,18 +1217,18 @@ function flwsWclXyrCheck(bm, $this, event) {
                     }
                 }
 
-            }else if(parentUl.attr("ids") == "wfxyrdw" && (flwsData.xydwpz != undefined || flwsData.xydwpz != '')){
+            } else if (parentUl.attr("ids") == "wfxyrdw" && (flwsData.xydwpz != undefined || flwsData.xydwpz != '')) {
                 for (var key in DATA.DX.xydxData.TB_ST_DW_WFXYDW) {
                     if (DATA.DX.xydxData.TB_ST_DW_WFXYDW[key].xxzjbh == $this.attr("xxzjbh")) {
                         zhxxObj = DATA.DX.xydxData.TB_ST_DW_WFXYDW[key];
                     }
                 }
             }
-            if(zhxxObj){
+            if (zhxxObj) {
                 var zhxx = {};
-                var xyrpz = eval('('+flwsData.xyrpz+')');
+                var xyrpz = eval('(' + flwsData.xyrpz + ')');
                 for (var fieldName in xyrpz) {
-                    var xyrpzArr=xyrpz[fieldName].split(",");
+                    var xyrpzArr = xyrpz[fieldName].split(",");
                     for (var j = 0; j < xyrpzArr.length; j++) {
                         var field = xyrpzArr[j];
                         var val = zhxxObj[field];
@@ -1236,57 +1236,57 @@ function flwsWclXyrCheck(bm, $this, event) {
                             zhxx[field] = val;
                         }
                     }
-                    fzxyDxXxfy(fieldName,filedToParagraphXyr(zhxx),bm);
+                    fzxyDxXxfy(fieldName, filedToParagraphXyr(zhxx), bm);
                 }
             }
 
             /*****公安行政处罚决定书*****/
         }
-/*****************************************************************************ok*/
-/*
-        //违法嫌疑人
-        var zhxxObj = null;
-        if (parentUl.attr("ids") == "wfxyr" && (DATA.CQBG.cqbgData.xyrpz != undefined || DATA.CQBG.cqbgData.xyrpz != '')) {//勾选嫌疑人
-            for (var key in DATA.DX.xydxData.TB_ST_RY_WFXYRY) {
-                if (DATA.DX.xydxData.TB_ST_RY_WFXYRY[key].xxzjbh == $this.attr("xxzjbh")) {
-                    zhxxObj = DATA.DX.xydxData.TB_ST_RY_WFXYRY[key];
-                }
-            }
-            var zhxx = {};
-            var xyrpzArr = DATA.CQBG.cqbgData.xyrpz.split(",");
-            for (var j = 0; j < xyrpzArr.length; j++) {
-                var field = xyrpzArr[j];
-                var val = zhxxObj[field];
-                if (val) {
-                    zhxx[field] = val;
-                }
-            }
-            $("#cqbg_main_con form textarea").val(filedToParagraphXyr(zhxx) + '\n' + textareaVal);
-        }
-        //违法嫌疑单位
-        else if (parentUl.attr("ids") == "wfxyrdw" && (DATA.CQBG.cqbgData.xydwpz != undefined || DATA.CQBG.cqbgData.xydwpz != '')) {//勾选嫌疑单位
-            for (var key in DATA.DX.xydxData.TB_ST_DW_WFXYDW) {
-                if (DATA.DX.xydxData.TB_ST_DW_WFXYDW[key].xxzjbh == $this.attr("xxzjbh")) {
-                    zhxxObj = DATA.DX.xydxData.TB_ST_DW_WFXYDW[key];
-                }
-            }
+        /*****************************************************************************ok*/
+        /*
+         //违法嫌疑人
+         var zhxxObj = null;
+         if (parentUl.attr("ids") == "wfxyr" && (DATA.CQBG.cqbgData.xyrpz != undefined || DATA.CQBG.cqbgData.xyrpz != '')) {//勾选嫌疑人
+         for (var key in DATA.DX.xydxData.TB_ST_RY_WFXYRY) {
+         if (DATA.DX.xydxData.TB_ST_RY_WFXYRY[key].xxzjbh == $this.attr("xxzjbh")) {
+         zhxxObj = DATA.DX.xydxData.TB_ST_RY_WFXYRY[key];
+         }
+         }
+         var zhxx = {};
+         var xyrpzArr = DATA.CQBG.cqbgData.xyrpz.split(",");
+         for (var j = 0; j < xyrpzArr.length; j++) {
+         var field = xyrpzArr[j];
+         var val = zhxxObj[field];
+         if (val) {
+         zhxx[field] = val;
+         }
+         }
+         $("#cqbg_main_con form textarea").val(filedToParagraphXyr(zhxx) + '\n' + textareaVal);
+         }
+         //违法嫌疑单位
+         else if (parentUl.attr("ids") == "wfxyrdw" && (DATA.CQBG.cqbgData.xydwpz != undefined || DATA.CQBG.cqbgData.xydwpz != '')) {//勾选嫌疑单位
+         for (var key in DATA.DX.xydxData.TB_ST_DW_WFXYDW) {
+         if (DATA.DX.xydxData.TB_ST_DW_WFXYDW[key].xxzjbh == $this.attr("xxzjbh")) {
+         zhxxObj = DATA.DX.xydxData.TB_ST_DW_WFXYDW[key];
+         }
+         }
 
-            var zhxx = {};
-            var xyrpzArr = DATA.CQBG.cqbgData.xydwpz.split(",");
-            for (var k = 0; k < xyrpzArr.length; k++) {
-                var field = xyrpzArr[k];
-                var val = zhxxObj[field];
-                if (val) {
-                    zhxx[field] = val;
-                }
-            }
-            $("#cqbg_main_con form textarea").val(filedToParagraphXyr(zhxx) + '\n' + textareaVal);
-        } else {
-            var xyrZhxxData = '\n' + '\t' + $this.next().attr('xyrzhxx');
-            $("#cqbg_main_con form textarea").val(xyrZhxxData + '\t' + textareaVal);
-        }
-*/
-/*****************************************************ok*/
+         var zhxx = {};
+         var xyrpzArr = DATA.CQBG.cqbgData.xydwpz.split(",");
+         for (var k = 0; k < xyrpzArr.length; k++) {
+         var field = xyrpzArr[k];
+         var val = zhxxObj[field];
+         if (val) {
+         zhxx[field] = val;
+         }
+         }
+         $("#cqbg_main_con form textarea").val(filedToParagraphXyr(zhxx) + '\n' + textareaVal);
+         } else {
+         var xyrZhxxData = '\n' + '\t' + $this.next().attr('xyrzhxx');
+         $("#cqbg_main_con form textarea").val(xyrZhxxData + '\t' + textareaVal);
+         }
+         */
+        /*****************************************************ok*/
 
 
     } else {//未选中
