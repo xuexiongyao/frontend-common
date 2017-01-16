@@ -170,7 +170,7 @@ function openOtherTable(isExport){
 				if(module_i_j.lishu){
 					lishuStr = JSON.stringify(module_i_j.lishu)
 				}
-				console.log(lishuStr);
+				//console.log(lishuStr);
 				var html_check = ''
 				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'" input="'+module_i_j.input+'" formatter="'+module_i_j.formatter+'" lishu=\''+lishuStr+'\'>'+module_i_j.text+'</label>';
 				$('#item_check'+i).append(html_check);
@@ -770,7 +770,7 @@ function parseInput(config,judge_id,condition_id){
 		$('#'+new_condition_id).parent().append('<input type="hidden" class="condition" id="'+field+'_org_'+field_time+'">');
 		
 		if(config.lishu){//隶属的时候只能单选
-			initSingleSelectOrg(new_condition_id,null,{text:new_condition_id,id:field+'_org_'+field_time},null);
+			initSingleSelectOrg(new_condition_id,{orgLevel:'00,10,21,32,50'},{text:new_condition_id,id:field+'_org_'+field_time},null);
 			$('#'+judge_id).combobox('select','IN');
 			$('#'+judge_id).combobox('setValue','IN');
 		}else{
@@ -1284,7 +1284,7 @@ function getOrgName(val,span_id){
 //					  console.log("翻译"+orgObj.html()+">"+val);
 //					  orgObj.html(val);
 //				  }else{
-					  console.log("存入待处理"+val);
+					  //console.log("存入待处理"+val);
 					  formateAry[formateAry.length]={span_id:span_id,val:val};//存入待处理的数组
 				 // }
 			  }
