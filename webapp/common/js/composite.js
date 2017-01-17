@@ -1038,9 +1038,11 @@ function tableContent(val, row, index){
 		var inputType = getConfigObj(field_i,config)['input'];
 		var field = getConfigObj(field_i,config)['field'];
 		
-		if(inputType == 'combobox' || inputType == 'combotree'){
-			if(!row[field]){
-				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
+		if(!row[field]){
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
+		}else if(inputType == 'combobox' || inputType == 'combotree'){
+			if(!row[field+"MC"]){
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field]+'</span></div>';
 			}else{
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
