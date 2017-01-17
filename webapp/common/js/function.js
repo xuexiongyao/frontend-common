@@ -1143,15 +1143,15 @@ function setInputValue($input,val){
 }
 
 //combobox自动填值
-function comboAutoComplete(combobox_id,url){
+function comboAutoComplete(combobox_id,dictUrl){
     var $combobox = $('#'+combobox_id);
     var domain = getThisLocationObj();
     var hostname = domain.hostname;
     var randomUrl = dictUrl;
-    if(url.indexOf('?') == -1){
-        randomUrl = url+'?domain='+hostname;
+    if(dictUrl.indexOf('?') == -1){
+        randomUrl = dictUrl+'?domain='+hostname;
     }else{
-        randomUrl = url+'&domain='+hostname;
+        randomUrl = dictUrl+'&domain='+hostname;
     }
     $.ajax({
         cache:true,
