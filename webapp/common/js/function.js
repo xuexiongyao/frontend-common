@@ -1144,14 +1144,25 @@ function setInputValue($input,val){
 
 //combobox自动填值
 function comboAutoComplete(combobox_id,url){
-    var _combobox = $('#'+combobox_id);
+    var $combobox = $('#'+combobox_id);
+    var domain = getThisLocationObj();
+    var hostname = domain.hostname;
+    var randomUrl = dictUrl;
+    if(url.indexOf('?') == -1){
+        randomUrl = url+'?domain='+hostname;
+    }else{
+        randomUrl = url+'&domain='+hostname;
+    }
     $.ajax({
-        url : url,
+        cache:true,
+        url : randomUrl,
         type:'get',
         dataType:'json',
+        xhrFields: {withCredentials:true},
+        crossDomain: true,
         success : function(data){
             if(data.length === 1){
-                _combobox.combobox('select',data[0]['id']);
+                $combobox.combobox('select',data[0]['id']);
             }
         }
     });
