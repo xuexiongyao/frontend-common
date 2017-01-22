@@ -515,9 +515,9 @@ function getIEVersion() {
 				var hostname = domain.hostname;
 				var randomUrl = dictUrl;
 				if(dictUrl.indexOf('?') == -1){
-					randomUrl = dictUrl+'?domain='+hostname;
+					randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
 				}else{
-					randomUrl = dictUrl+'&domain='+hostname;
+					randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
 				}
 				$.ajax({
 					cache: true,
@@ -1371,9 +1371,9 @@ function getIEVersion() {
 				var hostname = domain.hostname;
 				var randomUrl = dictUrl;
 				if(dictUrl.indexOf('?') == -1){
-					randomUrl = dictUrl+'?domain='+hostname;
+					randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
 				}else{
-					randomUrl = dictUrl+'&domain='+hostname;
+					randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
 				}
 				$.ajax({
 					cache: true,
