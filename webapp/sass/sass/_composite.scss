@@ -87,11 +87,17 @@
                         //font-weight: bold;
                         margin:  0 5px;
                         text-align: right;
-                        width:84px;
+                        width:80px;
                         vertical-align: top;
                     }
                     .condition{
                         margin-left: 10px;
+                    }
+                    .del-condition{
+                        color: #ff3a41;
+                        cursor:pointer;
+                        margin-left:2px;
+                        font-size: 14px;
                     }
                 }
             }

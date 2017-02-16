@@ -10,9 +10,18 @@ $(function(){
 	pagination();       //初始化分页
 	setTable();         //初始化表格设置按钮
 	getTableSetDom();   //生成表头配置信息,并实现拖动
-	createDatagrid();    //初始化表格
+	createDatagrid();   //初始化表格
 	btnEvent();         //按钮事件
+	delCondition();		//删除查询条件
 });
+
+//删除查询条件
+function delCondition(){
+	$('#advanced_box').off('click.delC').on('click.delC','.del-condition',function(){
+		$(this).parent().remove();
+	});
+}
+
 //更改页面显示的标题内容
 function changeName(){
 	$('#title_name').text(search_config.query_title);
@@ -89,6 +98,7 @@ function createAdInputByCheck(search_config_obj){
 					+'<span class="pro">'+config_i.text+'</span>'
 					+'<input id="'+type+'judge_input'+i+'" class="judge">'
 					+'<input id="'+type+'condition_input'+i+'" class="condition">'
+					+'<i class="fa fa-times del-condition"></i>'
 					+'</li>';
 				$('#'+type+' ul').append(search_li);
 				parseInput(config_i,type+'judge_input'+i,type+'condition_input'+i); //初始化input组件
@@ -567,7 +577,7 @@ function btnEvent(){
 	//点击清空
 	$('#search_clear').off('click').on('click',function(){
 		//移除添加查询条件
-		$('#advanced_box li[condition_type="add"]').remove();
+		//$('#advanced_box li[condition_type="add"]').remove();
 		//清除查询条件的值
 		clearInput('condition');
 	});
@@ -706,6 +716,7 @@ function createSearchInput(type){
 				+'<span class="pro">'+config_i.text+'</span>'
 				+'<input id="'+type+'judge_input'+i+'" class="judge">'
 				+'<input id="'+type+'condition_input'+i+'" isOrg="'+isOrg+'" class="condition">'
+				+'<i class="fa fa-times del-condition"></i>'
 				+'</li>';
 			$('#advanced_box #'+type+' ul').append(search_li);
 			parseInput(config_i,type+'judge_input'+i,type+'condition_input'+i); //初始化input组件
@@ -796,7 +807,7 @@ function parseInput(config,judge_id,condition_id){
 			+' style="height:22px;line-height:22px;width:180px;margin:0;position:relative;top:2px;"'
 			+'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',autoPickDate:true});"'
 			+'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
-		$parent.append(dateDom);
+		$parent.find('.del-condition').before(dateDom);
 	}else if(condition_type == 'combotree'){
 		$('#'+condition_id).combotree({
 			multiple:multiple,
@@ -885,7 +896,7 @@ function ajaxQuery(condition_obj){
 	
 	//查询成功,展示查询内容
 	loading('open','查询中...');
-	//console.log('查询条件:',condition_obj);
+	console.log('查询条件:',condition_obj);
 	//console.log(JSON.stringify(condition_obj));
 	var condition = JSON.stringify(condition_obj);
 	$.ajax({
@@ -976,6 +987,7 @@ function addCondition(type){
 							+'<span class="pro">'+config_i.text+'</span>'
 							+'<input id="'+type+'judge_input_'+j+'" class="judge">'
 							+'<input id="'+type+'condition_input_'+j+'" class="condition">'
+							+'<i class="fa fa-times del-condition"></i>'
 							+'</li>';
 						var $li = $('#advanced_box #'+type+' li[field="'+config_i.field+'"]');
 						//相同条件添加到旁边
