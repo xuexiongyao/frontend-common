@@ -3,6 +3,7 @@
 var condition_obj = {mainTable:search_config.main_type};
 var table_header_info=[];
 var	config=[];
+var pageN = 1;
 
 $(function(){
 	changeName();       //页面展示的模块更名
@@ -604,6 +605,7 @@ function createDatagrid(){
 		fit: false,
 		columns:[[
 			{field: 'ID',title:'check',align:'center',width:10, checkbox: true},
+			{field: 'NUM',title:'编号',align:'center',width:5,formatter:tableNum},
 			{field:'HJD_XZQHDMMC',title:'描述',align:'center',width:80,formatter:tableContent},
 			{field:'handle',title:'操作',align:'center',width:10,formatter:tableHandle}
 		]],
@@ -815,9 +817,6 @@ function getBaseInfoObj(type){
 	var query_obj = {};
 	var query = [];
 	query_obj.type = search_config[type+'_type'];
-	
-	
-
 	//循环获取查询条件
 	$('#advanced_box #'+type+' li').each(function(index){
 		var $this = $(this);
@@ -879,7 +878,6 @@ function getSearchData($this){
 
 //提交查询请求
 function ajaxQuery(condition_obj){
-	
 	try{
 		if(!beforeSubmit(condition_obj))
 			return;
@@ -907,14 +905,19 @@ function ajaxQuery(condition_obj){
 		},
 		error:function(e){
 			loading('close');
-//			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
-//			console.log(e);
-//			$('#pagination').pagination({
-//				total:998
-//			}).show();
-//			changeLinkButtonIcon();
-//			searchResult(search_result_test);
 			$.messager.alert('提示','连接失败!','warning',null);
+
+
+			/****正式环境请注释下面这一段****/
+
+			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
+			$('#pagination').pagination({
+				total:998
+			}).show();
+			changeLinkButtonIcon();
+			searchResult(search_result_test);
+
+
 		}
 	});
 
@@ -1006,6 +1009,7 @@ function pagination(){
 		pageSize:5,
 		pageList: [5,10,15,20,30,50],
 		onSelectPage:function(pageNumber, pageSize){
+			pageN = (pageNumber-1)*pageSize;
 			condition_obj.start = (pageNumber-1)*pageSize;
 			condition_obj.limit = pageSize;
 			//console.log(condition_obj);
@@ -1026,7 +1030,14 @@ function searchResult(data){
 	$('#handle_area').show();
 }
 
+
 //表格内容
+
+function tableNum(val, row, index){
+	return pageN + index;
+}
+
+
 function tableContent(val, row, index){
 	//alert()
 	//console.log(1,row,table_header_info);
