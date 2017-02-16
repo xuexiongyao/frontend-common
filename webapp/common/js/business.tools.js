@@ -483,7 +483,7 @@ function initHouseSearch(comboID, filterData, returnFieldData,onSelectedFun){
 					}else{
 						$.messager.alert({
 	                        title: '提示信息',
-	                        msg  : '该房屋没有缺失标准地址信息，请选择其他房屋！'
+	                        msg  : '该房屋缺失标准地址信息，请选择其他房屋！'
 	                    });
 						
 						for (var item in returnFieldData) {
