@@ -186,21 +186,22 @@
 }
 /* line 96, ../sass/sass/_composite.scss */
 .main .advanced-search-box > div ul li .del-condition {
+  display: none;
   color: #ff3a41;
   cursor: pointer;
   margin-left: 2px;
   font-size: 14px;
 }
-/* line 105, ../sass/sass/_composite.scss */
+/* line 106, ../sass/sass/_composite.scss */
 .main .advanced-search-box .bottom-btn {
   margin: 30px auto 20px auto;
   text-align: center;
 }
-/* line 108, ../sass/sass/_composite.scss */
+/* line 109, ../sass/sass/_composite.scss */
 .main .advanced-search-box .bottom-btn a {
   margin: 0 10px;
 }
-/* line 113, ../sass/sass/_composite.scss */
+/* line 114, ../sass/sass/_composite.scss */
 .main .search-result {
   margin: auto;
   margin-top: 10px;
@@ -208,13 +209,13 @@
   min-height: 150px;
   height: auto;
 }
-/* line 120, ../sass/sass/_composite.scss */
+/* line 121, ../sass/sass/_composite.scss */
 .main .handle-area {
   margin: auto;
   margin-top: 25px;
   width: 1100px;
 }
-/* line 124, ../sass/sass/_composite.scss */
+/* line 125, ../sass/sass/_composite.scss */
 .main .handle-area .all-select-btn {
   width: auto;
   min-width: 15px;
@@ -225,14 +226,14 @@
   left: 6px;
   font-size: 14px;
 }
-/* line 135, ../sass/sass/_composite.scss */
+/* line 136, ../sass/sass/_composite.scss */
 .main .result-table {
   margin: auto;
   margin-top: 5px;
   width: 1100px;
   height: auto;
 }
-/* line 140, ../sass/sass/_composite.scss */
+/* line 141, ../sass/sass/_composite.scss */
 .main .result-table .table-content {
   margin: 10px auto 0 auto;
   min-height: 70px;
@@ -250,19 +251,19 @@
   clear: both;
   overflow: hidden;
 }
-/* line 146, ../sass/sass/_composite.scss */
+/* line 147, ../sass/sass/_composite.scss */
 .main .result-table .table-content .img-dsc {
   float: left;
   height: 50px;
   line-height: 50px;
   margin-top: 10px;
 }
-/* line 151, ../sass/sass/_composite.scss */
+/* line 152, ../sass/sass/_composite.scss */
 .main .result-table .table-content .img-dsc img {
   height: 100%;
   width: auto;
 }
-/* line 156, ../sass/sass/_composite.scss */
+/* line 157, ../sass/sass/_composite.scss */
 .main .result-table .table-content .content-dsc {
   *zoom: 1;
   height: 100%;
@@ -281,12 +282,12 @@
   clear: both;
   overflow: hidden;
 }
-/* line 164, ../sass/sass/_composite.scss */
+/* line 165, ../sass/sass/_composite.scss */
 .main .result-table .table-content .content-dsc .item {
   float: left;
   margin: 5px 0;
 }
-/* line 167, ../sass/sass/_composite.scss */
+/* line 168, ../sass/sass/_composite.scss */
 .main .result-table .table-content .content-dsc .item .pro {
   font-weight: bold;
   color: #0e6595;
@@ -295,7 +296,7 @@
   min-width: 80px;
   display: inline-block;
 }
-/* line 182, ../sass/sass/_composite.scss */
+/* line 183, ../sass/sass/_composite.scss */
 .main .pagination {
   margin: auto;
   margin-top: 10px;
@@ -303,7 +304,7 @@
 }
 
 /*查询条件框*/
-/* line 190, ../sass/sass/_composite.scss */
+/* line 191, ../sass/sass/_composite.scss */
 .condition-dialog ul {
   list-style-type: none;
   margin: 0;
@@ -322,14 +323,14 @@
   clear: both;
   overflow: hidden;
 }
-/* line 197, ../sass/sass/_composite.scss */
+/* line 198, ../sass/sass/_composite.scss */
 .condition-dialog ul li {
   float: left;
   margin-bottom: 5px;
   min-width: 120px;
 }
 
-/* line 206, ../sass/sass/_composite.scss */
+/* line 207, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag {
   width: 100%;
   height: auto;
@@ -337,7 +338,7 @@
   /*已选表头*/
   /*待选表头*/
 }
-/* line 210, ../sass/sass/_composite.scss */
+/* line 211, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag ul {
   width: 100%;
   list-style-type: none;
@@ -355,13 +356,13 @@
   clear: both;
   overflow: hidden;
 }
-/* line 216, ../sass/sass/_composite.scss */
+/* line 217, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag ul li {
   float: left;
   margin: 2px;
   cursor: pointer;
 }
-/* line 220, ../sass/sass/_composite.scss */
+/* line 221, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag ul li div {
   text-align: center;
   padding: 0 20px;
@@ -375,12 +376,12 @@
   -o-border-radius: 3px;
   -ms-border-radius: 3px;
 }
-/* line 231, ../sass/sass/_composite.scss */
+/* line 232, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag ul .placeHolder div {
   background-color: #fff !important;
   border: dashed 1px #999 !important;
 }
-/* line 238, ../sass/sass/_composite.scss */
+/* line 239, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag .selected-header {
   *zoom: 1;
   padding: 10px;
@@ -395,16 +396,16 @@
   clear: both;
   overflow: hidden;
 }
-/* line 243, ../sass/sass/_composite.scss */
+/* line 244, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag .selected-header ul li div {
   background-color: #ed4848;
 }
-/* line 248, ../sass/sass/_composite.scss */
+/* line 249, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag .selected-header > div {
   padding-bottom: 5px;
   border-bottom: 1px dashed #ccc;
 }
-/* line 255, ../sass/sass/_composite.scss */
+/* line 256, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag .waiting-header {
   *zoom: 1;
   padding: 10px;
@@ -419,12 +420,12 @@
   clear: both;
   overflow: hidden;
 }
-/* line 258, ../sass/sass/_composite.scss */
+/* line 259, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag .waiting-header > div {
   padding-bottom: 5px;
   border-bottom: 1px dashed #ccc;
 }
-/* line 263, ../sass/sass/_composite.scss */
+/* line 264, ../sass/sass/_composite.scss */
 #set_table_panel .table-header-drag .tips {
   width: auto;
   margin: 10px auto;
@@ -435,7 +436,7 @@
   line-height: 30px;
 }
 
-/* line 276, ../sass/sass/_composite.scss */
+/* line 277, ../sass/sass/_composite.scss */
 #other_table_dialog .title {
   *zoom: 1;
   font-size: 14px;
@@ -453,11 +454,11 @@
   clear: both;
   overflow: hidden;
 }
-/* line 282, ../sass/sass/_composite.scss */
+/* line 283, ../sass/sass/_composite.scss */
 #other_table_dialog .title .text {
   float: left;
 }
-/* line 285, ../sass/sass/_composite.scss */
+/* line 286, ../sass/sass/_composite.scss */
 #other_table_dialog .title .fold {
   float: right;
   text-align: center;
@@ -466,31 +467,31 @@
   cursor: pointer;
   border-radius: 3px;
 }
-/* line 292, ../sass/sass/_composite.scss */
+/* line 293, ../sass/sass/_composite.scss */
 #other_table_dialog .title .fold:hover {
   background: #0D6193;
   color: #fff;
 }
-/* line 297, ../sass/sass/_composite.scss */
+/* line 298, ../sass/sass/_composite.scss */
 #other_table_dialog .title .select-all {
   float: right;
   font-size: 12px;
   color: #5a5a5a;
 }
-/* line 303, ../sass/sass/_composite.scss */
+/* line 304, ../sass/sass/_composite.scss */
 #other_table_dialog .item-table {
   margin: 0 15px;
   border: 2px #fff solid;
 }
-/* line 307, ../sass/sass/_composite.scss */
+/* line 308, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check-border {
   border: 2px #ccc solid;
 }
-/* line 310, ../sass/sass/_composite.scss */
+/* line 311, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check {
   display: none;
 }
-/* line 312, ../sass/sass/_composite.scss */
+/* line 313, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label {
   font-size: 12px;
   display: inline-block;
@@ -499,7 +500,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-/* line 319, ../sass/sass/_composite.scss */
+/* line 320, ../sass/sass/_composite.scss */
 #other_table_dialog .item-check label input {
   vertical-align: middle;
 }

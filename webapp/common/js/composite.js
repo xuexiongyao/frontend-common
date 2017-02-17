@@ -13,6 +13,7 @@ $(function(){
 	createDatagrid();   //初始化表格
 	btnEvent();         //按钮事件
 	delCondition();		//删除查询条件
+	showHideDel();		//hover显示删除条件
 });
 
 //删除查询条件
@@ -20,6 +21,15 @@ function delCondition(){
 	$('#advanced_box').off('click.delC').on('click.delC','.del-condition',function(){
 		$(this).parent().remove();
 	});
+}
+
+//hover显示删除条件
+function showHideDel(){
+	$('#advanced_box ul>li').hover(function(){
+		$(this).find('.del-condition').show();
+	},function(){
+		$(this).find('.del-condition').hide();
+	})
 }
 
 //更改页面显示的标题内容
@@ -231,6 +241,7 @@ function openOtherTable(isExport){
 				}else{
 					createAdInputByCheck(search_config_obj);
 				}
+				showHideDel();		//hover显示删除条件
 			}
 		}, {
 			text: '取消',
@@ -1004,6 +1015,7 @@ function addCondition(type){
 						j++;
 					}
 				}
+				showHideDel();		//hover显示删除条件
 			}
 		}, {
 			text: '关闭',
