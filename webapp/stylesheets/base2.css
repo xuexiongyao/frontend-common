@@ -1121,7 +1121,7 @@
   *vertical-align: auto;
   zoom: 1;
   *dispaly: inline;
-  width: 80px;
+  min-width: 80px;
   font-size: 12px;
   font-weight: bold;
   color: #747474;

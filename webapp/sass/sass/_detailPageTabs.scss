@@ -131,7 +131,7 @@
                     //border-bottom: 1px dashed colors(borderColor);
                     .pro {
                         @include inline-block(baseline);
-                        width: 80px;
+                        min-width: 80px;
                         font-size: fontSize(small);
                         font-weight: bold;
                         color: colors(grayBgcolor);
