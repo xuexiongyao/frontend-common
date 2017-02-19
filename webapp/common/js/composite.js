@@ -737,9 +737,8 @@ function createSearchInput(type){
 
 //初始化组件
 function parseInput(config,judge_id,condition_id){
-	//console.log(config,judge_id,condition_id);
 	var valid_type = config.valid_type || '';
-	var default_value = config.judge_default || '=';
+	var default_value = config.judge_default || config['judge_dict'][0]['id'];
 	var multiple = config.multiple || false;
 	var field = config.field;
 	//判断条件组件初始化
@@ -798,12 +797,12 @@ function parseInput(config,judge_id,condition_id){
 		
 		if(config.lishu){//隶属的时候只能单选
 			initSingleSelectOrg(new_condition_id,{orgLevel:'00,10,21,32,50'},{text:new_condition_id,id:field+'_org_'+field_time},null);
-			$('#'+judge_id).combobox('select','IN');
-			$('#'+judge_id).combobox('setValue','IN');
+			//$('#'+judge_id).combobox('select','IN');
+			//$('#'+judge_id).combobox('setValue','IN');
 		}else{
 			initMultiSelectOrg(new_condition_id,null,{text:new_condition_id,id:field+'_org_'+field_time},null);
-			$('#'+judge_id).combobox('select','=');
-			$('#'+judge_id).combobox('setValue','=');
+			//$('#'+judge_id).combobox('select','=');
+			//$('#'+judge_id).combobox('setValue','=');
 		}
 		
 		
