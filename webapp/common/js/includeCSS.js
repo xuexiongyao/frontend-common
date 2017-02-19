@@ -5,7 +5,7 @@ var staticPath = 'http://static.jwzh.com:7777/jwzh';//注意:请同步修改path
 var pathname = location.pathname;
 
 try{
-	if(staticVersion) jwzhVersion=staticVersion;//如果项目有新的静态资源版本号，就取项目的版本，通常是登录的时候会取静态资源的版本号
+	if(staticVersion) jwzhVersion=staticVersion;//门户会生成静态资源的版本号
 }catch (e) {
 	
 }
