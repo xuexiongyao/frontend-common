@@ -413,6 +413,10 @@ function getIEVersion() {
 
 		maxValueLength: 0,
 
+		panelWidth : 'auto',
+
+		panelMaxWidth : 400,
+
 		panelOptionsNumber: 10,
 
 		loaded: false,
