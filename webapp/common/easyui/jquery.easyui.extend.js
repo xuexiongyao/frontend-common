@@ -1956,6 +1956,14 @@ function getIEVersion() {
 		onLoadError: function(){
 			//加载失败时,显示空数据
 			$(this).datagrid('loadData',[]);
+			try{
+				$.messager.show({
+					title: '列表数据错误',
+					msg: '列表数据加载出错,请检查系统后台数据!'
+				});
+			}catch(e){
+				alert('列表数据加载错误,请检查系统后台数据!');
+			}
 		}
 	});
 
