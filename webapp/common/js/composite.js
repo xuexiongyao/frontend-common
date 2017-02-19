@@ -763,6 +763,8 @@ function parseInput(config,judge_id,condition_id){
 	$('#'+judge_id).combobox('setValue',default_value);
 	//输入条件组件初始化
 	var condition_type = config.input;
+	var dataFilter = config.dataFilter;
+	if(!dataFilter) dataFilter = '';
 	if(condition_type == 'combobox'){
 		$('#'+condition_id).combobox({
 			multiple:multiple,
@@ -772,7 +774,8 @@ function parseInput(config,judge_id,condition_id){
 			valueField: 'id',
 			textField: 'text',
 			panelWidth: 180,
-			width:180
+			width:180,
+			dataFilter:dataFilter
 		});
 		clickShowPanel(condition_id, true);
 	}else if(condition_type == 'textbox'){
@@ -829,6 +832,7 @@ function parseInput(config,judge_id,condition_id){
 			textField: 'text',
 			panelWidth: 180,
 			width:180,
+			dataFilter:dataFilter,
 			cascadeCheck:true
 		});
 	}
