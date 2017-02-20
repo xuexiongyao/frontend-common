@@ -1233,6 +1233,11 @@ function parseTimeToCN(time){
     return newTime;
 }
 
+//将时间格式转化为yyyy年MM月dd日
+function parseTimeToDayCN(time){
+    var CN = parseTimeToCN(time);
+    return CN.substr(0,11);
+}
 
 
 //获取sessionbean
