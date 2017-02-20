@@ -573,7 +573,7 @@ function fzxyrXxfy(currentXyr, tabId) {
     //loading('open','正在复用嫌疑人信息，请稍等....');
     for (var k in DATA.URLATTR) {
         var data;
-        if (k == "ASJQTXGRY01") {
+        if (k == xyrApiName) {
             data = currentXyr;
             for (var j = 0; j < DATA.URLATTR[k].length; j++) {
                 var key = DATA.URLATTR[k][j];//法律文书中对应的组件名字

@@ -498,10 +498,12 @@ function flwsDxRenderA(bm, flwsRow) {
                     var xydxMc = '';
                     for(var q=0;q<xydxArrayTmp.length;q++){
                         if(xydxArrayTmp[q].xxzjbh == flwsRow[i].CLDX_XXZJBH){
-                            if(dxLb == anjianXyDxDic.xyr || dxLb == anjianXyDxDic.ajxgr){
-                                xydxMc = xydxArrayTmp[q].xm
+                            if(dxLb == anjianXyDxDic.xyr){
+                                xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xyr].param]
                             }else if(dxLb == anjianXyDxDic.xydw){
-                                xydxMc = xydxArrayTmp[q].dwmc
+                                xydxMc = xydxArrayTmp[q][[xyrObj[anjianXyDxDic.xydw].param]]
+                            }else if(dxLb == anjianXyDxDic.ajxgr){
+                                xydxMc = xydxArrayTmp[q][[xyrObj[anjianXyDxDic.ajxgr].param]]
                             }
                         }
                     }
