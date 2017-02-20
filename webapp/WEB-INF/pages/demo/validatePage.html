@@ -170,7 +170,7 @@
                 <p class="pro">年-月-日</p>
                 <div class="ipt">
                     <input class="easyui-validatebox Wdate" style="width:99.7%" placeholder="yyyy-MM-dd"
-                           onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd',errDealMode:2,autoPickDate:true});"
+                           onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd',minDate: '%y-%M-%d {%d-3}',maxDate: '%y-%M-%d {%d+3}',errDealMode:2,autoPickDate:true});"
                            data-options="validType:['date[\'yyyy-MM-dd\']']"/>
                 </div>
             </li>
@@ -243,7 +243,7 @@
                 <div class="ipt">
                     <input class="easyui-validatebox Wdate" style="width:99.7%" placeholder="yyyyMMddHHmm"
                            onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyyMMddHHmm',errDealMode:2,autoPickDate:true});"
-                           data-options="validType:['date[\'yyyyMMddHHmm\']']"/>
+                           data-options="required:true"/>
                 </div>
             </li>
 
@@ -1956,9 +1956,9 @@
         });
 
     });
-    
-    var staticPath = 'http://static.jwzh.com:7777/jwzh';
-//    var staticPath = '../../..';
+
+//    var staticPath = 'http://static.jwzh.com:7777/jwzh';
+    var staticPath = '../../..';
 
     function bodyOnload() {
         $('#dataform').form({

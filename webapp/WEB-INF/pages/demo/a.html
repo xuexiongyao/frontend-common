@@ -1,74 +1,115 @@
-&lt;ul class="item-container"&gt;
-    &lt;li class="item-two"&gt;
-        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别1&lt;/p&gt;
-        &lt;div class="ipt"&gt;
-            &lt;input class="val easyui-combobox xb1" value="1" data-options="
-                    url: staticPath + '/common/dict/xb.js',
-                    method: 'get',
-                    valueField: 'id',
-                    textField: 'text',
-                    panelWidth: 'auto',
-                    panelMaxHeight: 200,
-                    panelHeight: 'auto',
-                    required: true,
-                    fit:true
-                "&gt;
-        &lt;/div&gt;
-    &lt;/li&gt;
-    &lt;li class="item-two"&gt;
-        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别2&lt;/p&gt;
-        &lt;div class="ipt"&gt;
-            &lt;input class="val easyui-combobox" value="1" data-options="
-                    url: staticPath + '/common/dict/xb.js',
-                    method: 'get',
-                    valueField: 'id',
-                    textField: 'text',
-                    panelWidth: 'auto',
-                    panelMaxHeight: 200,
-                    panelHeight: 'auto',
-                    required: true,
-                    fit:true
-                "&gt;
-        &lt;/div&gt;
-    &lt;/li&gt;
-    &lt;li class="item-two"&gt;
-        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别3&lt;/p&gt;
-        &lt;div class="ipt"&gt;
-            &lt;input class="val easyui-combobox" value="1" data-options="
-                    url: staticPath + '/common/dict/xb.js',
-                    method: 'get',
-                    valueField: 'id',
-                    textField: 'text',
-                    panelWidth: 'auto',
-                    panelMaxHeight: 200,
-                    panelHeight: 'auto',
-                    required: true,
-                    fit:true
-                "&gt;
-        &lt;/div&gt;
-    &lt;/li&gt;
-    &lt;li class="item-two"&gt;
-        &lt;p class="pro"&gt;&lt;i class="fa fa-asterisk"&gt;&lt;/i&gt;性别4&lt;/p&gt;
-        &lt;div class="ipt"&gt;
-            &lt;input class="val easyui-combobox" value="1" data-options="
-                    url: staticPath + '/common/dict/xb.js',
-                    method: 'get',
-                    valueField: 'id',
-                    textField: 'text',
-                    panelWidth: 'auto',
-                    panelMaxHeight: 200,
-                    panelHeight: 'auto',
-                    required: true,
-                    fit:true
-                "&gt;
-        &lt;/div&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../../common/easyuiDiy/easyui.css">
+    <link rel="stylesheet" href="../../../common/easyuiDiy/icon.css">
+    <link rel="stylesheet" href="../../../framework/default/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../common/datepicker/skin/christ/datepicker.css">
+    <link rel="stylesheet" href="../../../stylesheets/newItemStyle.css">
+    <script src="../../../common/easyui/jquery.min.js"></script>
+    <script src="../../../common/easyui/jquery.dragsort-0.5.2.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.min.js"></script>
+    <script src="../../../common/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.extend.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.extend.validatebox.js"></script>
+    <script src="../../../common/easyui/jquery.easyui.extend.tabs.js"></script>
+    <script src="../../../common/easyui/jquery.form.js"></script>
+    <script src="../../../common/js/tools.js"></script>
+    <script src="../../../common/js/business.tools.js"></script>
+    <script src="../../../common/js/windowTopPage.js"></script>
+    <script src="../../../common/js/messenger.js"></script>
+    <script src="../../../common/js/common.js"></script>
+    <script src="../../../common/js/ajax.js"></script>
+    <script src="../../../common/datepicker/WdatePicker.js"></script>
+</head>
+<body style="margin:10px;background: #bebebe;">
+<div class="easyui-tabs" id="tt" data-options="" style="height: 300px;">
+    <div title="test1">
+        <form action="#">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+        </form>
+    </div>
+    <div title="test2">
+        <form action="#">
+            <Ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </Ul>
+        </form>
+    </div>
+</div>
+<!--<input type="text" id="cc">-->
+</body>
+</html>
 
-&lt;a href="javascript:;" title="editSwitch false" onclick="editSwitch(false,'clear-border')" class="easyui-linkbutton easyui-tooltip"&gt;所有组件 只读状态&lt;/a&gt;
+<script type="text/javascript">
+    var window_type = 'open_url';
+    var flwsbms = '';
+    var flwsbmArry = [];
+    $(function () {
+        var tab = $('#tt').tabs('getSelected');
+        var index = $('#tt').tabs('getTabIndex',tab);
+        console.log(tab);
+        console.log(index);
 
-&lt;a href="javascript:;" title="editSwitch true" onclick="editSwitch(true,'clear-border')" class="easyui-linkbutton easyui-tooltip"&gt;所有组件 编辑状态&lt;/a&gt;
 
-&lt;a href="javascript:;" title="指定输入框" onclick="editSwitch(false,'clear-border','xb1')" class="easyui-linkbutton easyui-tooltip"&gt;性别1 只读状态&lt;/a&gt;
+//        var flwsData = {
+//            dwdw:{
+//                bianMa: '01'
+//            },
+//            feeewed:{
+//                bianMa:'02'
+//            }
+//        };
+//
+//        for(var key in flwsData){
+//            flwsbmArry.push(flwsData[key].bianMa);//法律文书编码
+//        }
+//        flwsbms = flwsbmArry.join(',');
+//        console.log(flwsbms)
 
-&lt;a href="javascript:;" title="指定输入框" onclick="editSwitch(true,'clear-border','xb1')" class="easyui-linkbutton easyui-tooltip"&gt;性别1 编辑状态&lt;/a&gt;
+
+    });
+
+    //easyui字典路径
+    var portal = '../../..';
+
+//    var aes = [
+//       111,101,204,305,1158,505,547,258
+//    ];
+//
+//    function sortNum(a,b){
+//        return a - b;
+//    }
+//
+//    var aesSort = aes.sort(sortNum);
+////    console.log(aesSort);
+//
+//    var tmpObj = {};
+//    for(var i= 0,j=aesSort.length;i<j;i++){
+//        var fzbh = parseInt(aesSort[i]/100);
+//            if(tmpObj[fzbh] == undefined){
+//                tmpObj[fzbh] = new Array();
+//            }
+//            tmpObj[fzbh].push(aesSort[i]);
+//
+//    }
+//
+//    console.log(tmpObj);
+
+//    var index = 847;
+//    var fzbh = parseInt(index/100);
+//    var znxh = index%100;
+//    console.log(fzbh);
+//    console.log(znxh);
+
+</script>
