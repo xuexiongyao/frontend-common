@@ -1,6 +1,12 @@
 @charset "utf-8";
 
 .main{
+    /*页码查询框的宽度添加*/
+    .pagination{
+        .pagination-num{
+            width:50px;
+        }
+    }
     .title{
         color:colors(primary);
         font-size: fontSize(h4);
@@ -81,11 +87,18 @@
                         //font-weight: bold;
                         margin:  0 5px;
                         text-align: right;
-                        width:84px;
+                        width:80px;
                         vertical-align: top;
                     }
                     .condition{
                         margin-left: 10px;
+                    }
+                    .del-condition{
+                        display:none;
+                        color: #ff3a41;
+                        cursor:pointer;
+                        margin-left:2px;
+                        font-size: 14px;
                     }
                 }
             }
@@ -127,7 +140,7 @@
         height: auto;
         .table-content{
             margin: 10px auto 0 auto;
-            height: 70px;
+            min-height: 70px;
             width: 920px;
             border-bottom: 1px dashed #ccc;
             @include clearfix;

@@ -451,7 +451,64 @@ function initCompanySearch(comboID, filterData, returnFieldData,onSelectedFun){
 function initHouseSearch(comboID, filterData, returnFieldData,onSelectedFun){
 	var basePath = basePath || pathConfig.basePath;
 	var url=basePath + '/solrSearcher/doSyfwSelect';
-	initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun);
+	var bzdzUrl=basePath + '/solrSearcher/doBzdzListSelect';
+	initSolrSearch(comboID, filterData, returnFieldData,url,function(record){
+		if(record){
+			//房屋的地址信息不全，需要再查地址信息来补全
+			loading('open','数据加载中,请耐心等待...');
+			$.ajax({
+				xhrFields: {withCredentials: true},
+				crossDomain: true,
+				type: 'post',
+				url: bzdzUrl,
+				data: {
+					dzids : record.dzid
+				},
+				dataType: 'json',
+				success: function(data) {
+					if(data && data.length > 0){
+						var fwxx = data[0];
+						fwxx['gldjdm']=record.gldjdm;
+						fwxx['lxdm']=record.lxdm;
+						fwxx['fwid']=record.fwid;
+						fwxx['ytdm']=record.ytdm;
+						fwxx['sylxdm']=record.sylxdm;
+						fwxx['jglxdm']=record.jglxdm;
+						
+						for (var item in returnFieldData) {
+							if (fwxx[item]) {
+								$('#' + returnFieldData[item]).val(fwxx[item]);
+							}
+						}
+					}else{
+						$.messager.alert({
+	                        title: '提示信息',
+	                        msg  : '该房屋缺失标准地址信息，请选择其他房屋！'
+	                    });
+						
+						for (var item in returnFieldData) {
+							$('#' + returnFieldData[item]).val('');
+						}
+					}
+				},
+				error: function() {
+					console.log('getAddrssInfo ajax err');
+				},
+		        complete : function(){
+		        	loading('close');
+		        }
+			});
+		}
+		
+		
+		
+		
+		//执行回调函数
+		if (typeof onSelectedFun == 'function') {
+			var fn = eval(onSelectedFun);
+			fn(record);
+		}
+	});
 }
 
 //根据四川的需求对上面的函数进行精简优化(下拉框地址ID,过滤字段,回填字段)
@@ -516,10 +573,10 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			submitParam['text'] = param.q;
 
 			var i = 10;     //首次次加载的条数
-			getAddrssInfo(i);
+			getSolrInfo(i);
 
-			//后面将函数提取出来:getAddrssInfo
-			function getAddrssInfo(page_size){
+			//后面将函数提取出来:getSolrInfo
+			function getSolrInfo(page_size){
 				submitParam['pagenum'] = 1;//起始页数
 				submitParam['rownum'] = page_size;//加载条数
 				loading('open','数据加载中,请耐心等待...');
@@ -547,7 +604,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 									down_btn.appendTo(_this.children());
 									$('#address_more_btn').off('click').on('click',function(){
 										i += 10;
-										getAddrssInfo(i);
+										getSolrInfo(i);
 									});
 								}
 							});
@@ -555,7 +612,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 					},
 					error: function() {
 						loading('close');
-						console.log('getAddrssInfo ajax err');
+						console.log('getSolrInfo ajax err');
 					}
 				});
 			}
@@ -1209,7 +1266,7 @@ function public_multiSelectOrg(rootOrgCode, orgType, orgLevel, orgBizType, orgCo
 // parentWindow       调用页面的window对象
 // onOkMethod         对话中点击确认后执行原页面中的方法（如：“orgUserSelect_onOk”）
 // dialogTitle        对话框的标题
-function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, userPositions, initFocusOrgCode, userIDInputID, userNameInputID, userTableIDInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle) {
+function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, userPositions, initFocusOrgCode, userIDInputID, userNameInputID, userTableIDInputID, orgCodeInputID, orgNameInputID, orgIDInputID, isCache, windowID, parentWindow, onOkMethod, dialogTitle,dialogTop) {
 	if (isCache) {
 		if (windowID == null || windowID == "") {
 			$.messager.alert('页面错误','组织机构人员选择public_singleSelectOrgUser()方法：<br><br>参数 windowID 不能为空！','error');
@@ -1270,6 +1327,7 @@ function public_singleSelectOrgUser(rootOrgCode, orgType, orgLevel, orgBizType, 
 	paramArray['onOkMethod'] = onOkMethod;
 	var dataOptions = {
 		title: '&nbsp;' + dialogTitle,
+		top: dialogTop,
 		width: 800,
 		height: 400,
 		collapsible: false,

@@ -1143,15 +1143,26 @@ function setInputValue($input,val){
 }
 
 //combobox自动填值
-function comboAutoComplete(combobox_id,url){
-    var _combobox = $('#'+combobox_id);
+function comboAutoComplete(combobox_id,dictUrl){
+    var $combobox = $('#'+combobox_id);
+    var domain = getThisLocationObj();
+    var hostname = domain.hostname;
+    var randomUrl = dictUrl;
+    if(dictUrl.indexOf('?') == -1){
+        randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
+    }else{
+        randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
+    }
     $.ajax({
-        url : url,
+        cache:true,
+        url : randomUrl,
         type:'get',
         dataType:'json',
+        xhrFields: {withCredentials:true},
+        crossDomain: true,
         success : function(data){
             if(data.length === 1){
-                _combobox.combobox('select',data[0]['id']);
+                $combobox.combobox('select',data[0]['id']);
             }
         }
     });
@@ -1222,6 +1233,11 @@ function parseTimeToCN(time){
     return newTime;
 }
 
+//将时间格式转化为yyyy年MM月dd日
+function parseTimeToDayCN(time){
+    var CN = parseTimeToCN(time);
+    return CN.substr(0,11);
+}
 
 
 //获取sessionbean

@@ -413,6 +413,12 @@ function getIEVersion() {
 
 		maxValueLength: 0,
 
+		panelWidth : 'auto',
+
+		panelMaxWidth : 400,
+
+		panelMinWidth : 100,
+
 		panelOptionsNumber: 10,
 
 		loaded: false,
@@ -515,9 +521,9 @@ function getIEVersion() {
 				var hostname = domain.hostname;
 				var randomUrl = dictUrl;
 				if(dictUrl.indexOf('?') == -1){
-					randomUrl = dictUrl+'?domain='+hostname;
+					randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
 				}else{
-					randomUrl = dictUrl+'&domain='+hostname;
+					randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
 				}
 				$.ajax({
 					cache: true,
@@ -1371,9 +1377,9 @@ function getIEVersion() {
 				var hostname = domain.hostname;
 				var randomUrl = dictUrl;
 				if(dictUrl.indexOf('?') == -1){
-					randomUrl = dictUrl+'?domain='+hostname;
+					randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
 				}else{
-					randomUrl = dictUrl+'&domain='+hostname;
+					randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
 				}
 				$.ajax({
 					cache: true,
@@ -1952,6 +1958,14 @@ function getIEVersion() {
 		onLoadError: function(){
 			//加载失败时,显示空数据
 			$(this).datagrid('loadData',[]);
+			try{
+				$.messager.show({
+					title: '列表数据错误',
+					msg: '列表数据加载出错,请检查系统后台数据!'
+				});
+			}catch(e){
+				alert('列表数据加载错误,请检查系统后台数据!');
+			}
 		}
 	});
 

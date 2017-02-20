@@ -1,8 +1,14 @@
 
 //版本管理获取最新版本号进行对比,如果变化则强制刷新页面
-var jwzhVersion = '1.0.0.5';                       //项目更新时手动修改版本号
+var jwzhVersion = '1.1.0.8';                       //项目更新时手动修改版本号
 var staticPath = 'http://static.jwzh.com:7777/jwzh';//注意:请同步修改pathConfig.js中的路径!!!
 var pathname = location.pathname;
+
+try{
+	if(staticVersion) jwzhVersion=staticVersion;//门户会生成静态资源的版本号
+}catch (e) {
+	
+}
 
 
 var jwzhVersionOld =  localStorage.getItem(pathname);

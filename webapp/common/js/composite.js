@@ -3,15 +3,35 @@
 var condition_obj = {mainTable:search_config.main_type};
 var table_header_info=[];
 var	config=[];
+var pageN = 1;
 
 $(function(){
 	changeName();       //页面展示的模块更名
 	pagination();       //初始化分页
 	setTable();         //初始化表格设置按钮
 	getTableSetDom();   //生成表头配置信息,并实现拖动
-	createDatagrid();    //初始化表格
+	createDatagrid();   //初始化表格
 	btnEvent();         //按钮事件
+	delCondition();		//删除查询条件
+	showHideDel();		//hover显示删除条件
 });
+
+//删除查询条件
+function delCondition(){
+	$('#advanced_box').off('click.delC').on('click.delC','.del-condition',function(){
+		$(this).parent().remove();
+	});
+}
+
+//hover显示删除条件
+function showHideDel(){
+	$('#advanced_box ul>li').hover(function(){
+		$(this).find('.del-condition').show();
+	},function(){
+		$(this).find('.del-condition').hide();
+	})
+}
+
 //更改页面显示的标题内容
 function changeName(){
 	$('#title_name').text(search_config.query_title);
@@ -81,12 +101,14 @@ function createAdInputByCheck(search_config_obj){
 				for(var j= 0,len=search_arr.length;j<len;j++){
 					if(search_arr[j]['field'] == module_i){
 						config_i = search_arr[j];
+						break;
 					}
 				}
-				var search_li = '<li field="'+config_i.field+'" input_type="'+config_i.input+'">'
+				var search_li = '<li field="'+config_i.field+'" input_type="'+config_i.input+'"  table_name="'+k+'" field_index="'+j+'">'
 					+'<span class="pro">'+config_i.text+'</span>'
 					+'<input id="'+type+'judge_input'+i+'" class="judge">'
 					+'<input id="'+type+'condition_input'+i+'" class="condition">'
+					+'<i class="fa fa-times del-condition"></i>'
 					+'</li>';
 				$('#'+type+' ul').append(search_li);
 				parseInput(config_i,type+'judge_input'+i,type+'condition_input'+i); //初始化input组件
@@ -165,8 +187,13 @@ function openOtherTable(isExport){
 			//排序后生成查询条件勾选框
 			for(var m=0;m<new_module_i.length;m++){
 				var module_i_j = new_module_i[m];
+				var lishuStr = '';
+				if(module_i_j.lishu){
+					lishuStr = JSON.stringify(module_i_j.lishu)
+				}
+				//console.log(lishuStr);
 				var html_check = ''
-				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'" input="'+module_i_j.input+'" formatter="'+module_i_j.formatter+'">'+module_i_j.text+'</label>';
+				+'<label title="'+module_i_j.text+'"><input type="checkbox" field="'+module_i_j.field+'" text="'+module_i_j.text+'" input="'+module_i_j.input+'" formatter="'+module_i_j.formatter+'" lishu=\''+lishuStr+'\'>'+module_i_j.text+'</label>';
 				$('#item_check'+i).append(html_check);
 			}
 		}
@@ -188,19 +215,21 @@ function openOtherTable(isExport){
 					var text = $(this).attr('text');
 					var input = $(this).attr('input');
 					var formatter = $(this).attr('formatter');
+					var lishu = $(this).attr('lishu');
+					
 					formatter = datePattern[formatter];
 					if(!formatter) 
 						formatter = datePattern.date19;
 					if(search_config_obj[module]){
 						if(isExport){
-							(search_config_obj[module]).push(field+'|'+text+'|'+input+'|'+formatter);
+							(search_config_obj[module]).push(field+'|'+text+'|'+input+'|'+formatter+'|'+lishu);
 						}else{
 							(search_config_obj[module]).push(field);
 						}
 
 					}else{
 						if(isExport){
-							search_config_obj[module] = [field+'|'+text+'|'+input+'|'+formatter];
+							search_config_obj[module] = [field+'|'+text+'|'+input+'|'+formatter+'|'+lishu];
 						}else{
 							search_config_obj[module] = [field];
 						}
@@ -212,6 +241,7 @@ function openOtherTable(isExport){
 				}else{
 					createAdInputByCheck(search_config_obj);
 				}
+				showHideDel();		//hover显示删除条件
 			}
 		}, {
 			text: '取消',
@@ -324,10 +354,10 @@ function batchExprot(search_config_obj){
 	export_condition_obj['start']=0;
 	//export_condition_obj['limit']=2000;//已改为后台获取
 
-	console.log('查询条件:',condition_obj);
-	console.log('导出的查询条件:',export_condition_obj);
-	console.log('导出条件:',search_config_obj);
-	console.log('导出URL:',search_config.export_url);
+	//console.log('查询条件:',condition_obj);
+	//console.log('导出的查询条件:',export_condition_obj);
+	//console.log('导出条件:',search_config_obj);
+	//console.log('导出URL:',search_config.export_url);
 
 
 
@@ -397,7 +427,7 @@ function setTable(){
 					$('#selected_ul li').find('div').each(function(index){
 						table_header_info[index] = $(this).attr('rel');
 					});
-					console.log('表头参数:',table_header_info); //参数
+					//console.log('表头参数:',table_header_info); //参数
 					//getTableData();
 					$('#set_table_panel').dialog('close');
 					ajaxQuery(condition_obj);
@@ -530,7 +560,7 @@ function btnEvent(){
 		var query = [];
 		for(var i=0;i<search_config_arr.length;i++){
 			var query_item = getBaseInfoObj(search_config_arr[i]);
-			if((query_item.condition).length){
+			if((query_item.condition).length || query_item.lishu){
 				query.push(query_item);
 			}
 		}
@@ -541,7 +571,7 @@ function btnEvent(){
 		condition_obj.limit = 5;
 		$.each(condition_obj.query,function(index){
 			var this_obj = condition_obj.query[index];
-			if((this_obj.condition).length > 0){
+			if((this_obj.condition).length > 0 || this_obj.lishu){
 				null_status = 1;
 			}
 		});
@@ -558,7 +588,7 @@ function btnEvent(){
 	//点击清空
 	$('#search_clear').off('click').on('click',function(){
 		//移除添加查询条件
-		$('#advanced_box li[condition_type="add"]').remove();
+		//$('#advanced_box li[condition_type="add"]').remove();
 		//清除查询条件的值
 		clearInput('condition');
 	});
@@ -596,6 +626,7 @@ function createDatagrid(){
 		fit: false,
 		columns:[[
 			{field: 'ID',title:'check',align:'center',width:10, checkbox: true},
+			{field: 'NUM',title:'编号',align:'center',width:5,formatter:tableNum},
 			{field:'HJD_XZQHDMMC',title:'描述',align:'center',width:80,formatter:tableContent},
 			{field:'handle',title:'操作',align:'center',width:10,formatter:tableHandle}
 		]],
@@ -692,10 +723,11 @@ function createSearchInput(type){
 		var config_i = config[i];
 		if($.inArray(config_i['field'],init) != -1){
 			var isOrg = config_i.isOrganization || false;
-			var search_li = '<li field="'+config_i.field+'" input_type="'+config_i.input+'">'
+			var search_li = '<li field="'+config_i.field+'" input_type="'+config_i.input+'" table_name="'+type+'" field_index="'+i+'">'
 				+'<span class="pro">'+config_i.text+'</span>'
 				+'<input id="'+type+'judge_input'+i+'" class="judge">'
 				+'<input id="'+type+'condition_input'+i+'" isOrg="'+isOrg+'" class="condition">'
+				+'<i class="fa fa-times del-condition"></i>'
 				+'</li>';
 			$('#advanced_box #'+type+' ul').append(search_li);
 			parseInput(config_i,type+'judge_input'+i,type+'condition_input'+i); //初始化input组件
@@ -705,9 +737,8 @@ function createSearchInput(type){
 
 //初始化组件
 function parseInput(config,judge_id,condition_id){
-	//console.log(config,judge_id,condition_id);
 	var valid_type = config.valid_type || '';
-	var default_value = config.judge_default || '=';
+	var default_value = config.judge_default || config['judge_dict'][0]['id'];
 	var multiple = config.multiple || false;
 	var field = config.field;
 	//判断条件组件初始化
@@ -731,6 +762,8 @@ function parseInput(config,judge_id,condition_id){
 	$('#'+judge_id).combobox('setValue',default_value);
 	//输入条件组件初始化
 	var condition_type = config.input;
+	var dataFilter = config.dataFilter;
+	if(!dataFilter) dataFilter = '';
 	if(condition_type == 'combobox'){
 		$('#'+condition_id).combobox({
 			multiple:multiple,
@@ -740,7 +773,8 @@ function parseInput(config,judge_id,condition_id){
 			valueField: 'id',
 			textField: 'text',
 			panelWidth: 180,
-			width:180
+			width:180,
+			dataFilter:dataFilter
 		});
 		clickShowPanel(condition_id, true);
 	}else if(condition_type == 'textbox'){
@@ -760,9 +794,18 @@ function parseInput(config,judge_id,condition_id){
 		
 		$('#'+new_condition_id).parent().attr('field_time',field_time)
 		$('#'+new_condition_id).parent().append('<input type="hidden" class="condition" id="'+field+'_org_'+field_time+'">');
-		initMultiSelectOrg(new_condition_id,null,{text:new_condition_id,id:field+'_org_'+field_time},null);
-		$('#'+judge_id).combobox('select','IN');
-		$('#'+judge_id).combobox('setValue','IN');
+		
+		if(config.lishu){//隶属的时候只能单选
+			initSingleSelectOrg(new_condition_id,{orgLevel:'00,10,21,32,50'},{text:new_condition_id,id:field+'_org_'+field_time},null);
+			//$('#'+judge_id).combobox('select','IN');
+			//$('#'+judge_id).combobox('setValue','IN');
+		}else{
+			initMultiSelectOrg(new_condition_id,null,{text:new_condition_id,id:field+'_org_'+field_time},null);
+			//$('#'+judge_id).combobox('select','=');
+			//$('#'+judge_id).combobox('setValue','=');
+		}
+		
+		
 	}else if(condition_type == 'datebox'){
 		//日期段处理
 		/*$('#'+condition_id).datebox({
@@ -777,7 +820,7 @@ function parseInput(config,judge_id,condition_id){
 			+' style="height:22px;line-height:22px;width:180px;margin:0;position:relative;top:2px;"'
 			+'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',autoPickDate:true});"'
 			+'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
-		$parent.append(dateDom);
+		$parent.find('.del-condition').before(dateDom);
 	}else if(condition_type == 'combotree'){
 		$('#'+condition_id).combotree({
 			multiple:multiple,
@@ -788,6 +831,7 @@ function parseInput(config,judge_id,condition_id){
 			textField: 'text',
 			panelWidth: 180,
 			width:180,
+			dataFilter:dataFilter,
 			cascadeCheck:true
 		});
 	}
@@ -798,19 +842,31 @@ function getBaseInfoObj(type){
 	var query_obj = {};
 	var query = [];
 	query_obj.type = search_config[type+'_type'];
-
 	//循环获取查询条件
 	$('#advanced_box #'+type+' li').each(function(index){
 		var $this = $(this);
 		var search_data = getSearchData($this);//获取单个查询条件数据
 		var field = $this.attr('field');
 		if(search_data[1] || search_data[0] == 'NL' || search_data[0] == 'NN'){
-			var module_obj = {
-				k : field,
-				v : search_data[1],
-				op : search_data[0]
-			};
-			query.push(module_obj);
+			var field_index = $this.attr('field_index');//参数序列，用于从配置中索引参数的配置
+			var param = search_config[type][field_index];
+			if(param && param.lishu){//隶属
+				var lishu_obj = param.lishu;
+				lishu_obj.v=search_data[1];
+				lishu_obj.op="=";
+				if(!query_obj.lishu) query_obj.lishu=[];
+				query_obj.lishu.push(lishu_obj);
+				
+			}else{//一般的查询条件
+				var module_obj = {
+					k : field,
+					v : search_data[1],
+					op : search_data[0]
+				};
+				query.push(module_obj);
+			}
+			
+			
 		}
 	});
 	query_obj.condition = query;
@@ -847,7 +903,6 @@ function getSearchData($this){
 
 //提交查询请求
 function ajaxQuery(condition_obj){
-	
 	try{
 		if(!beforeSubmit(condition_obj))
 			return;
@@ -865,7 +920,7 @@ function ajaxQuery(condition_obj){
 		xhrFields:{withCredentials:true},
 		crossDomain:true,
 		success : function(data){
-			console.log('查询结果:',data);
+			//console.log('查询结果:',data);
 			//加载分页
 			$('#pagination').pagination({
 				total:data.count
@@ -875,14 +930,19 @@ function ajaxQuery(condition_obj){
 		},
 		error:function(e){
 			loading('close');
-//			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
-//			console.log(e);
-//			$('#pagination').pagination({
-//				total:998
-//			}).show();
-//			changeLinkButtonIcon();
-//			searchResult(search_result_test);
 			$.messager.alert('提示','连接失败!','warning',null);
+
+
+			/****正式环境请注释下面这一段****/
+
+			alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
+			$('#pagination').pagination({
+				total:998
+			}).show();
+			changeLinkButtonIcon();
+			searchResult(search_result_test);
+
+
 		}
 	});
 
@@ -937,10 +997,11 @@ function addCondition(type){
 					var config_i = config[i];
 					//添加勾选的项
 					if($.inArray(config_i.field,input_checked_arr) != -1){
-						var li_html = '<li field="'+config_i.field+'" multi="'+config_i.multiple+'" input_type="'+config_i.input+'" condition_type="add">'
+						var li_html = '<li field="'+config_i.field+'" multi="'+config_i.multiple+'" input_type="'+config_i.input+'" table_name="'+type+'" field_index="'+i+'" condition_type="add">'
 							+'<span class="pro">'+config_i.text+'</span>'
 							+'<input id="'+type+'judge_input_'+j+'" class="judge">'
 							+'<input id="'+type+'condition_input_'+j+'" class="condition">'
+							+'<i class="fa fa-times del-condition"></i>'
 							+'</li>';
 						var $li = $('#advanced_box #'+type+' li[field="'+config_i.field+'"]');
 						//相同条件添加到旁边
@@ -957,6 +1018,7 @@ function addCondition(type){
 						j++;
 					}
 				}
+				showHideDel();		//hover显示删除条件
 			}
 		}, {
 			text: '关闭',
@@ -974,9 +1036,10 @@ function pagination(){
 		pageSize:5,
 		pageList: [5,10,15,20,30,50],
 		onSelectPage:function(pageNumber, pageSize){
+			pageN = (pageNumber-1)*pageSize;
 			condition_obj.start = (pageNumber-1)*pageSize;
 			condition_obj.limit = pageSize;
-			console.log(condition_obj);
+			//console.log(condition_obj);
 			ajaxQuery(condition_obj);
 		}
 	});
@@ -994,7 +1057,14 @@ function searchResult(data){
 	$('#handle_area').show();
 }
 
+
 //表格内容
+
+function tableNum(val, row, index){
+	return pageN + index;
+}
+
+
 function tableContent(val, row, index){
 	//alert()
 	//console.log(1,row,table_header_info);
@@ -1005,18 +1075,33 @@ function tableContent(val, row, index){
 		var pro_name = getConfigObj(field_i,config)['text'];
 		var inputType = getConfigObj(field_i,config)['input'];
 		var field = getConfigObj(field_i,config)['field'];
-		var formatter = getConfigObj(field_i,config)['formatter'];//格式化
-		//console.log(config[i].field)
-		if(inputType == 'combobox' || inputType == 'combotree'){
-			if(!row[field]){
-				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
+		
+		if(!row[field]){
+			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val"></span></div>';
+		}else if(inputType == 'combobox' || inputType == 'combotree'){
+			if(!row[field+"MC"]){
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field]+'</span></div>';
 			}else{
 				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row[field+"MC"]+'</span></div>';
 			}
 		}else if(inputType == 'textbox_org'){//组织机构，翻译
-			var span_id='org_format_'+row[field]+'_'+(Math.random()+'').substr(2);
-			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(row[field],span_id)+'</span></div>';
+			if('XT_LRRBMID' == field){
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row['XT_LRRBM']+'</span></div>';
+			}else if('XT_ZHXGRBMID' == field){
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+row['XT_ZHXGRBM']+'</span></div>';
+			}else{
+				/*隶属的时候，循环取有值的最低级别机构，翻译取全称*/
+				var lishu = getConfigObj(field_i,config)['lishu'];//隶属
+				var orgcode=getLishu(lishu,row);
+				if(!orgcode){//不是隶属，取配置的字段
+					orgcode = row[field];
+				}
+				var span_id='org_format_'+orgcode+'_'+(Math.random()+'').substr(2);
+				html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val" id="'+span_id+'">'+orgCodeFormatter(orgcode,span_id)+'</span></div>';
+			}
+			
 		}else if(inputType == 'datebox'){//日期格式化
+			var formatter = getConfigObj(field_i,config)['formatter'];//格式化
 			var val=dateFormatter(row[field],datePattern[formatter]);
 			html += '<div class="item"><span class="pro">'+pro_name+'</span><span class="val">'+val+'</span></div>';
 		}else{
@@ -1208,7 +1293,7 @@ function getOrgName(val,span_id){
 	sendAry_org=[];
 	
 	$.ajax({
-		url: pathConfig.managePath +'/api/orgization/queryOrgNameByOrgcodes',
+		url: pathConfig.managePath +'/api/orgization/queryOrgQcsByOrgcodes',
 		  dataType: 'text',
 		  type: 'get',
 		  async: true,	 
@@ -1239,7 +1324,7 @@ function getOrgName(val,span_id){
 //					  console.log("翻译"+orgObj.html()+">"+val);
 //					  orgObj.html(val);
 //				  }else{
-					  console.log("存入待处理"+val);
+					  //console.log("存入待处理"+val);
 					  formateAry[formateAry.length]={span_id:span_id,val:val};//存入待处理的数组
 				 // }
 			  }
@@ -1331,5 +1416,20 @@ function dateFormatter(val,pattern){
 	return pattern;
 }
 
-
+/**
+ * 获取隶属的最低级别机构
+ * @param lishu
+ * @param row
+ * @returns
+ */
+function getLishu(lishu,row){
+	if(lishu){
+		if(lishu.zrq && row[lishu.zrq]) return row[lishu.zrq];
+		if(lishu.pcs && row[lishu.pcs]) return row[lishu.pcs];
+		if(lishu.fxj && row[lishu.fxj]) return row[lishu.fxj];
+		if(lishu.sj && row[lishu.sj]) return row[lishu.sj];
+	}
+	
+	return null;
+}
 
