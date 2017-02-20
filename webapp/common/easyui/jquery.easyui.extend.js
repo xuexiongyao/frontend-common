@@ -417,6 +417,8 @@ function getIEVersion() {
 
 		panelMaxWidth : 400,
 
+		panelMinWidth : 100,
+
 		panelOptionsNumber: 10,
 
 		loaded: false,
