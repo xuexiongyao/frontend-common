@@ -951,20 +951,22 @@ function flwsClXyrCheckC(bm, $this) {
         for (var i = 0; i < xyrArry.length; i++) {
             if (xyrArry[i]["xxzjbh"] == xyrXxzjbh) {
                 var xyrCurrent = xyrArry[i];
-                for (var j = 0; j < DATA.URLATTR.FZXYR01.length; j++) {
-                    var key = DATA.URLATTR.FZXYR01[j];
-                    if (xyrCurrent[key.toLowerCase()] != undefined) {
-                        DATA.FLWS[bm].params[key] = xyrCurrent[key.toLowerCase()];
+                if(DATA.URLATTR[xyrApiName]){
+                    for (var j = 0; j < DATA.URLATTR[xyrApiName].length; j++) {
+                        var key = DATA.URLATTR[xyrApiName][j];
+                        if (xyrCurrent[key.toLowerCase()] != undefined) {
+                            DATA.FLWS[bm].params[key] = xyrCurrent[key.toLowerCase()];
+                        }
                     }
+                    if (DATA.FLWS[bm].xyrXxzjbh) {
+                        DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrXxzjbh;//嫌疑人主键id
+                    }
+                    if (DATA.FLWS[bm].xyrCldxlb) {
+                        DATA.FLWS[bm].params.CLDXLB = DATA.FLWS[bm].xyrCldxlb;//嫌疑人处理对象类别
+                    }
+                    //犯罪嫌疑人信息复用
+                    fzxyrXxfy(xyrCurrent, bm);
                 }
-                if (DATA.FLWS[bm].xyrXxzjbh) {
-                    DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrXxzjbh;//嫌疑人主键id
-                }
-                if (DATA.FLWS[bm].xyrCldxlb) {
-                    DATA.FLWS[bm].params.CLDXLB = DATA.FLWS[bm].xyrCldxlb;//嫌疑人处理对象类别
-                }
-                //犯罪嫌疑人信息复用
-                fzxyrXxfy(xyrCurrent, bm);
             }
         }
 
@@ -988,15 +990,15 @@ function flwsClXyrCheckC(bm, $this) {
         parentDiv.siblings().show();
 
         //置空
-        for (var j = 0; j < DATA.URLATTR.FZXYR01.length; j++) {
-            var key = DATA.URLATTR.FZXYR01[j];
+        for (var j = 0; j < DATA.URLATTR[xyrApiName].length; j++) {
+            var key = DATA.URLATTR[xyrApiName][j];
             DATA.FLWS[bm].params[key] = "";
         }
         DATA.FLWS[bm].params.CLDX_XXZJBH = "";//嫌疑人主键id
         DATA.FLWS[bm].params.CLDXLB = "";//嫌疑人处理对象类别
 
         if (!DATA.FLWS[bm].flwsData.customized) {
-            var xyrDom = DATA.URLATTR['FZXYR01'];
+            var xyrDom = DATA.URLATTR[xyrApiName];
             for (var j = 0; j < xyrDom.length; j++) {
                 var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
 
@@ -1131,15 +1133,15 @@ function flwsClXyrCheckD(bm, $this) {
         parentDiv.siblings().show();
 
         //置空
-        for (var j = 0; j < DATA.URLATTR.FZXYR01.length; j++) {
-            var key = DATA.URLATTR.FZXYR01[j];
+        for (var j = 0; j < DATA.URLATTR[xyrApiName].length; j++) {
+            var key = DATA.URLATTR[xyrApiName][j];
             DATA.FLWS[bm].params[key] = "";
         }
         DATA.FLWS[bm].params.CLDX_XXZJBH = "";//嫌疑人主键id
         DATA.FLWS[bm].params.CLDXLB = "";//嫌疑人处理对象类别
 
         if (!DATA.FLWS[bm].flwsData.customized) {
-            var xyrDom = DATA.URLATTR['FZXYR01'];
+            var xyrDom = DATA.URLATTR[xyrApiName];
             for (var j = 0; j < xyrDom.length; j++) {
                 var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
 
@@ -1286,7 +1288,7 @@ function flwsWclXyrCheck(bm, $this, event) {
         parentDiv.siblings().show();
 
         if (!DATA.FLWS[bm].flwsData.customized) {
-            var xyrDom = DATA.URLATTR['FZXYR01'];
+            var xyrDom = DATA.URLATTR[xyrApiName];
             for (var j = 0; j < xyrDom.length; j++) {
                 var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
 
