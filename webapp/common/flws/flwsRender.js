@@ -501,9 +501,9 @@ function flwsDxRenderA(bm, flwsRow) {
                             if(dxLb == anjianXyDxDic.xyr){
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xyr].param]
                             }else if(dxLb == anjianXyDxDic.xydw){
-                                xydxMc = xydxArrayTmp[q][[xyrObj[anjianXyDxDic.xydw].param]]
+                                xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xydw].param]
                             }else if(dxLb == anjianXyDxDic.ajxgr){
-                                xydxMc = xydxArrayTmp[q][[xyrObj[anjianXyDxDic.ajxgr].param]]
+                                xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.ajxgr].param]
                             }
                         }
                     }
