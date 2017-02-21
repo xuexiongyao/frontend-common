@@ -841,6 +841,7 @@ function parseInput(config,judge_id,condition_id){
 			dataFilter:dataFilter,
 			cascadeCheck:true
 		});
+		clickShowPanel(condition_id, true);
 	}
 }
 
