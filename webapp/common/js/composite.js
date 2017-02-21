@@ -521,6 +521,13 @@ function normalQuery(){
 	}
 }
 
+
+/*
+* 注意!!!
+*
+* 此函数在标准的的综合查询中被重写,修改时请同步修改!!!!
+*
+* */
 //初始按钮事件
 function btnEvent(){
 	$('.easyui-linkbutton:not(.c7)').linkbutton();
