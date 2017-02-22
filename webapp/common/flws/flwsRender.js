@@ -74,9 +74,9 @@ function cqbgPageRender() {
         } else {
             eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(DATA.CQBG.cqbgRow) + "')");
         }
-    } else if (DATA.CQBG.cqbgZj == undefined) {//新增
+    } else if (DATA.CQBG.cqbgZj == undefined || DATA.CQBG.cqbgZj == 'undefined') {//新增
         easyuiReset(cqbgIpts, true);
-        $('#loadingMskFlws').show();
+        //$('#loadingMskFlws').show();
     } else {//编辑
         if (DATA.CQBG.cqbgRow.CQZT != undefined && DATA.CQBG.cqbgRow.CQZT != 0 && DATA.CQBG.cqbgData.one) {
             $.messager.alert({

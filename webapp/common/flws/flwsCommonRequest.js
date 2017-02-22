@@ -46,7 +46,7 @@ function callbackForAllAjaxQuerySuccess() {
             cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
             $('#loadingMskFlws').hide();
         }
-        //flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
+        flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
     }
 }
 
