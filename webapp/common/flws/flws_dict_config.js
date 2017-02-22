@@ -297,6 +297,10 @@ var flwsDictObj = {
     'BD_D_BGJYQX_PZHJDLXDM':[
         {"id":"1","text":"批准","py":"PZ","wb":"RU"},
         {"id":"2","text":"决定","py":"JD","wb":"UP"}
+    ],
+    'BD_D_BAXZ_QWWTDM':[//前往委托
+        {"id":"1","text":"前往你管辖区","py":"QW","wb":"UT"},
+        {"id":"2","text":"委托你局代为","py":"WT","wb":"TR"}
     ]
 };
 
