@@ -2008,7 +2008,7 @@ function getIEVersion() {
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			loading('close');
-			console.log('ajax错误信息:',jqXHR, textStatus, errorThrown);
+			console.log('ajax错误信息:',this,jqXHR, textStatus, errorThrown);
 		}
 	});
 })();
