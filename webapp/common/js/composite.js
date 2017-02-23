@@ -916,6 +916,9 @@ function ajaxQuery(condition_obj){
 			return;
 	}catch(e){}
 	
+	if(search_config.sort)
+		condition_obj.sort = search_config.sort;
+	
 	//查询成功,展示查询内容
 	loading('open','查询中...');
 	console.log('查询条件:',condition_obj);
