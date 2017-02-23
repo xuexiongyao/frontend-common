@@ -415,7 +415,7 @@ function getIEVersion() {
 
 		panelWidth : 'auto',
 
-		panelMaxWidth : 400,
+		panelMaxWidth : 1000,
 
 		panelMinWidth : 100,
 
