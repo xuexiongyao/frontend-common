@@ -981,7 +981,7 @@ function getFmImage(lyid, lybm, add_btn, manage_btn) {
             var data = json.rows;
             if (data.length > 0) {
                 var src = 'data:image/jpeg;base64,' + data[0]['slt'];
-                updatePicUrl('info_pic', src, basePath + '/images/xlpc/person_default.jpg');
+                updatePicUrl('info_pic', src, basePath + '/images/default.jpg');
                 if (add_btn) {
                     add_btn.css('display', 'none');
                 }
@@ -1017,7 +1017,7 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
             var data = json.rows;
             if (data.length > 0) {
                 var src = 'data:image/jpeg;base64,' + data[0]['slt'];
-                updatePicUrl('info_pic', src, basePath + '/images/xlpc/person_default.jpg');
+                updatePicUrl('info_pic', src, basePath + '/images/default.jpg');
                 if (add_btn) {
                     add_btn.css('display', 'none');
                 }
