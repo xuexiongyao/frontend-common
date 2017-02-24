@@ -1024,6 +1024,8 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
                 if (manage_btn) {
                     manage_btn.css('display', 'block');
                 }
+            }else {
+                updatePicUrl('info_pic',basePath + '/images/default.jpg', basePath + '/images/default.jpg');
             }
         },
         error: function () {
