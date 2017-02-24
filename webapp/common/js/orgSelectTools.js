@@ -625,8 +625,10 @@ function clearOrgSelectChecked(textboxID){
 	var orgTreeObject = $('#treeSelect_'+textboxID);
 	if(!orgTreeObject)  return;
 	
-    var checkNode = orgTreeObject.tree('getChecked');
-    if(checkNode.length > 0){
-        orgTreeObject.tree('uncheck',checkNode[0].target);
+    var checkNodes = orgTreeObject.tree('getChecked');
+    if(checkNodes.length > 0){
+    	for(var index in checkNodes){
+    		orgTreeObject.tree('uncheck',checkNodes[index].target);
+    	}
     }
 }
