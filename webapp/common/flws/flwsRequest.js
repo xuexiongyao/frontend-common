@@ -306,14 +306,20 @@ function scflwsRequest(params){
         success: function (data) {
             var json = eval('('+data+')');
             if(json.status == 'success'){
-                $.messager.show({
+                $.messager.alert({
                     title: '提示',
-                    msg: '生成法律文书成功'
+                    msg: '生成法律文书成功',
+                    fn: function () {
+                        crossCloseTab();
+                    }
                 });
             }else if(json.status == 'error'){
-                $.messager.show({
+                $.messager.alert({
                     title: '提示',
-                    msg: '生成法律文书失败'
+                    msg: '生成法律文书失败',
+                    fn: function () {
+                        crossCloseTab();
+                    }
                 });
             }
         }
