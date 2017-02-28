@@ -106,7 +106,7 @@ function initMultiTree(textboxID,filterData){
 	$.ajax({
 		  url: managerPath +'/orgPublicSelect/queryComboTree',
 		  dataType: 'json',
-		  type: 'get',
+		  type: 'post',
 		  async: true,	 
 		  xhrFields: {
 			  withCredentials: true
@@ -160,7 +160,7 @@ function loadExpandNode(node,textboxID,filterData) {
 	loading('open','数据加载中,请稍候...');
 	$.ajax({
 		url: managerPath +'/orgPublicSelect/queryComboTree',
-		type: 'GET',
+		type: 'post',
 		async: true,
 		dataType: 'json', 
 		xhrFields: {
@@ -569,7 +569,7 @@ function initSingleTree(textboxID,filterData){
 	$.ajax({
 		  url: managerPath +'/orgPublicSelect/queryComboTree',
 		  dataType: 'json',
-		  type: 'get',
+		  type: 'post',
 		  async: true,	 
 		  xhrFields: {
 			  withCredentials: true
