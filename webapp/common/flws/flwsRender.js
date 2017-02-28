@@ -238,6 +238,11 @@ function filedToParagraph(xyrinfo) {
     return xyrinfoStr;
 }
 
+//function filedToParagraph(agr) {
+//    console.log(1111, agr);
+//    return JSON.stringify(agr);
+//    //return 'sb';
+//}
 
 /**
  * 呈请报告 犯罪嫌疑人勾选组合信息的复用
@@ -303,7 +308,7 @@ function xyrCheckedXxfy($this) {
                     zhxx[field] = val;
                 }
             }
-            $("#cqbg_main_con form textarea").val('\t'+filedToParagraphXyr(zhxx) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val('\t'+filedToParagraph(zhxx) + '\n' + textareaVal);
         }else if (xydxLb == xyrObj[anjianXyDxDic.xydw].id && cqbgData.xydwpz != undefined && cqbgData.xydwpz != '') {//违法嫌疑单位
             for (var key in DATA.DX.xydxData[anjianXyDxDic.xydw]) {
                 if (DATA.DX.xydxData[anjianXyDxDic.xydw][key].xxzjbh == $this.attr("xxzjbh")) {
@@ -320,7 +325,7 @@ function xyrCheckedXxfy($this) {
                     zhxx[field] = val;
                 }
             }
-            $("#cqbg_main_con form textarea").val(filedToParagraphXyr(zhxx) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx) + '\n' + textareaVal);
         } else {
             var xyrZhxxData = '\n' + '\t' + $this.next().attr('xyrzhxx');
             $("#cqbg_main_con form textarea").val(xyrZhxxData + '\t' + textareaVal);
@@ -1263,7 +1268,7 @@ function flwsWclXyrCheck(bm, $this, event) {
                             zhxx[field] = val;
                         }
                     }
-                    fzxyDxXxfy(fieldName,filedToParagraphXyr(zhxx),bm);
+                    fzxyDxXxfy(fieldName,filedToParagraph(zhxx),bm);
                 }
             }
         }
