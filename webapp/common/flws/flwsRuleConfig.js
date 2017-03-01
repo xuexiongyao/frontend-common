@@ -457,6 +457,7 @@ function cqbgNrXxfy() {
         var cqbgDataArr = textareaVal.match(/\((.*?)\]/g);
         //TODO hash结构数据有问题，需要转化为数组
         if (cqbgDataArr) {
+            var cqbgxxTmpArray = [];
             //构建呈请报告数据
             for (var i = 0; i < cqbgDataArr.length; i++) {
                 var a = cqbgDataArr[i];
@@ -464,27 +465,28 @@ function cqbgNrXxfy() {
                     funName: a.substring(a.indexOf('(') + 1, a.indexOf(')')),//方法名称
                     paramName: a.substring(a.indexOf('[') + 1, a.indexOf(']'))//参数名称
                 };
-                cqbgxxTmpObj[dataTmp.funName] = dataTmp.paramName;
+                cqbgxxTmpArray.push(dataTmp.paramName);
+                cqbgxxTmpObj[dataTmp.funName] = cqbgxxTmpArray;
             }
 
+            // console.log(cqbgxxTmpObj);
             //数据填写
             for (var k1 in DATA.publicJkXx) {
                 for (var k2 in cqbgxxTmpObj) {
-                    var key = cqbgxxTmpObj[k2];//参数名称
-                    var val = DATA.publicJkXx[k1][key];//参数对应的值
-                    var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
+                    if(k1 == k2){
+                        for(var j =0;j<cqbgxxTmpObj[k2].length;j++){
+                            var key = cqbgxxTmpObj[k2][j];//参数名称
+                            var val = DATA.publicJkXx[k1][key];//参数对应的值
+                            var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
 
-                    if (k1 == k2) {
-                        if (val == undefined || val == null || val == '') {//返回数据为空
-                            textareaVal = textareaVal.replace(strVal, '');
-                            console.log(key + '为空');
-                        } else {//textarea中对应的字符串替换赋值
-                            textareaVal = textareaVal.replace(strVal, val);
+                            if (val == undefined || val == null || val == '') {//返回数据为空
+                                textareaVal = textareaVal.replace(strVal, '');
+                                console.log(key + '为空');
+                            } else {//textarea中对应的字符串替换赋值
+                                textareaVal = textareaVal.replace(strVal, val);
+                            }
                         }
-                    } else {
-                        textareaVal = textareaVal.replace(strVal, '');
                     }
-
                     $("#cqbg_main_con form textarea").val(textareaVal);
                 }
             }
