@@ -161,7 +161,7 @@ function getDxxxData(render) {
                             for (var i = 0; i < DATA.DX.xydxData[anjianXyDxDic.xyr].length; i++) {
                                 var xyr = DATA.DX.xydxData[anjianXyDxDic.xyr][i];
                                 if(xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null'){
-                                    xyr_rsqzcsdm = '';
+                                    xyr_rsqzcsdm = '0000';
                                 }else{
                                     xyr_rsqzcsdm = xyr[flwsQhzgxXyrPz];
                                 }
