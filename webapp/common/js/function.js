@@ -300,6 +300,12 @@ function formSubmit(form_id, call_back, url,queryParams){
                 loading('close');//完成后关闭...转圈
             }
 
+        },
+        error: function () {
+            loading('close');
+            resetToken();
+            console.log('Form: '+form_id+' submit ajax error');
+
         }
     });
 }
