@@ -455,7 +455,6 @@ function cqbgNrXxfy() {
     var cqbgxxTmpObj = {};
     if (textareaVal) {
         var cqbgDataArr = textareaVal.match(/\((.*?)\]/g);
-        //TODO hash结构数据有问题，需要转化为数组
         if (cqbgDataArr) {
             var cqbgxxTmpArray = [];
             //构建呈请报告数据
@@ -486,6 +485,8 @@ function cqbgNrXxfy() {
                                 textareaVal = textareaVal.replace(strVal, val);
                             }
                         }
+                    }else{
+                        // var strVal = '(' + k1 + ')[' + key + ']';//textarea中对应的字符串
                     }
                     $("#cqbg_main_con form textarea").val(textareaVal);
                 }
