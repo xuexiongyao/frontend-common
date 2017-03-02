@@ -867,7 +867,7 @@ function flwsRightPageRenderB(flwsData) {
     $('#saveFlwsAdd_' + flwsData.bianMa).text('法律文书编辑保存');
 
     //行政案件 行政处罚报告书  执法公开编辑按钮单独处理
-    if(flwsData.bianMa == '020003'){
+    if(flwsData.bianMa == '020003' && flwsData.name.contains('行政处罚')){
         $('#saveFlwsZfgk_' + flwsData.bianMa).show().text('执法公开编辑');
     }
 
