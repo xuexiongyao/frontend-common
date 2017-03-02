@@ -3,7 +3,7 @@ $(function(){
     var parent_frame = new Messenger('parent','toParent');
     parent_frame.listen(
         function(msg){
-            //console.log('父框架接收到的消息',msg);
+            console.log('父框架接收到的消息',msg);
             try{
                 eval(msg);  //执行父框架中存在的方法
             }catch(e){
