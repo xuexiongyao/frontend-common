@@ -413,3 +413,13 @@ function hashObjUnique(o){
     }
     return n;
 }
+
+/**
+ * 定义是否包含
+ * @param str
+ * @param substr
+ * @returns {boolean}
+ */
+function isContains(str, substr) {
+    return str.indexOf(substr) >= 0;
+}

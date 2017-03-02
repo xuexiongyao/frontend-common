@@ -460,7 +460,7 @@ function shongshen(sessionBean) {
                         icon: 'warning'
                     });
                     return;
-                } else if (bm == '020003' && !DATA.FLWS[bm].status.zfgked && DATA.FLWS[bm].flwsData.name.contains('行政处罚')) {
+                } else if (bm == '020003' && !DATA.FLWS[bm].status.zfgked && isContains('行政处罚决定书',DATA.FLWS[bm].flwsData.name)) {
                     $.messager.alert({
                         title: '提示',
                         msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
