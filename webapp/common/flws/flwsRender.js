@@ -868,7 +868,7 @@ function flwsRightPageRenderB(flwsData) {
 
     //行政案件 行政处罚报告书  执法公开编辑按钮单独处理
 
-    if(flwsData.bianMa == '020003' && isContains('行政处罚决定书',flwsData.name)){
+    if(flwsData.bianMa == 'X020003'){
         $('#saveFlwsZfgk_' + flwsData.bianMa).show().text('执法公开编辑');
     }
 
