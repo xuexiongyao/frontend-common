@@ -65,7 +65,7 @@ function queryFlwsData(title, render) {
                 DATA.FLWS[flwsData[k].bianMa].params = {};
                 var only = DATA.CQBG.cqbgZj == undefined || DATA.FLWS[flwsData[k].bianMa].flwsData.only;
                 var one = DATA.FLWS[flwsData[k].bianMa].flwsData.one;
-                if (only || one) {//只能出一份文书
+                if (one) {//只能出一份文书
                     param = {
                         XT_ZXBZ: '0',
                         ASJBH: DATA.asjbh
