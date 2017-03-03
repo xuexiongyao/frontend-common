@@ -120,7 +120,7 @@ function xyrdxRenderCqbg() {
                     var xyrStr = '';
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                            var xyrzhxx = filedToParagraph(xydxDatas[k][i]);
+                            var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.CQBG.cqbgData.prefixpz,DATA.CQBG.cqbgData.splitpz);
                             xyrStr += '<li><label><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" />' +
                                 '<span xyrtype="' + xyrObj[key].id + '"  xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else if (key == anjianXyDxDic.xydw) {//嫌疑单位
@@ -164,8 +164,11 @@ function xydxHide() {
  * @param xyrinfo
  * @returns {string}
  */
-function filedToParagraph(xyrinfo) {
+function filedToParagraph(xyrinfo,prefixpz,splitpz) {
     var xyrinfoStr = '';
+    if(splitpz==undefined){
+        splitpz=',';
+    }
     for (var key in xyrinfo) {
         var value = xyrinfo[key];
         var caseValue = null;
@@ -182,57 +185,112 @@ function filedToParagraph(xyrinfo) {
             else {
                 caseValue = key;
             }
-            switch (caseValue) {
-                case 'xm':
-                    xyrinfoStr = "姓名:" + value + "," + xyrinfoStr;
-                    break;
-                case 'xbdm':
-                    xyrinfoStr += "性别:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XBDM.js', value) + ",";
-                    break;
-                case 'cyzj_cyzjdm':
-                    xyrinfoStr += "证件类型:" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + ",";
-                    break;
-                case 'fzxyr_csrq':
-                    xyrinfoStr += parseTimeToCN(value) + "出生,";
-                    break;
-                case 'fzxyr_zzmmdm': //政治面貌
-                    xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_ZZMMDM.js', value) + ",";
-                    break;
-                case 'fzxyr_jyzkdm':
-                    xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_HYZKDM.js', value) + ",";
-                    break;
-                case 'fzxyr_jgdm':
-                    xyrinfoStr += "籍贯为:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value) + ",";
-                    break;
-                case 'fzxyr_sg':
-                    xyrinfoStr += "身高:" + value + "厘米,";
-                    break;
-                    break;
-                case 'fzxyr_tmtzms':
-                    xyrinfoStr += value + ",";
-                    break;
-                case 'fzxyr_gzdw':
-                    xyrinfoStr += "在" + value + "工作,";
-                    break;
-                case 'fzxyr_zylbdm':
-                    xyrinfoStr += "职务为" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js', value) + ",";
-                    break;
-                case 'hjdz_dzmc':
-                    xyrinfoStr += "户籍地:" + value + ",";
-                    break;
-                case 'xzz_dzmc':
-                    xyrinfoStr += "现住址:" + value + ",";
-                    break;
-                case 'dwmc':
-                    xyrinfoStr += "单位名称:" + value + ",";
-                    break;
-                case 'dwbgdz_dzmc':
-                    xyrinfoStr += "办公地址:" + value + ",";
-                    break;
-                case 'fddbr_xm':
-                    xyrinfoStr += "法定待辨认姓名:" + value + ",";
-                    break;
+            if(prefixpz){
+                switch (caseValue) {
+                    case 'xm':
+                        xyrinfoStr = "姓名:" + value + splitpz + xyrinfoStr;
+                        break;
+                    case 'xbdm':
+                        xyrinfoStr += "性别:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XBDM.js', value) + splitpz;
+                        break;
+                    case 'cyzj_cyzjdm':
+                        xyrinfoStr += "证件类型:" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) +splitpz;
+                        break;
+                    case 'fzxyr_csrq':
+                        xyrinfoStr += parseTimeToCN(value) + "出生"+splitpz;
+                        break;
+                    case 'fzxyr_zzmmdm': //政治面貌
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_ZZMMDM.js', value) + splitpz;
+                        break;
+                    case 'fzxyr_jyzkdm':
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_HYZKDM.js', value) + splitpz;
+                        break;
+                    case 'fzxyr_jgdm':
+                        xyrinfoStr += "籍贯为:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value)+ splitpz;
+                        break;
+                    case 'fzxyr_sg':
+                        xyrinfoStr += "身高:" + value + "厘米"+splitpz;
+                        break;
+                        break;
+                    case 'fzxyr_tmtzms':
+                        xyrinfoStr += value +splitpz;
+                        break;
+                    case 'fzxyr_gzdw':
+                        xyrinfoStr += "在" + value + "工作"+splitpz;
+                        break;
+                    case 'fzxyr_zylbdm':
+                        xyrinfoStr += "职务为" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js', value) + splitpz;
+                        break;
+                    case 'hjdz_dzmc':
+                        xyrinfoStr += "户籍地:" + value + splitpz;
+                        break;
+                    case 'xzz_dzmc':
+                        xyrinfoStr += "现住址:" + value +splitpz;
+                        break;
+                    case 'dwmc':
+                        xyrinfoStr += "单位名称:" + value + splitpz;
+                        break;
+                    case 'dwbgdz_dzmc':
+                        xyrinfoStr += "办公地址:" + value +splitpz;
+                        break;
+                    case 'fddbr_xm':
+                        xyrinfoStr += "法定待辨认姓名:" + value +splitpz;
+                        break;
+                }
+            }else{
+                switch (caseValue) {
+                    case 'xm':
+                        xyrinfoStr =  value + splitpz + xyrinfoStr;
+                        break;
+                    case 'xbdm':
+                        xyrinfoStr +=getDictName(pathConfig.mainPath + '/common/dict/GB_D_XBDM.js', value) + splitpz;
+                        break;
+                    case 'cyzj_cyzjdm':
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
+                        break;
+                    case 'fzxyr_csrq':
+                        xyrinfoStr += parseTimeToCN(value) + splitpz;
+                        break;
+                    case 'fzxyr_zzmmdm': //政治面貌
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_ZZMMDM.js', value) + splitpz;
+                        break;
+                    case 'fzxyr_jyzkdm':
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_HYZKDM.js', value) + splitpz;
+                        break;
+                    case 'fzxyr_jgdm':
+                        xyrinfoStr +=  getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value) +splitpz;
+                        break;
+                    case 'fzxyr_sg':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                        break;
+                    case 'fzxyr_tmtzms':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                    case 'fzxyr_gzdw':
+                        xyrinfoStr +=  value +splitpz;
+                        break;
+                    case 'fzxyr_zylbdm':
+                        xyrinfoStr +=  getDictName(pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js', value) + splitpz;
+                        break;
+                    case 'hjdz_dzmc':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                    case 'xzz_dzmc':
+                        xyrinfoStr +=  value + splitpz;
+                        break;
+                    case 'dwmc':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                    case 'dwbgdz_dzmc':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                    case 'fddbr_xm':
+                        xyrinfoStr +=  value +splitpz;
+                        break;
+                }
             }
+
         }
     }
     return xyrinfoStr;
@@ -308,7 +366,7 @@ function xyrCheckedXxfy($this) {
                     zhxx[field] = val;
                 }
             }
-            $("#cqbg_main_con form textarea").val('\t'+filedToParagraph(zhxx) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val('\t'+filedToParagraph(zhxx,cqbgData.prefixpz,cqbgData.splitpz) + '\n' + textareaVal);
         }else if (xydxLb == xyrObj[anjianXyDxDic.xydw].id && cqbgData.xydwpz != undefined && cqbgData.xydwpz != '') {//违法嫌疑单位
             for (var key in DATA.DX.xydxData[anjianXyDxDic.xydw]) {
                 if (DATA.DX.xydxData[anjianXyDxDic.xydw][key].xxzjbh == $this.attr("xxzjbh")) {
@@ -325,7 +383,7 @@ function xyrCheckedXxfy($this) {
                     zhxx[field] = val;
                 }
             }
-            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx,cqbgData.prefixpz,cqbgData.splitpz) + '\n' + textareaVal);
         } else {
             var xyrZhxxData = '\n' + '\t' + $this.next().attr('xyrzhxx');
             $("#cqbg_main_con form textarea").val(xyrZhxxData + '\t' + textareaVal);
@@ -547,7 +605,7 @@ function flwsDxRenderA(bm, flwsRow) {
                             var xyrStr = '';
                             for (var i = 0; i < xydxDatas[k].length; i++) {
                                 if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                                    var xyrzhxx = filedToParagraph(xydxDatas[k][i]);
+                                    var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
                                     xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                         '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                                 } else {
@@ -569,7 +627,7 @@ function flwsDxRenderA(bm, flwsRow) {
                         var xyrStr = '';
                         for (var i = 0; i < xydxDatas[k].length; i++) {
                             if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                                var xyrzhxx = filedToParagraph(xydxDatas[k][i]);
+                                var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
                                 xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                     '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                             } else {
@@ -645,7 +703,7 @@ function flwsDxRenderC(bm) {
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         //DATA.xyrArry.push(xydxDatas[k][i]);
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                            var xyrzhxx = filedToParagraph(xydxDatas[k][i]);
+                            var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
                             xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                 '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else {
@@ -696,7 +754,7 @@ function flwsDxRenderD(bm) {
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         //DATA.xyrArry.push(xydxDatas[k][i]);
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                            var xyrzhxx = filedToParagraph(xydxDatas[k][i]);
+                            var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
                             xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                 '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else if (key == anjianXyDxDic.xyr) {
@@ -1269,7 +1327,7 @@ function flwsWclXyrCheck(bm, $this, event) {
                             zhxx[field] = val;
                         }
                     }
-                    fzxyDxXxfy(fieldName,filedToParagraph(zhxx),bm);
+                    fzxyDxXxfy(fieldName,filedToParagraph(zhxx,DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz),bm);
                 }
             }
         }
