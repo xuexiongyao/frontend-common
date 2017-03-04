@@ -321,6 +321,53 @@ function xyrCheckedXxfy($this) {
     //勾选嫌疑人
     if (parentDiv.find('input:checked').length > 0) {//选中
         var textareaVal = $("#cqbg_main_con form textarea").val();
+
+        /***嫌疑对象接口信息的复用***/
+        var cqbgDataArry = textareaVal.match(/\((.*?)\]/g);
+        var cqbgxxTmpObj = {};
+        if(cqbgDataArry){
+            var cqbgxxTmpArray = [];
+            for(var n=0;n<cqbgDataArry.length;n++){
+                var a = cqbgDataArry[n];
+                var dataTmp = {
+                    funName: a.substring(a.indexOf('(') + 1, a.indexOf(')')),//方法名称
+                    paramName: a.substring(a.indexOf('[') + 1, a.indexOf(']'))//参数名称
+                };
+                cqbgxxTmpArray.push(dataTmp.paramName);
+                cqbgxxTmpObj[dataTmp.funName] = cqbgxxTmpArray;
+            }
+        }
+
+        var xydxDataArry;//嫌疑人对象数据
+        var xyrType = $this.next().attr('xyrtype');//嫌疑人类型
+        var xyrXxzjbh = $this.attr('xxzjbh');//嫌疑人信息主键编号
+        for(var k in xyrObj){
+            if(xyrType == xyrObj[k].id){
+                xydxDataArry = DATA.DX.xydxData[k];//嫌疑对象数据
+            }
+        }
+        // console.log(xydxDataArry);
+        // console.log(cqbgxxTmpObj);
+        for(var l=0;l<xydxDataArry.length;l++){
+            if(xyrXxzjbh == xydxDataArry[l].xxzjbh){
+                for (var k2 in cqbgxxTmpObj) {
+                    for(var j =0;j<cqbgxxTmpObj[k2].length;j++){
+                        var key = cqbgxxTmpObj[k2][j];//参数名称
+                        var val = xydxDataArry[l][key.toLowerCase()];//参数对应的值
+                        var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
+
+                        if (val == undefined || val == null || val == '') {//返回数据为空
+                            textareaVal = textareaVal.replace(strVal, '');
+                            console.log(key + '为空');
+                        } else {//textarea中对应的字符串替换赋值
+                            textareaVal = textareaVal.replace(strVal, val);
+                        }
+                    }
+                    $("#cqbg_main_con form textarea").val(textareaVal);
+                }
+            }
+        }
+        /***********end************/
         checkXyr = $this.parent().parent().parent().find('input:checked');
 
         //同一时间只能操作一个
