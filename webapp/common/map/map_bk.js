@@ -360,7 +360,7 @@ FrameTools.Map.prototype.showNewMapServer = function(mapDiv,mapName){
 	for(var i=0;i<str.length;i++){
 		var imgStr = str[i];
 		var bz = (str.length -1) - i;
-		imgHtml += "<img id='img_"+bz+"' onclick='FrameTools.Map.showMap("+bz+","+mapName+","+str.length+");' style='cursor:hand;' src= '"+staticPath+"/common/images/map/"+imgStr.split('|')[3]+"'>&nbsp;&nbsp;"
+		imgHtml += "<img id='img_"+bz+"' onclick='FrameTools.Map.showMap("+bz+","+mapName+","+str.length+");' style='cursor:hand;' src='../images/map/icons/"+imgStr.split('|')[3]+"'>&nbsp;&nbsp;"
 	}
 	var html = "<div id='mapToolDiv' style='position:absolute;right:5px;top:10px;'>"+imgHtml+"</div>";
 	$("#"+mapDiv).append(html);
