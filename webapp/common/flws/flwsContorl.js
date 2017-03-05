@@ -402,6 +402,14 @@ function getFlwsQtsjEdit(bm) {
                                 }
                             }
 
+                            //textarea框的处理
+                            var areaArry = $(flwsA[a]).find('textarea');
+                            for(var l =0;l<areaArry.length;l++){
+                                var dataname = $(areaArry[i]).attr('name');//参数名
+                                var val = $(areaArry[i]).val();//值
+                                DATA.FLWS[bm].params[dataname] = val;
+                            }
+
                         }
                     }
                 }

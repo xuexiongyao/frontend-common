@@ -823,6 +823,11 @@ function flwsDxRenderD(bm) {
         $('#flws_xyr_area_' + bm + ' ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});
 
 
+        //嫌疑对象的勾选
+        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+            flwsClXyrCheckD(bm, $(this));
+        });
+
         //选中已经保存的法律文书
         if (DATA.FLWS[bm].flwsRow.length > 0) {
             var tmpArray = [];
@@ -835,14 +840,11 @@ function flwsDxRenderD(bm) {
             }
 
             for (var i = 0; i < tmpArray.length; i++) {
-                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + tmpArray[i] + "']").prop('checked', true);
+                console.log($('#flws_xyr_area_' + bm).find("input[xxzjbh='" + tmpArray[i] + "']"));
+
+                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + tmpArray[i] + "']").click();
             }
         }
-
-        //嫌疑对象的勾选
-        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
-            flwsClXyrCheckD(bm, $(this));
-        });
     }
 
 }
@@ -870,11 +872,11 @@ function flwsPageRender(bm) {
     if (flwsData.one && flwsData.dx) {//法律文书只能保存一份儿且允许多选
         flwsDxRenderB(bm);
     } else if (flwsData.one && !flwsData.dx) {//法律文书只能保存一份儿
-        flwsPageRenderC(bm);
         flwsDxRenderC(bm);
+        flwsPageRenderC(bm);
     } else if (flwsData.dx && flwsData.only) {//法律文书多选并且一个呈请报告下法律文书只有一份儿
-        flwsPageRenderD(bm);
         flwsDxRenderD(bm);
+        flwsPageRenderD(bm);
     } else if (flwsData.only && flwsData.wdx) {//法律文书无嫌疑对象
         flwsDxRenderE(bm);
         flwsPageRenderD(bm);
