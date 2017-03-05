@@ -368,7 +368,8 @@ function batchExprot(search_config_obj){
 		dataType : 'json',
 		data : {
 			query_condition : JSON.stringify(export_condition_obj),
-			export_param    : JSON.stringify(search_config_obj)
+			export_param    : JSON.stringify(search_config_obj),
+			url : search_config.url
 		},
 		xhrFields:{withCredentials:true},
 		crossDomain:true,
