@@ -304,8 +304,23 @@ function formSubmit(form_id, call_back, url,queryParams){
         error: function () {
             loading('close');
             resetToken();
-            console.log('Form: '+form_id+' submit ajax error');
-
+            console.log('submitForm ajax err');
+            var errorMsg='数据提交服务失败！';
+            if(data && (data.status == 400 || data.status == 500) && data.responseText){
+                errorMsg=data.responseText;
+                try{
+                    var messageJson = eval("("+errorMsg+")");
+                    if(messageJson.message){
+                        errorMsg = messageJson.message;
+                    }else if(messageJson.errors){
+                        errorMsg = messageJson.errors;
+                    }
+                }catch(e){}
+            }
+            $.messager.alert({
+                title : '错误信息',
+                msg : errorMsg
+            });
         }
     });
 }
@@ -337,11 +352,26 @@ function normalSubmit(form_id, call_back, url) {
             }
             formTips(json, call_back, 'tips');
         },
-        error: function () {
+        error: function (data) {
             loading('close');
             resetToken();
-            console.log('Form: '+form_id+' submit ajax error');
-
+            console.log('submitForm ajax err');
+            var errorMsg='数据提交服务失败！';
+            if(data && (data.status == 400 || data.status == 500) && data.responseText){
+                errorMsg=data.responseText;
+                try{
+                    var messageJson = eval("("+errorMsg+")");
+                    if(messageJson.message){
+                        errorMsg = messageJson.message;
+                    }else if(messageJson.errors){
+                        errorMsg = messageJson.errors;
+                    }
+                }catch(e){}
+            }
+            $.messager.alert({
+                title : '错误信息',
+                msg : errorMsg
+            });
         }
     });
 }
