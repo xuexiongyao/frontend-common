@@ -985,9 +985,6 @@ function flwsRightPageRenderB(flwsData) {
         DATA.FLWS[flwsData.bianMa]['status'] = {};
     }
     DATA.FLWS[flwsData.bianMa]['status']['isAdd'] = false;
-    if (flwsData.customized) {
-        eval("render" + flwsData.bianMa + "CustomizedPage('" + JSON.stringify(DATA.FLWS[flwsData.bianMa].flwsRow[0]) + "')");
-    }
 }
 /**
  * 针对法律文书 one：true  dx：false 法律文书页面的渲染
@@ -1432,7 +1429,6 @@ function flwsYclXyrCheck(bm, $this) {
         //编辑渲染
         flwsRightPageRenderB(DATA.FLWS[bm].flwsData);
         flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
-
         //编辑标识
         DATA.FLWS[bm]['status']['isAdd'] = false;
         DATA.FLWS[bm]['status']['selected'] = true;
@@ -1484,6 +1480,10 @@ function flwsDataXxfy(bm, zj) {
     //查询嫌疑人结果信息复用
     for (var i = 0; i < data.length; i++) {
         if (zj == data[i].ZJ) {
+            //自定义页面处理
+            if (DATA.FLWS[bm].flwsData.customized) {
+                eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
+            }
             //多版本处理
             data[i].VERSION = parseInt(data[i].VERSION);
             if (DATA.FLWS[bm].flwsData.switchVersion) {
