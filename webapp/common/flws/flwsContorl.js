@@ -461,7 +461,7 @@ function shongshen(sessionBean) {
                         icon: 'warning'
                     });
                     return;
-                } else if (DATA.FLWS[bm].status.hasDone != true) {
+                } else if (!DATA.FLWS[bm].status.hasDone) {
                     $.messager.alert({
                         title: '提示',
                         msg: "请填写" + DATA.FLWS[bm].flwsData.name,

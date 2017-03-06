@@ -86,18 +86,22 @@ function queryFlwsData(title, render) {
                         //console.log(json)
                         if (json.state == 'success') {
                             if (json.rows != undefined && json.rows.length > 0) {//有数据 执行编辑渲染
-                                if (only) {
+
+                                if (one) {
+                                    DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
+                                    //TODO 只能做一份儿
+                                    //DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
+                                }else if (only) {
                                     for (var i = 0; i < json.rows.length; i++) {
                                         if (json.rows[i].CQZT == 0 && json.rows[i].CQBG_ZJ == DATA.CQBG.cqbgZj) {
                                             DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                             break;
                                         }
                                     }
-                                } else if (one) {
-                                    DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                 } else {
                                     DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                 }
+
                                 DATA.FLWS[flwsData[k].bianMa].flwsRow = json.rows;
 
                             } else {//没有数据 执行新增渲染
