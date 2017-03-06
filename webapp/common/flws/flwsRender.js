@@ -88,15 +88,15 @@ function cqbgPageRender() {
                 }
             });
         } else {
-            easyuiReset(cqbgIpts, false,'');
+            easyuiReset(cqbgIpts, false, '');
             cqbgDataXxfy();//呈请报告信息复用
-            if(DATA.CQBG.cqbgRow.XYRID){
-                var interval=setInterval(function(){//必须保证嫌疑人列表已经渲染
-                    if(DATA.DX&&DATA.DX.hasData){
+            if (DATA.CQBG.cqbgRow.XYRID) {
+                var interval = setInterval(function () {//必须保证嫌疑人列表已经渲染
+                    if (DATA.DX && DATA.DX.hasData) {
                         cqbgXyrDataXxfy();//呈请报告嫌疑人信息复用
                         clearInterval(interval);
                     }
-                },10);
+                }, 10);
             }
         }
     }
@@ -120,7 +120,7 @@ function xyrdxRenderCqbg() {
                     var xyrStr = '';
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                            var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.CQBG.cqbgData.prefixpz,DATA.CQBG.cqbgData.splitpz);
+                            var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.CQBG.cqbgData.prefixpz, DATA.CQBG.cqbgData.splitpz);
                             xyrStr += '<li><label><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" />' +
                                 '<span xyrtype="' + xyrObj[key].id + '"  xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else if (key == anjianXyDxDic.xydw) {//嫌疑单位
@@ -164,10 +164,10 @@ function xydxHide() {
  * @param xyrinfo
  * @returns {string}
  */
-function filedToParagraph(xyrinfo,prefixpz,splitpz) {
+function filedToParagraph(xyrinfo, prefixpz, splitpz) {
     var xyrinfoStr = '';
-    if(splitpz==undefined){
-        splitpz=',';
+    if (splitpz == undefined) {
+        splitpz = ',';
     }
     for (var key in xyrinfo) {
         var value = xyrinfo[key];
@@ -185,7 +185,7 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
             else {
                 caseValue = key;
             }
-            if(prefixpz){
+            if (prefixpz) {
                 switch (caseValue) {
                     case 'xm':
                         xyrinfoStr = "姓名:" + value + splitpz + xyrinfoStr;
@@ -194,10 +194,10 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
                         xyrinfoStr += "性别:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XBDM.js', value) + splitpz;
                         break;
                     case 'cyzj_cyzjdm':
-                        xyrinfoStr += "证件类型:" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) +splitpz;
+                        xyrinfoStr += "证件类型:" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
                         break;
                     case 'fzxyr_csrq':
-                        xyrinfoStr += parseTimeToCN(value) + "出生"+splitpz;
+                        xyrinfoStr += parseTimeToCN(value) + "出生" + splitpz;
                         break;
                     case 'fzxyr_zzmmdm': //政治面貌
                         xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_ZZMMDM.js', value) + splitpz;
@@ -206,17 +206,17 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
                         xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_HYZKDM.js', value) + splitpz;
                         break;
                     case 'fzxyr_jgdm':
-                        xyrinfoStr += "籍贯为:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value)+ splitpz;
+                        xyrinfoStr += "籍贯为:" + getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value) + splitpz;
                         break;
                     case 'fzxyr_sg':
-                        xyrinfoStr += "身高:" + value + "厘米"+splitpz;
+                        xyrinfoStr += "身高:" + value + "厘米" + splitpz;
                         break;
                         break;
                     case 'fzxyr_tmtzms':
-                        xyrinfoStr += value +splitpz;
+                        xyrinfoStr += value + splitpz;
                         break;
                     case 'fzxyr_gzdw':
-                        xyrinfoStr += "在" + value + "工作"+splitpz;
+                        xyrinfoStr += "在" + value + "工作" + splitpz;
                         break;
                     case 'fzxyr_zylbdm':
                         xyrinfoStr += "职务为" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js', value) + splitpz;
@@ -225,25 +225,25 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
                         xyrinfoStr += "户籍地:" + value + splitpz;
                         break;
                     case 'xzz_dzmc':
-                        xyrinfoStr += "现住址:" + value +splitpz;
+                        xyrinfoStr += "现住址:" + value + splitpz;
                         break;
                     case 'dwmc':
                         xyrinfoStr += "单位名称:" + value + splitpz;
                         break;
                     case 'dwbgdz_dzmc':
-                        xyrinfoStr += "办公地址:" + value +splitpz;
+                        xyrinfoStr += "办公地址:" + value + splitpz;
                         break;
                     case 'fddbr_xm':
-                        xyrinfoStr += "法定待辨认姓名:" + value +splitpz;
+                        xyrinfoStr += "法定待辨认姓名:" + value + splitpz;
                         break;
                 }
-            }else{
+            } else {
                 switch (caseValue) {
                     case 'xm':
-                        xyrinfoStr =  value + splitpz + xyrinfoStr;
+                        xyrinfoStr = value + splitpz + xyrinfoStr;
                         break;
                     case 'xbdm':
-                        xyrinfoStr +=getDictName(pathConfig.mainPath + '/common/dict/GB_D_XBDM.js', value) + splitpz;
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_XBDM.js', value) + splitpz;
                         break;
                     case 'cyzj_cyzjdm':
                         xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
@@ -258,7 +258,7 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
                         xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_HYZKDM.js', value) + splitpz;
                         break;
                     case 'fzxyr_jgdm':
-                        xyrinfoStr +=  getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value) +splitpz;
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/GB_D_XZQHDM.js', value) + splitpz;
                         break;
                     case 'fzxyr_sg':
                         xyrinfoStr += value + splitpz;
@@ -268,16 +268,16 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
                         xyrinfoStr += value + splitpz;
                         break;
                     case 'fzxyr_gzdw':
-                        xyrinfoStr +=  value +splitpz;
+                        xyrinfoStr += value + splitpz;
                         break;
                     case 'fzxyr_zylbdm':
-                        xyrinfoStr +=  getDictName(pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js', value) + splitpz;
+                        xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js', value) + splitpz;
                         break;
                     case 'hjdz_dzmc':
                         xyrinfoStr += value + splitpz;
                         break;
                     case 'xzz_dzmc':
-                        xyrinfoStr +=  value + splitpz;
+                        xyrinfoStr += value + splitpz;
                         break;
                     case 'dwmc':
                         xyrinfoStr += value + splitpz;
@@ -286,7 +286,7 @@ function filedToParagraph(xyrinfo,prefixpz,splitpz) {
                         xyrinfoStr += value + splitpz;
                         break;
                     case 'fddbr_xm':
-                        xyrinfoStr +=  value +splitpz;
+                        xyrinfoStr += value + splitpz;
                         break;
                 }
             }
@@ -325,9 +325,9 @@ function xyrCheckedXxfy($this) {
         /***嫌疑对象接口信息的复用***/
         var cqbgDataArry = textareaVal.match(/\((.*?)\]/g);
         var cqbgxxTmpObj = {};
-        if(cqbgDataArry){
+        if (cqbgDataArry) {
             var cqbgxxTmpArray = [];
-            for(var n=0;n<cqbgDataArry.length;n++){
+            for (var n = 0; n < cqbgDataArry.length; n++) {
                 var a = cqbgDataArry[n];
                 var dataTmp = {
                     funName: a.substring(a.indexOf('(') + 1, a.indexOf(')')),//方法名称
@@ -341,17 +341,17 @@ function xyrCheckedXxfy($this) {
         var xydxDataArry;//嫌疑人对象数据
         var xyrType = $this.next().attr('xyrtype');//嫌疑人类型
         var xyrXxzjbh = $this.attr('xxzjbh');//嫌疑人信息主键编号
-        for(var k in xyrObj){
-            if(xyrType == xyrObj[k].id){
+        for (var k in xyrObj) {
+            if (xyrType == xyrObj[k].id) {
                 xydxDataArry = DATA.DX.xydxData[k];//嫌疑对象数据
             }
         }
         // console.log(xydxDataArry);
         // console.log(cqbgxxTmpObj);
-        for(var l=0;l<xydxDataArry.length;l++){
-            if(xyrXxzjbh == xydxDataArry[l].xxzjbh){
+        for (var l = 0; l < xydxDataArry.length; l++) {
+            if (xyrXxzjbh == xydxDataArry[l].xxzjbh) {
                 for (var k2 in cqbgxxTmpObj) {
-                    for(var j =0;j<cqbgxxTmpObj[k2].length;j++){
+                    for (var j = 0; j < cqbgxxTmpObj[k2].length; j++) {
                         var key = cqbgxxTmpObj[k2][j];//参数名称
                         var val = xydxDataArry[l][key.toLowerCase()];//参数对应的值
                         var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
@@ -395,7 +395,7 @@ function xyrCheckedXxfy($this) {
         /*******行政案件组合信息拼接*******/
         var zhxxObj = null;
         var xydxLb = parentUl.attr("ids");//嫌疑对象类别
-        var cqbgData=DATA.CQBG.cqbgData;
+        var cqbgData = DATA.CQBG.cqbgData;
 
         // 违法嫌疑人
         if (xydxLb == xyrObj[anjianXyDxDic.xyr].id && cqbgData.xyrpz != undefined && cqbgData.xyrpz != '') {
@@ -413,8 +413,8 @@ function xyrCheckedXxfy($this) {
                     zhxx[field] = val;
                 }
             }
-            $("#cqbg_main_con form textarea").val('\t'+filedToParagraph(zhxx,cqbgData.prefixpz,cqbgData.splitpz) + '\n' + textareaVal);
-        }else if (xydxLb == xyrObj[anjianXyDxDic.xydw].id && cqbgData.xydwpz != undefined && cqbgData.xydwpz != '') {//违法嫌疑单位
+            $("#cqbg_main_con form textarea").val('\t' + filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
+        } else if (xydxLb == xyrObj[anjianXyDxDic.xydw].id && cqbgData.xydwpz != undefined && cqbgData.xydwpz != '') {//违法嫌疑单位
             for (var key in DATA.DX.xydxData[anjianXyDxDic.xydw]) {
                 if (DATA.DX.xydxData[anjianXyDxDic.xydw][key].xxzjbh == $this.attr("xxzjbh")) {
                     zhxxObj = DATA.DX.xydxData[anjianXyDxDic.xydw][key];
@@ -430,7 +430,7 @@ function xyrCheckedXxfy($this) {
                     zhxx[field] = val;
                 }
             }
-            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx,cqbgData.prefixpz,cqbgData.splitpz) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
         } else {
             var xyrZhxxData = '\n' + '\t' + $this.next().attr('xyrzhxx');
             $("#cqbg_main_con form textarea").val(xyrZhxxData + '\t' + textareaVal);
@@ -495,18 +495,13 @@ function cqbgXyrDataXxfy() {
         }
     }
 
-    var ipts = $('#cqbg_xyr_con ul.xyrList input:checkbox');
     var currentXyDxDiv;
     for (var i = 0; i < xyridArry.length; i++) {
-        for (var j = 0; j < ipts.length; j++) {
-            var xydxzj = $(ipts[j]).attr('xxzjbh');
-            if (xyridArry[i] == xydxzj) {
-                currentXyDxDiv=$(ipts[j]).parent().parent().parent().parent()[0];
-                $(ipts[j]).attr('checked', true);
-            }
-        }
+        $('#cqbg_xyr_con ul.xyrList').find("input[xxzjbh=" + xyridArry[i] + "]").click();
+        currentXyDxDiv = $('#cqbg_xyr_con ul.xyrList').find("input[xxzjbh=" + xyridArry[i] + "]").parent().parent().parent().parent()[0];
     }
-    if(xyridArry.length>0&&currentXyDxDiv){
+
+    if (xyridArry.length > 0 && currentXyDxDiv) {
         $(currentXyDxDiv).siblings().hide();
     }
 }
@@ -606,13 +601,13 @@ function flwsDxRenderA(bm, flwsRow) {
                     //嫌疑对象名称拼接
                     var xydxArrayTmp = DATA.DX.xydxData[dxLb];
                     var xydxMc = '';
-                    for(var q=0;q<xydxArrayTmp.length;q++){
-                        if(xydxArrayTmp[q].xxzjbh == flwsRow[i].CLDX_XXZJBH){
-                            if(dxLb == anjianXyDxDic.xyr){
+                    for (var q = 0; q < xydxArrayTmp.length; q++) {
+                        if (xydxArrayTmp[q].xxzjbh == flwsRow[i].CLDX_XXZJBH) {
+                            if (dxLb == anjianXyDxDic.xyr) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xyr].param]
-                            }else if(dxLb == anjianXyDxDic.xydw){
+                            } else if (dxLb == anjianXyDxDic.xydw) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xydw].param]
-                            }else if(dxLb == anjianXyDxDic.ajxgr){
+                            } else if (dxLb == anjianXyDxDic.ajxgr) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.ajxgr].param]
                             }
                         }
@@ -652,7 +647,7 @@ function flwsDxRenderA(bm, flwsRow) {
                             var xyrStr = '';
                             for (var i = 0; i < xydxDatas[k].length; i++) {
                                 if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                                    var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
+                                    var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
                                     xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                         '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                                 } else {
@@ -674,7 +669,7 @@ function flwsDxRenderA(bm, flwsRow) {
                         var xyrStr = '';
                         for (var i = 0; i < xydxDatas[k].length; i++) {
                             if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                                var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
+                                var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
                                 xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                     '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                             } else {
@@ -750,7 +745,7 @@ function flwsDxRenderC(bm) {
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         //DATA.xyrArry.push(xydxDatas[k][i]);
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                            var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
+                            var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
                             xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                 '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else {
@@ -801,7 +796,7 @@ function flwsDxRenderD(bm) {
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         //DATA.xyrArry.push(xydxDatas[k][i]);
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
-                            var xyrzhxx = filedToParagraph(xydxDatas[k][i],DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz);
+                            var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
                             xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
                                 '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else if (key == anjianXyDxDic.xyr) {
@@ -948,7 +943,7 @@ function flwsRightPageRenderA(flwsData) {
 
     //法律文书页面的初始化
     var flwsIpts = $('#flws_main_con_r_' + flwsData.bianMa + ' form input');
-    easyuiReset(flwsIpts, true ,flwsData.bianMa);
+    easyuiReset(flwsIpts, true, flwsData.bianMa);
 
     if (DATA.FLWS[flwsData.bianMa] == undefined) {
         DATA.FLWS[flwsData.bianMa] = {};
@@ -975,13 +970,13 @@ function flwsRightPageRenderB(flwsData) {
 
     //行政案件 行政处罚报告书  执法公开编辑按钮单独处理
 
-    if(flwsData.bianMa == 'X020003'){
+    if (flwsData.bianMa == 'X020003') {
         $('#saveFlwsZfgk_' + flwsData.bianMa).show().text('执法公开编辑');
     }
 
     //法律文书页面的初始化
     var flwsIpts = $('#flws_main_con_r_' + flwsData.bianMa + ' form input');
-    easyuiReset(flwsIpts, false,flwsData.bianMa);
+    easyuiReset(flwsIpts, false, flwsData.bianMa);
 
     if (DATA.FLWS[flwsData.bianMa] == undefined) {
         DATA.FLWS[flwsData.bianMa] = {};
@@ -1066,7 +1061,7 @@ function flwsClXyrCheckC(bm, $this) {
         for (var i = 0; i < xyrArry.length; i++) {
             if (xyrArry[i]["xxzjbh"] == xyrXxzjbh) {
                 var xyrCurrent = xyrArry[i];
-                if(DATA.URLATTR[xyrApiName]){
+                if (DATA.URLATTR[xyrApiName]) {
                     for (var j = 0; j < DATA.URLATTR[xyrApiName].length; j++) {
                         var key = DATA.URLATTR[xyrApiName][j];
                         if (xyrCurrent[key.toLowerCase()] != undefined) {
@@ -1346,7 +1341,7 @@ function flwsWclXyrCheck(bm, $this, event) {
             }
             //违法嫌疑人
             var zhxxObj = null;
-            var flwsData=DATA.FLWS[bm].flwsData;
+            var flwsData = DATA.FLWS[bm].flwsData;
             var xydxLb = parentUl.attr("ids");//嫌疑对象类别
 
             if (xydxLb == xyrObj[anjianXyDxDic.xyr].id && flwsData.xyrpz != undefined && flwsData.xyrpz != '') {//勾选嫌疑人
@@ -1356,7 +1351,7 @@ function flwsWclXyrCheck(bm, $this, event) {
                     }
                 }
 
-            }else if(xydxLb == xyrObj[anjianXyDxDic.xydw].id && flwsData.xydwpz != undefined && flwsData.xydwpz != ''){
+            } else if (xydxLb == xyrObj[anjianXyDxDic.xydw].id && flwsData.xydwpz != undefined && flwsData.xydwpz != '') {
                 for (var key in DATA.DX.xydxData[anjianXyDxDic.xydw]) {
                     if (DATA.DX.xydxData[anjianXyDxDic.xydw][key].xxzjbh == $this.attr("xxzjbh")) {
                         zhxxObj = DATA.DX.xydxData[anjianXyDxDic.xydw][key];
@@ -1364,11 +1359,11 @@ function flwsWclXyrCheck(bm, $this, event) {
                 }
             }
 
-            if(zhxxObj){
+            if (zhxxObj) {
                 var zhxx = {};
-                var xyrpz = eval('('+flwsData.xyrpz+')');
+                var xyrpz = eval('(' + flwsData.xyrpz + ')');
                 for (var fieldName in xyrpz) {
-                    var xyrpzArr=xyrpz[fieldName].split(",");
+                    var xyrpzArr = xyrpz[fieldName].split(",");
                     for (var j = 0; j < xyrpzArr.length; j++) {
                         var field = xyrpzArr[j];
                         var val = zhxxObj[field];
@@ -1376,7 +1371,7 @@ function flwsWclXyrCheck(bm, $this, event) {
                             zhxx[field] = val;
                         }
                     }
-                    fzxyDxXxfy(fieldName,filedToParagraph(zhxx,DATA.FLWS[bm].prefixpz,DATA.FLWS[bm].splitpz),bm);
+                    fzxyDxXxfy(fieldName, filedToParagraph(zhxx, DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz), bm);
                 }
             }
         }
@@ -1491,15 +1486,15 @@ function flwsDataXxfy(bm, zj) {
         if (zj == data[i].ZJ) {
             //多版本处理
             data[i].VERSION = parseInt(data[i].VERSION);
-            if(DATA.FLWS[bm].flwsData.switchVersion){
-                var tabs=$('#flws_cl_area_'+bm).tabs("tabs");
-                if(tabs.length>data[i].VERSION){
-                    for(var index=data[i].VERSION;index<tabs.length;index++){
-                        $('#flws_cl_area_'+bm).tabs("close",index);
+            if (DATA.FLWS[bm].flwsData.switchVersion) {
+                var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                if (tabs.length > data[i].VERSION) {
+                    for (var index = data[i].VERSION; index < tabs.length; index++) {
+                        $('#flws_cl_area_' + bm).tabs("close", index);
                     }
                 }
-                for(var index=data[i].VERSION-2;index>=0;index--){
-                    $('#flws_cl_area_'+bm).tabs("close",index);
+                for (var index = data[i].VERSION - 2; index >= 0; index--) {
+                    $('#flws_cl_area_' + bm).tabs("close", index);
                 }
             }
             for (var key in data[i]) {
@@ -1507,9 +1502,9 @@ function flwsDataXxfy(bm, zj) {
                 var val = data[i][key];
                 //版本切换赋值的处理
                 var $a = $node.parent();
-                if($a.attr('annotation') == '/REPLACE/'){
+                if ($a.attr('annotation') == '/REPLACE/') {
                     $a.parent().next().val(val);
-                }else{
+                } else {
                     if ($node.hasClass('easyuitextbox')) {
                         $node.textbox({value: val});
                     } else if ($node.hasClass('easyuicombobox')) {
