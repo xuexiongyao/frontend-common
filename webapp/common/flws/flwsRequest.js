@@ -10,20 +10,35 @@ var DATA = {"ajax": {"count": "0"}, "DX": {}, "CQBG": {}, 'FLWS': {}};
  */
 function queryCqbgData(render) {
     if (DATA.CQBG.cqbgData) {
-        $.ajax({
-            url: DATA.CQBG.cqbgData.queryUrl,
-            data: {
+        var one = DATA.CQBG.cqbgData.one;
+        var param ={};
+        if (one) {//只能出一份文书
+            param = {
+                ASJBH: DATA.asjbh,
+                FLWS_ASJFLWSDM: DATA.CQBG.cqbgData.bianMa,
+                XT_ZXBZ: '0'
+            }
+        } else {//出多份文书
+            param = {
                 CQZT: '0',
                 ASJBH: DATA.asjbh,
                 FLWS_ASJFLWSDM: DATA.CQBG.cqbgData.bianMa,
                 XT_ZXBZ: '0'
-            },
+            }
+        }
+        $.ajax({
+            url: DATA.CQBG.cqbgData.queryUrl,
+            data:param ,
             jsonType: 'json',
             success: function (data) {
                 var json = eval('(' + data + ')');
                 if (json.state == 'success') {
                     if (json.rows.length > 0) {//有数据 编辑
                         DATA.CQBG.cqbgRow = json.rows[0];
+
+                        if (one && DATA.CQBG.cqbgRow.CQZT =='1') {
+                            DATA.CQBG.status.disabled = true;
+                        }
                         DATA.CQBG.status.hasDone = true;
                         if (DATA.CQBG.cqbgRow.XXZJBH == undefined) {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.ZJ;
@@ -89,8 +104,9 @@ function queryFlwsData(title, render) {
 
                                 if (one) {
                                     DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
-                                    //TODO 只能做一份儿
-                                    //DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
+                                    if(DATA.CQBG.cqbgRow.CQZT =='1'){
+                                        DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
+                                    }
                                 }else if (only) {
                                     for (var i = 0; i < json.rows.length; i++) {
                                         if (json.rows[i].CQZT == 0 && json.rows[i].CQBG_ZJ == DATA.CQBG.cqbgZj) {
