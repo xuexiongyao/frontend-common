@@ -188,8 +188,8 @@ function getDxxxData(render) {
                                 var rule = DATA.RULE[xyr_rsqzcsdm];
                                 var disabled = "";
                                 var title = "";
-                                if (rule != undefined) {
-                                    if (rule.iscontain) {
+                                if (typeof rule != 'undefined' || rule != undefined) {
+                                    if (rule.iscontain) {//包含的不能做
                                         for (var z = 0; z < rule.item.length; z++) {
                                             if (DATA.CQBG.asjflwsdm == rule.item[z]) {
                                                 disabled = "disabled ='disabled'";
@@ -197,7 +197,7 @@ function getDxxxData(render) {
                                                 break;
                                             }
                                         }
-                                    } else {
+                                    } else {//包含的能做
                                         disabled = "disabled='disabled'";
                                         title = "title = '" + rule.message + "'";
                                         for (var z = 0; z < rule.item.length; z++) {

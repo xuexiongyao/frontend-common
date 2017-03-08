@@ -62,6 +62,7 @@ function flwsQhzgxRequest() {
         success: function (data) {
             DATA.ajax.count--;
             DATA.RULE = data;
+            getDxxxData(xyrdxRenderCqbg);
         }
     })
 }

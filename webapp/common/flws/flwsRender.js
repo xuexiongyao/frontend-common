@@ -121,7 +121,7 @@ function xyrdxRenderCqbg() {
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                             var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.CQBG.cqbgData.prefixpz, DATA.CQBG.cqbgData.splitpz);
-                            xyrStr += '<li><label><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" />' +
+                            xyrStr += '<li><label  ' + xydxDatas[k][i].title + ' '+xydxDatas[k][i].disabled+' class="easyui-tooltip"><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" '+xydxDatas[k][i].disabled+' type="checkbox" />' +
                                 '<span xyrtype="' + xyrObj[key].id + '"  xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
                         } else if (key == anjianXyDxDic.xydw) {//嫌疑单位
                             xyrStr += '<li><label><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox"/>' +
@@ -141,7 +141,7 @@ function xyrdxRenderCqbg() {
         $('#cqbg_xyr_con').append(xyrListStr);
 
         //已呈请样式(呈请报告的前后置关系)
-        //$('#cqbg_xyr_con ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});
+        $('#cqbg_xyr_con ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});
 
         //嫌疑对象的勾选
         $('#cqbg_xyr_con ul.xyrList input:checkbox').off('click').on('click', function () {
@@ -620,8 +620,8 @@ function flwsDxRenderA(bm, flwsRow) {
                     '<ul class="xyrList ' + xyrObjTemp.id + '" ids=' + xyrObjTemp.id + '>' + xyrStr + '</ul></div>';
 
                 /***未处理嫌疑对象列表渲染***/
-                //$('.flws_xyr_area_wcq').html('');
-                //总的嫌疑人数据，删除已经做过的数据
+                    //$('.flws_xyr_area_wcq').html('');
+                    //总的嫌疑人数据，删除已经做过的数据
                 var wcqXyrArry = getDiffer(DATA.FLWS[bm].xyrData, flwsRow, 'xxzjbh', 'CLDX_XXZJBH');
                 //console.log(wcqXyrArry);
 
