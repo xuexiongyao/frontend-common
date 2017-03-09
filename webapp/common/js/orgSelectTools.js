@@ -54,7 +54,9 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData,onSelectedFun
 		'prompt':'点击”选择“可弹出选择框',
 		'buttonText':'选择',
     	'onClickButton' : function(){
-    		$("#"+normalHtmlDivId+textboxID).show().dialog('open');
+			var _top = parseInt($(document).scrollTop()+200);
+			$("#"+normalHtmlDivId+textboxID).show().dialog('open').dialog('move', {top: _top});
+    		//$("#"+normalHtmlDivId+textboxID).show().dialog('open');
     	}	
     });
 	
@@ -519,7 +521,8 @@ function initSingleSelectOrg(textboxID, filterData, returnFieldData,onSelectedFu
 		'prompt':'点击”选择“可弹出选择框',
 		'buttonText':'选择',
     	'onClickButton' : function(){
-    		$("#"+normalHtmlDivId+textboxID).show().dialog('open');
+			var _top = parseInt($(document).scrollTop()+200);
+			$("#"+normalHtmlDivId+textboxID).show().dialog('open').dialog('move', {top: _top});
     	}
     });
 	
