@@ -2,11 +2,9 @@
  * Created by christ on 2016/12/5.
  */
 
-//初始化DATA对象 ajax 数据请求信息  DX 嫌疑对象信息 CQBG 呈请报告信息
-var DATA = {"ajax": {"count": "0"}, "DX": {}, "CQBG": {}, 'FLWS': {}};
-
 /**
  * 请求获取呈请报告数据，判断该数据是否存在，如果存在保存既修改，如果不存在，保存既新增
+ * @param render 回调函数
  */
 function queryCqbgData(render) {
     if (DATA.CQBG.cqbgData) {
@@ -26,21 +24,25 @@ function queryCqbgData(render) {
                 XT_ZXBZ: '0'
             }
         }
+
+        //获取呈请报告数据请求
         $.ajax({
             url: DATA.CQBG.cqbgData.queryUrl,
             data:param ,
             jsonType: 'json',
             success: function (data) {
                 var json = eval('(' + data + ')');
-                if (json.state == 'success') {
+                if (json.state == 'success') {//查询成功
                     if (json.rows.length > 0) {//有数据 编辑
                         DATA.CQBG.cqbgRow = json.rows[0];
-
+                        //one为true，整个案件只能出一份儿呈请报告；并且该呈请报告已经呈请，CQZT=='1'，就不能再做
                         if (one && DATA.CQBG.cqbgRow.CQZT =='1') {
                             DATA.CQBG.status.disabled = true;
                         }
+                        //呈请报告状态hasDone为true，已经做过
                         DATA.CQBG.status.hasDone = true;
-                        if (DATA.CQBG.cqbgRow.XXZJBH == undefined) {
+
+                        if (typeof(DATA.CQBG.cqbgRow.XXZJBH) == 'undefined') {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.ZJ;
                         } else {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.XXZJBH;
@@ -49,8 +51,8 @@ function queryCqbgData(render) {
                         DATA.CQBG.cqbgRow = {};
                     }
 
-                    render();
-                } else if (json.state == 'error') {
+                    render();//回调函数
+                } else if (json.state == 'error') {//查询错误
                     console.log('error');
                 }
             }
@@ -69,18 +71,21 @@ function queryFlwsData(title, render) {
         for (var k in flwsData) {
             if (title == flwsData[k].name) {
                 var param = {};//参数
-                if (DATA.FLWS[flwsData[k].bianMa] == undefined) {
+
+                //构造对象
+                if (typeof (DATA.FLWS[flwsData[k].bianMa]) == 'undefined') {
                     DATA.FLWS[flwsData[k].bianMa] = {};
                 }
-                if (DATA.FLWS[flwsData[k].bianMa]['status'] == undefined) {
+
+                if (typeof (DATA.FLWS[flwsData[k].bianMa]['status']) == 'undefined') {
                     DATA.FLWS[flwsData[k].bianMa]['status'] = {};
                 }
 
                 DATA.FLWS[flwsData[k].bianMa].flwsData = flwsData[k];
                 DATA.FLWS[flwsData[k].bianMa].params = {};
-                var only = DATA.CQBG.cqbgZj == undefined || DATA.FLWS[flwsData[k].bianMa].flwsData.only;
-                var one = DATA.FLWS[flwsData[k].bianMa].flwsData.one;
-                if (one) {//只能出一份文书
+
+                var only = DATA.FLWS[flwsData[k].bianMa].flwsData.only;
+                if (only) {//只能出一份文书
                     param = {
                         XT_ZXBZ: '0',
                         ASJBH: DATA.asjbh
@@ -93,6 +98,7 @@ function queryFlwsData(title, render) {
                     }
                 }
 
+                //获取法律文书数据请求
                 $.ajax({
                     url: flwsData[k].queryUrl,
                     data: param,
@@ -100,16 +106,18 @@ function queryFlwsData(title, render) {
                     success: function (json) {
                         //console.log(json)
                         if (json.state == 'success') {
-                            if (json.rows != undefined && json.rows.length > 0) {//有数据 执行编辑渲染
-
-                                if (one) {
-                                    DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
-                                    if(DATA.CQBG.cqbgRow.CQZT =='1'){
+                            var jsonRows = json.rows;
+                            if (jsonRows.length > 0) {//有数据 执行编辑渲染
+                                DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
+                                if (only) {
+                                    //已经呈请的法律文书不能再改
+                                    if(DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT =='1'){
                                         DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
                                     }
-                                }else if (only) {
-                                    for (var i = 0; i < json.rows.length; i++) {
-                                        if (json.rows[i].CQZT == 0 && json.rows[i].CQBG_ZJ == DATA.CQBG.cqbgZj) {
+
+                                    //法律文书跟呈请报告绑定
+                                    for (var i = 0; i < jsonRows.length; i++) {
+                                        if (jsonRows[i].CQZT == '0' && jsonRows[i].CQBG_ZJ == DATA.CQBG.cqbgZj) {
                                             DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                             break;
                                         }
@@ -118,14 +126,13 @@ function queryFlwsData(title, render) {
                                     DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                 }
 
-                                DATA.FLWS[flwsData[k].bianMa].flwsRow = json.rows;
-
                             } else {//没有数据 执行新增渲染
                                 DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
+
+                                //自定义页面无数据的处理
                                 if(window["render"+flwsData[k].bianMa+"CustomizedPageForNone"]){
                                     eval("render"+flwsData[k].bianMa+"CustomizedPageForNone()");
                                 }
-
                             }
 
                             render(flwsData[k].bianMa);
