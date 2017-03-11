@@ -261,17 +261,21 @@ function openOtherTable(isExport){
 		var $this = $(this);
 		var $parent = $this.parent().parent().parent().parent();
 		var isChecked = $this.prop('checked');
+		var thisMaster = $parent.attr('isMaster');
+
 		if(isChecked){
 			$this.parent().parent().parent().next().find('input').prop('checked',true);
-			if(isExport){
-				$parent.siblings().each(function(){
-					var $this = $(this);
-					var isMaster = $this.attr('isMaster');
-					if(isMaster === 'false'){
-						$this.removeClass('item-check-border').find('input').prop('checked',false);
-					}
-				});
-				$parent.addClass('item-check-border');
+			if(thisMaster === 'false'){
+				if(isExport){
+					$parent.siblings().each(function(){
+						var $this = $(this);
+						var isMaster = $this.attr('isMaster');
+						if(isMaster === 'false'){
+							$this.removeClass('item-check-border').find('input').prop('checked',false);
+						}
+					});
+					$parent.addClass('item-check-border');
+				}
 			}
 		}else{
 			if(isExport){
@@ -279,6 +283,8 @@ function openOtherTable(isExport){
 			}
 			$this.parent().parent().parent().next().find('input').prop('checked',false);
 		}
+
+
 	});
 
 	//导出选项的勾选操作
@@ -287,21 +293,25 @@ function openOtherTable(isExport){
 			var $this = $(this);
 			var isChecked = $this.prop('checked');
 			var $parent = $this.parent().parent().parent();
-			if(isChecked){
-				$parent.siblings().each(function(){
-					var $this = $(this);
-					var isMaster = $this.attr('isMaster');
-					if(isMaster === 'false'){
-						$this.removeClass('item-check-border').find('input').prop('checked',false);
+			var thisMaster = $parent.attr('isMaster');
+			if(thisMaster === 'false'){
+				if(isChecked){
+					$parent.siblings().each(function(){
+						var $this = $(this);
+						var isMaster = $this.attr('isMaster');
+						if(isMaster === 'false'){
+							$this.removeClass('item-check-border').find('input').prop('checked',false);
+						}
+					});
+					$parent.addClass('item-check-border');
+				}else{
+					var checked = $parent.find('input:checked');
+					if(checked.length == 0){
+						$parent.removeClass('item-check-border');
 					}
-				});
-				$parent.addClass('item-check-border');
-			}else{
-				var checked = $parent.find('input:checked');
-				if(checked.length == 0){
-					$parent.removeClass('item-check-border');
 				}
 			}
+
 		});
 	}
 }
