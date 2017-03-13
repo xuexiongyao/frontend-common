@@ -288,21 +288,6 @@ function flwsPageRender(bm) {
         //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
         flwsDxListRenderOther(bm);
     }
-
-    // if (flwsData.one && flwsData.dx) {//法律文书只能保存一份儿且允许多选
-    //     flwsDxRenderB(bm);
-    // } else if (flwsData.one && !flwsData.dx) {//法律文书只能保存一份儿
-    //     flwsDxRenderC(bm);
-    //     flwsPageRenderC(bm);
-    // } else if (flwsData.dx && flwsData.only) {//法律文书多选并且一个呈请报告下法律文书只有一份儿
-    //     flwsDxRenderD(bm);
-    //     flwsPageRenderD(bm);
-    // } else if (flwsData.only && flwsData.wdx) {//法律文书无嫌疑对象
-    //     // flwsDxRenderE(bm);
-    //     // flwsPageRenderD(bm);
-    // } else {//法律文书可以保存多份儿
-    //     flwsDxRenderA(bm);
-    // }
 }
 
 /**********************类型A************************/
