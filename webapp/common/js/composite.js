@@ -14,11 +14,13 @@ $(function () {
     btnEvent();         //按钮事件
     delCondition();		//删除查询条件
     showHideDel();		//hover显示删除条件
-    queryModel();		//模板查询
+    saveQueryModel();	//保存模板查询
+    getQueryModel();	//获取模板查询
+
 });
 
-//查询条件模板
-function queryModel() {
+//保存模板查询
+function saveQueryModel() {
     var modelPanel = '<div id="model_dialog" class="model-dialog" style="display:none">' +
         '<div class="model-name">' +
         '<span class="pro">模版名称</span>' +
@@ -27,14 +29,14 @@ function queryModel() {
         '<div class="model-limit" id="model_limit">' +
         '<span class="pro">模板权限</span>' +
         '<div class="content">' +
-        '<label class="item"><input type="radio" name="limit-item" value="gk" checked>公开</label>' +
+        '<label class="item"><input type="radio" name="limit-item" value="gkkj" checked>公开可见</label>' +
         '<label class="item"><input type="radio" name="limit-item" value="grkj ">个人可见</label>' +
         '<label class="item"><input type="radio" name="limit-item" value="bbmkj">本部门可见</label>' +
         '<label class="item"><input type="radio" name="limit-item" value="bxkj">本县区可见</label>' +
         '<label class="item"><input type="radio" name="limit-item" value="bskj">本市可见</label>' +
         '</div>' +
         '</div>' +
-        '</div>';
+        '</div>等待后台完成保存数据接口...';
     $('#other_table_dialog').after(modelPanel);
     $('#search_model').off('click').on('click', function () {
         $('#model_name').textbox();
@@ -43,7 +45,8 @@ function queryModel() {
         openDivForm({
             id: 'model_dialog',
             title: '保存模板',
-            width: 600
+            width: 600,
+            height: 300
         }, [
             {
                 text: '保存',
@@ -102,6 +105,51 @@ function queryModel() {
     });
 }
 
+//获取模板查询条件
+function getQueryModel() {
+    var modelBtn = '<a class="easyui-linkbutton" id="model_btn" style="position: absolute;top:62px;margin-left:10px;">模板查询</a>';
+    var modelPanel2 = '<div id="model_list_dialog" class="model-list-dialog" style="display:none">' +
+        '<div class="title-input">' +
+        '<span>快速查询模板</span><input class="easyui-textbox" id="model_key"><i class="fa fa-search"></i>' +
+        '</div>' +
+        '<div class="model-limit">' +
+        '<a class="easyui-linkbutton limit-btn" val="gkkj">公开可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="grkj">个人可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="bbmkj">本部门可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="bxkj">本县区可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="bskj">本市可见</a>' +
+        '</div>' +
+        '<div class="model-table">' +
+        '<table></table>' +
+        '</div>等待后台数据接口...' +
+        '</div>';
+    $('#other_table_dialog').after(modelPanel2);
+    $('#advanced').after(modelBtn);
+    $('#model_key').textbox();
+    $('#model_list_dialog .limit-btn').linkbutton();
+    $('#model_btn').linkbutton({
+        onClick: function () {
+            openDivForm({
+                id: 'model_list_dialog',
+                title: '选择模板查询',
+                width: 600,
+                height: 300
+            }, [
+                {
+                    text: '查询',
+                    handler: function () {
+
+                    }
+                }, {
+                    text: '取消',
+                    handler: function () {
+
+                    }
+                }
+            ]);
+        }
+    });
+}
 
 //删除查询条件
 function delCondition() {
