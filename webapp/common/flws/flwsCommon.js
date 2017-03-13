@@ -76,6 +76,19 @@ function getHtmlByAjax(url) {
     return data;
 }
 
+/**
+ * 获取对象的属性个数
+ */
+function getObjLength(obj) {
+    var count = 0;
+    for(var k in obj){
+        if(obj.hasOwnProperty(k)){
+            count++;
+        }
+    }
+    return count;
+}
+
 
 /**
  * 呈请报告textarea框的处理
