@@ -9,7 +9,7 @@
 function queryCqbgData(render) {
     if (DATA.CQBG.cqbgData) {
         var one = DATA.CQBG.cqbgData.one;
-        var param ={};
+        var param = {};
         if (one) {//只能出一份文书
             param = {
                 ASJBH: DATA.asjbh,
@@ -28,7 +28,7 @@ function queryCqbgData(render) {
         //获取呈请报告数据请求
         $.ajax({
             url: DATA.CQBG.cqbgData.queryUrl,
-            data:param ,
+            data: param,
             jsonType: 'json',
             success: function (data) {
                 var json = eval('(' + data + ')');
@@ -36,7 +36,7 @@ function queryCqbgData(render) {
                     if (json.rows.length > 0) {//有数据 编辑
                         DATA.CQBG.cqbgRow = json.rows[0];
                         //one为true，整个案件只能出一份儿呈请报告；并且该呈请报告已经呈请，CQZT=='1'，就不能再做
-                        if (one && DATA.CQBG.cqbgRow.CQZT =='1') {
+                        if (one && DATA.CQBG.cqbgRow.CQZT == '1') {
                             DATA.CQBG.status.disabled = true;
                         }
                         //呈请报告状态hasDone为true，已经做过
@@ -111,7 +111,7 @@ function queryFlwsData(title, render) {
                                 DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
                                 if (only) {
                                     //已经呈请的法律文书不能再改
-                                    if(DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT =='1'){
+                                    if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
                                         DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
                                     }
 
@@ -130,8 +130,8 @@ function queryFlwsData(title, render) {
                                 DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
 
                                 //自定义页面无数据的处理
-                                if(window["render"+flwsData[k].bianMa+"CustomizedPageForNone"]){
-                                    eval("render"+flwsData[k].bianMa+"CustomizedPageForNone()");
+                                if (window["render" + flwsData[k].bianMa + "CustomizedPageForNone"]) {
+                                    eval("render" + flwsData[k].bianMa + "CustomizedPageForNone()");
                                 }
                             }
 
@@ -187,9 +187,9 @@ function getDxxxData(render) {
                             var xyr_rsqzcsdm;
                             for (var i = 0; i < DATA.DX.xydxData[anjianXyDxDic.xyr].length; i++) {
                                 var xyr = DATA.DX.xydxData[anjianXyDxDic.xyr][i];
-                                if(xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null'){
+                                if (xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null') {
                                     xyr_rsqzcsdm = '0000';
-                                }else{
+                                } else {
                                     xyr_rsqzcsdm = xyr[flwsQhzgxXyrPz];
                                 }
                                 var rule = DATA.RULE[xyr_rsqzcsdm];
@@ -222,7 +222,7 @@ function getDxxxData(render) {
                     }
                 }
 
-                if(DATA.CQBG.cqbgData){
+                if (DATA.CQBG.cqbgData) {
                     if (DATA.CQBG.cqbgData.bx && !DATA.DX.hasData) {
                         loading('open', '必选嫌疑对象列表不能为空')
                     } else {
@@ -286,7 +286,7 @@ function flwsSaveComplete(data, bm) {
                 DATA.FLWS[bm].status.hasDone = true;
 
                 //TODO 执法公开的单独处理(只针对行政案件)
-                if(bm == 'X020003'){
+                if (bm == 'X020003') {
                     DATA.FLWS[bm].status.zfgked = false;
                 }
             }
@@ -326,13 +326,13 @@ function flwsSave(url, param, bm) {
 /**
  * 生成法律文书请求(需要修改)
  */
-function scflwsRequest(params){
+function scflwsRequest(params) {
     $.ajax({
-        url: pathConfig.basePath +'/workflowRelated/createXwFlwsscrwb',
-        data:params,
+        url: pathConfig.basePath + '/workflowRelated/createXwFlwsscrwb',
+        data: params,
         success: function (data) {
-            var json = eval('('+data+')');
-            if(json.status == 'success'){
+            var json = eval('(' + data + ')');
+            if (json.status == 'success') {
                 $.messager.alert({
                     title: '提示',
                     msg: '生成法律文书成功',
@@ -340,7 +340,7 @@ function scflwsRequest(params){
                         crossCloseTab();
                     }
                 });
-            }else if(json.status == 'error'){
+            } else if (json.status == 'error') {
                 $.messager.alert({
                     title: '提示',
                     msg: '生成法律文书失败',

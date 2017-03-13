@@ -11,7 +11,7 @@ function setPage() {
     $('.flws-tabs-title').css('height', (bodyHeight - 192) + 'px');
     $('.flws-main-con').css('height', (bodyHeight - 226) + 'px');
     $('.flws-main-con-l,.flws-main-con-r,.flws-mode-right').css('height', (bodyHeight - 226) + 'px');
-    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height',((bodyHeight - 226)*0.49-39) + 'px')
+    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 226) * 0.49 - 39) + 'px')
 }
 
 /**
@@ -41,15 +41,15 @@ function compare(propertyName) {
  * @param param2  属性参数2
  * @returns {Array}
  */
-function getDiffer(a1,a2,param1,param2){
+function getDiffer(a1, a2, param1, param2) {
     var idArr = [];
     var a3 = [];
-    for(var j=0;j<a2.length;j++){
+    for (var j = 0; j < a2.length; j++) {
         idArr.push(a2[j][param2]);
     }
-    for(var i=0;i<a1.length;i++){
+    for (var i = 0; i < a1.length; i++) {
         var a1_i = a1[i];
-        if($.inArray(a1_i[param1],idArr) == -1){
+        if ($.inArray(a1_i[param1], idArr) == -1) {
             a3.push(a1_i);
         }
     }
@@ -59,7 +59,7 @@ function getDiffer(a1,a2,param1,param2){
 /**
  * 获取文书模板数据请求方法
  */
-function getHtmlByAjax(url){
+function getHtmlByAjax(url) {
     var data = '';
     $.ajax({
         url: url,
@@ -85,7 +85,7 @@ var minHeight = 500;
 // 最大高度，超过则出现滚动条
 var maxHeight = 10000;
 //重置textarea
-function resizeTextarea(){
+function resizeTextarea() {
     var t = document.getElementsByTagName('textarea')[0];
     var h = t.scrollHeight;
     h = h > minHeight ? h : minHeight;
@@ -94,7 +94,7 @@ function resizeTextarea(){
 }
 
 //用'\t'替换回车
-function replaceEnter(){
+function replaceEnter() {
     //$("textarea").off('keyup').on('keyup', function (e) {
     //    resizeTextarea();
     //    if(e.which == 13){
@@ -102,25 +102,25 @@ function replaceEnter(){
     //    }
     //})
     $('textarea').off().on({
-        keydown: function(){
-            this.style.height='0px';
-            this.style.height=(this.scrollHeight+'px');
+        keydown: function () {
+            this.style.height = '0px';
+            this.style.height = (this.scrollHeight + 'px');
         },
         keyup: function (e) {
-            if(e.which == 13){
-                $(this).val($(this).val()+"\t");
+            if (e.which == 13) {
+                $(this).val($(this).val() + "\t");
             }
         },
-        propertychange: function(){
-            this.style.height=(this.scrollHeight+'px');
+        propertychange: function () {
+            this.style.height = (this.scrollHeight + 'px');
         },
-        input: function(){
-            this.style.height='0px';
-            this.style.height=(this.scrollHeight+'px');
+        input: function () {
+            this.style.height = '0px';
+            this.style.height = (this.scrollHeight + 'px');
         },
-        scroll: function(){
-            this.style.height='0px';
-            this.style.height=(this.scrollHeight+'px');
+        scroll: function () {
+            this.style.height = '0px';
+            this.style.height = (this.scrollHeight + 'px');
         }
     });
 }
@@ -288,25 +288,25 @@ function Arabia_to_Chinese(Num) {
                 tmpnewchar = tmpnewchar + "元";
                 break;
             case 1:
-                if (perchar != 0)tmpnewchar = tmpnewchar + "拾";
+                if (perchar != 0) tmpnewchar = tmpnewchar + "拾";
                 break;
             case 2:
-                if (perchar != 0)tmpnewchar = tmpnewchar + "佰";
+                if (perchar != 0) tmpnewchar = tmpnewchar + "佰";
                 break;
             case 3:
-                if (perchar != 0)tmpnewchar = tmpnewchar + "仟";
+                if (perchar != 0) tmpnewchar = tmpnewchar + "仟";
                 break;
             case 4:
                 tmpnewchar = tmpnewchar + "万";
                 break;
             case 5:
-                if (perchar != 0)tmpnewchar = tmpnewchar + "拾";
+                if (perchar != 0) tmpnewchar = tmpnewchar + "拾";
                 break;
             case 6:
-                if (perchar != 0)tmpnewchar = tmpnewchar + "佰";
+                if (perchar != 0) tmpnewchar = tmpnewchar + "佰";
                 break;
             case 7:
-                if (perchar != 0)tmpnewchar = tmpnewchar + "仟";
+                if (perchar != 0) tmpnewchar = tmpnewchar + "仟";
                 break;
             case 8:
                 tmpnewchar = tmpnewchar + "亿";
@@ -362,8 +362,8 @@ function Arabia_to_Chinese(Num) {
                     tmpnewchar = "玖" + tmpnewchar;
                     break;
             }
-            if (i == 0)tmpnewchar = tmpnewchar + "角";
-            if (i == 1)tmpnewchar = tmpnewchar + "分";
+            if (i == 0) tmpnewchar = tmpnewchar + "角";
+            if (i == 1) tmpnewchar = tmpnewchar + "分";
             newchar = newchar + tmpnewchar;
         }
     }
@@ -386,9 +386,9 @@ function Arabia_to_Chinese(Num) {
  * 数组去重
  * @returns {Array}
  */
-Array.prototype.uniqueChrist = function(){
-    var n = {},r=[]; //n为hash表，r为临时数组
-    for(var i = 0; i < this.length; i++) //遍历当前数组
+Array.prototype.uniqueChrist = function () {
+    var n = {}, r = []; //n为hash表，r为临时数组
+    for (var i = 0; i < this.length; i++) //遍历当前数组
     {
         if (!n[this[i]]) //如果hash表中没有当前项
         {
@@ -404,9 +404,9 @@ Array.prototype.uniqueChrist = function(){
  * @param o hash对象
  * @returns {{}}
  */
-function hashObjUnique(o){
+function hashObjUnique(o) {
     var n = {};//新的hash表
-    for(var k in o){
+    for (var k in o) {
         var array = o[k];
         var newA = array.uniqueChrist();
         n[k] = newA;

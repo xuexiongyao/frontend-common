@@ -28,8 +28,8 @@ function cqbgNrXxfy() {
             //数据填写
             for (var k1 in DATA.publicJkXx) {
                 for (var k2 in cqbgxxTmpObj) {
-                    if(k1 == k2){
-                        for(var j =0;j<cqbgxxTmpObj[k2].length;j++){
+                    if (k1 == k2) {
+                        for (var j = 0; j < cqbgxxTmpObj[k2].length; j++) {
                             var key = cqbgxxTmpObj[k2][j];//参数名称
                             var val = DATA.publicJkXx[k1][key];//参数对应的值
                             var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
@@ -41,7 +41,7 @@ function cqbgNrXxfy() {
                                 textareaVal = textareaVal.replace(strVal, val);
                             }
                         }
-                    }else{
+                    } else {
                         // var strVal = '(' + k1 + ')[' + key + ']';//textarea中对应的字符串
                     }
                     $("#cqbg_main_con form textarea").val(textareaVal);
@@ -159,7 +159,7 @@ function cqbgXyrDataXxfy() {
  * @param xydxmc 嫌疑对象名称
  * @returns {string}  返回为拼接好的字符串
  */
-function xydxStrTmpFun(title,disabled,xxzjbh,xytype,xyzhxx,xydxmc) {
+function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc) {
     var xydxStrTmp = '';
     xydxStrTmp = '<li><label  ' + title + ' ' + disabled + ' class="easyui-tooltip"><input xxzjbh="' + xxzjbh + '" ' + disabled + ' type="checkbox" />' +
         '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label></li>';
@@ -180,7 +180,7 @@ function xydxHide() {
  * @param textareaVal textarea的值
  * @param $this input框本身
  */
-function xydxXxfyCqbg(textareaVal,$this) {
+function xydxXxfyCqbg(textareaVal, $this) {
     var cqbgDataArry = textareaVal.match(/\((.*?)\]/g);
     var cqbgxxTmpObj = {};
     if (cqbgDataArry) {
@@ -232,18 +232,18 @@ function xydxXxfyCqbg(textareaVal,$this) {
  * @param $this  input框本身
  * @param textareaVal  textarea的值
  */
-function cqbgXydxZhxxFyForXzaj($this,textareaVal) {
+function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
     var zhxxObj = {};
     var parentUl = $this.parent().parent().parent();//父级ul
     var xxzjbh = $this.attr("xxzjbh");//当前嫌疑对象信息主键编号
     var xydxLb = parentUl.attr("ids");//嫌疑对象类别
     var cqbgData = DATA.CQBG.cqbgData;
 
-    for(var k in xyrObj){
-        if(xydxLb == xyrObj[k].id){//嫌疑对象类别
+    for (var k in xyrObj) {
+        if (xydxLb == xyrObj[k].id) {//嫌疑对象类别
             var xydxArryTmp = DATA.DX.xydxData[k];
-            if(xydxArryTmp.length > 0){
-                for (var i=0;i<xydxArryTmp.length;i++) {
+            if (xydxArryTmp.length > 0) {
+                for (var i = 0; i < xydxArryTmp.length; i++) {
                     if (xydxArryTmp[i].xxzjbh == xxzjbh) {
                         zhxxObj = xydxArryTmp[i];
                     }
@@ -269,18 +269,18 @@ function cqbgXydxZhxxFyForXzaj($this,textareaVal) {
  * @param bm  法律文书编码
  * @param $this  input框本身
  */
-function flwsXydxZhxxFyForXzaj(bm,$this) {
+function flwsXydxZhxxFyForXzaj(bm, $this) {
     var zhxxObj = {};
     var parentUl = $this.parent().parent().parent();//父级ul
     var xxzjbh = $this.attr("xxzjbh");//当前嫌疑对象信息主键编号
     var xydxLb = parentUl.attr("ids");//嫌疑对象类别
     var flwsData = DATA.FLWS[bm].flwsData;
 
-    for(var k in xyrObj){
-        if(xydxLb == xyrObj[k].id){//嫌疑对象类别
+    for (var k in xyrObj) {
+        if (xydxLb == xyrObj[k].id) {//嫌疑对象类别
             var xydxArryTmp = DATA.DX.xydxData[k];
-            if(xydxArryTmp.length > 0){
-                for (var i=0;i<xydxArryTmp.length;i++) {
+            if (xydxArryTmp.length > 0) {
+                for (var i = 0; i < xydxArryTmp.length; i++) {
                     if (xydxArryTmp[i].xxzjbh == xxzjbh) {
                         zhxxObj = xydxArryTmp[i];
                     }
@@ -509,8 +509,8 @@ function flwsWclXyDxCheck(bm, $this, event) {
             }
 
             /*******行政案件组合信息拼接*******/
-            if(flwsData.xyrpz || flwsData.xydwpz || flwsData.xgrpz){//行政案件组合信息复用
-                flwsXydxZhxxFyForXzaj(bm,$this);
+            if (flwsData.xyrpz || flwsData.xydwpz || flwsData.xgrpz) {//行政案件组合信息复用
+                flwsXydxZhxxFyForXzaj(bm, $this);
             }
         }
     } else {//未选中
