@@ -106,56 +106,67 @@ function queryFlwsData(title, render) {
                         }
                     }
                 } else {//出多份文书
-                    param = {
-                        CQBG_ZJ: DATA.CQBG.cqbgZj,
-                        XT_ZXBZ: '0',
-                        ASJBH: DATA.asjbh
+                    if(DATA.CQBG.cqbgZj){
+                        param = {
+                            CQBG_ZJ: DATA.CQBG.cqbgZj,
+                            XT_ZXBZ: '0',
+                            ASJBH: DATA.asjbh
+                        }
+                    }else{
+                        DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
+
+                        //自定义页面无数据的处理
+                        if (window["render" + flwsData[k].bianMa + "CustomizedPageForNone"]) {
+                            eval("render" + flwsData[k].bianMa + "CustomizedPageForNone()");
+                        }
+                        render(flwsData[k].bianMa);
                     }
                 }
-
-                //获取法律文书数据请求
-                $.ajax({
-                    url: flwsData[k].queryUrl,
-                    data: param,
-                    dataType: 'json',
-                    success: function (json) {
-                        //console.log(json)
-                        if (json.state == 'success') {
-                            var jsonRows = json.rows;
-                            if (jsonRows.length > 0) {//有数据 执行编辑渲染
-                                DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
-                                if (only) {
-                                    //已经呈请的法律文书不能再改
-                                    if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
-                                        DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
-                                    }
-
-                                    //法律文书跟呈请报告绑定
-                                    for (var i = 0; i < jsonRows.length; i++) {
-                                        if (jsonRows[i].CQZT == '0' && jsonRows[i].CQBG_ZJ == DATA.CQBG.cqbgZj) {
-                                            DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
-                                            break;
+                if(param){
+                    //获取法律文书数据请求
+                    $.ajax({
+                        url: flwsData[k].queryUrl,
+                        data: param,
+                        dataType: 'json',
+                        success: function (json) {
+                            //console.log(json)
+                            if (json.state == 'success') {
+                                var jsonRows = json.rows;
+                                if (jsonRows.length > 0) {//有数据 执行编辑渲染
+                                    DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
+                                    if (only) {
+                                        //已经呈请的法律文书不能再改
+                                        if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
+                                            DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
                                         }
+
+                                        //法律文书跟呈请报告绑定
+                                        for (var i = 0; i < jsonRows.length; i++) {
+                                            if (jsonRows[i].CQZT == '0' && jsonRows[i].CQBG_ZJ == DATA.CQBG.cqbgZj) {
+                                                DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                     }
-                                } else {
-                                    DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
+
+                                } else {//没有数据 执行新增渲染
+                                    DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
+
+                                    //自定义页面无数据的处理
+                                    if (window["render" + flwsData[k].bianMa + "CustomizedPageForNone"]) {
+                                        eval("render" + flwsData[k].bianMa + "CustomizedPageForNone()");
+                                    }
                                 }
 
-                            } else {//没有数据 执行新增渲染
-                                DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
-
-                                //自定义页面无数据的处理
-                                if (window["render" + flwsData[k].bianMa + "CustomizedPageForNone"]) {
-                                    eval("render" + flwsData[k].bianMa + "CustomizedPageForNone()");
-                                }
+                                render(flwsData[k].bianMa);
+                            } else if (json.state == 'error') {
+                                console.log('error');
                             }
-
-                            render(flwsData[k].bianMa);
-                        } else if (json.state == 'error') {
-                            console.log('error');
                         }
-                    }
-                });
+                    });
+                }
                 break;
             }
         }

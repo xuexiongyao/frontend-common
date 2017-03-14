@@ -6,38 +6,54 @@
  * 获取法律文书数据
  */
 function getCqbgMapData() {
+    var openUrl = '';
+    if(DATA.asjflwsbm && DATA.asjflwsbm != 'undefined'){//无呈请报告法律文书的处理
+        openUrl = pathConfig.basePath+'/wenshu/source/FLWS_'+DATA.flwsAsjflwsdm+'/DIC'
+    }else{
+        openUrl = pathConfig.basePath+'/wenshu/source/CQBG_'+DATA.flwsAsjflwsdm+'/DIC'
+    }
+
+    //发送请求
     $.ajax({
-        url: pathConfig.basePath + '/wenshu/source/CQBG_' + DATA.flwsAsjflwsdm + '/DIC',
+        url: openUrl,
         success: function (json) {
             var jsonDatas = eval('(' + json + ')');//json化数据
             //console.log(jsonDatas);
             //呈请报告、法律文书map数据的获取
-            if (!jsonDatas.isFlws && !jsonDatas.bianMa.startsWith("000000")) {
+            if (!jsonDatas.isFlws && !jsonDatas.bianMa.startsWith("000000")) {//有呈请报告
                 DATA.CQBG = {
                     cqbgData: jsonDatas,//呈请报告数据
                     asjflwsdm: jsonDatas.bianMa,//呈请报告编码(案事件法律文书代码)
                     asjflwsmc: jsonDatas.name,//案事件法律文书名称
                     status: {}
-                }
-            } else {
-                DATA.CQBG = {
-                    status: {}
-                }
-            }
+                };
 
-            //有法律文书
-            if (jsonDatas.childMap) {
+                //有法律文书
+                if (jsonDatas.childMap) {//有法律文书
+                    DATA.FLWS = {
+                        flwsData: jsonDatas.childMap//法律文书数据
+                    }
+                } else {
+                    DATA.FLWS = {
+                        flwsData: {}//法律文书数据
+                    }
+                }
+            } else  if (jsonDatas.isFlws) {//无呈请报告
+                DATA.CQBG = {status: {}};
                 DATA.FLWS = {
-                    flwsData: jsonDatas.childMap//法律文书数据
-                }
+                    flwsData: {"customer": jsonDatas}//法律文书数据
+                };
             }
-
 
             getCqbgFlwsHtmlPage();//呈请报告(法律文书)iframe页面的获取
 
             //呈请报告数据查询
-            if (DATA.CQBG.cqbgData) {
+            if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
                 queryCqbgData();//获取呈请报告数据
+            }else{
+                if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
+                    onlyFlwsRender();
+                }
             }
 
             lctShow();//流程图的显示
@@ -199,14 +215,25 @@ function flwsRightPagePj(flwsData) {
 function tabSwitch() {
     $("#flwsTabs").tabs({
         onSelect: function (title, index) {
-            if (DATA.CQBG.cqbgData.bianMa != '000000') {//有呈请报告
+            if (DATA.CQBG.cqbgData.bianMa != '000000'  || typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
                 DATA.FLWS.title = title;
                 queryFlwsData(title, flwsPageRender);
             } else {//没有呈请报告
-                //TODO 无呈请报告的处理
+                //TODO 无呈请报告的处理(并且有多个法律文书的处理)
+                queryFlwsData(title, flwsPageRender);
             }
         }
     })
+}
+
+/**
+ * 特殊类型
+ * 无呈请报告，只有一个法律文书的的渲染
+ */
+function onlyFlwsRender() {
+    var title = DATA.FLWS.flwsData.customer.name;
+    DATA.FLWS.title = title;
+    queryFlwsData(title, flwsPageRender);
 }
 
 /**
