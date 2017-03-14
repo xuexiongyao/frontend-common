@@ -268,11 +268,17 @@ function flwsPageRender(bm) {
 
     /*****************法律文书的各种组合类型********************/
 
-    if (flwsData.wdx && flwsData.only) {
-        /**类型A**/
-        //法律文书无嫌疑对象，法律文书只能做一份儿（ wdx：true && only：true）
-        flwsDxListRenderA(bm);
-        flwsPageRenderA(bm);
+    if (flwsData.wdx) {
+        if(flwsData.only){
+            /**类型A**/
+            //法律文书无嫌疑对象，法律文书只能做一份儿（ wdx：true && only：true）
+            flwsDxListRenderA(bm);
+            flwsPageRenderA(bm);
+        }else if(!flwsData.only){//(无呈请报告，无对象，法律文书可以做多份儿)
+            //法律文书无嫌疑对象，法律文书可以做多份儿（ wdx：true && only：false）
+            flwsDxListRenderA(bm);
+            flwsPageRenderA(bm);
+        }
     } else if(!flwsData.wdx && flwsData.only && !flwsData.dx){
         /**类型B**/
         //法律文书有嫌疑对象，不能多选,法律文书只能做一份儿（ wdx：false && only：true && dx:false）

@@ -7,6 +7,7 @@
  * 获取呈请报告、法律文书 公共数据 新增使用(需要修改)
  */
 function getCqbgFlwsAllXxData(render) {
+    // $('#loadingMskFlws').show();
     if (!DATA.publicJkXx) {
         DATA.ajax.count++;
         $.ajax({
@@ -40,14 +41,14 @@ function getCqbgFlwsAllXxData(render) {
  * 所有接口请求回调函数  全部ajax成功之后渲染数据
  */
 function callbackForAllAjaxQuerySuccess() {
-    if (DATA.ajax.count == 0) {
-        if (DATA.CQBG.cqbgZj == undefined) {
-            cqbgNrXxfy();//呈请报告内容接口请求信息复用
-            cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-            $('#loadingMskFlws').hide();
-        }
-        flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
+    // if (DATA.ajax.count == 0) {
+    if (typeof (DATA.CQBG.cqbgZj) == 'undefined' || !DATA.CQBG.cqbgZj) {
+        cqbgNrXxfy();//呈请报告内容接口请求信息复用
+        cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        $('#loadingMskFlws').hide();
     }
+    flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
+    // }
 }
 
 /**
