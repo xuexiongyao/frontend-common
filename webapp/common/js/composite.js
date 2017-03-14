@@ -29,14 +29,14 @@ function saveQueryModel() {
         '<div class="model-limit" id="model_limit">' +
         '<span class="pro">模板权限</span>' +
         '<div class="content">' +
-        '<label class="item"><input type="radio" name="limit-item" value="gkkj" checked>公开可见</label>' +
-        '<label class="item"><input type="radio" name="limit-item" value="grkj ">个人可见</label>' +
-        '<label class="item"><input type="radio" name="limit-item" value="bbmkj">本部门可见</label>' +
-        '<label class="item"><input type="radio" name="limit-item" value="bxkj">本县区可见</label>' +
-        '<label class="item"><input type="radio" name="limit-item" value="bskj">本市可见</label>' +
+        '<label class="item"><input type="radio" name="limit-item" value="1" checked>公开可见</label>' +
+        '<label class="item"><input type="radio" name="limit-item" value="2">个人可见</label>' +
+        '<label class="item"><input type="radio" name="limit-item" value="3">本部门可见</label>' +
+        '<label class="item"><input type="radio" name="limit-item" value="4">本县区可见</label>' +
+        '<label class="item"><input type="radio" name="limit-item" value="5">本市可见</label>' +
         '</div>' +
         '</div>' +
-        '</div>等待后台完成保存数据接口...';
+        '</div>';
     $('#other_table_dialog').after(modelPanel);
     $('#search_model').off('click').on('click', function () {
         $('#model_name').textbox();
@@ -55,26 +55,27 @@ function saveQueryModel() {
                     if (modelName) {
                         var queryModel = {
                             condition: JSON.stringify(queryResult), //查询条件
-                            modelName: modelName,
-                            modelLimit: $('#model_limit').find('input:checked').val()
+                            templet_name: modelName,
+                            kjfw: $('#model_limit').find('input:checked').val()
                         };
-                        /***
-                         * 这里是保存模板的接口,保存之后应该还需要提供一个返回模板数据的接口
-                         *
-                         * 数据格式 {status:'success',message:'',rows:[模板数据1,模板数据2]}
-                         *
-                         * ***/
+                        //console.log('queryModel:',queryModel);
+                        loading('open','正在保存查询模板...');
                         $.ajax({
-                            url: '保存模板的url',
+                            url: pathConfig.mainPath + '/api/main/zhcxtemplet/add',
                             type: 'post',
                             dataType: 'json',
                             data: queryModel,
+                            xhrFields: {withCredentials:true},
+                            crossDomain: true,
                             success: function (json) {
-                                if (json.success == 'success') {
+                                loading('close');
+                                if (json.status == 'success') {
+                                    $('#model_dialog').dialog('close');
                                     $.messager.show({
                                         title: '提示',
                                         msg: '模板保存成功!'
                                     });
+                                    $('#model_table').datagrid('load');
                                 } else {
                                     $.messager.alert({
                                         title: '提示',
@@ -83,14 +84,11 @@ function saveQueryModel() {
                                 }
                             }
                         });
-                        console.log('查询条件:', queryModel);
+                        //console.log('查询条件:', queryModel);
                     } else {
                         $.messager.alert({
                             title: '提示',
-                            msg: '请填写模板名称',
-                            fn: function () {
-                                $('#model_name').focus();
-                            }
+                            msg: '请填写模板名称'
                         });
                     }
                 }
@@ -107,46 +105,59 @@ function saveQueryModel() {
 
 //获取模板查询条件
 function getQueryModel() {
-    var modelBtn = '<a class="easyui-linkbutton" id="model_btn" style="position: absolute;top:62px;margin-left:10px;">模板查询</a>';
-    var modelPanel2 = '<div id="model_list_dialog" class="model-list-dialog" style="display:none">' +
-        '<div class="title-input">' +
-        '<span>快速查询模板</span><input class="easyui-textbox" id="model_key"><i class="fa fa-search"></i>' +
-        '</div>' +
+    var modelAccordion = '<div class="model-accordion" style="width:1100px;margin:0 auto;">' +
+        '<div id="model_accordion">' +
+        '<div title="模板查询" data-options="">'+
+        '<div><span>快速查询模板</span><input class="easyui-textbox" id="model_key"><i class="fa fa-search"></i></div>'+
         '<div class="model-limit">' +
-        '<a class="easyui-linkbutton limit-btn" val="gkkj">公开可见</a>' +
-        '<a class="easyui-linkbutton limit-btn" val="grkj">个人可见</a>' +
-        '<a class="easyui-linkbutton limit-btn" val="bbmkj">本部门可见</a>' +
-        '<a class="easyui-linkbutton limit-btn" val="bxkj">本县区可见</a>' +
-        '<a class="easyui-linkbutton limit-btn" val="bskj">本市可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="1">公开可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="2">个人可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="3">本部门可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="4">本县区可见</a>' +
+        '<a class="easyui-linkbutton limit-btn" val="5">本市可见</a>' +
         '</div>' +
         '<div class="model-table">' +
-        '<table></table>' +
-        '</div>等待后台数据接口...' +
+        '<table id="model_table"></table>' +
+        '</div>'+
+        '</div>'+
+        '</div>' +
         '</div>';
-    $('#other_table_dialog').after(modelPanel2);
-    $('#advanced').after(modelBtn);
+    $('#advanced_box').before(modelAccordion);
+    $('#model_accordion .limit-btn').linkbutton();
     $('#model_key').textbox();
-    $('#model_list_dialog .limit-btn').linkbutton();
-    $('#model_btn').linkbutton({
-        onClick: function () {
-            openDivForm({
-                id: 'model_list_dialog',
-                title: '选择模板查询',
-                width: 600,
-                height: 300
-            }, [
-                {
-                    text: '查询',
-                    handler: function () {
-
-                    }
-                }, {
-                    text: '取消',
-                    handler: function () {
-
-                    }
-                }
-            ]);
+    $('#model_accordion').accordion({
+        title: '模板查询',
+        collapsible: true
+    });
+    $('#model_table').datagrid({
+        url: pathConfig.mainPath + '/api/main/zhcxtemplet/queryPageList',
+        fitColumns: true,
+        striped: true,
+        singleSelect: true,
+        nowrap: true,
+        scrollbarSize: 0,
+        selectOnCheck: false,
+        checkOnSelect: false,
+        fit: false,
+        columns: [[
+            //{field: 'ID', title: 'check', align: 'center', width: 10, checkbox: true},
+            //{field: 'NUM', title: '编号', align: 'center', width: 5, formatter: tableNum},
+            {field: 'templet_name', title: '模板名称', align: 'center', width: 100},
+            {field: 'xt_lrrxm', title: '创建人', align: 'center', width: 100},
+            {field: 'orgname', title: '创建部门', align: 'center', width: 100},
+            {field: 'xt_cjsj', title: '创建时间', align: 'center', width: 100}
+        ]],
+        //分页
+        pagination: true,
+        pageSize: 5,
+        pageList: [5, 10, 20, 50], //rows
+        pageNumber: 1,//显示在第几页
+        pagePosition: 'bottom',
+        onDblClickRow: function(index,row){
+            var condition = row.condition;
+            var condition_obj = eval('('+condition+')');
+            //根据模板查询数据
+            ajaxQuery(condition_obj);
         }
     });
 }
@@ -671,13 +682,6 @@ function normalQuery() {
     }
 }
 
-
-/*
- * 注意!!!
- *
- * 此函数在标准的的综合查询中被重写,修改时请同步修改!!!!
- *
- * */
 //初始按钮事件
 function btnEvent() {
     $('.easyui-linkbutton:not(.c7)').linkbutton();
@@ -740,7 +744,12 @@ function btnEvent() {
         openOtherTable(true);
     });
 }
-
+/*
+ * 注意!!!
+ *
+ * 此函数在标准的的综合查询中被重写,修改时请同步修改!!!!
+ *
+ * */
 //获取高级查询条件并执行
 function getQuery(type) {
     checked_id_arr = [];//清空已勾选
@@ -778,7 +787,6 @@ function getQuery(type) {
         } else {
             alert('getQuery(type)传递的参数格式不合法!');
         }
-
     }
 }
 
@@ -1093,9 +1101,8 @@ function ajaxQuery(condition_obj) {
 
     //查询成功,展示查询内容
     loading('open', '查询中...');
-    console.log('查询条件:', condition_obj);
-    //console.log(JSON.stringify(condition_obj));
     var condition = JSON.stringify(condition_obj);
+    console.log('查询条件:', condition_obj,condition);
     $.ajax({
         url: search_config.url + condition,
         type: 'get',
@@ -1242,7 +1249,7 @@ function searchResult(data) {
 //表格内容
 
 function tableNum(val, row, index) {
-    return pageN + index;
+    return pageN + index + 1;
 }
 
 
