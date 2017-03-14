@@ -1258,17 +1258,22 @@ function getCurrentTime(){
 
 //将时间格式转化为yyyy年MM月dd日 HH时mm分ss秒
 function parseTimeToCN(time){
-    var newTime =  time.replace(/\-/, '年');
-    newTime =  newTime.replace(/\-/, '月');
-    newTime =  newTime.replace(/ /, '日');
-    newTime =  newTime.replace(/:/, '时');
-    newTime =  newTime.replace(/:/, '分');
-    if(newTime.indexOf('分') != -1){
-        newTime += '秒';
-    }else{
-        newTime += '日';
+    try{
+        var newTime =  time.replace(/\-/, '年');
+        newTime =  newTime.replace(/\-/, '月');
+        newTime =  newTime.replace(/ /, '日');
+        newTime =  newTime.replace(/:/, '时');
+        newTime =  newTime.replace(/:/, '分');
+        if(newTime.indexOf('分') != -1){
+            newTime += '秒';
+        }else{
+            newTime += '日';
+        }
+        return newTime;
+    }catch(e){
+        return time;
     }
-    return newTime;
+
 }
 
 //将时间格式转化为yyyy年MM月dd日
