@@ -53,7 +53,14 @@ function queryCqbgData(render) {
 
                     render();//回调函数
                 } else if (json.state == 'error') {//查询错误
-                    console.log('error');
+                    // console.log('error');
+                    $.messager.alert({
+                        title: '温馨提示',
+                        msg: json.msg,
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
                 }
             }
         })
@@ -86,9 +93,17 @@ function queryFlwsData(title, render) {
 
                 var only = DATA.FLWS[flwsData[k].bianMa].flwsData.only;
                 if (only) {//只能出一份文书
-                    param = {
-                        XT_ZXBZ: '0',
-                        ASJBH: DATA.asjbh
+                    if(DATA.CQBG.cqbgZj){
+                        param = {
+                            XT_ZXBZ: '0',
+                            ASJBH: DATA.asjbh,
+                            CQBG_ZJ: DATA.CQBG.cqbgZj
+                        }
+                    }else{
+                        param = {
+                            XT_ZXBZ: '0',
+                            ASJBH: DATA.asjbh
+                        }
                     }
                 } else {//出多份文书
                     param = {
