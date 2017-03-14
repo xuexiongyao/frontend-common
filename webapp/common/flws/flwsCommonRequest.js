@@ -7,7 +7,7 @@
  * 获取呈请报告、法律文书 公共数据 新增使用(需要修改)
  */
 function getCqbgFlwsAllXxData(render) {
-    $('#loadingMskFlws').show();
+    // $('#loadingMskFlws').show();
     if (!DATA.publicJkXx) {
         DATA.ajax.count++;
         $.ajax({
