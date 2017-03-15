@@ -4,6 +4,8 @@ var condition_obj = {mainTable: search_config.main_type, sort: search_config.sor
 var table_header_info = [];
 var config = [];
 var pageN = 1;
+var pageNumAll = 1;
+var pageSizeAll = 0;
 
 $(function () {
     changeName();       //页面展示的模块更名
@@ -39,14 +41,17 @@ function saveQueryModel() {
         '</div>';
     $('#other_table_dialog').after(modelPanel);
     $('#search_model').off('click').on('click', function () {
-        $('#model_name').textbox();
+        $('#model_name').textbox({
+            width: 360,
+            height: 25
+        });
         var queryResult = getQuery('result');
         if (!queryResult) return false;
         openDivForm({
             id: 'model_dialog',
             title: '保存模板',
             width: 600,
-            height: 300
+            height: 260
         }, [
             {
                 text: '保存',
@@ -76,6 +81,7 @@ function saveQueryModel() {
                                         msg: '模板保存成功!'
                                     });
                                     $('#model_table').datagrid('load');
+                                    $('#model_accordion').accordion('select',0);
                                 } else {
                                     $.messager.alert({
                                         title: '提示',
@@ -84,7 +90,6 @@ function saveQueryModel() {
                                 }
                             }
                         });
-                        //console.log('查询条件:', queryModel);
                     } else {
                         $.messager.alert({
                             title: '提示',
@@ -105,10 +110,10 @@ function saveQueryModel() {
 
 //获取模板查询条件
 function getQueryModel() {
-    var modelAccordion = '<div class="model-accordion" style="width:1100px;margin:0 auto;">' +
+    var modelAccordion = '<div class="model-accordion">' +
         '<div id="model_accordion">' +
         '<div title="模板查询">'+
-        '<div><span>快速查询模板</span><input class="easyui-textbox" id="model_key"><i id="queryModelBtn" class="fa fa-search"></i></div>'+
+        '<div class="quick-query"><span class="pro">快速查询模板</span><input class="easyui-textbox" id="model_key"><i id="queryModelBtn" class="fa fa-search search-btn"></i></div>'+
         '<div class="model-limit">' +
         '<a class="easyui-linkbutton limit-btn c6" val="1">公开可见</a>' +
         '<a class="easyui-linkbutton limit-btn" val="2">个人可见</a>' +
@@ -117,7 +122,7 @@ function getQueryModel() {
         '<a class="easyui-linkbutton limit-btn" val="5">本市可见</a>' +
         '<input type="hidden" id="kjfw" value="1">' +
         '</div>' +
-        '<div class="model-table">' +
+        '<div class="model-table" id="model_table_div">' +
         '<table id="model_table"></table>' +
         '</div>'+
         '</div>'+
@@ -126,12 +131,19 @@ function getQueryModel() {
     $('#advanced_box').before(modelAccordion);
     $('#model_accordion .limit-btn').linkbutton();
     $('#model_key').textbox({
-        prompt: '输入模板名称或创建信息进行查询'
+        prompt: '输入模板名称或创建信息进行查询',
+        width: 300,
+        height: 25
     });
     //初始化查询面板
     $('#model_accordion').accordion({
         title: '模板查询',
-        collapsible: true
+        collapsible: true,
+        //展开
+        onSelect:function(title, index){
+            $('#advanced_box').css('display','none');
+            $('#advanced').find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+        }
     });
     //初始化查询模板表格
     $('#model_table').datagrid({
@@ -190,11 +202,61 @@ function getQueryModel() {
             kjfw: $('#kjfw').val()
         })
     });
+    //列表操作
+    $('#model_table_div').off('click').on('click','.fa',function(){
+        var $this = $(this);
+        if($this.hasClass('fa-search')){
+            var condition = $this.attr('condition');
+            //var condition_obj = eval('('+condition+')');
+            console.log(condition);
+            //根据模板查询数据
+            //ajaxQuery(condition_obj);
+        }else{
+            var id = $this.attr('zj');
+            loading('open','正在删除查询模板...');
+            $.messager.confirm('确认对话框', '您想要退出该系统吗？', function(r){
+                if (r){
+                    // 退出操作;
+                }
+            });
+            $.messager.confirm({
+                title: '确认删除',
+                msg: '是否确认删除'
+            });
+            $.ajax({
+                url: pathConfig.mainPath + '/api/main/zhcxtemplet/delete',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    id: id
+                },
+                xhrFields: {withCredentials:true},
+                crossDomain: true,
+                success: function(json){
+                    loading('close');
+                    if (json.status == 'success') {
+                        $.messager.show({
+                            title: '提示',
+                            msg: json.message
+                        });
+                        $('#model_table').datagrid('load');
+                    } else {
+                        $.messager.alert({
+                            title: '提示',
+                            msg: json.message
+                        });
+                    }
+                    console.log('delete:',json);
+                }
+            });
+        }
+    });
 
 }
 //模板列表操作
 function modelHandle(val, row, index){
-    return '<i title="查询此条件" class="fa fa-search"></i><i title="删除条件" class="fa fa-times"></i>';
+    //return '<i title="查询此条件" condition  = "'+condition+'" class="fa fa-search"></i><i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+    return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
 }
 //可见范围解析
 function kjfwParse(val, row, index){
@@ -515,6 +577,7 @@ function openOtherTable(isExport) {
 function batchExprot(search_config_obj) {
     //将查询条件赋给导出查询条件
     var export_condition_obj = {};
+    export_condition_obj['export']='1';
 
     if (checked_id_arr.length > 0) {//有勾选的
         export_condition_obj['mainTable'] = search_config.main_type;
@@ -742,16 +805,23 @@ function btnEvent() {
     });
     //点击高级
     $('#advanced').off('click').on('click', function () {
-        var _this = $(this);
+        var $this = $(this);
+        var modelPanel = $('#model_accordion').accordion('panels');
         //按钮样式变化,展开/折叠搜索框
-        if (_this.find('.fa').hasClass('fa-angle-double-down')) {
+        //展开
+        if ($this.find('.fa').hasClass('fa-angle-double-down')) {
+            //收起模板查询
+            modelPanel[0].panel('collapse','animate');
             $('#advanced_box').slideDown(function () {
-                _this.find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+                $this.find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
             });
+            //折叠
         } else {
             $('#advanced_box').slideUp(function () {
-                _this.find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
+                $this.find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
             });
+            //展开模板查询
+            modelPanel[0].panel('expand','animate');
         }
 
         //点击各个子模块的添加按钮(事件委托)
@@ -937,7 +1007,6 @@ function doCheckRows(index, rows, type) {
             }
         }
     }
-
     //console.log(checked_id_arr);
 }
 
@@ -1098,8 +1167,6 @@ function getBaseInfoObj(type) {
                 };
                 query.push(module_obj);
             }
-
-
         }
     });
     query_obj.condition = query;
@@ -1270,10 +1337,19 @@ function pagination() {
         pageSize: 5,
         pageList: [5, 10, 15, 20, 30, 50],
         onSelectPage: function (pageNumber, pageSize) {
+            var total = pageNumber*pageSize;
+            pageNumAll = pageNumber;
+            pageSizeAll = pageSize;
+            if(total >= 10000){
+                $.messager.alert({
+                    title: '查询数据提示!',
+                    msg: '数据操作超过10000条之后,查询数据重复。'
+                });
+                return false;
+            }
             pageN = (pageNumber - 1) * pageSize;
             condition_obj.start = (pageNumber - 1) * pageSize;
             condition_obj.limit = pageSize;
-            //console.log(condition_obj);
             ajaxQuery(condition_obj);
         }
     });
@@ -1295,7 +1371,12 @@ function searchResult(data) {
 //表格内容
 
 function tableNum(val, row, index) {
-    return pageN + index + 1;
+    console.log(pageNumAll,pageSizeAll);
+    if(pageSizeAll>0){
+        return (pageNumAll - 1)*pageSizeAll + index + 1;
+    }else{
+        return index + 1;
+    }
 }
 
 
