@@ -678,6 +678,17 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 				var fn = eval(onSelectedFun);
 				try{fn();}catch(e){console.log(e)}
 			}
+		},
+		onHidePanel : function(){
+			for (var item in returnFieldData) {
+				if (item == "text") {
+					var text = $(this).combobox('getValue');
+					if('' == text || typeof ($(this).combobox('getValue')) == 'undefined'){
+                        $(this).textbox('setText','');
+						$('#' + returnFieldData[item]).val('');
+					}
+				}
+			}
 		}
 	});
 
