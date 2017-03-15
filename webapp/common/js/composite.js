@@ -75,11 +75,11 @@ function saveQueryModel() {
                             success: function (json) {
                                 loading('close');
                                 if (json.status == 'success') {
-                                    $('#model_dialog').dialog('close');
                                     $.messager.show({
                                         title: '提示',
                                         msg: '模板保存成功!'
                                     });
+                                    $('#model_dialog').dialog('close');
                                     $('#model_table').datagrid('load');
                                     $('#model_accordion').accordion('select',0);
                                 } else {
@@ -213,45 +213,46 @@ function getQueryModel() {
             //ajaxQuery(condition_obj);
         }else{
             var id = $this.attr('zj');
-            loading('open','正在删除查询模板...');
-            $.messager.confirm('确认对话框', '您想要退出该系统吗？', function(r){
-                if (r){
-                    // 退出操作;
-                }
-            });
             $.messager.confirm({
-                title: '确认删除',
-                msg: '是否确认删除'
-            });
-            $.ajax({
-                url: pathConfig.mainPath + '/api/main/zhcxtemplet/delete',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    id: id
-                },
-                xhrFields: {withCredentials:true},
-                crossDomain: true,
-                success: function(json){
-                    loading('close');
-                    if (json.status == 'success') {
-                        $.messager.show({
-                            title: '提示',
-                            msg: json.message
-                        });
-                        $('#model_table').datagrid('load');
-                    } else {
-                        $.messager.alert({
-                            title: '提示',
-                            msg: json.message
+                ok: '删除',
+                cancel: '取消',
+                title: '删除确认',
+                msg: '是否确认删除查询模板?',
+                fn: function(r){
+                    if (r){
+                        loading('open','正在删除查询模板...');
+                        $.ajax({
+                            url: pathConfig.mainPath + '/api/main/zhcxtemplet/delete',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                id: id
+                            },
+                            xhrFields: {withCredentials:true},
+                            crossDomain: true,
+                            success: function(json){
+                                loading('close');
+                                if (json.status == 'success') {
+                                    $.messager.show({
+                                        title: '提示',
+                                        msg: json.message
+                                    });
+                                    $('#model_table').datagrid('load');
+                                } else {
+                                    $.messager.alert({
+                                        title: '提示',
+                                        msg: json.message
+                                    });
+                                }
+                                console.log('delete:',json);
+                            }
                         });
                     }
-                    console.log('delete:',json);
                 }
             });
         }
     });
-
+    changeLinkButtonIcon();
 }
 //模板列表操作
 function modelHandle(val, row, index){
