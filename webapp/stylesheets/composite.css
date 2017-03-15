@@ -504,3 +504,73 @@
 #other_table_dialog .item-check label input {
   vertical-align: middle;
 }
+
+/* line 329, ../sass/sass/_composite.scss */
+#model_dialog .model-name {
+  height: 30px;
+  line-height: 30px;
+  margin: 20px 60px;
+}
+/* line 333, ../sass/sass/_composite.scss */
+#model_dialog .model-name .pro {
+  display: inline-block;
+  margin-right: 24px;
+}
+/* line 338, ../sass/sass/_composite.scss */
+#model_dialog .model-limit {
+  margin: 0 60px;
+}
+/* line 340, ../sass/sass/_composite.scss */
+#model_dialog .model-limit .pro {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: top;
+}
+/* line 345, ../sass/sass/_composite.scss */
+#model_dialog .model-limit .content {
+  width: 400px;
+  display: inline-block;
+}
+/* line 348, ../sass/sass/_composite.scss */
+#model_dialog .model-limit .content .item {
+  width: 120px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+/* line 358, ../sass/sass/_composite.scss */
+.model-accordion {
+  box-shadow: 0 0 8px #aaa;
+  width: 1100px;
+  margin: 10px auto;
+}
+/* line 362, ../sass/sass/_composite.scss */
+.model-accordion .panel-title {
+  color: #0D6193;
+}
+/* line 365, ../sass/sass/_composite.scss */
+.model-accordion .quick-query {
+  text-align: center;
+  margin: 10px 0;
+}
+/* line 368, ../sass/sass/_composite.scss */
+.model-accordion .quick-query .pro {
+  margin-right: 15px;
+  color: #0D6193;
+}
+/* line 372, ../sass/sass/_composite.scss */
+.model-accordion .quick-query .search-btn {
+  color: #0e6595;
+  margin-left: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+/* line 379, ../sass/sass/_composite.scss */
+.model-accordion .model-limit {
+  text-align: center;
+  margin: 10px 0;
+}
+/* line 382, ../sass/sass/_composite.scss */
+.model-accordion .model-limit a {
+  margin: 0 5px;
+}
