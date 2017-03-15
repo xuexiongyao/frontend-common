@@ -112,7 +112,18 @@ function queryFlwsData(title, render) {
                             XT_ZXBZ: '0',
                             ASJBH: DATA.asjbh
                         }
-                    }else{
+                    }else if(DATA.FLWS.cqbgZj){
+                        param = {
+                            CQBG_ZJ: DATA.FLWS.cqbgZj,
+                            XT_ZXBZ: '0',
+                            ASJBH: DATA.asjbh
+                        }
+                    }else if(DATA.FLWS[flwsData[k].bianMa].status.currentFlwsId){
+                        param = {
+                            ZJ: DATA.FLWS[flwsData[k].bianMa].status.currentFlwsId
+                        }
+                    } else {
+                        param = undefined;
                         DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
 
                         //自定义页面无数据的处理
@@ -122,6 +133,7 @@ function queryFlwsData(title, render) {
                         render(flwsData[k].bianMa);
                     }
                 }
+
                 if(param){
                     //获取法律文书数据请求
                     $.ajax({
@@ -148,6 +160,10 @@ function queryFlwsData(title, render) {
                                             }
                                         }
                                     } else {
+                                        //无呈请报告，法律文书可以做多份儿，获取呈请报告主键
+                                        if(DATA.CQBG.cqbgZj == undefined || DATA.FLWS.cqbgZj == undefined){
+                                            DATA.CQBG.cqbgzj = jsonRows[0].CQBG_ZJ;
+                                        }
                                         DATA.FLWS[flwsData[k].bianMa].status.hasDone = true;
                                     }
 
@@ -307,7 +323,6 @@ function flwsSaveComplete(data, bm) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
             if (json.ID != undefined || json.ID) {
-                queryFlwsData(DATA.FLWS.title, flwsPageRender);
                 DATA.FLWS[bm].status.currentFlwsId = json.ID;
                 DATA.FLWS[bm].status.hasDone = true;
 
@@ -315,6 +330,7 @@ function flwsSaveComplete(data, bm) {
                 if (bm == 'X020003') {
                     DATA.FLWS[bm].status.zfgked = false;
                 }
+                queryFlwsData(DATA.FLWS.title, flwsPageRender);
             }
             $.messager.show({
                 title: '提示',
@@ -353,8 +369,15 @@ function flwsSave(url, param, bm) {
  * 生成法律文书请求(需要修改)
  */
 function scflwsRequest(params) {
+    var cqbgzj = '';//呈请报告主键
+    if(DATA.FLWS.cqbgZj && typeof (DATA.FLWS.cqbgZj) != 'undefined'){
+        cqbgzj = DATA.FLWS.cqbgZj;
+    } else if(DATA.CQBG.cqbgzj && typeof (DATA.CQBG.cqbgzj) != 'undefined'){
+        cqbgzj = DATA.CQBG.cqbgzj;
+    }
+
     $.ajax({
-        url: pathConfig.basePath + '/workflowRelated/createXwFlwsscrwb',
+        url: pathConfig.basePath + '/workflowRelated/createXwFlwsscrwb?cqbgXxzjbh='+cqbgzj,
         data: params,
         success: function (data) {
             var json = eval('(' + data + ')');
