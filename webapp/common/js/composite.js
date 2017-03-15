@@ -107,14 +107,15 @@ function saveQueryModel() {
 function getQueryModel() {
     var modelAccordion = '<div class="model-accordion" style="width:1100px;margin:0 auto;">' +
         '<div id="model_accordion">' +
-        '<div title="模板查询" data-options="">'+
-        '<div><span>快速查询模板</span><input class="easyui-textbox" id="model_key"><i class="fa fa-search"></i></div>'+
+        '<div title="模板查询">'+
+        '<div><span>快速查询模板</span><input class="easyui-textbox" id="model_key"><i id="queryModelBtn" class="fa fa-search"></i></div>'+
         '<div class="model-limit">' +
-        '<a class="easyui-linkbutton limit-btn" val="1">公开可见</a>' +
+        '<a class="easyui-linkbutton limit-btn c6" val="1">公开可见</a>' +
         '<a class="easyui-linkbutton limit-btn" val="2">个人可见</a>' +
         '<a class="easyui-linkbutton limit-btn" val="3">本部门可见</a>' +
         '<a class="easyui-linkbutton limit-btn" val="4">本县区可见</a>' +
         '<a class="easyui-linkbutton limit-btn" val="5">本市可见</a>' +
+        '<input type="hidden" id="kjfw" value="1">' +
         '</div>' +
         '<div class="model-table">' +
         '<table id="model_table"></table>' +
@@ -124,11 +125,15 @@ function getQueryModel() {
         '</div>';
     $('#advanced_box').before(modelAccordion);
     $('#model_accordion .limit-btn').linkbutton();
-    $('#model_key').textbox();
+    $('#model_key').textbox({
+        prompt: '输入模板名称或创建信息进行查询'
+    });
+    //初始化查询面板
     $('#model_accordion').accordion({
         title: '模板查询',
         collapsible: true
     });
+    //初始化查询模板表格
     $('#model_table').datagrid({
         url: pathConfig.mainPath + '/api/main/zhcxtemplet/queryPageList',
         fitColumns: true,
@@ -145,8 +150,14 @@ function getQueryModel() {
             {field: 'templet_name', title: '模板名称', align: 'center', width: 100},
             {field: 'xt_lrrxm', title: '创建人', align: 'center', width: 100},
             {field: 'orgname', title: '创建部门', align: 'center', width: 100},
-            {field: 'xt_cjsj', title: '创建时间', align: 'center', width: 100}
+            {field: 'kjfw', title: '可见范围', align: 'center', width: 100,formatter: kjfwParse},
+            {field: 'xt_cjsj', title: '创建时间', align: 'center', width: 100},
+            {field: 'modelHandle', title: '操作', align: 'center', width: 80,formatter: modelHandle}
         ]],
+        //默认条件
+        queryParams: {
+            kjfw: $('#kjfw').val()
+        },
         //分页
         pagination: true,
         pageSize: 5,
@@ -160,6 +171,41 @@ function getQueryModel() {
             ajaxQuery(condition_obj);
         }
     });
+    //选择可见范围
+    $('#model_accordion a.limit-btn').off('click').on('click',function(){
+        var $this = $(this);
+        var val = $this.attr('val');
+        $('#kjfw').val(val);
+        $('#model_key').textbox('setValue','');
+        $this.addClass('c6').siblings().removeClass('c6');
+        $('#model_table').datagrid('load',{
+            kjfw: val
+        });
+    });
+    //查询模板
+    $('#queryModelBtn').off('click').on('click',function(){
+        var keyWords = $('#model_key').val();
+        $('#model_table').datagrid('load',{
+            keywords : keyWords,
+            kjfw: $('#kjfw').val()
+        })
+    });
+
+}
+//模板列表操作
+function modelHandle(val, row, index){
+    return '<i title="查询此条件" class="fa fa-search"></i><i title="删除条件" class="fa fa-times"></i>';
+}
+//可见范围解析
+function kjfwParse(val, row, index){
+    var kjfwDict = {
+        1:'公开可见',
+        2:'个人可见',
+        3:'本部门可见',
+        4:'本县区可见',
+        5:'本市可见'
+    };
+    return kjfwDict[val];
 }
 
 //删除查询条件
