@@ -683,7 +683,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			for (var item in returnFieldData) {
 				if (item == "text") {
 					var text = $(this).combobox('getValue');
-					if('' == text || typeof ($(this).combobox('getValue')) == 'undefined'){
+					if('' == text || typeof (text) == 'undefined'){
                         $(this).textbox('setText','');
 						$('#' + returnFieldData[item]).val('');
 					}
