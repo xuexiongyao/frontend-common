@@ -578,6 +578,7 @@ function openOtherTable(isExport) {
 function batchExprot(search_config_obj) {
     //将查询条件赋给导出查询条件
     var export_condition_obj = {};
+    export_condition_obj['export']='1';
 
     if (checked_id_arr.length > 0) {//有勾选的
         export_condition_obj['mainTable'] = search_config.main_type;

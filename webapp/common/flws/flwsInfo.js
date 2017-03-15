@@ -56,7 +56,9 @@ function getCqbgMapData() {
                 }
             }
 
-            lctShow();//流程图的显示
+            if(DATA.CQBG.cqbgData || typeof (DATA.CQBG.cqbgData) != 'undefined'){
+                lctShow();//流程图的显示
+            }
 
             tabSwitch();//法律文书tab切换
 
@@ -317,11 +319,17 @@ function flwsPageRender(bm) {
         eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
     }
 
-    if (flwsData.wdx && flwsData.only) {
-        /***无嫌疑对象***/
-        //无嫌疑对象,法律文书真能做一份儿 wdx:true  only:true
-        /****类型A*****/
-        xydxListRenderA(bm);
+    /***无嫌疑对象***/
+    if (flwsData.wdx) {
+        if(flwsData.only){
+            //无嫌疑对象,法律文书真能做一份儿 wdx:true  only:true
+            /****类型A*****/
+            xydxListRenderA(bm);
+        }else if(!flwsData.only){
+            //无嫌疑对象,法律文书真能做一份儿 wdx:true  only:false（无呈请报告）
+            /****类型A*****/
+            xydxListRenderA(bm);
+        }
     } else if (!flwsData.wdx) {
         /****有嫌疑对象****/
 
