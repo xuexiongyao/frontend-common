@@ -16,8 +16,8 @@ $(function () {
     btnEvent();         //按钮事件
     delCondition();		//删除查询条件
     showHideDel();		//hover显示删除条件
-    saveQueryModel();	//保存模板查询
-    getQueryModel();	//获取模板查询
+    //saveQueryModel();	//保存模板查询
+    //getQueryModel();	//获取模板查询
 
 });
 
@@ -81,7 +81,7 @@ function saveQueryModel() {
                                     });
                                     $('#model_dialog').dialog('close');
                                     $('#model_table').datagrid('load');
-                                    $('#model_accordion').accordion('select',0);
+                                    //$('#model_accordion').accordion('select',0);
                                 } else {
                                     $.messager.alert({
                                         title: '提示',
@@ -316,7 +316,7 @@ function createAdInput(search_config_arr) {
     type_html += '<div class="bottom-btn">'
         + '<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
         + '<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
-        + '<a class="easyui-linkbutton c6" id="search_model">保存模板</a>'
+        //+ '<a class="easyui-linkbutton c6" id="search_model">保存模板</a>'
         + '<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
         + '</div>';
     $('#advanced_box').append(type_html);
@@ -330,7 +330,6 @@ function createAdInput(search_config_arr) {
             $('#otherTable').hide();
         }
     }
-
 }
 
 //通过勾选生成查询框
@@ -813,12 +812,12 @@ function btnEvent() {
     //点击高级
     $('#advanced').off('click').on('click', function () {
         var $this = $(this);
-        var modelPanel = $('#model_accordion').accordion('panels');
+        //var modelPanel = $('#model_accordion').accordion('panels');
         //按钮样式变化,展开/折叠搜索框
         //展开
         if ($this.find('.fa').hasClass('fa-angle-double-down')) {
             //收起模板查询
-            modelPanel[0].panel('collapse','animate');
+            //modelPanel[0].panel('collapse','animate');
             $('#advanced_box').slideDown(function () {
                 $this.find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
             });
@@ -828,7 +827,7 @@ function btnEvent() {
                 $this.find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
             });
             //展开模板查询
-            modelPanel[0].panel('expand','animate');
+            //modelPanel[0].panel('expand','animate');
         }
 
         //点击各个子模块的添加按钮(事件委托)
