@@ -479,8 +479,31 @@ function shongshen(sessionBean) {
             }
         }
     }
-
-    selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+    //如果不是呈请报告
+    if(DATA.CQBG.cqbgData.tableName!="TB_ST_ASJ_CQBG"){
+        if(DATA.CQBG.cqbgRow.CQBG_ZJ==undefined){
+            $.ajax({
+                url: DATA.CQBG.cqbgData.queryUrl,
+                data: {
+                    ZJ:DATA.CQBG.cqbgZj
+                },
+                jsonType: 'json',
+                success: function (data) {
+                    var json = eval('(' + data + ')');
+                    if (json.state == 'success') {//查询成功
+                        if (json.rows.length > 0) {//有数据 编辑
+                            DATA.CQBG.cqbgRow = json.rows[0];
+                            selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                        }
+                    }
+                }
+            });
+        }else{
+            selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+        }
+    }else{
+        selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+    }
 }
 
 /**

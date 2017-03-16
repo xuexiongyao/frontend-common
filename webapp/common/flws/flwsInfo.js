@@ -118,7 +118,8 @@ function queryCqbgData() {
     $.ajax({
         url: cqbgQueryUrl,
         data: {
-            XXZJBH: DATA.cqbgzj
+            XXZJBH: DATA.cqbgzj,
+            CQBG_ZJ: DATA.cqbgzj
         },
         dataType: 'json',
         success: function (json) {
