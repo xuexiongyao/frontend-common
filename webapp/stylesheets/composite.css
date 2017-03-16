@@ -546,7 +546,7 @@
 }
 /* line 362, ../sass/sass/_composite.scss */
 .model-accordion .panel-title {
-  color: #0D6193;
+  color: #0D6193 !important;
 }
 /* line 365, ../sass/sass/_composite.scss */
 .model-accordion .quick-query {
