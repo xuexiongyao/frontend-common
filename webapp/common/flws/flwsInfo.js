@@ -677,7 +677,7 @@ function lcriZs() {
     var str = '';
     var spzt = '';//审批状态
     $.ajax({
-        url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?DATA.lcslid=' + DATA.lcslid,
+        url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?lcslId=' + DATA.lcslid,
         type: 'post',
         dataType: 'json',
         success: function (json) {
