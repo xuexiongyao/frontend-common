@@ -7,7 +7,7 @@
  */
 function getCqbgMapData() {
     var openUrl = '';
-    if(DATA.asjflwsbm && DATA.asjflwsbm != 'undefined'){//无呈请报告法律文书的处理
+    if(DATA.asjflwsbm && DATA.asjflwsbm != 'undefined'&&DATA.asjflwsbm != 'TB_XW_FLWS_SADJ'&&DATA.asjflwsbm != 'TB_FLWS_SADJB'){//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath+'/wenshu/source/FLWS_'+DATA.flwsAsjflwsdm+'/DIC'
     }else{
         openUrl = pathConfig.basePath+'/wenshu/source/CQBG_'+DATA.flwsAsjflwsdm+'/DIC'
@@ -124,20 +124,26 @@ function queryCqbgData() {
         success: function (json) {
             if (json.state == 'success') {//成功
                 var data = json.rows[0];//呈请报告返回的数据
-                //信息复用
-                var $target = $("#cqbg_main_con form a");
-                for (var a in data) {
-                    if (a == 'CQNR') {//呈请内容单独处理
-                        $('#cqbg_main_con form textarea').val(data[a]).prop('readonly', true);
-                    } else {
-                        for (var i = 0; i < $target.length; i++) {
-                            var aName = $($target[i]).attr('name');//a标签的name属性
-                            if (a == aName) {
-                                $($target[i]).text(data[a]);
+                //判断是否为自定义页面
+                if (DATA.CQBG.cqbgData.customized) {
+                    //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
+                    eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(data) + "')");
+                }else{
+                    //信息复用
+                    var $target = $("#cqbg_main_con form a");
+                    for (var a in data) {
+                        if (a == 'CQNR') {//呈请内容单独处理
+                            $('#cqbg_main_con form textarea').val(data[a]).prop('readonly', true);
+                        } else {
+                            for (var i = 0; i < $target.length; i++) {
+                                var aName = $($target[i]).attr('name');//a标签的name属性
+                                if (a == aName) {
+                                    $($target[i]).text(data[a]);
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
             } else {
                 $.messager.show({
@@ -314,13 +320,14 @@ function queryFlwsData(title, render) {
 function flwsPageRender(bm) {
     var flwsData = DATA.FLWS[bm].flwsData;
 
-    //针对自定义页面
-    if (flwsData.customized) {
-        eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
-    }
-
     /***无嫌疑对象***/
     if (flwsData.wdx) {
+        //针对自定义页面
+        if (flwsData.customized) {
+            eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
+            return;
+        }
+
         if(flwsData.only){
             //无嫌疑对象,法律文书真能做一份儿 wdx:true  only:true
             /****类型A*****/
@@ -334,10 +341,15 @@ function flwsPageRender(bm) {
         /****有嫌疑对象****/
 
         if (flwsData.dx && flwsData.only) {//有嫌疑对象，并且允许多选，只能出一份儿文书 wdx:false dx:true only:true
-            /****类型B****/
+            //针对自定义页面
+            if (flwsData.customized) {
+                eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
+                return;
+            }/****类型B****/
             xydxListRenderB(bm);
+
         } else {//有嫌疑对象，并且单选，而且可以出多份儿文书
-            /****类型C***/
+            /****类型C(customized内部处理)***/
             xydxListRenderC(bm);
         }
     }
@@ -534,43 +546,47 @@ function flwsXxfyC1(bm, $this) {
     if (data) {
         for (var i = 0; i < data.length; i++) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
-                for (var j = 0; j < $target.length; j++) {
-                    var aName = $($target[j]).attr('name');//a标签的name属性
-                    var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-                    $($target[j]).html('');
-                    for (var a in data[i]) {
-                        if (a == aName) {
-                            if (annotation) {
-                                //日期的处理
-                                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
-                                var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
-                                var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
-                                if (textStyle && !isEdit) {
-                                    if (textStyle == 'DATE') {//2016年12月28日
-                                        var val = data[i][a + '_MASTER'];
-                                        var array = val.split('-');
-                                        var newVal = '';
+                if (DATA.FLWS[bm].flwsData.customized) {
+                    eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
+                }else{
+                    for (var j = 0; j < $target.length; j++) {
+                        var aName = $($target[j]).attr('name');//a标签的name属性
+                        var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+                        $($target[j]).html('');
+                        for (var a in data[i]) {
+                            if (a == aName) {
+                                if (annotation) {
+                                    //日期的处理
+                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                    var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
+                                    var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
+                                    var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
+                                    if (textStyle && !isEdit) {
+                                        if (textStyle == 'DATE') {//2016年12月28日
+                                            var val = data[i][a + '_MASTER'];
+                                            var array = val.split('-');
+                                            var newVal = '';
 
-                                        for (var m = 0; m < array.length; m++) {
-                                            newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
+                                            for (var m = 0; m < array.length; m++) {
+                                                newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
+                                            }
+                                            $($target[j]).text(newVal);
+                                        } else if (textStyle == 'DATE_CN') {
+                                            $($target[j]).text(data[i][a]);
+                                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
+                                            var str = '<div>' + data[i][a] + '</div>';
+                                            $($target[j]).html(str);
+                                        } else {
+                                            $($target[j]).text(data[i][a]);
                                         }
-                                        $($target[j]).text(newVal);
-                                    } else if (textStyle == 'DATE_CN') {
-                                        $($target[j]).text(data[i][a]);
-                                    } else if (textStyle == 'TEXTBOX') {//textarea框的处理
-                                        var str = '<div>' + data[i][a] + '</div>';
-                                        $($target[j]).html(str);
+                                    } else if (dictStyle || treeStyle) {
+                                        $($target[j]).text(data[i][a + '_DICTMC']);
                                     } else {
                                         $($target[j]).text(data[i][a]);
                                     }
-                                } else if (dictStyle || treeStyle) {
-                                    $($target[j]).text(data[i][a + '_DICTMC']);
                                 } else {
                                     $($target[j]).text(data[i][a]);
                                 }
-                            } else {
-                                $($target[j]).text(data[i][a]);
                             }
                         }
                     }
