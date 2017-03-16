@@ -325,6 +325,12 @@ function createAdInput(search_config_arr) {
         createSearchInput(search_config_arr[i]);
     }
     addOtherTable();//添加查询模块
+    if( (typeof pageType) != 'undefined'){
+        if(pageType == 'bzdz'){
+            $('#otherTable').hide();
+        }
+    }
+
 }
 
 //通过勾选生成查询框
