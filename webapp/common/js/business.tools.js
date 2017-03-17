@@ -437,6 +437,10 @@ function dict_multiSelectTree(isCache, windowID, parentWindow, dictName, dictInp
 	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
 }
 function initAddressSearch2(comboID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData) filterData = {};
+	if(!filterData.sort) filterData.sort = 'DZJB';
+	if(!filterData.order) filterData.order = 'ASC';
+	
 	var basePath = basePath || pathConfig.basePath;
 	var url=basePath + '/solrSearcher/doBzdzSelect';
 	initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun);
@@ -449,6 +453,10 @@ function initCompanySearch(comboID, filterData, returnFieldData,onSelectedFun){
 }
 
 function initHouseSearch(comboID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData) filterData = {};
+	if(!filterData.sort) filterData.sort = 'FWDZ_DZJB';
+	if(!filterData.order) filterData.order = 'ASC';
+	
 	var basePath = basePath || pathConfig.basePath;
 	var url=basePath + '/solrSearcher/doSyfwSelect';
 	var bzdzUrl=basePath + '/solrSearcher/doBzdzListSelect';
