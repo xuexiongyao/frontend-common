@@ -55,6 +55,7 @@ function getCqbgMapData() {
                     onlyFlwsRender();
                 }
             }
+            clearAllStyle();
 
             if(DATA.CQBG.cqbgData || typeof (DATA.CQBG.cqbgData) != 'undefined'){
                 lctShow();//流程图的显示
@@ -375,6 +376,11 @@ function flwsXxfyA(bm) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
         $($target[j]).html('');
+        if(aName.indexOf('_T_') != -1){
+            var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+            var val = data[name];//对应数据的值
+            $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+        }
         for (var k in data) {
             if (k == aName) {
                 if (annotation) {//日期的处理
@@ -432,6 +438,11 @@ function flwsXxfyB(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+        if(aName.indexOf('_T_') != -1){
+            var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+            var val = data[name];//对应数据的值
+            $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+        }
         for (var k in data) {
             if (k == aName) {
                 if (annotation) {
@@ -554,6 +565,12 @@ function flwsXxfyC1(bm, $this) {
                         var aName = $($target[j]).attr('name');//a标签的name属性
                         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
                         $($target[j]).html('');
+                        if(aName.indexOf('_T_') != -1){
+                            var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+                            var val = data[name];//对应数据的值
+                            $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+                        }
+
                         for (var a in data[i]) {
                             if (a == aName) {
                                 if (annotation) {
@@ -608,7 +625,12 @@ function flwsXxfyC2(bm) {
     }
 }
 /************************end*****************************/
-
+/**
+ * 清除所有可编辑的样式
+ */
+function clearAllStyle(){
+    $('input').attr({"readonly":"readonly",'disabled':'disabled'});
+}
 
 /*************************************流程图***********************************/
 /**

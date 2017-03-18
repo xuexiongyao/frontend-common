@@ -326,6 +326,26 @@ function getFlwsQtsjAdd(bm) {
                             param[a.attr("name")] = $(textarea).val();
                         }
                     });
+                    //文书中radio 处理（主要针对行政案件）
+                    currentForm.find("input[type='checkbox']").each(function (i,checkbox) {
+                        var param = DATA.FLWS[bm].params;
+                        var _this = $(checkbox);
+                        //选中的值
+                        if(_this.prop('checked')){
+                            param[_this.attr('name')] = _this.val();
+                        }
+                    });
+
+                    //文书中radio 处理（主要针对行政案件）
+                    currentForm.find("input[type='radio']").each(function (i,radio) {
+                        var param = DATA.FLWS[bm].params;
+                        var _this = $(radio);
+                        //选中的值
+                        if(_this.prop('checked')){
+                            param[_this.attr('name')] = _this.val();
+                        }
+                    });
+
                     return false;
                 } else {
                     return false;// 返回false终止表单提交
