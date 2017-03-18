@@ -63,7 +63,7 @@ function saveQueryModel() {
                     var modelName = $.trim($('#model_name').textbox('getValue'));
                     if (modelName) {
                         var queryModel = {
-                            type: sysType,
+                            system_type: sysType,
                             condition: JSON.stringify(queryResult), //查询条件
                             templet_name: modelName,
                             kjfw: $('#model_limit').find('input:checked').val()
@@ -172,7 +172,7 @@ function getQueryModel() {
         ]],
         //默认条件
         queryParams: {
-            type: sysType,
+            system_type: sysType,
             kjfw: $('#kjfw').val()
         },
         //分页
