@@ -122,7 +122,7 @@ function xydxRenderCqbg() {
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                             var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.CQBG.cqbgData.prefixpz, DATA.CQBG.cqbgData.splitpz);
                             xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param]);
-                        // } else if (key == anjianXyDxDic.xydw || key == anjianXyDxDic.ajxgr) {//嫌疑单位或者案件相关人
+                            // } else if (key == anjianXyDxDic.xydw || key == anjianXyDxDic.ajxgr) {//嫌疑单位或者案件相关人
                         } else {//嫌疑单位或者案件相关人
                             xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param]);
                         }

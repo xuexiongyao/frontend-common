@@ -723,6 +723,8 @@ function fzxyrXxfy(currentXyr, bm) {
  */
 function flwsDataXxfy(bm, zj) {
     var data = DATA.FLWS[bm].flwsRow;//返回的法律文书数据
+    var $target = $('#flws_cl_area_' + bm + ' form a');
+
     //查询嫌疑人结果信息复用
     for (var i = 0; i < data.length; i++) {
         if (zj == data[i].ZJ) {
@@ -743,6 +745,19 @@ function flwsDataXxfy(bm, zj) {
                     $('#flws_cl_area_' + bm).tabs("close", index);
                 }
             }
+
+            //checkbox、radio的处理
+            // for(var j=0;j<$target.length;j++){
+            //     var aName = $($target[j]).attr('name');//a标签的name属性
+            //     var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+            //     if(aName.indexOf('_T_') != -1){
+            //         var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+            //         var val = data[i][name];//对应数据的值
+            //         $($target[j]).find("input[value='"+val+"']").click();
+            //     }
+            // }
+
+            //数据处理
             for (var key in data[i]) {
                 var $node = $("#flws_cl_area_" + bm + " form a ." + key);//节点
                 var val = data[i][key];
