@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+
 .main{
     /*页码查询框的宽度添加*/
     .pagination{
@@ -52,57 +53,60 @@
         //min-height: 100px;
         background-color: #fff;
         box-shadow: 0 0 8px #aaa;
-        >div{
-            padding: 0 10px;
-            margin-top: 10px;
+        .condition-area{
             >div{
-                @include clearfix;
-                border-bottom:1px dashed #ccc;
-                height: 20px;
-                line-height: 20px;
-                .search-title{
-                    float:left;
-                    color: #0D6193;
-                    font-size: fontSize(base);
-                }
-                .search-add{
-                    float:right;
-                }
-            }
-            ul{
-                list-style-type: none;
-                margin: 10px 0 0px 0;
-                padding: 0;
-                border: 0;
-                width: 100%;
-                height: auto;
-                @include clearfix;
-                li{
-                    float: left;
-                    margin: 5px 0;
-                    width:33.33333%;
-                    .pro{
-                        display: inline-block;
-                        font-size: fontSize(small);
-                        //font-weight: bold;
-                        margin:  0 5px;
-                        text-align: right;
-                        width:80px;
-                        vertical-align: top;
+                padding: 0 10px;
+                margin-top: 10px;
+                >div{
+                    @include clearfix;
+                    border-bottom:1px dashed #ccc;
+                    height: 20px;
+                    line-height: 20px;
+                    .search-title{
+                        float:left;
+                        color: #0D6193;
+                        font-size: fontSize(base);
                     }
-                    .condition{
-                        margin-left: 10px;
+                    .search-add{
+                        float:right;
                     }
-                    .del-condition{
-                        display:none;
-                        color: #ff3a41;
-                        cursor:pointer;
-                        margin-left:2px;
-                        font-size: 14px;
+                }
+                ul{
+                    list-style-type: none;
+                    margin: 10px 0 0px 0;
+                    padding: 0;
+                    border: 0;
+                    width: 100%;
+                    height: auto;
+                    @include clearfix;
+                    li{
+                        float: left;
+                        margin: 5px 0;
+                        width:33.33333%;
+                        .pro{
+                            display: inline-block;
+                            font-size: fontSize(small);
+                            //font-weight: bold;
+                            margin:  0 5px;
+                            text-align: right;
+                            width:80px;
+                            vertical-align: top;
+                        }
+                        .condition{
+                            margin-left: 10px;
+                        }
+                        .del-condition{
+                            display:none;
+                            color: #ff3a41;
+                            cursor:pointer;
+                            margin-left:2px;
+                            font-size: 14px;
+                        }
                     }
                 }
             }
         }
+
         .bottom-btn{
             margin: 30px auto 20px auto;
             text-align: center;

@@ -1,11 +1,14 @@
-﻿//var staticPath = './webapp';
-//var window_type = 'open_url';
-var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
-var table_header_info = [];
+﻿var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
+var table_header_info = [];	//表头数组
+var expandInfoArr = [];		//扩展信息数组
 var config = [];
 var pageN = 1;
 var pageNumAll = 1;
 var pageSizeAll = 0;
+var sysType = search_config.sysType || null;
+if(!sysType){
+    alert('无法读取到综合查询系统的类别,请在search_config_xxxx.js中添加sysType属性,参照实有人口(search_config_syrk.js)');
+}
 
 $(function () {
     changeName();       //页面展示的模块更名
@@ -15,9 +18,10 @@ $(function () {
     createDatagrid();   //初始化表格
     btnEvent();         //按钮事件
     delCondition();		//删除查询条件
-    showHideDel();		//hover显示删除条件
-    //saveQueryModel();	//保存模板查询
-    //getQueryModel();	//获取模板查询
+    showHideDel();		//条件删除按钮显示,隐藏
+    /***模板查询***/
+    saveQueryModel();	//保存模板查询
+    getQueryModel();	//获取模板查询
 
 });
 
@@ -59,6 +63,7 @@ function saveQueryModel() {
                     var modelName = $.trim($('#model_name').textbox('getValue'));
                     if (modelName) {
                         var queryModel = {
+                            type: sysType,
                             condition: JSON.stringify(queryResult), //查询条件
                             templet_name: modelName,
                             kjfw: $('#model_limit').find('input:checked').val()
@@ -81,7 +86,7 @@ function saveQueryModel() {
                                     });
                                     $('#model_dialog').dialog('close');
                                     $('#model_table').datagrid('load');
-                                    //$('#model_accordion').accordion('select',0);
+                                    $('#model_accordion').accordion('select',0);
                                 } else {
                                     $.messager.alert({
                                         title: '提示',
@@ -107,12 +112,11 @@ function saveQueryModel() {
         ]);
     });
 }
-
 //获取模板查询条件
 function getQueryModel() {
     var modelAccordion = '<div class="model-accordion">' +
         '<div id="model_accordion">' +
-        '<div title="模板查询">'+
+        '<div title="模板查询" id="model_title">'+
         '<div class="quick-query"><span class="pro">快速查询模板</span><input class="easyui-textbox" id="model_key"><i id="queryModelBtn" class="fa fa-search search-btn"></i></div>'+
         '<div class="model-limit">' +
         '<a class="easyui-linkbutton limit-btn c6" val="1">公开可见</a>' +
@@ -168,6 +172,7 @@ function getQueryModel() {
         ]],
         //默认条件
         queryParams: {
+            type: sysType,
             kjfw: $('#kjfw').val()
         },
         //分页
@@ -178,9 +183,49 @@ function getQueryModel() {
         pagePosition: 'bottom',
         onDblClickRow: function(index,row){
             var condition = row.condition;
+            var templateName = row.templet_name;
             var condition_obj = eval('('+condition+')');
+            var conditionArr = condition_obj.query;
+            var modelSearchObj = {};
+            var modelSearchData = {};
+            var zbzd = search_config_arr[0]; //主表名称
+            modelSearchObj[zbzd] = search_config[zbzd + '_init'];
+            //重新组装
+            for(var i=0;i<conditionArr.length;i++){
+                var condition2 = conditionArr[i]['condition'];
+                try{
+                    var lishuArr = conditionArr[i]['lishu'];
+                    if(lishuArr.length){
+                        lishuArr[0]['k'] = lishuArr[0]['fxj'].substr(0,lishuArr[0]['fxj'].indexOf('_')) + '_GXDW';
+                        condition2.push(lishuArr[0]);	//把隶属信息装进来 GXDW
+                    }
+                }catch(e){}
+                var type = conditionArr[i]['type'];
+                var fieldArr = [];
+                for(var j=0;j<condition2.length;j++){
+                    fieldArr.push(condition2[j]['k']);
+                }
+                //生成查询条件框组件的数据和之前勾选查询条件的数据格式相同
+                modelSearchObj[type] = fieldArr;
+                //生成回写查询条件的数据
+                modelSearchData[type] = condition2;
+            }
+            //console.log('modelSearchObj:',modelSearchObj,modelSearchData);
+            $('#condition_area').empty();
+            createAdInputByCheck(modelSearchObj,modelSearchData);
+
+            /***显示效果处理***/
+            //1.收起模板查询
+            var modelPanel = $('#model_accordion').accordion('panels');
+            modelPanel[0].panel('collapse','animate');
+            //2.打开条件界面
+            $('#advanced_box').slideDown(function () {
+                $('#advanced').find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
+            });
+            //3.提示模板名称
+            $('#model_accordion .panel-title').text('当前查询模板:【'+templateName+'】');
             //根据模板查询数据
-            ajaxQuery(condition_obj);
+            //ajaxQuery(condition_obj);
         }
     });
     //选择可见范围
@@ -206,9 +251,10 @@ function getQueryModel() {
     $('#model_table_div').off('click').on('click','.fa',function(){
         var $this = $(this);
         if($this.hasClass('fa-search')){
-            var condition = $this.attr('condition');
+            //操作下面的查询,为了简化不做此项目
+            //var condition = $this.attr('condition');
             //var condition_obj = eval('('+condition+')');
-            console.log(condition);
+            //console.log(condition);
             //根据模板查询数据
             //ajaxQuery(condition_obj);
         }else{
@@ -244,7 +290,6 @@ function getQueryModel() {
                                         msg: json.message
                                     });
                                 }
-                                console.log('delete:',json);
                             }
                         });
                     }
@@ -254,7 +299,7 @@ function getQueryModel() {
     });
     changeLinkButtonIcon();
 }
-//模板列表操作
+//模板列表操作解析
 function modelHandle(val, row, index){
     //return '<i title="查询此条件" condition  = "'+condition+'" class="fa fa-search"></i><i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
     return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
@@ -277,14 +322,13 @@ function delCondition() {
         $(this).parent().remove();
     });
 }
-
 //hover显示删除条件
 function showHideDel() {
-    $('#advanced_box ul>li').hover(function () {
+    $('#condition_area ul>li').hover(function () {
         $(this).find('.del-condition').show();
     }, function () {
         $(this).find('.del-condition').hide();
-    })
+    });
 }
 
 //更改页面显示的标题内容
@@ -292,11 +336,37 @@ function changeName() {
     $('#title_name').text(search_config.query_title);
     var search_config_arr1 = [search_config_arr[0]];
     createAdInput(search_config_arr1);//初始化高级查询框
+
+    //点击各个子模块的添加按钮(事件委托,可提前执行)
+    $('#advanced_box').off('click.add').on('click.add', '.add-condition', function () {
+        var type = $(this).parent().parent().parent().attr('id');
+        addCondition(type);
+    });
 }
 
 //初始化高级查询框
 function createAdInput(search_config_arr) {
-    $('#advanced_box').empty();
+    var $advancedBox = $('#advanced_box');
+    $advancedBox.append('<div class="condition-area" id="condition_area"></div>');
+    initAddCondition(search_config_arr);
+    var btn_html = '<div class="bottom-btn">'
+        + '<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
+        + '<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
+        + '<a class="easyui-linkbutton c6" id="search_model">保存模板</a>'
+        + '<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
+        + '</div>';
+    $advancedBox.append(btn_html);
+    for (var i = 0; i < search_config_arr.length; i++) {
+        //生成查询条件输入框
+        createSearchInput(search_config_arr[i]);
+    }
+    addOtherTable();//添加查询模块
+}
+
+//初始化添加查询条件
+function initAddCondition(search_config_arr){
+    //console.log(search_config_arr);
+    $('#condition_area').empty();
     var type_html = '';
     //通过配置生成多表查询条件
     for (var i = 0; i < search_config_arr.length; i++) {
@@ -313,27 +383,13 @@ function createAdInput(search_config_arr) {
             + '<ul></ul>'
             + '</div>';
     }
-    type_html += '<div class="bottom-btn">'
-        + '<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
-        + '<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
-        //+ '<a class="easyui-linkbutton c6" id="search_model">保存模板</a>'
-        + '<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
-        + '</div>';
-    $('#advanced_box').append(type_html);
-    for (var i = 0; i < search_config_arr.length; i++) {
-        //生成查询条件输入框
-        createSearchInput(search_config_arr[i]);
-    }
-    addOtherTable();//添加查询模块
-    if( (typeof pageType) != 'undefined'){
-        if(pageType == 'bzdz'){
-            $('#otherTable').hide();
-        }
-    }
+    $('#condition_area').append(type_html);
 }
 
+
+
 //通过勾选生成查询框
-function createAdInputByCheck(search_config_obj) {
+function createAdInputByCheck(search_config_obj,modelSearchData) {
     //$('#advanced_box').empty();
     for (var k in search_config_obj) {
         var otherTableBtn = '';
@@ -353,12 +409,19 @@ function createAdInputByCheck(search_config_obj) {
             + '</div>'
             + '<ul></ul>'
             + '</div>';
-        $('#advanced_box .bottom-btn').before(type_html);
+        $('#condition_area').append(type_html);
+        //回写数据
+        if(modelSearchData){
+            var moduleData_k = modelSearchData[k];
+        }
         for (var i = 0, len = module_k.length; i < len; i++) {
             var module_i = module_k[i];
             var config_i;
             var search_arr = search_config[k];
             if (module_i) {
+                if(moduleData_k){
+                    var moduleData_i = moduleData_k[i];
+                }
                 for (var j = 0, len = search_arr.length; j < len; j++) {
                     if (search_arr[j]['field'] == module_i) {
                         config_i = search_arr[j];
@@ -372,25 +435,25 @@ function createAdInputByCheck(search_config_obj) {
                     + '<i class="fa fa-times del-condition"></i>'
                     + '</li>';
                 $('#' + type + ' ul').append(search_li);
-                parseInput(config_i, type + 'judge_input' + i, type + 'condition_input' + i); //初始化input组件
+                parseInput(config_i, type + 'judge_input' + i, type + 'condition_input' + i,moduleData_i); //初始化input组件
             }
         }
     }
-    /*var bottomBtn = '<div class="bottom-btn">'
-     +'<a class="easyui-linkbutton c6" id="search_submit">查询</a>'
-     +'<a class="easyui-linkbutton c6" id="search_clear">清空</a>'
-     +'<a class="easyui-linkbutton c6" id="search_close">关闭</a>'
-     +'</div>';
-     $('#advanced_box').append(bottomBtn);*/
     addOtherTable();//添加查询模块
     btnEvent();
 }
 
 //添加查询模块
 function addOtherTable() {
-    $('#otherTable').off('click').on('click', function () {
-        openOtherTable(false);
-    });
+    //标准地址不显示子表查询
+    if(sysType == 'bzdz'){
+        $('#otherTable').hide();
+    }
+    try{
+        $('#otherTable').off('click').on('click', function () {
+            openOtherTable(false);
+        });
+    }catch(e){}
 }
 
 //打开多表查询条件
@@ -404,7 +467,7 @@ function openOtherTable(isExport) {
         text = '导出';
         start = 0;
     } else {
-        $('#advanced_box>div').each(function () {
+        $('#condition_area>div').each(function () {
             var thisId = $(this).attr('id');
             if (thisId) tableArr.push(thisId);
         });
@@ -412,7 +475,8 @@ function openOtherTable(isExport) {
     //通过勾选获取查询配置条件
     var search_config_obj = {};
     $('#other_table_dialog').empty();
-    //var search_config_arr = [];
+    console.log('expandInfoArr:',expandInfoArr);
+    console.log('tableArr:',tableArr);
     for (var i = start; i < search_config_arr.length; i++) {
         var isMaster = false;
         if (i == 0) isMaster = true;
@@ -454,7 +518,6 @@ function openOtherTable(isExport) {
                 if (module_i_j.lishu) {
                     lishuStr = JSON.stringify(module_i_j.lishu)
                 }
-                //console.log(lishuStr);
                 var html_check = ''
                     + '<label title="' + module_i_j.text + '"><input type="checkbox" field="' + module_i_j.field + '" text="' + module_i_j.text + '" input="' + module_i_j.input + '" formatter="' + module_i_j.formatter + '" lishu=\'' + lishuStr + '\'>' + module_i_j.text + '</label>';
                 $('#item_check' + i).append(html_check);
@@ -468,7 +531,7 @@ function openOtherTable(isExport) {
         height: 'auto'
     }, [
         {
-            text: text,
+            text: text, //确认
             handler: function () {
                 //添加主表信息数据
                 //if(!isExport) search_config_obj[search_config_arr[0]] = search_config[search_config_arr[0]+'_init'];
@@ -479,7 +542,7 @@ function openOtherTable(isExport) {
                     var input = $(this).attr('input');
                     var formatter = $(this).attr('formatter');
                     var lishu = $(this).attr('lishu');
-
+                    expandInfoArr.push(module);
                     formatter = datePattern[formatter];
                     if (!formatter)
                         formatter = datePattern.date19;
@@ -502,6 +565,7 @@ function openOtherTable(isExport) {
                 if (isExport) {
                     batchExprot(search_config_obj);
                 } else {
+                    console.log('search_config_obj:',search_config_obj);
                     createAdInputByCheck(search_config_obj);
                 }
                 showHideDel();		//hover显示删除条件
@@ -583,7 +647,6 @@ function openOtherTable(isExport) {
 function batchExprot(search_config_obj) {
     //将查询条件赋给导出查询条件
     var export_condition_obj = {};
-    export_condition_obj['export']='1';
 
     if (checked_id_arr.length > 0) {//有勾选的
         export_condition_obj['mainTable'] = search_config.main_type;
@@ -812,12 +875,19 @@ function btnEvent() {
     //点击高级
     $('#advanced').off('click').on('click', function () {
         var $this = $(this);
-        //var modelPanel = $('#model_accordion').accordion('panels');
+        var modelPanel = $('#model_accordion').accordion('panels');
+        $('#model_accordion .panel-title').text('模板查询');
         //按钮样式变化,展开/折叠搜索框
         //展开
         if ($this.find('.fa').hasClass('fa-angle-double-down')) {
+            //初始查询条件
+            var searchConfigObj = {};
+            searchConfigObj[search_config_arr[0]] = search_config[search_config_arr[0] + '_init'];
+            //console.log(searchConfigObj);
+            $('#condition_area').empty();
+            createAdInputByCheck(searchConfigObj);
             //收起模板查询
-            //modelPanel[0].panel('collapse','animate');
+            modelPanel[0].panel('collapse','animate');
             $('#advanced_box').slideDown(function () {
                 $this.find('.fa').removeClass('fa-angle-double-down').addClass('fa-angle-double-up');
             });
@@ -827,14 +897,8 @@ function btnEvent() {
                 $this.find('.fa').removeClass('fa-angle-double-up').addClass('fa-angle-double-down');
             });
             //展开模板查询
-            //modelPanel[0].panel('expand','animate');
+            modelPanel[0].panel('expand','animate');
         }
-
-        //点击各个子模块的添加按钮(事件委托)
-        $('#advanced_box').off('click.add').on('click.add', '.add-condition', function () {
-            var type = $(this).parent().parent().parent().attr('id');
-            addCondition(type);
-        });
     });
     //点击查询(高级查询)
     $('#search_submit').off('click').on('click', function () {
@@ -1037,13 +1101,30 @@ function createSearchInput(type) {
 }
 
 //初始化组件
-function parseInput(config, judge_id, condition_id) {
+function parseInput(config, judge_id,condition_id,moduleData) {
+    //console.log('moduleData:',moduleData);
+    var op=null,v=null,fxj=null,textValue=null;
     var valid_type = config.valid_type || '';
-    var default_value = config.judge_default || config['judge_dict'][0]['id'];
     var multiple = config.multiple || false;
+    var condition_type = config.input;
+    var dataFilter = config.dataFilter;
     var field = config.field;
+    var $judge = $('#' + judge_id);
+    if(moduleData){
+        op = moduleData.op;
+        v = moduleData.v;
+        fxj = moduleData.fxj;
+        textValue = moduleData.textValue;
+        //隶属 管辖单位
+        if(condition_type == 'textbox_org' && fxj){
+            op = 'IN';
+        }
+    }
+    var judgeValue = op || config.judge_default || config['judge_dict'][0]['id'];
+    var conditionValue = v || '';
     //判断条件组件初始化
-    $('#' + judge_id).combobox({
+    $judge.combobox({
+        value: op,
         editable: false,
         //url: config.judge_dict,
         data: config.judge_dict,
@@ -1051,6 +1132,7 @@ function parseInput(config, judge_id, condition_id) {
         valueField: 'id',
         textField: 'text',
         panelWidth: 75,
+        panelMinWidth: 0,
         //required: true,
         width: 75,
         formatter: function (row) {
@@ -1059,13 +1141,15 @@ function parseInput(config, judge_id, condition_id) {
         }
     });
     //初始化选择条件,并选择
-    $('#' + judge_id).combobox('select', default_value);
-    $('#' + judge_id).combobox('setValue', default_value);
+    $judge.combobox('select', judgeValue);
+    $judge.combobox('setValue', judgeValue);
     //输入条件组件初始化
-    var condition_type = config.input;
-    var dataFilter = config.dataFilter;
+
     if (!dataFilter) dataFilter = '';
     if (condition_type == 'combobox') {
+        if(multiple){
+            conditionValue = conditionValue.replace(' ',',');
+        }
         $('#' + condition_id).combobox({
             multiple: multiple,
             url: config.condition_dict,
@@ -1075,61 +1159,51 @@ function parseInput(config, judge_id, condition_id) {
             textField: 'text',
             panelWidth: 180,
             width: 180,
-            dataFilter: dataFilter
+            dataFilter: dataFilter,
+            value: conditionValue
         });
         clickShowPanel(condition_id, true);
     } else if (condition_type == 'textbox') {
         $('#' + condition_id).textbox({
             panelWidth: 180,
             width: 180,
+            value: conditionValue,
             validType: valid_type
         });
     } else if (condition_type == 'textbox_org') {
         var field_time = (Math.random() + '').substr(2);
         var new_condition_id = condition_id + '_' + field_time;
+        conditionValue = conditionValue.replace(' ',',');
         $('#' + condition_id).attr('id', new_condition_id);
         $('#' + new_condition_id).textbox({
+            value: textValue,
             panelWidth: 180,
             width: 180
         });
-
-        $('#' + new_condition_id).parent().attr('field_time', field_time)
-        $('#' + new_condition_id).parent().append('<input type="hidden" class="condition" id="' + field + '_org_' + field_time + '">');
-
+        $('#' + new_condition_id).parent().attr('field_time', field_time);
+        $('#' + new_condition_id).parent().append('<input type="hidden" value="'+conditionValue+'" class="condition" id="' + field + '_org_' + field_time + '">');
         if (config.lishu) {//隶属的时候只能单选
             initSingleSelectOrg(new_condition_id, {orgLevel: '00,10,21,32,50'}, {
                 text: new_condition_id,
                 id: field + '_org_' + field_time
             }, null);
-            //$('#'+judge_id).combobox('select','IN');
-            //$('#'+judge_id).combobox('setValue','IN');
         } else {
             initMultiSelectOrg(new_condition_id, null, {
                 text: new_condition_id,
                 id: field + '_org_' + field_time
             }, null);
-            //$('#'+judge_id).combobox('select','=');
-            //$('#'+judge_id).combobox('setValue','=');
         }
-
-
     } else if (condition_type == 'datebox') {
-        //日期段处理
-        /*$('#'+condition_id).datebox({
-         panelWidth: 180,
-         width:180,
-         validType:'date[\'yyyy-MM-dd\']'
-         });*/
-
         var $parent = $('#' + condition_id).parent();
         $('#' + condition_id).remove();
-        var dateDom = '<input id="' + condition_id + '" class="condition easyui-validatebox Wdate validatebox-text"'
+        var dateDom = '<input id="' + condition_id + '" value="'+conditionValue+'" class="condition easyui-validatebox Wdate validatebox-text"'
             + ' style="height:22px;line-height:22px;width:180px;margin:0;position:relative;top:2px;"'
             + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',autoPickDate:true});"'
             + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
         $parent.find('.del-condition').before(dateDom);
     } else if (condition_type == 'combotree') {
         $('#' + condition_id).combotree({
+            value: conditionValue,
             multiple: multiple,
             url: config.condition_dict,
             // data: config.condition_dict,
@@ -1157,11 +1231,17 @@ function getBaseInfoObj(type) {
         var field = $this.attr('field');
         if (search_data[1] || search_data[0] == 'NL' || search_data[0] == 'NN') {
             var field_index = $this.attr('field_index');//参数序列，用于从配置中索引参数的配置
+            var textValue = null;
+            try{
+                textValue = $this.find('.textbox-value')[1].value;
+            }catch(e){}
             var param = search_config[type][field_index];
             if (param && param.lishu) {//隶属
+
                 var lishu_obj = param.lishu;
                 lishu_obj.v = search_data[1];
                 lishu_obj.op = "=";
+                lishu_obj.textValue = textValue;
                 if (!query_obj.lishu) query_obj.lishu = [];
                 query_obj.lishu.push(lishu_obj);
 
@@ -1169,7 +1249,8 @@ function getBaseInfoObj(type) {
                 var module_obj = {
                     k: field,
                     v: search_data[1],
-                    op: search_data[0]
+                    op: search_data[0],
+                    textValue: textValue
                 };
                 query.push(module_obj);
             }
@@ -1747,4 +1828,3 @@ function getLishu(lishu, row) {
 
     return null;
 }
-
