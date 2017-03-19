@@ -658,10 +658,6 @@ function openDivForm(options, btn_diy) {
     var _width = options.width || 800;
     var _height = options.height || 'auto';
     var _left = options.left || null;
-    var _closable = true;
-    if(options.closable === false){
-        _closable = false;
-    }
     var blank_height = _height;
     if (blank_height == 'auto') {
         blank_height = dlg_div.height();
@@ -691,7 +687,6 @@ function openDivForm(options, btn_diy) {
         left: _left,
         buttons: _buttons,
         onClose: options.onClose,
-        closable: _closable
     });
     dlg_div.dialog('move', {top: $(document).scrollTop() + _top});
     dlg_div.show().dialog('open');
@@ -1382,11 +1377,14 @@ function alertDiv(options){
             }catch(e){}
         }
     }, options);
-    var divHtml = '<div id="alertDiv1956" style="overflow:auto;display:none;padding:10px 10px 0 10px;">'+opts.msg+'</div>';
+
+    var divHtml = '<div id="alertDiv1956" style="display:none;overflow: auto;padding:10px 10px 0 10px;"></div>';
+    var msgHtml = '<div>'+opts.msg+'</div>';
     var $alertDiv = $('#alertDiv1956');
     if(!$alertDiv.length){
         $('body').append(divHtml);
     }
+    $('#alertDiv1956').empty().append(msgHtml);
     openDivForm(opts, [{
         text: '确定',
         handler: function () {

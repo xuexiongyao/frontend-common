@@ -6,11 +6,26 @@ var pageN = 1;
 var pageNumAll = 1;
 var pageSizeAll = 0;
 var sysType = search_config.sysType || null;
-if(!sysType){
-    alert('无法读取到综合查询系统的类别,请在search_config_xxxx.js中添加sysType属性,参照实有人口(search_config_syrk.js)');
-}
+
 
 $(function () {
+    if(!sysType){
+        alertDiv({
+            width: 600,
+            height: 300,
+            title: '重大提示!',
+            msg: '重大提示,一定要看完!!! \n 无法读取到综合查询系统的类别,请马上要求开发人员在search_config_xxxx.js中添加sysType属性,参照实有人口(search_config_syrk.js)。否则，综合查询将【无法正常使用！！！】',
+            fn: function(){
+                alertDiv({
+                    title: '再次提示',
+                    msg: '再次提示，当前子系统下的综合查询无法正常使用，我将关闭此页面~~╮(︶︿︶）╭',
+                    fn: function(){
+                        crossCloseTab();
+                    }
+                });
+            }
+        });
+    }
     changeName();       //页面展示的模块更名
     pagination();       //初始化分页
     setTable();         //初始化表格设置按钮
@@ -182,6 +197,7 @@ function getQueryModel() {
         pageNumber: 1,//显示在第几页
         pagePosition: 'bottom',
         onDblClickRow: function(index,row){
+            //if()
             var condition = row.condition;
             var templateName = row.templet_name;
             var condition_obj = eval('('+condition+')');
