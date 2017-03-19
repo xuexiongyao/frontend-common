@@ -658,6 +658,10 @@ function openDivForm(options, btn_diy) {
     var _width = options.width || 800;
     var _height = options.height || 'auto';
     var _left = options.left || null;
+    var _closable = true;
+    if(options.closable === false){
+        _closable = false;
+    }
     var blank_height = _height;
     if (blank_height == 'auto') {
         blank_height = dlg_div.height();
@@ -686,7 +690,8 @@ function openDivForm(options, btn_diy) {
         top: _top,
         left: _left,
         buttons: _buttons,
-        onClose: options.onClose
+        onClose: options.onClose,
+        closable: _closable
     });
     dlg_div.dialog('move', {top: $(document).scrollTop() + _top});
     dlg_div.show().dialog('open');
@@ -1357,4 +1362,35 @@ function changeStorage(){
 function wdateValidate(obj){
     var $this = $(obj);
     $this.validatebox();
+}
+
+//自定义弹框,默认在屏幕正中间
+function alertDiv(options){
+    var opts = $.extend({}, {
+        id: "alertDiv1956",
+        title: "提示",
+        msg: "提示信息",
+        width: 350,
+        height: 150,
+        //closable: false,
+        onClose: function(){
+            try{
+                var fn1 = opts.fn;
+                if(fn1){
+                    fn1();
+                }
+            }catch(e){}
+        }
+    }, options);
+    var divHtml = '<div id="alertDiv1956" style="overflow:auto;display:none;padding:10px 10px 0 10px;">'+opts.msg+'</div>';
+    var $alertDiv = $('#alertDiv1956');
+    if(!$alertDiv.length){
+        $('body').append(divHtml);
+    }
+    openDivForm(opts, [{
+        text: '确定',
+        handler: function () {
+            $('#alertDiv1956').dialog('close');
+        }
+    }]);
 }
