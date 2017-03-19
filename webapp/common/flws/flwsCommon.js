@@ -7,11 +7,10 @@
  */
 function setPage() {
     var bodyHeight = $(window).height();
-    $('.flws-main').css('height', (bodyHeight - 160) + 'px');
-    $('.flws-tabs-title').css('height', (bodyHeight - 192) + 'px');
-    $('.flws-main-con').css('height', (bodyHeight - 226) + 'px');
-    $('.flws-main-con-l,.flws-main-con-r,.flws-mode-right').css('height', (bodyHeight - 226) + 'px');
-    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 226) * 0.49 - 39) + 'px')
+    $('.flws-main').css('height', (bodyHeight - 15) + 'px');
+    $('.flws-main-con').css('height', (bodyHeight - 52) + 'px');
+    $('.flws-main-con-l,.flws-main-con-r,.flws-mode-right').css('height', (bodyHeight - 52) + 'px');
+    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 52) * 0.49 - 39) + 'px')
 }
 
 /**
