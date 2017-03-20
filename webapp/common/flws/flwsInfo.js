@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2016/11/4.
+ * description: 法律文书详情页面渲染js文件
  */
 
 /**

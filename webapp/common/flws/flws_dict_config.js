@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2016/11/15.
+ * description：法律文书字典配置js文件
  */
 
 /*法律文书简单字典配置js*/

@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2017/3/18.
+ * description：法律文书checkbox、radio处理js文件
  */
 
 /**

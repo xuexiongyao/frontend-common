@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2016/12/6.
+ * description: 法律文书操作js文件
  */
 
 /**
@@ -326,7 +327,7 @@ function getFlwsQtsjAdd(bm) {
                             param[a.attr("name")] = $(textarea).val();
                         }
                     });
-                    //文书中radio 处理（主要针对行政案件）
+                    //文书中checkbox 处理（主要针对行政案件）
                     currentForm.find("input[type='checkbox']").each(function (i,checkbox) {
                         var param = DATA.FLWS[bm].params;
                         var _this = $(checkbox);

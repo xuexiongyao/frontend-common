@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2016/11/3.
+ * description：法律文书前端输入控件easyui处理js文件
  */
 /**
  * easyui初始化组件

@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2016/11/3.
+ * description：法律文书公共方法js文件
  */
 
 /**
