@@ -1,0 +1,547 @@
+@charset "UTF-8";
+/***********************************/
+/**
+ * 获取颜色map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取字体map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取字体大小map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取行高map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取圆角map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取z-index map方法
+ * @param $key 颜色的key值
+ */
+/**!
+ * @author christ
+ * 本配置基于sass框架compass,在运用时请注意是否安装sass,compass
+ */
+/*按钮移入渐变*/
+/*disabled btn*/
+/*selected button*/
+/* line 5, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar {
+  background-color: #fff;
+  width: 5px;
+  height: 10px;
+}
+
+/* line 11, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+/* line 15, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.65);
+}
+
+/***********************************/
+/* line 4, ../sass/sass/_flws.scss */
+.flws-main {
+  padding: 5px 15px 0;
+  height: auto;
+}
+/* line 7, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con {
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.flws-main .flws-main-con:before, .flws-main .flws-main-con:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.flws-main .flws-main-con:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 9, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l {
+  width: 12%;
+  float: left;
+  _display: inline;
+  background: #f5f5f5;
+  overflow: auto;
+}
+/* line 14, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l p {
+  margin: 0;
+  padding: 10px;
+  color: #0e6595;
+  font-size: 14px;
+}
+/* line 19, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l p i {
+  margin-right: 5px;
+}
+/* line 23, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l p.mustcheck {
+  color: #ed4848;
+}
+/* line 26, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  list-style-type: none;
+}
+/* line 30, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul li {
+  padding: 5px 10px;
+}
+/* line 32, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul li label {
+  width: 100%;
+  display: inline-block;
+}
+/* line 35, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul li label input {
+  vertical-align: 1px;
+}
+/* line 38, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul li label span {
+  display: inline-block;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 85%;
+}
+/* line 49, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul.xyrList li label[disabled='disabled'] {
+  cursor: no-drop;
+  color: #747474;
+  border-radius: 3px;
+  background: #e0dede;
+}
+/* line 59, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l .choose-list li span {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+/* line 70, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l .choose-list .hasdone {
+  color: #ed4848;
+}
+/* line 72, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l .choose-list .hasdone:hover {
+  cursor: not-allowed;
+}
+/* line 78, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_edit {
+  overflow: inherit;
+  background: #fff;
+  position: relative;
+}
+/* line 82, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_ycq, .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_wcq {
+  background: #f5f5f5;
+  width: 100%;
+  height: 49%;
+  overflow: auto;
+  position: absolute;
+}
+/* line 89, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_ycq {
+  top: 0;
+}
+/* line 91, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_ycq p {
+  background: #747474;
+  color: #fff;
+}
+/* line 96, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_wcq {
+  bottom: 0;
+}
+/* line 98, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_wcq p {
+  background: #0e6595;
+  color: #fff;
+}
+/* line 104, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add {
+  overflow: inherit;
+  background: #fff;
+  position: relative;
+}
+/* line 108, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl, .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl {
+  background: #f5f5f5;
+  width: 100%;
+  height: 49%;
+  position: absolute;
+}
+/* line 113, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl div.title, .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl div.title {
+  width: 100%;
+  text-indent: 10px;
+  padding: 10px 0;
+  position: absolute;
+  top: 0;
+}
+/* line 120, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl .xyr_box, .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl .xyr_box {
+  margin-top: 39px;
+  overflow: auto;
+}
+/* line 125, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl {
+  bottom: 0;
+}
+/* line 127, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl div.title {
+  background: #747474;
+  color: #fff;
+}
+/* line 132, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl {
+  top: 0;
+}
+/* line 134, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl div.title {
+  background: #0e6595;
+  color: #fff;
+}
+/* line 140, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r {
+  width: 85%;
+  float: right;
+  _display: inline;
+  position: relative;
+  overflow: auto;
+  /*法律文书右侧模板*/
+}
+/* line 145, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .panel-body-noheader,
+.flws-main .flws-main-con .flws-main-con-r .panel-body-noborder {
+  outline: none;
+}
+/* line 150, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form table {
+  margin: 0 auto;
+}
+/* line 152, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form table textarea {
+  min-height: 100px;
+  width: 100%;
+  resize: none;
+  overflow-y: hidden;
+}
+/* line 158, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form table p {
+  margin-bottom: 0 !important;
+}
+/* line 161, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form table p a > input[type='checkbox'], .flws-main .flws-main-con .flws-main-con-r form table p a input[type='radio'] {
+  height: 20px;
+  width: 100%;
+  vertical-align: -3px;
+  margin-left: -5px;
+}
+/* line 170, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form a {
+  width: 100%;
+  display: inline-block;
+}
+/* line 174, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form input.iptreadonly, .flws-main .flws-main-con .flws-main-con-r form input.readonly, .flws-main .flws-main-con .flws-main-con-r form input[readonly='readonly'], .flws-main .flws-main-con .flws-main-con-r form input[readonly] {
+  outline: none;
+  border: none;
+  background: #fff;
+  white-space: nowrap;
+}
+/* line 182, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-flws-data {
+  position: absolute;
+  display: none;
+  z-index: 3;
+  right: 0;
+  top: 3px;
+  cursor: pointer;
+  background: #0e6595;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+}
+/* line 194, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-flws-data:hover {
+  background: #0a4566;
+}
+/* line 198, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  top: 3px;
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area:before, .flws-main .flws-main-con .flws-main-con-r .save-btn-area:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 204, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area a.save-btn {
+  display: none;
+  cursor: pointer;
+  background: #0e6595;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  float: left;
+  _display: inline;
+  margin-left: 5px;
+}
+/* line 214, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area a.save-btn:hover {
+  background: #0a4566;
+}
+/* line 218, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area a.scflws {
+  display: none;
+  cursor: pointer;
+  background: #0e6595;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  float: left;
+  _display: inline;
+  margin-left: 5px;
+}
+/* line 228, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-area a.scflws:hover {
+  background: #0a4566;
+}
+/* line 233, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .save-btn-bottom {
+  text-align: center;
+}
+/* line 236, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .report-save {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  height: 30px;
+  line-height: 30px;
+}
+/* line 241, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .report-save a {
+  float: right;
+}
+/* line 246, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r .flws-mode-right {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* line 253, ../sass/sass/_flws.scss */
+body {
+  padding: 0;
+}
+
+/* line 256, ../sass/sass/_flws.scss */
+.main {
+  position: relative;
+  margin: 5px auto;
+  padding: 0;
+}
+/* line 260, ../sass/sass/_flws.scss */
+.main .flws-btn-area {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  z-index: 5;
+}
+
+/*选择审批人panel*/
+/* line 269, ../sass/sass/_flws.scss */
+#select_name {
+  padding: 10px 15px 0 15px;
+}
+/* line 271, ../sass/sass/_flws.scss */
+#select_name .role {
+  margin-bottom: 15px;
+}
+/* line 273, ../sass/sass/_flws.scss */
+#select_name .role label {
+  min-width: 100px;
+  display: inline-block;
+}
+/* line 278, ../sass/sass/_flws.scss */
+#select_name .btn {
+  text-align: center;
+  margin-left: 100px;
+}
+/* line 281, ../sass/sass/_flws.scss */
+#select_name .btn a {
+  margin-right: 5px;
+}
+
+/*流程全图配置*/
+/* line 288, ../sass/sass/_flws.scss */
+.process-make {
+  position: relative;
+  text-align: center;
+  display: none;
+  width: 100%;
+}
+
+/* line 294, ../sass/sass/_flws.scss */
+.process-mask {
+  top: 0;
+  position: absolute;
+  margin: 0 28px;
+}
+/* line 298, ../sass/sass/_flws.scss */
+.process-mask .process-box {
+  border: 1px solid #0e6595;
+  position: absolute;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  background: #fff;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 2px;
+}
+
+/* line 314, ../sass/sass/_flws.scss */
+.lct-box {
+  width: 1118px;
+  margin: 0 40px;
+  min-height: 100px;
+  position: absolute;
+  bottom: 0;
+  overflow-x: auto;
+}
+/* line 321, ../sass/sass/_flws.scss */
+.lct-box .lct-container {
+  *zoom: 1;
+  position: relative;
+  background: #ecf2f4;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.lct-box .lct-container:before, .lct-box .lct-container:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.lct-box .lct-container:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 325, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node {
+  float: left;
+  _display: inline;
+  padding: 10px;
+  min-width: 120px;
+  margin-right: 36px;
+  margin-top: 15px;
+}
+/* line 331, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .text {
+  text-align: center;
+  color: #0e6595;
+}
+/* line 334, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .text .lcspr {
+  font-weight: bold;
+  padding-right: 5px;
+}
+/* line 339, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .text .lcspzt i.fa-check {
+  color: #39980f;
+}
+/* line 342, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .text .lcspzt i.fa-times {
+  color: #ed4848;
+}
+/* line 345, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .text .lcspzt i.fa-reply {
+  color: #000;
+}
+/* line 350, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .point {
+  margin: 7px 0;
+}
+/* line 352, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .point b {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 2px solid #0e6595;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -o-border-radius: 100%;
+  -ms-border-radius: 100%;
+  margin: 0 auto;
+}
+/* line 360, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .point b .h-line {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: #0e6595;
+  left: 16px;
+  top: 4px;
+}
+/* line 370, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .time {
+  text-align: center;
+}
+/* line 372, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node .time span {
+  color: #5a5a5a;
+}
+/* line 380, ../sass/sass/_flws.scss */
+.lct-box .lct-container .lct-node:last-child .point b .h-line {
+  width: 0;
+  height: 0;
+}
