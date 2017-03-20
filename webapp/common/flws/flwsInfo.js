@@ -741,7 +741,7 @@ function lcriZs() {
                                     '</div>';
                             }
 
-                            if(data2.username !=null ||data2.username !=''){
+                            if(data2 && data2.username){
                                 str += '<div class="lct-node" title="待审批">' +
                                     '<div class="text">' +
                                     '<span class="lcspr">' + data2.username + '</span>' +
