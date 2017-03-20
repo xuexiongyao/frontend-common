@@ -14,10 +14,21 @@ function easyuiReset(ipts, isAdd, bm) {
         var parentA = $(ipts[i]).parent();//a标签
         var annotation = parentA.attr('annotation');//annotation的值
         var aName = parentA.attr('name');//name的值
+        var isTrue = true;//是否必填
 
         if (annotation) {
             var funName = annotation.substring(annotation.indexOf('(') + 1, annotation.indexOf(')')); //方法名称
             var params = annotation.substring(annotation.indexOf('[') + 1, annotation.indexOf(']')); //参数
+            var editAttr = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/')); //编辑状态
+
+            //必填项的判断
+            if(editAttr && editAttr !='REPLACE'){
+                if (editAttr == 'EDIT_N'){
+                    isTrue = false;
+                }else{
+                    isTrue = true;
+                }
+            }
 
             if (isAdd) {//新增页面
                 if (params.length > 0 && funName.length > 0) {
@@ -32,7 +43,7 @@ function easyuiReset(ipts, isAdd, bm) {
             if ($(ipts[i]).hasClass('easyuicombobox')) {//combobox字典
                 var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}')); //字典名称
                 var comboboxObj = {
-                    required: true, showText: true, valueField: 'id', textField: 'text', method: 'get',
+                    required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
                     onChange: function (newValue, oldValue) {
                         if (newValue) {
                             var $this = $(this);
@@ -41,7 +52,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             if (val && bm) {
                                 if (val && bm) {
                                     if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(className, val, 'combobox');
+                                        flwsLdXxfy(bm, className, val, 'combobox');
                                     }
                                 }
                             }
@@ -56,7 +67,7 @@ function easyuiReset(ipts, isAdd, bm) {
                         $(ipts[i]).attr('dicturl', comboboxObj.url);
                         $(ipts[i]).combobox({
                             url: comboboxObj.url, multiple: true,
-                            required: true, showText: true, valueField: 'id', textField: 'text', method: 'get',
+                            required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
                             onChange: function (newValue, oldValue) {
                                 if (newValue) {
                                     var $this = $(this);
@@ -64,7 +75,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.next().find('input:hidden').val();
                                     if (val && bm) {
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(className, val, 'combobox');
+                                            flwsLdXxfy(bm, className, val, 'combobox');
                                         }
                                     }
                                 }
@@ -250,7 +261,7 @@ function easyuiReset(ipts, isAdd, bm) {
                     editable: false,
                     multiple: false,
                     lines: true,
-                    required: true,
+                    required: isTrue,
                     onChange: function (newValue, oldValue) {
                         if (newValue) {
                             var $this = $(this);
@@ -258,7 +269,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             var val = $this.next().find('input:hidden').val();
                             if (val && bm) {
                                 if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(className, val, 'combotree');
+                                    flwsLdXxfy(bm, className, val, 'combotree');
                                 }
                             }
                         }
@@ -282,13 +293,13 @@ function easyuiReset(ipts, isAdd, bm) {
                 if (annotation) {
                     var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
                     var textboxObj = {
-                        required: true,
+                        required: isTrue,
                         onChange: function (newValue, oldValue) {
                             if (newValue && bm) {
                                 var $this = $(this);
                                 var className = $this.attr('textboxname');//组件class name值
                                 if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(className, newValue, 'textbox');
+                                    flwsLdXxfy(bm, className, newValue, 'textbox');
                                 }
                             }
                         }
@@ -308,7 +319,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             break;
                         case 'NUMBERCN'://数字转大写
                             $(ipts[i]).textbox({
-                                required: true,
+                                required: isTrue,
                                 onChange: function (newValue, oldValue) {
                                     //输入框值得处理
                                     var iptVal = Number(newValue);//输入框的值
@@ -318,7 +329,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                         var chNum = NumberToChinese(iptVal);//转化之后的汉字
                                         $this.textbox({value: chNum});
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(className, chNum, 'textbox');
+                                            flwsLdXxfy(bm, className, chNum, 'textbox');
                                         }
                                     } else {
                                         $.messager.alert({
@@ -335,7 +346,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             break;
                         case 'MONEY'://金额转大写
                             $(ipts[i]).textbox({
-                                required: true,
+                                required: isTrue,
                                 onChange: function (newValue, oldValue) {
                                     //输入框值得处理
                                     var iptVal = Number(newValue);//输入框的值
@@ -346,7 +357,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                         var chNum = Arabia_to_Chinese(newValue);//转化之后的汉字
                                         $this.textbox({value: chNum});
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(className, chNum, 'textbox');
+                                            flwsLdXxfy(bm, className, chNum, 'textbox');
                                         }
                                     } else {
                                         $.messager.alert({
@@ -385,7 +396,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
                                 if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(className, val, 'Wdate');
+                                    flwsLdXxfy(bm, className, val, 'Wdate');
                                 }
                             });
                             break;
@@ -395,13 +406,13 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
                                 if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(className, val, 'Wdate');
+                                    flwsLdXxfy(bm, className, val, 'Wdate');
                                 }
                             });
                             break;
                     }
                     var validateboxObj = {
-                        required: true
+                        required: isTrue
                     };
                     $(ipts[i]).validatebox(validateboxObj);
                 }
@@ -427,20 +438,23 @@ function easyuiReset(ipts, isAdd, bm) {
 
 /**
  * 法律文书多级联动
+ * @param bm 法律文书编码
  * @param className 当前操作的class name
  * @param vals 当前操作的输入框的值
  * @param funName 当前操作的输入框类型
  */
-function flwsLdXxfy(className, vals, funName) {
-    var ipts = $('.flws_cl_area .panel .panel-body form');
+function flwsLdXxfy(bm, className, vals, funName) {
+    var ipts = $('#flws_cl_area_'+ bm +' .panel .panel-body form a');
     for (var i = 0; i < ipts.length; i++) {
         if (funName == 'textbox') {
-            $(ipts[i]).find('.' + className).textbox({value: vals});
+            // $(ipts[i]).find('.' + className).textbox({value: vals});
             $(ipts[i]).find('.' + className).textbox('setValue', vals);
         } else if (funName == 'combobox') {
-            $(ipts[i]).find('.' + className).combobox({value: vals});
+            // $(ipts[i]).find('.' + className).combobox({value: vals});
+            $(ipts[i]).find('.' + className).combobox('setValue', vals);
         } else if (funName == 'combotree') {
-            $(ipts[i]).find('.' + className).combotree({value: vals});
+            // $(ipts[i]).find('.' + className).combotree({value: vals});
+            $(ipts[i]).find('.' + className).combotree('setValue', vals);
         } else if (funName == 'validatebox' || funName == 'Wdate') {
             $(ipts[i]).find('.' + className).val(vals).validatebox();
         }
