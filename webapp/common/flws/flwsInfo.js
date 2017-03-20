@@ -47,7 +47,6 @@ function getCqbgMapData() {
             }
 
             getCqbgFlwsHtmlPage();//呈请报告(法律文书)iframe页面的获取
-
             //呈请报告数据查询
             if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
                 queryCqbgData();//获取呈请报告数据
@@ -63,7 +62,6 @@ function getCqbgMapData() {
             }
 
             tabSwitch();//法律文书tab切换
-
         }
     });
 }
@@ -642,8 +640,8 @@ function lctShow() {
     if (DATA.cqzt != 0 && DATA.cqzt) {
         if (DATA.lcslid && DATA.lcdyid) {
             $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
-            $('#png_process').show();
             if (DATA.cqzt == '1') {//已呈请
+                $('#cklcBtn').show();
                 getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
             } else if (DATA.cqzt == '2') {//已送审
                 getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
