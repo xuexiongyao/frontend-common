@@ -1146,6 +1146,10 @@
   overflow: hidden;
 }
 /* line 161, ../sass/sass/_detailPageTimeline.scss */
+.info-main .other-info > span {
+  font-size: 14px;
+}
+/* line 164, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title, .info-main .other-info #logout_panel .living-info .living-table-div, #logout_panel .living-info .info-main .other-info .living-table-div {
   width: 100%;
   *zoom: 1;
@@ -1160,7 +1164,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 164, ../sass/sass/_detailPageTimeline.scss */
+/* line 167, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title .tip, .info-main .other-info #logout_panel .living-info .living-table-div .tip, #logout_panel .living-info .info-main .other-info .living-table-div .tip {
   position: relative;
   left: -10px;
@@ -1174,7 +1178,7 @@
   font-size: 18px;
   font-family: "Microsoft Yahei", "微软雅黑";
 }
-/* line 176, ../sass/sass/_detailPageTimeline.scss */
+/* line 179, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title .tip:before, .info-main .other-info #logout_panel .living-info .living-table-div .tip:before, #logout_panel .living-info .info-main .other-info .living-table-div .tip:before {
   position: absolute;
   border-top: 10px solid #07364f;
@@ -1182,19 +1186,19 @@
   border-left: 10px solid transparent;
   left: 0;
 }
-/* line 180, ../sass/sass/_detailPageTimeline.scss */
+/* line 183, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .title .edit-btn, .info-main .other-info #logout_panel .living-info .living-table-div .edit-btn, #logout_panel .living-info .info-main .other-info .living-table-div .edit-btn {
   float: right;
   margin-right: 30px;
   margin-bottom: 0;
 }
-/* line 186, ../sass/sass/_detailPageTimeline.scss */
+/* line 189, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content {
   width: 900px;
   height: auto;
   margin: 25px auto 40px;
 }
-/* line 190, ../sass/sass/_detailPageTimeline.scss */
+/* line 193, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content {
   list-style-type: none;
   margin: 0;
@@ -1211,7 +1215,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 195, ../sass/sass/_detailPageTimeline.scss */
+/* line 198, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li {
   background-color: #eef1f6;
   width: 440px;
@@ -1233,7 +1237,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 204, ../sass/sass/_detailPageTimeline.scss */
+/* line 207, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li label {
   cursor: default;
   display: inline-block;
@@ -1245,35 +1249,35 @@
   color: #5a5a5a;
   font-weight: bold;
 }
-/* line 214, ../sass/sass/_detailPageTimeline.scss */
+/* line 217, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li .textbox {
   background: transparent;
   border: 1px solid #eef1f6;
 }
-/* line 218, ../sass/sass/_detailPageTimeline.scss */
+/* line 221, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li input {
   background: transparent;
 }
-/* line 222, ../sass/sass/_detailPageTimeline.scss */
+/* line 225, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li:nth-child(2n) {
   margin-left: 20px;
 }
-/* line 225, ../sass/sass/_detailPageTimeline.scss */
+/* line 228, ../sass/sass/_detailPageTimeline.scss */
 .info-main .other-info .content .form-content li.li-full {
   width: 900px;
   margin: 0 0 10px !important;
 }
 
-/* line 236, ../sass/sass/_detailPageTimeline.scss */
+/* line 239, ../sass/sass/_detailPageTimeline.scss */
 .info-edit .base-info, .info-edit #export_panel .relation-info, #export_panel .info-edit .relation-info {
   border: none;
   width: auto;
 }
-/* line 239, ../sass/sass/_detailPageTimeline.scss */
+/* line 242, ../sass/sass/_detailPageTimeline.scss */
 .info-edit .base-info .person-info, .info-edit #export_panel .relation-info .person-info, #export_panel .info-edit .relation-info .person-info {
   margin-left: 40px;
 }
-/* line 242, ../sass/sass/_detailPageTimeline.scss */
+/* line 245, ../sass/sass/_detailPageTimeline.scss */
 .info-edit .base-info .person-info .item span.pro-right, .info-edit #export_panel .relation-info .person-info .item span.pro-right, #export_panel .info-edit .relation-info .person-info .item span.pro-right {
   margin-left: 30px;
 }
