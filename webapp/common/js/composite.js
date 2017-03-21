@@ -197,7 +197,6 @@ function getQueryModel() {
         pageNumber: 1,//显示在第几页
         pagePosition: 'bottom',
         onDblClickRow: function(index,row){
-            //if()
             var condition = row.condition;
             var templateName = row.templet_name;
             var condition_obj = eval('('+condition+')');
@@ -252,6 +251,7 @@ function getQueryModel() {
         $('#model_key').textbox('setValue','');
         $this.addClass('c6').siblings().removeClass('c6');
         $('#model_table').datagrid('load',{
+            system_type: sysType,
             kjfw: val
         });
     });
@@ -259,6 +259,7 @@ function getQueryModel() {
     $('#queryModelBtn').off('click').on('click',function(){
         var keyWords = $('#model_key').val();
         $('#model_table').datagrid('load',{
+            system_type: sysType,
             keywords : keyWords,
             kjfw: $('#kjfw').val()
         })
