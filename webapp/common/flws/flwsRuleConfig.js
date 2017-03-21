@@ -450,11 +450,11 @@ function flwsLdXxfy(bm, className, vals, funName) {
             // $(ipts[i]).find('.' + className).textbox({value: vals});
             $(ipts[i]).find('.' + className).textbox('setValue', vals);
         } else if (funName == 'combobox') {
-            // $(ipts[i]).find('.' + className).combobox({value: vals});
-            $(ipts[i]).find('.' + className).combobox('setValue', vals);
+            $(ipts[i]).find('.' + className).combobox({value: vals});
+            // $(ipts[i]).find('.' + className).combobox('setValue', vals);
         } else if (funName == 'combotree') {
-            // $(ipts[i]).find('.' + className).combotree({value: vals});
-            $(ipts[i]).find('.' + className).combotree('setValue', vals);
+            $(ipts[i]).find('.' + className).combotree({value: vals});
+            // $(ipts[i]).find('.' + className).combotree('setValue', vals);
         } else if (funName == 'validatebox' || funName == 'Wdate') {
             $(ipts[i]).find('.' + className).val(vals).validatebox();
         }
