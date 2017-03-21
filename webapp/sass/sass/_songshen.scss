@@ -1,0 +1,291 @@
+@charset "utf-8";
+.main{
+    position: relative;
+    @include clearfix;
+    padding:0;
+    .left-examine{
+        float: left;
+        z-index: 2;
+        width:50%;
+        ul{
+            list-style-type: none;
+            margin:0;
+            padding: 0 40px;
+            @include clearfix;
+            min-height:186px;
+            border-right:1px dashed colors(gray);
+            li{
+                @include float(left);
+                width:50%;
+                min-height:22px;
+                margin-bottom:10px;
+                span.pro{
+                    display: inline-block;
+                    min-width: 48px;
+                    margin-right: 10px;
+                    vertical-align: middle;
+                }
+            }
+            li.li-full{
+                width:100%;
+                .pro-top{
+                    vertical-align: top;
+                }
+                textarea{
+                    width:86%;
+                }
+            }
+        }
+    }
+    .lct-box{
+        width:50%;
+        min-height:100px;
+        @include float(left);
+        z-index: 2;
+        overflow-x: auto;
+        .lct-container{
+            @include clearfix;
+            position: relative;
+            margin-right: 40px;
+            //background: #ecf2f4;
+            overflow: hidden;
+            .lct-node{
+                @include float(left);
+                padding: 10px;
+                min-width:120px;
+                margin-right:36px;
+                margin-top:15px;
+                .text{
+                    text-align: center;
+                    color: colors(primary);
+                    .lcspr{
+                        font-weight:bold;
+                        padding-right:5px;
+                    }
+                    .lcspzt{
+                        i.fa-check{
+                            color: colors(green);
+                        }
+                        i.fa-times{
+                            color: colors(red);
+                        }
+                        i.fa-reply{
+                            color: colors(black);
+                        }
+                    }
+                }
+                .point{
+                    margin: 7px 0;
+                    b{
+                        position: relative;
+                        display: block;
+                        @include square(8px);
+                        background: colors(white);
+                        @include border(2px,solid,colors(primary));
+                        @include prefix(border,radius,100%);
+                        margin: 0 auto;
+                        .h-line{
+                            position: absolute;
+                            width:150px;
+                            height:2px;
+                            background: colors(primary);
+                            left:16px;
+                            top: 4px;
+                        }
+                    }
+                }
+                .time{
+                    text-align: center;
+                    span{
+                        color: colors(textColor);
+                    }
+                }
+            }
+            .lct-node:last-child{
+                .point{
+                    b{
+                        .h-line{
+                            @include square(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .right-report{
+        float: left;
+        width:1198px;
+        min-height: 650px;
+        z-index: 1;
+    }
+    .report-table{
+        border-top:#333 solid 1px;
+        height:auto;
+        margin:auto;
+        margin-bottom: 40px;
+        width:500px;
+        .report-table-item{
+            border-bottom:#333 solid 1px;
+            @include clearfix;
+            .pro{
+                padding:15px 0;
+                text-align: center;
+                font-size: fontSize(h5);
+                float: left;
+                width:120px;
+                height:auto;
+                border-right:#333 solid 1px;
+            }
+            .val{
+                width:360px;
+                float: left;
+                text-align: left;
+                font-size: fontSize(h6);
+                padding:15px 0 0 10px;
+            }
+        }
+    }
+    .report-content{
+        margin:auto;
+        width:500px;
+        .report-content-title{
+            height: 40px;
+            line-height:40px;
+            text-align: center;
+            font-size: fontSize(h4);
+            margin-bottom:10px;
+        }
+        .report-content-text{
+            font-size: fontSize(h6);
+        }
+    }
+    .btn-area-top{
+        position: absolute;
+        right:30px;
+        top: 14px;
+    }
+    #flws_send{
+        position: static;
+        text-align: right;
+        margin:10px 30px 0;
+    }
+}
+
+#lctBox{
+     width:100%;
+     min-height:100px;
+     z-index: 2;
+     overflow-x: auto;
+     .lct-container{
+         @include clearfix;
+         position: relative;
+         margin-right: 40px;
+         //background: #ecf2f4;
+         overflow: hidden;
+         .lct-node{
+             @include float(left);
+             padding: 10px;
+             min-width:120px;
+             margin-right:36px;
+             margin-top:15px;
+             .text{
+                 text-align: center;
+                 color: colors(primary);
+                 .lcspr{
+                     font-weight:bold;
+                     padding-right:5px;
+                 }
+                 .lcspzt{
+                     i.fa-check{
+                         color: colors(green);
+                     }
+                     i.fa-times{
+                         color: colors(red);
+                     }
+                     i.fa-reply{
+                         color: colors(black);
+                     }
+                 }
+             }
+             .point{
+                 margin: 7px 0;
+                 b{
+                     position: relative;
+                     display: block;
+                     @include square(8px);
+                     background: colors(white);
+                     @include border(2px,solid,colors(primary));
+                     @include prefix(border,radius,100%);
+                     margin: 0 auto;
+                     .h-line{
+                         position: absolute;
+                         width:150px;
+                         height:2px;
+                         background: colors(primary);
+                         left:16px;
+                         top: 4px;
+                     }
+                 }
+             }
+             .time{
+                 text-align: center;
+                 span{
+                     color: colors(textColor);
+                 }
+             }
+         }
+         .lct-node:last-child{
+             .point{
+                 b{
+                     .h-line{
+                         @include square(0);
+                     }
+                 }
+             }
+         }
+     }
+ }
+
+/*选择审批人和环节*/
+#next_link_panel{
+    padding:0 20px;
+    max-height: 800px;
+    overflow: auto;
+    .next-link{
+        margin:8px 0 15px 0;
+        .pro{
+            color:colors(primary);
+            display: inline-block;
+        }
+        .val{
+            label{
+                color:colors(textColor);
+                font-size: fontSize(small);
+                margin-right: 15px;
+            }
+        }
+    }
+    .role{
+        .title{
+            //font-weight:bold;
+            color:colors(primary);
+            height: 20px;
+            line-height:20px;
+            border-bottom: 1px dashed #ccc;
+        }
+        .role-name{
+            margin-bottom:10px;
+            label{
+                display: inline-block;
+                min-width:80px;
+                margin-top:5px;
+                font-size: fontSize(small);
+                color:colors(textColor);
+                input{
+                    vertical-align: top;
+
+                }
+            }    
+        }
+    }
+}

@@ -437,11 +437,14 @@ function flwsXxfyB(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-        if(aName.indexOf('_T_') != -1){
-            var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
-            var val = data[name];//对应数据的值
-            $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+        if(typeof aName !='undefined'){
+            if(aName.indexOf('_T_') > -1){
+                var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+                var val = data[name];//对应数据的值
+                $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+            }
         }
+
         for (var k in data) {
             if (k == aName) {
                 if (annotation) {
