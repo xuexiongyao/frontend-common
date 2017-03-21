@@ -42,14 +42,14 @@ function getCqbgFlwsAllXxData(render) {
  * 所有接口请求回调函数  全部ajax成功之后渲染数据
  */
 function callbackForAllAjaxQuerySuccess() {
-    // if (DATA.ajax.count == 0) {
-    if (typeof (DATA.CQBG.cqbgZj) == 'undefined' || !DATA.CQBG.cqbgZj) {
-        cqbgNrXxfy();//呈请报告内容接口请求信息复用
-        cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-        $('#loadingMskFlws').hide();
+    if (DATA.ajax.count == 0) {
+        if (typeof (DATA.CQBG.cqbgZj) == 'undefined' || !DATA.CQBG.cqbgZj) {
+            cqbgNrXxfy();//呈请报告内容接口请求信息复用
+            cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+            $('#loadingMskFlws').hide();
+        }
+        flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
     }
-    flwsLsCqbgNrXxfy();//法律文书中类呈请报告呈请内容的信息复用
-    // }
 }
 
 /**
