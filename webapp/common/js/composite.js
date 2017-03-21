@@ -756,6 +756,26 @@ function batchExprot(search_config_obj) {
                 });
             }
         },
+        error : function(data){
+       	 loading('close');
+            console.log('submitForm ajax err');
+            var errorMsg='导出失败！';
+            if(data && (data.status == 400 || data.status == 500) && data.responseText){
+           	 errorMsg=data.responseText;
+           	 try{
+	            	 var messageJson = eval("("+errorMsg+")");
+	         		 if(messageJson.message){
+	             		errorMsg = messageJson.message;
+	             	 }else if(messageJson.errors){
+	             		errorMsg = messageJson.errors;
+	             	 }
+           	 }catch(e){}
+            }
+            $.messager.alert({
+     	        title : '错误信息',
+     	        msg : errorMsg
+     	     });
+        },
         complete: function () {
             loading('close');
         }
@@ -1319,6 +1339,10 @@ function ajaxQuery(condition_obj) {
     loading('open', '查询中...');
     var condition = JSON.stringify(condition_obj);
     console.log('查询条件:', condition_obj,condition);
+    
+    var logEntity = {};//日志对象
+    logEntity.operate_time = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
+    logEntity.param=condition;
     $.ajax({
         url: search_config.url + condition,
         type: 'get',
@@ -1333,6 +1357,10 @@ function ajaxQuery(condition_obj) {
             }).show();
             changeLinkButtonIcon();
             searchResult(data); //展示查询结果
+            
+            logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
+            logEntity.error_code = '0';
+            writeLog(logEntity);
         },
         error: function (e) {
             loading('close');
@@ -1345,6 +1373,10 @@ function ajaxQuery(condition_obj) {
             }).show();
             changeLinkButtonIcon();
             searchResult(search_result_test);
+            
+            logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
+            logEntity.error_code = e.status;
+            writeLog(logEntity);
         }
     });
 
@@ -1843,4 +1875,42 @@ function getLishu(lishu, row) {
     }
 
     return null;
+}
+
+/**
+ * 日期格式化
+ * @param date 日期
+ * @param filter 格式
+ * @returns
+ */
+function getDateStr(date,filter){
+	var yyyy=date.getFullYear();
+	var mm=(date.getMonth()+1) >= 10 ? date.getMonth()+1 : '0'+(date.getMonth()+1);
+	var dd=date.getDate() >= 10 ? date.getDate() : '0'+date.getDate();
+	
+	var hh=date.getHours() >= 10 ? date.getHours() : '0'+date.getHours();
+	var mi=date.getMinutes() >= 10 ? date.getMinutes() : '0'+ date.getMinutes();
+	var ss=date.getSeconds() >= 10 ? date.getSeconds() : '0'+ date.getSeconds();
+	
+	filter=filter.replace('yyyy',yyyy);
+	filter=filter.replace('mm',mm);
+	filter=filter.replace('dd',dd);
+	filter=filter.replace('hh',hh);
+	filter=filter.replace('mi',mi);
+	filter=filter.replace('ss',ss);
+	
+	return filter;
+}
+
+/**
+ * 记录日志，不处理返回
+ * @param logEntity
+ */
+function writeLog(logEntity){
+	$.ajax({
+        url: basePath+'/compositQuery/writeLog',
+        type: 'post',
+        dataType: 'json',
+        data: logEntity
+    });
 }
