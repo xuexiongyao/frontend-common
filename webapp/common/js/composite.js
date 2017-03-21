@@ -492,8 +492,8 @@ function openOtherTable(isExport) {
     //通过勾选获取查询配置条件
     var search_config_obj = {};
     $('#other_table_dialog').empty();
-    console.log('expandInfoArr:',expandInfoArr);
-    console.log('tableArr:',tableArr);
+   // console.log('expandInfoArr:',expandInfoArr);
+    //console.log('tableArr:',tableArr);
     for (var i = start; i < search_config_arr.length; i++) {
         var isMaster = false;
         if (i == 0) isMaster = true;
@@ -582,7 +582,7 @@ function openOtherTable(isExport) {
                 if (isExport) {
                     batchExprot(search_config_obj);
                 } else {
-                    console.log('search_config_obj:',search_config_obj);
+                   // console.log('search_config_obj:',search_config_obj);
                     createAdInputByCheck(search_config_obj);
                 }
                 showHideDel();		//hover显示删除条件
@@ -723,7 +723,7 @@ function batchExprot(search_config_obj) {
         type: 'post',
         dataType: 'json',
         data: {
-            query_condition: JSON.stringify(export_condition_obj),
+            query_condition: JSON.stringify(doCondiion(export_condition_obj)),
             export_param: JSON.stringify(search_config_obj),
             url: search_config.url
         },
@@ -1338,8 +1338,7 @@ function ajaxQuery(condition_obj) {
 
     //查询成功,展示查询内容
     loading('open', '查询中...');
-    var condition = JSON.stringify(condition_obj);
-    console.log('查询条件:', condition_obj,condition);
+    var condition = JSON.stringify(doCondiion(condition_obj));
     
     var logEntity = {};//日志对象
     logEntity.operate_time = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
@@ -1364,17 +1363,21 @@ function ajaxQuery(condition_obj) {
             writeLog(logEntity);
         },
         error: function (e) {
-            loading('close');
-            alert('此处为无效数据提示处理!');
+        	loading('close');
+    		alertDiv({
+                title : '错误信息',
+                msg : '综合查询服务请求失败！'
+            });
+            
+            //alert('此处为无效数据提示处理!');
             //$.messager.alert('提示','一万条以后的数据不让查出来.','warning');
             /****正式环境请注释下面这一段****/
-            alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
-            $('#pagination').pagination({
-                total: 998
-            }).show();
-            changeLinkButtonIcon();
-            searchResult(search_result_test);
-            
+//            alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
+//            $('#pagination').pagination({
+//                total: 998
+//            }).show();
+//            changeLinkButtonIcon();
+//            searchResult(search_result_test);
             logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
             logEntity.error_code = e.status;
             writeLog(logEntity);
@@ -1914,4 +1917,33 @@ function writeLog(logEntity){
         dataType: 'json',
         data: logEntity
     });
+}
+
+/**
+ * 请求参数处理
+ * @param condition_obj
+ * @returns
+ */
+function doCondiion(condition_obj){
+	var newCondition = condition_obj;
+	if(newCondition && newCondition.query){
+		for(var index in newCondition.query){
+			var condition = newCondition.query[index];
+			if(condition && condition.condition){
+				for(var cIndex in condition.condition){
+					delete (condition.condition[cIndex]).textValue;
+				}
+			}
+			
+			if(condition && condition.lishu){
+				for(var lIndex in condition.lishu){
+					delete (condition.lishu[lIndex]).textValue;
+				}
+			}
+			
+			//console.log(condition);
+		}
+	}
+	
+	return newCondition;
 }
