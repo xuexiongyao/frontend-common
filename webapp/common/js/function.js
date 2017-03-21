@@ -1361,13 +1361,21 @@ function wdateValidate(obj){
 
 //自定义弹框,默认在屏幕正中间
 function alertDiv(options){
+    var arguments = arguments;
+    var type = typeof options;
+    if(type == 'string'){
+        options = {
+            title: arguments[0],
+            msg: arguments[1],
+            fn: arguments[2]
+        }
+    }
     var opts = $.extend({}, {
         id: "alertDiv1956",
         title: "提示",
         msg: "提示信息",
         width: 350,
         height: 150,
-        //closable: false,
         onClose: function(){
             try{
                 var fn1 = opts.fn;
@@ -1378,7 +1386,7 @@ function alertDiv(options){
         }
     }, options);
 
-    var divHtml = '<div id="alertDiv1956" style="display:none;overflow: auto;padding:10px 10px 0 10px;"></div>';
+    var divHtml = '<div id="alertDiv1956" style="display:none;overflow:auto;padding:10px 10px 0 10px;"></div>';
     var msgHtml = '<div>'+opts.msg+'</div>';
     var $alertDiv = $('#alertDiv1956');
     if(!$alertDiv.length){
