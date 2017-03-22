@@ -47,6 +47,7 @@ function cqbgNrXxfy() {
                     $("#cqbg_main_con form textarea").val(textareaVal);
                 }
             }
+            loading('close');
         }
     }
 }
@@ -384,7 +385,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     DATA.FLWS[bm]['status']['isAdd'] = true;
 
     //获取呈请报告、法律文书公共参数接口
-    getCqbgFlwsAllXxData(cqbgFlwsOtherXxfy);
+    // getCqbgFlwsAllXxData(cqbgFlwsOtherXxfy);
 }
 
 /**

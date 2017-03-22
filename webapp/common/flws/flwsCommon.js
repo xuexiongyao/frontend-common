@@ -60,6 +60,7 @@ function getDiffer(a1, a2, param1, param2) {
  * 获取文书模板数据请求方法
  */
 function getHtmlByAjax(url) {
+    loading('open','正在获取数据...');
     var data = '';
     $.ajax({
         url: url,

@@ -136,6 +136,7 @@ function xydxRenderCqbg() {
 
         //呈请报告嫌疑人列表展示
         $('#cqbg_xyr_con').append(xyrListStr);
+        loading('close');
 
         //已呈请样式(呈请报告的前后置关系)
         $('#cqbg_xyr_con ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});
