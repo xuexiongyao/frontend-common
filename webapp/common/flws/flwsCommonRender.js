@@ -62,10 +62,6 @@ function cqbgFlwsOtherXxfy() {
                 var val = DATA.publicJkXx[k1][key];//参数值
 
                 if (k1 == k2) {
-                    if (k2 == 'BAR02') {//办案人字典处理
-                        val = DATA.publicJkXx[k2][0].text;
-                    }
-
                     if (val == undefined || val == '' || val == null) {//返回数据为空
                         console.log(key + '为空');
                     } else {
