@@ -150,7 +150,6 @@
                 table{
                     margin: 0 auto;
                     textarea{
-                        min-height:100px;
                         width: 100%;
                         resize: none;
                         overflow-y: hidden;
@@ -163,6 +162,15 @@
                                 width: 100%;
                                 vertical-align: -3px;
                                 margin-left: -5px;
+                            }
+                            >textarea{
+                                font-family: '仿宋_GB2312';
+                                font-size: 12px;
+                                letter-spacing: 0;
+                                width: 99%;
+                                resize: none;
+                                height: 16px;
+                                margin-bottom: -5px;
                             }
                         }
                     }

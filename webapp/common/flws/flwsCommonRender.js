@@ -775,7 +775,7 @@ function flwsDataXxfy(bm, zj) {
                     } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
                         $node.val(data[i][key + '_MASTER']);
                         wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-                    } else if ($node.hasClass('TEXTBOX')) {//多选 TEXTBOX 的处理
+                    } else if ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R')) {//多选 TEXTBOX 的处理
                         $node.val(val);
                     }
                 }

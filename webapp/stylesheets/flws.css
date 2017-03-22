@@ -239,35 +239,44 @@
 }
 /* line 152, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table textarea {
-  min-height: 100px;
   width: 100%;
   resize: none;
   overflow-y: hidden;
 }
-/* line 158, ../sass/sass/_flws.scss */
+/* line 157, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table p {
   margin-bottom: 0 !important;
 }
-/* line 161, ../sass/sass/_flws.scss */
+/* line 160, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table p a > input[type='checkbox'], .flws-main .flws-main-con .flws-main-con-r form table p a input[type='radio'] {
   height: 20px;
   width: 100%;
   vertical-align: -3px;
   margin-left: -5px;
 }
-/* line 170, ../sass/sass/_flws.scss */
+/* line 166, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-r form table p a > textarea {
+  font-family: '仿宋_GB2312';
+  font-size: 12px;
+  letter-spacing: 0;
+  width: 99%;
+  resize: none;
+  height: 16px;
+  margin-bottom: -5px;
+}
+/* line 178, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form a {
   width: 100%;
   display: inline-block;
 }
-/* line 174, ../sass/sass/_flws.scss */
+/* line 182, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form input.iptreadonly, .flws-main .flws-main-con .flws-main-con-r form input.readonly, .flws-main .flws-main-con .flws-main-con-r form input[readonly='readonly'], .flws-main .flws-main-con .flws-main-con-r form input[readonly] {
   outline: none;
   border: none;
   background: #fff;
   white-space: nowrap;
 }
-/* line 182, ../sass/sass/_flws.scss */
+/* line 190, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-flws-data {
   position: absolute;
   display: none;
@@ -285,11 +294,11 @@
   -o-border-radius: 3px;
   -ms-border-radius: 3px;
 }
-/* line 194, ../sass/sass/_flws.scss */
+/* line 202, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-flws-data:hover {
   background: #0a4566;
 }
-/* line 198, ../sass/sass/_flws.scss */
+/* line 206, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area {
   position: absolute;
   z-index: 3;
@@ -307,7 +316,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 204, ../sass/sass/_flws.scss */
+/* line 212, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.save-btn {
   display: none;
   cursor: pointer;
@@ -324,11 +333,11 @@
   _display: inline;
   margin-left: 5px;
 }
-/* line 214, ../sass/sass/_flws.scss */
+/* line 222, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.save-btn:hover {
   background: #0a4566;
 }
-/* line 218, ../sass/sass/_flws.scss */
+/* line 226, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.scflws {
   display: none;
   cursor: pointer;
@@ -345,44 +354,44 @@
   _display: inline;
   margin-left: 5px;
 }
-/* line 228, ../sass/sass/_flws.scss */
+/* line 236, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.scflws:hover {
   background: #0a4566;
 }
-/* line 233, ../sass/sass/_flws.scss */
+/* line 241, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-bottom {
   text-align: center;
 }
-/* line 236, ../sass/sass/_flws.scss */
+/* line 244, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .report-save {
   margin-top: 15px;
   margin-bottom: 20px;
   height: 30px;
   line-height: 30px;
 }
-/* line 241, ../sass/sass/_flws.scss */
+/* line 249, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .report-save a {
   float: right;
 }
-/* line 246, ../sass/sass/_flws.scss */
+/* line 254, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .flws-mode-right {
   position: relative;
   overflow: hidden;
   width: 100%;
 }
 
-/* line 253, ../sass/sass/_flws.scss */
+/* line 261, ../sass/sass/_flws.scss */
 body {
   padding: 0;
 }
 
-/* line 256, ../sass/sass/_flws.scss */
+/* line 264, ../sass/sass/_flws.scss */
 .main {
   position: relative;
   margin: 5px auto;
   padding: 0;
 }
-/* line 260, ../sass/sass/_flws.scss */
+/* line 268, ../sass/sass/_flws.scss */
 .main .flws-btn-area {
   position: absolute;
   right: 15px;
@@ -391,31 +400,31 @@ body {
 }
 
 /*选择审批人panel*/
-/* line 269, ../sass/sass/_flws.scss */
+/* line 277, ../sass/sass/_flws.scss */
 #select_name {
   padding: 10px 15px 0 15px;
 }
-/* line 271, ../sass/sass/_flws.scss */
+/* line 279, ../sass/sass/_flws.scss */
 #select_name .role {
   margin-bottom: 15px;
 }
-/* line 273, ../sass/sass/_flws.scss */
+/* line 281, ../sass/sass/_flws.scss */
 #select_name .role label {
   min-width: 100px;
   display: inline-block;
 }
-/* line 278, ../sass/sass/_flws.scss */
+/* line 286, ../sass/sass/_flws.scss */
 #select_name .btn {
   text-align: center;
   margin-left: 100px;
 }
-/* line 281, ../sass/sass/_flws.scss */
+/* line 289, ../sass/sass/_flws.scss */
 #select_name .btn a {
   margin-right: 5px;
 }
 
 /*流程全图配置*/
-/* line 288, ../sass/sass/_flws.scss */
+/* line 296, ../sass/sass/_flws.scss */
 .process-make {
   position: relative;
   text-align: center;
@@ -423,13 +432,13 @@ body {
   width: 100%;
 }
 
-/* line 294, ../sass/sass/_flws.scss */
+/* line 302, ../sass/sass/_flws.scss */
 .process-mask {
   top: 0;
   position: absolute;
   margin: 0 28px;
 }
-/* line 298, ../sass/sass/_flws.scss */
+/* line 306, ../sass/sass/_flws.scss */
 .process-mask .process-box {
   border: 1px solid #0e6595;
   position: absolute;
@@ -448,7 +457,7 @@ body {
   padding: 0 2px;
 }
 
-/* line 314, ../sass/sass/_flws.scss */
+/* line 322, ../sass/sass/_flws.scss */
 .lct-box {
   width: 1118px;
   margin: 0 40px;
@@ -457,7 +466,7 @@ body {
   bottom: 0;
   overflow-x: auto;
 }
-/* line 321, ../sass/sass/_flws.scss */
+/* line 329, ../sass/sass/_flws.scss */
 .lct-box .lct-container {
   *zoom: 1;
   position: relative;
@@ -473,7 +482,7 @@ body {
   clear: both;
   overflow: hidden;
 }
-/* line 325, ../sass/sass/_flws.scss */
+/* line 333, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node {
   float: left;
   _display: inline;
@@ -482,33 +491,33 @@ body {
   margin-right: 36px;
   margin-top: 15px;
 }
-/* line 331, ../sass/sass/_flws.scss */
+/* line 339, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text {
   text-align: center;
   color: #0e6595;
 }
-/* line 334, ../sass/sass/_flws.scss */
+/* line 342, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspr {
   font-weight: bold;
   padding-right: 5px;
 }
-/* line 339, ../sass/sass/_flws.scss */
+/* line 347, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-check {
   color: #39980f;
 }
-/* line 342, ../sass/sass/_flws.scss */
+/* line 350, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-times {
   color: #ed4848;
 }
-/* line 345, ../sass/sass/_flws.scss */
+/* line 353, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-reply {
   color: #000;
 }
-/* line 350, ../sass/sass/_flws.scss */
+/* line 358, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point {
   margin: 7px 0;
 }
-/* line 352, ../sass/sass/_flws.scss */
+/* line 360, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point b {
   position: relative;
   display: block;
@@ -523,7 +532,7 @@ body {
   -ms-border-radius: 100%;
   margin: 0 auto;
 }
-/* line 360, ../sass/sass/_flws.scss */
+/* line 368, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point b .h-line {
   position: absolute;
   width: 150px;
@@ -532,15 +541,15 @@ body {
   left: 16px;
   top: 4px;
 }
-/* line 370, ../sass/sass/_flws.scss */
+/* line 378, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .time {
   text-align: center;
 }
-/* line 372, ../sass/sass/_flws.scss */
+/* line 380, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .time span {
   color: #5a5a5a;
 }
-/* line 380, ../sass/sass/_flws.scss */
+/* line 388, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node:last-child .point b .h-line {
   width: 0;
   height: 0;

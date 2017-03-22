@@ -397,7 +397,7 @@ function flwsXxfyA(bm) {
                                 newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
                             }
                             $($target[j]).text(newVal);
-                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
+                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
                             var str = '<div>' + data[k] + '</div>';
                             $($target[j]).html(str);
                         } else if (textStyle == 'DATE_CN') {
@@ -464,7 +464,7 @@ function flwsXxfyB(bm) {
                             $($target[j]).text(newVal);
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
-                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
+                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
                             var str = '<div>' + data[k] + '</div>';
                             $($target[j]).html(str);
                         } else {
@@ -593,7 +593,7 @@ function flwsXxfyC1(bm, $this) {
                                             $($target[j]).text(newVal);
                                         } else if (textStyle == 'DATE_CN') {
                                             $($target[j]).text(data[i][a]);
-                                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
+                                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
                                             var str = '<div>' + data[i][a] + '</div>';
                                             $($target[j]).html(str);
                                         } else {
