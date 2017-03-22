@@ -500,3 +500,13 @@ function hashObjUnique(o) {
 function isContains(str, substr) {
     return str.indexOf(substr) >= 0;
 }
+
+/**
+ * 是否为中文字符的判断
+ * @param str 字符串
+ * @returns {boolean} 返回值
+ */
+function isChineseChar(str){
+    var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+    return reg.test(str);
+}

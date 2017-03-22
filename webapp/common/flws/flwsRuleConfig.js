@@ -21,13 +21,19 @@ function easyuiReset(ipts, isAdd, bm) {
             var params = annotation.substring(annotation.indexOf('[') + 1, annotation.indexOf(']')); //参数
             var editAttr = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/')); //编辑状态
 
-            //必填项的判断
+            //是否为必填项的判断
             if(editAttr && editAttr !='REPLACE'){
                 if (editAttr == 'EDIT_N'){
                     isTrue = false;
                 }else{
                     isTrue = true;
                 }
+            }
+
+            //annotation为中文的判断(行政案件)
+            var isChinese = isChineseChar(annotation);
+            if(isChinese){
+                $(ipts[i]).textbox({value:annotation});
             }
 
             if (isAdd) {//新增页面
