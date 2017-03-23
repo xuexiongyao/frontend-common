@@ -37,6 +37,95 @@ function getCqbgFlwsAllXxData(render) {
     }
 }
 
+/**
+ * 获取嫌疑对象信息(需要修改)
+ */
+function getDxxxData(render) {
+    //有无呈请报告的判断
+    if (DATA.CQBG == undefined || DATA.CQBG.cqbgData == undefined || DATA.CQBG.cqbgData.dxbm == undefined) {
+        for (var key in DATA.FLWS.flwsData) {
+            if (DATA.FLWS.flwsData[key].dxbm != undefined) {
+                DATA.DX.dxbm = DATA.FLWS.flwsData[key].dxbm;
+            }
+            if (DATA.FLWS.flwsData[key].wdx != undefined) {
+                DATA.DX.wdx = DATA.FLWS.flwsData[key].wdx;
+            }
+        }
+
+    } else {
+        if (DATA.CQBG.cqbgData.dxbm) {
+            DATA.DX.dxbm = DATA.CQBG.cqbgData.dxbm;
+        }
+        if (DATA.CQBG.cqbgData.wdx) {
+            DATA.DX.wdx = DATA.CQBG.cqbgData.wdx;
+        }
+    }
+    if (DATA.DX.dxbm && !DATA.DX.wdx) {//有嫌疑对象
+        $.ajax({
+            url: pathConfig.basePath + '/api/dtbm/' + DATA.DX.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
+            type: 'get',
+            success: function (json) {
+                if (json) {
+                    DATA.DX.xydxData = json;
+                    DATA.DX.hasData = true;
+                    for (var key in DATA.DX.xydxData) {
+                        if (DATA.DX.xydxData[key] == undefined || DATA.DX.xydxData[key] == null) {
+                            DATA.DX.xydxData[key] = [];
+                        }
+                        //嫌疑人前后置关系的判断
+                        if (DATA.DX.xydxData[anjianXyDxDic.xyr] != undefined) {
+                            var xyr_rsqzcsdm;
+                            for (var i = 0; i < DATA.DX.xydxData[anjianXyDxDic.xyr].length; i++) {
+                                var xyr = DATA.DX.xydxData[anjianXyDxDic.xyr][i];
+                                if (xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null') {
+                                    xyr_rsqzcsdm = '0000';
+                                } else {
+                                    xyr_rsqzcsdm = xyr[flwsQhzgxXyrPz];
+                                }
+                                var rule = DATA.RULE[xyr_rsqzcsdm];
+                                var disabled = "";
+                                var title = "";
+                                if (typeof rule != 'undefined' || rule != undefined) {
+                                    if (rule.iscontain) {//包含的不能做
+                                        for (var z = 0; z < rule.item.length; z++) {
+                                            if (DATA.CQBG.asjflwsdm == rule.item[z]) {
+                                                disabled = "disabled ='disabled'";
+                                                title = "title = '" + rule.message + "'";
+                                                break;
+                                            }
+                                        }
+                                    } else {//包含的能做
+                                        disabled = "disabled='disabled'";
+                                        title = "title = '" + rule.message + "'";
+                                        for (var z = 0; z < rule.item.length; z++) {
+                                            if (DATA.CQBG.asjflwsdm == rule.item[z]) {
+                                                disabled = "";
+                                                title = "";
+                                            }
+                                        }
+                                    }
+                                }
+                                xyr.disabled = disabled;
+                                xyr.title = title;
+                            }
+                        }
+                    }
+                }
+
+                if (DATA.CQBG.cqbgData) {
+                    if (DATA.CQBG.cqbgData.bx && !DATA.DX.hasData) {
+                        loading('open', '必选嫌疑对象列表不能为空')
+                    } else {
+                        render();
+                    }
+                }
+            }
+        })
+    } else {//无嫌疑对象
+        xydxHide();
+    }
+}
+
 
 /**
  * 所有接口请求回调函数  全部ajax成功之后渲染数据
@@ -64,6 +153,7 @@ function flwsQhzgxRequest() {
         success: function (data) {
             DATA.ajax.count--;
             DATA.RULE = data;
+            getCqbgFlwsAllXxData(callbackForAllAjaxQuerySuccess);
             getDxxxData(xydxRenderCqbg);
         }
     })

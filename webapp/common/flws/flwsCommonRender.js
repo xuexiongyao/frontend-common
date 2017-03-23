@@ -47,6 +47,7 @@ function cqbgNrXxfy() {
                     $("#cqbg_main_con form textarea").val(textareaVal);
                 }
             }
+            loading('close');
         }
     }
 }
@@ -62,10 +63,6 @@ function cqbgFlwsOtherXxfy() {
                 var val = DATA.publicJkXx[k1][key];//参数值
 
                 if (k1 == k2) {
-                    if (k2 == 'BAR02') {//办案人字典处理
-                        val = DATA.publicJkXx[k2][0].text;
-                    }
-
                     if (val == undefined || val == '' || val == null) {//返回数据为空
                         console.log(key + '为空');
                     } else {
@@ -388,7 +385,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     DATA.FLWS[bm]['status']['isAdd'] = true;
 
     //获取呈请报告、法律文书公共参数接口
-    getCqbgFlwsAllXxData(cqbgFlwsOtherXxfy);
+    // getCqbgFlwsAllXxData(cqbgFlwsOtherXxfy);
 }
 
 /**
@@ -775,7 +772,7 @@ function flwsDataXxfy(bm, zj) {
                     } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
                         $node.val(data[i][key + '_MASTER']);
                         wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-                    } else if ($node.hasClass('TEXTBOX')) {//多选 TEXTBOX 的处理
+                    } else if ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R')) {//多选 TEXTBOX 的处理
                         $node.val(val);
                     }
                 }

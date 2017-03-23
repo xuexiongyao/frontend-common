@@ -135,6 +135,7 @@ function queryCqbgData() {
                     for (var a in data) {
                         if (a == 'CQNR') {//呈请内容单独处理
                             $('#cqbg_main_con form textarea').val(data[a]).prop('readonly', true);
+                            autoTextarea($('#cqbg_main_con form textarea')[0]);
                         } else {
                             for (var i = 0; i < $target.length; i++) {
                                 var aName = $($target[i]).attr('name');//a标签的name属性
@@ -397,9 +398,9 @@ function flwsXxfyA(bm) {
                                 newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
                             }
                             $($target[j]).text(newVal);
-                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
-                            var str = '<div>' + data[k] + '</div>';
-                            $($target[j]).html(str);
+                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
+                            $($target[j]).val(data[k])
+                            autoTextarea($($target[j])[0]);
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
                         }
@@ -464,9 +465,9 @@ function flwsXxfyB(bm) {
                             $($target[j]).text(newVal);
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
-                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
-                            var str = '<div>' + data[k] + '</div>';
-                            $($target[j]).html(str);
+                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
+                            $($target[j]).val(data[k])
+                            autoTextarea($($target[j])[0]);
                         } else {
                             $($target[j]).text(data[k]);
                         }
@@ -593,9 +594,9 @@ function flwsXxfyC1(bm, $this) {
                                             $($target[j]).text(newVal);
                                         } else if (textStyle == 'DATE_CN') {
                                             $($target[j]).text(data[i][a]);
-                                        } else if (textStyle == 'TEXTBOX') {//textarea框的处理
-                                            var str = '<div>' + data[i][a] + '</div>';
-                                            $($target[j]).html(str);
+                                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
+                                            $($target[j]).val(data[i][a])
+                                            autoTextarea($($target[j])[0]);
                                         } else {
                                             $($target[j]).text(data[i][a]);
                                         }

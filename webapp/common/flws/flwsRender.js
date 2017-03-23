@@ -136,6 +136,7 @@ function xydxRenderCqbg() {
 
         //呈请报告嫌疑人列表展示
         $('#cqbg_xyr_con').append(xyrListStr);
+        loading('close');
 
         //已呈请样式(呈请报告的前后置关系)
         $('#cqbg_xyr_con ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});
@@ -164,6 +165,9 @@ function xyrCheckedXxfy($this) {
     var xyrxmArry = [];//嫌疑人姓名
     var xyridArry = [];//嫌疑人ID
     var checkXyr = [];
+
+    var xydxZhxx = $this.next().attr('xyrzhxx');//嫌疑对象组合信息
+
     //勾选嫌疑人
     if (parentDiv.find('input:checked').length > 0) {//选中
         var textareaVal = $("#cqbg_main_con form textarea").val();
@@ -201,7 +205,7 @@ function xyrCheckedXxfy($this) {
             cqbgXydxZhxxFyForXzaj($this,textareaVal);
         }else {
             /*****刑事案件组合信息复用*****/
-            var xyrZhxxData = '\n' + '\t' + $this.next().attr('xyrzhxx') +'\n';
+            var xyrZhxxData = '\t' + xydxZhxx +'\n';
             $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
         }
 
@@ -211,6 +215,12 @@ function xyrCheckedXxfy($this) {
         //同一时间只能操作一个
         parentDiv.show();
         parentDiv.siblings().show();
+
+        //呈请报告嫌疑对象内容去掉
+        var textareaVal = $("#cqbg_main_con form textarea").val();
+        textareaVal = textareaVal.replace('\t'+ xydxZhxx +'\n','');
+        $("#cqbg_main_con form textarea").val(textareaVal);
+
     }
 }
 

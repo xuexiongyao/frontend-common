@@ -21,13 +21,19 @@ function easyuiReset(ipts, isAdd, bm) {
             var params = annotation.substring(annotation.indexOf('[') + 1, annotation.indexOf(']')); //参数
             var editAttr = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/')); //编辑状态
 
-            //必填项的判断
+            //是否为必填项的判断
             if(editAttr && editAttr !='REPLACE'){
                 if (editAttr == 'EDIT_N'){
                     isTrue = false;
                 }else{
                     isTrue = true;
                 }
+            }
+
+            //annotation为中文的判断(行政案件)
+            var isChinese = isChineseChar(annotation);
+            if(isChinese){
+                $(ipts[i]).textbox({value:annotation});
             }
 
             if (isAdd) {//新增页面
@@ -311,11 +317,25 @@ function easyuiReset(ipts, isAdd, bm) {
                         case 'NUMBER': //数字输入框
                             $(ipts[i]).textbox(textboxObj);
                             break;
-                        case 'TEXTAREA': //换行文本不换行
-                            $(ipts[i]).textbox(textboxObj);
+                        case 'TEXTAREA': //换行文本   不换行
+                            // $(ipts[i]).textbox(textboxObj);
+                            // break;
+                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
+                            parentA.html(strTextbox);
+                            replaceEnter();//textarea框的处理
+                            parentA.find('textarea').validatebox({
+                                required: false
+                            });
                             break;
                         case 'TEXTAREA_R': //换行文本不换行
-                            $(ipts[i]).textbox(textboxObj);
+                            // $(ipts[i]).textbox(textboxObj);
+                            // break;
+                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
+                            parentA.html(strTextbox);
+                            replaceEnter();//textarea框的处理
+                            parentA.find('textarea').validatebox({
+                                required: false
+                            });
                             break;
                         case 'NUMBERCN'://数字转大写
                             $(ipts[i]).textbox({
@@ -373,7 +393,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             });
                             break;
                         case 'TEXTBOX'://文本框  换行文本
-                            var strTextbox = '<textarea class="easyui-validatebox easyuivalidatebox TEXTBOX ' + aName + '" name="' + aName + '" style="text-align: start;hyphenate: auto;font-family: 仿宋_GB2312;font-size: 16pt;letter-spacing: 0;width: 99%;min-height: 300px;resize: none;"></textarea>';
+                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             replaceEnter();//textarea框的处理
                             parentA.find('textarea').validatebox({
