@@ -11,7 +11,7 @@ function getCqbgFlwsHtmlPage() {
     /***呈请报告***/
     var cqbgstr = '';
     var cqbgData = DATA.CQBG.cqbgData;//呈请报告数据
-    if (cqbgData) {
+    if (!jQuery.isEmptyObject(cqbgData)) {
         //呈请报告字符串
         var cqbgcon = getHtmlByAjax(cqbgData.url);
         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
@@ -33,7 +33,7 @@ function getCqbgFlwsHtmlPage() {
     /***法律文书***/
     var flwsstr = '';
     var flwsData = DATA.FLWS.flwsData;//法律文书数据
-    if (flwsData) {
+    if (!jQuery.isEmptyObject(flwsData)) {
         //法律文书字符串
         for (var a in flwsData) {
             flwsstr = '<div class="flws-tabs-title" title="' + flwsData[a].name + '">' +
@@ -83,10 +83,10 @@ function cqbgPageRender() {
     } else {
         if (!DATA.CQBG.cqbgZj) {//新增渲染
             easyuiReset(cqbgIpts, true , '');
-            //$('#loadingMskFlws').show();
+            cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         } else {//编辑渲染
             easyuiReset(cqbgIpts, false, '');
-
+            cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
             cqbgDataXxfy();//呈请报告数据信息复用
 
             //呈请报告嫌疑对象的勾选
@@ -101,6 +101,7 @@ function cqbgPageRender() {
         }
     }
 
+    loading('close');
     //绑定呈请报告保存事件
     $('#save_cqbg').off('click').on('click', function () {
         saveCqbg();
@@ -136,7 +137,6 @@ function xydxRenderCqbg() {
 
         //呈请报告嫌疑人列表展示
         $('#cqbg_xyr_con').append(xyrListStr);
-        loading('close');
 
         //已呈请样式(呈请报告的前后置关系)
         $('#cqbg_xyr_con ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});

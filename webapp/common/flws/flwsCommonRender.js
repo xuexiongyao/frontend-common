@@ -47,7 +47,6 @@ function cqbgNrXxfy() {
                     $("#cqbg_main_con form textarea").val(textareaVal);
                 }
             }
-            loading('close');
         }
     }
 }

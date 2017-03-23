@@ -4,6 +4,106 @@
  */
 
 /**
+ * 当字符串长度过大（string>5000）时，在本页面请求获取文书map结构数据
+ * @param data  前一个页面传过来的map数据
+ * @param cqbgBm  呈请报告的编码
+ */
+function wsMainPageRender(data,cqbgBm){
+    if(typeof data == 'undefined' && typeof cqbgBm != 'undefined'){
+        $.ajax({
+            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC',
+            success: function (json) {
+                initFlwsMain(json);
+            }
+        })
+    } else if(typeof data == 'string'){
+        initFlwsMain(data);
+    }
+}
+
+/**
+ * 初始化文书主页面函数
+ * @param data  前一个页面传过来的map数据
+ */
+function initFlwsMain(data){
+    var jsonDatas = eval('(' + data + ')');//json化数据
+
+    /**********规则引入***********/
+    DATA.asjbh = pathObj.asjbh;//案事件编号
+    if (pathObj.asjzcxwdm) {
+        DATA.asjzcxwdm = pathObj.asjzcxwdm;//案事件侦查行为代码
+    }
+
+    //呈请报告、法律文书map数据的获取
+    if (!jsonDatas.isFlws && !jsonDatas.bianMa.startsWith("000000")) {
+        DATA.CQBG = {
+            cqbgData: jsonDatas,//呈请报告数据
+            asjflwsdm: jsonDatas.bianMa,//呈请报告编码(案事件法律文书代码)
+            asjflwsmc: jsonDatas.name,//案事件法律文书名称
+            status: {}
+        };
+        //有法律文书
+        if (jsonDatas.childMap) {//有法律文书
+            DATA.FLWS = {
+                flwsData: jsonDatas.childMap//法律文书数据
+            }
+        } else {
+            DATA.FLWS = {
+                flwsData: {}//法律文书数据
+            }
+        }
+    } else if (jsonDatas.isFlws) {//无呈请报告
+        DATA.CQBG = {status: {}};
+        DATA.FLWS = {
+            flwsData: {"customer": jsonDatas}//法律文书数据
+        };
+
+        if(pathObj.flwsxxzjbh && typeof (pathObj.flwsxxzjbh) != 'undefined'){
+            DATA.FLWS.cqbgZj = pathObj.flwsxxzjbh;//呈请报告主键
+        }
+
+        $("#sent").hide();
+    }
+
+    //页面初始化
+    getCqbgFlwsHtmlPage();//获取呈请报告、法律文书页面
+
+    $.when(flwsQhzgxRequest() , getCqbgFlwsAllXxData(), getDxxxData() , getLoginInfo()).done(function (r1,r2,r3,r4) {
+        console.log(r1 +','+ r2 +','+ r3 +','+ r4);
+        xydxRenderCqbg();//呈请报告嫌疑对象列表的渲染;
+        callbackForAllAjaxQuerySuccess();//呈请报告内容复用，其他公共信息复用
+
+        loading('close');
+    }).fail(function () {
+        console.log("fail");
+    });
+
+    //获取呈请报告数据
+    /***呈请报告***/
+    if (typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
+        queryCqbgData(cqbgPageRender);//页面渲染
+    }else{//无呈请报告
+        if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
+            onlyFlwsRender();
+        }
+    }
+
+    /***呈请报告****/
+    replaceEnter();//textarea框的处理
+
+    // 页面操作
+    tabSwitch();//tab切换
+
+    //绑定送审事件
+    $('#sent').off('click').on('click', function () {
+        if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
+            shongshen(DATA.OWN);
+        }
+    });
+}
+
+
+/**
  * 请求获取呈请报告数据，判断该数据是否存在，如果存在保存既修改，如果不存在，保存既新增
  * @param render 回调函数
  */
@@ -27,6 +127,7 @@ function queryCqbgData(render) {
         }
 
         //获取呈请报告数据请求
+        loading("open","正在获取呈请报告数据,请稍等...");
         $.ajax({
             url: DATA.CQBG.cqbgData.queryUrl,
             data: param,
