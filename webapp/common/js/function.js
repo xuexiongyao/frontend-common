@@ -1363,11 +1363,18 @@ function wdateValidate(obj){
 function alertDiv(options){
     var arguments = arguments;
     var type = typeof options;
+    var fn = arguments[2];
+    if(typeof fn != 'function'){
+        fn = arguments[3];
+        if(typeof fn !== 'function'){
+            fn = function(){console.log('alertDiv()传递的参数格式不正确')}
+        }
+    }
     if(type == 'string'){
         options = {
             title: arguments[0],
             msg: arguments[1],
-            fn: arguments[2]
+            fn: fn
         }
     }
     var opts = $.extend({}, {
