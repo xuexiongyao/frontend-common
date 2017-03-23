@@ -322,9 +322,29 @@ function easyuiReset(ipts, isAdd, bm) {
                             // break;
                             var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
-                            replaceEnter();//textarea框的处理
                             parentA.find('textarea').validatebox({
                                 required: false
+                            });
+                            autoTextarea(parentA.find('textarea')[0]);
+                            //输入框的联动处理
+                            parentA.find('textarea').off().on({
+                                keyup: function (e) {
+                                    if (e.which == 13) {
+                                        $(this).val($(this).val() + "\t");
+                                    }
+                                },
+                                input: function () {
+                                    this.style.height = '0px';
+                                    this.style.height = (this.scrollHeight + 'px');
+                                },
+                                blur:function () {
+                                    var $this = $(this);
+                                    var val = $this.val();
+                                    var className = $this.attr('name');//组件class name值
+                                    if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                        flwsLdXxfy(bm, className, val, 'textarea');
+                                    }
+                                }
                             });
                             break;
                         case 'TEXTAREA_R': //换行文本不换行
@@ -332,9 +352,29 @@ function easyuiReset(ipts, isAdd, bm) {
                             // break;
                             var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
-                            replaceEnter();//textarea框的处理
                             parentA.find('textarea').validatebox({
                                 required: false
+                            });
+                            autoTextarea(parentA.find('textarea')[0]);
+                            //输入框的联动处理
+                            parentA.find('textarea').off().on({
+                                keyup: function (e) {
+                                    if (e.which == 13) {
+                                        $(this).val($(this).val() + "\t");
+                                    }
+                                },
+                                input: function () {
+                                    this.style.height = '0px';
+                                    this.style.height = (this.scrollHeight + 'px');
+                                },
+                                blur:function () {
+                                    var $this = $(this);
+                                    var val = $this.val();
+                                    var className = $this.attr('name');//组件class name值
+                                    if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                        flwsLdXxfy(bm, className, val, 'textarea');
+                                    }
+                                }
                             });
                             break;
                         case 'NUMBERCN'://数字转大写
@@ -395,9 +435,29 @@ function easyuiReset(ipts, isAdd, bm) {
                         case 'TEXTBOX'://文本框  换行文本
                             var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
-                            replaceEnter();//textarea框的处理
                             parentA.find('textarea').validatebox({
                                 required: false
+                            });
+                            autoTextarea(parentA.find('textarea')[0]);
+                            //输入框的联动处理
+                            parentA.find('textarea').off().on({
+                                keyup: function (e) {
+                                    if (e.which == 13) {
+                                        $(this).val($(this).val() + "\t");
+                                    }
+                                },
+                                input: function () {
+                                    this.style.height = '0px';
+                                    this.style.height = (this.scrollHeight + 'px');
+                                },
+                                blur:function () {
+                                    var $this = $(this);
+                                    var val = $this.val();
+                                    var className = $this.attr('name');//组件class name值
+                                    if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                        flwsLdXxfy(bm, className, val, 'textarea');
+                                    }
+                                }
                             });
                             break;
                         case 'CHECKBOX'://复选框
@@ -477,6 +537,8 @@ function flwsLdXxfy(bm, className, vals, funName) {
             // $(ipts[i]).find('.' + className).combotree('setValue', vals);
         } else if (funName == 'validatebox' || funName == 'Wdate') {
             $(ipts[i]).find('.' + className).val(vals).validatebox();
+        } else if(funName == 'textarea'){
+            $(ipts[i]).find('.' + className).val(vals);
         }
     }
 }

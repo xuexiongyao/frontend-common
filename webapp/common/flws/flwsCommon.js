@@ -107,14 +107,14 @@ function resizeTextarea() {
 }
 
 //用'\t'替换回车
-function replaceEnter() {
+function replaceEnterForCqbg() {
     //$("textarea").off('keyup').on('keyup', function (e) {
     //    resizeTextarea();
     //    if(e.which == 13){
     //        $(this).val($(this).val()+"\t");
     //    }
     //})
-    $('textarea').off().on({
+    $('#cqbg_main_con form textarea').off().on({
         keydown: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');

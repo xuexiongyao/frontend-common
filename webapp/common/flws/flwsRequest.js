@@ -89,7 +89,7 @@ function initFlwsMain(data){
     }
 
     /***呈请报告****/
-    replaceEnter();//textarea框的处理
+    replaceEnterForCqbg();//textarea框的处理
 
     // 页面操作
     tabSwitch();//tab切换
