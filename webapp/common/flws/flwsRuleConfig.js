@@ -320,10 +320,10 @@ function easyuiReset(ipts, isAdd, bm) {
                         case 'TEXTAREA': //换行文本   不换行
                             // $(ipts[i]).textbox(textboxObj);
                             // break;
-                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             parentA.find('textarea').validatebox({
-                                required: false
+                                required: isTrue
                             });
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
@@ -350,10 +350,10 @@ function easyuiReset(ipts, isAdd, bm) {
                         case 'TEXTAREA_R': //换行文本不换行
                             // $(ipts[i]).textbox(textboxObj);
                             // break;
-                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             parentA.find('textarea').validatebox({
-                                required: false
+                                required: isTrue
                             });
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
@@ -433,10 +433,10 @@ function easyuiReset(ipts, isAdd, bm) {
                             });
                             break;
                         case 'TEXTBOX'://文本框  换行文本
-                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             parentA.find('textarea').validatebox({
-                                required: false
+                                required: isTrue
                             });
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
@@ -538,7 +538,7 @@ function flwsLdXxfy(bm, className, vals, funName) {
         } else if (funName == 'validatebox' || funName == 'Wdate') {
             $(ipts[i]).find('.' + className).val(vals).validatebox();
         } else if(funName == 'textarea'){
-            $(ipts[i]).find('.' + className).val(vals);
+            $(ipts[i]).find('.' + className).val(vals).validatebox();
         }
     }
 }

@@ -73,8 +73,10 @@ function cqbgFlwsOtherXxfy() {
                             $node.combobox({value: val})
                         } else if ($node.hasClass('easyuicombotree')) {
                             $node.combotree({value: val})
-                        } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-                            $node.val(val);
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(val).validatebox();
+                        }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
                         }
                     }
                 }
@@ -374,6 +376,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面的初始化 (新增渲染)
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
     easyuiReset(flwsIpts, true, bm);
+    cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
 
     if (typeof (DATA.FLWS[bm]) == 'undefined') {
         DATA.FLWS[bm] = {};
@@ -701,8 +704,10 @@ function fzxyrXxfy(currentXyr, bm) {
                             $node.combobox({value: val});
                         } else if ($node.hasClass('easyuicombotree')) {
                             $node.combotree({value: val})
-                        } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-                            $node.val(val);
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(val).validatebox();
+                        } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
                         }
                     }
                 }
@@ -769,11 +774,11 @@ function flwsDataXxfy(bm, zj) {
                         $node.combobox({value: val})
                     } else if ($node.hasClass('easyuicombotree')) {
                         $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
+                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
                         $node.val(data[i][key + '_MASTER']);
                         wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-                    } else if ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R')) {//多选 TEXTBOX 的处理
-                        $node.val(val);
+                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                        $node.val(val).validatebox();
                     }
                 }
             }
