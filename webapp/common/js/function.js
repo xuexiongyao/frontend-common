@@ -417,11 +417,12 @@ function formTips(json, success_fn, type) {
         }
 
         if (json.message && json.message.indexOf('{') == -1) {   //系统异常错误抛出
-            $.messager.alert({
+            /*$.messager.alert({
                 title: '提示信息',
                 msg: json.message,
                 top: 200
-            });
+            });*/
+            alertDiv('提示信息',json.message);
         } else {
             var message = eval("(" + json.message + ")");
             var message_arr = [];
@@ -1364,7 +1365,8 @@ function alertDiv(options){
     var arguments = arguments;
     var type = typeof options;
     var fn = arguments[2];
-    if(typeof fn != 'function'){
+
+    if(typeof fn != 'undefined' && typeof fn != 'function'){
         fn = arguments[3];
         if(typeof fn !== 'function'){
             fn = function(){console.log('alertDiv()传递的参数格式不正确')}
