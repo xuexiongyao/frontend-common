@@ -11,7 +11,7 @@
 function wsMainPageRender(data,cqbgBm){
     if(typeof data == 'undefined' && typeof cqbgBm != 'undefined'){
         $.ajax({
-            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC',
+            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json',
             success: function (json) {
                 initFlwsMain(json);
             }
