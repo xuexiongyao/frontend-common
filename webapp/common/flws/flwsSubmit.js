@@ -66,6 +66,14 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                         param += '&shjl=1';
                         param += '&shyj=1';
                         param += '&shsj='+getCurrentTime();
+
+                        //发送短信请求
+                        var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
+                        if(isCheckMsger){
+                            var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.asjflwsmc+"】已到审批任务中，请您及时处理。";
+                            sendMsg(nameIdStr,content);
+                        }
+
                         //第三次
                         $.ajax({
                             url: pathConfig.basePath+'/workflowRelated/startProcessInstance?'+param,
@@ -96,4 +104,19 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
     });
 }
 
+/**
+ * 启动流程发送短信方法
+ */
+function sendMsg(userid,con){
+    $.ajax({
+        url:  pathConfig.basePath + '/api/xx/sendMsg/'+userid,
+        param: {
+            content: con
+        },
+        type: 'post',
+        success: function (data) {
+            console.log(data);
+        }    
+    })
+}
 
