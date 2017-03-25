@@ -8,7 +8,7 @@
  */
 function getCqbgMapData() {
     var openUrl = '';
-    if(DATA.asjflwsbm && DATA.asjflwsbm != 'undefined'&&DATA.asjflwsbm != 'TB_XW_FLWS_SADJ'&&DATA.asjflwsbm != 'TB_FLWS_SADJB'){//无呈请报告法律文书的处理
+    if(DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined'&&DATA.asjflwsbm != 'TB_XW_FLWS_SADJ'&&DATA.asjflwsbm != 'TB_FLWS_SADJB'){//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath+'/wenshu/source/FLWS_'+DATA.flwsAsjflwsdm+'/DIC.json'
     }else{
         openUrl = pathConfig.basePath+'/wenshu/source/CQBG_'+DATA.flwsAsjflwsdm+'/DIC.json'
