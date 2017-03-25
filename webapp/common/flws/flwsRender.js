@@ -610,6 +610,9 @@ function flwsClXyDxCheckB(bm, $this) {
 
         DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
 
+        //嫌疑人勾选其他接口请求信息复用（秀平）
+        ajax_request(bm,xyrXxzjbh);
+
         //嫌疑人处理对象类别
         for (var k in xyrObj) {
             if (xyrtype == xyrObj[k].id) {
