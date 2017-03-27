@@ -1511,7 +1511,7 @@ function searchResult(data) {
 //表格内容
 
 function tableNum(val, row, index) {
-    console.log(pageNumAll,pageSizeAll);
+    //console.log(pageNumAll,pageSizeAll);
     if(pageSizeAll>0){
         return (pageNumAll - 1)*pageSizeAll + index + 1;
     }else{
@@ -1795,7 +1795,7 @@ var isLast = true;//是否是最后一个
 function clearFormate() {
     setTimeout(function () {
         if (isLast) {//如果是最后一个，开始清空
-            console.log("开始清空未发送的翻译请求");
+            //console.log("开始清空未发送的翻译请求");
             getOrgName(null, null);
         } else {
             isLast = true;//标记为最后一个，如果0.5s之间还有新的翻译请求，会将isLast=false
@@ -1809,7 +1809,7 @@ var formateAry = [];//未处理的翻译
  * 循环遍历未处理的翻译
  */
 function orgCodeFormat() {
-    console.log("开始遍历未处理");
+    //console.log("开始遍历未处理");
     if (formateAry.length == 0) {
         return;
     }
@@ -1821,7 +1821,7 @@ function orgCodeFormat() {
         }
     }
 
-    console.log("处理完毕");
+    //console.log("处理完毕");
     if (formateAry.length > 0) {
         setTimeout(function () {
             orgCodeFormat();
