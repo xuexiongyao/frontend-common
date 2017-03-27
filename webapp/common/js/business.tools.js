@@ -438,8 +438,8 @@ function dict_multiSelectTree(isCache, windowID, parentWindow, dictName, dictInp
 }
 function initAddressSearch2(comboID, filterData, returnFieldData,onSelectedFun){
 	if(!filterData) filterData = {};
-	if(!filterData.sort) filterData.sort = 'DZJB';
-	if(!filterData.order) filterData.order = 'ASC';
+	if(!filterData.sort) filterData.sort = 'DZJB ASC,MPH ASC,MPHHZ_HFH ASC,MPHHZ_ZHFH ASC';
+	if(!filterData.order) filterData.order = 'MULTIPLE_SORT';
 	
 	var basePath = basePath || pathConfig.basePath;
 	var url=basePath + '/solrSearcher/doBzdzSelect';

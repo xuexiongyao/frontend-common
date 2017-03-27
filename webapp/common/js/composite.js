@@ -1360,7 +1360,7 @@ function ajaxQuery(condition_obj) {
             searchResult(data); //展示查询结果
             
             logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
-            logEntity.error_code = '0';
+            logEntity.error_code = '200';
             writeLog(logEntity);
         },
         error: function (e) {
@@ -1912,8 +1912,13 @@ function getDateStr(date,filter){
  * @param logEntity
  */
 function writeLog(logEntity){
+	var logUrl = basePath+'/compositQuery/writeLog';
+	if(basePath && basePath.length>0 && basePath.substr(basePath.length-1) == "/"){
+		logUrl = basePath+'compositQuery/writeLog';
+	}
+		
 	$.ajax({
-        url: basePath+'/compositQuery/writeLog',
+        url: logUrl,
         type: 'post',
         dataType: 'json',
         data: logEntity
