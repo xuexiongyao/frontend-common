@@ -67,13 +67,6 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                         param += '&shyj=1';
                         param += '&shsj='+getCurrentTime();
 
-                        //发送短信请求
-                        var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
-                        if(isCheckMsger){
-                            var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.asjflwsmc+"】已到审批任务中，请您及时处理。";
-                            sendMsg(nameIdStr,content);
-                        }
-
                         //第三次
                         $.ajax({
                             url: pathConfig.basePath+'/workflowRelated/startProcessInstance?'+param,
@@ -82,6 +75,12 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                             success: function (json) {
                                 loading('close');
                                 if(json.status == 'success'){
+                                    //发送短信请求
+                                    var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
+                                    if(isCheckMsger){
+                                        var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.asjflwsmc+"】已到审批任务中，请您及时处理。";
+                                        sendMsg(nameIdStr,content);
+                                    }
                                     $.messager.alert({
                                         title : '提示',
                                         msg: '保存成功!',

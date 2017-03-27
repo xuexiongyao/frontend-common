@@ -15,6 +15,7 @@ var flwsmc = pathObj.flwsmc;
 var cjsj = pathObj.cjsj;
 var asjbh = pathObj.asjbh;
 var ajmc = pathObj.ajmc;
+var badwGajgmc = pathObj.badwGajgmc;
 var fjrid = pathObj.fjrid;
 var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
@@ -504,6 +505,12 @@ function complete(shjl, shsj, shyj) {
             loading('close');
             // console.log('complete:', json);
             if (json.status == 'success') {
+                //发送短信请求
+                var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
+                if(isCheckMsger && candidateUsers){
+                    var content = badwGajgmc+"送审的【"+flwsmc+"】已到审批任务中，请您及时处理。";
+                    sendMsg(candidateUsers,content);
+                }
                 $.messager.alert({
                     title: '提示',
                     msg: json.message,
@@ -581,12 +588,13 @@ function lctShow() {
                 $('#next_over').after(shsjStr);
                 //默认值设置
                 if(isTrue){
-                    $('#shsj').val(data[0].shsj);
+                    var dLen = data.length;
+                    $('#shsj').val(data[dLen-1].shsj);
                 }else{
                     $('#shsj').val(getCurrent());
                 }
 
-                for (var i = data.length - 1; i > -1; i--) {
+                for (var i = 0; i < data.length; i++) {
                     //审批状态
                     if (data[i].shjl == '1') {
                         spzt = '<i class="fa fa-check"></i>';
@@ -653,4 +661,20 @@ function compareTime(startTime,endTime,i) {
     } else if (thisResult >= i) {
         return false;
     }
+}
+
+/**
+ * 启动流程发送短信方法
+ */
+function sendMsg(userid,con){
+    $.ajax({
+        url:  pathConfig.basePath + '/api/xx/sendMsg/'+userid,
+        param: {
+            content: con
+        },
+        type: 'post',
+        success: function (data) {
+            console.log(data);
+        }
+    })
 }
