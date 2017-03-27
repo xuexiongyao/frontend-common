@@ -572,9 +572,10 @@ function lctShow() {
                  * 2、如果审核时间相对于当前系统时间不超过三天，minDate=审核时间；
                  */
                 var minDateVal,isTrue;
-                isTrue = minDateFun(data[0].shsj);
+                var dLen = data.length;
+                isTrue = minDateFun(data[dLen-1].shsj);
                 if(isTrue){
-                    minDateVal = data[0].shsj;
+                    minDateVal = data[dLen-1].shsj;
                 }else{
                     minDateVal = '%y-%M-%d {%H-72}:%m:%s'
                 }
@@ -588,7 +589,6 @@ function lctShow() {
                 $('#next_over').after(shsjStr);
                 //默认值设置
                 if(isTrue){
-                    var dLen = data.length;
                     $('#shsj').val(data[dLen-1].shsj);
                 }else{
                     $('#shsj').val(getCurrent());
