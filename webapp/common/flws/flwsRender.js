@@ -86,6 +86,7 @@ function cqbgPageRender() {
             cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         } else {//编辑渲染
             easyuiReset(cqbgIpts, false, '');
+            cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
             cqbgDataXxfy();//呈请报告数据信息复用
 
             //呈请报告嫌疑对象的勾选
