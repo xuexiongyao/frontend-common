@@ -7,7 +7,6 @@ var pageNumAll = 1;
 var pageSizeAll = 0;
 var sysType = search_config.sysType || null;
 
-
 $(function () {
     if(!sysType){
         alertDiv({
@@ -1477,22 +1476,30 @@ function pagination() {
         pageSize: 5,
         pageList: [5, 10, 15, 20, 30, 50],
         onSelectPage: function (pageNumber, pageSize) {
-            var total = pageNumber*pageSize;
-            pageNumAll = pageNumber;
-            pageSizeAll = pageSize;
-            if(total >= 10000){
-                $.messager.alert({
-                    title: '查询数据提示!',
-                    msg: '数据操作超过10000条之后,查询数据重复。'
-                });
-                return false;
-            }
-            pageN = (pageNumber - 1) * pageSize;
-            condition_obj.start = (pageNumber - 1) * pageSize;
-            condition_obj.limit = pageSize;
-            ajaxQuery(condition_obj);
+            paginationQuery(pageNumber, pageSize);
+        },
+        onRefresh: function(pageNumber, pageSize){
+            paginationQuery(pageNumber, pageSize);
         }
     });
+}
+
+//分页查询处理
+function paginationQuery(pageNumber, pageSize){
+    var total = pageNumber*pageSize;
+    pageNumAll = pageNumber;
+    pageSizeAll = pageSize;
+    if(total >= 10000){
+        $.messager.alert({
+            title: '查询数据提示!',
+            msg: '数据操作超过10000条之后,查询数据重复。'
+        });
+        return false;
+    }
+    pageN = (pageNumber - 1) * pageSize;
+    condition_obj.start = (pageNumber - 1) * pageSize;
+    condition_obj.limit = pageSize;
+    ajaxQuery(condition_obj);
 }
 
 //查询结果
