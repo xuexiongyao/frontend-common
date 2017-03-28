@@ -304,7 +304,9 @@ function Arabia_to_Chinese(Num) {
         Num = Num.replace(",", "");//替换tomoney()中的“,”
         Num = Num.replace(" ", "");//替换tomoney()中的空格
     }
-    Num = Num.replace("￥", "");//替换掉可能出现的￥字符
+    if(Num.indexOf('￥') > -1){
+        Num = Num.replace("￥", "");//替换掉可能出现的￥字符
+    }
     if (isNaN(Num)) { //验证输入的字符是否为数字
         $.messager.show({
             title: '提示',

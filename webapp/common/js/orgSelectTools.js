@@ -207,7 +207,7 @@ function org_add_select(textboxID) {
 			for (var item in selectedNodes) {
 				var node = selectedNodes[item];
 				if (node.id != "ROOT") { // 根结点不变
-					addHTML.push(getOptionString(node.id,node.text,node.bizID));
+					addHTML.push(getOptionString(node.id,node.text,node.bizID,node.attributes.orgLevel));
 				}
 			}
 		}
@@ -224,8 +224,8 @@ function org_add_select(textboxID) {
  * @param bizID
  * @returns {String}
  */
-function getOptionString(optionValue, optionText, bizID) {
-	var optionString = '<option value="' + optionValue + '" optionName="' + optionText + '" bizID="' + bizID + '">';
+function getOptionString(optionValue, optionText, bizID,orgLevel) {
+	var optionString = '<option value="' + optionValue + '" optionName="' + optionText + '" bizID="' + bizID + '" orgLevel ="'+orgLevel+'">';
 	optionString += '\xA0' + optionValue + '\xA0|\xA0' + optionText + '</options>';
 	return optionString;
 }
@@ -316,6 +316,7 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 				var option = options[i];
 				selectedOrgCode.push(option.value);
 				selectedOrgName.push(option.getAttribute('optionname'));
+				selectedorgLevel.push(option.getAttribute('orgLevel'));
 			}
 		}else{
 			var checkNode = $('#treeSelect_'+textboxID).tree('getChecked');

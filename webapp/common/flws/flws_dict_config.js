@@ -312,6 +312,10 @@ var flwsDictObj = {
     'BD_D_BAXZ_QWWTDM': [//前往委托
         {"id": "1", "text": "前往你管辖区", "py": "QW", "wb": "UT"},
         {"id": "2", "text": "委托你局代为", "py": "WT", "wb": "TR"}
+    ],
+    'BD_D_JSJZ_FLTK': [//监视居住法律条款
+        {"id":"1","text":"七十二","py":"QSE","wb":""},
+        {"id":"2","text":"七十二、七十三","py":"QSE、QSS","wb":""}
     ]
 };
 

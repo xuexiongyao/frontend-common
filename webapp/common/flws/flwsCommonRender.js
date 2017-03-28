@@ -73,8 +73,10 @@ function cqbgFlwsOtherXxfy() {
                             $node.combobox({value: val})
                         } else if ($node.hasClass('easyuicombotree')) {
                             $node.combotree({value: val})
-                        } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-                            $node.val(val);
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(val).validatebox();
+                        }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
                         }
                     }
                 }
@@ -154,13 +156,54 @@ function cqbgXyrDataXxfy() {
  * @param xytype 嫌疑对象类型
  * @param xyzhxx 嫌疑对象组合信息
  * @param xydxmc 嫌疑对象名称
+ * @param isFlws 是否是法律文书
  * @returns {string}  返回为拼接好的字符串
  */
-function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc) {
+function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc,isFlws) {
     var xydxStrTmp = '';
+    var str = '';
+    if(isFlws){
+        str = '<a class="val easyui-linkbuttom c5 delXydxBtn" title="删除"><i class="fa fa-times"></i></a>';
+    }
     xydxStrTmp = '<li><label  ' + title + ' ' + disabled + ' class="easyui-tooltip"><input xxzjbh="' + xxzjbh + '" ' + disabled + ' type="checkbox" />' +
-        '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label></li>';
+        '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label>' + str +'</li>';
     return xydxStrTmp;
+}
+
+/**
+ * 已处理嫌疑对象的删除
+ * @param bm  文书编码
+ * @param $this  当前这条数据
+ */
+function flwsYclXydxDelete(bm,$this) {
+    var flwsZj = $this.prev().find('input:checkbox').attr('flwszj');//当前嫌疑对象对应法律文书列表的主键
+
+    loading('open','数据处理中...');
+    //删除请求
+    $.ajax({
+        url: DATA.FLWS[bm].flwsData.writtenOffUrl,
+        data: {
+            ZJ: flwsZj
+        },
+        success: function (data) {
+            loading('close');
+            var json = eval('('+data+')');
+            if(json.state == 'success'){
+                $.messager.alert({
+                    title: '温馨提示',
+                    msg: '操作成功',
+                    fn: function () {
+                        queryFlwsData(DATA.FLWS.title, flwsPageRender);
+                    }
+                });
+            } else if(json.state == 'error'){
+                $.messager.show({
+                    title: '温馨提示',
+                    msg: '操作失败'
+                });
+            }
+        }
+    })
 }
 
 /**
@@ -374,6 +417,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面的初始化 (新增渲染)
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
     easyuiReset(flwsIpts, true, bm);
+    cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
 
     if (typeof (DATA.FLWS[bm]) == 'undefined') {
         DATA.FLWS[bm] = {};
@@ -476,6 +520,9 @@ function flwsWclXyDxCheck(bm, $this, event) {
             var xyrtype = $this.next().attr('xyrtype');//嫌疑人类别
 
             DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
+
+            //嫌疑人勾选其他接口请求信息复用（秀平）
+            ajax_request(bm,xyrXxzjbh);
 
             //遍历嫌疑人处理对象类别筛选出当前嫌疑对象对应的的表名
             for (var k in xyrObj) {
@@ -701,8 +748,10 @@ function fzxyrXxfy(currentXyr, bm) {
                             $node.combobox({value: val});
                         } else if ($node.hasClass('easyuicombotree')) {
                             $node.combotree({value: val})
-                        } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-                            $node.val(val);
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(val).validatebox();
+                        } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
                         }
                     }
                 }
@@ -769,11 +818,11 @@ function flwsDataXxfy(bm, zj) {
                         $node.combobox({value: val})
                     } else if ($node.hasClass('easyuicombotree')) {
                         $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
+                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
                         $node.val(data[i][key + '_MASTER']);
                         wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-                    } else if ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R')) {//多选 TEXTBOX 的处理
-                        $node.val(val);
+                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                        $node.val(val).validatebox();
                     }
                 }
             }

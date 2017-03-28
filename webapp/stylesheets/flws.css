@@ -120,14 +120,42 @@
   white-space: nowrap;
   width: 85%;
 }
-/* line 49, ../sass/sass/_flws.scss */
+/* line 48, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul.xyrList li {
+  position: relative;
+}
+/* line 50, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-l ul.xyrList li label[disabled='disabled'] {
   cursor: no-drop;
   color: #747474;
   border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
   background: #e0dede;
 }
-/* line 59, ../sass/sass/_flws.scss */
+/* line 56, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul.xyrList li > a {
+  position: absolute;
+  display: none;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  right: 10px;
+  line-height: 15px;
+  top: 8px;
+}
+/* line 65, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l ul.xyrList li:hover > a {
+  display: block;
+}
+/* line 71, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l .choose-list li {
+  position: relative;
+}
+/* line 73, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-l .choose-list li span {
   font-size: 12px;
   overflow: hidden;
@@ -135,21 +163,21 @@
   white-space: nowrap;
   width: 100%;
 }
-/* line 70, ../sass/sass/_flws.scss */
+/* line 84, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-l .choose-list .hasdone {
   color: #ed4848;
 }
-/* line 72, ../sass/sass/_flws.scss */
+/* line 86, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-l .choose-list .hasdone:hover {
   cursor: not-allowed;
 }
-/* line 78, ../sass/sass/_flws.scss */
+/* line 92, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_edit {
   overflow: inherit;
   background: #fff;
   position: relative;
 }
-/* line 82, ../sass/sass/_flws.scss */
+/* line 96, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_ycq, .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_wcq {
   background: #f5f5f5;
   width: 100%;
@@ -157,38 +185,38 @@
   overflow: auto;
   position: absolute;
 }
-/* line 89, ../sass/sass/_flws.scss */
+/* line 103, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_ycq {
   top: 0;
 }
-/* line 91, ../sass/sass/_flws.scss */
+/* line 105, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_ycq p {
   background: #747474;
   color: #fff;
 }
-/* line 96, ../sass/sass/_flws.scss */
+/* line 110, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_wcq {
   bottom: 0;
 }
-/* line 98, ../sass/sass/_flws.scss */
+/* line 112, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_edit .flws_xyr_area_wcq p {
   background: #0e6595;
   color: #fff;
 }
-/* line 104, ../sass/sass/_flws.scss */
+/* line 118, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add {
   overflow: inherit;
   background: #fff;
   position: relative;
 }
-/* line 108, ../sass/sass/_flws.scss */
+/* line 122, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl, .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl {
   background: #f5f5f5;
   width: 100%;
   height: 49%;
   position: absolute;
 }
-/* line 113, ../sass/sass/_flws.scss */
+/* line 127, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl div.title, .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl div.title {
   width: 100%;
   text-indent: 10px;
@@ -196,30 +224,30 @@
   position: absolute;
   top: 0;
 }
-/* line 120, ../sass/sass/_flws.scss */
+/* line 134, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl .xyr_box, .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl .xyr_box {
   margin-top: 39px;
   overflow: auto;
 }
-/* line 125, ../sass/sass/_flws.scss */
+/* line 139, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl {
   bottom: 0;
 }
-/* line 127, ../sass/sass/_flws.scss */
+/* line 141, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_ycl div.title {
   background: #747474;
   color: #fff;
 }
-/* line 132, ../sass/sass/_flws.scss */
+/* line 146, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl {
   top: 0;
 }
-/* line 134, ../sass/sass/_flws.scss */
+/* line 148, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws_xyr_area_add .flws_xyr_area_wcl div.title {
   background: #0e6595;
   color: #fff;
 }
-/* line 140, ../sass/sass/_flws.scss */
+/* line 154, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r {
   width: 85%;
   float: right;
@@ -228,33 +256,33 @@
   overflow: auto;
   /*法律文书右侧模板*/
 }
-/* line 145, ../sass/sass/_flws.scss */
+/* line 159, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .panel-body-noheader,
 .flws-main .flws-main-con .flws-main-con-r .panel-body-noborder {
   outline: none;
 }
-/* line 150, ../sass/sass/_flws.scss */
+/* line 164, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table {
   margin: 0 auto;
 }
-/* line 152, ../sass/sass/_flws.scss */
+/* line 166, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table textarea {
   width: 100%;
   resize: none;
   overflow-y: hidden;
 }
-/* line 157, ../sass/sass/_flws.scss */
+/* line 171, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table p {
   margin-bottom: 0 !important;
 }
-/* line 160, ../sass/sass/_flws.scss */
+/* line 174, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table p a > input[type='checkbox'], .flws-main .flws-main-con .flws-main-con-r form table p a input[type='radio'] {
   height: 20px;
   width: 100%;
   vertical-align: -3px;
   margin-left: -5px;
 }
-/* line 166, ../sass/sass/_flws.scss */
+/* line 180, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form table p a > textarea {
   font-family: '仿宋_GB2312';
   font-size: 12px;
@@ -264,19 +292,19 @@
   height: 16px;
   margin-bottom: -5px;
 }
-/* line 178, ../sass/sass/_flws.scss */
+/* line 192, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form a {
   width: 100%;
   display: inline-block;
 }
-/* line 182, ../sass/sass/_flws.scss */
+/* line 196, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r form input.iptreadonly, .flws-main .flws-main-con .flws-main-con-r form input.readonly, .flws-main .flws-main-con .flws-main-con-r form input[readonly='readonly'], .flws-main .flws-main-con .flws-main-con-r form input[readonly] {
   outline: none;
   border: none;
   background: #fff;
   white-space: nowrap;
 }
-/* line 190, ../sass/sass/_flws.scss */
+/* line 204, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-flws-data {
   position: absolute;
   display: none;
@@ -294,11 +322,11 @@
   -o-border-radius: 3px;
   -ms-border-radius: 3px;
 }
-/* line 202, ../sass/sass/_flws.scss */
+/* line 216, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-flws-data:hover {
   background: #0a4566;
 }
-/* line 206, ../sass/sass/_flws.scss */
+/* line 220, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area {
   position: absolute;
   z-index: 3;
@@ -316,7 +344,7 @@
   clear: both;
   overflow: hidden;
 }
-/* line 212, ../sass/sass/_flws.scss */
+/* line 226, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.save-btn {
   display: none;
   cursor: pointer;
@@ -333,11 +361,11 @@
   _display: inline;
   margin-left: 5px;
 }
-/* line 222, ../sass/sass/_flws.scss */
+/* line 236, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.save-btn:hover {
   background: #0a4566;
 }
-/* line 226, ../sass/sass/_flws.scss */
+/* line 240, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.scflws {
   display: none;
   cursor: pointer;
@@ -354,44 +382,44 @@
   _display: inline;
   margin-left: 5px;
 }
-/* line 236, ../sass/sass/_flws.scss */
+/* line 250, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-area a.scflws:hover {
   background: #0a4566;
 }
-/* line 241, ../sass/sass/_flws.scss */
+/* line 255, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .save-btn-bottom {
   text-align: center;
 }
-/* line 244, ../sass/sass/_flws.scss */
+/* line 258, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .report-save {
   margin-top: 15px;
   margin-bottom: 20px;
   height: 30px;
   line-height: 30px;
 }
-/* line 249, ../sass/sass/_flws.scss */
+/* line 263, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .report-save a {
   float: right;
 }
-/* line 254, ../sass/sass/_flws.scss */
+/* line 268, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-r .flws-mode-right {
   position: relative;
   overflow: hidden;
   width: 100%;
 }
 
-/* line 261, ../sass/sass/_flws.scss */
+/* line 275, ../sass/sass/_flws.scss */
 body {
   padding: 0;
 }
 
-/* line 264, ../sass/sass/_flws.scss */
+/* line 278, ../sass/sass/_flws.scss */
 .main {
   position: relative;
   margin: 5px auto;
   padding: 0;
 }
-/* line 268, ../sass/sass/_flws.scss */
+/* line 282, ../sass/sass/_flws.scss */
 .main .flws-btn-area {
   position: absolute;
   right: 15px;
@@ -400,31 +428,31 @@ body {
 }
 
 /*选择审批人panel*/
-/* line 277, ../sass/sass/_flws.scss */
+/* line 291, ../sass/sass/_flws.scss */
 #select_name {
   padding: 10px 15px 0 15px;
 }
-/* line 279, ../sass/sass/_flws.scss */
+/* line 293, ../sass/sass/_flws.scss */
 #select_name .role {
   margin-bottom: 15px;
 }
-/* line 281, ../sass/sass/_flws.scss */
+/* line 295, ../sass/sass/_flws.scss */
 #select_name .role label {
   min-width: 100px;
   display: inline-block;
 }
-/* line 286, ../sass/sass/_flws.scss */
+/* line 300, ../sass/sass/_flws.scss */
 #select_name .btn {
   text-align: center;
   margin-left: 100px;
 }
-/* line 289, ../sass/sass/_flws.scss */
+/* line 303, ../sass/sass/_flws.scss */
 #select_name .btn a {
   margin-right: 5px;
 }
 
 /*流程全图配置*/
-/* line 296, ../sass/sass/_flws.scss */
+/* line 310, ../sass/sass/_flws.scss */
 .process-make {
   position: relative;
   text-align: center;
@@ -432,13 +460,13 @@ body {
   width: 100%;
 }
 
-/* line 302, ../sass/sass/_flws.scss */
+/* line 316, ../sass/sass/_flws.scss */
 .process-mask {
   top: 0;
   position: absolute;
   margin: 0 28px;
 }
-/* line 306, ../sass/sass/_flws.scss */
+/* line 320, ../sass/sass/_flws.scss */
 .process-mask .process-box {
   border: 1px solid #0e6595;
   position: absolute;
@@ -457,7 +485,7 @@ body {
   padding: 0 2px;
 }
 
-/* line 322, ../sass/sass/_flws.scss */
+/* line 336, ../sass/sass/_flws.scss */
 .lct-box {
   width: 1118px;
   margin: 0 40px;
@@ -466,7 +494,7 @@ body {
   bottom: 0;
   overflow-x: auto;
 }
-/* line 329, ../sass/sass/_flws.scss */
+/* line 343, ../sass/sass/_flws.scss */
 .lct-box .lct-container {
   *zoom: 1;
   position: relative;
@@ -482,7 +510,7 @@ body {
   clear: both;
   overflow: hidden;
 }
-/* line 333, ../sass/sass/_flws.scss */
+/* line 347, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node {
   float: left;
   _display: inline;
@@ -491,33 +519,33 @@ body {
   margin-right: 36px;
   margin-top: 15px;
 }
-/* line 339, ../sass/sass/_flws.scss */
+/* line 353, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text {
   text-align: center;
   color: #0e6595;
 }
-/* line 342, ../sass/sass/_flws.scss */
+/* line 356, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspr {
   font-weight: bold;
   padding-right: 5px;
 }
-/* line 347, ../sass/sass/_flws.scss */
+/* line 361, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-check {
   color: #39980f;
 }
-/* line 350, ../sass/sass/_flws.scss */
+/* line 364, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-times {
   color: #ed4848;
 }
-/* line 353, ../sass/sass/_flws.scss */
+/* line 367, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-reply {
   color: #000;
 }
-/* line 358, ../sass/sass/_flws.scss */
+/* line 372, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point {
   margin: 7px 0;
 }
-/* line 360, ../sass/sass/_flws.scss */
+/* line 374, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point b {
   position: relative;
   display: block;
@@ -532,7 +560,7 @@ body {
   -ms-border-radius: 100%;
   margin: 0 auto;
 }
-/* line 368, ../sass/sass/_flws.scss */
+/* line 382, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point b .h-line {
   position: absolute;
   width: 150px;
@@ -541,15 +569,15 @@ body {
   left: 16px;
   top: 4px;
 }
-/* line 378, ../sass/sass/_flws.scss */
+/* line 392, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .time {
   text-align: center;
 }
-/* line 380, ../sass/sass/_flws.scss */
+/* line 394, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .time span {
   color: #5a5a5a;
 }
-/* line 388, ../sass/sass/_flws.scss */
+/* line 402, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node:last-child .point b .h-line {
   width: 0;
   height: 0;

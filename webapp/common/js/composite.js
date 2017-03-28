@@ -7,7 +7,6 @@ var pageNumAll = 1;
 var pageSizeAll = 0;
 var sysType = search_config.sysType || null;
 
-
 $(function () {
     if(!sysType){
         alertDiv({
@@ -192,7 +191,7 @@ function getQueryModel() {
         },
         //分页
         pagination: true,
-        pageSize: 5,
+        pageSize: 10,
         pageList: [5, 10, 20, 50], //rows
         pageNumber: 1,//显示在第几页
         pagePosition: 'bottom',
@@ -1360,7 +1359,7 @@ function ajaxQuery(condition_obj) {
             searchResult(data); //展示查询结果
             
             logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
-            logEntity.error_code = '0';
+            logEntity.error_code = '200';
             writeLog(logEntity);
         },
         error: function (e) {
@@ -1369,16 +1368,12 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
-            
-            //alert('此处为无效数据提示处理!');
-            //$.messager.alert('提示','一万条以后的数据不让查出来.','warning');
-            /****正式环境请注释下面这一段****/
-//            alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
-//            $('#pagination').pagination({
-//                total: 998
-//            }).show();
-//            changeLinkButtonIcon();
-//            searchResult(search_result_test);
+            return; //本地调试时,注释这个retrun
+            $('#pagination').pagination({
+                total: 998
+            }).show();
+            changeLinkButtonIcon();
+            searchResult(search_result_test);
             logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
             logEntity.error_code = e.status;
             writeLog(logEntity);
@@ -1477,22 +1472,30 @@ function pagination() {
         pageSize: 5,
         pageList: [5, 10, 15, 20, 30, 50],
         onSelectPage: function (pageNumber, pageSize) {
-            var total = pageNumber*pageSize;
-            pageNumAll = pageNumber;
-            pageSizeAll = pageSize;
-            if(total >= 10000){
-                $.messager.alert({
-                    title: '查询数据提示!',
-                    msg: '数据操作超过10000条之后,查询数据重复。'
-                });
-                return false;
-            }
-            pageN = (pageNumber - 1) * pageSize;
-            condition_obj.start = (pageNumber - 1) * pageSize;
-            condition_obj.limit = pageSize;
-            ajaxQuery(condition_obj);
+            paginationQuery(pageNumber, pageSize);
+        },
+        onRefresh: function(pageNumber, pageSize){
+            paginationQuery(pageNumber, pageSize);
         }
     });
+}
+
+//分页查询处理
+function paginationQuery(pageNumber, pageSize){
+    var total = pageNumber*pageSize;
+    pageNumAll = pageNumber;
+    pageSizeAll = pageSize;
+    if(total >= 10000){
+        $.messager.alert({
+            title: '查询数据提示!',
+            msg: '数据操作超过10000条之后,查询数据重复。'
+        });
+        return false;
+    }
+    pageN = (pageNumber - 1) * pageSize;
+    condition_obj.start = (pageNumber - 1) * pageSize;
+    condition_obj.limit = pageSize;
+    ajaxQuery(condition_obj);
 }
 
 //查询结果
@@ -1511,7 +1514,7 @@ function searchResult(data) {
 //表格内容
 
 function tableNum(val, row, index) {
-    console.log(pageNumAll,pageSizeAll);
+    //console.log(pageNumAll,pageSizeAll);
     if(pageSizeAll>0){
         return (pageNumAll - 1)*pageSizeAll + index + 1;
     }else{
@@ -1795,7 +1798,7 @@ var isLast = true;//是否是最后一个
 function clearFormate() {
     setTimeout(function () {
         if (isLast) {//如果是最后一个，开始清空
-            console.log("开始清空未发送的翻译请求");
+            //console.log("开始清空未发送的翻译请求");
             getOrgName(null, null);
         } else {
             isLast = true;//标记为最后一个，如果0.5s之间还有新的翻译请求，会将isLast=false
@@ -1809,7 +1812,7 @@ var formateAry = [];//未处理的翻译
  * 循环遍历未处理的翻译
  */
 function orgCodeFormat() {
-    console.log("开始遍历未处理");
+    //console.log("开始遍历未处理");
     if (formateAry.length == 0) {
         return;
     }
@@ -1821,7 +1824,7 @@ function orgCodeFormat() {
         }
     }
 
-    console.log("处理完毕");
+    //console.log("处理完毕");
     if (formateAry.length > 0) {
         setTimeout(function () {
             orgCodeFormat();
@@ -1912,8 +1915,13 @@ function getDateStr(date,filter){
  * @param logEntity
  */
 function writeLog(logEntity){
+	var logUrl = basePath+'/compositQuery/writeLog';
+	if(basePath && basePath.length>0 && basePath.substr(basePath.length-1) == "/"){
+		logUrl = basePath+'compositQuery/writeLog';
+	}
+		
 	$.ajax({
-        url: basePath+'/compositQuery/writeLog',
+        url: logUrl,
         type: 'post',
         dataType: 'json',
         data: logEntity

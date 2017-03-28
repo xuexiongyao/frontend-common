@@ -58,7 +58,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             if (val && bm) {
                                 if (val && bm) {
                                     if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'combobox');
+                                        flwsLdXxfy(bm, className, val, 'combobox','');
                                     }
                                 }
                             }
@@ -69,7 +69,6 @@ function easyuiReset(ipts, isAdd, bm) {
                     case 'TB_ST_BARY': //办案人员
                         comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
                         comboboxObj.multiple = true;
-                        var _comboNode = $(ipts[i]);
                         $(ipts[i]).attr('dicturl', comboboxObj.url);
                         $(ipts[i]).combobox({
                             url: comboboxObj.url, multiple: true,
@@ -81,19 +80,33 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.next().find('input:hidden').val();
                                     if (val && bm) {
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, val, 'combobox');
+                                            flwsLdXxfy(bm, className, val, 'combobox','');
                                         }
                                     }
                                 }
                             },
                             onHidePanel: function () {
                                 var $this = $(this);
-                                var getBary = _comboNode.combobox('getValues');
+                                var getBary = $this.combobox('getValues');
+                                //至少勾选两名办案民警
                                 if (getBary.length < 2) {
                                     $.messager.confirm('提示信息', '办案民警至少选两名', function (r) {
                                         if (r) {
-                                            _comboNode.combobox('clear');
-                                            _comboNode.next().find('input').focus();
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
+                                        }
+                                    });
+                                }
+
+                                //必须勾选当前登录者
+                                var currentUserId = DATA.OWN.userId;//当前登录者用户ID
+                                var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
+                                var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
+                                if(isCheckCurUser == -1){
+                                    $.messager.confirm('提示信息', '办案民警必须勾选当前登录者用户:'+currentUserName, function (r) {
+                                        if (r) {
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
                                         }
                                     });
                                 }
@@ -256,6 +269,12 @@ function easyuiReset(ipts, isAdd, bm) {
                         $(ipts[i]).attr('dicturl', url);
                         $(ipts[i]).combobox(comboboxObj);
                         break;
+                    case 'BD_D_JSJZ_FLTK'://监视居住法律条款
+                        var url = pathConfig.mainPath + '/common/dict/BD_D_JSJZ_FLTK.js';
+                        comboboxObj.data = flwsDictObj.BD_D_JSJZ_FLTK;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
                 }
             } else if ($(ipts[i]).hasClass('easyuicombotree')) {//combotree字典
                 var dictTree = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%')); //combotree字典名称
@@ -275,7 +294,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             var val = $this.next().find('input:hidden').val();
                             if (val && bm) {
                                 if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, val, 'combotree');
+                                    flwsLdXxfy(bm, className, val, 'combotree','');
                                 }
                             }
                         }
@@ -305,7 +324,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var $this = $(this);
                                 var className = $this.attr('textboxname');//组件class name值
                                 if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, newValue, 'textbox');
+                                    flwsLdXxfy(bm, className, newValue, 'textbox','');
                                 }
                             }
                         }
@@ -320,10 +339,10 @@ function easyuiReset(ipts, isAdd, bm) {
                         case 'TEXTAREA': //换行文本   不换行
                             // $(ipts[i]).textbox(textboxObj);
                             // break;
-                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             parentA.find('textarea').validatebox({
-                                required: false
+                                required: isTrue
                             });
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
@@ -342,7 +361,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
                                     if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'textarea');
+                                        flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
                             });
@@ -350,10 +369,10 @@ function easyuiReset(ipts, isAdd, bm) {
                         case 'TEXTAREA_R': //换行文本不换行
                             // $(ipts[i]).textbox(textboxObj);
                             // break;
-                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             parentA.find('textarea').validatebox({
-                                required: false
+                                required: isTrue
                             });
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
@@ -372,7 +391,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
                                     if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'textarea');
+                                        flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
                             });
@@ -389,7 +408,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                         var chNum = NumberToChinese(iptVal);//转化之后的汉字
                                         $this.textbox({value: chNum});
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, chNum, 'textbox');
+                                            flwsLdXxfy(bm, className, chNum, 'textbox','numbercn');
                                         }
                                     } else {
                                         $.messager.alert({
@@ -414,10 +433,10 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var className = $this.attr('textboxname');//组件class name值
                                     if (!isNaN(iptVal) && bm) {
                                         $this.parent().attr('money', newValue);
-                                        var chNum = Arabia_to_Chinese(newValue);//转化之后的汉字
+                                        var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
                                         $this.textbox({value: chNum});
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, chNum, 'textbox');
+                                            flwsLdXxfy(bm, className, chNum, 'textbox','money');
                                         }
                                     } else {
                                         $.messager.alert({
@@ -433,10 +452,10 @@ function easyuiReset(ipts, isAdd, bm) {
                             });
                             break;
                         case 'TEXTBOX'://文本框  换行文本
-                            var strTextbox = "<textarea class='easyui-validatebox easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
                             parentA.html(strTextbox);
                             parentA.find('textarea').validatebox({
-                                required: false
+                                required: isTrue
                             });
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
@@ -455,7 +474,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
                                     if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'textarea');
+                                        flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
                             });
@@ -476,7 +495,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
                                 if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, val, 'Wdate');
+                                    flwsLdXxfy(bm, className, val, 'Wdate','');
                                 }
                             });
                             break;
@@ -486,7 +505,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
                                 if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, val, 'Wdate');
+                                    flwsLdXxfy(bm, className, val, 'Wdate','');
                                 }
                             });
                             break;
@@ -522,13 +541,17 @@ function easyuiReset(ipts, isAdd, bm) {
  * @param className 当前操作的class name
  * @param vals 当前操作的输入框的值
  * @param funName 当前操作的输入框类型
+ * @param tx 特性
  */
-function flwsLdXxfy(bm, className, vals, funName) {
+function flwsLdXxfy(bm, className, vals, funName, tx) {
     var ipts = $('#flws_cl_area_'+ bm +' .panel .panel-body form a');
     for (var i = 0; i < ipts.length; i++) {
         if (funName == 'textbox') {
-            // $(ipts[i]).find('.' + className).textbox({value: vals});
-            $(ipts[i]).find('.' + className).textbox('setValue', vals);
+            if(tx){
+                $(ipts[i]).find('.' + className).textbox({value: vals});
+            }else{
+                $(ipts[i]).find('.' + className).textbox('setValue', vals);
+            }
         } else if (funName == 'combobox') {
             $(ipts[i]).find('.' + className).combobox({value: vals});
             // $(ipts[i]).find('.' + className).combobox('setValue', vals);
@@ -538,7 +561,7 @@ function flwsLdXxfy(bm, className, vals, funName) {
         } else if (funName == 'validatebox' || funName == 'Wdate') {
             $(ipts[i]).find('.' + className).val(vals).validatebox();
         } else if(funName == 'textarea'){
-            $(ipts[i]).find('.' + className).val(vals);
+            $(ipts[i]).find('.' + className).val(vals).validatebox();
         }
     }
 }

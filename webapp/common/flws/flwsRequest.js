@@ -7,11 +7,12 @@
  * 当字符串长度过大（string>5000）时，在本页面请求获取文书map结构数据
  * @param data  前一个页面传过来的map数据
  * @param cqbgBm  呈请报告的编码
+ * @param flwsBm  法律文书的编码
  */
-function wsMainPageRender(data,cqbgBm){
+function wsMainPageRender(data,cqbgBm,flwsBm){
     if(typeof data == 'undefined' && typeof cqbgBm != 'undefined'){
         $.ajax({
-            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC',
+            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json?flwsBm='+flwsBm,
             success: function (json) {
                 initFlwsMain(json);
             }
@@ -133,6 +134,7 @@ function queryCqbgData(render) {
             data: param,
             jsonType: 'json',
             success: function (data) {
+                loading('close');
                 var json = eval('(' + data + ')');
                 if (json.state == 'success') {//查询成功
                     if (json.rows.length > 0) {//有数据 编辑
@@ -194,7 +196,11 @@ function queryFlwsData(title, render) {
                 DATA.FLWS[flwsData[k].bianMa].params = {};
 
                 var only = DATA.FLWS[flwsData[k].bianMa].flwsData.only;
-                if (only) {//只能出一份文书
+                if(!jQuery.isEmptyObject(DATA.FLWS_PARAM)){
+                    param = {
+                        ZJ: DATA.FLWS_PARAM.flwsZj
+                    }
+                }else if (only) {//只能出一份文书
                     if(DATA.CQBG.cqbgZj){
                         param = {
                             XT_ZXBZ: '0',
@@ -237,6 +243,7 @@ function queryFlwsData(title, render) {
                 }
 
                 if(param){
+                    loading("open","正在获取法律文书数据,请稍等...");
                     //获取法律文书数据请求
                     $.ajax({
                         url: flwsData[k].queryUrl,
@@ -244,6 +251,7 @@ function queryFlwsData(title, render) {
                         dataType: 'json',
                         success: function (json) {
                             //console.log(json)
+                            loading("close");
                             if (json.state == 'success') {
                                 var jsonRows = json.rows;
                                 if (jsonRows.length > 0) {//有数据 执行编辑渲染
@@ -296,7 +304,7 @@ function queryFlwsData(title, render) {
  * @param data
  */
 function cqbgSaveComplete(data) {
-    //loading('close');//完成后关闭...转圈
+    loading('close');//完成后关闭...转圈
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
@@ -319,6 +327,7 @@ function cqbgSave(url, param) {
     if (DATA.CQBG.cqbgData.customized) {
         eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
     } else {
+        loading("open","数据处理中...");
         $.ajax({
             url: url,
             data: param,
@@ -331,7 +340,7 @@ function cqbgSave(url, param) {
 }
 
 function flwsSaveComplete(data, bm) {
-    //loading('close');//完成后关闭...转圈
+    loading('close');//完成后关闭...转圈
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
@@ -367,6 +376,7 @@ function flwsSave(url, param, bm) {
     if (DATA.FLWS[bm].flwsData.customized) {
         eval("save" + bm + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','flwsSaveComplete', '" + bm + "');");
     } else {
+        loading("open","数据处理中...");
         $.ajax({
             url: url,
             data: param,
@@ -389,10 +399,12 @@ function scflwsRequest(params) {
         cqbgzj = DATA.CQBG.cqbgzj;
     }
 
+    loading("open","数据处理中...");
     $.ajax({
         url: pathConfig.basePath + '/workflowRelated/createXwFlwsscrwb?cqbgXxzjbh='+cqbgzj,
         data: params,
         success: function (data) {
+            loading('close');
             var json = eval('(' + data + ')');
             if (json.status == 'success') {
                 $.messager.alert({
