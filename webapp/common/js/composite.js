@@ -191,7 +191,7 @@ function getQueryModel() {
         },
         //分页
         pagination: true,
-        pageSize: 5,
+        pageSize: 10,
         pageList: [5, 10, 20, 50], //rows
         pageNumber: 1,//显示在第几页
         pagePosition: 'bottom',
@@ -1368,16 +1368,12 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
-            
-            //alert('此处为无效数据提示处理!');
-            //$.messager.alert('提示','一万条以后的数据不让查出来.','warning');
-            /****正式环境请注释下面这一段****/
-//            alert('获取数据失败,详情查看console. \n\n接下来展示的为本地测试数据!!!\n');
-//            $('#pagination').pagination({
-//                total: 998
-//            }).show();
-//            changeLinkButtonIcon();
-//            searchResult(search_result_test);
+            return; //本地调试时,注释这个retrun
+            $('#pagination').pagination({
+                total: 998
+            }).show();
+            changeLinkButtonIcon();
+            searchResult(search_result_test);
             logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
             logEntity.error_code = e.status;
             writeLog(logEntity);
