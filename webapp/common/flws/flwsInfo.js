@@ -14,10 +14,12 @@ function getCqbgMapData() {
         openUrl = pathConfig.basePath+'/wenshu/source/CQBG_'+DATA.flwsAsjflwsdm+'/DIC.json'
     }
 
+    loading("open","正在请求数据中,请稍等...");
     //发送请求
     $.ajax({
         url: openUrl,
         success: function (json) {
+            loading('close');
             var jsonDatas = eval('(' + json + ')');//json化数据
             //console.log(jsonDatas);
             //呈请报告、法律文书map数据的获取
@@ -289,11 +291,13 @@ function queryFlwsData(title, render) {
                 //    }
                 //}
 
+                loading("open","正在获取法律文书数据,请稍等...");
                 $.ajax({
                     url: flwsData[k].queryUrl,
                     data: param,
                     dataType: 'json',
                     success: function (json) {
+                        loading('close');
                         //console.log(json)
                         if (json.state == 'success') {
                             if (json.rows.length > 0 && json.rows != undefined) {//有数据 执行编辑渲染
