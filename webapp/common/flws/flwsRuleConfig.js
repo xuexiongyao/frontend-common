@@ -69,7 +69,6 @@ function easyuiReset(ipts, isAdd, bm) {
                     case 'TB_ST_BARY': //办案人员
                         comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
                         comboboxObj.multiple = true;
-                        var _comboNode = $(ipts[i]);
                         $(ipts[i]).attr('dicturl', comboboxObj.url);
                         $(ipts[i]).combobox({
                             url: comboboxObj.url, multiple: true,
@@ -88,12 +87,26 @@ function easyuiReset(ipts, isAdd, bm) {
                             },
                             onHidePanel: function () {
                                 var $this = $(this);
-                                var getBary = _comboNode.combobox('getValues');
+                                var getBary = $this.combobox('getValues');
+                                //至少勾选两名办案民警
                                 if (getBary.length < 2) {
                                     $.messager.confirm('提示信息', '办案民警至少选两名', function (r) {
                                         if (r) {
-                                            _comboNode.combobox('clear');
-                                            _comboNode.next().find('input').focus();
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
+                                        }
+                                    });
+                                }
+
+                                //必须勾选当前登录者
+                                var currentUserId = DATA.OWN.userId;//当前登录者用户ID
+                                var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
+                                var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
+                                if(isCheckCurUser == -1){
+                                    $.messager.confirm('提示信息', '办案民警必须勾选当前登录者用户:'+currentUserName, function (r) {
+                                        if (r) {
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
                                         }
                                     });
                                 }
