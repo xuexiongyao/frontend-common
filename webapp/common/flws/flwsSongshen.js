@@ -588,11 +588,7 @@ function lctShow() {
 
                 $('#next_over').after(shsjStr);
                 //默认值设置
-                if(isTrue){
-                    $('#shsj').val(data[dLen-1].shsj);
-                }else{
-                    $('#shsj').val(getCurrent());
-                }
+                $('#shsj').val(getCurrent());
 
                 for (var i = 0; i < data.length; i++) {
                     //审批状态
