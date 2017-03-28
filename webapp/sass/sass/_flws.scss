@@ -46,16 +46,30 @@
             //不可操作样式
             ul.xyrList{
                li{
+                   position: relative;
                    label[disabled='disabled']{
                        cursor: no-drop;
                        color: #747474;
-                       border-radius: 3px;
+                       @include prefix('border','radius',3px);
                        background: #e0dede;
+                   }
+                   >a{
+                       @include positionDisplay();
+                       @include text-align(center);
+                       @include square(15px);
+                       cursor: pointer;
+                       right: 10px;
+                       line-height:15px;
+                       top: 8px;
+                   }
+                   &:hover >a{
+                       display: block;
                    }
                }
             }
             .choose-list {
                 li {
+                    position: relative;
                     span{
                         font-size: fontSize(small);
                         @include text-overflow();
