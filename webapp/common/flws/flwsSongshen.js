@@ -588,7 +588,7 @@ function lctShow() {
 
                 $('#next_over').after(shsjStr);
                 //默认值设置
-                $('#shsj').val(getCurrent());
+                $('#shsj').val(getCurrentTime());
 
                 for (var i = 0; i < data.length; i++) {
                     //审批状态
