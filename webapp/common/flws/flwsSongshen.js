@@ -36,7 +36,7 @@ var sessionBean = getSessionBean();     //获取登陆者信息
 //console.log('sessionBean:',sessionBean);
 var role = sessionBean.userOrgBiztype || '04';  //登陆角色 02为法制民警
 
-var flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm;
+var flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
 var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
 $('.right-report').append(str);
 
@@ -540,6 +540,12 @@ function end(shjl, shsj, shyj) {
             // console.log('结束:', json);
             loading('close');
             if (json.status == 'success') {
+                //发送短信请求
+                var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
+                if(isCheckMsger){
+                    var content = "您送审的"+ajmc+"的【"+flwsmc+"】已审批完成，请及时查收。";
+                    sendMsg(DATA.CQBG.cqbgRow.BAMJID,content);
+                }
                 $.messager.alert({
                     title: '提示',
                     msg: json.message,
@@ -588,11 +594,7 @@ function lctShow() {
 
                 $('#next_over').after(shsjStr);
                 //默认值设置
-                if(isTrue){
-                    $('#shsj').val(data[dLen-1].shsj);
-                }else{
-                    $('#shsj').val(getCurrent());
-                }
+                $('#shsj').val(getCurrentTime());
 
                 for (var i = 0; i < data.length; i++) {
                     //审批状态

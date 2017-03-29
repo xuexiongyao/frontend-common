@@ -156,13 +156,54 @@ function cqbgXyrDataXxfy() {
  * @param xytype 嫌疑对象类型
  * @param xyzhxx 嫌疑对象组合信息
  * @param xydxmc 嫌疑对象名称
+ * @param isFlws 是否是法律文书
  * @returns {string}  返回为拼接好的字符串
  */
-function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc) {
+function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc,isFlws) {
     var xydxStrTmp = '';
+    var str = '';
+    if(isFlws){
+        str = '<a class="val easyui-linkbuttom c5 delXydxBtn" title="删除"><i class="fa fa-times"></i></a>';
+    }
     xydxStrTmp = '<li><label  ' + title + ' ' + disabled + ' class="easyui-tooltip"><input xxzjbh="' + xxzjbh + '" ' + disabled + ' type="checkbox" />' +
-        '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label></li>';
+        '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label>' + str +'</li>';
     return xydxStrTmp;
+}
+
+/**
+ * 已处理嫌疑对象的删除
+ * @param bm  文书编码
+ * @param $this  当前这条数据
+ */
+function flwsYclXydxDelete(bm,$this) {
+    var flwsZj = $this.prev().find('input:checkbox').attr('flwszj');//当前嫌疑对象对应法律文书列表的主键
+
+    loading('open','数据处理中...');
+    //删除请求
+    $.ajax({
+        url: DATA.FLWS[bm].flwsData.writtenOffUrl,
+        data: {
+            ZJ: flwsZj
+        },
+        success: function (data) {
+            loading('close');
+            var json = eval('('+data+')');
+            if(json.state == 'success'){
+                $.messager.alert({
+                    title: '温馨提示',
+                    msg: '操作成功',
+                    fn: function () {
+                        queryFlwsData(DATA.FLWS.title, flwsPageRender);
+                    }
+                });
+            } else if(json.state == 'error'){
+                $.messager.show({
+                    title: '温馨提示',
+                    msg: '操作失败'
+                });
+            }
+        }
+    })
 }
 
 /**

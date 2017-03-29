@@ -8,16 +8,18 @@
  */
 function getCqbgMapData() {
     var openUrl = '';
-    if(DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined'&&DATA.asjflwsbm != 'TB_XW_FLWS_SADJ'&&DATA.asjflwsbm != 'TB_FLWS_SADJB'){//无呈请报告法律文书的处理
-        openUrl = pathConfig.basePath+'/wenshu/source/FLWS_'+DATA.flwsAsjflwsdm+'/DIC.json'
-    }else{
-        openUrl = pathConfig.basePath+'/wenshu/source/CQBG_'+DATA.flwsAsjflwsdm+'/DIC.json'
+    if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB') {//无呈请报告法律文书的处理
+        openUrl = pathConfig.basePath + '/wenshu/source/FLWS_' + DATA.flwsAsjflwsdm + '/DIC.json'
+    } else {
+        openUrl = pathConfig.basePath + '/wenshu/source/CQBG_' + DATA.flwsAsjflwsdm + '/DIC.json'
     }
 
+    loading("open", "正在请求数据中,请稍等...");
     //发送请求
     $.ajax({
         url: openUrl,
         success: function (json) {
+            loading('close');
             var jsonDatas = eval('(' + json + ')');//json化数据
             //console.log(jsonDatas);
             //呈请报告、法律文书map数据的获取
@@ -39,7 +41,7 @@ function getCqbgMapData() {
                         flwsData: {}//法律文书数据
                     }
                 }
-            } else  if (jsonDatas.isFlws) {//无呈请报告
+            } else if (jsonDatas.isFlws) {//无呈请报告
                 DATA.CQBG = {status: {}};
                 DATA.FLWS = {
                     flwsData: {"customer": jsonDatas}//法律文书数据
@@ -50,14 +52,14 @@ function getCqbgMapData() {
             //呈请报告数据查询
             if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
                 queryCqbgData();//获取呈请报告数据
-            }else{
-                if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
+            } else {
+                if (DATA.FLWS.flwsData.customer) {//只有法律文书,并且需要生成法律文书
                     onlyFlwsRender();
                 }
             }
             clearAllStyle();
 
-            if(DATA.CQBG.cqbgData || typeof (DATA.CQBG.cqbgData) != 'undefined'){
+            if (DATA.CQBG.cqbgData || typeof (DATA.CQBG.cqbgData) != 'undefined') {
                 lctShow();//流程图的显示
             }
 
@@ -125,11 +127,12 @@ function queryCqbgData() {
         success: function (json) {
             if (json.state == 'success') {//成功
                 var data = json.rows[0];//呈请报告返回的数据
+                DATA.CQBG.cqbgRow = data;//呈请报告返回的数据
                 //判断是否为自定义页面
                 if (DATA.CQBG.cqbgData.customized) {
                     //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
                     eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(data) + "')");
-                }else{
+                } else {
                     //信息复用
                     var $target = $("#cqbg_main_con form a");
                     for (var a in data) {
@@ -225,7 +228,7 @@ function flwsRightPagePj(flwsData) {
 function tabSwitch() {
     $("#flwsTabs").tabs({
         onSelect: function (title, index) {
-            if (DATA.CQBG.cqbgData.bianMa != '000000'  || typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
+            if (DATA.CQBG.cqbgData.bianMa != '000000' || typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
                 DATA.FLWS.title = title;
                 queryFlwsData(title, flwsPageRender);
             } else {//没有呈请报告
@@ -289,11 +292,13 @@ function queryFlwsData(title, render) {
                 //    }
                 //}
 
+                loading("open", "正在获取法律文书数据,请稍等...");
                 $.ajax({
                     url: flwsData[k].queryUrl,
                     data: param,
                     dataType: 'json',
                     success: function (json) {
+                        loading('close');
                         //console.log(json)
                         if (json.state == 'success') {
                             if (json.rows.length > 0 && json.rows != undefined) {//有数据 执行编辑渲染
@@ -330,11 +335,11 @@ function flwsPageRender(bm) {
             return;
         }
 
-        if(flwsData.only){
+        if (flwsData.only) {
             //无嫌疑对象,法律文书真能做一份儿 wdx:true  only:true
             /****类型A*****/
             xydxListRenderA(bm);
-        }else if(!flwsData.only){
+        } else if (!flwsData.only) {
             //无嫌疑对象,法律文书真能做一份儿 wdx:true  only:false（无呈请报告）
             /****类型A*****/
             xydxListRenderA(bm);
@@ -347,7 +352,8 @@ function flwsPageRender(bm) {
             if (flwsData.customized) {
                 eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
                 return;
-            }/****类型B****/
+            }
+            /****类型B****/
             xydxListRenderB(bm);
 
         } else {//有嫌疑对象，并且单选，而且可以出多份儿文书
@@ -376,10 +382,10 @@ function flwsXxfyA(bm) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
         $($target[j]).html('');
-        if(aName.indexOf('_T_') != -1){
-            var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+        if (aName.indexOf('_T_') != -1) {
+            var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
             var val = data[name];//对应数据的值
-            $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+            $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
         }
         for (var k in data) {
             if (k == aName) {
@@ -438,11 +444,11 @@ function flwsXxfyB(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-        if(typeof aName !='undefined'){
-            if(aName.indexOf('_T_') > -1){
-                var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+        if (typeof aName != 'undefined') {
+            if (aName.indexOf('_T_') > -1) {
+                var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                 var val = data[name];//对应数据的值
-                $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+                $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
             }
         }
 
@@ -563,15 +569,15 @@ function flwsXxfyC1(bm, $this) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
                 if (DATA.FLWS[bm].flwsData.customized) {
                     eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
-                }else{
+                } else {
                     for (var j = 0; j < $target.length; j++) {
                         var aName = $($target[j]).attr('name');//a标签的name属性
                         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
                         $($target[j]).html('');
-                        if(aName.indexOf('_T_') != -1){
-                            var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+                        if (aName.indexOf('_T_') != -1) {
+                            var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                             var val = data[name];//对应数据的值
-                            $($target[j]).find("input[value='"+val+"']").prop('checked',true).attr('disabled','disabled');
+                            $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
                         }
 
                         for (var a in data[i]) {
@@ -631,8 +637,8 @@ function flwsXxfyC2(bm) {
 /**
  * 清除所有可编辑的样式
  */
-function clearAllStyle(){
-    $('input').attr({"readonly":"readonly",'disabled':'disabled'});
+function clearAllStyle() {
+    $('input').attr({"readonly": "readonly", 'disabled': 'disabled'});
 }
 
 /*************************************流程图***********************************/
@@ -644,8 +650,8 @@ function lctShow() {
     if (DATA.cqzt != 0 && DATA.cqzt) {
         if (DATA.lcslid && DATA.lcdyid) {
             $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
+            $('#cklcBtn').show();
             if (DATA.cqzt == '1') {//已呈请
-                $('#cklcBtn').show();
                 getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
             } else if (DATA.cqzt == '2') {//已送审
                 getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
@@ -717,7 +723,7 @@ function lcriZs() {
                     success: function (json2) {
                         if (json2.status == 'success') {
                             var data = json.data;
-                            var data2= json2.data;
+                            var data2 = json2.data;
                             for (var i = 0; i < data.length; i++) {
                                 //审批状态
                                 if (data[i].shjl == '1') {
@@ -745,19 +751,19 @@ function lcriZs() {
                                     '</div>';
                             }
 
-                            if(data2 && data2.username){
+                            if (data2 && data2.username) {
                                 str += '<div class="lct-node" title="待审批">' +
                                     '<div class="text">' +
                                     '<span class="lcspr">' + data2.username + '</span>' +
-                                    '<span class="lcspzt"><i class="fa fa-map-marker" style="color:#ff0000;"></i>'+
+                                    '<span class="lcspzt"><i class="fa fa-map-marker" style="color:#ff0000;"></i>' +
                                     '</span>' +
                                     '</div>' +
                                     '<div class="point">' +
-                                    '<b>' ;
+                                    '<b>';
                             }
 
                             $('.lct-container').append(str);
-                            $('.lct-node').tooltip({position:'bottom'});
+                            $('.lct-node').tooltip({position: 'bottom'});
                             if (!str) {//如果没有流程图，隐藏流程
                                 $('.lct-box').hide();
                             }

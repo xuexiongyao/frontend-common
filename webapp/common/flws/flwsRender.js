@@ -86,7 +86,6 @@ function cqbgPageRender() {
             cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         } else {//编辑渲染
             easyuiReset(cqbgIpts, false, '');
-            cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
             cqbgDataXxfy();//呈请报告数据信息复用
 
             //呈请报告嫌疑对象的勾选
@@ -123,10 +122,10 @@ function xydxRenderCqbg() {
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                             var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.CQBG.cqbgData.prefixpz, DATA.CQBG.cqbgData.splitpz);
-                            xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param]);
+                            xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param],false);
                             // } else if (key == anjianXyDxDic.xydw || key == anjianXyDxDic.ajxgr) {//嫌疑单位或者案件相关人
                         } else {//嫌疑单位或者案件相关人
-                            xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param]);
+                            xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param],false);
                         }
                     }
                     xyrListStr += '<div><p><i class="fa fa-bars"></i>' + xyrObj[key].text + '</p>' +
@@ -333,7 +332,7 @@ function flwsPageRenderA(bm){
         DATA.FLWS[bm]['status']['isAdd'] = true;
 
         //新增渲染
-        //flwsRightPageRenderA(DATA.FLWS[bm].flwsData);
+        flwsRightPageRenderForAdd(DATA.FLWS[bm].flwsData);
     } else if (flwsRow.length > 0) {//有数据
         //编辑标识
         DATA.FLWS[bm]['status']['isAdd'] = false;
@@ -427,7 +426,9 @@ function flwsDxListRenderOther(bm){
                         }
                     }
                     xyrStr += '<li><label ' + title + ' class="easyui-tooltip"><input xxzjbh="' + flwsRow[i].CLDX_XXZJBH + '" flwszj="' + flwsRow[i].ZJ + '" ' + disabled + ' type="checkbox"/>' +
-                        '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label></li>';
+                        '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' +
+                        '<a class="val easyui-linkbuttom c5 delXydxBtn"><i class="fa fa-times"></i></a>' +
+                        '</li>';
                 }
 
                 yclXyrStr = '<div><p><i class="fa fa-bars"></i>' + xyrObjTemp.text + '</p>' +
@@ -462,9 +463,9 @@ function flwsDxListRenderOther(bm){
                             for (var i = 0; i < xydxDatas[k].length; i++) {
                                 if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                                     var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
-                                    xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param]);
+                                    xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param],true);
                                 } else {
-                                    xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param]);
+                                    xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param],true);
                                 }
                             }
 
@@ -482,9 +483,13 @@ function flwsDxListRenderOther(bm){
                         for (var i = 0; i < xydxDatas[k].length; i++) {
                             if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                                 var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
-                                xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param]);
+                                xyrStr += '<li><label  ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + ' class="easyui-tooltip"><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" ' + xydxDatas[k][i].disabled + ' type="checkbox" />' +
+                                    '<span xyrtype="' + xyrObj[key].id + '"  xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label>' +
+                                    '</li>';
                             } else {
-                                xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param]);
+                                xyrStr += '<li><label class="easyui-tooltip"><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" />' +
+                                    '<span xyrtype="' + xyrObj[key].id + '" >' + xydxDatas[k][i][xyrObj[key].param] + '</span></label>' +
+                                    '</li>';
                             }
                         }
 
@@ -522,6 +527,11 @@ function flwsDxListRenderOther(bm){
         flwsYclXyDxCheck(bm, $(this));
     });
 
+    //已处理的嫌疑对象绑定删除事件
+    $('#flws_xyr_area_ycl_' + bm + ' ul.xyrList a').off('click').on('click', function () {
+        flwsYclXydxDelete(bm, $(this));
+    });
+
     //保存数据成功后获取法律文书主键，再次点击为编辑
     if (typeof (DATA.FLWS[bm].status.currentDxId) != 'undefined') {
         $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].status.currentDxId + "']").click();
@@ -550,9 +560,9 @@ function flwsDxListRenderB(bm){
                     for (var i = 0; i < xydxDatas[k].length; i++) {
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                             var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
-                            xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param]);
+                            xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param],false);
                         } else {
-                            xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param]);
+                            xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param],false);
                         }
                     }
 
@@ -725,14 +735,11 @@ function flwsDxListRenderC(bm){
                 if (k == key) {
                     var xyrStr = '';
                     for (var i = 0; i < xydxDatas[k].length; i++) {
-                        //DATA.xyrArry.push(xydxDatas[k][i]);
                         if (key == anjianXyDxDic.xyr) {//嫌疑人的显示组合信息
                             var xyrzhxx = filedToParagraph(xydxDatas[k][i], DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz);
-                            xyrStr += '<li><label ' + xydxDatas[k][i].title + ' ' + xydxDatas[k][i].disabled + '><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox" ' + xydxDatas[k][i].disabled + '/>' +
-                                '<span xyrtype="' + xyrObj[key].id + '" xyrzhxx="' + xyrzhxx + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
-                        } else if (key == anjianXyDxDic.xyr) {
-                            xyrStr += '<li><label><input xxzjbh="' + xydxDatas[k][i][xyrObj[key].xxzjbh] + '" type="checkbox"/>' +
-                                '<span xyrtype="' + xyrObj[key].id + '">' + xydxDatas[k][i][xyrObj[key].param] + '</span></label></li>';
+                            xyrStr += xydxStrTmpFun(xydxDatas[k][i].title,xydxDatas[k][i].disabled,xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,xyrzhxx,xydxDatas[k][i][xyrObj[key].param],false);
+                        } else {
+                            xyrStr += xydxStrTmpFun('','',xydxDatas[k][i][xyrObj[key].xxzjbh],xyrObj[key].id,'',xydxDatas[k][i][xyrObj[key].param],false);
                         }
                     }
 
