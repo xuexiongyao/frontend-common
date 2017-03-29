@@ -673,7 +673,7 @@ function batchExprot(search_config_obj) {
     	var query = export_condition_obj.query;
     	var is_main_type_query = false;//主表是否查询
     	for (var i = 0; i < query.length; i++) {
-            if (search_config.main_type == query[i]['type']) {//主表有查询条件
+            if (search_config.main_type.toUpperCase() == query[i]['type'].toUpperCase()) {//主表有查询条件
             	is_main_type_query = true;
             	query[i].condition.push({"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="});
             	break;
@@ -682,7 +682,7 @@ function batchExprot(search_config_obj) {
     	
     	if(!is_main_type_query){//主表没有查询条件
     		export_condition_obj.query.push({
-                "type": search_config.main_type,
+                "type": search_config.main_type.toUpperCase(),
                 "condition": [{"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="}]
             });
     	}
@@ -1298,6 +1298,7 @@ function getSearchData($this) {
 
 //提交查询请求
 function ajaxQuery(condition_obj) {
+    console.log('condition_obj:',condition_obj);
     try {
         if (!beforeSubmit(condition_obj))
             return;
@@ -1339,7 +1340,7 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
-            return; //本地调试时,注释这个retrun
+            //return; //本地调试时,注释这个retrun
             $('#pagination').pagination({
                 total: 998
             }).show();
@@ -1443,10 +1444,12 @@ function pagination() {
         pageSize: 5,
         pageList: [5, 10, 15, 20, 30, 50],
         onSelectPage: function (pageNumber, pageSize) {
+            console.log('onSelectPage');
             paginationQuery(pageNumber, pageSize);
         },
         onRefresh: function(pageNumber, pageSize){
             paginationQuery(pageNumber, pageSize);
+            console.log('onRefresh');
         }
     });
 }
