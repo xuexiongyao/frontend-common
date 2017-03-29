@@ -540,6 +540,12 @@ function end(shjl, shsj, shyj) {
             // console.log('结束:', json);
             loading('close');
             if (json.status == 'success') {
+                //发送短信请求
+                var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
+                if(isCheckMsger){
+                    var content = "您送审的"+ajmc+"的【"+flwsmc+"】已审批完成，请及时查收。";
+                    sendMsg(DATA.CQBG.cqbgRow.BAMJID,content);
+                }
                 $.messager.alert({
                     title: '提示',
                     msg: json.message,
