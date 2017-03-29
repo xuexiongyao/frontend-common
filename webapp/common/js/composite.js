@@ -662,60 +662,31 @@ function openOtherTable(isExport) {
 //批量导出
 function batchExprot(search_config_obj) {
     //将查询条件赋给导出查询条件
-    var export_condition_obj = {};
+    var export_condition_obj = condition_obj;
+    export_condition_obj['start'] = 0;
     export_condition_obj['export']='1';
 
     if (checked_id_arr.length > 0) {//有勾选的
-        export_condition_obj['mainTable'] = search_config.main_type;
-        export_condition_obj['key'] = '';
-        export_condition_obj['option'] = 'ad';
-
-        export_condition_obj.query = [{
-            "type": search_config.main_type,
-            "condition": [{"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="}]
-        }];
-
-    } else {//没有勾选的
-        for (var k in condition_obj) {
-            export_condition_obj[k] = condition_obj[k];
-        }
-    }
-
-    var query = export_condition_obj.query || [];
-    for (var k in search_config_obj) {
-        //判断导出的条件查询条件中是否存在
-        var isrepeat = false;
-        var repeat_fields = [];
-        for (var i = 0; i < query.length; i++) {
-            if (k.toUpperCase() == query[i]['type'].toUpperCase()) {
-                isrepeat = true;
+    	if(!export_condition_obj.query)
+    		export_condition_obj.query = [];
+    	
+    	var query = export_condition_obj.query;
+    	var is_main_type_query = false;//主表是否查询
+    	for (var i = 0; i < query.length; i++) {
+            if (search_config.main_type == query[i]['type']) {//主表有查询条件
+            	is_main_type_query = true;
+            	query[i].condition.push({"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="});
+            	break;
             }
         }
-        //不存在，添加的默认查询条件
-        if (!isrepeat) {
-            //默认全部信息都返回了，不添加默认条件了
-//			var condition = search_config_obj[k][0];
-//
-//			query.push({
-//				condition : [{
-//					"op": "=",
-//					"k": '_all',
-//					"v": "*"
-//				}],
-//				type : k
-//			});
-        }
+    	
+    	if(!is_main_type_query){//主表没有查询条件
+    		export_condition_obj.query.push({
+                "type": search_config.main_type,
+                "condition": [{"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="}]
+            });
+    	}
     }
-    export_condition_obj.query = query;
-    //表格内容
-    export_condition_obj['start'] = 0;
-    //export_condition_obj['limit']=2000;//已改为后台获取
-
-    //console.log('查询条件:',condition_obj);
-    //console.log('导出的查询条件:',export_condition_obj);
-    //console.log('导出条件:',search_config_obj);
-    //console.log('导出URL:',search_config.export_url);
-
 
     loading('open', '数据处理中,请稍候...');
     $.ajax({
