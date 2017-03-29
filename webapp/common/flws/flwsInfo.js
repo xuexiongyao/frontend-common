@@ -127,6 +127,7 @@ function queryCqbgData() {
         success: function (json) {
             if (json.state == 'success') {//成功
                 var data = json.rows[0];//呈请报告返回的数据
+                DATA.CQBG.cqbgRow = data;//呈请报告返回的数据
                 //判断是否为自定义页面
                 if (DATA.CQBG.cqbgData.customized) {
                     //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值

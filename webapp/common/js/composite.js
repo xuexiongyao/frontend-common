@@ -1298,6 +1298,7 @@ function getSearchData($this) {
 
 //提交查询请求
 function ajaxQuery(condition_obj) {
+    console.log('condition_obj:',condition_obj);
     try {
         if (!beforeSubmit(condition_obj))
             return;
@@ -1339,7 +1340,7 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
-            return; //本地调试时,注释这个retrun
+            //return; //本地调试时,注释这个retrun
             $('#pagination').pagination({
                 total: 998
             }).show();
@@ -1443,10 +1444,12 @@ function pagination() {
         pageSize: 5,
         pageList: [5, 10, 15, 20, 30, 50],
         onSelectPage: function (pageNumber, pageSize) {
+            console.log('onSelectPage');
             paginationQuery(pageNumber, pageSize);
         },
         onRefresh: function(pageNumber, pageSize){
             paginationQuery(pageNumber, pageSize);
+            console.log('onRefresh');
         }
     });
 }
