@@ -649,8 +649,8 @@ function lctShow() {
     if (DATA.cqzt != 0 && DATA.cqzt) {
         if (DATA.lcslid && DATA.lcdyid) {
             $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
+            $('#cklcBtn').show();
             if (DATA.cqzt == '1') {//已呈请
-                $('#cklcBtn').show();
                 getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
             } else if (DATA.cqzt == '2') {//已送审
                 getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
