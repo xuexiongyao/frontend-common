@@ -152,7 +152,7 @@
      * @param keyOfFuncCodes
      */
     var combineFunccode = function(funccodes,keyOfFuncCodes){
-        if(typeof (funccodesOfConfigObj[keyOfFuncCodes])){
+        if(typeof (funccodesOfConfigObj) != 'undefined' && typeof (funccodesOfConfigObj[keyOfFuncCodes]) != 'undefined'){
             var codesOfConfig = funccodesOfConfigObj[keyOfFuncCodes];
         }
 
