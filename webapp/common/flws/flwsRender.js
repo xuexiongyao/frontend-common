@@ -71,12 +71,14 @@ function cqbgPageRender() {
 
     //受案登记表的特殊处理
     if(DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG'){
+        loading('open','正在获取数据...');
         $.ajax({
             url: pathConfig.basePath+'/wenshu/source/CQBG/INFO',
             data:{
                 xxzjbh: DATA.CQBG.cqbgRow.CQBG_ZJ
             },
             success:function (data) {
+                loading('close');
                 var json = eval('('+data+')');
                 //呈请报告只能做一份儿，并且已呈请的判断(//受案登记表的特殊处理)
                 if (json.cqzt && json.cqzt != '0' && DATA.CQBG.cqbgData.one) {
