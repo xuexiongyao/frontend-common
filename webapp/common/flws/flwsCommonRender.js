@@ -26,28 +26,21 @@ function cqbgNrXxfy() {
 
             // console.log(cqbgxxTmpObj);
             //数据填写
-            for (var k1 in DATA.publicJkXx) {
-                for (var k2 in cqbgxxTmpObj) {
-                    if (k1 == k2) {
-                        for (var j = 0; j < cqbgxxTmpObj[k2].length; j++) {
-                            var key = cqbgxxTmpObj[k2][j];//参数名称
-                            var val = DATA.publicJkXx[k1][key];//参数对应的值
-                            var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
+            for (var k in cqbgxxTmpObj) {
+                for (var j = 0; j < cqbgxxTmpObj[k].length; j++) {
+                    var key = cqbgxxTmpObj[k][j];//参数名称
+                    var val = DATA.publicJkXx[k][key];//参数对应的值
+                    var strVal = '(' + k + ')[' + key + ']';//textarea中对应的字符串
 
-                            if (val == undefined || val == null || val == '') {//返回数据为空
-                                textareaVal = textareaVal.replace(strVal, '');
-                                console.log(key + '为空');
-                            } else {//textarea中对应的字符串替换赋值
-                                textareaVal = textareaVal.replace(strVal, val);
-                            }
-                        }
-                    } else {
-                        // var strVal = '(' + k1 + ')[' + key + ']';//textarea中对应的字符串
+                    if (val == undefined || val == null || val == '') {//返回数据为空
+                        textareaVal = textareaVal.replace(strVal, '');
+                        console.log(key + '为空');
+                    } else {//textarea中对应的字符串替换赋值
+                        textareaVal = textareaVal.replace(strVal, val);
                     }
-                    $("#cqbg_main_con form textarea").val(textareaVal);
                 }
+                $("#cqbg_main_con form textarea").val(textareaVal);
             }
-            // loading('close');
         }
     }
 }
@@ -56,29 +49,25 @@ function cqbgNrXxfy() {
  * 呈请报告、法律文书 其他公共接口信息接口请求数据复用
  */
 function cqbgFlwsOtherXxfy() {
-    for (var k1 in DATA.publicJkXx) {
-        for (var k2 in DATA.URLATTR) {
-            for (var i = 0; i < DATA.URLATTR[k2].length; i++) {
-                var key = DATA.URLATTR[k2][i];//参数名称
-                var val = DATA.publicJkXx[k1][key];//参数值
+    for (var k in DATA.publicJkXx) {
+        for (var i = 0; i < DATA.URLATTR[k].length; i++) {
+            var key = DATA.URLATTR[k][i];//参数名称
+            var val = DATA.publicJkXx[k][key];//参数值
 
-                if (k1 == k2) {
-                    if (val == undefined || val == '' || val == null) {//返回数据为空
-                        console.log(key + '为空');
-                    } else {
-                        var $node = $(".flws-main-con-r form input." + key);
-                        if ($node.hasClass('easyuitextbox')) {
-                            $node.textbox({value: val})
-                        } else if ($node.hasClass('easyuicombobox')) {
-                            $node.combobox({value: val})
-                        } else if ($node.hasClass('easyuicombotree')) {
-                            $node.combotree({value: val})
-                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                            $node.val(val).validatebox();
-                        }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                            $node.val(val).validatebox();
-                        }
-                    }
+            if (val == undefined || val == '' || val == null) {//返回数据为空
+                console.log(key + '为空');
+            } else {
+                var $node = $(".flws-main-con-r form input." + key);
+                if ($node.hasClass('easyuitextbox')) {
+                    $node.textbox({value: val})
+                } else if ($node.hasClass('easyuicombobox')) {
+                    $node.combobox({value: val})
+                } else if ($node.hasClass('easyuicombotree')) {
+                    $node.combotree({value: val})
+                } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                    $node.val(val).validatebox();
+                }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                    $node.val(val).validatebox();
                 }
             }
         }
@@ -417,7 +406,9 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面的初始化 (新增渲染)
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
     easyuiReset(flwsIpts, true, bm);
-    cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+    if(DATA.publicJkXx){
+        cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+    }
 
     if (typeof (DATA.FLWS[bm]) == 'undefined') {
         DATA.FLWS[bm] = {};
@@ -489,6 +480,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
 
         //法律文书新增页面渲染
         flwsRightPageRenderForAdd(flwsData);
+        cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
 
         //法律文书中类呈请报告呈请内容的信息复用
         flwsLsCqbgNrXxfy();
@@ -690,25 +682,19 @@ function flwsLsCqbgNrXxfy() {
                 cqbgxxTmpObj[dataTmp.funName] = dataTmp.paramName;
             }
             //数据填写
-            for (var k1 in DATA.publicJkXx) {
-                for (var k2 in cqbgxxTmpObj) {
-                    var key = cqbgxxTmpObj[k2];//参数名称
-                    var val = DATA.publicJkXx[k1][key];//参数对应的值
-                    var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
+            for (var k in cqbgxxTmpObj) {
+                var key = cqbgxxTmpObj[k];//参数名称
+                var val = DATA.publicJkXx[k][key];//参数对应的值
+                var strVal = '(' + k + ')[' + key + ']';//textarea中对应的字符串
 
-                    if (k1 == k2) {
-                        if (val == undefined || val == null || val == '') {//返回数据为空
-                            textareaVal = textareaVal.replace(strVal, '');
-                            console.log(key + '为空');
-                        } else {//textarea中对应的字符串替换赋值
-                            textareaVal = textareaVal.replace(strVal, val);
-                        }
-                    } else {
-                        textareaVal = textareaVal.replace(strVal, '');
-                    }
-
-                    $(".flws_cl_area form textarea").val(textareaVal);
+                if (val == undefined || val == null || val == '') {//返回数据为空
+                    textareaVal = textareaVal.replace(strVal, '');
+                    console.log(key + '为空');
+                } else {//textarea中对应的字符串替换赋值
+                    textareaVal = textareaVal.replace(strVal, val);
                 }
+
+                $(".flws_cl_area form textarea").val(textareaVal);
             }
         }
     }

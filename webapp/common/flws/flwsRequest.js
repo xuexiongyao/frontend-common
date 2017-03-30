@@ -71,6 +71,17 @@ function initFlwsMain(data){
 
     $.when(flwsQhzgxRequest() , getCqbgFlwsAllXxData(), getDxxxData() , getLoginInfo()).done(function (r1,r2,r3,r4) {
         console.log(r1 +','+ r2 +','+ r3 +','+ r4);
+
+        //获取呈请报告数据
+        /***呈请报告***/
+        if (typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
+            queryCqbgData(cqbgPageRender);//页面渲染
+        }else{//无呈请报告
+            if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
+                onlyFlwsRender();
+            }
+        }
+
         xydxRenderCqbg();//呈请报告嫌疑对象列表的渲染;
         callbackForAllAjaxQuerySuccess();//呈请报告内容复用，其他公共信息复用
 
@@ -79,15 +90,7 @@ function initFlwsMain(data){
         console.log("fail");
     });
 
-    //获取呈请报告数据
-    /***呈请报告***/
-    if (typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
-        queryCqbgData(cqbgPageRender);//页面渲染
-    }else{//无呈请报告
-        if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
-            onlyFlwsRender();
-        }
-    }
+
 
     /***呈请报告****/
     replaceEnterForCqbg();//textarea框的处理
