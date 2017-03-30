@@ -69,16 +69,40 @@ function cqbgPageRender() {
     //呈请报告input组件 easyui初始化组件
     var cqbgIpts = $('#cqbg_main_con form input');
 
-    //呈请报告只能做一份儿，并且已呈请的判断
-    if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one) {
-        $.messager.alert({
-            title: '提示',
-            msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
-            icon: 'warning',
-            fn: function () {
-                crossCloseTab();
+    //受案登记表的特殊处理
+    if(DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG'){
+        $.ajax({
+            url: pathConfig.basePath+'/wenshu/source/CQBG/INFO',
+            data:{
+                xxzjbh: DATA.CQBG.cqbgRow.CQBG_ZJ
+            },
+            success:function (data) {
+                var json = eval('('+data+')');
+                //呈请报告只能做一份儿，并且已呈请的判断(//受案登记表的特殊处理)
+                if (json.cqzt && json.cqzt != '0' && DATA.CQBG.cqbgData.one) {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
+                        icon: 'warning',
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
+                }
             }
-        });
+        })
+    }else{
+        //呈请报告只能做一份儿，并且已呈请的判断
+        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one) {
+            $.messager.alert({
+                title: '提示',
+                msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
+                icon: 'warning',
+                fn: function () {
+                    crossCloseTab();
+                }
+            });
+        }
     }
 
     //判断是否为自定义页面
@@ -367,6 +391,8 @@ function flwsPageRender(bm) {
         //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
         flwsDxListRenderOther(bm);
     }
+
+    cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
 }
 
 /**********************类型A************************/
