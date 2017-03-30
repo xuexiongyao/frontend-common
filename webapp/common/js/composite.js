@@ -872,11 +872,17 @@ function normalQuery() {
 function btnEvent() {
     $('.easyui-linkbutton:not(.c7)').linkbutton();
     $('#search_all').off('click').on('click', function () {
+        pageN = 1;
+        pageNumAll = 1;
+        pageSizeAll = 0;
         normalQuery();
     });
     //回车事件
     $('#keywords').next().find('input').keydown(function (e) {
         if (e.keyCode == 13) {
+            pageN = 1;
+            pageNumAll = 1;
+            pageSizeAll = 0;
             normalQuery();
         }
     });
@@ -910,6 +916,9 @@ function btnEvent() {
     });
     //点击查询(高级查询)
     $('#search_submit').off('click').on('click', function () {
+        pageN = 1;
+        pageNumAll = 1;
+        pageSizeAll = 0;
         getQuery('query');	//执行查询
     });
     //点击清空
@@ -1298,7 +1307,8 @@ function getSearchData($this) {
 
 //提交查询请求
 function ajaxQuery(condition_obj) {
-    console.log('condition_obj:',condition_obj);
+    console.log(pageN,pageNumAll,pageSizeAll);
+    //console.log('condition_obj:',condition_obj);
     try {
         if (!beforeSubmit(condition_obj))
             return;
@@ -1340,7 +1350,8 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
-            //return; //本地调试时,注释这个retrun
+            //本地调试时,注释这个retrun
+            //return;
             $('#pagination').pagination({
                 total: 998
             }).show();
