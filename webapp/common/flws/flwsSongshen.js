@@ -415,7 +415,7 @@ function saveAndSsShyj(backObj) {
                 var hxshyjbz = backObj.hxshyjbz;
                 var UsersStr = '';
                 $.ajax({
-                    url: ajaxUrl + '/findBamjids?businessKey=' + businessKey,
+                    url: ajaxUrl + '/findBamjids?businessKey=' + businessKey+'&asjbh='+asjbh+'&asjflwsdm='+asjflwsdm,
                     type: 'post',
                     async: false,
                     dataType: 'json',
