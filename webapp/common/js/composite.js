@@ -1338,8 +1338,15 @@ function ajaxQuery(condition_obj) {
             changeLinkButtonIcon();
             searchResult(data); //展示查询结果
             
-            logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
             logEntity.error_code = '200';
+            
+            if(data.requestTime && data.responseTime){
+            	logEntity.operate_time = data.requestTime;
+            	logEntity.operate_endtime = data.responseTime;
+            }else{
+            	logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
+            }
+            
             writeLog(logEntity);
         },
         error: function (e) {
