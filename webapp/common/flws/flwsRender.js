@@ -519,7 +519,7 @@ function flwsDxListRenderOther(bm){
                     }
                     xyrStr += '<li><label ' + title + ' class="easyui-tooltip"><input xxzjbh="' + flwsRow[i].CLDX_XXZJBH + '" flwszj="' + flwsRow[i].ZJ + '" ' + disabled + ' type="checkbox"/>' +
                         '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' +
-                        '<a class="val easyui-linkbuttom c5 delXydxBtn"><i class="fa fa-times"></i></a>' +
+                        '<a class="val easyui-linkbuttom c5 delXydxBtn"  title="删除"><i class="fa fa-times"></i></a>' +
                         '</li>';
                 }
 
