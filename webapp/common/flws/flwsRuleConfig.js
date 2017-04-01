@@ -406,6 +406,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
+                                    $this.validatebox();
                                     if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }

@@ -50,24 +50,26 @@ function cqbgNrXxfy() {
  */
 function cqbgFlwsOtherXxfy() {
     for (var k in DATA.publicJkXx) {
-        for (var i = 0; i < DATA.URLATTR[k].length; i++) {
-            var key = DATA.URLATTR[k][i];//参数名称
-            var val = DATA.publicJkXx[k][key];//参数值
+        if(DATA.URLATTR[k] && DATA.URLATTR[k].length>0){
+            for (var i = 0; i < DATA.URLATTR[k].length; i++) {
+                var key = DATA.URLATTR[k][i];//参数名称
+                var val = DATA.publicJkXx[k][key];//参数值
 
-            if (val == undefined || val == '' || val == null) {//返回数据为空
-                console.log(key + '为空');
-            } else {
-                var $node = $(".flws-main-con-r form input." + key);
-                if ($node.hasClass('easyuitextbox')) {
-                    $node.textbox({value: val})
-                } else if ($node.hasClass('easyuicombobox')) {
-                    $node.combobox({value: val})
-                } else if ($node.hasClass('easyuicombotree')) {
-                    $node.combotree({value: val})
-                } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                    $node.val(val).validatebox();
-                }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                    $node.val(val).validatebox();
+                if (val == undefined || val == '' || val == null) {//返回数据为空
+                    console.log(key + '为空');
+                } else {
+                    var $node = $(".flws-main-con-r form input." + key);
+                    if ($node.hasClass('easyuitextbox')) {
+                        $node.textbox({value: val})
+                    } else if ($node.hasClass('easyuicombobox')) {
+                        $node.combobox({value: val})
+                    } else if ($node.hasClass('easyuicombotree')) {
+                        $node.combotree({value: val})
+                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                        $node.val(val).validatebox();
+                    }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                        $node.val(val).validatebox();
+                    }
                 }
             }
         }
@@ -87,11 +89,15 @@ function cqbgDataXxfy() {
         if ($node) {
             var val = data[key];
             if (key == 'CQNR') {//呈请内容单独处理
-                $('#cqbg_main_con form textarea').val(val);
+                $('#cqbg_main_con form textarea.CQNR').val(val);
                 $node.textbox({
                     value: val
                 })
-            } else if (key == 'CQRQ') {//呈请日期
+            } else if (key == 'SQXGYY') {//呈请内容单独处理
+                $('#cqbg_main_con form textarea.SQXGYY').val(val).validatebox();
+            } else if (key == 'SQXGNR') {//呈请内容单独处理
+                $('#cqbg_main_con form textarea.SQXGNR').val(val).validatebox();
+            } else if (key == 'CQRQ' || key == 'SQXGSJ') {//呈请日期
                 $('#cqbg_main_con form input.' + key).val(data[key + '_MASTER']);
                 wdateValidate('#cqbg_main_con form input.Wdate');
             } else {
