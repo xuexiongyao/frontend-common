@@ -32,8 +32,17 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                 success : function(json){
                     console.log(2,json);
                     loading('close');
-                    var nameData = eval('('+json['data']['treeJson']+')');
-                    var nameArr = nameData[0]['children'];
+                    //var nameData = eval('('+json['data']['treeJson']+')');
+                    //var nameArr = nameData[0]['children'];
+
+                    var nameData = eval('(' + json['data']['treeJson'] + ')');
+                    var nameArr = null;
+                    if(json['data'].yyzlx == 'O'){
+                        nameArr = nameData[0]['children'];
+                    }else{
+                        nameArr = nameData;
+                    }
+
                     $('#role_approve').empty();
                     for(var i=0;i<nameArr.length;i++){
                         if(nameArr[i]['nodeType'] == 'user'){

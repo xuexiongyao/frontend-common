@@ -217,7 +217,7 @@ function selectApprove(shjl) {
                     if(json['data'].yyzlx == 'O'){
                         data = treeJson[0]['children'];
                     }else{
-                        data = treeJson[0];
+                        data = treeJson;
                     }
                     $('#role_name').empty();
                     for (var i = 0; i < data.length; i++) {
