@@ -50,7 +50,7 @@ function cqbgNrXxfy() {
  */
 function cqbgFlwsOtherXxfy() {
     for (var k in DATA.publicJkXx) {
-        if(DATA.URLATTR[k] && DATA.URLATTR[k].length>0){
+        if(DATA.URLATTR && DATA.URLATTR[k] && DATA.URLATTR[k].length>0){
             for (var i = 0; i < DATA.URLATTR[k].length; i++) {
                 var key = DATA.URLATTR[k][i];//参数名称
                 var val = DATA.publicJkXx[k][key];//参数值
