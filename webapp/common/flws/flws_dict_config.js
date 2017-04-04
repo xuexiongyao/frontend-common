@@ -292,7 +292,7 @@ var flwsDictObj = {
     ],
     'BD_D_BGJYQX_JYQXBGYYDM': [
         {"id": "1", "text": "依法延长拘留时间", "py": "YFYZJLSJ", "wb": "WITTRQJU"},
-        {"id": "2", "text": "法延长侦查羁押期限、审查起诉期限、审理期限", "py": "FYZZCJYQX、SCQSQX、SLQX", "wb": "ITTWSLRAB、PSFYAB、PGAB"},
+        {"id": "2", "text": "依法延长侦查羁押期限、审查起诉期限、审理期限", "py": "YFYZZCJYQX、SCQSQX、SLQX", "wb": "ITTWSLRAB、PSFYAB、PGAB"},
         {
             "id": "3",
             "text": "发现犯罪嫌疑人另有重要罪行，重新计算侦查羁押期限",
@@ -300,9 +300,9 @@ var flwsDictObj = {
             "wb": "NGQLVXWKDTSLT，TUYTWSLRAB"
         },
         {"id": "4", "text": "因犯罪嫌疑人身份不明不计算侦查羁押期限", "py": "YFZXYRSFBMBJSZCJYQX", "wb": "LQLVXWTWGJGYTWSLRAB"},
-        {"id": "5", "text": "清身份开始计算侦查羁押期限", "py": "QSFKSJSZCJYQX", "wb": "ITWGVYTWSLRAB"},
-        {"id": "6", "text": "用简易程序审理的案件转为第一审普通程序", "py": "YJYCXSLDAJZWDYSPTCX", "wb": "ETJTYPGRPWLOTGPUCTY"},
-        {"id": "7", "text": "精神病鉴定停止计算羁押期限", "py": "JSBJDTZJSJYQX", "wb": "OPUJPWHYTLRAB"},
+        {"id": "5", "text": "查清身份开始计算侦查羁押期限", "py": "CQSFKSJSZCJYQX", "wb": "ITWGVYTWSLRAB"},
+        {"id": "6", "text": "适用简易程序审理的案件转为第一审普通程序", "py": "SYJYCXSLDAJZWDYSPTCX", "wb": "ETJTYPGRPWLOTGPUCTY"},
+        {"id": "7", "text": "因精神病鉴定停止计算羁押期限", "py": "YJSBJDTZJSJYQX", "wb": "OPUJPWHYTLRAB"},
         {"id": "8", "text": "因精神病鉴定恢复计算羁押期限", "py": "YJSBJDHFJSJYQX", "wb": "LOPUJPNTYTLRAB"}
     ],
     'BD_D_BGJYQX_PZHJDLXDM': [
