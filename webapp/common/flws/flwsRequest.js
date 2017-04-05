@@ -7,12 +7,11 @@
  * 当字符串长度过大（string>5000）时，在本页面请求获取文书map结构数据
  * @param data  前一个页面传过来的map数据
  * @param cqbgBm  呈请报告的编码
- * @param flwsBm  法律文书的编码
  */
-function wsMainPageRender(data,cqbgBm,flwsBm){
+function wsMainPageRender(data,cqbgBm){
     if(typeof data == 'undefined' && typeof cqbgBm != 'undefined'){
         $.ajax({
-            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json?flwsBm='+flwsBm,
+            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json',
             success: function (json) {
                 initFlwsMain(json);
             }
