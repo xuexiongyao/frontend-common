@@ -139,11 +139,7 @@ function queryCqbgData() {
                         if (a == 'CQNR') {//呈请内容单独处理
                             $('#cqbg_main_con form textarea').val(data[a]).prop('readonly', true);
                             autoTextarea($('#cqbg_main_con form textarea')[0]);
-                        } else if(a == 'SQXGYY' || a == 'SQXGNR'){//呈请法律文书修改报告书
-                            var str = "<textarea class='easyuivalidatebox TEXTAREA_R " + a + "' name='" + a + "' readonly='readonly'>"+data[a]+"</textarea>";
-                            $("#cqbg_main_con form a[name='" + a + "']").html(str);
-                            autoTextarea($("#cqbg_main_con form a[name='" + a + "']").find('textarea')[0]);
-                        } else {
+                        }else {
                             for (var i = 0; i < $target.length; i++) {
                                 var aName = $($target[i]).attr('name');//a标签的name属性
                                 if (a == aName) {

@@ -89,7 +89,8 @@ function cqbgDataXxfy() {
         if ($node) {
             var val = data[key];
             if (key == 'CQNR') {//呈请内容单独处理
-                $('#cqbg_main_con form textarea.CQNR').val(val);
+                $('#cqbg_main_con form textarea').val(val);
+                autoTextarea($('#cqbg_main_con form textarea')[0]);
                 $node.textbox({
                     value: val
                 })
