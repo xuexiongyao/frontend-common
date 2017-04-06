@@ -93,11 +93,7 @@ function cqbgDataXxfy() {
                 $node.textbox({
                     value: val
                 })
-            } else if (key == 'SQXGYY') {//呈请内容单独处理
-                $('#cqbg_main_con form textarea.SQXGYY').val(val).validatebox();
-            } else if (key == 'SQXGNR') {//呈请内容单独处理
-                $('#cqbg_main_con form textarea.SQXGNR').val(val).validatebox();
-            } else if (key == 'CQRQ' || key == 'SQXGSJ') {//呈请日期
+            } else if (key == 'CQRQ') {//呈请日期
                 $('#cqbg_main_con form input.' + key).val(data[key + '_MASTER']);
                 wdateValidate('#cqbg_main_con form input.Wdate');
             } else {

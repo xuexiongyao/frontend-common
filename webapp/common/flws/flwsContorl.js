@@ -51,42 +51,16 @@ function getCqbgQtsjAdd() {
                     bamj = '',//办案民警
                     bamjArry = [];//办案民警人员数组
 
-                DATA.CQBG.params = {};
-                //呈请法律文书修改报告书（asjflwsdm = 900003）特殊处理
-                if(DATA.CQBG.asjflwsdm != '900003'){
-                    /**********呈请报告提交后台数据************/
-                    DATA.CQBG.params = {
-                        ASJFLWSMC: DATA.CQBG.asjflwsmc,//案事件法律文书名称
-                        FLWS_ASJFLWSDM: DATA.CQBG.asjflwsdm,//案事件法律文书名称
-                        ASJBH: DATA.asjbh,//案事件编号
-                        AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
-                        ASJZCXWDM: DATA.asjzcxwdm,//案事件侦查行为代码
-                        CQZT: '0',//呈请状态
-                        BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM//办案单位公安机关机关代码
-                    };
-
-                    DATA.CQBG.params.CQNR = $('#cqbg_main_con form textarea').val();//呈请内容
-                    DATA.CQBG.params.CQRQ = $('#cqbg_main_con form input.CQRQ').val();//呈请日期
-                } else {
-                    //   SQXGBM_GAJGMC  SQXGBM_GAJGJGDM
-                    DATA.CQBG.params = {
-                        ASJBH: DATA.asjbh,//案事件编号
-                        AJMC: DATA.FLWS_PARAM.flwsMc,//案件名称
-                        WSXGZT: '0',//呈请状态默认0
-                        FLWSDM: DATA.FLWS_PARAM.flwsBm,//法律文书编码
-                        FLWS_ZJ: DATA.FLWS_PARAM.flwsZj,//法律文书主键
-                        BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM,//办案单位公安机关机关代码
-                        SQXGR_XM: DATA.OWN.userName,//当前登录者姓名
-                        SQXGBM_GAJGMC: DATA.OWN.userOrgName,//当前登录者公安机关名称
-                        SQXGBM_GAJGJGDM: DATA.OWN.userOrgCode//当前登录者公安机关机关代码
-                    };
-
-                    DATA.CQBG.params.SQXGYY = $('#cqbg_main_con form textarea.SQXGYY').val();//修改原因
-                    DATA.CQBG.params.SQXGNR = $('#cqbg_main_con form textarea.SQXGNR').val();//内容
-                    DATA.CQBG.params.SQXGSJ = $('#cqbg_main_con form input.SQXGSJ').val();//时间
-                    DATA.CQBG.params.CQRQ = $('#cqbg_main_con form input.SQXGSJ').val();//时间
-                }
-
+                /**********呈请报告提交后台数据************/
+                DATA.CQBG.params = {
+                    ASJFLWSMC: DATA.CQBG.asjflwsmc,//案事件法律文书名称
+                    FLWS_ASJFLWSDM: DATA.CQBG.asjflwsdm,//案事件法律文书名称
+                    ASJBH: DATA.asjbh,//案事件编号
+                    AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
+                    ASJZCXWDM: DATA.asjzcxwdm,//案事件侦查行为代码
+                    CQZT: '0',//呈请状态
+                    BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM//办案单位公安机关机关代码
+                };
                 /*嫌疑人姓名*/
                 if (DATA.CQBG.xyrxms) {
                     DATA.CQBG.params.XYRXM = DATA.CQBG.xyrxms.join(',');//嫌疑人姓名
@@ -96,6 +70,7 @@ function getCqbgQtsjAdd() {
                 if (DATA.CQBG.xyrids) {
                     DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
                 }
+
 
                 //循环取数据
                 var cqbgTjdataArry = $('#cqbg_main_con form input[type="hidden"]');//呈请报告提交后台数据
@@ -116,7 +91,8 @@ function getCqbgQtsjAdd() {
                 bamj = bamjArry.join(',');//已选择办案人员
                 DATA.CQBG.params.BAMJID = bamj;//办案民警身份证号码
                 DATA.CQBG.params.BAMJXM = getDictName(bamjDictUrl, bamj, false);//办案民警名称
-
+                DATA.CQBG.params.CQNR = $('#cqbg_main_con form textarea').val();//呈请内容
+                DATA.CQBG.params.CQRQ = $('#cqbg_main_con form input.CQRQ').val();//呈请日期
                 return false;
             } else {
                 return false;	// 返回false终止表单提交
