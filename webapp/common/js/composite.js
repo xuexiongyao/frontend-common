@@ -318,7 +318,20 @@ function getQueryModel() {
 //模板列表操作解析
 function modelHandle(val, row, index){
     //return '<i title="查询此条件" condition  = "'+condition+'" class="fa fa-search"></i><i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
-    return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+    $.ajax({
+        url: pathConfig.managePath+'/api/userLogin/getSetuSession',
+        type: 'get',
+        dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        async: false,
+        success: function(json){
+            sessionBean = json.sessionBean;
+            if(row.xt_lrrid == sessionBean.userId){//当前录入此模版的才能删除
+                return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+            }
+        }
+    });
 }
 //可见范围解析
 function kjfwParse(val, row, index){
