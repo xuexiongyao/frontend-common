@@ -327,8 +327,10 @@ function modelHandle(val, row, index){
         async: false,
         success: function(json){
             sessionBean = json.sessionBean;
-            if(row.xt_lrrid == sessionBean.userId){//当前录入此模版的才能删除
-                return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+            if(typeof sessionBean != 'undefined' && typeof row.xt_lrrid != 'undefined'){
+                if(row.xt_lrrid == sessionBean.userId){//当前录入此模版的才能删除
+                    return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+                }
             }
         }
     });
