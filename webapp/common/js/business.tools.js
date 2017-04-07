@@ -678,6 +678,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 		onClick: function(){return false;},
 		//展示面板时,清空input的值并执行不带参数的回调函数
 		onShowPanel :function(){
+			/*
 			for (var item in returnFieldData) {
 				$('#' + returnFieldData[item]).val('');
 			}
@@ -686,6 +687,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 				var fn = eval(onSelectedFun);
 				try{fn();}catch(e){console.log(e)}
 			}
+			*/
 		},
 		onHidePanel : function(){
 			for (var item in returnFieldData) {

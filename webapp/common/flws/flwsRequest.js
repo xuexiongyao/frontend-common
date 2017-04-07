@@ -7,12 +7,11 @@
  * 当字符串长度过大（string>5000）时，在本页面请求获取文书map结构数据
  * @param data  前一个页面传过来的map数据
  * @param cqbgBm  呈请报告的编码
- * @param flwsBm  法律文书的编码
  */
-function wsMainPageRender(data,cqbgBm,flwsBm){
+function wsMainPageRender(data,cqbgBm){
     if(typeof data == 'undefined' && typeof cqbgBm != 'undefined'){
         $.ajax({
-            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json?flwsBm='+flwsBm,
+            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json',
             success: function (json) {
                 initFlwsMain(json);
             }
@@ -71,6 +70,17 @@ function initFlwsMain(data){
 
     $.when(flwsQhzgxRequest() , getCqbgFlwsAllXxData(), getDxxxData() , getLoginInfo()).done(function (r1,r2,r3,r4) {
         console.log(r1 +','+ r2 +','+ r3 +','+ r4);
+
+        //获取呈请报告数据
+        /***呈请报告***/
+        if (typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
+            queryCqbgData(cqbgPageRender);//页面渲染
+        }else{//无呈请报告
+            if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
+                onlyFlwsRender();
+            }
+        }
+
         xydxRenderCqbg();//呈请报告嫌疑对象列表的渲染;
         callbackForAllAjaxQuerySuccess();//呈请报告内容复用，其他公共信息复用
 
@@ -79,15 +89,7 @@ function initFlwsMain(data){
         console.log("fail");
     });
 
-    //获取呈请报告数据
-    /***呈请报告***/
-    if (typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
-        queryCqbgData(cqbgPageRender);//页面渲染
-    }else{//无呈请报告
-        if(DATA.FLWS.flwsData.customer){//只有法律文书,并且需要生成法律文书
-            onlyFlwsRender();
-        }
-    }
+
 
     /***呈请报告****/
     replaceEnterForCqbg();//textarea框的处理

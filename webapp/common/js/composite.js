@@ -675,7 +675,8 @@ function openOtherTable(isExport) {
 //批量导出
 function batchExprot(search_config_obj) {
     //将查询条件赋给导出查询条件
-    var export_condition_obj = condition_obj;
+    //var export_condition_obj = condition_obj;
+	var export_condition_obj = cloneObj(condition_obj);
     export_condition_obj['start'] = 0;
     export_condition_obj['export']='1';
 
@@ -684,21 +685,18 @@ function batchExprot(search_config_obj) {
     		export_condition_obj.query = [];
     	
     	var query = export_condition_obj.query;
-    	var is_main_type_query = false;//主表是否查询
     	for (var i = 0; i < query.length; i++) {
-            if (search_config.main_type.toUpperCase() == query[i]['type'].toUpperCase()) {//主表有查询条件
-            	is_main_type_query = true;
-            	query[i].condition.push({"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="});
+    		//主表有查询条件,全部删除，导出的时候，主表条件不用了
+            if (search_config.main_type.toUpperCase() == query[i]['type'].toUpperCase()) {
+            	query.splice(i, 1);
             	break;
             }
         }
     	
-    	if(!is_main_type_query){//主表没有查询条件
-    		export_condition_obj.query.push({
-                "type": search_config.main_type.toUpperCase(),
-                "condition": [{"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="}]
-            });
-    	}
+		export_condition_obj.query.push({
+            "type": search_config.main_type.toUpperCase(),
+            "condition": [{"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="}]
+        });
     }
 
     loading('open', '数据处理中,请稍候...');
@@ -885,11 +883,17 @@ function normalQuery() {
 function btnEvent() {
     $('.easyui-linkbutton:not(.c7)').linkbutton();
     $('#search_all').off('click').on('click', function () {
+        pageN = 1;
+        pageNumAll = 1;
+        pageSizeAll = 0;
         normalQuery();
     });
     //回车事件
     $('#keywords').next().find('input').keydown(function (e) {
         if (e.keyCode == 13) {
+            pageN = 1;
+            pageNumAll = 1;
+            pageSizeAll = 0;
             normalQuery();
         }
     });
@@ -923,6 +927,9 @@ function btnEvent() {
     });
     //点击查询(高级查询)
     $('#search_submit').off('click').on('click', function () {
+        pageN = 1;
+        pageNumAll = 1;
+        pageSizeAll = 0;
         getQuery('query');	//执行查询
     });
     //点击清空
@@ -1311,7 +1318,8 @@ function getSearchData($this) {
 
 //提交查询请求
 function ajaxQuery(condition_obj) {
-    console.log('condition_obj:',condition_obj);
+    console.log(pageN,pageNumAll,pageSizeAll);
+    //console.log('condition_obj:',condition_obj);
     try {
         if (!beforeSubmit(condition_obj))
             return;
@@ -1343,8 +1351,15 @@ function ajaxQuery(condition_obj) {
             changeLinkButtonIcon();
             searchResult(data); //展示查询结果
             
-            logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
             logEntity.error_code = '200';
+            
+            if(data.requestTime && data.responseTime){
+            	logEntity.operate_time = data.requestTime;
+            	logEntity.operate_endtime = data.responseTime;
+            }else{
+            	logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
+            }
+            
             writeLog(logEntity);
         },
         error: function (e) {
@@ -1353,7 +1368,8 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
-            //return; //本地调试时,注释这个retrun
+            //本地调试时,注释这个retrun
+            return;
             $('#pagination').pagination({
                 total: 998
             }).show();
@@ -1942,4 +1958,13 @@ function doCondiion(condition_obj){
 	}
 	
 	return newCondition;
+}
+
+function cloneObj(srcObj){
+	if(typeof(srcObj) != 'object') return srcObj; 
+	if(srcObj == null) return srcObj; 
+	var newObj = new Object(); 
+	for(var i in srcObj) 
+		newObj[i] = srcObj[i];
+	return newObj; 
 }

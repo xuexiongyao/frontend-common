@@ -723,7 +723,7 @@ function editSwitch(bool, border_class, box_class) {
                     _this.removeAttr('disabled');
                     _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
                 }else{
-                    _this.validatebox({readonly: false}).next().removeClass(_border_class);
+                    _this.validatebox({readonly: false,required:true}).next().removeClass(_border_class);
                 }
             }else if(_this.hasClass('Wdate')){
                 _this.removeAttr('disabled');
@@ -822,7 +822,7 @@ function editEnable(input_class){
                 _this.removeAttr('disabled');
                 _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
             }else{
-                _this.validatebox({readonly: false}).next().removeClass(border_class);
+                _this.validatebox({readonly: false,required:true}).next().removeClass(border_class);
             }
         } else if(_this.hasClass('Wdate')){
             _this.removeAttr('disabled');
@@ -1158,17 +1158,16 @@ function clearInput(input_class){
 //设置组件的值
 function setInputValue($input,val){
     try{
-        $input.combobox('setValue',val);
-        $input.combobox('select',val);
+        $input.combotree('setValue',val);
     }catch(e){
         try{
-            $input.textbox('setValue',val);
+            $input.combobox('setValue',val);
         }catch(e){
             try{
                 $input.datebox('setValue',val);
             }catch(e){
                 try{
-                    $input.combotree('setValue',val);
+                    $input.textbox('setValue',val);
                 }catch(e){
                     try{
                         $input.validate('setValue',val);

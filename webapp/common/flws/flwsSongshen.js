@@ -217,7 +217,7 @@ function selectApprove(shjl) {
                     if(json['data'].yyzlx == 'O'){
                         data = treeJson[0]['children'];
                     }else{
-                        data = treeJson[0];
+                        data = treeJson;
                     }
                     $('#role_name').empty();
                     for (var i = 0; i < data.length; i++) {
@@ -415,7 +415,7 @@ function saveAndSsShyj(backObj) {
                 var hxshyjbz = backObj.hxshyjbz;
                 var UsersStr = '';
                 $.ajax({
-                    url: ajaxUrl + '/findBamjids?businessKey=' + businessKey,
+                    url: ajaxUrl + '/findBamjids?businessKey=' + businessKey+'&asjbh='+asjbh+'&asjflwsdm='+asjflwsdm,
                     type: 'post',
                     async: false,
                     dataType: 'json',

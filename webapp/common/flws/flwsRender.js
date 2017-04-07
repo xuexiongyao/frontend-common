@@ -34,18 +34,23 @@ function getCqbgFlwsHtmlPage() {
     var flwsstr = '';
     var flwsData = DATA.FLWS.flwsData;//法律文书数据
     if (!jQuery.isEmptyObject(flwsData)) {
+        var flwsTmpArray = [];//法律文书临时数组
+        for(var k in flwsData){
+            flwsTmpArray.push(flwsData[k]);
+        }
+        var sortedFlwsData = flwsTmpArray.sort(compare('bianMa'));
         //法律文书字符串
-        for (var a in flwsData) {
-            flwsstr = '<div class="flws-tabs-title" title="' + flwsData[a].name + '">' +
+        for (var a=0;a<sortedFlwsData.length;a++) {
+            flwsstr = '<div class="flws-tabs-title" title="' + sortedFlwsData[a].name + '">' +
                 '<div class="flws-main-con">' +
-                '<div class="flws-main-con-l flws_xyr_area flws_xyr_area_add" id="flws_xyr_area_' + flwsData[a].bianMa + '">' +
+                '<div class="flws-main-con-l flws_xyr_area flws_xyr_area_add" id="flws_xyr_area_' + sortedFlwsData[a].bianMa + '">' +
                 '</div>' +
-                '<div class="flws-main-con-r"  id="flws_main_con_r_' + flwsData[a].bianMa + '">' +
+                '<div class="flws-main-con-r"  id="flws_main_con_r_' + sortedFlwsData[a].bianMa + '">' +
                 '</div>' +
                 '</div>' +
                 '</div>';
             $("#flwsTabs").append(flwsstr);
-            flwsRightPageRenderForAdd(flwsData[a]);
+            flwsRightPageRenderForAdd(sortedFlwsData[a]);
         }
     }
 
@@ -64,16 +69,42 @@ function cqbgPageRender() {
     //呈请报告input组件 easyui初始化组件
     var cqbgIpts = $('#cqbg_main_con form input');
 
-    //呈请报告只能做一份儿，并且已呈请的判断
-    if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one) {
-        $.messager.alert({
-            title: '提示',
-            msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
-            icon: 'warning',
-            fn: function () {
-                crossCloseTab();
+    //受案登记表的特殊处理
+    if(DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG'){
+        loading('open','正在获取数据...');
+        $.ajax({
+            url: pathConfig.basePath+'/wenshu/source/CQBG/INFO',
+            data:{
+                xxzjbh: DATA.CQBG.cqbgRow.CQBG_ZJ
+            },
+            success:function (data) {
+                loading('close');
+                var json = eval('('+data+')');
+                //呈请报告只能做一份儿，并且已呈请的判断(//受案登记表的特殊处理)
+                if (json.cqzt && json.cqzt != '0' && DATA.CQBG.cqbgData.one) {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
+                        icon: 'warning',
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
+                }
             }
-        });
+        })
+    }else{
+        //呈请报告只能做一份儿，并且已呈请的判断
+        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one) {
+            $.messager.alert({
+                title: '提示',
+                msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
+                icon: 'warning',
+                fn: function () {
+                    crossCloseTab();
+                }
+            });
+        }
     }
 
     //判断是否为自定义页面
@@ -167,8 +198,9 @@ function xyrCheckedXxfy($this) {
 
     var xydxZhxx = $this.next().attr('xyrzhxx');//嫌疑对象组合信息
 
+    var isCheck = $this.prop('checked');//当前checkbox框是否勾选
     //勾选嫌疑人
-    if (parentDiv.find('input:checked').length > 0) {//选中
+    if (isCheck) {//选中
         var textareaVal = $("#cqbg_main_con form textarea").val();
 
         /***嫌疑对象接口信息的复用***/
@@ -199,27 +231,84 @@ function xyrCheckedXxfy($this) {
         DATA.CQBG.xyrxms = xyrxmArry;
         DATA.CQBG.xyrids = xyridArry;
 
-        /*******行政案件组合信息拼接*******/
-        if(DATA.CQBG.cqbgData.xyrpz || DATA.CQBG.cqbgData.xydwpz || DATA.CQBG.cqbgData.xgrpz){//行政案件组合信息复用
-            cqbgXydxZhxxFyForXzaj($this,textareaVal);
-        }else {
-            /*****刑事案件组合信息复用*****/
-            var xyrZhxxData = '\t' + xydxZhxx +'\n';
-            $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
+        if(!DATA.CQBG.cqbgZj){
+            /*******行政案件组合信息拼接*******/
+            if(DATA.CQBG.cqbgData.xyrpz || DATA.CQBG.cqbgData.xydwpz || DATA.CQBG.cqbgData.xgrpz){//行政案件组合信息复用
+                cqbgXydxZhxxFyForXzaj($this,textareaVal);
+            }else {
+                /*****刑事案件组合信息复用*****/
+                var xyrZhxxData = '\t' + xydxZhxx +'\n';
+                $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
+            }
+        }else{
+            var xydxXxzjbh = $this.attr('xxzjbh');//当前嫌疑对象信息主键编号
+            var xyrids = DATA.CQBG.cqbgRow.XYRID;//已经勾选的嫌疑对象id
+            var xyridArray = [];
+
+            if (xyrids) {//嫌疑人id可能为多个
+                if (xyrids.indexOf(',') == -1) {
+                    xyridArray.push(xyrids);
+                } else {
+                    xyridArray = xyrids.split(',');
+                }
+            }
+
+            //其他嫌疑对象的勾选
+            if(jQuery.inArray(xydxXxzjbh,xyridArray) == -1){
+                /*******行政案件组合信息拼接*******/
+                if(DATA.CQBG.cqbgData.xyrpz || DATA.CQBG.cqbgData.xydwpz || DATA.CQBG.cqbgData.xgrpz){//行政案件组合信息复用
+                    cqbgXydxZhxxFyForXzaj($this,textareaVal);
+                }else {
+                    /*****刑事案件组合信息复用*****/
+                    var xyrZhxxData = '\t' + xydxZhxx +'\n';
+                    $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
+                }
+            }
+
+            //已经勾选的嫌疑对象的勾选
+            // if(jQuery.inArray(xydxXxzjbh,xyridArray) > -1){
+            //     for(var j=0;j<xyridArray.length;j++){
+            //         var isChecked = $('#cqbg_xyr_con ul.xyrList').find("input[xxzjbh=" + xyridArry[j] + "]").prop('checked');
+            //         if(!isChecked){
+            //             /*******行政案件组合信息拼接*******/
+            //             if(DATA.CQBG.cqbgData.xyrpz || DATA.CQBG.cqbgData.xydwpz || DATA.CQBG.cqbgData.xgrpz){//行政案件组合信息复用
+            //                 cqbgXydxZhxxFyForXzaj($this,textareaVal);
+            //             }else {
+            //                 /*****刑事案件组合信息复用*****/
+            //                 var xyrZhxxData = '\t' + xydxZhxx +'\n';
+            //                 $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
+            //             }
+            //         }
+            //     }
+            // }
         }
 
     } else {//未选中
-        DATA.CQBG["status"]["selected"] = false;
+        checkXyr = $this.parent().parent().parent().find('input:checked');
 
-        //同一时间只能操作一个
-        parentDiv.show();
-        parentDiv.siblings().show();
+        //已勾选的嫌疑人姓名和id的处理
+        for (var i = 0; i < checkXyr.length; i++) {
+            xyrxmData = $(checkXyr[i]).next().text();
+            xyridData = $(checkXyr[i]).attr('xxzjbh');
+            xyrxmArry.push(xyrxmData);
+            xyridArry.push(xyridData);
+        }
 
+        DATA.CQBG.xyrxms = xyrxmArry;
+        DATA.CQBG.xyrids = xyridArry;
+
+        if(parentDiv.find('input:checked').length == 0){
+            DATA.CQBG["status"]["selected"] = false;
+        } else if(parentDiv.find('input:checked').length > 0){
+            DATA.CQBG["status"]["selected"] = true;
+            //同一时间只能操作一个
+            parentDiv.show();
+            parentDiv.siblings().show();
+        }
         //呈请报告嫌疑对象内容去掉
         var textareaVal = $("#cqbg_main_con form textarea").val();
         textareaVal = textareaVal.replace('\t'+ xydxZhxx +'\n','');
         $("#cqbg_main_con form textarea").val(textareaVal);
-
     }
 }
 
@@ -304,6 +393,8 @@ function flwsPageRender(bm) {
         //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
         flwsDxListRenderOther(bm);
     }
+
+    cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
 }
 
 /**********************类型A************************/
@@ -333,6 +424,7 @@ function flwsPageRenderA(bm){
 
         //新增渲染
         flwsRightPageRenderForAdd(DATA.FLWS[bm].flwsData);
+        cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
     } else if (flwsRow.length > 0) {//有数据
         //编辑标识
         DATA.FLWS[bm]['status']['isAdd'] = false;
@@ -427,7 +519,7 @@ function flwsDxListRenderOther(bm){
                     }
                     xyrStr += '<li><label ' + title + ' class="easyui-tooltip"><input xxzjbh="' + flwsRow[i].CLDX_XXZJBH + '" flwszj="' + flwsRow[i].ZJ + '" ' + disabled + ' type="checkbox"/>' +
                         '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' +
-                        '<a class="val easyui-linkbuttom c5 delXydxBtn"><i class="fa fa-times"></i></a>' +
+                        '<a class="val easyui-linkbuttom c5 delXydxBtn"  title="删除"><i class="fa fa-times"></i></a>' +
                         '</li>';
                 }
 

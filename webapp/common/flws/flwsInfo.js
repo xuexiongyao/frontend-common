@@ -8,7 +8,7 @@
  */
 function getCqbgMapData() {
     var openUrl = '';
-    if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB') {//无呈请报告法律文书的处理
+    if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB' && DATA.asjflwsbm != 'TB_XW_FLWS_FLWSXGSQB') {//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath + '/wenshu/source/FLWS_' + DATA.flwsAsjflwsdm + '/DIC.json'
     } else {
         openUrl = pathConfig.basePath + '/wenshu/source/CQBG_' + DATA.flwsAsjflwsdm + '/DIC.json'
@@ -139,7 +139,7 @@ function queryCqbgData() {
                         if (a == 'CQNR') {//呈请内容单独处理
                             $('#cqbg_main_con form textarea').val(data[a]).prop('readonly', true);
                             autoTextarea($('#cqbg_main_con form textarea')[0]);
-                        } else {
+                        }else {
                             for (var i = 0; i < $target.length; i++) {
                                 var aName = $($target[i]).attr('name');//a标签的name属性
                                 if (a == aName) {
