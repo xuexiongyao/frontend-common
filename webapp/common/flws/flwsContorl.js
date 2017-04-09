@@ -93,6 +93,12 @@ function getCqbgQtsjAdd() {
                 DATA.CQBG.params.BAMJXM = getDictName(bamjDictUrl, bamj, false);//办案民警名称
                 DATA.CQBG.params.CQNR = $('#cqbg_main_con form textarea').val();//呈请内容
                 DATA.CQBG.params.CQRQ = $('#cqbg_main_con form input.CQRQ').val();//呈请日期
+
+                //呈请法律文书修改
+                if(DATA.FLWS_PARAM && DATA.FLWS_PARAM.CQXG_XQ){
+                    DATA.CQBG.params.CQXG_XQ = JSON.stringify(DATA.FLWS_PARAM.CQXG_XQ);
+                }
+
                 return false;
             } else {
                 return false;	// 返回false终止表单提交
