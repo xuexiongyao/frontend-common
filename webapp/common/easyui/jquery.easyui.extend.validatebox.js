@@ -387,13 +387,13 @@
 		},
 		mobile: {
 			validator : function(value) {
-				return /(^[1][3|5|7|8]{1}\d{9}$)/.test(value);
+				return /(^[1][3|4|5|7|8]{1}\d{9}$)/.test(value);
 			},
 			message : "请输入正确的移动电话"
 		},
 		manyMobils:{
 			validator : function(value) {
-				var pattern=/(^[1][3|5|7|8]{1}\d{9}$)/;
+				var pattern=/(^[1][3|4|5|7|8]{1}\d{9}$)/;
 				var phoneArray=value.split('/'); //
 				var bSuccess=true;
 				for(var i=0;i<phoneArray.length;i++){
