@@ -391,6 +391,17 @@ function flwsRightPagePj(flwsData) {
             scflwsrwForNoCqbg(bm);
         });
     }
+
+    /**
+     * checkbox、radio方法调用(jessie)
+     * @type {string}
+     */
+    var initFun = 'init_'+bm;
+    try{
+        eval(initFun+'()');
+    }catch(e){
+        console.log(initFun+"()不存在！");
+    }
 }
 
 /**
