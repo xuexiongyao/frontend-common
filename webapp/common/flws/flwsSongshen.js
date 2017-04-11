@@ -671,7 +671,7 @@ function compareTime(startTime,endTime,i) {
 function sendMsg(userid,con){
     $.ajax({
         url:  pathConfig.basePath + '/api/xx/sendMsg/'+userid,
-        param: {
+        data: {
             content: con
         },
         type: 'post',
