@@ -163,6 +163,30 @@ function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc,isFlws) {
 }
 
 /**
+ * 嫌疑对象字符串模板函数
+ * @param title title属性，提示内容
+ * @param disabled disabled属性
+ * @param xxzjbh 嫌疑对象的主键
+ * @param ryid 犯罪嫌疑人人员ID
+ * @param asjxgrybh 案事件相关人员编号
+ * @param xytype 嫌疑对象类型
+ * @param xyzhxx 嫌疑对象组合信息
+ * @param xydxmc 嫌疑对象名称
+ * @param isFlws 是否是法律文书
+ * @returns {string}  返回为拼接好的字符串
+ */
+function xydxDxStrTmpFun(title, disabled, xxzjbh, ryid, asjxgrybh, xytype, xyzhxx, xydxmc,isFlws) {
+    var xydxStrTmp = '';
+    var str = '';
+    if(isFlws){
+        str = '<a class="val easyui-linkbuttom c5 delXydxBtn" title="删除"><i class="fa fa-times"></i></a>';
+    }
+    xydxStrTmp = '<li><label  ' + title + ' ' + disabled + ' class="easyui-tooltip"><input xxzjbh="' + xxzjbh + '" ryid="'+ryid+'" asjxgrybh="'+asjxgrybh+'" ' + disabled + ' type="checkbox" />' +
+        '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label>' + str +'</li>';
+    return xydxStrTmp;
+}
+
+/**
  * 已处理嫌疑对象的删除
  * @param bm  文书编码
  * @param $this  当前这条数据
@@ -546,6 +570,13 @@ function flwsWclXyDxCheck(bm, $this, event) {
             for (var i = 0; i < xyrArry.length; i++) {
                 if (xyrArry[i]["xxzjbh"] == xyrXxzjbh) {
                     var xyrCurrent = xyrArry[i];
+                    //案事件相关人员、犯罪嫌疑人人员id
+                    if(xyrCurrent.asjxgrybh){
+                        DATA.FLWS[bm].asjxgry = xyrCurrent.asjxgrybh;
+                    }
+                    if(xyrCurrent.ryid){
+                        DATA.FLWS[bm].fzxyrRyid = xyrCurrent.ryid;
+                    }
 
                     //自定义页面的处理(传递当前选中的嫌疑对象数据)
                     if (flwsData.customized) {
