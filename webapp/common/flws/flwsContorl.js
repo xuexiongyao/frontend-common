@@ -446,6 +446,11 @@ function getFlwsQtsjEdit(bm) {
                                             DATA.FLWS[bm].params[dataname] = moneyNum;
                                             DATA.FLWS[bm].params[dataname + '_DX'] = val;
                                         }
+                                    }  else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
+                                        var numberNum = $(dataArry[i]).parent().parent().attr('number');
+                                        if (numberNum) {
+                                            DATA.FLWS[bm].params[dataname] = numberNum;
+                                        }
                                     } else {
                                         DATA.FLWS[bm].params[dataname] = val;
                                     }
