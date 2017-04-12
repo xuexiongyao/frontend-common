@@ -88,15 +88,8 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                     var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
                                     if(isCheckMsger){
                                         var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.asjflwsmc+"】已到审批任务中，请您及时处理。";
-                                        sendMsg(nameIdStr,content);
+                                        sendMsg(nameIdStr,content,json.message);
                                     }
-                                    $.messager.alert({
-                                        title : '提示',
-                                        msg: '保存成功!',
-                                        fn: function () {
-                                            crossCloseTab();
-                                        }
-                                    });
                                 }else{
                                     $.messager.alert({
                                         title : '提示',
@@ -114,8 +107,11 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
 
 /**
  * 启动流程发送短信方法
+ * @param userid  用户id
+ * @param con  短信内容
+ * @param msg  提示信息
  */
-function sendMsg(userid,con){
+function sendMsg(userid,con,msg){
     $.ajax({
         url:  pathConfig.basePath + '/api/xx/sendMsg/'+userid,
         data: {
@@ -123,7 +119,13 @@ function sendMsg(userid,con){
         },
         type: 'post',
         success: function (data) {
-            console.log(data);
+            $.messager.alert({
+                title : '提示',
+                msg: '保存成功!',
+                fn: function () {
+                    crossCloseTab();
+                }
+            });
         }    
     })
 }

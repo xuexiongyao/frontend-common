@@ -509,15 +509,8 @@ function complete(shjl, shsj, shyj) {
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
                 if(isCheckMsger && candidateUsers){
                     var content = badwGajgmc+"送审的【"+flwsmc+"】已到审批任务中，请您及时处理。";
-                    sendMsg(candidateUsers,content);
+                    sendMsg(candidateUsers, content, json.message);
                 }
-                $.messager.alert({
-                    title: '提示',
-                    msg: json.message,
-                    fn: function () {
-                        crossCloseTab('refresh_flwstask');
-                    }
-                });
             } else {
                 $.messager.alert({
                     title: '提示',
@@ -544,15 +537,8 @@ function end(shjl, shsj, shyj) {
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
                 if(isCheckMsger){
                     var content = "您送审的"+ajmc+"的【"+flwsmc+"】已审批完成，请及时查收。";
-                    sendMsg(DATA.CQBG.cqbgRow.BAMJID,content);
+                    sendMsg(DATA.CQBG.cqbgRow.BAMJID,content,json.message);
                 }
-                $.messager.alert({
-                    title: '提示',
-                    msg: json.message,
-                    fn: function () {
-                        crossCloseTab('refresh_flwstask');
-                    }
-                });
             } else {
                 //console.log('结束:',json);
             }
@@ -667,8 +653,11 @@ function compareTime(startTime,endTime,i) {
 
 /**
  * 启动流程发送短信方法
+ * @param userid  用户id
+ * @param con  短信内容
+ * @param msg  提示信息
  */
-function sendMsg(userid,con){
+function sendMsg(userid,con,msg){
     $.ajax({
         url:  pathConfig.basePath + '/api/xx/sendMsg/'+userid,
         data: {
@@ -676,7 +665,13 @@ function sendMsg(userid,con){
         },
         type: 'post',
         success: function (data) {
-            console.log(data);
+            $.messager.alert({
+                title: '提示',
+                msg: msg,
+                fn: function () {
+                    crossCloseTab('refresh_flwstask');
+                }
+            });
         }
     })
 }
