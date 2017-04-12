@@ -225,7 +225,8 @@ function getFlwsQtsjAdd(bm) {
         CQZT: '0',//呈请状态
         ASJBH: DATA.asjbh,//案事件编号
         AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
-        BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM//办案机关公安机关机关代码
+        BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM,//办案机关公安机关机关代码
+        BADW_GAJGMC: DATA.publicJkXx.BADW01.BAJG_GAJGMC//办案机关公安机关名称
     };
 
     //法律文书是否切换版本【目前只针对行政案件中 行政处罚文书 一\二版】
@@ -305,11 +306,17 @@ function getFlwsQtsjAdd(bm) {
                             if (dataname) {
                                 //所有(树形)字典新增DICTMC后缀
                                 if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox')) {
+                                    var annotation = parentA.attr('annotation');
                                     var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
+                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                     if (dicturl) {
                                         var dictValue = getDictName(dicturl, val, false);
                                         DATA.FLWS[bm].params[dataname] = val;
                                         DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
+                                        if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
+                                            DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
+                                            DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
+                                        }
                                     }
                                 } else if ($(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
                                     var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
