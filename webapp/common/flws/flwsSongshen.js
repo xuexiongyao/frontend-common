@@ -507,9 +507,16 @@ function complete(shjl, shsj, shyj) {
             if (json.status == 'success') {
                 //发送短信请求
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
-                if(isCheckMsger && candidateUsers){
-                    var content = badwGajgmc+"送审的【"+flwsmc+"】已到审批任务中，请您及时处理。";
-                    sendMsg(candidateUsers, content, json.message);
+                if(isLastTask){
+                    if(isCheckMsger){
+                        var content = "您送审的"+ajmc+"的【"+flwsmc+"】已审批完成，请及时查收。";
+                        sendMsg(DATA.CQBG.cqbgRow.BAMJID,content,json.message);
+                    }
+                } else {
+                    if(isCheckMsger && candidateUsers){
+                        var content = badwGajgmc+"送审的【"+flwsmc+"】已到审批任务中，请您及时处理。";
+                        sendMsg(candidateUsers, content, json.message);
+                    }
                 }
             } else {
                 $.messager.alert({
