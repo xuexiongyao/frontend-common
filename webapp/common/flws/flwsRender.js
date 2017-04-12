@@ -203,8 +203,6 @@ function xyrCheckedXxfy($this) {
     if (isCheck) {//选中
         var textareaVal = $("#cqbg_main_con form textarea").val();
 
-        /***嫌疑对象接口信息的复用***/
-        xydxXxfyCqbg(textareaVal,$this);
         /***********end************/
         checkXyr = $this.parent().parent().parent().find('input:checked');
 
@@ -239,6 +237,8 @@ function xyrCheckedXxfy($this) {
                 /*****刑事案件组合信息复用*****/
                 var xyrZhxxData = '\t' + xydxZhxx +'\n';
                 $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
+                /***嫌疑对象接口信息的复用***/
+                xydxXxfyCqbg(xyrZhxxData + textareaVal,$this);
             }
         }else{
             var xydxXxzjbh = $this.attr('xxzjbh');//当前嫌疑对象信息主键编号
@@ -262,6 +262,8 @@ function xyrCheckedXxfy($this) {
                     /*****刑事案件组合信息复用*****/
                     var xyrZhxxData = '\t' + xydxZhxx +'\n';
                     $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
+                    /***嫌疑对象接口信息的复用***/
+                    xydxXxfyCqbg(xyrZhxxData + textareaVal,$this);
                 }
             }
 
