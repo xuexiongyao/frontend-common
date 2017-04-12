@@ -330,6 +330,17 @@ function getFlwsQtsjAdd(bm) {
                                             }
                                         }
                                     }
+                                } else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
+                                    var annotation = parentA.attr('annotation');
+                                    var numberNum = parentA.attr('number');
+                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                    if (textStyle) {
+                                        if (textStyle == 'NUMBERCN') {
+                                            if (numberNum) {
+                                                DATA.FLWS[bm].params[dataname] = numberNum;
+                                            }
+                                        }
+                                    }
                                 } else {
                                     DATA.FLWS[bm].params[dataname] = val;
                                 }
