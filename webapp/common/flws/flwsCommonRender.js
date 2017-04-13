@@ -26,20 +26,26 @@ function cqbgNrXxfy() {
 
             // console.log(cqbgxxTmpObj);
             //数据填写
-            for (var k in cqbgxxTmpObj) {
-                for (var j = 0; j < cqbgxxTmpObj[k].length; j++) {
-                    var key = cqbgxxTmpObj[k][j];//参数名称
-                    var val = DATA.publicJkXx[k][key];//参数对应的值
-                    var strVal = '(' + k + ')[' + key + ']';//textarea中对应的字符串
+            for (var k1 in DATA.publicJkXx) {
+                for (var k2 in cqbgxxTmpObj) {
+                    if (k1 == k2) {
+                        for (var j = 0; j < cqbgxxTmpObj[k2].length; j++) {
+                            var key = cqbgxxTmpObj[k2][j];//参数名称
+                            var val = DATA.publicJkXx[k1][key];//参数对应的值
+                            var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
 
-                    if (val == undefined || val == null || val == '') {//返回数据为空
-                        textareaVal = textareaVal.replace(strVal, '');
-                        console.log(key + '为空');
-                    } else {//textarea中对应的字符串替换赋值
-                        textareaVal = textareaVal.replace(strVal, val);
+                            if (val == undefined || val == null || val == '') {//返回数据为空
+                                textareaVal = textareaVal.replace(strVal, '');
+                                console.log(key + '为空');
+                            } else {//textarea中对应的字符串替换赋值
+                                textareaVal = textareaVal.replace(strVal, val);
+                            }
+                        }
+                    } else {
+                        // var strVal = '(' + k1 + ')[' + key + ']';//textarea中对应的字符串
                     }
+                    $("#cqbg_main_con form textarea").val(textareaVal);
                 }
-                $("#cqbg_main_con form textarea").val(textareaVal);
             }
         }
     }
@@ -158,6 +164,30 @@ function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc,isFlws) {
         str = '<a class="val easyui-linkbuttom c5 delXydxBtn" title="删除"><i class="fa fa-times"></i></a>';
     }
     xydxStrTmp = '<li><label  ' + title + ' ' + disabled + ' class="easyui-tooltip"><input xxzjbh="' + xxzjbh + '" ' + disabled + ' type="checkbox" />' +
+        '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label>' + str +'</li>';
+    return xydxStrTmp;
+}
+
+/**
+ * 嫌疑对象字符串模板函数
+ * @param title title属性，提示内容
+ * @param disabled disabled属性
+ * @param xxzjbh 嫌疑对象的主键
+ * @param ryid 犯罪嫌疑人人员ID
+ * @param asjxgrybh 案事件相关人员编号
+ * @param xytype 嫌疑对象类型
+ * @param xyzhxx 嫌疑对象组合信息
+ * @param xydxmc 嫌疑对象名称
+ * @param isFlws 是否是法律文书
+ * @returns {string}  返回为拼接好的字符串
+ */
+function xydxDxStrTmpFun(title, disabled, xxzjbh, ryid, asjxgrybh, xytype, xyzhxx, xydxmc,isFlws) {
+    var xydxStrTmp = '';
+    var str = '';
+    if(isFlws){
+        str = '<a class="val easyui-linkbuttom c5 delXydxBtn" title="删除"><i class="fa fa-times"></i></a>';
+    }
+    xydxStrTmp = '<li><label  ' + title + ' ' + disabled + ' class="easyui-tooltip"><input xxzjbh="' + xxzjbh + '" ryid="'+ryid+'" asjxgrybh="'+asjxgrybh+'" ' + disabled + ' type="checkbox" />' +
         '<span xyrtype="' + xytype + '"  xyrzhxx="' + xyzhxx + '">' + xydxmc + '</span></label>' + str +'</li>';
     return xydxStrTmp;
 }
@@ -391,6 +421,17 @@ function flwsRightPagePj(flwsData) {
             scflwsrwForNoCqbg(bm);
         });
     }
+
+    /**
+     * checkbox、radio方法调用(jessie)
+     * @type {string}
+     */
+    var initFun = 'init_'+bm;
+    try{
+        eval(initFun+'()');
+    }catch(e){
+        console.log(initFun+"()不存在！");
+    }
 }
 
 /**
@@ -535,6 +576,13 @@ function flwsWclXyDxCheck(bm, $this, event) {
             for (var i = 0; i < xyrArry.length; i++) {
                 if (xyrArry[i]["xxzjbh"] == xyrXxzjbh) {
                     var xyrCurrent = xyrArry[i];
+                    //案事件相关人员、犯罪嫌疑人人员id
+                    if(xyrCurrent.asjxgrybh){
+                        DATA.FLWS[bm].asjxgry = xyrCurrent.asjxgrybh;
+                    }
+                    if(xyrCurrent.ryid){
+                        DATA.FLWS[bm].fzxyrRyid = xyrCurrent.ryid;
+                    }
 
                     //自定义页面的处理(传递当前选中的嫌疑对象数据)
                     if (flwsData.customized) {
@@ -685,19 +733,25 @@ function flwsLsCqbgNrXxfy() {
                 cqbgxxTmpObj[dataTmp.funName] = dataTmp.paramName;
             }
             //数据填写
-            for (var k in cqbgxxTmpObj) {
-                var key = cqbgxxTmpObj[k];//参数名称
-                var val = DATA.publicJkXx[k][key];//参数对应的值
-                var strVal = '(' + k + ')[' + key + ']';//textarea中对应的字符串
+            for (var k1 in DATA.publicJkXx) {
+                for (var k2 in cqbgxxTmpObj) {
+                    var key = cqbgxxTmpObj[k2];//参数名称
+                    var val = DATA.publicJkXx[k1][key];//参数对应的值
+                    var strVal = '(' + k2 + ')[' + key + ']';//textarea中对应的字符串
 
-                if (val == undefined || val == null || val == '') {//返回数据为空
-                    textareaVal = textareaVal.replace(strVal, '');
-                    console.log(key + '为空');
-                } else {//textarea中对应的字符串替换赋值
-                    textareaVal = textareaVal.replace(strVal, val);
+                    if (k1 == k2) {
+                        if (val == undefined || val == null || val == '') {//返回数据为空
+                            textareaVal = textareaVal.replace(strVal, '');
+                            console.log(key + '为空');
+                        } else {//textarea中对应的字符串替换赋值
+                            textareaVal = textareaVal.replace(strVal, val);
+                        }
+                    } else {
+                        textareaVal = textareaVal.replace(strVal, '');
+                    }
+
+                    $(".flws_cl_area form textarea").val(textareaVal);
                 }
-
-                $(".flws_cl_area form textarea").val(textareaVal);
             }
         }
     }

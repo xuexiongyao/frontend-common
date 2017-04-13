@@ -93,6 +93,12 @@ function getCqbgQtsjAdd() {
                 DATA.CQBG.params.BAMJXM = getDictName(bamjDictUrl, bamj, false);//办案民警名称
                 DATA.CQBG.params.CQNR = $('#cqbg_main_con form textarea').val();//呈请内容
                 DATA.CQBG.params.CQRQ = $('#cqbg_main_con form input.CQRQ').val();//呈请日期
+
+                //呈请法律文书修改
+                if(DATA.FLWS_PARAM && DATA.FLWS_PARAM.CQXG_XQ){
+                    DATA.CQBG.params.CQXG_XQ = JSON.stringify(DATA.FLWS_PARAM.CQXG_XQ);
+                }
+
                 return false;
             } else {
                 return false;	// 返回false终止表单提交
@@ -219,7 +225,8 @@ function getFlwsQtsjAdd(bm) {
         CQZT: '0',//呈请状态
         ASJBH: DATA.asjbh,//案事件编号
         AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
-        BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM//办案机关公安机关机关代码
+        BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM,//办案机关公安机关机关代码
+        BADW_GAJGMC: DATA.publicJkXx.BADW01.BAJG_GAJGMC//办案机关公安机关名称
     };
 
     //法律文书是否切换版本【目前只针对行政案件中 行政处罚文书 一\二版】
@@ -249,10 +256,22 @@ function getFlwsQtsjAdd(bm) {
                     if (DATA.FLWS[bm].xyrCldxlb) {
                         DATA.FLWS[bm].params.CLDXLB = DATA.FLWS[bm].xyrCldxlb;//嫌疑人处理对象类别
                     }
+                    if (DATA.FLWS[bm].asjxgry) {
+                        DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].asjxgry;//嫌疑人案事件相关人员编号
+                    }
+                    if (DATA.FLWS[bm].fzxyrRyid) {
+                        DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].fzxyrRyid;//嫌疑人人员id
+                    }
 
                     //多选
                     if (DATA.FLWS[bm].xyrids) {
                         DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
+                    }
+                    if (DATA.FLWS[bm].xyrryids) {
+                        DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].xyrryids.join(',');//嫌疑人人员id
+                    }
+                    if (DATA.FLWS[bm].xyrasjxgrybhs) {
+                        DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].xyrasjxgrybhs.join(',');//嫌疑人案事件相关人员编号
                     }
 
                     //textbox框(换行文本)的处理
@@ -287,11 +306,17 @@ function getFlwsQtsjAdd(bm) {
                             if (dataname) {
                                 //所有(树形)字典新增DICTMC后缀
                                 if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox')) {
+                                    var annotation = parentA.attr('annotation');
                                     var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
+                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                     if (dicturl) {
                                         var dictValue = getDictName(dicturl, val, false);
                                         DATA.FLWS[bm].params[dataname] = val;
                                         DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
+                                        if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
+                                            DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
+                                            DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
+                                        }
                                     }
                                 } else if ($(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
                                     var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
@@ -309,6 +334,17 @@ function getFlwsQtsjAdd(bm) {
                                             if (moneyNum) {
                                                 DATA.FLWS[bm].params[dataname] = moneyNum;
                                                 DATA.FLWS[bm].params[dataname + '_DX'] = val;
+                                            }
+                                        }
+                                    }
+                                } else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
+                                    var annotation = parentA.attr('annotation');
+                                    var numberNum = parentA.attr('number');
+                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                    if (textStyle) {
+                                        if (textStyle == 'NUMBERCN') {
+                                            if (numberNum) {
+                                                DATA.FLWS[bm].params[dataname] = numberNum;
                                             }
                                         }
                                     }
@@ -416,6 +452,11 @@ function getFlwsQtsjEdit(bm) {
                                         if (moneyNum) {
                                             DATA.FLWS[bm].params[dataname] = moneyNum;
                                             DATA.FLWS[bm].params[dataname + '_DX'] = val;
+                                        }
+                                    }  else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
+                                        var numberNum = $(dataArry[i]).parent().parent().attr('number');
+                                        if (numberNum) {
+                                            DATA.FLWS[bm].params[dataname] = numberNum;
                                         }
                                     } else {
                                         DATA.FLWS[bm].params[dataname] = val;

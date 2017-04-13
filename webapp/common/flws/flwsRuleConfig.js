@@ -422,6 +422,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var className = $this.attr('textboxname');//组件class name值
                                     if (!isNaN(iptVal) && bm) {
+                                        $this.parent().attr('number', newValue);
                                         var chNum = NumberToChinese(iptVal);//转化之后的汉字
                                         $this.textbox({value: chNum});
                                         if (!DATA.FLWS[bm].flwsData.switchVersion) {
