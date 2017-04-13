@@ -318,6 +318,7 @@ function getQueryModel() {
 //模板列表操作解析
 function modelHandle(val, row, index){
     //return '<i title="查询此条件" condition  = "'+condition+'" class="fa fa-search"></i><i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+	var result = '';
     $.ajax({
         url: pathConfig.managePath+'/api/userLogin/getSetuSession',
         type: 'get',
@@ -327,13 +328,15 @@ function modelHandle(val, row, index){
         async: false,
         success: function(json){
             sessionBean = json.sessionBean;
-            if(typeof sessionBean != 'undefined' && typeof row.xt_lrrid != 'undefined'){
-                if(row.xt_lrrid == sessionBean.userId){//当前录入此模版的才能删除
-                    return '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+            if(typeof sessionBean != 'undefined' && typeof row.userid != 'undefined'){
+                if(row.userid == sessionBean.userId){//当前录入此模版的才能删除
+                    result =  '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
                 }
             }
         }
     });
+
+	return result;
 }
 //可见范围解析
 function kjfwParse(val, row, index){
