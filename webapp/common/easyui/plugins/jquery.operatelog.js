@@ -203,7 +203,7 @@
     var setParams = function($this,defaults){
         if(typeof ($this.attr('conditionStr')) != "undefined" &&  $this.attr('conditionStr') != ""){
             defaults.url += $this.attr('conditionStr');
-            defaults.tab_id = $this.attr('conditionStr');
+            defaults.tab_id = 'operatelog_' + $this.attr('conditionStr');
         }
 
         if(getFunccodesStr($this) != ''){
