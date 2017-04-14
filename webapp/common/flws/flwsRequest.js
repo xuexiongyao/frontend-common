@@ -36,12 +36,20 @@ function initFlwsMain(data){
 
     //呈请报告、法律文书map数据的获取
     if (!jsonDatas.isFlws && !jsonDatas.bianMa.startsWith("000000")) {
+
         DATA.CQBG = {
             cqbgData: jsonDatas,//呈请报告数据
             asjflwsdm: jsonDatas.bianMa,//呈请报告编码(案事件法律文书代码)
             asjflwsmc: jsonDatas.name,//案事件法律文书名称
             status: {}
         };
+        //法律文书必填及分组规则
+        if(jsonDatas.btflws!=undefined){
+            var btflwsRule = eval('('+jsonDatas.btflws+')');//处理
+            if(typeof btflwsRule == 'object'){//【取保候审】
+                DATA.CQBG.btflwsRule=btflwsRule;
+            }
+        }
         //有法律文书
         if (jsonDatas.childMap) {//有法律文书
             DATA.FLWS = {
@@ -184,7 +192,16 @@ function queryFlwsData(title, render) {
         for (var k in flwsData) {
             if (title == flwsData[k].name) {
                 var param = {};//参数
-
+                //法律文书必填及分组规则
+                var btflwsRule =  DATA.CQBG.btflwsRule;
+                if(btflwsRule!=undefined){
+                    for(var z in btflwsRule){
+                        if(btflwsRule[z].BM.indexOf(flwsData[k].bianMa)!=-1){
+                            DATA.CQBG.btflwsRuleSelected=btflwsRule[z];
+                            break;
+                        }
+                    }
+                }
                 //构造对象
                 if (typeof (DATA.FLWS[flwsData[k].bianMa]) == 'undefined') {
                     DATA.FLWS[flwsData[k].bianMa] = {};
@@ -243,7 +260,6 @@ function queryFlwsData(title, render) {
                         render(flwsData[k].bianMa);
                     }
                 }
-
                 if(param){
                     loading("open","正在获取法律文书数据,请稍等...");
                     //获取法律文书数据请求

@@ -392,7 +392,10 @@ function getFlwsQtsjAdd(bm) {
                             param[_this.attr('name')] = _this.val();
                         }
                     });
-
+                    //法律文书必填及分组规则
+                    if(DATA.CQBG.btflwsRule!=undefined){
+                        DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
+                    }
                     return false;
                 } else {
                     return false;// 返回false终止表单提交
@@ -549,6 +552,33 @@ function shongshen(sessionBean) {
         var btflwsStr = DATA.CQBG.cqbgData.btflws;//必填法律文书
         var btflwsArray = [];
         if (btflwsStr) {
+            //法律文書必選及規則
+            if(DATA.CQBG.btflwsRule != undefined){
+                var param={
+                    CQBG_ZJ:DATA.CQBG.cqbgZj,
+                    CQBG_BM:DATA.CQBG.cqbgData.bianMa
+                };
+                var skip=false;
+                $.ajax({
+                    url: pathConfig.basePath + '/wenshu/source/BTFLWS/CHECK',
+                    data: param,
+                    dataType: 'json',
+                    async: false,
+                    success: function (json) {
+                        if (json.state != 'success') {
+                            $.messager.alert({
+                                title: '提示',
+                                msg: json.msg,
+                                icon: 'warning'
+                            });
+                            skip = true;
+                        }
+                    }
+                });
+                if(skip){
+                    return;
+                }
+            }
             if (btflwsStr.indexOf(',') == -1) {//只有一条
                 btflwsArray.push(btflwsStr);
             } else {//有多条，逗号分隔

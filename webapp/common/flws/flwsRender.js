@@ -460,14 +460,61 @@ function flwsDxListRenderOther(bm){
     var flwsRow = DATA.FLWS[bm].flwsRow;
 
     //嫌疑对象数据
-    var xydxDatas = DATA.DX.xydxData;
-
+    var xydxDatas=jQuery.extend(true, {}, DATA.DX.xydxData);
     // if (DATA.FLWS[bm].flwsData.wdx) {
     //     $('#flws_xyr_area_' + bm).hide();
     //     $('#flws_main_con_r_' + bm).css({width: '100%'});
     //     $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
     //     return;
     // }
+    if(DATA.CQBG.btflwsRuleSelected!=undefined) {
+        //法律文書必選及規則
+        var flwsMainBm=DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
+        if(bm!=flwsMainBm){
+            for(var key in DATA.FLWS.flwsData){
+                if(DATA.FLWS.flwsData[key].bianMa==flwsMainBm){
+                    var param = {
+                        CQBG_ZJ: DATA.CQBG.cqbgZj,
+                        XT_ZXBZ: '0',
+                    }
+                    param[DATA.CQBG.btflwsRuleSelected.FIELD]=DATA.CQBG.btflwsRuleSelected.VALUE;
+                    $.ajax({
+                        url: DATA.FLWS.flwsData[key].queryUrl,
+                        data: param,
+                        dataType: 'json',
+                        async: false,
+                        success: function (json) {
+                            if (json.state == 'success') {
+                                var flwsRow = json.rows;
+                                var xylx;
+                                for(var j in DATA.FLWS.flwsData){
+                                    if(DATA.FLWS.flwsData[j].bianMa==bm){
+                                        xylx=DATA.FLWS.flwsData[j].dxbm;
+                                        break;
+                                    }
+                                }
+
+                                for(var i in xydxDatas[xylx]){
+                                    var xyrdx=xydxDatas[xylx][i];
+                                    var has=false;
+                                    for(var k in flwsRow){
+                                        if(flwsRow[k].CLDX_XXZJBH==xyrdx.xxzjbh){
+                                            has=true;
+                                        }
+                                    }
+                                    if(!has){
+                                        xyrdx.disabled='disabled="disabled"';
+                                        xyrdx.title="title='此人未做"+DATA.FLWS.flwsData[key].name+"，不能做该法律文书'";
+                                    }
+                                }
+
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
 
     //申明未处理嫌疑对象，已处理嫌疑对象
     var wclXyrStr = '', yclXyrStr = '';
@@ -495,6 +542,7 @@ function flwsDxListRenderOther(bm){
                 }
 
                 for (var i = 0; i < flwsRow.length; i++) {
+
                     if (DATA.FLWS[bm].status.currentFlwsId != undefined && DATA.FLWS[bm].status.currentFlwsId == flwsRow[i].ZJ) {
                         DATA.FLWS[bm].status.currentDxId = flwsRow[i].CLDX_XXZJBH;
                     }
@@ -508,8 +556,17 @@ function flwsDxListRenderOther(bm){
                     //嫌疑对象名称拼接
                     var xydxArrayTmp = DATA.DX.xydxData[dxLb];
                     var xydxMc = '';
+                    var isSkip=false;//是否跳過該已處理對象
                     for (var q = 0; q < xydxArrayTmp.length; q++) {
                         if (xydxArrayTmp[q].xxzjbh == flwsRow[i].CLDX_XXZJBH) {
+                            if(DATA.CQBG.btflwsRuleSelected!=undefined){
+                                //法律文書必選及規則
+                                var flwsMainBm=DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
+                                if(flwsMainBm==bm&&flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD]!=DATA.CQBG.btflwsRuleSelected.VALUE){
+                                    isSkip=true;
+                                    break;
+                                }
+                            }
                             if (dxLb == anjianXyDxDic.xyr) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xyr].param]
                             } else if (dxLb == anjianXyDxDic.xydw) {
@@ -517,7 +574,11 @@ function flwsDxListRenderOther(bm){
                             } else if (dxLb == anjianXyDxDic.ajxgr) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.ajxgr].param]
                             }
+                            break;
                         }
+                    }
+                    if(isSkip){
+                        break;
                     }
                     xyrStr += '<li><label ' + title + ' class="easyui-tooltip"><input xxzjbh="' + flwsRow[i].CLDX_XXZJBH + '" flwszj="' + flwsRow[i].ZJ + '" ' + disabled + ' type="checkbox"/>' +
                         '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' +
