@@ -89,6 +89,7 @@ function getDxxxData() {
                                         url: pathConfig.basePath + '/wenshu/source/RULE',
                                         dataType: 'json',
                                         type: 'get',
+                                        async: false,
                                         success: function (data) {
                                             DATA.RULE = data;
                                             rule = DATA.RULE[xyr_rsqzcsdm];
