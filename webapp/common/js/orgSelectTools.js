@@ -530,6 +530,112 @@ function initSingleSelectOrg(textboxID, filterData, returnFieldData,onSelectedFu
 }
 
 /**
+ * 组织机构单选初始方法
+ * @param textboxID 弹出框触发和显示的textbox对象ID
+ * @param filterData 过滤条件：rootOrgCode 根节点orgcode、orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
+ * @param returnFieldData 返回数据存储对象：CLASS 部门编号、TEXT 部门名称
+ * @param onSelectedFun 回掉方法
+ */
+function initSingleSelectOrgReturnByClass(textboxID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData)
+		filterData={};
+	filterDataAry[textboxID]=filterData;
+	initHtmlDiv(textboxID,filterData,'single');
+
+	//初始化弹出框
+	$("#"+normalHtmlDivId+textboxID).dialog({
+		title: '组织机构单选',
+		height: 'auto',
+		width:450,
+		resizable: true,
+		modal: true,
+		closed: true,
+		buttons:[{
+			text:'确定',
+			handler:function(){
+                returnSelectedByClass(textboxID,returnFieldData,'single');
+				$("#"+normalHtmlDivId+textboxID).dialog('close');
+
+				if (typeof onSelectedFun == 'function') {
+					var fn = eval(onSelectedFun);
+					fn();
+				}
+			}
+
+		},
+			{
+				text:'关闭',
+				handler:function(){
+					$("#"+normalHtmlDivId+textboxID).dialog('close');
+				}
+
+			}]
+	});
+
+	//绑定弹出事件
+	$('#'+textboxID).textbox({
+		'editable':false,
+		'prompt':'点击”选择“可弹出选择框',
+		'buttonText':'选择',
+		'onClickButton' : function(){
+			var _top = parseInt($(document).scrollTop()+200);
+			$("#"+normalHtmlDivId+textboxID).show().dialog('open').dialog('move', {top: _top});
+		}
+	});
+
+}
+
+/**
+ * 设置选择的值 回填到class
+ * @param returnFieldData
+ */
+function returnSelectedByClass(textboxID,returnFieldData,multi_single){
+    if (returnFieldData) {
+        var selectedOrgCode = [];
+        var selectedOrgName = [];
+        var selectedorgLevel= [];
+
+        if(multi_single == 'multi'){//多选
+            var options = $('#select_valid_'+textboxID+'>option');
+            for (var i=0;i < options.length;i++) {
+                var option = options[i];
+                selectedOrgCode.push(option.value);
+                selectedOrgName.push(option.getAttribute('optionname'));
+                selectedorgLevel.push(option.getAttribute('orgLevel'));
+            }
+        }else{
+            var checkNode = $('#treeSelect_'+textboxID).tree('getChecked');
+            if(checkNode.length>0){
+                selectedOrgCode=checkNode[0].id;
+                selectedOrgName=checkNode[0].text;
+
+                if(checkNode[0].orgLevel)
+                    selectedorgLevel=checkNode[0].orgLevel;
+                else
+                    selectedorgLevel=checkNode[0].attributes.orgLevel;
+            }
+        }
+
+
+        for (var item in returnFieldData) {
+            if (item == "text") {
+                $('#' + returnFieldData[item]).textbox('setValue',selectedOrgName);
+            }else if (item == "className") {
+                var dom_item = $('.' + returnFieldData[item]);
+                if(dom_item.hasClass('easyui-textbox')){
+                    dom_item.textbox('setValue',selectedOrgCode)
+                }else {
+                    dom_item.val(selectedOrgCode);
+                }
+            }else if (item == "orgLevel") {
+                $('#' + returnFieldData[item]).val(selectedorgLevel);
+            }
+        }
+    }
+}
+
+
+/**
  * 单选得HTML
  * @param textboxID
  * @returns {String}
