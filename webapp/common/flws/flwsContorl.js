@@ -383,6 +383,16 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
 
+                    //文书中自定义的input[type=hidden]的处理
+                    currentForm.find("a>input[type='hidden']").each(function (i,ipt) {
+                        var param = DATA.FLWS[bm].params;
+                        var _this = $(ipt);
+                        var annotation = _this.attr('annotation');
+                        if(!annotation){
+                            param[_this.attr('name')] = _this.val();
+                        }
+                    });
+
                     return false;
                 } else {
                     return false;// 返回false终止表单提交
@@ -472,6 +482,37 @@ function getFlwsQtsjEdit(bm) {
                                 DATA.FLWS[bm].params[dataname] = val;
                             }
 
+
+                            //文书中checkbox 处理（主要针对行政案件）
+                            var checkboxIpt = $(flwsA[a]).find("input[type='checkbox']");
+                            for(var n=0;n<checkboxIpt.length;n++){
+                                var param = DATA.FLWS[bm].params;
+                                var _this = $(checkboxIpt[n]);
+                                //选中的值
+                                if(_this.prop('checked')){
+                                    param[_this.attr('name')] = _this.val();
+                                }
+                            }
+
+                            //文书中radio 处理（主要针对行政案件）
+                            var radioIpt = $(flwsA[a]).find("input[type='radio']");
+                            for(var m=0;m<checkbox.length;m++){
+                                var param = DATA.FLWS[bm].params;
+                                var _this = $(radioIpt[m]);
+                                //选中的值
+                                if(_this.prop('checked')){
+                                    param[_this.attr('name')] = _this.val();
+                                }
+                            }
+                        }
+                    }else{
+                        //文书中自定义的input[type=hidden]的处理
+                        var hiddenIpt = $(flwsA[a]>input[type='hidden']);
+                        for(var f=0;f<checkbox.length;f++){
+                            var param = DATA.FLWS[bm].params;
+                            var _this = $(hiddenIpt[f]);
+                            //选中的值
+                            param[_this.attr('name')] = _this.val();
                         }
                     }
                 }
