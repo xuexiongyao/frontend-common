@@ -209,7 +209,7 @@ function org_add_select(textboxID) {
 				if (node.id != "ROOT") { // 根结点不变
 					var orgLevel = getOrgLevel(node);
 						
-					addHTML.push(getOptionString(node.id,node.text,node.bizID,orgLevel));
+					addHTML.push(getOptionString(node.id,node.text,getOrgId(node),orgLevel));
 				}
 			}
 		}
@@ -308,6 +308,7 @@ function getMultiDivHtml(textboxID){
  */
 function returnSelected(textboxID,returnFieldData,multi_single){
 	if (returnFieldData) {
+		var selectedOrgId= [];
 		var selectedOrgCode = [];
 		var selectedOrgName = [];
 		var selectedorgLevel= [];
@@ -317,6 +318,7 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 			for (var i=0;i < options.length;i++) {
 				var option = options[i];
 				selectedOrgCode.push(option.value);
+				selectedOrgId.push(option.getAttribute('bizID'));
 				selectedOrgName.push(option.getAttribute('optionname'));
 				selectedorgLevel.push(option.getAttribute('orgLevel'));
 			}
@@ -346,7 +348,9 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 				}
 			}else if (item == "orgLevel") {
 				$('#' + returnFieldData[item]).val(selectedorgLevel);
-			}
+			}else if (item == "orgId") {
+                $('#' + returnFieldData[item]).val(selectedOrgId);
+            }
 		}
 	}						
 }
@@ -777,8 +781,33 @@ function getOrgLevel(node){
 	
 	if(!orgLevel){
 		console.log(node);
-		alert("组织机构级别为空，无法判定级别！");
+		console.log("组织机构级别为空，无法判定级别！");
 	}
 	
 	return orgLevel;
+}
+
+/**
+ * 组织机构级别获取，点击出来的结点和搜索出来的结点不一样
+ * @param node
+ * @returns
+ */
+function getOrgId(node){
+	var orgId = null;
+	if(node){
+		if(node.bizID){
+			orgId = node.bizID;//搜索出来结点
+		}else{
+			if(node.attributes && node.attributes.bizID){
+				orgId = node.attributes.bizID;//手动点击出来的结点
+			}
+		}
+	}
+	
+	if(!orgId){
+		console.log(node);
+		console.log("组织机构ID为空！");
+	}
+	
+	return orgId;
 }
