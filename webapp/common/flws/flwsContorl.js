@@ -306,8 +306,8 @@ function getFlwsQtsjAdd(bm) {
                             if (dataname) {
                                 //所有(树形)字典新增DICTMC后缀
                                 if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox')) {
-                                    var annotation = parentA.attr('annotation');
                                     var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
+                                    var annotation = parentA.attr('annotation');
                                     var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                     if (dicturl) {
                                         var dictValue = getDictName(dicturl, val, false);
@@ -393,7 +393,7 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
                     //法律文书必填及分组规则
-                    if(DATA.CQBG.btflwsRule!=undefined){
+                    if(DATA.CQBG.btflwsRule!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
                         DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                     }
                     return false;
@@ -499,7 +499,7 @@ function getFlwsQtsjEdit(bm) {
 
                             //文书中radio 处理（主要针对行政案件）
                             var radioIpt = $(flwsA[a]).find("input[type='radio']");
-                            for(var m=0;m<checkbox.length;m++){
+                            for(var m=0;m<radioIpt.length;m++){
                                 var param = DATA.FLWS[bm].params;
                                 var _this = $(radioIpt[m]);
                                 //选中的值
@@ -510,8 +510,8 @@ function getFlwsQtsjEdit(bm) {
                         }
                     }else{
                         //文书中自定义的input[type=hidden]的处理
-                        var hiddenIpt = $(flwsA[a]>input[type='hidden']);
-                        for(var f=0;f<checkbox.length;f++){
+                        var hiddenIpt = $(flwsA[a]+">input[type='hidden']");
+                        for(var f=0;f<hiddenIpt.length;f++){
                             var param = DATA.FLWS[bm].params;
                             var _this = $(hiddenIpt[f]);
                             //选中的值

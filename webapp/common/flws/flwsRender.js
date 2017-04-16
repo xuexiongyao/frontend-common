@@ -562,7 +562,7 @@ function flwsDxListRenderOther(bm){
                             if(DATA.CQBG.btflwsRuleSelected!=undefined){
                                 //法律文書必選及規則
                                 var flwsMainBm=DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
-                                if(flwsMainBm==bm&&flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD]!=DATA.CQBG.btflwsRuleSelected.VALUE){
+                                if(flwsMainBm==bm && $("."+DATA.CQBG.btflwsRuleSelected.FIELD).length==0 && flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD]!=DATA.CQBG.btflwsRuleSelected.VALUE){
                                     isSkip=true;
                                     break;
                                 }
