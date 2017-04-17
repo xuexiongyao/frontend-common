@@ -411,7 +411,11 @@ function flwsXxfyA(bm) {
                             $($target[j]).text(data[k]);
                         }
                     } else if (dictStyle || treeStyle) {
-                        $($target[j]).text(data[k + '_DICTMC']);
+                        if(k == 'JYCS_GAJGMC'){
+                            $($target[j]).text(data[k]);
+                        }else{
+                            $($target[j]).text(data[k + '_DICTMC']);
+                        }
                     } else {
                         $($target[j]).text(data[k]);
                     }
@@ -478,7 +482,11 @@ function flwsXxfyB(bm) {
                             $($target[j]).text(data[k]);
                         }
                     } else if (dictStyle || treeStyle) {
-                        $($target[j]).text(data[k + '_DICTMC']);
+                        if(k == 'JYCS_GAJGMC'){
+                            $($target[j]).text(data[k]);
+                        }else{
+                            $($target[j]).text(data[k + '_DICTMC']);
+                        }
                     } else {
                         $($target[j]).text(data[k]);
                     }
@@ -607,7 +615,11 @@ function flwsXxfyC1(bm, $this) {
                                             $($target[j]).text(data[i][a]);
                                         }
                                     } else if (dictStyle || treeStyle) {
-                                        $($target[j]).text(data[i][a + '_DICTMC']);
+                                        if(a == 'JYCS_GAJGMC'){
+                                            $($target[j]).text(data[i][a]);
+                                        }else{
+                                            $($target[j]).text(data[i][a + '_DICTMC']);
+                                        }
                                     } else {
                                         $($target[j]).text(data[i][a]);
                                     }
