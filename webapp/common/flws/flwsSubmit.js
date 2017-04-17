@@ -101,6 +101,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                         });
                                     }
                                 }else{
+                                    loading('close');
                                     $.messager.alert({
                                         title : '提示',
                                         msg: json.message
