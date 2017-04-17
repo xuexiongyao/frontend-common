@@ -48,6 +48,10 @@ function getCqbgMapData() {
                 };
             }
 
+            if(pathObj.pageFrom != 'undefined' && pathObj.pageFrom == 'cqwsxg'){//【呈请文书修改详情】
+                DATA.FLWS.cqFlwsZj = pathObj.flwsxxzjbh;//呈请法律文书主键
+            }
+
             getCqbgFlwsHtmlPage();//呈请报告(法律文书)iframe页面的获取
             //呈请报告数据查询
             if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
@@ -263,11 +267,17 @@ function queryFlwsData(title, render) {
                 var bm = flwsData[k].bianMa;//法律文书编码
 
                 //目前只能查看有呈请报告的法律文书，没有的还未设计 todo
-                param = {
-                    CQBG_ZJ: DATA.cqbgzj,
-                    XT_ZXBZ: '0',
-                    ASJBH: DATA.asjbh
-                };
+                if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改】
+                    param = {
+                        ZJ: DATA.FLWS.cqFlwsZj
+                    };
+                }else{
+                    param = {
+                        CQBG_ZJ: DATA.cqbgzj,
+                        XT_ZXBZ: '0',
+                        ASJBH: DATA.asjbh
+                    };
+                }
                 if (typeof (DATA.FLWS[bm]) == 'undefined') {
                     DATA.FLWS[bm] = {};
                 }

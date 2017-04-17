@@ -145,7 +145,7 @@ function xydxRenderCqbg() {
     var xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
     var xyrListStr = '';//嫌疑人list字符串
 
-    if (xydxDatas && DATA.DX.dxbm) {
+    if (xydxDatas && DATA.DX.dxbm && typeof DATA.CQBG.cqbgData != 'undefined') {
         for (var k in xydxDatas) {
             for (var key in xyrObj) {
                 if (k == key) {
@@ -548,9 +548,16 @@ function flwsDxListRenderOther(bm){
                     }
                     var disabled = "";
                     var title = "";
+                    var isShowDelete = true;//[是否显示删除按钮]
                     if ((flwsRow[i].CQBG_ZJ == undefined && flwsRow[i].CQZT > 0 || (flwsRow[i].CQBG_ZJ != DATA.CQBG.cqbgZj))) {
-                        disabled = "disabled='disabled'";
-                        title = "title='已呈请法律文书，不能修改'";
+                        if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改】
+                            disabled = "";
+                            title = "";
+                            isShowDelete = false;
+                        }else{
+                            disabled = "disabled='disabled'";
+                            title = "title='已呈请法律文书，不能修改'";
+                        }
                     }
                     //console.log('已处理对象违法嫌疑人参数',flwsRow[i],xyrObjTemp);//[(xyrObjTemp.param).toUpperCase()]
                     //嫌疑对象名称拼接
@@ -581,9 +588,12 @@ function flwsDxListRenderOther(bm){
                         break;
                     }
                     xyrStr += '<li><label ' + title + ' class="easyui-tooltip"><input xxzjbh="' + flwsRow[i].CLDX_XXZJBH + '" flwszj="' + flwsRow[i].ZJ + '" ' + disabled + ' type="checkbox"/>' +
-                        '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' +
-                        '<a class="val easyui-linkbuttom c5 delXydxBtn"  title="删除"><i class="fa fa-times"></i></a>' +
-                        '</li>';
+                        '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' ;
+
+                    if(isShowDelete){
+                        xyrStr += '<a class="val easyui-linkbuttom c5 delXydxBtn"  title="删除"><i class="fa fa-times"></i></a>' ;
+                    }
+                    xyrStr+= '</li>';
                 }
 
                 yclXyrStr = '<div><p><i class="fa fa-bars"></i>' + xyrObjTemp.text + '</p>' +
@@ -690,6 +700,11 @@ function flwsDxListRenderOther(bm){
     //保存数据成功后获取法律文书主键，再次点击为编辑
     if (typeof (DATA.FLWS[bm].status.currentDxId) != 'undefined') {
         $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].status.currentDxId + "']").click();
+    }
+
+    //【呈请法律文书修改】默认选中
+    if(DATA.FLWS.cqFlwsZj && typeof DATA.FLWS.cqFlwsZj != 'undefined'){
+        $('#flws_xyr_area_' + bm).find("input[flwszj='" + DATA.FLWS.cqFlwsZj + "']").click();
     }
 }
 

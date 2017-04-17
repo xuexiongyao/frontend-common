@@ -529,6 +529,10 @@ function getFlwsQtsjEdit(bm) {
                         param[a.attr("name")] = $(textarea).val();
                     }
                 });
+
+                if(DATA.FLWS.flwsxgsqbZj){//【呈请法律文书修改】
+                    DATA.FLWS[bm].params.SETU_CQXGZJ = DATA.FLWS.flwsxgsqbZj;
+                }
                 return false;
             } else {
                 return false;// 返回false终止表单提交
@@ -666,17 +670,28 @@ function scflwsrwForNoCqbg(bm) {
         }
     } else {//编辑
         if (DATA.FLWS[bm].flwsZj || DATA.FLWS[bm].flwsZj != undefined) {
-            //任务表数据 拼接
-            var params = {
-                asjbh: DATA.asjbh,
-                ajmc: DATA.publicJkXx.AJ01.AJMC,
-                asjflwsdm: DATA.FLWS[bm].flwsData.bianMa,//法律文书编码
-                flwsbm: DATA.FLWS[bm].flwsData.tableName,//法律文书表名
-                flwsywZj: DATA.FLWS[bm].flwsZj,//法律文书业务主键
-                cjsj: getCurrentTime(),//出具时间
-                flwsmc: DATA.FLWS[bm].flwsData.name//法律文书名称
-            };
-            scflwsRequest(params);
+            if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改生成法律文书】
+                var params = {
+                    ASJFLWSDM: DATA.FLWS.flwsdm,
+                    FLWSYW_ZJ:DATA.FLWS.cqFlwsZj,
+                    AJMC:DATA.FLWS.ajmc,
+                    ASJBH:DATA.asjbh,
+                    FLWSXGSQB_ZJ:DATA.FLWS.flwsxgsqbZj
+                };
+                cqxgWsScflwsRequest(params);
+            }else{
+                //任务表数据 拼接
+                var params = {
+                    asjbh: DATA.asjbh,
+                    ajmc: DATA.publicJkXx.AJ01.AJMC,
+                    asjflwsdm: DATA.FLWS[bm].flwsData.bianMa,//法律文书编码
+                    flwsbm: DATA.FLWS[bm].flwsData.tableName,//法律文书表名
+                    flwsywZj: DATA.FLWS[bm].flwsZj,//法律文书业务主键
+                    cjsj: getCurrentTime(),//出具时间
+                    flwsmc: DATA.FLWS[bm].flwsData.name//法律文书名称
+                };
+                scflwsRequest(params);
+            }
         } else {
             $.messager.alert({
                 title: '提示',

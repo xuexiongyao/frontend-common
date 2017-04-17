@@ -44,7 +44,7 @@ function initFlwsMain(data){
             status: {}
         };
         //法律文书必填及分组规则
-        if(jsonDatas.btflws!=undefined){
+        if(jsonDatas.btflws != undefined && jsonDatas.btflws){
             var btflwsRule = eval('('+jsonDatas.btflws+')');//处理
             if(typeof btflwsRule == 'object'){//【取保候审】
                 DATA.CQBG.btflwsRule=btflwsRule;
@@ -69,6 +69,23 @@ function initFlwsMain(data){
         if(pathObj.flwsxxzjbh && typeof (pathObj.flwsxxzjbh) != 'undefined'){
             DATA.FLWS.cqbgZj = pathObj.flwsxxzjbh;//呈请报告主键
         }
+
+        if(pathObj.flwsZj && typeof (pathObj.flwsZj) != 'undefined'){
+            DATA.FLWS.cqFlwsZj = pathObj.flwsZj;//法律文书主键【针对呈请法律文书修改】
+        }
+
+        if(pathObj.ajmc && typeof (pathObj.ajmc) != 'undefined'){
+            DATA.FLWS.ajmc = pathObj.ajmc;//案件名称【针对呈请法律文书修改】
+        }
+
+        if(pathObj.flwsdm && typeof (pathObj.flwsdm) != 'undefined'){
+            DATA.FLWS.flwsdm = pathObj.flwsdm;//法律文书代码【针对呈请法律文书修改】
+        }
+
+        if(pathObj.flwsxgsqbZj && typeof (pathObj.flwsxgsqbZj) != 'undefined'){
+            DATA.FLWS.flwsxgsqbZj = pathObj.flwsxgsqbZj;//法律文书修改申请表主键【针对呈请法律文书修改】
+        }
+
 
         $("#sent").hide();
     }
@@ -249,7 +266,12 @@ function queryFlwsData(title, render) {
                         param = {
                             ZJ: DATA.FLWS[flwsData[k].bianMa].status.currentFlwsId
                         }
-                    } else {
+                    }else if(DATA.FLWS.cqFlwsZj){//呈请法律文书修改
+                        param = {
+                            ZJ: DATA.FLWS.cqFlwsZj
+                        }
+                    }
+                    else {
                         param = undefined;
                         DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
 
@@ -408,6 +430,7 @@ function flwsSave(url, param, bm) {
 
 /**
  * 生成法律文书请求(需要修改)
+ * @param params  请求参数
  */
 function scflwsRequest(params) {
     var cqbgzj = '';//呈请报告主键
@@ -423,23 +446,60 @@ function scflwsRequest(params) {
         data: params,
         success: function (data) {
             loading('close');
-            var json = eval('(' + data + ')');
-            if (json.status == 'success') {
-                $.messager.alert({
-                    title: '提示',
-                    msg: '生成法律文书成功',
-                    fn: function () {
-                        crossCloseTab();
-                    }
-                });
-            } else if (json.status == 'error') {
-                $.messager.alert({
-                    title: '提示',
-                    msg: '生成法律文书失败',
-                    fn: function () {
-                        crossCloseTab();
-                    }
-                });
+            if(data){
+                var json = eval('(' + data + ')');
+                if (json.status == 'success') {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '生成法律文书成功',
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
+                } else if (json.status == 'error') {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '生成法律文书失败',
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
+                }
+            }
+        }
+    })
+}
+
+/**
+ * 呈请修改文书生成法律文书请求
+ * @param params  请求参数
+ */
+function cqxgWsScflwsRequest(params){
+    loading("open","数据处理中...");
+    $.ajax({
+        url: pathConfig.basePath + '/wenshu/source/FLWS/XGRW/COMPLETE',
+        data: params,
+        success: function (data) {
+            loading('close');
+            if(data){
+                var json = eval('(' + data + ')');
+                if (json.state == 'success') {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '生成法律文书成功',
+                        fn: function () {
+                            crossCloseTab('refresh_cqflwstask');
+                        }
+                    });
+                } else if (json.state == 'error') {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '生成法律文书失败',
+                        fn: function () {
+                            crossCloseTab('refresh_cqflwstask');
+                        }
+                    });
+                }
             }
         }
     })

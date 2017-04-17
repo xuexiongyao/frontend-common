@@ -708,9 +708,20 @@ function flwsYclXyDxCheck(bm, $this) {
             });
         }
     } else {//未选中
-        DATA.FLWS[bm]['status']['selected'] = false;
-        //新增渲染
-        flwsRightPageRenderForAdd(flwsData);
+        if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改不能取消选中】
+            $.messager.alert({
+                title: '提示',
+                msg: '必须选择一项',
+                fn: function () {
+                    $this.prop('checked', true);
+                }
+            });
+            return false;
+        }else{
+            DATA.FLWS[bm]['status']['selected'] = false;
+            //新增渲染
+            flwsRightPageRenderForAdd(flwsData);
+        }
     }
 }
 
