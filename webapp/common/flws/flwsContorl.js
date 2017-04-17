@@ -455,10 +455,16 @@ function getFlwsQtsjEdit(bm) {
                                     //所有(树形)字典新增DICTMC后缀
                                     if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox') || $(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
                                         var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
+                                        var annotation = parentA.attr('annotation');
+                                        var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                         if (dicturl) {
                                             var dictValue = getDictName(dicturl, val, false);
                                             DATA.FLWS[bm].params[dataname] = val;
                                             DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
+                                            if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
+                                                DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
+                                                DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
+                                            }
                                         }
                                     } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
                                         var moneyNum = $(dataArry[i]).parent().parent().attr('money');

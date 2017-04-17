@@ -415,8 +415,9 @@ function flwsXxfyA(bm) {
                             }
                             $($target[j]).text(newVal);
                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                            $($target[j]).val(data[k])
-                            autoTextarea($($target[j])[0]);
+                            var strTextbox = "<textarea class='easyuivalidatebox "+textStyle+"" + aName + "' name='" + aName + "' readonly>"+data[k]+"</textarea>";
+                            $($target[j]).html(strTextbox);
+                            autoTextarea($($target[j]).find('textarea')[0]);
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
                         }
@@ -486,8 +487,9 @@ function flwsXxfyB(bm) {
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                            $($target[j]).val(data[k])
-                            autoTextarea($($target[j])[0]);
+                            var strTextbox = "<textarea class='easyuivalidatebox "+textStyle+"" + aName + "' name='" + aName + "' readonly>"+data[k]+"</textarea>";
+                            $($target[j]).html(strTextbox);
+                            autoTextarea($($target[j]).find('textarea')[0]);
                         } else {
                             $($target[j]).text(data[k]);
                         }
@@ -619,8 +621,9 @@ function flwsXxfyC1(bm, $this) {
                                         } else if (textStyle == 'DATE_CN') {
                                             $($target[j]).text(data[i][a]);
                                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                                            $($target[j]).val(data[i][a])
-                                            autoTextarea($($target[j])[0]);
+                                            var strTextbox = "<textarea class='easyuivalidatebox "+textStyle+"" + aName + "' name='" + aName + "' readonly>"+data[i][a]+"</textarea>";
+                                            $($target[j]).html(strTextbox);
+                                            autoTextarea($($target[j]).find('textarea')[0]);
                                         } else {
                                             $($target[j]).text(data[i][a]);
                                         }
