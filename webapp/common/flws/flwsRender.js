@@ -145,7 +145,7 @@ function xydxRenderCqbg() {
     var xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
     var xyrListStr = '';//嫌疑人list字符串
 
-    if (xydxDatas && DATA.DX.dxbm) {
+    if (xydxDatas && DATA.DX.dxbm && typeof DATA.CQBG.cqbgData != 'undefined') {
         for (var k in xydxDatas) {
             for (var key in xyrObj) {
                 if (k == key) {
@@ -460,14 +460,61 @@ function flwsDxListRenderOther(bm){
     var flwsRow = DATA.FLWS[bm].flwsRow;
 
     //嫌疑对象数据
-    var xydxDatas = DATA.DX.xydxData;
-
+    var xydxDatas=jQuery.extend(true, {}, DATA.DX.xydxData);
     // if (DATA.FLWS[bm].flwsData.wdx) {
     //     $('#flws_xyr_area_' + bm).hide();
     //     $('#flws_main_con_r_' + bm).css({width: '100%'});
     //     $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
     //     return;
     // }
+    if(DATA.CQBG.btflwsRuleSelected!=undefined) {
+        //法律文書必選及規則
+        var flwsMainBm=DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
+        if(bm!=flwsMainBm){
+            for(var key in DATA.FLWS.flwsData){
+                if(DATA.FLWS.flwsData[key].bianMa==flwsMainBm){
+                    var param = {
+                        CQBG_ZJ: DATA.CQBG.cqbgZj,
+                        XT_ZXBZ: '0',
+                    }
+                    param[DATA.CQBG.btflwsRuleSelected.FIELD]=DATA.CQBG.btflwsRuleSelected.VALUE;
+                    $.ajax({
+                        url: DATA.FLWS.flwsData[key].queryUrl,
+                        data: param,
+                        dataType: 'json',
+                        async: false,
+                        success: function (json) {
+                            if (json.state == 'success') {
+                                var flwsRow = json.rows;
+                                var xylx;
+                                for(var j in DATA.FLWS.flwsData){
+                                    if(DATA.FLWS.flwsData[j].bianMa==bm){
+                                        xylx=DATA.FLWS.flwsData[j].dxbm;
+                                        break;
+                                    }
+                                }
+
+                                for(var i in xydxDatas[xylx]){
+                                    var xyrdx=xydxDatas[xylx][i];
+                                    var has=false;
+                                    for(var k in flwsRow){
+                                        if(flwsRow[k].CLDX_XXZJBH==xyrdx.xxzjbh){
+                                            has=true;
+                                        }
+                                    }
+                                    if(!has){
+                                        xyrdx.disabled='disabled="disabled"';
+                                        xyrdx.title="title='此人未做"+DATA.FLWS.flwsData[key].name+"，不能做该法律文书'";
+                                    }
+                                }
+
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
 
     //申明未处理嫌疑对象，已处理嫌疑对象
     var wclXyrStr = '', yclXyrStr = '';
@@ -495,21 +542,38 @@ function flwsDxListRenderOther(bm){
                 }
 
                 for (var i = 0; i < flwsRow.length; i++) {
+
                     if (DATA.FLWS[bm].status.currentFlwsId != undefined && DATA.FLWS[bm].status.currentFlwsId == flwsRow[i].ZJ) {
                         DATA.FLWS[bm].status.currentDxId = flwsRow[i].CLDX_XXZJBH;
                     }
                     var disabled = "";
                     var title = "";
+                    var isShowDelete = true;//[是否显示删除按钮]
                     if ((flwsRow[i].CQBG_ZJ == undefined && flwsRow[i].CQZT > 0 || (flwsRow[i].CQBG_ZJ != DATA.CQBG.cqbgZj))) {
-                        disabled = "disabled='disabled'";
-                        title = "title='已呈请法律文书，不能修改'";
+                        if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改】
+                            disabled = "";
+                            title = "";
+                            isShowDelete = false;
+                        }else{
+                            disabled = "disabled='disabled'";
+                            title = "title='已呈请法律文书，不能修改'";
+                        }
                     }
                     //console.log('已处理对象违法嫌疑人参数',flwsRow[i],xyrObjTemp);//[(xyrObjTemp.param).toUpperCase()]
                     //嫌疑对象名称拼接
                     var xydxArrayTmp = DATA.DX.xydxData[dxLb];
                     var xydxMc = '';
+                    var isSkip=false;//是否跳過該已處理對象
                     for (var q = 0; q < xydxArrayTmp.length; q++) {
                         if (xydxArrayTmp[q].xxzjbh == flwsRow[i].CLDX_XXZJBH) {
+                            if(DATA.CQBG.btflwsRuleSelected!=undefined){
+                                //法律文書必選及規則
+                                var flwsMainBm=DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
+                                if(flwsMainBm==bm && $("."+DATA.CQBG.btflwsRuleSelected.FIELD).length==0 && flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD]!=DATA.CQBG.btflwsRuleSelected.VALUE){
+                                    isSkip=true;
+                                    break;
+                                }
+                            }
                             if (dxLb == anjianXyDxDic.xyr) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.xyr].param]
                             } else if (dxLb == anjianXyDxDic.xydw) {
@@ -517,12 +581,19 @@ function flwsDxListRenderOther(bm){
                             } else if (dxLb == anjianXyDxDic.ajxgr) {
                                 xydxMc = xydxArrayTmp[q][xyrObj[anjianXyDxDic.ajxgr].param]
                             }
+                            break;
                         }
                     }
+                    if(isSkip){
+                        break;
+                    }
                     xyrStr += '<li><label ' + title + ' class="easyui-tooltip"><input xxzjbh="' + flwsRow[i].CLDX_XXZJBH + '" flwszj="' + flwsRow[i].ZJ + '" ' + disabled + ' type="checkbox"/>' +
-                        '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' +
-                        '<a class="val easyui-linkbuttom c5 delXydxBtn"  title="删除"><i class="fa fa-times"></i></a>' +
-                        '</li>';
+                        '<span xyrtype="' + xyrObjTemp.id + '">' + xydxMc + '</span></label>' ;
+
+                    if(isShowDelete){
+                        xyrStr += '<a class="val easyui-linkbuttom c5 delXydxBtn"  title="删除"><i class="fa fa-times"></i></a>' ;
+                    }
+                    xyrStr+= '</li>';
                 }
 
                 yclXyrStr = '<div><p><i class="fa fa-bars"></i>' + xyrObjTemp.text + '</p>' +
@@ -629,6 +700,11 @@ function flwsDxListRenderOther(bm){
     //保存数据成功后获取法律文书主键，再次点击为编辑
     if (typeof (DATA.FLWS[bm].status.currentDxId) != 'undefined') {
         $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].status.currentDxId + "']").click();
+    }
+
+    //【呈请法律文书修改】默认选中
+    if(DATA.FLWS.cqFlwsZj && typeof DATA.FLWS.cqFlwsZj != 'undefined'){
+        $('#flws_xyr_area_' + bm).find("input[flwszj='" + DATA.FLWS.cqFlwsZj + "']").click();
     }
 }
 

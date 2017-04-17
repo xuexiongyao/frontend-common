@@ -207,7 +207,9 @@ function org_add_select(textboxID) {
 			for (var item in selectedNodes) {
 				var node = selectedNodes[item];
 				if (node.id != "ROOT") { // 根结点不变
-					addHTML.push(getOptionString(node.id,node.text,node.bizID,node.attributes.orgLevel));
+					var orgLevel = getOrgLevel(node);
+						
+					addHTML.push(getOptionString(node.id,node.text,getOrgId(node),orgLevel));
 				}
 			}
 		}
@@ -306,6 +308,7 @@ function getMultiDivHtml(textboxID){
  */
 function returnSelected(textboxID,returnFieldData,multi_single){
 	if (returnFieldData) {
+		var selectedOrgId= [];
 		var selectedOrgCode = [];
 		var selectedOrgName = [];
 		var selectedorgLevel= [];
@@ -315,6 +318,7 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 			for (var i=0;i < options.length;i++) {
 				var option = options[i];
 				selectedOrgCode.push(option.value);
+				selectedOrgId.push(option.getAttribute('bizID'));
 				selectedOrgName.push(option.getAttribute('optionname'));
 				selectedorgLevel.push(option.getAttribute('orgLevel'));
 			}
@@ -327,7 +331,7 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 				if(checkNode[0].orgLevel)
 					selectedorgLevel=checkNode[0].orgLevel;
 				else
-					selectedorgLevel=checkNode[0].attributes.orgLevel;
+					selectedorgLevel= getOrgLevel(checkNode[0]);
 			}
 		}
 		
@@ -344,7 +348,9 @@ function returnSelected(textboxID,returnFieldData,multi_single){
 				}
 			}else if (item == "orgLevel") {
 				$('#' + returnFieldData[item]).val(selectedorgLevel);
-			}
+			}else if (item == "orgId") {
+                $('#' + returnFieldData[item]).val(selectedOrgId);
+            }
 		}
 	}						
 }
@@ -371,6 +377,10 @@ function searchOrgByCondition(textboxID) {
 	}
 }
 
+/**
+ * 组织机构树搜索，支持多根结点，但是一旦搜索出结果，就不会再搜索下一个根结点
+ * @param textboxID
+ */
 function searchTree(textboxID) {
 	var managerPath=managerPath || pathConfig.managePath;
 	var filterData = filterDataAry[textboxID];
@@ -380,7 +390,16 @@ function searchTree(textboxID) {
 	if (searchKeyValue != "") {
 		var treeObject = $('#treeSelect_'+textboxID);
 		var url = managerPath + '/orgPublicSelect/queryPublicOrgTreeSearchResultByOrgCode';
-		filterData['rootOrgCode']=treeObject.tree('getRoot').id;
+		
+		var rootNodes = treeObject.tree('getRoots');
+		if(!rootNodes || rootNodes.length==0)
+			return;
+		
+		var rootOrgCodes = [];
+		for(var index = 0; index<rootNodes.length;index++){
+			rootOrgCodes.push(rootNodes[index].id);
+		}
+		filterData['rootOrgCode']=rootOrgCodes.join(",");
 		
 		var urlParam="";
 		for(var item in filterData){
@@ -741,4 +760,54 @@ function clearOrgSelectChecked(textboxID){
     		orgTreeObject.tree('uncheck',checkNodes[index].target);
     	}
     }
+}
+
+/**
+ * 组织机构级别获取，点击出来的结点和搜索出来的结点不一样
+ * @param node
+ * @returns
+ */
+function getOrgLevel(node){
+	var orgLevel = null;
+	if(node){
+		if(node.orgLevel){
+			orgLevel = node.orgLevel;//搜索出来结点
+		}else{
+			if(node.attributes && node.attributes.orgLevel){
+				orgLevel = node.attributes.orgLevel;//手动点击出来的结点
+			}
+		}
+	}
+	
+	if(!orgLevel){
+		console.log(node);
+		console.log("组织机构级别为空，无法判定级别！");
+	}
+	
+	return orgLevel;
+}
+
+/**
+ * 组织机构级别获取，点击出来的结点和搜索出来的结点不一样
+ * @param node
+ * @returns
+ */
+function getOrgId(node){
+	var orgId = null;
+	if(node){
+		if(node.bizID){
+			orgId = node.bizID;//搜索出来结点
+		}else{
+			if(node.attributes && node.attributes.bizID){
+				orgId = node.attributes.bizID;//手动点击出来的结点
+			}
+		}
+	}
+	
+	if(!orgId){
+		console.log(node);
+		console.log("组织机构ID为空！");
+	}
+	
+	return orgId;
 }
