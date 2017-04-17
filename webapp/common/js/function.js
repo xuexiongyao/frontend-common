@@ -1170,13 +1170,16 @@ function setInputValue($input,val){
                     $input.textbox('setValue',val);
                 }catch(e){
                     try{
-                        $input.validate('setValue',val);
+                        $input.validatebox('setValue',val);
                     }catch(e){
                         $input.val(val);
                     }
                 }
             }
         }
+    }
+    if($input.hasClass('easyui-validatebox')){
+        $input.validatebox();
     }
 }
 
