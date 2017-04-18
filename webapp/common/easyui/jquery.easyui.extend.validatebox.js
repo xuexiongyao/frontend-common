@@ -519,6 +519,23 @@
 			message: "输入最多输入 {0} 个字符"
 		},
 
+		noSpaceMaxLength: {
+			validator: function (value, param) {
+				var spaceRe = /\s/g;
+				if(spaceRe.test(value)){
+					return false;
+				}else if (param) {
+					if (param[0] != undefined) {
+						if (value.length > param[0]) {
+							return false;
+						}
+					}
+				}
+				return true;
+			},
+			message: "输入最多输入 {0} 个字符,无空格"
+		},
+
 		date: {
 			validator: function (value, param) {
 				if (param) {
