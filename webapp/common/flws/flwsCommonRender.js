@@ -431,6 +431,11 @@ function flwsRightPagePj(flwsData) {
      */
     var initFun = 'init_'+bm;
     try{
+        ajax_request(bm);
+    }catch(e){
+        console.log("没有ajax_request函数");
+    }
+    try{
         eval(initFun+'()');
     }catch(e){
         console.log(initFun+"()不存在！");

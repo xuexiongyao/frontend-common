@@ -591,58 +591,68 @@ function lctShow() {
             // console.log('流程图展示数据:', json, lcslId);
             if (json.status == 'success') {
                 var data = json.data;
-                /**
-                 * 获取上级的审核时间，根据上级审核时间，判断当前级别的最小审核时间的范围;
-                 * 1、如果审核时间相对于当前系统时间超过三天，minDate=当前时间-3天；
-                 * 2、如果审核时间相对于当前系统时间不超过三天，minDate=审核时间；
-                 */
-                var minDateVal,isTrue;
-                var dLen = data.length;
-                isTrue = minDateFun(data[dLen-1].shsj);
-                if(isTrue){
-                    minDateVal = data[dLen-1].shsj;
-                }else{
-                    minDateVal = '%y-%M-%d {%H-72}:%m:%s'
-                }
-
-                var shsjStr =  '<li>\n'+
-                    '<span class="pro">审核时间</span>\n'+
-                    '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n'+
-                    'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \''+minDateVal+'\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n'+
-                    '</li>';
-
-                $('#next_over').after(shsjStr);
-                //默认值设置
-                $('#shsj').val(getCurrentTime());
-
-                for (var i = 0; i < data.length; i++) {
-                    //审批状态
-                    if (data[i].shjl == '1') {
-                        spzt = '<i class="fa fa-check"></i>';
-                    } else if (data[i].shjl == '2') {
-                        spzt = '<i class="fa fa-times"></i>';
-                    } else if (data[i].shjl == '3') {
-                        spzt = '<i class="fa fa-reply"></i>';
+                if(data.length>0){
+                    /**
+                     * 获取上级的审核时间，根据上级审核时间，判断当前级别的最小审核时间的范围;
+                     * 1、如果审核时间相对于当前系统时间超过三天，minDate=当前时间-3天；
+                     * 2、如果审核时间相对于当前系统时间不超过三天，minDate=审核时间；
+                     */
+                    var minDateVal,isTrue;
+                    var dLen = data.length;
+                    isTrue = minDateFun(data[dLen-1].shsj);
+                    if(isTrue){
+                        minDateVal = data[dLen-1].shsj;
+                    }else{
+                        minDateVal = '%y-%M-%d {%H-72}:%m:%s'
                     }
 
-                    str += '<div class="lct-node" title="' + data[i].shyj + '">' +
-                        '<div class="text">' +
-                        '<span class="lcspr">' + data[i].shrXm + '</span>' +
-                        '<span class="lcspzt">' + spzt +
-                        '</span>' +
-                        '</div>' +
-                        '<div class="point">' +
-                        '<b>' +
-                        '<div class="h-line"></div>' +
-                        '</b>' +
-                        '</div>' +
-                        '<div class="time">' +
-                        '<span>' + data[i].shsj + '</span>' +
-                        '</div>' +
-                        '</div>';
+                    var shsjStr =  '<li>\n'+
+                        '<span class="pro">审核时间</span>\n'+
+                        '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n'+
+                        'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \''+minDateVal+'\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n'+
+                        '</li>';
+
+                    $('#next_over').after(shsjStr);
+                    //默认值设置
+                    $('#shsj').val(getCurrentTime());
+
+                    for (var i = 0; i < data.length; i++) {
+                        //审批状态
+                        if (data[i].shjl == '1') {
+                            spzt = '<i class="fa fa-check"></i>';
+                        } else if (data[i].shjl == '2') {
+                            spzt = '<i class="fa fa-times"></i>';
+                        } else if (data[i].shjl == '3') {
+                            spzt = '<i class="fa fa-reply"></i>';
+                        }
+
+                        str += '<div class="lct-node" title="' + data[i].shyj + '">' +
+                            '<div class="text">' +
+                            '<span class="lcspr">' + data[i].shrXm + '</span>' +
+                            '<span class="lcspzt">' + spzt +
+                            '</span>' +
+                            '</div>' +
+                            '<div class="point">' +
+                            '<b>' +
+                            '<div class="h-line"></div>' +
+                            '</b>' +
+                            '</div>' +
+                            '<div class="time">' +
+                            '<span>' + data[i].shsj + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                    $('.lct-container').append(str);
+                    $('.lct-node').tooltip();
+                }else{
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '请求数据有误，请联系相关工作人员',
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
                 }
-                $('.lct-container').append(str);
-                $('.lct-node').tooltip();
             } else {
                 $.messager.alert({
                     title: '提示',
