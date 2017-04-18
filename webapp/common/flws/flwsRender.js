@@ -301,15 +301,19 @@ function xyrCheckedXxfy($this) {
 
         if(parentDiv.find('input:checked').length == 0){
             DATA.CQBG["status"]["selected"] = false;
-        } else if(parentDiv.find('input:checked').length > 0){
-            DATA.CQBG["status"]["selected"] = true;
             //同一时间只能操作一个
             parentDiv.show();
             parentDiv.siblings().show();
+        } else if(parentDiv.find('input:checked').length > 0){
+            DATA.CQBG["status"]["selected"] = true;
         }
         //呈请报告嫌疑对象内容去掉
         var textareaVal = $("#cqbg_main_con form textarea").val();
-        textareaVal = textareaVal.replace('\t'+ xydxZhxx +'\n','');
+        if(DATA.CQBG.xydxZhxx && typeof DATA.CQBG.xydxZhxx != 'undefined'){//行政案件处理
+            textareaVal = textareaVal.replace('\t'+ DATA.CQBG.xydxZhxx +'\n','');
+        }else{
+            textareaVal = textareaVal.replace('\t'+ xydxZhxx +'\n','');
+        }
         $("#cqbg_main_con form textarea").val(textareaVal);
     }
 }

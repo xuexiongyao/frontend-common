@@ -45,9 +45,11 @@ function initFlwsMain(data){
         };
         //法律文书必填及分组规则
         if(jsonDatas.btflws != undefined && jsonDatas.btflws){
-            var btflwsRule = eval('('+jsonDatas.btflws+')');//处理
-            if(typeof btflwsRule == 'object'){//【取保候审】
-                DATA.CQBG.btflwsRule=btflwsRule;
+            if((jsonDatas.btflws).indexOf('[')>-1 && (jsonDatas.btflws).indexOf(']')>-1){
+                var btflwsRule = eval('('+jsonDatas.btflws+')');//处理
+                if(typeof btflwsRule == 'object'){//【取保候审】
+                    DATA.CQBG.btflwsRule = btflwsRule;
+                }
             }
         }
         //有法律文书

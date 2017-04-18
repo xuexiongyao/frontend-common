@@ -300,6 +300,7 @@ function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
     var xxzjbh = $this.attr("xxzjbh");//当前嫌疑对象信息主键编号
     var xydxLb = parentUl.attr("ids");//嫌疑对象类别
     var cqbgData = DATA.CQBG.cqbgData;
+    DATA.CQBG.xydxZhxx = '';//置空
 
     for (var k in xyrObj) {
         if (xydxLb == xyrObj[k].id) {//嫌疑对象类别
@@ -321,8 +322,10 @@ function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
                     zhxx[field] = val;
                 }
             }
+            DATA.CQBG.xydxZhxx = filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz);//嫌疑对象组合信息
             $("#cqbg_main_con form textarea").val('\t' + filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
         }
+        break;
     }
 }
 
