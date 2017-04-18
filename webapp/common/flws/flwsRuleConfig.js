@@ -57,7 +57,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             var val = $this.next().find('input:hidden').val();
                             if (val && bm) {
                                 if (val && bm) {
-                                    if (!DATA.FLWS[bm].flwsData.switchVersion) {
+                                    if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'combobox','');
                                     }
                                 }
@@ -79,7 +79,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var className = $this.attr('textboxname');//组件class name值
                                     var val = $this.next().find('input:hidden').val();
                                     if (val && bm) {
-                                        if (!DATA.FLWS[bm].flwsData.switchVersion) {
+                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                             flwsLdXxfy(bm, className, val, 'combobox','');
                                         }
                                     }
@@ -315,7 +315,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             var className = $this.attr('textboxname');//组件class name值
                             var val = $this.next().find('input:hidden').val();
                             if (val && bm) {
-                                if (!DATA.FLWS[bm].flwsData.switchVersion) {
+                                if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                     flwsLdXxfy(bm, className, val, 'combotree','');
                                 }
                             }
@@ -345,7 +345,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             if (newValue && bm) {
                                 var $this = $(this);
                                 var className = $this.attr('textboxname');//组件class name值
-                                if (!DATA.FLWS[bm].flwsData.switchVersion) {
+                                if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                     flwsLdXxfy(bm, className, newValue, 'textbox','');
                                 }
                             }
@@ -382,7 +382,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
-                                    if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                    if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
@@ -413,7 +413,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
                                     $this.validatebox();
-                                    if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                    if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
@@ -431,7 +431,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                         $this.parent().attr('number', newValue);
                                         var chNum = NumberToChinese(iptVal);//转化之后的汉字
                                         $this.textbox({value: chNum});
-                                        if (!DATA.FLWS[bm].flwsData.switchVersion) {
+                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                             flwsLdXxfy(bm, className, chNum, 'textbox','numbercn');
                                         }
                                     } else {
@@ -459,7 +459,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                         $this.parent().attr('money', newValue);
                                         var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
                                         $this.textbox({value: chNum});
-                                        if (!DATA.FLWS[bm].flwsData.switchVersion) {
+                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                             flwsLdXxfy(bm, className, chNum, 'textbox','money');
                                         }
                                     } else {
@@ -497,7 +497,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
-                                    if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                    if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
@@ -518,7 +518,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var $this = $(this);
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
-                                if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                     flwsLdXxfy(bm, className, val, 'Wdate','');
                                 }
                             });
@@ -528,7 +528,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var $this = $(this);
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
-                                if (bm && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                     flwsLdXxfy(bm, className, val, 'Wdate','');
                                 }
                             });
