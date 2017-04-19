@@ -493,6 +493,10 @@ var flwsDictObj = {
     'BD_D_WCNRFDDLR_ZRHBHRLXDM':[//证人、被害人
         {"id":"1","text":"证人","py":"","wb":""},
         {"id":"2","text":"被害人","py":"","wb":""}
+    ],
+    'BD_D_WCNRFDDLR_XWLXDM':[//询问
+        {"id":"1","text":"询问","py":"","wb":""},
+        {"id":"2","text":"讯问","py":"","wb":""}
     ]
 };
 
