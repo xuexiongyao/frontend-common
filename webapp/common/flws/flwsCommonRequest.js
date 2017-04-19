@@ -75,11 +75,12 @@ function getDxxxData() {
                         }
                         //嫌疑人前后置关系的判断
                         if (DATA.DX.xydxData[anjianXyDxDic.xyr] != undefined) {
-                            var xyr_rsqzcsdm,rule;
+
                             for (var i = 0; i < DATA.DX.xydxData[anjianXyDxDic.xyr].length; i++) {
+                                var xyr_rsqzcsdm='',rule='';
                                 var xyr = DATA.DX.xydxData[anjianXyDxDic.xyr][i];
                                 if (xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null') {
-                                    xyr_rsqzcsdm = '0000';
+
                                 } else {
                                     xyr_rsqzcsdm = xyr[flwsQhzgxXyrPz];
                                 }
@@ -92,30 +93,31 @@ function getDxxxData() {
                                         async: false,
                                         success: function (data) {
                                             DATA.RULE = data;
-                                            rule = DATA.RULE[xyr_rsqzcsdm];
                                         }
                                     });
-                                } else {
-                                    rule = DATA.RULE[xyr_rsqzcsdm];
                                 }
+                                rule = DATA.RULE[xyr_rsqzcsdm];
+
                                 var disabled = "";
                                 var title = "";
-                                if (typeof rule != 'undefined' || rule != undefined) {
-                                    if (rule.iscontain) {//包含的不能做
-                                        for (var z = 0; z < rule.item.length; z++) {
-                                            if (DATA.CQBG.asjflwsdm == rule.item[z]) {
-                                                disabled = "disabled ='disabled'";
-                                                title = "title = '" + rule.message + "'";
-                                                break;
-                                            }
-                                        }
-                                    } else {//包含的能做
-                                        disabled = "disabled='disabled'";
+                                if (typeof rule != 'undefined' || rule != undefined||rule ) {
+                                    if (rule.iscontain) {//包含的能做
+                                        disabled = "disabled ='disabled'";
                                         title = "title = '" + rule.message + "'";
                                         for (var z = 0; z < rule.item.length; z++) {
                                             if (DATA.CQBG.asjflwsdm == rule.item[z]) {
                                                 disabled = "";
                                                 title = "";
+                                                break;
+                                            }
+                                        }
+                                    } else {//包含的能做
+                                        disabled = "";
+                                        title = "";
+                                        for (var z = 0; z < rule.item.length; z++) {
+                                            if (DATA.CQBG.asjflwsdm == rule.item[z]) {
+                                                disabled = "disabled='disabled'";
+                                                title = "title = '" + rule.message + "'";
                                             }
                                         }
                                     }
