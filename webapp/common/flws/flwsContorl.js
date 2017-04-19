@@ -563,7 +563,7 @@ function shongshen(sessionBean) {
         var btflwsArray = [];
         if (btflwsStr) {
             //法律文書必選及規則
-            if(DATA.CQBG.btflwsRule != undefined){
+            if(DATA.CQBG.btflwsRule != undefined && DATA.CQBG.btflwsRule){
                 var param={
                     CQBG_ZJ:DATA.CQBG.cqbgZj,
                     CQBG_BM:DATA.CQBG.cqbgData.bianMa
@@ -575,6 +575,7 @@ function shongshen(sessionBean) {
                     dataType: 'json',
                     async: false,
                     success: function (json) {
+                        var jsonRows = json.rows;
                         if (json.state != 'success') {
                             $.messager.alert({
                                 title: '提示',
@@ -582,44 +583,55 @@ function shongshen(sessionBean) {
                                 icon: 'warning'
                             });
                             skip = true;
+                        }else if(jsonRows.length>0){
+                            skip = true;
+                            //错误列表提示语言
+                            var msgs = msgListTab(jsonRows);
+                            $.messager.show({
+                                title: '提示',
+                                msg: msgs,
+                                icon: 'warning'
+                            });
                         }
                     }
                 });
                 if(skip){
                     return;
                 }
-            }
-            if (btflwsStr.indexOf(',') == -1) {//只有一条
-                btflwsArray.push(btflwsStr);
-            } else {//有多条，逗号分隔
-                btflwsArray = btflwsStr.split(",");
-            }
+            }else{
+                if (btflwsStr.indexOf(',') == -1) {//只有一条
+                    btflwsArray.push(btflwsStr);
+                } else {//有多条，逗号分隔
+                    btflwsArray = btflwsStr.split(",");
+                }
 
-            for (var i = 0; i < btflwsArray.length; i++) {
-                var bm = btflwsArray[i];
-                if (DATA.FLWS[bm] == undefined || !DATA.FLWS[bm] || DATA.FLWS[bm].flwsData == undefined) {
-                    $.messager.alert({
-                        title: '提示',
-                        msg: '请填写法律文书',
-                        icon: 'warning'
-                    });
-                    return;
-                } else if (!DATA.FLWS[bm].status.hasDone) {
-                    $.messager.alert({
-                        title: '提示',
-                        msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                        icon: 'warning'
-                    });
-                    return;
-                } else if (bm == 'X020003' && !DATA.FLWS[bm].status.zfgked) {
-                    $.messager.alert({
-                        title: '提示',
-                        msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
-                        icon: 'warning'
-                    });
-                    return;
+                for (var i = 0; i < btflwsArray.length; i++) {
+                    var bm = btflwsArray[i];
+                    if (DATA.FLWS[bm] == undefined || !DATA.FLWS[bm] || DATA.FLWS[bm].flwsData == undefined) {
+                        $.messager.alert({
+                            title: '提示',
+                            msg: '请填写法律文书',
+                            icon: 'warning'
+                        });
+                        return;
+                    } else if (!DATA.FLWS[bm].status.hasDone) {
+                        $.messager.alert({
+                            title: '提示',
+                            msg: "请填写" + DATA.FLWS[bm].flwsData.name,
+                            icon: 'warning'
+                        });
+                        return;
+                    } else if (bm == 'X020003' && !DATA.FLWS[bm].status.zfgked) {
+                        $.messager.alert({
+                            title: '提示',
+                            msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
+                            icon: 'warning'
+                        });
+                        return;
+                    }
                 }
             }
+
         }
     }
     //如果不是呈请报告
@@ -648,6 +660,35 @@ function shongshen(sessionBean) {
         selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
     }
 }
+
+/**
+ * 列表展示
+ */
+function msgListTab(data){
+    var str = '';
+    var xydxData = DATA.DX.xydxData;
+    for(var i=0;i<data.length;i++){
+        var tb = '',param = '',xxzjbh='',xydx='';
+        for(var k in xyrObj){
+            if(Number(data[i].CLDXLB) == xyrObj[k].cldxlb){
+                tb = k;
+                param = xyrObj[k].param;
+                xxzjbh = data[i].CLDX_XXZJBH;
+                xydx = xyrObj[k].text;
+            }
+        }
+        if(tb && param && xxzjbh){
+            for(var j=0;j<xydxData[tb].length;j++){
+                if(xxzjbh == xydxData[tb][j].xxzjbh){
+                    var name = xydxData[tb][j][param];
+                    str += xydx +'('+ name+')对应的文书<'+data[i].WENSHU_NAME+'>还未填写，请填写！'
+                }
+            }
+        }
+    }
+    return str;
+}
+
 
 /**
  * 没有呈请报告的法律文书，无法走流程，只能发送请求生成法律文书任务，生成pdf
