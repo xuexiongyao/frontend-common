@@ -506,3 +506,23 @@ function cqxgWsScflwsRequest(params){
         }
     })
 }
+
+/**
+ *呈请移送案件报告书  保存数据
+ */
+function saveAjyjData(asjbh,jsdwGajgjgdm,jsdwGajgmc){
+    loading("open","数据处理中...");
+    var param = {
+        asjbh: asjbh,
+        jsdw_gajgjgdm:jsdwGajgjgdm,
+        jsdw_gajgmc: jsdwGajgmc
+    };
+
+    $.ajax({
+        url: pathConfig.basePath + '/api/ajxx/ajyj/save',
+        data: param,
+        success: function () {
+            loading('close');
+        }
+    })
+}

@@ -176,7 +176,7 @@ function selectCheckOpinion() {
 //【选择】审批人 ， 选择审核意见
 function selectApprove(shjl) {
     /****选择审核结论,的处理方式****/
-    //同意
+        //同意
     $('#next_link_area,#next_over').hide();
     $('#over_area').hide();
     if (shjl == '1') {
@@ -201,7 +201,7 @@ function selectApprove(shjl) {
     }
     /*****END*****/
 
-    //点击【选择】按钮
+        //点击【选择】按钮
     $('#select_approve').off('click').on('click', function () {
         //同意,不同意
         if (shjl == '1' || shjl == '2') {
@@ -214,9 +214,9 @@ function selectApprove(shjl) {
                 success: function (json) {
                     var treeJson = eval('(' + json['data']['treeJson'] + ')');
                     var data = null;
-                    if(json['data'].yyzlx == 'O'){
+                    if (json['data'].yyzlx == 'O') {
                         data = treeJson[0]['children'];
-                    }else{
+                    } else {
                         data = treeJson;
                     }
                     $('#role_name').empty();
@@ -330,7 +330,7 @@ function selectApprove(shjl) {
  */
 function minDateFun(prevDate) {
     var nowDate = getCurrentTime();
-    var isTrue = compareTime(prevDate,nowDate,3);//时间是否超过三天
+    var isTrue = compareTime(prevDate, nowDate, 3);//时间是否超过三天
     return isTrue;
 }
 
@@ -415,7 +415,7 @@ function saveAndSsShyj(backObj) {
                 var hxshyjbz = backObj.hxshyjbz;
                 var UsersStr = '';
                 $.ajax({
-                    url: ajaxUrl + '/findBamjids?businessKey=' + businessKey+'&asjbh='+asjbh+'&asjflwsdm='+asjflwsdm,
+                    url: ajaxUrl + '/findBamjids?businessKey=' + businessKey + '&asjbh=' + asjbh + '&asjflwsdm=' + asjflwsdm,
                     type: 'post',
                     async: false,
                     dataType: 'json',
@@ -476,29 +476,32 @@ function complete(shjl, shsj, shyj) {
     //alert('complete');
     //return;
     loading('open', '信息保存中...');
-    var param = 'taskId=' + taskId;
-    param += '&candidateUsers=' + candidateUsers;
-    param += '&shsj=' + shsj;
-    param += '&shjl=' + shjl;
-    param += '&shyj=' + shyj;
-    param += '&businessKey=' + businessKey;
-    param += '&isLastTask=' + isLastTask;
-    param += '&hxshyjbz=' + hxshyjbz;
-    param += '&fjrid=' + fjrid;
-    param += '&fjrxm=' + fjrxm;
+    var param = {
+        'taskId': taskId,
+        'candidateUsers': candidateUsers,
+        'shsj': shsj,
+        'shjl': shjl,
+        'shyj': shyj,
+        'businessKey': businessKey,
+        'isLastTask': isLastTask,
+        'hxshyjbz': hxshyjbz,
+        'fjrid': fjrid,
+        'fjrxm': fjrxm
+    };
     if (isLastTask) {
-        param += '&xwFlwsLajdsZjs=d036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
-        param += '&asjzcxwlbdm=' + asjzcxwlbdm;
-        param += '&asjflwsdm=' + asjflwsdm;//+asjflwsdm;
-        param += '&dxmc=' + dxmc;
-        param += '&flwsmc=' + flwsmc;
-        param += '&asjbh=' + asjbh;
-        param += '&cjsj=' + cjsj || '2012-08-08 20:00:00';
-        param += '&cqbgZj=' + businessKey;
-        param += '&ajmc=' + ajmc;
+        param.xwFlwsLajdsZjs = 'd036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
+        param.asjzcxwlbdm = asjzcxwlbdm;
+        param.asjflwsdm = asjflwsdm;//+asjflwsdm;
+        param.dxmc = dxmc;
+        param.flwsmc = flwsmc;
+        param.asjbh = asjbh;
+        param.cjsj = cjsj || '2012-08-08 20:00:00';
+        param.cqbgZj = businessKey;
+        param.ajmc = ajmc;
     }
     $.ajax({
-        url: ajaxUrl + '/complete?' + param,
+        url: ajaxUrl + '/complete',
+        data: param,
         type: 'post',
         dataType: 'json',
         success: function (json) {
@@ -507,11 +510,11 @@ function complete(shjl, shsj, shyj) {
             if (json.status == 'success') {
                 //发送短信请求
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
-                if(isLastTask){
-                    if(isCheckMsger){
-                        var content = "您送审的"+ajmc+"的【"+flwsmc+"】已审批完成，请及时查收。";
+                if (isLastTask) {
+                    if (isCheckMsger) {
+                        var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
                         //sendMsg(DATA.CQBG.cqbgRow.BAMJID,content,json.message);
-                    }else{
+                    } else {
                         loading('close');
                         $.messager.alert({
                             title: '提示',
@@ -522,10 +525,10 @@ function complete(shjl, shsj, shyj) {
                         });
                     }
                 } else {
-                    if(isCheckMsger && candidateUsers){
-                        var content = badwGajgmc+"送审的【"+flwsmc+"】已到审批任务中，请您及时处理。";
+                    if (isCheckMsger && candidateUsers) {
+                        var content = badwGajgmc + "送审的【" + flwsmc + "】已到审批任务中，请您及时处理。";
                         sendMsg(candidateUsers, content, json.message);
-                    }else{
+                    } else {
                         loading('close');
                         $.messager.alert({
                             title: '提示',
@@ -559,10 +562,10 @@ function end(shjl, shsj, shyj) {
             if (json.status == 'success') {
                 //发送短信请求
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
-                if(isCheckMsger){
-                    var content = "您送审的"+ajmc+"的【"+flwsmc+"】已审批完成，请及时查收。";
+                if (isCheckMsger) {
+                    var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
                     //sendMsg(DATA.CQBG.cqbgRow.BAMJID,content,json.message);
-                }else{
+                } else {
                     loading('close');
                     $.messager.alert({
                         title: '提示',
@@ -591,25 +594,25 @@ function lctShow() {
             // console.log('流程图展示数据:', json, lcslId);
             if (json.status == 'success') {
                 var data = json.data;
-                if(data.length>0){
+                if (data.length > 0) {
                     /**
                      * 获取上级的审核时间，根据上级审核时间，判断当前级别的最小审核时间的范围;
                      * 1、如果审核时间相对于当前系统时间超过三天，minDate=当前时间-3天；
                      * 2、如果审核时间相对于当前系统时间不超过三天，minDate=审核时间；
                      */
-                    var minDateVal,isTrue;
+                    var minDateVal, isTrue;
                     var dLen = data.length;
-                    isTrue = minDateFun(data[dLen-1].shsj);
-                    if(isTrue){
-                        minDateVal = data[dLen-1].shsj;
-                    }else{
+                    isTrue = minDateFun(data[dLen - 1].shsj);
+                    if (isTrue) {
+                        minDateVal = data[dLen - 1].shsj;
+                    } else {
                         minDateVal = '%y-%M-%d {%H-72}:%m:%s'
                     }
 
-                    var shsjStr =  '<li>\n'+
-                        '<span class="pro">审核时间</span>\n'+
-                        '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n'+
-                        'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \''+minDateVal+'\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n'+
+                    var shsjStr = '<li>\n' +
+                        '<span class="pro">审核时间</span>\n' +
+                        '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n' +
+                        'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \'' + minDateVal + '\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n' +
                         '</li>';
 
                     $('#next_over').after(shsjStr);
@@ -644,7 +647,7 @@ function lctShow() {
                     }
                     $('.lct-container').append(str);
                     $('.lct-node').tooltip();
-                }else{
+                } else {
                     $.messager.alert({
                         title: '提示',
                         msg: '请求数据有误，请联系相关工作人员',
@@ -681,12 +684,12 @@ function linkToJz() {
  * @param i  天数（比较时间）
  * @return {*}
  */
-function compareTime(startTime,endTime,i) {
+function compareTime(startTime, endTime, i) {
     var startTimes = startTime.substring(0, 10).split('-');
     var endTimes = endTime.substring(0, 10).split('-');
     startTime = startTimes[1] + '-' + startTimes[2] + '-' + startTimes[0] + ' ' + startTime.substring(10, 19);
     endTime = endTimes[1] + '-' + endTimes[2] + '-' + endTimes[0] + ' ' + endTime.substring(10, 19);
-    var thisResult = (Date.parse(endTime) - Date.parse(startTime)) / 3600 / 1000 /24;
+    var thisResult = (Date.parse(endTime) - Date.parse(startTime)) / 3600 / 1000 / 24;
     if (thisResult < i) {
         return true;
     } else if (thisResult >= i) {
@@ -700,9 +703,9 @@ function compareTime(startTime,endTime,i) {
  * @param con  短信内容
  * @param msg  提示信息
  */
-function sendMsg(userid,con,msg){
+function sendMsg(userid, con, msg) {
     $.ajax({
-        url:  pathConfig.basePath + '/api/xx/sendMsg/'+userid,
+        url: pathConfig.basePath + '/api/xx/sendMsg/' + userid,
         data: {
             content: con
         },

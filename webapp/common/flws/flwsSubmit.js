@@ -86,6 +86,10 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                             dataType: 'json',
                             success: function (json) {
                                 if(json.status == 'success'){
+                                    //呈请移送案件报告书 请求接口
+                                    if(asjflwsdm == '020004'){
+                                        saveAjyjData(DATA.asjbh , DATA.FLWS['020005'].flwsRow[0].SWDW_GAJGJGDM,DATA.FLWS['020005'].flwsRow[0].SWDW_GAJGMC)
+                                    }
                                     //发送短信请求
                                     if(isCheckMsger){
                                         var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.asjflwsmc+"】已到审批任务中，请您及时处理。";
@@ -96,7 +100,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                             title : '提示',
                                             msg: '保存成功!',
                                             fn: function () {
-                                                crossCloseTab();
+                                                crossCloseTab('refresh_table_list');
                                             }
                                         });
                                     }
@@ -135,7 +139,7 @@ function sendMsg(userid,con,msg){
                 title : '提示',
                 msg: '保存成功!',
                 fn: function () {
-                    crossCloseTab();
+                    crossCloseTab('refresh_table_list');
                 }
             });
         }    
