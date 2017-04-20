@@ -505,7 +505,7 @@ function complete(shjl, shsj, shyj) {
         type: 'post',
         dataType: 'json',
         success: function (json) {
-            loading('close');
+            //loading('close');
             // console.log('complete:', json);
             if (json.status == 'success') {
                 //发送短信请求
@@ -513,7 +513,7 @@ function complete(shjl, shsj, shyj) {
                 if (isLastTask) {
                     if (isCheckMsger) {
                         var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
-                        sendMsgLast(asjbh,businessKey,asjflwsdm,content);
+                        sendMsgLast(asjbh,businessKey,asjflwsdm,content,json.message);
                     } else {
                         loading('close');
                         $.messager.alert({
@@ -564,7 +564,7 @@ function end(shjl, shsj, shyj) {
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
                 if (isCheckMsger) {
                     var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
-                    sendMsgLast(asjbh,businessKey,asjflwsdm,content);
+                    sendMsgLast(asjbh,businessKey,asjflwsdm,content,json.message);
                 } else {
                     loading('close');
                     $.messager.alert({
@@ -729,12 +729,14 @@ function sendMsg(userid, con, msg) {
  * @param businessKey  短信内容
  * @param asjflwsdm  呈请报告编码
  * @param con  短信内容
+ * @param msg  提示信息
  */
-function sendMsgLast(asjbh,businessKey,asjflwsdm,con){
+function sendMsgLast(asjbh,businessKey,asjflwsdm,con,msg){
     $.ajax({
-        url: pathConfig.basePath + '/api/xx/sendMsg/'+asjbh+'/'+businessKey+'?asjflwsdm='+asjflwsdm,
+        url: pathConfig.basePath + '/api/xx/sendMsg/'+asjbh+'/'+businessKey,
         data: {
-            content: con
+            content: con,
+            asjflwsdm:asjflwsdm
         },
         type: 'post',
         success: function (data) {

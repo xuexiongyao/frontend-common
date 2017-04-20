@@ -92,7 +92,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                     }
                                     //发送短信请求
                                     if(isCheckMsger){
-                                        var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.asjflwsmc+"】已到审批任务中，请您及时处理。";
+                                        var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.CQBG.asjflwsmc+"】已到审批任务中，请您及时处理。";
                                         sendMsg(nameIdStr,content,json.message);
                                     }else{
                                         loading('close');
