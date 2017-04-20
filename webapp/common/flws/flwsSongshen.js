@@ -513,7 +513,7 @@ function complete(shjl, shsj, shyj) {
                 if (isLastTask) {
                     if (isCheckMsger) {
                         var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
-                        //sendMsg(DATA.CQBG.cqbgRow.BAMJID,content,json.message);
+                        sendMsgLast(asjbh,businessKey,asjflwsdm,content);
                     } else {
                         loading('close');
                         $.messager.alert({
@@ -564,7 +564,7 @@ function end(shjl, shsj, shyj) {
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
                 if (isCheckMsger) {
                     var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
-                    //sendMsg(DATA.CQBG.cqbgRow.BAMJID,content,json.message);
+                    sendMsgLast(asjbh,businessKey,asjflwsdm,content);
                 } else {
                     loading('close');
                     $.messager.alert({
@@ -706,6 +706,33 @@ function compareTime(startTime, endTime, i) {
 function sendMsg(userid, con, msg) {
     $.ajax({
         url: pathConfig.basePath + '/api/xx/sendMsg/' + userid,
+        data: {
+            content: con
+        },
+        type: 'post',
+        success: function (data) {
+            loading('close');
+            $.messager.alert({
+                title: '提示',
+                msg: msg,
+                fn: function () {
+                    crossCloseTab('refresh_flwstask');
+                }
+            });
+        }
+    })
+}
+
+/**
+ * 审批结束发送短信
+ * @param asjbh  案事件编号
+ * @param businessKey  短信内容
+ * @param asjflwsdm  呈请报告编码
+ * @param con  短信内容
+ */
+function sendMsgLast(asjbh,businessKey,asjflwsdm,con){
+    $.ajax({
+        url: pathConfig.basePath + '/api/xx/sendMsg/'+asjbh+'/'+businessKey+'?asjflwsdm='+asjflwsdm,
         data: {
             content: con
         },
