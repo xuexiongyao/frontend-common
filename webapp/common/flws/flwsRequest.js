@@ -510,12 +510,13 @@ function cqxgWsScflwsRequest(params){
 /**
  *呈请移送案件报告书  保存数据
  */
-function saveAjyjData(asjbh,jsdwGajgjgdm,jsdwGajgmc){
+function saveAjyjData(asjbh,jsdwGajgjgdm,jsdwGajgmc,cqbgZj){
     loading("open","数据处理中...");
     var param = {
         asjbh: asjbh,
         jsdw_gajgjgdm:jsdwGajgjgdm,
-        jsdw_gajgmc: jsdwGajgmc
+        jsdw_gajgmc: jsdwGajgmc,
+        cqbg_zj:cqbgZj
     };
 
     $.ajax({
