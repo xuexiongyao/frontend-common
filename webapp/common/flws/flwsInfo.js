@@ -79,7 +79,7 @@ function getCqbgFlwsHtmlPage() {
     /***呈请报告***/
     var cqbgstr = '';
     var cqbgData = DATA.CQBG.cqbgData;//呈请报告数据
-    if (cqbgData) {
+    if (!jQuery.isEmptyObject(cqbgData)) {
         //呈请报告字符串
         var cqbgcon = getHtmlByAjax(cqbgData.url);
         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
@@ -95,15 +95,20 @@ function getCqbgFlwsHtmlPage() {
     /***法律文书***/
     var flwsstr = '';
     var flwsData = DATA.FLWS.flwsData;//法律文书数据
-    if (flwsData) {
+    if (!jQuery.isEmptyObject(flwsData)) {
+        var flwsTmpArray = [];//法律文书临时数组
+        for(var k in flwsData){
+            flwsTmpArray.push(flwsData[k]);
+        }
+        var sortedFlwsData = flwsTmpArray.sort(compare('bianMa'));
         //法律文书字符串
-        for (var a in flwsData) {
-            flwsstr = '<div class="flws-tabs-title" title="' + flwsData[a].name + '">' +
-                '<div class="flws-main-con" id="flws_main_con_' + flwsData[a].bianMa + '">' +
+        for (var a=0;a<sortedFlwsData.length;a++) {
+            flwsstr = '<div class="flws-tabs-title" title="' + sortedFlwsData[a].name + '">' +
+                '<div class="flws-main-con" id="flws_main_con_' + sortedFlwsData[a].bianMa + '">' +
                 '</div>' +
                 '</div>';
             $("#flwsTabs").append(flwsstr);
-            flwsRightPageRender(flwsData[a]);
+            flwsRightPageRender(sortedFlwsData[a]);
         }
     }
 
@@ -445,16 +450,22 @@ function flwsXxfyA(bm) {
  * @param bm  法律文书编码
  */
 function xydxListRenderB(bm) {
-    flwsXxfyB(bm);
+    flwsXxfyB(bm,false);
 }
 
 /**
  * 法律文书信息复用B
  * @param bm  法律文书编码
  */
-function flwsXxfyB(bm) {
+function flwsXxfyB(bm,isCustomized) {
     var data = DATA.FLWS[bm].flwsRow[0];
     var $target = $('#flws_cl_area_' + bm + ' form a');
+
+    if(isCustomized){
+        if (DATA.FLWS[bm].flwsData.customized) {
+            eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
+        }
+    }
 
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
@@ -530,7 +541,7 @@ function xydxListRenderC(bm) {
     if (data.length > 0) {//有数据
         //只有一条数据(有嫌疑对象但是未勾选，并且非必选，也只能有一条数据)
         if (data.length == 1) {//默认选中
-            flwsXxfyB(bm);
+            flwsXxfyB(bm,true);
             $('#flws_xyr_area_' + bm).hide();
             $('#flws_main_con_r_' + bm).css({width: '100%'});
             $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
