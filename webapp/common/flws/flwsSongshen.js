@@ -540,6 +540,7 @@ function complete(shjl, shsj, shyj) {
                     }
                 }
             } else {
+                loading('close');
                 $.messager.alert({
                     title: '提示',
                     msg: json.message
@@ -576,6 +577,7 @@ function end(shjl, shsj, shyj) {
                     });
                 }
             } else {
+                loading('close');
                 //console.log('结束:',json);
             }
         }
