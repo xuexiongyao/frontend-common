@@ -11,7 +11,17 @@ $(function(){
 
 var listConfig = init.listConfig || new ListConfig();
 var tableCookieName = init.cookieName || (location.pathname).substr(0,location.pathname.indexOf('.')) + '_tableHeaderC';
-var queryListParam = init.queryListParam || {};    //查询条件
+var queryListParam = {};    //查询条件
+//重置查询条件
+function paramRest(){
+    if(init.queryListParam){
+        for(var k in init.queryListParam){
+            queryListParam[k] = init.queryListParam[k];
+        }
+    }else{
+        queryListParam = {};
+    }
+}
 //生成查询条件模块
 function queryModule(){
     //查询条件输入框,勾选项
@@ -145,7 +155,7 @@ function queryModule(){
 
     //点击查询
     $('#query_btn').on('click',function(){
-        queryListParam = init.queryListParam || {};
+        paramRest();
         $('#query_panel input[name]').each(function(){
             var _this = $(this);
             var pro = _this.prop('name');
