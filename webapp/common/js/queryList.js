@@ -14,12 +14,11 @@ var tableCookieName = init.cookieName || (location.pathname).substr(0,location.p
 var queryListParam = {};    //查询条件
 //重置查询条件
 function paramRest(){
+    queryListParam = {};
     if(init.queryListParam){
         for(var k in init.queryListParam){
             queryListParam[k] = init.queryListParam[k];
         }
-    }else{
-        queryListParam = {};
     }
 }
 //生成查询条件模块
