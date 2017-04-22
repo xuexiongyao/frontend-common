@@ -48,8 +48,8 @@ function queryModule(){
             if (list_config[k].length > 5) {
                 query_item = '<div class="item ' + k_mark + '" >'
                     + '<span class="pro">' + list_config[k][1] + '</span>'
-                    + '<input name="' + k + '" id="query_input_' + k_mark + '" class="easyui-validatebox Wdate validatebox-text" style="width:120;height:22;"'
-                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',maxDate:\'#F{$dp.$D(\\\'query_input_'+list_config[k][5]+'\\\'||\\\'%y-%M-%d\\\')}\',errDealMode:2,autoPickDate:true});"'
+                    + '<input name="' + k + '" id="query_input_' + k_mark + '" class="easyui-validatebox Wdate validatebox-text" '
+                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',maxDate:\'#F{$dp.$D(\\\'query_input_'+list_config[k][5]+'\\\')||\\\'%y-%M-%d\\\'}\',errDealMode:2,autoPickDate:true});"'
                     + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
 
                 query_item += '至'
@@ -69,8 +69,8 @@ function queryModule(){
             if (list_config[k].length > 5) {
                 query_item = '<div class="item ' + k_mark + '" >'
                     + '<span class="pro">' + list_config[k][1] + '</span>'
-                    + '<input name="' + k + '" id="query_input_' + k_mark + '" class="easyui-validatebox Wdate validatebox-text" style="width:120;height:22;"'
-                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',maxDate:\'#F{$dp.$D(\\\'query_input_'+list_config[k][5]+'\\\'||\\\'%y-%M-%d %H:%m:%s\\\')}\',errDealMode:2,autoPickDate:true});"'
+                    + '<input name="' + k + '" id="query_input_' + k_mark + '" class="easyui-validatebox Wdate validatebox-text" '
+                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',maxDate:\'#F{$dp.$D(\\\'query_input_'+list_config[k][5]+'\\\')||\\\'%y-%M-%d %H:%m:%s\\\'}\',errDealMode:2,autoPickDate:true});"'
                     + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd HH:mm:ss\\\']\']"/>';
 
                 query_item += '至'
