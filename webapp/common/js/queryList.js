@@ -12,6 +12,7 @@ $(function(){
 var listConfig = init.listConfig || new ListConfig();
 var tableCookieName = init.cookieName || (location.pathname).substr(0,location.pathname.indexOf('.')) + '_tableHeaderC';
 var queryListParam = {};    //查询条件
+paramRest();
 //重置查询条件
 function paramRest(){
     queryListParam = {};
