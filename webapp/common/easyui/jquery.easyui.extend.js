@@ -1462,6 +1462,11 @@ function getIEVersion() {
 		},
 		//点击节点展开收缩开关
 		onClick: function (node) {
+			var $this = $(this);
+			var opts = $this.tree('options');
+			if(opts.onlyLeaf && node.children){
+				$this.parents('div.combo-p').show();
+			}
 			$(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
 		}
 	});
