@@ -855,15 +855,15 @@ function flwsDataXxfy(bm, zj) {
             }
 
             //checkbox、radio的处理
-            // for(var j=0;j<$target.length;j++){
-            //     var aName = $($target[j]).attr('name');//a标签的name属性
-            //     var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-            //     if(aName.indexOf('_T_') != -1){
-            //         var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
-            //         var val = data[i][name];//对应数据的值
-            //         $($target[j]).find("input[value='"+val+"']").click();
-            //     }
-            // }
+             for(var j=0;j<$target.length;j++){
+                 var aName = $($target[j]).attr('name');//a标签的name属性
+                 var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+                 if(aName.indexOf('_T_') != -1){
+                     var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+                     var val = data[i][name];//对应数据的值
+                     $($target[j]).find("input[value='"+val+"']").click();
+                 }
+             }
 
             //数据处理
             for (var key in data[i]) {

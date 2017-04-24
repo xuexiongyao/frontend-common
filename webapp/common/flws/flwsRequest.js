@@ -455,7 +455,7 @@ function scflwsRequest(params) {
                         title: '提示',
                         msg: '生成法律文书成功',
                         fn: function () {
-                            crossCloseTab();
+                            crossCloseTab('refresh_table_list');
                         }
                     });
                 } else if (json.status == 'error') {
@@ -463,7 +463,7 @@ function scflwsRequest(params) {
                         title: '提示',
                         msg: '生成法律文书失败',
                         fn: function () {
-                            crossCloseTab();
+                            crossCloseTab('refresh_table_list');
                         }
                     });
                 }
