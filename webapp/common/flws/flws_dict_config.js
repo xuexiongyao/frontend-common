@@ -497,6 +497,11 @@ var flwsDictObj = {
     'BD_D_WCNRFDDLR_XWLXDM':[//询问
         {"id":"1","text":"询问","py":"","wb":""},
         {"id":"2","text":"讯问","py":"","wb":""}
+    ],
+    'BD_D_HJFZXYR_RSCSDM':[//会见犯罪嫌疑人人身措施代码
+        {"id":"2","text":"拘留","py":"JL","wb":"RQ"},
+        {"id":"4","text":"监视居住","py":"JSJZ","wb":"JPNW"},
+        {"id":"5","text":"逮捕","py":"DB","wb":"VR"}
     ]
 };
 
