@@ -23,6 +23,7 @@
     <script src="http://static.jwzh.com:7777/jwzh/common/js/messenger.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/js/common.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/js/ajax.js"></script>
+    <script src="http://static.jwzh.com:7777/jwzh/common/js/function.js"></script>
     <script src="http://static.jwzh.com:7777/jwzh/common/datepicker/WdatePicker.js"></script>
 </head>
 <body style="margin: 10px;">
@@ -1906,6 +1907,17 @@
                     </code>
                 </pre>
             </li>
+            <li class="item-two">
+                <p class="pro">日期赋值</p>
+                <div class="ipt">
+                    <input id="date" class="easyui-validatebox Wdate" style="width:99.7%"
+                           onclick="WdatePicker({skin: 'christ',el:'date',dateFmt:'yyyy-MM-dd',onpicked:pickedAge,errDealMode:2,autoPickDate:true});"
+                           data-options="validType:['date[\'yyyy-MM-dd\']']"/>
+                    <input type="text" id="age">
+                </div>
+            </li>
+
+
 
             <!--<li class="item-two">-->
             <!--<p class="pro">图片格式</p>-->
@@ -1984,6 +1996,50 @@
         $dp.$('date_HH').value = $dp.cal.getP('H');
         $dp.$('date_mm').value = $dp.cal.getP('m');
         $dp.$('date_ss').value = $dp.cal.getP('s');
+    }
+
+    function pickedAge(){
+        var csrq = jsGetAge(this.value);
+        $dp.$('age').value = csrq;
+    }
+
+    function jsGetAge(strBirthday){
+        var returnAge;
+        var strBirthdayArr=strBirthday.split("-");
+        var birthYear = strBirthdayArr[0];
+        var birthMonth = strBirthdayArr[1];
+        var birthDay = strBirthdayArr[2];
+
+        d = new Date();
+        var nowYear = d.getFullYear();
+        var nowMonth = d.getMonth() + 1;
+        var nowDay = d.getDate();
+
+        if(nowYear == birthYear){
+            returnAge = 0;//同年 则为0岁
+        } else {
+            var ageDiff = nowYear - birthYear ; //年之差
+            if(ageDiff > 0){
+                if(nowMonth == birthMonth) {
+                    var dayDiff = nowDay - birthDay;//日之差
+                    if(dayDiff < 0) {
+                        returnAge = ageDiff - 1;
+                    } else {
+                        returnAge = ageDiff ;
+                    }
+                } else {
+                    var monthDiff = nowMonth - birthMonth;//月之差
+                    if(monthDiff < 0) {
+                        returnAge = ageDiff - 1;
+                    } else {
+                        returnAge = ageDiff ;
+                    }
+                }
+            } else {
+                returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+            }
+        }
+        return returnAge;//返回周岁年龄
     }
 
     //查看源代码
