@@ -1464,6 +1464,7 @@ function getIEVersion() {
 		onClick: function (node) {
 			var $this = $(this);
 			var opts = $this.tree('options');
+			//如果只能选择叶子节点并且选中的不是叶子节点  不隐藏
 			if(opts.onlyLeaf && node.children){
 				$this.parents('div.combo-p').show();
 			}
