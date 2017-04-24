@@ -59,7 +59,8 @@ function getCqbgQtsjAdd() {
                     AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
                     ASJZCXWDM: DATA.asjzcxwdm,//案事件侦查行为代码
                     CQZT: '0',//呈请状态
-                    BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM//办案单位公安机关机关代码
+                    BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM,//办案单位公安机关机关代码
+                    BADW_GAJGMC: DATA.publicJkXx.BADW01.BAJG_GAJGMC//办案机关公安机关名称
                 };
                 /*嫌疑人姓名*/
                 if (DATA.CQBG.xyrxms) {
@@ -226,7 +227,9 @@ function getFlwsQtsjAdd(bm) {
         ASJBH: DATA.asjbh,//案事件编号
         AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
         BADW_GAJGJGDM: DATA.publicJkXx.BADW01.BAJG_GAJGJGDM,//办案机关公安机关机关代码
-        BADW_GAJGMC: DATA.publicJkXx.BADW01.BAJG_GAJGMC//办案机关公安机关名称
+        BADW_GAJGMC: DATA.publicJkXx.BADW01.BAJG_GAJGMC,//办案机关公安机关名称
+        BAMJXM:DATA.OWN.userName,//办案民警姓名(没有呈请报告的法律文书向呈请报告写数据)todo
+        BAMJID:DATA.OWN.userId//办案民警ID
     };
 
     //法律文书是否切换版本【目前只针对行政案件中 行政处罚文书 一\二版】

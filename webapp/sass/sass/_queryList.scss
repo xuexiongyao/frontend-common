@@ -1,5 +1,5 @@
 @charset "utf-8";
-.query-com-main{
+//.query-com-main{
     .query-top-btn{
         margin-top:15px;
         .help{
@@ -45,7 +45,8 @@
                 @include clearfix;
                 display: none;
                 float: left;
-                width:33.333%;
+                margin-right:5px;
+                //width:33.333%;
                 margin-top:10px;
                 font-size: 12px;
                 .pro{
@@ -76,7 +77,7 @@
             margin-bottom:5px;
         }
     }
-}
+//}
 
 /*更多条件查询面板样式*/
 #other_condition_panel{
