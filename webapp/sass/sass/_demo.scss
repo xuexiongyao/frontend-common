@@ -76,6 +76,12 @@ body{
                         @include box-shadow(0 0 3px 0 colors(borderFocus));
                     }
                 }
+                >textarea[readonly],>textarea[readonly='readonly']{
+                    &:hover{
+                        border:0;
+                        box-shadow: none;
+                    }
+                }
             }
             >div.panel-noscroll{
                 overflow: inherit;

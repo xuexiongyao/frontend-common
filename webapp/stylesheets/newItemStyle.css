@@ -49,9 +49,8 @@
 
 /* line 2, ../sass/sass/_demo.scss */
 body {
-  /*margin: 10px;*/
-  /*padding: 10px;*/
-  margin:0;padding:0;
+  margin: 10px;
+  padding: 10px;
   font-family: "Microsoft Yahei", "微软雅黑";
   color: #5a5a5a;
 }
@@ -188,61 +187,66 @@ body {
   box-shadow: 0 0 3px 0 #66afe9;
 }
 /* line 80, ../sass/sass/_demo.scss */
+.container .item-container li > div > textarea[readonly]:hover, .container .item-container li > div > textarea[readonly='readonly']:hover {
+  border: 0;
+  box-shadow: none;
+}
+/* line 86, ../sass/sass/_demo.scss */
 .container .item-container li > div.panel-noscroll {
   overflow: inherit;
 }
-/* line 83, ../sass/sass/_demo.scss */
+/* line 89, ../sass/sass/_demo.scss */
 .container .item-container li > div.textarea {
   min-height: 26px;
   height: auto;
 }
-/* line 87, ../sass/sass/_demo.scss */
+/* line 93, ../sass/sass/_demo.scss */
 .container .item-container li .ipt {
   width: 68%;
 }
-/* line 90, ../sass/sass/_demo.scss */
+/* line 96, ../sass/sass/_demo.scss */
 .container .item-container li .ipt-fullTwo {
   width: 84%;
 }
-/* line 93, ../sass/sass/_demo.scss */
+/* line 99, ../sass/sass/_demo.scss */
 .container .item-container li .ipt-twoThree {
   width: 78.6666%;
 }
-/* line 96, ../sass/sass/_demo.scss */
+/* line 102, ../sass/sass/_demo.scss */
 .container .item-container li .ipt-fullThree {
   width: 89.3333%;
 }
-/* line 100, ../sass/sass/_demo.scss */
+/* line 106, ../sass/sass/_demo.scss */
 .container .item-container .item-full {
   width: 100%;
 }
-/* line 103, ../sass/sass/_demo.scss */
+/* line 109, ../sass/sass/_demo.scss */
 .container .item-container .item-two {
   width: 50%;
 }
-/* line 106, ../sass/sass/_demo.scss */
+/* line 112, ../sass/sass/_demo.scss */
 .container .item-container .item-three {
   width: 33.3333%;
 }
-/* line 109, ../sass/sass/_demo.scss */
+/* line 115, ../sass/sass/_demo.scss */
 .container .item-container .item-add-li {
   position: relative;
   float: left;
   width: 100%;
 }
-/* line 113, ../sass/sass/_demo.scss */
+/* line 119, ../sass/sass/_demo.scss */
 .container .item-container .item-add-li > a {
   position: absolute;
   right: -42px;
   top: 0;
 }
-/* line 120, ../sass/sass/_demo.scss */
+/* line 126, ../sass/sass/_demo.scss */
 .container .btn-area {
   width: 100%;
   margin-top: 30px;
   text-align: center;
 }
-/* line 125, ../sass/sass/_demo.scss */
+/* line 131, ../sass/sass/_demo.scss */
 .container .h-blank {
   display: block;
   width: 100%;
@@ -250,33 +254,33 @@ body {
   padding-bottom: 7px;
   border-bottom: 1px dashed #ccc;
 }
-/* line 130, ../sass/sass/_demo.scss */
+/* line 136, ../sass/sass/_demo.scss */
 .container .h-blank span {
   font-weight: bold;
 }
-/* line 134, ../sass/sass/_demo.scss */
+/* line 140, ../sass/sass/_demo.scss */
 .container .h-blank span.title {
   font-size: 18px;
 }
-/* line 138, ../sass/sass/_demo.scss */
+/* line 144, ../sass/sass/_demo.scss */
 .container .h-blank-noborder {
   display: block;
   width: 100%;
   height: 20px;
 }
-/* line 142, ../sass/sass/_demo.scss */
+/* line 148, ../sass/sass/_demo.scss */
 .container .h-blank-noborder-s {
   display: block;
   width: 100%;
   height: 10px;
 }
-/* line 146, ../sass/sass/_demo.scss */
+/* line 152, ../sass/sass/_demo.scss */
 .container .h-blank-noborder-l {
   display: block;
   width: 100%;
   height: 30px;
 }
-/* line 150, ../sass/sass/_demo.scss */
+/* line 156, ../sass/sass/_demo.scss */
 .container .h-blank-pre {
   display: none;
   width: 100%;
@@ -292,11 +296,11 @@ body {
   overflow: auto;
   font-size: 12px;
 }
-/* line 159, ../sass/sass/_demo.scss */
+/* line 165, ../sass/sass/_demo.scss */
 .container .h-blank-pre pre, .container .h-blank-pre code {
   font-family: "Microsoft Yahei", "微软雅黑";
 }
-/* line 163, ../sass/sass/_demo.scss */
+/* line 169, ../sass/sass/_demo.scss */
 .container .h-blank-pre-show {
   width: 100%;
   height: auto;
@@ -304,21 +308,21 @@ body {
   color: #fff;
   font-size: 12px;
 }
-/* line 168, ../sass/sass/_demo.scss */
+/* line 174, ../sass/sass/_demo.scss */
 .container .h-blank-pre-show pre, .container .h-blank-pre-show code {
   font-family: "Microsoft Yahei", "微软雅黑";
 }
 
-/* line 174, ../sass/sass/_demo.scss */
+/* line 180, ../sass/sass/_demo.scss */
 label {
   cursor: pointer;
   margin-right: 10px;
 }
-/* line 177, ../sass/sass/_demo.scss */
+/* line 183, ../sass/sass/_demo.scss */
 label input {
   vertical-align: -2px;
 }
-/* line 180, ../sass/sass/_demo.scss */
+/* line 186, ../sass/sass/_demo.scss */
 label input[type="checkbox"] {
   margin-left: 0;
 }
