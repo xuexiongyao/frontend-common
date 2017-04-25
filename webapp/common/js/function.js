@@ -832,6 +832,80 @@ function editEnable(input_class){
     });
 }
 
+//input禁用编辑(easyui组件)
+function editDisableForAj(input_class){
+    var box = $('.'+input_class);
+    var border_class = 'clear-border';//确保此样式已经加载
+    box.each(function () {
+        var _this = $(this);
+        //隐藏“*”
+        _this.prev().find('i').hide();
+        if (_this.hasClass('easyuicombobox')) {
+            _this.combobox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);//添加样式取消边框
+        } else if (_this.hasClass('easyuitextbox')) {
+            _this.textbox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+        } else if (_this.hasClass('easyuidatebox')) {
+            _this.datebox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+        }else if (_this.hasClass('easyuinumberbox')) {
+            _this.numberbox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+        } else if (_this.hasClass('easyuidatetimebox')) {
+            _this.datetimebox({value:'',readonly: true,required:false}).next().addClass(border_class);
+        } else if (_this.hasClass('easyuicombotree')) {
+            _this.combotree({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+        } else if (_this.hasClass('easyuivalidatebox')) {
+            if(_this.hasClass('Wdate')){
+                _this.val('').attr('disabled','disabled');
+                _this.css({'border':'0','background':'#fff'});
+                _this.validatebox({required:false});
+            }else if(_this.hasClass('TEXTAREA') || _this.hasClass('TEXTAREA_R') ||_this.hasClass('TEXTBOX')){
+                _this.val('').attr('readonly','readonly').css('border','0');
+                _this.validatebox({required:false});
+            }else{
+                _this.attr('disabled','disabled').css('background','#ffffff').addClass(border_class);
+                _this.validatebox({value:'',readonly: true,required:false}).attr('disabled','disabled').next().addClass(border_class);
+            }
+        }
+        _this.next().find('span.textbox-addon').hide();//隐藏按钮
+    });
+}
+
+//input启用编辑(easyui组件)
+function editEnableForAj(input_class){
+    var box = $('.'+input_class);
+    var border_class = 'clear-border';//确保此样式已经加载
+    box.each(function () {
+        var _this = $(this);
+        //显示"*"
+        _this.prev().find('i').show();
+        if (_this.hasClass('easyuicombobox')) {
+            _this.combobox({readonly: false,required:true}).next().removeClass(border_class);//移除样式还原边框
+        } else if (_this.hasClass('easyuitextbox')) {
+            _this.textbox({readonly: false,required:true}).next().removeClass(border_class);
+        }else if (_this.hasClass('easyuinumberbox')) {
+            _this.numberbox({readonly: false,required:true}).next().removeClass(border_class);
+        }else if (_this.hasClass('easyuidatebox')) {
+            _this.datebox({readonly: false,required:true}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyuidatetimebox')) {
+            _this.datetimebox({readonly: false,required:true}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyuicombotree')) {
+            _this.combotree({readonly: false,required:true}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyuivalidatebox')) {
+            if(_this.hasClass('Wdate')){
+                _this.removeAttr('disabled');
+                _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
+                _this.validatebox({required:true});
+            }else if(_this.hasClass('TEXTAREA') || _this.hasClass('TEXTAREA_R') ||_this.hasClass('TEXTBOX')){
+                _this.removeAttr('readonly').css('border','1px solid #ccc');
+                _this.validatebox({required:true});
+            }else{
+                _this.removeAttr('disabled').removeClass(border_class);
+                _this.validatebox({readonly: false,required:true}).next().removeClass(border_class);
+            }
+        }
+        _this.next().find('span.textbox-addon').show();//显示按钮
+    });
+}
+
 //组件的边框和图标是否显示
 function isBorder(bool,boxClass){
     var $box = $('.'+boxClass);

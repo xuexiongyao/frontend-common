@@ -14,7 +14,8 @@ function easyuiReset(ipts, isAdd, bm) {
         var parentA = $(ipts[i]).parent();//a标签
         var annotation = parentA.attr('annotation');//annotation的值
         var aName = parentA.attr('name');//name的值
-        var isTrue = true;//是否必填
+        var isTrue = false;//是否必填
+        var isEdit = true;//是否可编辑
 
         if (annotation) {
             var funName = annotation.substring(annotation.indexOf('(') + 1, annotation.indexOf(')')); //方法名称
@@ -28,6 +29,8 @@ function easyuiReset(ipts, isAdd, bm) {
                 }else{
                     isTrue = true;
                 }
+            }else{
+                isEdit = false;
             }
 
             //annotation为中文的判断(行政案件)
@@ -371,10 +374,17 @@ function easyuiReset(ipts, isAdd, bm) {
                             $(ipts[i]).textbox(textboxObj);
                             break;
                         case 'TEXTAREA': //换行文本   不换行
-                            // $(ipts[i]).textbox(textboxObj);
-                            // break;
-                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "'></textarea>";
+                            var readonly = '';
+                            if(!isEdit){
+                                readonly = 'readonly="readonly"'
+                            }else {
+                                readonly = '';
+                            }
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "' "+readonly+"></textarea>";
                             parentA.html(strTextbox);
+                            if(!isEdit){
+                                parentA.find('textarea').css('border','0');
+                            }
                             parentA.find('textarea').validatebox({
                                 required: isTrue
                             });
@@ -401,10 +411,17 @@ function easyuiReset(ipts, isAdd, bm) {
                             });
                             break;
                         case 'TEXTAREA_R': //换行文本不换行
-                            // $(ipts[i]).textbox(textboxObj);
-                            // break;
-                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "'></textarea>";
+                            var readonly = '';
+                            if(!isEdit){
+                                readonly = 'readonly="readonly"'
+                            }else {
+                                readonly = '';
+                            }
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "' "+readonly+"></textarea>";
                             parentA.html(strTextbox);
+                            if(!isEdit){
+                                parentA.find('textarea').css('border','0');
+                            }
                             parentA.find('textarea').validatebox({
                                 required: isTrue
                             });
@@ -488,8 +505,17 @@ function easyuiReset(ipts, isAdd, bm) {
                             });
                             break;
                         case 'TEXTBOX'://文本框  换行文本
-                            var strTextbox = "<textarea class='easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "'></textarea>";
+                            var readonly = '';
+                            if(!isEdit){
+                                readonly = 'readonly="readonly"'
+                            }else {
+                                readonly = '';
+                            }
+                            var strTextbox = "<textarea class='easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "' "+readonly+"></textarea>";
                             parentA.html(strTextbox);
+                            if(!isEdit){
+                                parentA.find('textarea').css('border','0');
+                            }
                             parentA.find('textarea').validatebox({
                                 required: isTrue
                             });
@@ -568,6 +594,7 @@ function easyuiReset(ipts, isAdd, bm) {
         }
     }
     editSwitch(false, 'clear-border', 'iptreadonly');//清除easyui样式
+    editDisableForAj('readonly');//清除easyui样式
     clickShowPanel();
 }
 
