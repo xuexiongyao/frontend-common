@@ -206,15 +206,21 @@ function getQueryModel() {
             modelSearchObj[zbzd] = search_config[zbzd + '_init'];
             //重新组装
             for(var i=0;i<conditionArr.length;i++){
+                var type = conditionArr[i]['type'];
                 var condition2 = conditionArr[i]['condition'];
                 try{
                     var lishuArr = conditionArr[i]['lishu'];
                     if(lishuArr.length){
-                        lishuArr[0]['k'] = lishuArr[0]['fxj'].substr(0,lishuArr[0]['fxj'].indexOf('_')) + '_GXDW';
+                        if(typeof type !='undefined' && type == 'SYDW_DWDZB' ){
+                            lishuArr[0]['k'] = 'DWDZ_GXDW';
+                        }
+                        else{
+                            lishuArr[0]['k'] = lishuArr[0]['fxj'].substr(0,lishuArr[0]['fxj'].indexOf('_')) + '_GXDW';
+                        }
                         condition2.push(lishuArr[0]);	//把隶属信息装进来 GXDW
                     }
                 }catch(e){}
-                var type = conditionArr[i]['type'];
+
                 var fieldArr = [];
                 for(var j=0;j<condition2.length;j++){
                     fieldArr.push(condition2[j]['k']);
