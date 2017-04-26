@@ -619,9 +619,72 @@
 				var re=/^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$/;
 				return re.test(value);
 			},
+
 			message: "请输入正确的车牌号码"
 		},
-
+		cjh: {
+			validator: function (value) {
+				var re=/^[A-Z0-9]{17}$/;
+				return re.test(value);
+			},
+			message: "请输入正确的(VIN)车架号"
+		},
+		fdjh: {
+			validator: function (value) {
+				var re=/^[0-9A-Z]{0,30}$/;
+				return re.test(value);
+			},
+			message: "请输入正确的发动机号(30位内的数字和大写字母)"
+		},
+		yhkh: {
+			validator: function (value) {
+				var re=/^([0-9]{16}|[0-9]{19})$/;
+				return re.test(value);
+			},
+			message: "输入正确的16位或者19位银行卡号!"
+		},
+		imei: {
+			validator: function (value) {
+				var re=/^([A-Za-z0-9]{15})$/;
+				return re.test(value);
+			},
+			message: "输入正确的(15位数字(英文字母))IMEI号!"
+		},
+		imsi: {
+			validator: function (value) {
+				var re=/^([0-9]{15})$/;
+				return re.test(value);
+			},
+			message: "输入正确的(15位数字)IMSI号!"
+		},
+		xlh: {
+			validator: function (value) {
+				var re=/^[0-9A-Z]{0,50}$/;
+				return re.test(value);
+			},
+			message: "序列号必须是50位以下的数字或大写字母!"
+		},
+		xckybh: {
+			validator: function (value) {
+				var re=/^K[0-9]{22}$/;
+				return re.test(value);
+			},
+			message: "现场勘验编号输入不合法（23位字符组成，首字母为K,其他字符为数字）！"
+		},
+		djhgyh: {
+			validator: function (value) {
+				var re=/^[A-Z|0-9|\-]{0,20}$/;
+				return re.test(value);
+			},
+			message: "电机或钢印号输入不合法（20位以内的大写字母、数字或-）！"
+		},
+		iccid: {
+			validator: function (value) {
+				var re=/^[8][9][8][6][0][A-Z0-9]{15}$/;
+				return re.test(value);
+			},
+			message: "ICCID输入不合法（89860+15位数字和大写字母组合）！"
+		}
 	};
 
 	$.extend($.fn.validatebox.defaults.rules, rules);
