@@ -86,9 +86,13 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                             dataType: 'json',
                             success: function (json) {
                                 if(json.status == 'success'){
-                                    //呈请移送案件报告书 请求接口
+                                    //呈请移送案件报告书 请求接口  刑事案件
                                     if(asjflwsdm == '020004'){
                                         saveAjyjData(DATA.asjbh , DATA.FLWS['020005'].flwsRow[0].SWDW_GAJGJGDM,DATA.FLWS['020005'].flwsRow[0].SWDW_GAJGMC,DATA.FLWS['020005'].flwsRow[0].CQBG_ZJ)
+                                    }
+                                    //呈请移送案件报告书 请求接口  行政案件
+                                    if(asjflwsdm == 'X030003'){
+                                        saveAjyjData(DATA.asjbh , DATA.FLWS['X030004'].flwsRow[0].SWDW_GAJGJGDM,DATA.FLWS['X030004'].flwsRow[0].SWDW_GAJGMC,DATA.FLWS['X030004'].flwsRow[0].CQBG_ZJ)
                                     }
                                     //发送短信请求
                                     if(isCheckMsger){
