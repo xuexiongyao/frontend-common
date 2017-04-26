@@ -222,7 +222,7 @@ function saveFlws(bm) {
 function getFlwsQtsjAdd(bm) {
     var tabs = $('#flws_cl_area_' + bm).tabs();
     DATA.FLWS[bm].params = {
-        ASJFLWSDM: DATA.CQBG.asjflwsdm,//案事件法律文书代码
+        ASJFLWSDM: bm,//案事件法律文书代码
         CQZT: '0',//呈请状态
         ASJBH: DATA.asjbh,//案事件编号
         AJMC: DATA.publicJkXx.AJ01.AJMC,//案件名称
@@ -503,6 +503,8 @@ function getFlwsQtsjEdit(bm) {
                                 //选中的值
                                 if(_this.prop('checked')){
                                     param[_this.attr('name')] = _this.val();
+                                }else{
+                                    param[_this.attr('name')] = '';
                                 }
                             }
 
@@ -514,6 +516,8 @@ function getFlwsQtsjEdit(bm) {
                                 //选中的值
                                 if(_this.prop('checked')){
                                     param[_this.attr('name')] = _this.val();
+                                }else{
+                                    param[_this.attr('name')] = '';
                                 }
                             }
                         }
