@@ -593,7 +593,7 @@ function initSingleSelectOrgReturnByClass(textboxID, filterData, returnFieldData
 
 	//绑定弹出事件
 	$('#'+textboxID).textbox({
-		'editable':false,
+		'editable':true,
 		'prompt':'点击”选择“可弹出选择框',
 		'buttonText':'选择',
 		'onClickButton' : function(){
