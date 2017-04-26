@@ -296,7 +296,7 @@ function formSubmit(form_id, call_back, url,queryParams){
                     alert(call_back+'is not a function');
                 }
             }else{
-                $.messager.alert('提示',json.message);
+                alertDiv('提示',json.message);
                 loading('close');//完成后关闭...转圈
             }
 
@@ -317,7 +317,7 @@ function formSubmit(form_id, call_back, url,queryParams){
                     }
                 }catch(e){}
             }
-            $.messager.alert({
+            alertDiv({
                 title : '错误信息',
                 msg : errorMsg
             });
@@ -368,7 +368,7 @@ function normalSubmit(form_id, call_back, url) {
                     }
                 }catch(e){}
             }
-            $.messager.alert({
+            alertDiv({
                 title : '错误信息',
                 msg : errorMsg
             });
@@ -417,11 +417,6 @@ function formTips(json, success_fn, type) {
         }
 
         if (json.message && json.message.indexOf('{') == -1) {   //系统异常错误抛出
-            /*$.messager.alert({
-                title: '提示信息',
-                msg: json.message,
-                top: 200
-            });*/
             alertDiv('提示信息',json.message);
         } else {
             var message = eval("(" + json.message + ")");
@@ -455,10 +450,10 @@ function formTips(json, success_fn, type) {
 function submitImg(form_id, callback_fn) {
     var img_input = $("#" + form_id + " input[type=file]");
     if (img_input.val() == '') {
-        $.messager.alert('添加失败', '请添加图片!');
+        alertDiv('添加失败', '请添加图片!');
         return false;
     } else if (!/.(gif|jpg|jpeg|png|GIF|JPG|png|PNG)$/.test(img_input.val())) {
-        $.messager.alert('上传失败', '图片类型必须是.gif,jpeg,jpg,png中的一种');
+        alertDiv('上传失败', '图片类型必须是.gif,jpeg,jpg,png中的一种');
         return false;
     } else {
         $("#" + form_id).ajaxSubmit({
@@ -475,11 +470,11 @@ function submitImg(form_id, callback_fn) {
                     }
                     img_input.val('');
                 } else {
-                    $.messager.alert('上传失败', data);
+                    alertDiv('上传失败', data);
                 }
             },
             error: function () {
-                $.messager.alert('上传失败', 'submitImg ajaxsubmit err');
+                alertDiv('上传失败', 'submitImg ajaxsubmit err');
             }
         });
     }
@@ -635,7 +630,7 @@ function openDivForm(options, btn_diy) {
                     success: afterSubmit
                 });
             } else {
-                $.messager.alert('提示', '无法获取表单元素,无法提交', 'warning');
+                alertDiv('提示', '无法获取表单元素,无法提交');
             }
         }
     }, {
@@ -645,7 +640,7 @@ function openDivForm(options, btn_diy) {
             if (form.length > 0) {
                 $(form[0]).form('reset');
             } else {
-                $.messager.alert('提示', '无法获取表单元素,无法提交', 'warning');
+                alertDiv('提示', '无法获取表单元素,无法提交');
             }
         }
     }, {
