@@ -411,16 +411,15 @@
 /* line 275, ../sass/sass/_flws.scss */
 body {
   padding: 0;
-  margin: 0;
 }
 
-/* line 279, ../sass/sass/_flws.scss */
+/* line 278, ../sass/sass/_flws.scss */
 .main {
   position: relative;
   margin: 5px auto;
   padding: 0;
 }
-/* line 283, ../sass/sass/_flws.scss */
+/* line 282, ../sass/sass/_flws.scss */
 .main .flws-btn-area {
   position: absolute;
   right: 15px;
@@ -429,31 +428,31 @@ body {
 }
 
 /*选择审批人panel*/
-/* line 292, ../sass/sass/_flws.scss */
+/* line 291, ../sass/sass/_flws.scss */
 #select_name {
   padding: 10px 15px 0 15px;
 }
-/* line 294, ../sass/sass/_flws.scss */
+/* line 293, ../sass/sass/_flws.scss */
 #select_name .role {
   margin-bottom: 15px;
 }
-/* line 296, ../sass/sass/_flws.scss */
+/* line 295, ../sass/sass/_flws.scss */
 #select_name .role label {
   min-width: 100px;
   display: inline-block;
 }
-/* line 301, ../sass/sass/_flws.scss */
+/* line 300, ../sass/sass/_flws.scss */
 #select_name .btn {
   text-align: center;
   margin-left: 100px;
 }
-/* line 304, ../sass/sass/_flws.scss */
+/* line 303, ../sass/sass/_flws.scss */
 #select_name .btn a {
   margin-right: 5px;
 }
 
 /*流程全图配置*/
-/* line 311, ../sass/sass/_flws.scss */
+/* line 310, ../sass/sass/_flws.scss */
 .process-make {
   position: relative;
   text-align: center;
@@ -461,13 +460,13 @@ body {
   width: 100%;
 }
 
-/* line 317, ../sass/sass/_flws.scss */
+/* line 316, ../sass/sass/_flws.scss */
 .process-mask {
   top: 0;
   position: absolute;
   margin: 0 28px;
 }
-/* line 321, ../sass/sass/_flws.scss */
+/* line 320, ../sass/sass/_flws.scss */
 .process-mask .process-box {
   border: 1px solid #0e6595;
   position: absolute;
@@ -486,7 +485,7 @@ body {
   padding: 0 2px;
 }
 
-/* line 337, ../sass/sass/_flws.scss */
+/* line 336, ../sass/sass/_flws.scss */
 .lct-box {
   width: 1118px;
   margin: 0 40px;
@@ -495,7 +494,7 @@ body {
   bottom: 0;
   overflow-x: auto;
 }
-/* line 344, ../sass/sass/_flws.scss */
+/* line 343, ../sass/sass/_flws.scss */
 .lct-box .lct-container {
   *zoom: 1;
   position: relative;
@@ -511,7 +510,7 @@ body {
   clear: both;
   overflow: hidden;
 }
-/* line 348, ../sass/sass/_flws.scss */
+/* line 347, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node {
   float: left;
   _display: inline;
@@ -520,33 +519,33 @@ body {
   margin-right: 36px;
   margin-top: 15px;
 }
-/* line 354, ../sass/sass/_flws.scss */
+/* line 353, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text {
   text-align: center;
   color: #0e6595;
 }
-/* line 357, ../sass/sass/_flws.scss */
+/* line 356, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspr {
   font-weight: bold;
   padding-right: 5px;
 }
-/* line 362, ../sass/sass/_flws.scss */
+/* line 361, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-check {
   color: #39980f;
 }
-/* line 365, ../sass/sass/_flws.scss */
+/* line 364, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-times {
   color: #ed4848;
 }
-/* line 368, ../sass/sass/_flws.scss */
+/* line 367, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .text .lcspzt i.fa-reply {
   color: #000;
 }
-/* line 373, ../sass/sass/_flws.scss */
+/* line 372, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point {
   margin: 7px 0;
 }
-/* line 375, ../sass/sass/_flws.scss */
+/* line 374, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point b {
   position: relative;
   display: block;
@@ -561,7 +560,7 @@ body {
   -ms-border-radius: 100%;
   margin: 0 auto;
 }
-/* line 383, ../sass/sass/_flws.scss */
+/* line 382, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .point b .h-line {
   position: absolute;
   width: 150px;
@@ -570,15 +569,15 @@ body {
   left: 16px;
   top: 4px;
 }
-/* line 393, ../sass/sass/_flws.scss */
+/* line 392, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .time {
   text-align: center;
 }
-/* line 395, ../sass/sass/_flws.scss */
+/* line 394, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node .time span {
   color: #5a5a5a;
 }
-/* line 403, ../sass/sass/_flws.scss */
+/* line 402, ../sass/sass/_flws.scss */
 .lct-box .lct-container .lct-node:last-child .point b .h-line {
   width: 0;
   height: 0;
