@@ -470,6 +470,22 @@ function flwsXxfyB(bm,isCustomized) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+
+        //多版本处理（行政案件）
+        data.VERSION = parseInt(data.VERSION);
+        if (DATA.FLWS[bm].flwsData.switchVersion) {
+            var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+            if (tabs.length > data.VERSION) {
+                for (var index = data.VERSION; index < tabs.length; index++) {
+                    $('#flws_cl_area_' + bm).tabs("close", index);
+                }
+            }
+            for (var index = data.VERSION - 2; index >= 0; index--) {
+                $('#flws_cl_area_' + bm).tabs("close", index);
+            }
+        }
+
+        //checkbox、radiobox的处理
         if (typeof aName != 'undefined') {
             if (aName.indexOf('_T_') > -1) {
                 var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
@@ -605,6 +621,22 @@ function flwsXxfyC1(bm, $this) {
                         var aName = $($target[j]).attr('name');//a标签的name属性
                         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
                         $($target[j]).html('');
+
+                        //多版本处理（行政案件）
+                        data[i].VERSION = parseInt(data[i].VERSION);
+                        if (DATA.FLWS[bm].flwsData.switchVersion) {
+                            var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                            if (tabs.length > data[i].VERSION) {
+                                for (var index = data[i].VERSION; index < tabs.length; index++) {
+                                    $('#flws_cl_area_' + bm).tabs("close", index);
+                                }
+                            }
+                            for (var index = data[i].VERSION - 2; index >= 0; index--) {
+                                $('#flws_cl_area_' + bm).tabs("close", index);
+                            }
+                        }
+
+                        //checkbox、radiobox的处理
                         if (aName.indexOf('_T_') != -1) {
                             var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                             var val = data[name];//对应数据的值
