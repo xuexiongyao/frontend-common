@@ -11,7 +11,8 @@ function setPage() {
     $('.flws-main').css('height', (bodyHeight - 15) + 'px');
     $('.flws-main-con').css('height', (bodyHeight - 52) + 'px');
     $('.flws-main-con-l,.flws-main-con-r,.flws-mode-right').css('height', (bodyHeight - 52) + 'px');
-    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 52) * 0.49 - 39) + 'px')
+    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 52) * 0.49 - 39) + 'px');
+    $('#flws_main_con_r_mask span').css('margin-top',(bodyHeight-72)/2 + 'px');
 }
 
 /**
