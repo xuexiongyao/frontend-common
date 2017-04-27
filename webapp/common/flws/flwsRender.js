@@ -45,7 +45,7 @@ function getCqbgFlwsHtmlPage() {
                 '<div class="flws-main-con">' +
                 '<div class="flws-main-con-l flws_xyr_area flws_xyr_area_add" id="flws_xyr_area_' + sortedFlwsData[a].bianMa + '">' +
                 '</div>' +
-                '<div class="flws-main-con-r"  id="flws_main_con_r_' + sortedFlwsData[a].bianMa + '">' +
+                '<div class="flws-main-con-r" style="position: relative;"  id="flws_main_con_r_' + sortedFlwsData[a].bianMa + '">' +
                 '</div>' +
                 '</div>' +
                 '</div>';
@@ -682,6 +682,7 @@ function flwsDxListRenderOther(bm){
     //append嫌疑人列表
     $('#flws_xyr_area_' + bm).append(xyrTmpStr);
     setPage();//设置页面样式
+    flwsLsCqbgNrXxfy(bm);//法律文书中类呈请报告呈请内容的信息复用
 
     //不能做嫌疑对象的处理
     $('#flws_xyr_area_wcl_' + bm + ' ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});

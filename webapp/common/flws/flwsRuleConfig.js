@@ -404,6 +404,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
+                                    $this.validatebox();//失去焦点验证必填
                                     if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
@@ -441,7 +442,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
-                                    $this.validatebox();
+                                    $this.validatebox();//失去焦点验证必填
                                     if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
@@ -535,6 +536,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
+                                    $this.validatebox();//失去焦点验证必填
                                     if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }

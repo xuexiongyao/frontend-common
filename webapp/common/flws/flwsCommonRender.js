@@ -401,7 +401,8 @@ function flwsRightPagePj(flwsData) {
         '</div>' +
         '<div class="flws-mode-right">' +
         '<div class="flws_cl_area" id="flws_cl_area_' + bm + '">' + iframecon + '</div>' +
-        '</div>';
+        '</div>'+
+        '<div id="flws_main_con_r_mask"><span>请勾选嫌疑人！</span></div>';
 
     $('#flws_main_con_r_' + bm).append(str);
     setPage();//设置页面高度
@@ -452,6 +453,10 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面拼接
     flwsRightPagePj(flwsData);
 
+    if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
+        $('#flws_main_con_r_mask').show();
+    }
+
     //新增页面保存按钮修改
     $('#saveFlwsAdd_' + bm).text('法律文书新增保存');
 
@@ -460,6 +465,8 @@ function flwsRightPageRenderForAdd(flwsData) {
     easyuiReset(flwsIpts, true, bm);
     if(DATA.publicJkXx){
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        //法律文书中类呈请报告呈请内容的信息复用
+        flwsLsCqbgNrXxfy(bm);
     }
 
     if (typeof (DATA.FLWS[bm]) == 'undefined') {
@@ -497,6 +504,8 @@ function flwsRightPageRenderForEdit(flwsData) {
     //法律文书页面的初始化 （编辑渲染）
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
     easyuiReset(flwsIpts, false, bm);
+    //法律文书中类呈请报告呈请内容的信息复用
+    flwsLsCqbgNrXxfy(bm);
 
     if (typeof (DATA.FLWS[bm]) == 'undefined') {
         DATA.FLWS[bm] = {};
@@ -534,14 +543,14 @@ function flwsWclXyDxCheck(bm, $this, event) {
         flwsRightPageRenderForAdd(flwsData);
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
 
-        //法律文书中类呈请报告呈请内容的信息复用
-        flwsLsCqbgNrXxfy();
-
         //已处理|未处理嫌疑对象选中的互斥
         var yclXyrLen = $('#flws_xyr_area_ycl_' + bm + ' .xyrList li');
         if (yclXyrLen.length > 0) {
             $('#flws_xyr_area_ycl_' + bm + ' .xyrList').find('input:checked').attr('checked', false);
         }
+
+        //法律文书蒙层隐藏
+        $('#flws_main_con_r_mask').hide();
 
         //多个嫌疑对象列表同一时间只能操作一个
         parentDiv.show();
@@ -674,9 +683,6 @@ function flwsYclXyDxCheck(bm, $this) {
         //编辑渲染
         flwsRightPageRenderForEdit(flwsData);
 
-        //法律文书中类呈请报告呈请内容的信息复用
-        flwsLsCqbgNrXxfy();
-
         //编辑页面标识
         DATA.FLWS[bm]['status']['isAdd'] = false;
         DATA.FLWS[bm]['status']['selected'] = true;
@@ -735,9 +741,10 @@ function flwsYclXyDxCheck(bm, $this) {
 
 /**
  * 法律文书中类呈请报告  内容信息接口请求数据复用
+ * @param bm 法律文书编码
  */
-function flwsLsCqbgNrXxfy() {
-    var textareaVal = $(".flws_cl_area form textarea").val();//textarea默认值
+function flwsLsCqbgNrXxfy(bm) {
+    var textareaVal = $("#flws_cl_area_"+bm+" form td>textarea").val();//textarea默认值
     var cqbgxxTmpObj = {};
     if (textareaVal) {
         var cqbgDataArr = textareaVal.match(/\((.*?)\]/g);
@@ -769,7 +776,7 @@ function flwsLsCqbgNrXxfy() {
                         textareaVal = textareaVal.replace(strVal, '');
                     }
 
-                    $(".flws_cl_area form textarea").val(textareaVal);
+                    $("#flws_cl_area_"+bm+" form td>textarea").val(textareaVal);
                 }
             }
         }
@@ -855,17 +862,17 @@ function flwsDataXxfy(bm, zj) {
             }
 
             //checkbox、radio的处理
-             for(var j=0;j<$target.length;j++){
-                 var aName = $($target[j]).attr('name');//a标签的name属性
-                 var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-                 try{//行政案件CheckBox、radio的赋值
-                     if(aName.indexOf('_T_') != -1){
-                         var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
-                         var val = data[i][name];//对应数据的值
-                         $($target[j]).find("input[value='"+val+"']").click();
-                     }
-                 }catch(e){}
-             }
+            for(var j=0;j<$target.length;j++){
+                var aName = $($target[j]).attr('name');//a标签的name属性
+                var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+                try{//行政案件CheckBox、radio的赋值
+                    if(aName.indexOf('_T_') != -1){
+                        var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+                        var val = data[i][name];//对应数据的值
+                        $($target[j]).find("input[value='"+val+"']").click();
+                    }
+                }catch(e){}
+            }
 
             //数据处理
             for (var key in data[i]) {
@@ -904,15 +911,17 @@ function flwsDataXxfy(bm, zj) {
  */
 function fzxyDxXxfy(currentName, currentValue, bm) {
     //loading('open','正在复用嫌疑人信息，请稍等....');
-    var $node = $("#flws_cl_area_" + bm + " form input[textboxname='" + currentName + "']");
+    var $node = $("#flws_cl_area_" + bm + " form a ." + currentName);
     if ($node.hasClass('easyuitextbox')) {
         $node.textbox({value: currentValue})
     } else if ($node.hasClass('easyuicombobox')) {
         $node.combobox({value: currentValue});
     } else if ($node.hasClass('easyuicombotree')) {
         $node.combotree({value: currentValue})
-    } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-        $node.val(currentValue);
+    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+        $node.val(currentValue).validatebox();
+    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R') || $node.hasClass('TEXTBOX'))) {
+        $node.val(currentValue).validatebox();
     }
 }
 
