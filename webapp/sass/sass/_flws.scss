@@ -75,11 +75,11 @@
                         @include text-overflow();
                     }
                     &:hover {
-                        background: colors(listActive);
+                        background: colors(lightBlueBg);
                     }
                 }
                 .active {
-                    background: colors(listActive);
+                    background: colors(lightBlueBg);
                 }
                 .hasdone{
                     color: colors(red);

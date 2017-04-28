@@ -163,6 +163,14 @@
   white-space: nowrap;
   width: 100%;
 }
+/* line 77, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l .choose-list li:hover {
+  background: #9cd2e8;
+}
+/* line 81, ../sass/sass/_flws.scss */
+.flws-main .flws-main-con .flws-main-con-l .choose-list .active {
+  background: #9cd2e8;
+}
 /* line 84, ../sass/sass/_flws.scss */
 .flws-main .flws-main-con .flws-main-con-l .choose-list .hasdone {
   color: #ed4848;

@@ -543,9 +543,36 @@ function getFlwsQtsjEdit(bm) {
                     }
                 });
 
+                //文书中自定义的input[type=hidden]的处理
+                currentForm.find("a>input[type='hidden']").each(function (i,ipt) {
+                    var param = DATA.FLWS[bm].params;
+                    var _this = $(ipt);
+                    var annotation = _this.attr('annotation');
+                    if(!annotation){
+                        param[_this.attr('name')] = _this.val();
+                    }
+                });
+
+                //法律文书必填及分组规则
+                if(DATA.CQBG.btflwsRule!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
+                    DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
+                }
+
                 if(DATA.FLWS.flwsxgsqbZj){//【呈请法律文书修改】
                     DATA.FLWS[bm].params.SETU_CQXGZJ = DATA.FLWS.flwsxgsqbZj;
                 }
+
+
+                //更新DATA.FLWS[bm].flwsRow中的数据;
+                if(bm == 'X030004' || bm == '020005'){
+                    var flwsRow = DATA.FLWS[bm].flwsRow;
+                    for(var i = 0;i<flwsRow.length;i++){
+                        if(DATA.FLWS[bm].flwsZj == flwsRow[i].ZJ){
+                           jQuery.extend(flwsRow[i], DATA.FLWS[bm].params);
+                        }
+                    }
+                }
+
                 return false;
             } else {
                 return false;// 返回false终止表单提交
