@@ -79,6 +79,18 @@ function getDxxxData() {
                             for (var i = 0; i < DATA.DX.xydxData[anjianXyDxDic.xyr].length; i++) {
                                 var xyr_rsqzcsdm='',rule='';
                                 var xyr = DATA.DX.xydxData[anjianXyDxDic.xyr][i];
+                                //嫌疑人根据出生日期计算年龄
+                                if(anjianXyDxDic.xyr == 'TB_ST_XYR'){//刑事案件犯罪嫌疑人
+                                    if(xyr.fzxyr_csrq){
+                                        xyr.fzxyr_nl = jsGetAge(xyr.fzxyr_csrq)+'岁';
+                                    }
+                                }
+                                if(anjianXyDxDic.xyr == 'TB_ST_RY_WFXYRY'){//行政案件违法嫌疑人
+                                    if(xyr.csrq){
+                                        xyr.nl = jsGetAge(xyr.csrq)+'岁';
+                                    }
+                                }
+
                                 if (xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null') {
 
                                 } else {
