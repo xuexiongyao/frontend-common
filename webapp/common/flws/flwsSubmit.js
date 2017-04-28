@@ -92,7 +92,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                     }
                                     //呈请移送案件报告书 请求接口  行政案件
                                     if(asjflwsdm == 'X030003'){
-                                        saveAjyjData(DATA.asjbh , DATA.FLWS['X030004'].flwsRow[0].SWDW_GAJGJGDM,DATA.FLWS['X030004'].flwsRow[0].SWDW_GAJGMC,DATA.FLWS['X030004'].flwsRow[0].CQBG_ZJ)
+                                        saveAjyjData(DATA.asjbh , DATA.FLWS['X030004'].flwsRow[0].YSJGDM,DATA.FLWS['X030004'].flwsRow[0].YSJG,DATA.FLWS['X030004'].flwsRow[0].CQBG_ZJ)
                                     }
                                     //发送短信请求
                                     if(isCheckMsger){
