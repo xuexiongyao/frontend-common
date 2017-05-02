@@ -408,7 +408,7 @@ body{
     }
 }
 //法律文书蒙层样式
-#flws_main_con_r_mask{
+.flws_main_con_r_mask{
     @include positionDisplay();
     @include square(100%);
     z-index:5;

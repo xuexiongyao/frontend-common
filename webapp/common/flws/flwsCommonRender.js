@@ -402,7 +402,7 @@ function flwsRightPagePj(flwsData) {
         '<div class="flws-mode-right">' +
         '<div class="flws_cl_area" id="flws_cl_area_' + bm + '">' + iframecon + '</div>' +
         '</div>'+
-        '<div id="flws_main_con_r_mask"><span>请勾选嫌疑人！</span></div>';
+        '<div class="flws_main_con_r_mask" id="flws_main_con_r_mask_' + bm +'"><span>请勾选嫌疑人！</span></div>';
 
     $('#flws_main_con_r_' + bm).append(str);
     setPage();//设置页面高度
@@ -454,7 +454,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     flwsRightPagePj(flwsData);
 
     if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
-        $('#flws_main_con_r_mask').show();
+        $('#flws_main_con_r_mask_'+bm).show();
     }
 
     //新增页面保存按钮修改
@@ -550,7 +550,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         }
 
         //法律文书蒙层隐藏
-        $('#flws_main_con_r_mask').hide();
+        $('#flws_main_con_r_mask_'+bm).hide();
 
         //多个嫌疑对象列表同一时间只能操作一个
         parentDiv.show();

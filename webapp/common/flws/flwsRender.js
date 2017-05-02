@@ -479,8 +479,8 @@ function flwsDxListRenderOther(bm){
                 if(DATA.FLWS.flwsData[key].bianMa==flwsMainBm){
                     var param = {
                         CQBG_ZJ: DATA.CQBG.cqbgZj,
-                        XT_ZXBZ: '0',
-                    }
+                        XT_ZXBZ: '0'
+                    };
                     param[DATA.CQBG.btflwsRuleSelected.FIELD]=DATA.CQBG.btflwsRuleSelected.VALUE;
                     $.ajax({
                         url: DATA.FLWS.flwsData[key].queryUrl,
@@ -799,6 +799,9 @@ function flwsClXyDxCheckB(bm, $this) {
         //嫌疑人勾选其他接口请求信息复用（秀平）
         ajax_request(bm,xyrXxzjbh);
 
+        //法律文书蒙层隐藏
+        $('#flws_main_con_r_mask_'+bm).hide();
+
         //嫌疑人处理对象类别
         for (var k in xyrObj) {
             if (xyrtype == xyrObj[k].id) {
@@ -996,6 +999,8 @@ function flwsClXyrCheckC(bm, $this) {
         //选中状态
         DATA.FLWS[bm]["status"]["selected"] = true;
 
+        //法律文书蒙层隐藏
+        $('#flws_main_con_r_mask_'+bm).hide();
 
         var xyrtype = $this.next().attr('xyrtype');//嫌疑人类别
         for (var k in xyrObj) {
