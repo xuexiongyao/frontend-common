@@ -317,8 +317,12 @@ function queryFlwsData(title, render) {
                         //console.log(json)
                         if (json.state == 'success') {
                             if (json.rows.length > 0 && json.rows != undefined) {//有数据 执行编辑渲染
-                                DATA.FLWS[bm].flwsRow = json.rows;
-
+                                DATA.FLWS[bm].flwsRow = [];
+                                for(var i=0;i<json.rows.length;i++){
+                                    if(bm == json.rows[i].ASJFLWSDM){
+                                        DATA.FLWS[bm].flwsRow.push(json.rows[i]);
+                                    }
+                                }
                             } else {//没有数据 执行新增渲染
                                 DATA.FLWS[bm].flwsRow = [];
                             }
@@ -329,7 +333,6 @@ function queryFlwsData(title, render) {
                         }
                     }
                 });
-                break;
             }
         }
     }
