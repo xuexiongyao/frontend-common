@@ -297,12 +297,17 @@ function queryFlwsData(title, render) {
                             if (json.state == 'success') {
                                 var jsonRows = json.rows;
                                 if (jsonRows.length > 0) {//有数据 执行编辑渲染
-                                    DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
+                                    DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
+                                    for(var i=0;i<json.rows.length;i++){
+                                        if(flwsData[k].bianMa == json.rows[i].ASJFLWSDM){
+                                            DATA.FLWS[flwsData[k].bianMa].flwsRow.push(json.rows[i]);
+                                        }
+                                    }
                                     if (only) {
                                         //已经呈请的法律文书不能再改
-                                        if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
-                                            DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
-                                        }
+                                        //if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
+                                        //    DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
+                                        //}
 
                                         //法律文书跟呈请报告绑定
                                         for (var i = 0; i < jsonRows.length; i++) {
