@@ -91,8 +91,8 @@ function getDxxxData() {
                                     }
                                 }
 
-                                if (xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null') {
-
+                                if (xyr[flwsQhzgxXyrPz] == null || xyr[flwsQhzgxXyrPz] == 'null' || !xyr[flwsQhzgxXyrPz]) {
+                                    xyr_rsqzcsdm='0';
                                 } else {
                                     xyr_rsqzcsdm = xyr[flwsQhzgxXyrPz];
                                 }
