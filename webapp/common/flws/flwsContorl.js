@@ -645,7 +645,7 @@ function shongshen(sessionBean) {
                     if (DATA.FLWS[bm] == undefined || !DATA.FLWS[bm] || DATA.FLWS[bm].flwsData == undefined) {
                         $.messager.alert({
                             title: '提示',
-                            msg: "请确认" + DATA.FLWS[bm].flwsData.name,
+                            msg: "请检查法律文书",
                             icon: 'warning'
                         });
                         return;
