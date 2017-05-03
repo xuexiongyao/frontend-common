@@ -886,7 +886,11 @@ function flwsDataXxfy(bm, zj) {
                     if ($node.hasClass('easyuitextbox')) {
                         $node.textbox({value: val});
                     } else if ($node.hasClass('easyuicombobox')) {
-                        $node.combobox({value: val})
+                        if($node.hasClass('JYCS_GAJGMC')){
+                            $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                        }else {
+                            $node.combobox({value: val})
+                        }
                     } else if ($node.hasClass('easyuicombotree')) {
                         $node.combotree({value: val})
                     } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
