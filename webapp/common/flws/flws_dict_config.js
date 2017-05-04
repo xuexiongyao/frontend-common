@@ -502,6 +502,11 @@ var flwsDictObj = {
         {"id":"2","text":"拘留","py":"JL","wb":"RQ"},
         {"id":"4","text":"监视居住","py":"JSJZ","wb":"JPNW"},
         {"id":"5","text":"逮捕","py":"DB","wb":"VR"}
+    ],
+    'BD_D_SWTZ_RYJSDM':[//死亡通知人员角色代码
+        {"id":"1","text":"嫌疑人","py":"","wb":""},
+        {"id":"2","text":"被告人","py":"","wb":""},
+        {"id":"3","text":"罪犯","py":"","wb":""}
     ]
 };
 

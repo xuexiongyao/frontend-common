@@ -312,6 +312,12 @@ function easyuiReset(ipts, isAdd, bm) {
                         $(ipts[i]).attr('dicturl', url);
                         $(ipts[i]).combobox(comboboxObj);
                         break;
+                    case 'BD_D_SWTZ_RYJSDM':
+                        var url = pathConfig.mainPath + '/common/dict/BD_D_SWTZ_RYJSDM.js';
+                        comboboxObj.data = flwsDictObj.BD_D_SWTZ_RYJSDM;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
                 }
             } else if ($(ipts[i]).hasClass('easyuicombotree')) {//combotree字典
                 var dictTree = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%')); //combotree字典名称
