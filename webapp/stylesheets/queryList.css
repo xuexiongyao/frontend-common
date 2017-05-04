@@ -260,3 +260,8 @@
   height: 30px;
   line-height: 30px;
 }
+
+/* line 156, ../sass/sass/_queryList.scss */
+.datagrid-body {
+  overflow: hidden;
+}
