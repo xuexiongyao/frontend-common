@@ -221,7 +221,9 @@ function getTableData(get_header_info){
         var _title = listConfig.config[_field];
         //生成表头
         var info_obj;
-        if(_title[5] == 'address'){
+        if(_field == 'asjbh'){
+            info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:datagridProcessFormater_asjbh};
+        }else if(_title[5] == 'address'){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:parseAddress};
         }else if(_title[2] == null){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true};
@@ -329,6 +331,11 @@ function getTableSetDom(){
 function parseAddress(val,row,index){
     var adress = val || '';
     return '<div style="float:right" title="'+adress+'">'+adress+'</div>';
+}
+
+function datagridProcessFormater_asjbh(val, row, index) {
+    var res = '<span style="float:right;text-decoration:underline;cursor:pointer;">' + row.asjbh + '</span>';
+    return res;
 }
 
 //获取表头cookie信息(数组)
