@@ -316,11 +316,12 @@ function queryFlwsData(title, render) {
                         loading('close');
                         //console.log(json)
                         if (json.state == 'success') {
-                            if (json.rows.length > 0 && json.rows != undefined) {//有数据 执行编辑渲染
+                            var jsonRows = json.rows;
+                            if (jsonRows.length > 0) {//有数据 执行编辑渲染
                                 DATA.FLWS[bm].flwsRow = [];
-                                for(var i=0;i<json.rows.length;i++){
-                                    if(bm == json.rows[i].ASJFLWSDM){
-                                        DATA.FLWS[bm].flwsRow.push(json.rows[i]);
+                                for(var i=0;i<jsonRows.length;i++){
+                                    if(bm == jsonRows[i].ASJFLWSDM){
+                                        DATA.FLWS[bm].flwsRow.push(jsonRows[i]);
                                     }
                                 }
                             } else {//没有数据 执行新增渲染
@@ -430,6 +431,8 @@ function flwsXxfyA(bm) {
                             $($target[j]).html(strTextbox);
                             autoTextarea($($target[j]).find('textarea')[0]);
                         } else if (textStyle == 'DATE_CN') {
+                            $($target[j]).text(data[k]);
+                        } else {
                             $($target[j]).text(data[k]);
                         }
                     } else if (dictStyle || treeStyle) {

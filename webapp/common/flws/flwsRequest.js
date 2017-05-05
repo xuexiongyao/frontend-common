@@ -298,9 +298,9 @@ function queryFlwsData(title, render) {
                                 var jsonRows = json.rows;
                                 if (jsonRows.length > 0) {//有数据 执行编辑渲染
                                     DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
-                                    for(var i=0;i<json.rows.length;i++){
-                                        if(flwsData[k].bianMa == json.rows[i].ASJFLWSDM){
-                                            DATA.FLWS[flwsData[k].bianMa].flwsRow.push(json.rows[i]);
+                                    for(var i=0;i<jsonRows.length;i++){
+                                        if(flwsData[k].bianMa == jsonRows[i].ASJFLWSDM){
+                                            DATA.FLWS[flwsData[k].bianMa].flwsRow.push(jsonRows[i]);
                                         }
                                     }
                                     if (only) {
