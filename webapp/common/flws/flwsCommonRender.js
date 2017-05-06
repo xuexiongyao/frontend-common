@@ -123,8 +123,7 @@ function cqbgDataXxfy() {
 /**
  * 呈请报告查询接口返回数据 嫌疑人对象列表的渲染
  */
-function cqbgXyrDataXxfy() {
-    var xyrids = DATA.CQBG.cqbgRow.XYRID;
+function cqbgXyrDataXxfy(xyrids) {
     var xyridArry = [];
 
     if (xyrids) {//嫌疑人id可能为多个
@@ -366,6 +365,7 @@ function flwsXydxZhxxFyForXzaj(bm, $this) {
                 }
                 fzxyDxXxfy(fieldName, filedToParagraph(zhxx, DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz), bm);
             }
+            break;
         }
     }
 }

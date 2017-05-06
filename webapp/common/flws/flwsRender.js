@@ -123,7 +123,7 @@ function cqbgPageRender() {
             if (DATA.CQBG.cqbgRow.XYRID) {
                 var interval = setInterval(function () {
                     if (DATA.DX && DATA.DX.hasData) {//必须保证嫌疑人列表已经渲染
-                        cqbgXyrDataXxfy();//呈请报告嫌疑人信息复用
+                        cqbgXyrDataXxfy(DATA.CQBG.cqbgRow.XYRID);//呈请报告嫌疑人信息复用
                         clearInterval(interval);
                     }
                 }, 10);
@@ -228,6 +228,30 @@ function xyrCheckedXxfy($this) {
         }
         DATA.CQBG.xyrxms = xyrxmArry;
         DATA.CQBG.xyrids = xyridArry;
+
+        //自定义页面的处理(传递当前选中的嫌疑对象数据)  【会见犯罪嫌疑人申请表】
+        if (DATA.CQBG.cqbgData.customized) {
+            //获取当前选中的嫌疑对象的数据
+            var xydxData,xydxCheckData;
+            var xyrType = $this.next().attr('xyrtype');//嫌疑人类型
+            var xyrXxzjbh = $this.attr('xxzjbh');//嫌疑人信息主键编号
+            for (var k in xyrObj) {
+                if (xyrType == xyrObj[k].id) {
+                    xydxData = DATA.DX.xydxData[k];//嫌疑对象数据
+                    DATA.CQBG.xyrlb = xyrObj[k].cldxlb;
+                }
+            }
+
+            for (var l = 0; l < xydxData.length; l++) {
+                if (xyrXxzjbh == xydxData[l].xxzjbh) {
+                    xydxCheckData = xydxData[l];
+                    break;
+                }
+            }
+
+            eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedDx('" + JSON.stringify(xydxCheckData) + "')");
+            return;
+        }
 
         if(!DATA.CQBG.cqbgZj){
             /*******行政案件组合信息拼接*******/
