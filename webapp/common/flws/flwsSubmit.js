@@ -104,6 +104,9 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                             title : '提示',
                                             msg: '保存成功!',
                                             fn: function () {
+                                                try {
+                                                  parent.crossCloseTab('refresh_table_list');
+                                                }catch (e){}
                                                 crossCloseTab('refresh_table_list');
                                             }
                                         });
@@ -143,6 +146,9 @@ function sendMsg(userid,con,msg){
                 title : '提示',
                 msg: '保存成功!',
                 fn: function () {
+                    try {
+                        parent.crossCloseTab('refresh_table_list');
+                    }catch (e){}
                     crossCloseTab('refresh_table_list');
                 }
             });
