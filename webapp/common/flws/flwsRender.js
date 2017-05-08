@@ -539,28 +539,21 @@ function checkBtflwsRuleSelected(bm) {
                                 success: function (json) {
                                     if (json.state == 'success') {
                                         var flwsRow = json.rows;
-                                        var xylx;
-                                        for (var j in DATA.FLWS.flwsData) {
-                                            if (DATA.FLWS.flwsData[j].bianMa == bm) {
-                                                xylx = DATA.FLWS.flwsData[j].dxbm;
-                                                break;
-                                            }
-                                        }
-
-                                        for (var i in xydxDatas[xylx]) {
-                                            var xyrdx = xydxDatas[xylx][i];
-                                            var has = false;
-                                            for (var k in flwsRow) {
-                                                if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
-                                                    has = true;
+                                        for(var xylx in xydxDatas){
+                                            for (var i=0;i<xydxDatas[xylx].length;i++) {
+                                                var xyrdx = xydxDatas[xylx][i];
+                                                var has = false;
+                                                for (var k in flwsRow) {
+                                                    if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
+                                                        has = true;
+                                                    }
+                                                }
+                                                if (has) {
+                                                    xyrdx.disabled = 'disabled="disabled"';
+                                                    xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
                                                 }
                                             }
-                                            if (has) {
-                                                xyrdx.disabled = 'disabled="disabled"';
-                                                xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
-                                            }
                                         }
-
                                     }
                                 }
                             });
@@ -618,26 +611,21 @@ function flwsDxListRenderOther(bm) {
                         success: function (json) {
                             if (json.state == 'success') {
                                 var flwsRow = json.rows;
-                                var xylx;
-                                for (var j in DATA.FLWS.flwsData) {
-                                    if (DATA.FLWS.flwsData[j].bianMa == bm) {
-                                        xylx = DATA.FLWS.flwsData[j].dxbm;
-                                        break;
-                                    }
-                                }
 
-                                for (var i =0;i<xydxDatas[xylx].length;i++) {
-                                    var xyrdx = xydxDatas[xylx][i];
-                                    var has = false;
-                                    for (var k=0;k<flwsRow.length;k++) {
-                                        if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
-                                            has = true;
-                                            DATA.DX.xydxData[xylx][i].fyFlwsData = flwsRow[k];
+                                for(var xylx in xydxDatas){
+                                    for (var i =0;i<xydxDatas[xylx].length;i++) {
+                                        var xyrdx = xydxDatas[xylx][i];
+                                        var has = false;
+                                        for (var k=0;k<flwsRow.length;k++) {
+                                            if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
+                                                has = true;
+                                                DATA.DX.xydxData[xylx][i].fyFlwsData = flwsRow[k];
+                                            }
                                         }
-                                    }
-                                    if (!has) {
-                                        xyrdx.disabled = 'disabled="disabled"';
-                                        xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                        if (!has) {
+                                            xyrdx.disabled = 'disabled="disabled"';
+                                            xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                        }
                                     }
                                 }
                             }
@@ -666,28 +654,21 @@ function flwsDxListRenderOther(bm) {
                                 success: function (json) {
                                     if (json.state == 'success') {
                                         var flwsRow = json.rows;
-                                        var xylx;
-                                        for (var j in DATA.FLWS.flwsData) {
-                                            if (DATA.FLWS.flwsData[j].bianMa == bm) {
-                                                xylx = DATA.FLWS.flwsData[j].dxbm;
-                                                break;
-                                            }
-                                        }
-
-                                        for (var i in xydxDatas[xylx]) {
-                                            var xyrdx = xydxDatas[xylx][i];
-                                            var has = false;
-                                            for (var k in flwsRow) {
-                                                if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
-                                                    has = true;
+                                        for(var xylx in xydxDatas){
+                                            for (var i in xydxDatas[xylx]) {
+                                                var xyrdx = xydxDatas[xylx][i];
+                                                var has = false;
+                                                for (var k in flwsRow) {
+                                                    if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
+                                                        has = true;
+                                                    }
+                                                }
+                                                if (has) {
+                                                    xyrdx.disabled = 'disabled="disabled"';
+                                                    xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
                                                 }
                                             }
-                                            if (has) {
-                                                xyrdx.disabled = 'disabled="disabled"';
-                                                xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
-                                            }
                                         }
-
                                     }
                                 }
                             });

@@ -656,12 +656,14 @@ function shongshen(sessionBean) {
                             icon: 'warning'
                         });
                         return;
-                    }else if (bm == 'X020003' && !DATA.FLWS[bm].status.zfgked) {
-                        $.messager.alert({
-                            title: '提示',
-                            msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
-                            icon: 'warning'
-                        });
+                    }else if (bm == 'X020003') {
+                        if((typeof DATA.FLWS[bm].status.zfgked!= 'undefined' && !DATA.FLWS[bm].status.zfgked) || typeof DATA.FLWS[bm].status.zfgked == 'undefined'){
+                            $.messager.alert({
+                                title: '提示',
+                                msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
+                                icon: 'warning'
+                            });
+                        }
                         return;
                     }
                 }
