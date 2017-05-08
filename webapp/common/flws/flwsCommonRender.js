@@ -1044,6 +1044,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'cyzj_cyzjdm':
                         xyrinfoStr += "证件类型:" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
                         break;
+                    case 'cyzj_zjhm':
+                        xyrinfoStr += "证件号码:" + value + splitpz;
+                        break;
                     case 'fzxyr_csrq':
                         xyrinfoStr += parseTimeToCN(value) + "出生" + splitpz;
                         break;
@@ -1095,6 +1098,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         break;
                     case 'cyzj_cyzjdm':
                         xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
+                        break;
+                    case 'cyzj_zjhm':
+                        xyrinfoStr += value + splitpz;
                         break;
                     case 'fzxyr_csrq':
                         xyrinfoStr += parseTimeToCN(value) + splitpz;
