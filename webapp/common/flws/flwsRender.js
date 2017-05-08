@@ -723,7 +723,7 @@ function flwsDxListRenderOther(bm){
                     var disabled = "";
                     var title = "";
                     var isShowDelete = true;//[是否显示删除按钮]
-                    if ((flwsRow[i].CQBG_ZJ == undefined && flwsRow[i].CQZT > 0 || (flwsRow[i].CQBG_ZJ != DATA.CQBG.cqbgZj))) {
+                    if ((flwsRow[i].CQBG_ZJ == undefined && Number(flwsRow[i].CQZT) > 0) || (typeof DATA.CQBG.cqbgZj != 'undefined' && flwsRow[i].CQBG_ZJ != DATA.CQBG.cqbgZj) || (flwsRow[i].CQBG_ZJ != DATA.CQBG.cqbgzj)) {
                         if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改】
                             disabled = "";
                             title = "";
