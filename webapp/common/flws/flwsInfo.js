@@ -308,6 +308,16 @@ function queryFlwsData(title, render) {
                 //}
 
                 loading("open", "正在获取法律文书数据,请稍等...");
+                if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){
+                    if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
+                        var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
+                        for(var index=0;index<btflwsRule.length;index++){
+                            if(btflwsRule[index].BM.split(",")[0]==bm&&btflwsRule[index].FIELD){
+                                param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
+                            }
+                        }
+                    }
+                }
                 $.ajax({
                     url: flwsData[k].queryUrl,
                     data: param,
@@ -318,12 +328,7 @@ function queryFlwsData(title, render) {
                         if (json.state == 'success') {
                             var jsonRows = json.rows;
                             if (jsonRows.length > 0) {//有数据 执行编辑渲染
-                                DATA.FLWS[bm].flwsRow = [];
-                                for(var i=0;i<jsonRows.length;i++){
-                                    if(bm == jsonRows[i].ASJFLWSDM){
-                                        DATA.FLWS[bm].flwsRow.push(jsonRows[i]);
-                                    }
-                                }
+                                DATA.FLWS[bm].flwsRow = jsonRows;
                             } else {//没有数据 执行新增渲染
                                 DATA.FLWS[bm].flwsRow = [];
                             }
