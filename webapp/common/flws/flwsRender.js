@@ -257,6 +257,9 @@ function xyrCheckedXxfy($this) {
             /*******行政案件组合信息拼接*******/
             if(DATA.CQBG.cqbgData.xyrpz || DATA.CQBG.cqbgData.xydwpz || DATA.CQBG.cqbgData.xgrpz){//行政案件组合信息复用
                 cqbgXydxZhxxFyForXzaj($this,textareaVal);
+                /***嫌疑对象接口信息的复用***/
+                var textareaValNew = $("#cqbg_main_con form textarea").val();
+                xydxXxfyCqbg(textareaValNew,$this);
             }else {
                 /*****刑事案件组合信息复用*****/
                 var xyrZhxxData = '\t' + xydxZhxx +'\n';
