@@ -214,9 +214,10 @@ function queryFlwsData(title, render) {
                 //法律文书必填及分组规则
                 var btflwsRule =  DATA.CQBG.btflwsRule;
                 if(btflwsRule!=undefined){
-                    for(var z in btflwsRule){
+                    DATA.CQBG.btflwsRuleSelected = undefined;
+                    for(var z=0;z<btflwsRule.length;z++){
                         if(btflwsRule[z].BM.indexOf(flwsData[k].bianMa)!=-1){
-                            DATA.CQBG.btflwsRuleSelected=btflwsRule[z];
+                            DATA.CQBG.btflwsRuleSelected = btflwsRule[z];
                             break;
                         }
                     }
@@ -286,6 +287,16 @@ function queryFlwsData(title, render) {
                 }
                 if(param){
                     loading("open","正在获取法律文书数据,请稍等...");
+                    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){
+                        if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
+                            var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
+                            for(var index=0;index<btflwsRule.length;index++){
+                                if(btflwsRule[index].BM.split(",")[0] == flwsData[k].bianMa && btflwsRule[index].FIELD){
+                                    param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
+                                }
+                            }
+                        }
+                    }
                     //获取法律文书数据请求
                     $.ajax({
                         url: flwsData[k].queryUrl,
@@ -297,12 +308,7 @@ function queryFlwsData(title, render) {
                             if (json.state == 'success') {
                                 var jsonRows = json.rows;
                                 if (jsonRows.length > 0) {//有数据 执行编辑渲染
-                                    DATA.FLWS[flwsData[k].bianMa].flwsRow = [];
-                                    for(var i=0;i<jsonRows.length;i++){
-                                        if(flwsData[k].bianMa == jsonRows[i].ASJFLWSDM){
-                                            DATA.FLWS[flwsData[k].bianMa].flwsRow.push(jsonRows[i]);
-                                        }
-                                    }
+                                    DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
                                     if (only) {
                                         //已经呈请的法律文书不能再改
                                         //if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
