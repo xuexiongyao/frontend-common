@@ -96,7 +96,9 @@ function cqbgDataXxfy() {
             var val = data[key];
             if (key == 'CQNR') {//呈请内容单独处理
                 $('#cqbg_main_con form textarea').val(val);
-                autoTextarea($('#cqbg_main_con form textarea')[0]);
+                try{//todo 违法行为人
+                    autoTextarea($('#cqbg_main_con form textarea')[0]);
+                }catch (e){}
                 $node.textbox({
                     value: val
                 })
@@ -1062,7 +1064,6 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'fzxyr_sg':
                         xyrinfoStr += "身高:" + value + "厘米" + splitpz;
                         break;
-                        break;
                     case 'fzxyr_tmtzms':
                         xyrinfoStr += value + splitpz;
                         break;
@@ -1077,6 +1078,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         break;
                     case 'xzz_dzmc':
                         xyrinfoStr += "现住址:" + value + splitpz;
+                        break;
+                    case 'lxdh':
+                        xyrinfoStr += "联系方式:" + value + splitpz;
                         break;
                     case 'dwmc':
                         xyrinfoStr += "单位名称:" + value + splitpz;
@@ -1117,7 +1121,6 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'fzxyr_sg':
                         xyrinfoStr += value + splitpz;
                         break;
-                        break;
                     case 'fzxyr_tmtzms':
                         xyrinfoStr += value + splitpz;
                         break;
@@ -1131,6 +1134,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         xyrinfoStr += value + splitpz;
                         break;
                     case 'xzz_dzmc':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                    case 'lxdh':
                         xyrinfoStr += value + splitpz;
                         break;
                     case 'dwmc':

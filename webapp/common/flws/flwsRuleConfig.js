@@ -318,6 +318,18 @@ function easyuiReset(ipts, isAdd, bm) {
                         $(ipts[i]).attr('dicturl', url);
                         $(ipts[i]).combobox(comboboxObj);
                         break;
+                    case 'BD_D_ZJBQFLMC':
+                        var url = pathConfig.mainPath + '/common/dict/BD_D_ZJBQFLMC.js';
+                        comboboxObj.data = flwsDictObj.BD_D_ZJBQFLMC;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
+                    case 'BD_D_JXFS'://举行方式
+                        var url = pathConfig.mainPath + '/common/dict/BD_D_JXFS.js';
+                        comboboxObj.data = flwsDictObj.BD_D_JXFS;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
                 }
             } else if ($(ipts[i]).hasClass('easyuicombotree')) {//combotree字典
                 var dictTree = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%')); //combotree字典名称
@@ -353,6 +365,12 @@ function easyuiReset(ipts, isAdd, bm) {
                     case 'BD_D_GXDM': //关系树
                         var url = pathConfig.mainPath + '/common/dict/BD_D_GXDM.js';
                         combotreeObj.data = flwsTreeDictObj.BD_D_GXDM;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combotree(combotreeObj);
+                        break;
+                    case 'GA_D_XZAJLBDM': //行政案件类别代码
+                        var url = pathConfig.mainPath + '/common/dict/GA_D_XZAJLBDM.js';
+                        combotreeObj.data = flwsTreeDictObj.GA_D_XZAJLBDM;
                         $(ipts[i]).attr('dicturl', url);
                         $(ipts[i]).combotree(combotreeObj);
                         break;
