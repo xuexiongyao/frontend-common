@@ -216,9 +216,14 @@ function queryFlwsData(title, render) {
                 if(btflwsRule!=undefined){
                     DATA.CQBG.btflwsRuleSelected = undefined;
                     for(var z=0;z<btflwsRule.length;z++){
-                        if(btflwsRule[z].BM.indexOf(flwsData[k].bianMa)!=-1){
-                            DATA.CQBG.btflwsRuleSelected = btflwsRule[z];
-                            break;
+                    	var index=btflwsRule[z].BM.indexOf(flwsData[k].bianMa);
+                        if(index!=-1){
+                        	DATA.CQBG.btflwsRuleSelected = btflwsRule[z];
+                        	if(index==0){
+                    		  continue;
+                        	}else{//以 被约束方为主
+                    		  break;
+                        	}
                         }
                     }
                 }

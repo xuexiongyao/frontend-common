@@ -467,7 +467,7 @@ function flwsPageRenderA(bm) {
         //新增渲染
         flwsRightPageRenderForAdd(DATA.FLWS[bm].flwsData);
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-        if(typeof DATA.FLWS.fyFlwsData != 'undefiend'){
+        if(typeof DATA.FLWS.fyFlwsData != 'undefined'){
             flwsDataXxfyCopyFromOtherFlws(bm,DATA.FLWS.fyFlwsData);
         }
     } else if (flwsRow.length > 0) {//有数据
@@ -501,84 +501,87 @@ function checkBtflwsRuleSelected(bm) {
 
     if (typeof DATA.CQBG.btflwsRuleSelected != 'undefined' && DATA.CQBG.btflwsRuleSelected) {
         var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
-        if (bm != flwsMainBm) {
-            for (var key in DATA.FLWS.flwsData) {
-                if (DATA.FLWS.flwsData[key].bianMa == flwsMainBm) {
-                    var param = {
-                        CQBG_ZJ: DATA.CQBG.cqbgZj,
-                        XT_ZXBZ: '0'
-                    };
-                    param[DATA.CQBG.btflwsRuleSelected.FIELD] = DATA.CQBG.btflwsRuleSelected.VALUE;
-                    $.ajax({
-                        url: DATA.FLWS.flwsData[key].queryUrl,
-                        data: param,
-                        dataType: 'json',
-                        async: false,
-                        success: function (json) {
-                            if (json.state == 'success') {
-                                var flwsRow = json.rows;
-                                if (flwsRow.length == 0) {
-                                    $.messager.alert({
-                                        title: '提示',
-                                        msg: "请先填写" + DATA.FLWS.flwsData[key].name,
-                                        icon: 'warning',
-                                        fn: function () {
-                                            $("#flwsTabs").tabs('select', DATA.FLWS.flwsData[key].name)
-                                        }
-                                    });
-                                }else{
-                                    DATA.FLWS.fyFlwsData=flwsRow[0];
+        if(!DATA.CQBG.btflwsRuleSelected.ALONE){
+        	if (bm != flwsMainBm) {
+                for (var key in DATA.FLWS.flwsData) {
+                    if (DATA.FLWS.flwsData[key].bianMa == flwsMainBm) {
+                        var param = {
+                            CQBG_ZJ: DATA.CQBG.cqbgZj,
+                            XT_ZXBZ: '0'
+                        };
+                        param[DATA.CQBG.btflwsRuleSelected.FIELD] = DATA.CQBG.btflwsRuleSelected.VALUE;
+                        $.ajax({
+                            url: DATA.FLWS.flwsData[key].queryUrl,
+                            data: param,
+                            dataType: 'json',
+                            async: false,
+                            success: function (json) {
+                                if (json.state == 'success') {
+                                    var flwsRow = json.rows;
+                                    if (flwsRow.length == 0) {
+                                        $.messager.alert({
+                                            title: '提示',
+                                            msg: "请先填写" + DATA.FLWS.flwsData[key].name,
+                                            icon: 'warning',
+                                            fn: function () {
+                                                $("#flwsTabs").tabs('select', DATA.FLWS.flwsData[key].name)
+                                            }
+                                        });
+                                    }else{
+                                        DATA.FLWS.fyFlwsData=flwsRow[0];
+                                    }
                                 }
                             }
-                        }
-                    });
-                    break;
+                        });
+                        break;
+                    }
                 }
-            }
-        } else {
-            for (var index = 0; index < DATA.CQBG.btflwsRule.length; index++) {
-                var flwsOther = DATA.CQBG.btflwsRule[index];
-                var flwsOtherMainBm = flwsOther.BM.split(",")[0];
-                if (flwsOtherMainBm != flwsMainBm) {
-                    for (var key in DATA.FLWS.flwsData) {
-                        if (DATA.FLWS.flwsData[key].bianMa == flwsOtherMainBm) {
-                            var param = {
-                                CQBG_ZJ: DATA.CQBG.cqbgZj,
-                                XT_ZXBZ: '0'
-                            };
-                            param[flwsOther.FIELD] = flwsOther.VALUE;
-                            $.ajax({
-                                url: DATA.FLWS.flwsData[key].queryUrl,
-                                data: param,
-                                dataType: 'json',
-                                async: false,
-                                success: function (json) {
-                                    if (json.state == 'success') {
-                                        var flwsRow = json.rows;
-                                        for(var xylx in xydxDatas){
-                                            for (var i=0;i<xydxDatas[xylx].length;i++) {
-                                                var xyrdx = xydxDatas[xylx][i];
-                                                var has = false;
-                                                for (var k in flwsRow) {
-                                                    if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
-                                                        has = true;
+            } else {
+                for (var index = 0; index < DATA.CQBG.btflwsRule.length; index++) {
+                    var flwsOther = DATA.CQBG.btflwsRule[index];
+                    var flwsOtherMainBm = flwsOther.BM.split(",")[0];
+                    if (flwsOtherMainBm != flwsMainBm) {
+                        for (var key in DATA.FLWS.flwsData) {
+                            if (DATA.FLWS.flwsData[key].bianMa == flwsOtherMainBm) {
+                                var param = {
+                                    CQBG_ZJ: DATA.CQBG.cqbgZj,
+                                    XT_ZXBZ: '0'
+                                };
+                                param[flwsOther.FIELD] = flwsOther.VALUE;
+                                $.ajax({
+                                    url: DATA.FLWS.flwsData[key].queryUrl,
+                                    data: param,
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function (json) {
+                                        if (json.state == 'success') {
+                                            var flwsRow = json.rows;
+                                            for(var xylx in xydxDatas){
+                                                for (var i=0;i<xydxDatas[xylx].length;i++) {
+                                                    var xyrdx = xydxDatas[xylx][i];
+                                                    var has = false;
+                                                    for (var k in flwsRow) {
+                                                        if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
+                                                            has = true;
+                                                        }
                                                     }
-                                                }
-                                                if (has) {
-                                                    xyrdx.disabled = 'disabled="disabled"';
-                                                    xyrdx.title = "title='已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                    if (has) {
+                                                        xyrdx.disabled = 'disabled="disabled"';
+                                                        xyrdx.title = "title='已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                            });
-                            break;
+                                });
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
+        
     }
 }
 
@@ -604,90 +607,92 @@ function flwsDxListRenderOther(bm) {
 
     //法律文書必選及規則【法律文書關聯規則】可參考法律文書取保候審
     if (typeof DATA.CQBG.btflwsRuleSelected != 'undefined' && DATA.CQBG.btflwsRuleSelected) {
-        var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
-        if (bm != flwsMainBm) {
-            for (var key in DATA.FLWS.flwsData) {
-                if (DATA.FLWS.flwsData[key].bianMa == flwsMainBm) {
-                    var param = {
-                        CQBG_ZJ: DATA.CQBG.cqbgZj,
-                        XT_ZXBZ: '0'
-                    };
-                    param[DATA.CQBG.btflwsRuleSelected.FIELD] = DATA.CQBG.btflwsRuleSelected.VALUE;
-                    $.ajax({
-                        url: DATA.FLWS.flwsData[key].queryUrl,
-                        data: param,
-                        dataType: 'json',
-                        async: false,
-                        success: function (json) {
-                            if (json.state == 'success') {
-                                var flwsRow = json.rows;
+    	if(!DATA.CQBG.btflwsRuleSelected.ALONE){
+    		var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
+            if (bm != flwsMainBm) {
+                for (var key in DATA.FLWS.flwsData) {
+                    if (DATA.FLWS.flwsData[key].bianMa == flwsMainBm) {
+                        var param = {
+                            CQBG_ZJ: DATA.CQBG.cqbgZj,
+                            XT_ZXBZ: '0'
+                        };
+                        param[DATA.CQBG.btflwsRuleSelected.FIELD] = DATA.CQBG.btflwsRuleSelected.VALUE;
+                        $.ajax({
+                            url: DATA.FLWS.flwsData[key].queryUrl,
+                            data: param,
+                            dataType: 'json',
+                            async: false,
+                            success: function (json) {
+                                if (json.state == 'success') {
+                                    var flwsRow = json.rows;
 
-                                for(var xylx in xydxDatas){
-                                    for (var i =0;i<xydxDatas[xylx].length;i++) {
-                                        var xyrdx = xydxDatas[xylx][i];
-                                        var has = false;
-                                        for (var k=0;k<flwsRow.length;k++) {
-                                            if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
-                                                has = true;
-                                                DATA.DX.xydxData[xylx][i].fyFlwsData = flwsRow[k];
+                                    for(var xylx in xydxDatas){
+                                        for (var i =0;i<xydxDatas[xylx].length;i++) {
+                                            var xyrdx = xydxDatas[xylx][i];
+                                            var has = false;
+                                            for (var k=0;k<flwsRow.length;k++) {
+                                                if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
+                                                    has = true;
+                                                    DATA.DX.xydxData[xylx][i].fyFlwsData = flwsRow[k];
+                                                }
                                             }
-                                        }
-                                        if (!has) {
-                                            xyrdx.disabled = 'disabled="disabled"';
-                                            xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                            if (!has) {
+                                                xyrdx.disabled = 'disabled="disabled"';
+                                                xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    });
-                    break;
+                        });
+                        break;
+                    }
                 }
-            }
-        } else {
-            for (var index = 0; index < DATA.CQBG.btflwsRule.length; index++) {
-                var flwsOther = DATA.CQBG.btflwsRule[index];
-                var flwsOtherMainBm = flwsOther.BM.split(",")[0];
-                if (flwsOtherMainBm != flwsMainBm) {
-                    for (var key in DATA.FLWS.flwsData) {
-                        if (DATA.FLWS.flwsData[key].bianMa == flwsOtherMainBm) {
-                            var param = {
-                                CQBG_ZJ: DATA.CQBG.cqbgZj,
-                                XT_ZXBZ: '0'
-                            };
-                            param[flwsOther.FIELD] = flwsOther.VALUE;
-                            $.ajax({
-                                url: DATA.FLWS.flwsData[key].queryUrl,
-                                data: param,
-                                dataType: 'json',
-                                async: false,
-                                success: function (json) {
-                                    if (json.state == 'success') {
-                                        var flwsRow = json.rows;
-                                        for(var xylx in xydxDatas){
-                                            for (var i in xydxDatas[xylx]) {
-                                                var xyrdx = xydxDatas[xylx][i];
-                                                var has = false;
-                                                for (var k in flwsRow) {
-                                                    if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
-                                                        has = true;
+            } else {
+                for (var index = 0; index < DATA.CQBG.btflwsRule.length; index++) {
+                    var flwsOther = DATA.CQBG.btflwsRule[index];
+                    var flwsOtherMainBm = flwsOther.BM.split(",")[0];
+                    if (flwsOtherMainBm != flwsMainBm) {
+                        for (var key in DATA.FLWS.flwsData) {
+                            if (DATA.FLWS.flwsData[key].bianMa == flwsOtherMainBm) {
+                                var param = {
+                                    CQBG_ZJ: DATA.CQBG.cqbgZj,
+                                    XT_ZXBZ: '0'
+                                };
+                                param[flwsOther.FIELD] = flwsOther.VALUE;
+                                $.ajax({
+                                    url: DATA.FLWS.flwsData[key].queryUrl,
+                                    data: param,
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function (json) {
+                                        if (json.state == 'success') {
+                                            var flwsRow = json.rows;
+                                            for(var xylx in xydxDatas){
+                                                for (var i in xydxDatas[xylx]) {
+                                                    var xyrdx = xydxDatas[xylx][i];
+                                                    var has = false;
+                                                    for (var k in flwsRow) {
+                                                        if (flwsRow[k].CLDX_XXZJBH == xyrdx.xxzjbh) {
+                                                            has = true;
+                                                        }
                                                     }
-                                                }
-                                                if (has) {
-                                                    xyrdx.disabled = 'disabled="disabled"';
-                                                    xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                    if (has) {
+                                                        xyrdx.disabled = 'disabled="disabled"';
+                                                        xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                            });
-                            break;
+                                });
+                                break;
+                            }
                         }
                     }
                 }
             }
-        }
+    	}
     }
 
     //申明未处理嫌疑对象，已处理嫌疑对象
