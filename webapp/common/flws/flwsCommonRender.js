@@ -353,22 +353,38 @@ function flwsXydxZhxxFyForXzaj(bm, $this) {
                 }
             }
 
-            var zhxx = {};
-            var xydxpzObj = eval('(' + flwsData[xyrObj[k].xydxpz] + ')');
+            var xydxpzData = eval('(' + flwsData[xyrObj[k].xydxpz] + ')');
 
-            for (var fieldName in xydxpzObj) {
-                var xyrpzArr = xydxpzObj[fieldName].split(",");
-                for (var j = 0; j < xyrpzArr.length; j++) {
-                    var field = xyrpzArr[j];
-                    var val = zhxxObj[field];
-                    if (val) {
-                        zhxx[field] = val;
-                    }
+            if(Array.isArray(xydxpzData)){//如果是数组，按下面方式处理
+                for(var s=0;s<xydxpzData.length;s++){
+                    xydxZhxxBlPz(xydxpzData[s],zhxxObj,bm);
                 }
-                fzxyDxXxfy(fieldName, filedToParagraph(zhxx, DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz), bm);
+            }else{//如果是对象，按下面方式处理
+                xydxZhxxBlPz(xydxpzData,zhxxObj,bm);
             }
             break;
         }
+    }
+}
+
+/**
+ * 嫌疑对象组合信息遍历拼装
+ * @param xydxpzData 嫌疑对象配置数据
+ * @param currentXydxData 当前嫌疑人数据
+ * @param bm 法律文书编码
+ */
+function xydxZhxxBlPz(xydxpzData,currentXydxData,bm){
+    for (var fieldName in xydxpzData) {
+        var zhxx = {};//组合信息初始化
+        var xyrpzArr = xydxpzData[fieldName].split(",");
+        for (var j = 0; j < xyrpzArr.length; j++) {
+            var field = xyrpzArr[j];
+            var val = currentXydxData[field];
+            if (val) {
+                zhxx[field] = val;
+            }
+        }
+        fzxyDxXxfy(fieldName, filedToParagraph(zhxx, DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz), bm);
     }
 }
 
@@ -1016,7 +1032,7 @@ function fzxyDxXxfy(currentName, currentValue, bm) {
 function filedToParagraph(xyrinfo, prefixpz, splitpz) {
     var xyrinfoStr = '';
     if (!splitpz) {
-        splitpz = ',';//如果为空，默认为逗号
+        splitpz = '，';//如果为空，默认为逗号
     }
 
     for (var key in xyrinfo) {
@@ -1152,6 +1168,11 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
             }
 
         }
+    }
+    //组合信息末尾处理: 如果组合信息以逗号结尾，则删除末尾逗号
+    var lastStr = xyrinfoStr.charAt(xyrinfoStr.length-1);
+    if(lastStr == ',' || lastStr == '，'){
+        xyrinfoStr = xyrinfoStr.substring(0, xyrinfoStr.length-1);
     }
     return xyrinfoStr;
 }
