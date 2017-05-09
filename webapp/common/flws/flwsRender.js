@@ -399,6 +399,14 @@ function flwsPageRender(bm) {
     var flwsData = DATA.FLWS[bm].flwsData;
 
     /*****************法律文书的各种组合类型********************/
+    //將復用法律文書設置為空
+    for(var xylx in DATA.DX.xydxData){
+        var xydxDatas=DATA.DX.xydxData[xylx];
+        for(var i=0;i<xydxDatas.length;i++){
+            xydxDatas[i].fyFlwsData=undefined;
+        }
+    }
+    DATA.FLWS.fyFlwsData=undefined;
 
     if (flwsData.wdx) {
         if (flwsData.only) {
@@ -459,6 +467,9 @@ function flwsPageRenderA(bm) {
         //新增渲染
         flwsRightPageRenderForAdd(DATA.FLWS[bm].flwsData);
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        if(typeof DATA.FLWS.fyFlwsData != 'undefiend'){
+            flwsDataXxfyCopyFromOtherFlws(bm,DATA.FLWS.fyFlwsData);
+        }
     } else if (flwsRow.length > 0) {//有数据
         //编辑标识
         DATA.FLWS[bm]['status']['isAdd'] = false;
@@ -485,6 +496,9 @@ function flwsPageRenderA(bm) {
  */
 function checkBtflwsRuleSelected(bm) {
     //法律文書必選及規則【法律文書關聯規則】可參考法律文書取保候審
+    //將復用法律文書設置為空
+    var xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);
+
     if (typeof DATA.CQBG.btflwsRuleSelected != 'undefined' && DATA.CQBG.btflwsRuleSelected) {
         var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
         if (bm != flwsMainBm) {
@@ -512,6 +526,8 @@ function checkBtflwsRuleSelected(bm) {
                                             $("#flwsTabs").tabs('select', DATA.FLWS.flwsData[key].name)
                                         }
                                     });
+                                }else{
+                                    DATA.FLWS.fyFlwsData=flwsRow[0];
                                 }
                             }
                         }
@@ -550,7 +566,7 @@ function checkBtflwsRuleSelected(bm) {
                                                 }
                                                 if (has) {
                                                     xyrdx.disabled = 'disabled="disabled"';
-                                                    xyrdx.title = "title='此人已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                    xyrdx.title = "title='已做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
                                                 }
                                             }
                                         }
@@ -577,12 +593,6 @@ function flwsDxListRenderOther(bm) {
 
     //后台查询回来的法律文书数据
     var flwsRow = DATA.FLWS[bm].flwsRow;
-    for(var xylx in DATA.DX.xydxData){
-        var xydxDatas=DATA.DX.xydxData[xylx];
-        for(var i=0;i<xydxDatas.length;i++){
-            xydxDatas[i].fyFlwsData=undefined;
-        }
-    }
     //嫌疑对象数据
     var xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);
     // if (DATA.FLWS[bm].flwsData.wdx) {
