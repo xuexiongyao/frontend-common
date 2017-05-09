@@ -80,6 +80,7 @@ function cqbgFlwsOtherXxfy() {
             }
         }
     }
+    editSwitch(false,'clear-border','iptreadonly');
 }
 
 /**
