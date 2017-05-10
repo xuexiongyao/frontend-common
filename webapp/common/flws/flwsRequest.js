@@ -296,7 +296,7 @@ function queryFlwsData(title, render) {
                         if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
                             var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
                             for(var index=0;index<btflwsRule.length;index++){
-                                if(btflwsRule[index].BM.split(",")[0] == flwsData[k].bianMa && btflwsRule[index].FIELD){
+                                if(btflwsRule[index].BM.split(",")[0] == flwsData[k].bianMa && btflwsRule[index].FIELD&&!btflwsRule[index].FCX){
                                     param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
                                 }
                             }

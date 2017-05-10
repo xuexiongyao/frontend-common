@@ -636,9 +636,13 @@ function flwsDxListRenderOther(bm) {
                                                     DATA.DX.xydxData[xylx][i].fyFlwsData = flwsRow[k];
                                                 }
                                             }
-                                            if (!has) {
+                                            if (!has&&!xyrdx.title) {
                                                 xyrdx.disabled = 'disabled="disabled"';
-                                                xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                if(DATA.CQBG.btflwsRuleSelected.MSG){
+                                                    xyrdx.title ="title='"+DATA.CQBG.btflwsRuleSelected.MSG +"'";
+                                                }else{
+                                                    xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                }
                                             }
                                         }
                                     }
@@ -748,7 +752,7 @@ function flwsDxListRenderOther(bm) {
                             if (DATA.CQBG.btflwsRuleSelected != undefined) {
                                 //法律文書必選及規則
                                 var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
-                                if (flwsMainBm == bm && $("." + DATA.CQBG.btflwsRuleSelected.FIELD).length == 0 && flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD] != DATA.CQBG.btflwsRuleSelected.VALUE) {
+                                if (flwsMainBm == bm && $("." + DATA.CQBG.btflwsRuleSelected.FIELD).length == 0 && flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD] != DATA.CQBG.btflwsRuleSelected.VALUE&&!DATA.CQBG.btflwsRuleSelected.FCX) {
                                     isSkip = true;
                                     break;
                                 }
