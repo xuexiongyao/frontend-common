@@ -5,8 +5,9 @@
 
 /**
  * 获取法律文书数据
+ * @param cqbgzj 呈请报告主键
  */
-function getCqbgMapData() {
+function getCqbgMapData(cqbgzj) {
     var openUrl = '';
     if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB' && DATA.asjflwsbm != 'TB_XW_FLWS_HJFZXYRSQB') {//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath + '/wenshu/source/FLWS_' + DATA.flwsAsjflwsdm + '/DIC.json'
@@ -18,6 +19,9 @@ function getCqbgMapData() {
     //发送请求
     $.ajax({
         url: openUrl,
+        data:{
+           cqbgZj: cqbgzj
+        },
         success: function (json) {
             loading('close');
             var jsonDatas = eval('(' + json + ')');//json化数据
@@ -312,7 +316,7 @@ function queryFlwsData(title, render) {
                     if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
                         var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
                         for(var index=0;index<btflwsRule.length;index++){
-                            if(btflwsRule[index].BM.split(",")[0]==bm&&btflwsRule[index].FIELD){
+                            if(btflwsRule[index].BM.split(",")[0]==bm&&btflwsRule[index].FIELD&&!btflwsRule[index].FCX){
                                 param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
                             }
                         }
@@ -584,8 +588,32 @@ function xydxListRenderC(bm) {
                 if (data[0].CLDXLB) {
                     xyrCldxlb = data[0].CLDXLB;
                     for (var k in xyrObj) {
-                        if (xyrCldxlb == xyrObj[k].cldxlb)
-                            xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                        if (xyrCldxlb == xyrObj[k].cldxlb){
+                            if(data[i][(xyrObj[k].param)]){
+                                xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                            }else{
+                                if(!DATA.DX.xydxData){
+                                    $.ajax({
+                                        url: pathConfig.basePath + '/api/dtbm/' + DATA.FLWS[bm].flwsData.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
+                                        type: 'get',
+                                        async:false,
+                                        success: function (json) {
+                                            if (json) {
+                                                DATA.DX.xydxData = json;
+                                            }
+                                        }
+                                    })
+                                }
+
+                                var xydxArray = DATA.DX.xydxData[k];
+                                for(var j=0;j<xydxArray.length;j++){
+                                    if(xydxArray[j].xxzjbh == data[i].CLDX_XXZJBH){
+                                        xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + xydxArray[j][(xyrObj[k].param)] + '</span></label></li>';
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
