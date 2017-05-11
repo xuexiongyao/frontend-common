@@ -531,6 +531,12 @@ var flwsDictObj = {
     'BD_D_CX_QZCS':[
         {"id":"3","text":"取保候审","py":"","wb":""},
         {"id":"4","text":"监视居住","py":"","wb":""}
+    ],
+    'BD_D_HYZ_HYYYDM':[
+        {"id":"01","text":"侦查机关侦查终结，移送人民检察院审查起诉","py":"ZCJGZCZJ，YSRMJCYSCQS","wb":"WSSUWSXX，TUWNSPBPSFY"},
+        {"id":"02","text":"人民检察院退回侦查机关补充侦查","py":"","wb":""},
+        {"id":"03","text":"侦查机关补充侦查完毕后重新移送人员检察院审查起诉","py":"ZCJGBCZCWBHZXYSRYJCYSCQS","wb":"WSSUPYWSPXRTUTUWKSPBPSFY"},
+        {"id":"04","text":"改变办案机关","py":"","wb":""}
     ]
 };
 
