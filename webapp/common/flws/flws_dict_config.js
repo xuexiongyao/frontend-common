@@ -520,7 +520,7 @@ var flwsDictObj = {
         {"id":"2","text":"不公开举行","py":"BGKJX","wb":"GWGIT"}
     ],
     'BD_D_SFTZ_JLDBLXDM':[//释放通知逮捕拘留类型代码
-        {"id":"1","text":"逮捕","py":"","wb":""},
+        {"id":"5","text":"逮捕","py":"","wb":""},
         {"id":"2","text":"拘留","py":"JL","wb":"RQ"}
     ]
 };
