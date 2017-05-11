@@ -64,23 +64,44 @@ function cqbgFlwsOtherXxfy() {
                 if (val == undefined || val == '' || val == null) {//返回数据为空
                     console.log(key + '为空');
                 } else {
-                    var $node = $(".flws-main-con-r form input." + key);
-                    if ($node.hasClass('easyuitextbox')) {
-                        $node.textbox({value: val})
-                    } else if ($node.hasClass('easyuicombobox')) {
-                        $node.combobox({value: val})
-                    } else if ($node.hasClass('easyuicombotree')) {
-                        $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                        $node.val(val).validatebox();
-                    }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                        $node.val(val).validatebox();
+                    //办案人的特殊处理(BAR02)[ZCRY_XM]
+                    if(key == 'ZCRY_XM'){
+                        var $nodeT = $(".flws-main-con-r form input." + key);
+                        if(DATA.CQBG.cqbgRow.BAMJXM && typeof DATA.CQBG.cqbgRow.BAMJXM !='undefined'){
+                            var valT = DATA.CQBG.cqbgRow.BAMJXM;//获取呈请报告办案民警姓名
+                            $nodeT.textbox({value: valT})
+                        }
+                    }else{
+                        var $node = $(".flws-main-con-r form input." + key);
+                        if ($node.hasClass('easyuitextbox')) {
+                            $node.textbox({value: val})
+                        } else if ($node.hasClass('easyuicombobox')) {
+                            $node.combobox({value: val})
+                        } else if ($node.hasClass('easyuicombotree')) {
+                            $node.combotree({value: val})
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(val).validatebox();
+                        }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
+                        }
                     }
                 }
             }
         }
     }
     editSwitch(false,'clear-border','iptreadonly');
+}
+
+/**
+ * 法律文书【填发人】默认复用当前登录者,可编辑
+ */
+function flwsTfrXxFy(){
+    //登录者填发人字段名：TFR_XM
+    var userData = DATA.OWN;//当前登录者信息
+    if(userData){
+        var $node = $(".flws-main-con-r form input.TFR_XM");
+        $node.textbox({value:userData.userName})
+    }
 }
 
 /**
@@ -484,6 +505,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     easyuiReset(flwsIpts, true, bm);
     if(DATA.publicJkXx){
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        flwsTfrXxFy();//填发人信息复用
         //法律文书中类呈请报告呈请内容的信息复用
         flwsLsCqbgNrXxfy(bm);
     }
@@ -561,6 +583,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         //法律文书新增页面渲染
         flwsRightPageRenderForAdd(flwsData);
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        flwsTfrXxFy();//填发人信息复用
 
         //已处理|未处理嫌疑对象选中的互斥
         var yclXyrLen = $('#flws_xyr_area_ycl_' + bm + ' .xyrList li');

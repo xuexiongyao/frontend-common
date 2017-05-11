@@ -184,7 +184,9 @@ function queryCqbgData(render) {
                         DATA.CQBG.cqbgRow = {};
                     }
 
-                    render();//回调函数
+                    try{
+                        render();//回调函数
+                    }catch (e){}
                 } else if (json.state == 'error') {//查询错误
                     // console.log('error');
                     $.messager.alert({
@@ -366,8 +368,10 @@ function cqbgSaveComplete(data) {
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
-            if (DATA.CQBG.cqbgZj == undefined) {
+            if (DATA.CQBG.cqbgZj == undefined && json.ID) {
                 DATA.CQBG.cqbgZj = json.ID;
+            }else{
+                queryCqbgData('');//重新查询数据
             }
             $.messager.show({
                 title: '提示',
