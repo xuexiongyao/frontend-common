@@ -409,14 +409,17 @@ function flwsXxfyA(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-        $($target[j]).html('');
-        try{
-            if (aName.indexOf('_T_') != -1) {
-                var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
-                var val = data[name];//对应数据的值
-                $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
-            }
-        }catch(e){}
+
+
+        if(typeof aName !='undefined'){
+            try{
+                if (aName.indexOf('_T_') != -1) {
+                    var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
+                    var val = data[name];//对应数据的值
+                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                }
+            }catch(e){}
+        }
 
         for (var k in data) {
             if (k == aName) {
@@ -454,6 +457,7 @@ function flwsXxfyA(bm) {
                         $($target[j]).text(data[k]);
                     }
                 } else {
+                    $($target[j]).text(data[k]);
                 }
             }
         }
@@ -576,14 +580,14 @@ function xydxListRenderC(bm) {
     var data = flwsRow;
     if (data.length > 0) {//有数据
         //只有一条数据(有嫌疑对象但是未勾选，并且非必选，也只能有一条数据)
-        if (data.length == 1) {//默认选中
-            flwsXxfyB(bm,true);
-            $('#flws_xyr_area_' + bm).hide();
-            $('#flws_main_con_r_' + bm).css({width: '100%'});
-            $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
-            $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
-            $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
-        } else {
+        //if (data.length == 1) {//默认选中
+        //    flwsXxfyB(bm,true);
+        //    $('#flws_xyr_area_' + bm).hide();
+        //    $('#flws_main_con_r_' + bm).css({width: '100%'});
+        //    $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
+        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
+        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
+        //} else {
             for (var i = 0; i < data.length; i++) {
                 if (data[0].CLDXLB) {
                     xyrCldxlb = data[0].CLDXLB;
@@ -624,7 +628,7 @@ function xydxListRenderC(bm) {
                         '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
             }
-        }
+        //}
     } else {//无数据
         checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
             '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
@@ -664,7 +668,6 @@ function flwsXxfyC1(bm, $this) {
                     for (var j = 0; j < $target.length; j++) {
                         var aName = $($target[j]).attr('name');//a标签的name属性
                         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-                        $($target[j]).html('');
 
                         //多版本处理（行政案件）
                         data[i].VERSION = parseInt(data[i].VERSION);
@@ -681,14 +684,17 @@ function flwsXxfyC1(bm, $this) {
                         }
 
                         //checkbox、radiobox的处理
-                        try{
-                            if (aName.indexOf('_T_') != -1) {
-                                var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
-                                var val = data[name];//对应数据的值
-                                $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
-                            }
-                        }catch(e){}
+                        if (typeof aName != 'undefined') {
+                            try{
+                                if (aName.indexOf('_T_') != -1) {
+                                    var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
+                                    var val = data[i][name];//对应数据的值
+                                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                                }
+                            }catch(e){}
+                        }
 
+                        //$($target[j]).text('');
                         for (var a in data[i]) {
                             if (a == aName) {
                                 if (annotation) {
