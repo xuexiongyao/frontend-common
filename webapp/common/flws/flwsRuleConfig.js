@@ -398,7 +398,23 @@ function easyuiReset(ipts, isAdd, bm) {
                     };
                     switch (textStyle) {
                         case 'TEXT': //普通文本
-                            $(ipts[i]).textbox(textboxObj);
+                            if(aName == 'TFR_XM'){
+                                //todo 填发人姓名不能填写处理,模板不修改，js修改
+                                $(ipts[i]).addClass('iptreadonly').textbox({
+                                    required: false,
+                                    onChange: function (newValue, oldValue) {
+                                        if (newValue && bm) {
+                                            var $this = $(this);
+                                            var className = $this.attr('textboxname');//组件class name值
+                                            if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                                flwsLdXxfy(bm, className, newValue, 'textbox','');
+                                            }
+                                        }
+                                    }
+                                });
+                            }else{
+                                $(ipts[i]).textbox(textboxObj);
+                            }
                             break;
                         case 'NUMBER': //数字输入框
                             $(ipts[i]).textbox(textboxObj);
