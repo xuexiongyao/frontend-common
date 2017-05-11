@@ -923,24 +923,34 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
         var val = data[key];
         //版本切换赋值的处理
         var $a = $node.parent();
-        if ($a.attr('annotation') == '/REPLACE/') {
-            $a.parent().next().val(val);
-        } else {
-            if ($node.hasClass('easyuitextbox')) {
-                $node.textbox({value: val});
-            } else if ($node.hasClass('easyuicombobox')) {
-                if($node.hasClass('JYCS_GAJGMC')){
-                    $node.combobox({value: data['JYCS_GAJGJGDM']})
-                }else {
-                    $node.combobox({value: val})
+        var annotation = $a.attr('annotation');
+        if(annotation){
+            if (annotation == '/REPLACE/') {
+                $a.parent().next().val(val);
+            } else {
+                //money的特殊处理
+                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
+                if(textStyle == 'MONEY'){
+                    $node.textbox({value: val});
+                    $a.attr('money',data[key + '_MASTER']);
+                }else{
+                    if ($node.hasClass('easyuitextbox')) {
+                        $node.textbox({value: val});
+                    } else if ($node.hasClass('easyuicombobox')) {
+                        if($node.hasClass('JYCS_GAJGMC')){
+                            $node.combobox({value: data['JYCS_GAJGJGDM']})
+                        }else {
+                            $node.combobox({value: val})
+                        }
+                    } else if ($node.hasClass('easyuicombotree')) {
+                        $node.combotree({value: val})
+                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                        $node.val(data[key + '_MASTER']);
+                        wdateValidate("#flws_cl_area_" + bm + " form input." + key);
+                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                        $node.val(val).validatebox();
+                    }
                 }
-            } else if ($node.hasClass('easyuicombotree')) {
-                $node.combotree({value: val})
-            } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                $node.val(data[key + '_MASTER']);
-                wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-            } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                $node.val(val).validatebox();
             }
         }
     }
