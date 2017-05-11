@@ -527,6 +527,10 @@ var flwsDictObj = {
         {"id":"01","text":"直接送达","py":"ZJSD","wb":"FRUD"},
         {"id":"02","text":"邮寄","py":"YJ","wb":""},
         {"id":"03","text":"传真","py":"CZ","wb":""}
+    ],
+    'BD_D_CX_QZCS':[
+        {"id":"3","text":"取保候审","py":"","wb":""},
+        {"id":"4","text":"监视居住","py":"","wb":""}
     ]
 };
 
