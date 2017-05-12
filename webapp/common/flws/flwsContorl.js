@@ -396,7 +396,7 @@ function getFlwsQtsjAdd(bm) {
 
                     //文书中checkbox验证不能为空
                     var checkboxs = currentForm.find("input[type='checkbox']");
-                    if(checkboxs){
+                    if(checkboxs.length > 0){
                         if(currentForm.find('input[type="checkbox"]:checked').length < 1){
                             DATA.FLWS[bm].checkBoxIsChecked = false;
                         }else{
@@ -538,7 +538,7 @@ function getFlwsQtsjEdit(bm) {
                             }
 
                             //文书中checkbox验证不能为空
-                            if(checkboxIpt){
+                            if(checkboxIpt.length > 0){
                                 if($(flwsA[a]).find('input[type="checkbox"]:checked').length < 1){
                                     DATA.FLWS[bm].checkBoxIsChecked = false;
                                 }else{
