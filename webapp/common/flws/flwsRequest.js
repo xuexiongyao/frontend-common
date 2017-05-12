@@ -184,7 +184,9 @@ function queryCqbgData(render) {
                         DATA.CQBG.cqbgRow = {};
                     }
 
-                    render();//回调函数
+                    try{
+                        render();//回调函数
+                    }catch (e){}
                 } else if (json.state == 'error') {//查询错误
                     // console.log('error');
                     $.messager.alert({
@@ -296,7 +298,7 @@ function queryFlwsData(title, render) {
                         if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
                             var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
                             for(var index=0;index<btflwsRule.length;index++){
-                                if(btflwsRule[index].BM.split(",")[0] == flwsData[k].bianMa && btflwsRule[index].FIELD){
+                                if(btflwsRule[index].BM.split(",")[0] == flwsData[k].bianMa && btflwsRule[index].FIELD&&!btflwsRule[index].FCX){
                                     param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
                                 }
                             }
@@ -366,8 +368,10 @@ function cqbgSaveComplete(data) {
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
-            if (DATA.CQBG.cqbgZj == undefined) {
+            if (DATA.CQBG.cqbgZj == undefined && json.ID) {
                 DATA.CQBG.cqbgZj = json.ID;
+            }else{
+                queryCqbgData('');//重新查询数据
             }
             $.messager.show({
                 title: '提示',

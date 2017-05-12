@@ -113,10 +113,10 @@ function cqbgPageRender() {
         eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(DATA.CQBG.cqbgRow) + "')");
     } else {
         if (!DATA.CQBG.cqbgZj) {//新增渲染
-            easyuiReset(cqbgIpts, true, '');
+            easyuiReset(cqbgIpts, true, DATA.CQBG.cqbgData.bianMa, false);
             cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         } else {//编辑渲染
-            easyuiReset(cqbgIpts, false, '');
+            easyuiReset(cqbgIpts, false, DATA.CQBG.cqbgData.bianMa, false);
             cqbgDataXxfy();//呈请报告数据信息复用
 
             //呈请报告嫌疑对象的勾选
@@ -437,6 +437,7 @@ function flwsPageRender(bm) {
     }
 
     cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+    flwsTfrXxFy();//填发人信息复用
 }
 
 /**********************类型A************************/
@@ -636,9 +637,13 @@ function flwsDxListRenderOther(bm) {
                                                     DATA.DX.xydxData[xylx][i].fyFlwsData = flwsRow[k];
                                                 }
                                             }
-                                            if (!has) {
+                                            if (!has&&!xyrdx.title) {
                                                 xyrdx.disabled = 'disabled="disabled"';
-                                                xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                if(DATA.CQBG.btflwsRuleSelected.MSG){
+                                                    xyrdx.title ="title='"+DATA.CQBG.btflwsRuleSelected.MSG +"'";
+                                                }else{
+                                                    xyrdx.title = "title='此人未做" + DATA.FLWS.flwsData[key].name + "，不能做该法律文书'";
+                                                }
                                             }
                                         }
                                     }
@@ -748,7 +753,7 @@ function flwsDxListRenderOther(bm) {
                             if (DATA.CQBG.btflwsRuleSelected != undefined) {
                                 //法律文書必選及規則
                                 var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
-                                if (flwsMainBm == bm && $("." + DATA.CQBG.btflwsRuleSelected.FIELD).length == 0 && flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD] != DATA.CQBG.btflwsRuleSelected.VALUE) {
+                                if (flwsMainBm == bm && $("." + DATA.CQBG.btflwsRuleSelected.FIELD).length == 0 && flwsRow[i][DATA.CQBG.btflwsRuleSelected.FIELD] != DATA.CQBG.btflwsRuleSelected.VALUE&&!DATA.CQBG.btflwsRuleSelected.FCX) {
                                     isSkip = true;
                                     break;
                                 }

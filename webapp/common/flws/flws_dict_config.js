@@ -518,6 +518,25 @@ var flwsDictObj = {
     'BD_D_JXFS':[//举行方式
         {"id":"1","text":"公开举行","py":"GKJX","wb":"WGIT"},
         {"id":"2","text":"不公开举行","py":"BGKJX","wb":"GWGIT"}
+    ],
+    'BD_D_SFTZ_JLDBLXDM':[//释放通知逮捕拘留类型代码
+        {"id":"5","text":"逮捕","py":"","wb":""},
+        {"id":"2","text":"拘留","py":"JL","wb":"RQ"}
+    ],
+    'BD_D_HYZ_SDFSDM':[//送达方式
+        {"id":"01","text":"直接送达","py":"ZJSD","wb":"FRUD"},
+        {"id":"02","text":"邮寄","py":"YJ","wb":""},
+        {"id":"03","text":"传真","py":"CZ","wb":""}
+    ],
+    'BD_D_CX_QZCS':[
+        {"id":"3","text":"取保候审","py":"","wb":""},
+        {"id":"4","text":"监视居住","py":"","wb":""}
+    ],
+    'BD_D_HYZ_HYYYDM':[
+        {"id":"01","text":"侦查机关侦查终结，移送人民检察院审查起诉","py":"ZCJGZCZJ，YSRMJCYSCQS","wb":"WSSUWSXX，TUWNSPBPSFY"},
+        {"id":"02","text":"人民检察院退回侦查机关补充侦查","py":"","wb":""},
+        {"id":"03","text":"侦查机关补充侦查完毕后重新移送人员检察院审查起诉","py":"ZCJGBCZCWBHZXYSRYJCYSCQS","wb":"WSSUPYWSPXRTUTUWKSPBPSFY"},
+        {"id":"04","text":"改变办案机关","py":"","wb":""}
     ]
 };
 

@@ -179,14 +179,22 @@ function saveFlws(bm) {
                 }
             }
 
-            if (isvalid) {
+            if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
                 flwsSave(DATA.FLWS[bm].flwsData.insertUrl, DATA.FLWS[bm].params, bm)
             } else {
-                $.messager.alert({
-                    title: '提示',
-                    msg: '法律文书多联中必填项不能为空',
-                    icon: 'warning'
-                })
+                if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '法律文书多联中必填项不能为空',
+                        icon: 'warning'
+                    })
+                }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '法律文书中选择框不能为空，必须勾选一个',
+                        icon: 'warning'
+                    })
+                }
             }
         } else {
             flwsSave(DATA.FLWS[bm].flwsData.insertUrl, DATA.FLWS[bm].params, bm)
@@ -204,14 +212,22 @@ function saveFlws(bm) {
             }
         }
 
-        if (isvalid) {
+        if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
             flwsSave(DATA.FLWS[bm].flwsData.updateUrl, DATA.FLWS[bm].params, bm)
         } else {
-            $.messager.alert({
-                title: '提示',
-                msg: '法律文书多联中必填项不能为空',
-                icon: 'warning'
-            })
+            if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
+                $.messager.alert({
+                    title: '提示',
+                    msg: '法律文书多联中必填项不能为空',
+                    icon: 'warning'
+                })
+            }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
+                $.messager.alert({
+                    title: '提示',
+                    msg: '法律文书中选择框不能为空，必须勾选一个',
+                    icon: 'warning'
+                })
+            }
         }
     }
 }
@@ -246,6 +262,7 @@ function getFlwsQtsjAdd(bm) {
                 var currentForm = $(this);
                 var isValid = currentForm.form('validate');
                 DATA.FLWS[bm].isValidArry.push(isValid);
+                DATA.FLWS[bm].checkBoxIsChecked = true;
 
                 if (isValid) {
 
@@ -377,6 +394,16 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
 
+                    //文书中checkbox验证不能为空
+                    var checkboxs = currentForm.find("input[type='checkbox']");
+                    if(checkboxs.length > 0){
+                        if(currentForm.find('input[type="checkbox"]:checked').length < 1){
+                            DATA.FLWS[bm].checkBoxIsChecked = false;
+                        }else{
+                            DATA.FLWS[bm].checkBoxIsChecked = true;
+                        }
+                    }
+
                     //文书中radio 处理（主要针对行政案件）
                     currentForm.find("input[type='radio']").each(function (i,radio) {
                         var param = DATA.FLWS[bm].params;
@@ -397,7 +424,7 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
                     //法律文书必填及分组规则
-                    if(DATA.CQBG.btflwsRule!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
+                    if(DATA.CQBG.btflwsRuleSelected!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
                         DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                     }
                     return false;
@@ -419,6 +446,7 @@ function getFlwsQtsjEdit(bm) {
         onSubmit: function () {
             var isValid = $(this).form('validate');
             DATA.FLWS[bm].isValidArry.push(isValid);
+            DATA.FLWS[bm].checkBoxIsChecked = true;
             if (isValid) {
                 //法律文书主键
                 if (!DATA.FLWS[bm].flwsData.one) {
@@ -509,6 +537,15 @@ function getFlwsQtsjEdit(bm) {
                                 }
                             }
 
+                            //文书中checkbox验证不能为空
+                            if(checkboxIpt.length > 0){
+                                if($(flwsA[a]).find('input[type="checkbox"]:checked').length < 1){
+                                    DATA.FLWS[bm].checkBoxIsChecked = false;
+                                }else{
+                                    DATA.FLWS[bm].checkBoxIsChecked = true;
+                                }
+                            }
+
                             //文书中radio 处理（主要针对行政案件）
                             var radioIpt = $(flwsA[a]).find("input[type='radio']");
                             for(var m=0;m<radioIpt.length;m++){
@@ -555,7 +592,7 @@ function getFlwsQtsjEdit(bm) {
                 });
 
                 //法律文书必填及分组规则
-                if(DATA.CQBG.btflwsRule!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
+                if(DATA.CQBG.btflwsRuleSelected!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
                     DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                 }
 
@@ -655,15 +692,6 @@ function shongshen(sessionBean) {
                             msg: "请填写" + DATA.FLWS[bm].flwsData.name,
                             icon: 'warning'
                         });
-                        return;
-                    }else if (bm == 'X020003') {
-                        if((typeof DATA.FLWS[bm].status.zfgked!= 'undefined' && !DATA.FLWS[bm].status.zfgked) || typeof DATA.FLWS[bm].status.zfgked == 'undefined'){
-                            $.messager.alert({
-                                title: '提示',
-                                msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
-                                icon: 'warning'
-                            });
-                        }
                         return;
                     }
                 }
