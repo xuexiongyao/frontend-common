@@ -4,8 +4,12 @@
  */
 /**
  * easyui初始化组件
+ * @param ipts input输入框
+ * @param isAdd 是否新增
+ * @param bm 文书编码（呈请报告编码/法律文书编码）
+ * @param isFlws  是否是法律文书（false---呈请报告；true---法律文书）
  */
-function easyuiReset(ipts, isAdd, bm) {
+function easyuiReset(ipts, isAdd, bm ,isFlws) {
     var urlAttr = {};
     if (DATA.URLATTR != undefined) {
         urlAttr = DATA.URLATTR;
@@ -58,11 +62,9 @@ function easyuiReset(ipts, isAdd, bm) {
                             var $this = $(this);
                             var className = $this.attr('textboxname');//组件class name值
                             var val = $this.next().find('input:hidden').val();
-                            if (val && bm) {
-                                if (val && bm) {
-                                    if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'combobox','');
-                                    }
+                            if (val && bm && isFlws) {
+                                if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                    flwsLdXxfy(bm, className, val, 'combobox','');
                                 }
                             }
                         }
@@ -81,7 +83,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var $this = $(this);
                                     var className = $this.attr('textboxname');//组件class name值
                                     var val = $this.next().find('input:hidden').val();
-                                    if (val && bm) {
+                                    if (val && bm && isFlws) {
                                         if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                             flwsLdXxfy(bm, className, val, 'combobox','');
                                         }
@@ -95,33 +97,47 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var currentUserId = DATA.OWN.userId;//当前登录者用户ID
                                 var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
                                 var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
-                                if(isCheckCurUser == -1 && getBary.length < 2){
-                                    $.messager.alert({
-                                        title: '提示信息',
-                                        msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
-                                } else if(isCheckCurUser > -1 && getBary.length < 2){
-                                    $.messager.alert({
-                                        title: '提示信息',
-                                        msg: '办案民警至少选两名',
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
-                                } else if(isCheckCurUser == -1 && getBary.length >= 2){
-                                    $.messager.alert({
-                                        title: '提示信息',
-                                        msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
+                                if(!isFlws && bm != 'X050028'){
+                                    // 行政案件'当场处罚决定书（X050028）'办案民警可以只勾选一个
+                                    if(isCheckCurUser == -1 && getBary.length < 2){
+                                        $.messager.alert({
+                                            title: '提示信息',
+                                            msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    } else if(isCheckCurUser > -1 && getBary.length < 2){
+                                        $.messager.alert({
+                                            title: '提示信息',
+                                            msg: '办案民警至少选两名',
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    } else if(isCheckCurUser == -1 && getBary.length >= 2){
+                                        $.messager.alert({
+                                            title: '提示信息',
+                                            msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    }
+                                }else{
+                                    if(isCheckCurUser == -1){
+                                        $.messager.alert({
+                                            title: '提示信息',
+                                            msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    }
                                 }
                             }
                         });
@@ -371,7 +387,7 @@ function easyuiReset(ipts, isAdd, bm) {
                             var $this = $(this);
                             var className = $this.attr('textboxname');//组件class name值
                             var val = $this.next().find('input:hidden').val();
-                            if (val && bm) {
+                            if (val && bm && isFlws) {
                                 if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
                                     flwsLdXxfy(bm, className, val, 'combotree','');
                                 }
@@ -405,7 +421,7 @@ function easyuiReset(ipts, isAdd, bm) {
                     var textboxObj = {
                         required: isTrue,
                         onChange: function (newValue, oldValue) {
-                            if (newValue && bm) {
+                            if (newValue && bm && isFlws) {
                                 var $this = $(this);
                                 var className = $this.attr('textboxname');//组件class name值
                                 if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
@@ -421,7 +437,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 $(ipts[i]).addClass('iptreadonly').textbox({
                                     required: false,
                                     onChange: function (newValue, oldValue) {
-                                        if (newValue && bm) {
+                                        if (newValue && bm && isFlws) {
                                             var $this = $(this);
                                             var className = $this.attr('textboxname');//组件class name值
                                             if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
@@ -521,7 +537,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var iptVal = Number(newValue);//输入框的值
                                     var $this = $(this);
                                     var className = $this.attr('textboxname');//组件class name值
-                                    if (!isNaN(iptVal) && bm) {
+                                    if (!isNaN(iptVal) && bm && isFlws) {
                                         $this.parent().attr('number', newValue);
                                         var chNum = NumberToChinese(iptVal);//转化之后的汉字
                                         $this.textbox({value: chNum});
@@ -549,7 +565,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var iptVal = Number(newValue);//输入框的值
                                     var $this = $(this);
                                     var className = $this.attr('textboxname');//组件class name值
-                                    if (!isNaN(iptVal) && bm) {
+                                    if (!isNaN(iptVal) && bm && isFlws) {
                                         $this.parent().attr('money', newValue);
                                         var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
                                         $this.textbox({value: chNum});
@@ -601,7 +617,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                     var val = $this.val();
                                     var className = $this.attr('name');//组件class name值
                                     $this.validatebox();//失去焦点验证必填
-                                    if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                    if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion  && isFlws) {
                                         flwsLdXxfy(bm, className, val, 'textarea','');
                                     }
                                 }
@@ -622,7 +638,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var $this = $(this);
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
-                                if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion && isFlws) {
                                     flwsLdXxfy(bm, className, val, 'Wdate','');
                                 }
                             });
@@ -632,7 +648,7 @@ function easyuiReset(ipts, isAdd, bm) {
                                 var $this = $(this);
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
-                                if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion && isFlws) {
                                     flwsLdXxfy(bm, className, val, 'Wdate','');
                                 }
                             });

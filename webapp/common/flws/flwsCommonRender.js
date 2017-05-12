@@ -502,7 +502,7 @@ function flwsRightPageRenderForAdd(flwsData) {
 
     //法律文书页面的初始化 (新增渲染)
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
-    easyuiReset(flwsIpts, true, bm);
+    easyuiReset(flwsIpts, true, bm ,true);
     if(DATA.publicJkXx){
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         flwsTfrXxFy();//填发人信息复用
@@ -544,7 +544,7 @@ function flwsRightPageRenderForEdit(flwsData) {
 
     //法律文书页面的初始化 （编辑渲染）
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
-    easyuiReset(flwsIpts, false, bm);
+    easyuiReset(flwsIpts, false, bm, true);
     //法律文书中类呈请报告呈请内容的信息复用
     flwsLsCqbgNrXxfy(bm);
 

@@ -113,10 +113,10 @@ function cqbgPageRender() {
         eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(DATA.CQBG.cqbgRow) + "')");
     } else {
         if (!DATA.CQBG.cqbgZj) {//新增渲染
-            easyuiReset(cqbgIpts, true, '');
+            easyuiReset(cqbgIpts, true, DATA.CQBG.cqbgData.bianMa, false);
             cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         } else {//编辑渲染
-            easyuiReset(cqbgIpts, false, '');
+            easyuiReset(cqbgIpts, false, DATA.CQBG.cqbgData.bianMa, false);
             cqbgDataXxfy();//呈请报告数据信息复用
 
             //呈请报告嫌疑对象的勾选
