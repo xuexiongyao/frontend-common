@@ -933,6 +933,9 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
                 if(textStyle == 'MONEY'){
                     $node.textbox({value: val});
                     $a.attr('money',data[key + '_MASTER']);
+                }else if(textStyle == 'NUMBERCN'){
+                    $node.textbox({value: val});
+                    $a.attr('number',data[key + '_MASTER']);
                 }else{
                     if ($node.hasClass('easyuitextbox')) {
                         $node.textbox({value: val});
