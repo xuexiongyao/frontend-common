@@ -117,7 +117,10 @@ function getDxxxData() {
                                         disabled = "disabled ='disabled'";
                                         title = "title = '" + rule.message + "'";
                                         for (var z = 0; z < rule.item.length; z++) {
-                                            if (DATA.CQBG.asjflwsdm == rule.item[z]) {
+                                            if (DATA.CQBG.asjflwsdm == rule.item[z].dm) {
+                                                if(rule.item[z].message ){
+                                                    title = "title = '" + rule.item[z].message + "'";
+                                                }
                                                 disabled = "";
                                                 title = "";
                                                 break;
@@ -127,9 +130,14 @@ function getDxxxData() {
                                         disabled = "";
                                         title = "";
                                         for (var z = 0; z < rule.item.length; z++) {
-                                            if (DATA.CQBG.asjflwsdm == rule.item[z]) {
+                                            if (DATA.CQBG.asjflwsdm == rule.item[z].dm) {
+                                                if(rule.item[z].message ){
+                                                    title = "title = '" + rule.item[z].message + "'";
+                                                }else{
+                                                    title = "title = '" + rule.message + "'";
+                                                }
                                                 disabled = "disabled='disabled'";
-                                                title = "title = '" + rule.message + "'";
+
                                             }
                                         }
                                     }
