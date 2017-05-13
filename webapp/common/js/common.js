@@ -36,7 +36,21 @@ $(function () {
                 var content = msg.content;
                 if (status == 'run_fn') { //执行函数
                     try {
-                        eval(content);
+
+                        if(content.indexOf('|') == -1){//如果传递参数
+                            eval(content);
+                        }
+                        else{//未传递参数
+                            var fnAndParaArray = content.split('|');
+
+                            var fnName = 'window.return_fn.'+fnAndParaArray[0];
+                            if(fnAndParaArray.length > 1){
+                                fnAndParaArray.shift();
+                            }
+                            fnName += '(fnAndParaArray)';
+                            eval(fnName);
+                        }
+
                     } catch (e) {
                         console.log('toIframe提示:,请确认页面中 ' + content + ' is not a function');
                     }

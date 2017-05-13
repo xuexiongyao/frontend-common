@@ -224,9 +224,17 @@ function callIframeFn(tabID,fnName){
     var fn_name = fnName.split(',');
     for(var i=0;i<fn_name.length;i++){
         var _fn_name = fn_name[i];
+        
+        //兼容传递的函数带参数的情况
+        var content = null;
+        if(_fn_name.indexOf('|') == -1){
+            content = 'window.return_fn.'+_fn_name+'()';
+        }else{//传递参数
+            content = _fn_name;
+        }
         var msg = {
             status : 'run_fn',
-            content : 'window.return_fn.'+_fn_name+'()'
+            content : content
         };
         crossRequestIframe(msg,return_iframe);
     }
