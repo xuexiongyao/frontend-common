@@ -370,9 +370,8 @@ function cqbgSaveComplete(data) {
         if (json.state == 'success') {
             if (DATA.CQBG.cqbgZj == undefined && json.ID) {
                 DATA.CQBG.cqbgZj = json.ID;
-            }else{
-                queryCqbgData('');//重新查询数据
             }
+            queryCqbgData('');//重新查询数据
             $.messager.show({
                 title: '提示',
                 msg: '呈请报告保存成功'
