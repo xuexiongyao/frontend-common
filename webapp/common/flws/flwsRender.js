@@ -38,7 +38,7 @@ function getCqbgFlwsHtmlPage() {
         for (var k in flwsData) {
             flwsTmpArray.push(flwsData[k]);
         }
-        var sortedFlwsData = flwsTmpArray.sort(compare('bianMa'));
+        var sortedFlwsData = flwsTmpArray.sort(compare('index'));
         //法律文书字符串
         for (var a = 0; a < sortedFlwsData.length; a++) {
             flwsstr = '<div class="flws-tabs-title" title="' + sortedFlwsData[a].name + '">' +
