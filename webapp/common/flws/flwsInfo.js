@@ -892,7 +892,7 @@ function lcriZs() {
                 });
 
             } else {
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
                     msg: json.message
                 });

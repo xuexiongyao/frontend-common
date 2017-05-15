@@ -79,7 +79,7 @@ function getNext() {
             } else {
                 isLastTask = true;
                 // console.log('下一环节:', json);
-                $.messager.alert({
+                alertDiv({
                     title: '获取下一环节出错',
                     msg: json.message
                 });
@@ -102,7 +102,7 @@ function getCurrent() {
                 }
             } else {
                 // console.log('当前环节:', json);
-                $.messager.alert({
+                alertDiv({
                     title: '获取当前环节出错',
                     msg: json.message
                 });
@@ -250,10 +250,9 @@ function selectApprove(shjl) {
                                             msg: '审批人选择成功!'
                                         });
                                     } else {
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示',
-                                            msg: '请选择审批人!',
-                                            icon: 'warning'
+                                            msg: '请选择审批人!'
                                         });
                                     }
                                 } else {
@@ -378,10 +377,9 @@ function saveAndSsShyj(backObj) {
                 if (candidateUsers) {
                     complete(shjl, shsj, shyj);
                 } else {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
-                        msg: '请选择下一环节及审批人!',
-                        icon: 'warning'
+                        msg: '请选择下一环节及审批人!'
                     });
                 }
             }
@@ -398,10 +396,9 @@ function saveAndSsShyj(backObj) {
                     complete(shjl, shsj, shyj);
                     //console.log('不同意,但是选择审批人:',candidateUsers);
                 } else {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
-                        msg: '请选择处理方式',
-                        icon: 'warning'
+                        msg: '请选择处理方式'
                     });
                 }
             }
@@ -448,7 +445,7 @@ function saveAndSsShyj(backObj) {
                     dataType: 'json',
                     success: function (json) {
                         loading('close');
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -458,10 +455,9 @@ function saveAndSsShyj(backObj) {
                     }
                 });
             } else {
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
-                    msg: '请选择退回状态!',
-                    icon: 'warning'
+                    msg: '请选择退回状态!'
                 });
             }
 
@@ -516,7 +512,7 @@ function complete(shjl, shsj, shyj) {
                         sendMsgLast(asjbh,businessKey,asjflwsdm,content,json.message);
                     } else {
                         loading('close');
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -530,7 +526,7 @@ function complete(shjl, shsj, shyj) {
                         sendMsg(candidateUsers, content, json.message);
                     } else {
                         loading('close');
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -541,7 +537,7 @@ function complete(shjl, shsj, shyj) {
                 }
             } else {
                 loading('close');
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
                     msg: json.message
                 });
@@ -568,7 +564,7 @@ function end(shjl, shsj, shyj) {
                     sendMsgLast(asjbh,businessKey,asjflwsdm,content,json.message);
                 } else {
                     loading('close');
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: msg,
                         fn: function () {
@@ -650,7 +646,7 @@ function lctShow() {
                     $('.lct-container').append(str);
                     $('.lct-node').tooltip();
                 } else {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: '请求数据有误，请联系相关工作人员',
                         fn: function () {
@@ -659,7 +655,7 @@ function lctShow() {
                     });
                 }
             } else {
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
                     msg: json.message
                 });
@@ -714,7 +710,7 @@ function sendMsg(userid, con, msg) {
         type: 'post',
         success: function (data) {
             loading('close');
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: msg,
                 fn: function () {
@@ -743,7 +739,7 @@ function sendMsgLast(asjbh,businessKey,asjflwsdm,con,msg){
         type: 'post',
         success: function (data) {
             loading('close');
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: msg,
                 fn: function () {

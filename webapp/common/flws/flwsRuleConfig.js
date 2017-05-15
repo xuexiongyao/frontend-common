@@ -100,7 +100,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                 if(!isFlws && bm != 'X050028'){
                                     // 行政案件'当场处罚决定书（X050028）'办案民警可以只勾选一个
                                     if(isCheckCurUser == -1 && getBary.length < 2){
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示信息',
                                             msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
                                             fn: function () {
@@ -109,7 +109,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                             }
                                         })
                                     } else if(isCheckCurUser > -1 && getBary.length < 2){
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示信息',
                                             msg: '办案民警至少选两名',
                                             fn: function () {
@@ -118,7 +118,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                             }
                                         })
                                     } else if(isCheckCurUser == -1 && getBary.length >= 2){
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示信息',
                                             msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
                                             fn: function () {
@@ -129,7 +129,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                     }
                                 }else{
                                     if(isCheckCurUser == -1){
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示信息',
                                             msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
                                             fn: function () {
@@ -545,10 +545,9 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                             flwsLdXxfy(bm, className, chNum, 'textbox','numbercn');
                                         }
                                     } else {
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示',
                                             msg: '只能输入数字',
-                                            icon: 'warning',
                                             fn: function () {
                                                 $this.textbox({value: ''})
                                             }
@@ -573,10 +572,9 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                             flwsLdXxfy(bm, className, chNum, 'textbox','money');
                                         }
                                     } else {
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示',
                                             msg: '只能输入数字',
-                                            icon: 'warning',
                                             fn: function () {
                                                 $this.textbox({value: ''})
                                             }

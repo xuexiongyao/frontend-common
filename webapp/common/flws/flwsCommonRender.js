@@ -234,7 +234,7 @@ function flwsYclXydxDelete(bm,$this) {
             loading('close');
             var json = eval('('+data+')');
             if(json.state == 'success'){
-                $.messager.alert({
+                alertDiv({
                     title: '温馨提示',
                     msg: '操作成功',
                     fn: function () {
@@ -666,7 +666,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
     } else {//未选中
         if (flwsData.bx) {//是否必选的校验
             event.stopPropagation();
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: '必须选择一项',
                 fn: function () {
@@ -775,7 +775,7 @@ function flwsYclXyDxCheck(bm, $this) {
         }
     } else {//未选中
         if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改不能取消选中】
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: '必须选择一项',
                 fn: function () {

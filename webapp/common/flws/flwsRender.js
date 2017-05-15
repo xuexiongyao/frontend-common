@@ -82,10 +82,9 @@ function cqbgPageRender() {
                 var json = eval('(' + data + ')');
                 //呈请报告只能做一份儿，并且已呈请的判断(//受案登记表的特殊处理)
                 if (json.cqzt && json.cqzt != '0' && DATA.CQBG.cqbgData.one) {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
-                        icon: 'warning',
                         fn: function () {
                             crossCloseTab();
                         }
@@ -96,10 +95,9 @@ function cqbgPageRender() {
     } else {
         //呈请报告只能做一份儿，并且已呈请的判断
         if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one) {
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
-                icon: 'warning',
                 fn: function () {
                     crossCloseTab();
                 }
@@ -359,7 +357,7 @@ function tabSwitch() {
             if (DATA.CQBG.cqbgData.bianMa != '000000' || typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
                 if (index > 0) {//操作法律文书
                     if (!DATA.CQBG.cqbgZj) {//呈请报告主键还未生成
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
                             msg: '请先保存呈请报告，再操作法律文书',
                             fn: function () {
@@ -524,10 +522,9 @@ function checkBtflwsRuleSelected(bm) {
                                 if (json.state == 'success') {
                                     var flwsRow = json.rows;
                                     if (flwsRow.length == 0) {
-                                        $.messager.alert({
+                                        alertDiv({
                                             title: '提示',
                                             msg: "请先填写" + DATA.FLWS.flwsData[key].name,
-                                            icon: 'warning',
                                             fn: function () {
                                                 $("#flwsTabs").tabs('select', DATA.FLWS.flwsData[key].name)
                                             }
@@ -1049,7 +1046,7 @@ function flwsClXyDxCheckB(bm, $this) {
     } else {//未选中
         if (flwsData.bx) {
             event.stopPropagation();
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: '必须选择一项',
                 fn: function () {
@@ -1240,7 +1237,7 @@ function flwsClXyrCheckC(bm, $this) {
     } else {//未选中
         if (DATA.FLWS[bm].flwsData.bx) {
             event.stopPropagation();
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: '必须选择一项',
                 fn: function () {

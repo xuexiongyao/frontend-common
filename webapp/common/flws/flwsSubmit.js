@@ -100,7 +100,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                         sendMsg(nameIdStr,content,json.message);
                                     }else{
                                         loading('close');
-                                        $.messager.alert({
+                                        alertDiv({
                                             title : '提示',
                                             msg: '保存成功!',
                                             fn: function () {
@@ -113,7 +113,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                     }
                                 }else{
                                     loading('close');
-                                    $.messager.alert({
+                                    alertDiv({
                                         title : '提示',
                                         msg: json.message
                                     });
@@ -142,7 +142,7 @@ function sendMsg(userid,con,msg){
         type: 'post',
         success: function (data) {
             loading('close');
-            $.messager.alert({
+            alertDiv({
                 title : '提示',
                 msg: '保存成功!',
                 fn: function () {

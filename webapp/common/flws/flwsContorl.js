@@ -8,10 +8,9 @@
  */
 function saveCqbg() {
     if (DATA.CQBG.cqbgData.bx && !DATA.CQBG.status.selected) {
-        $.messager.alert({
+        alertDiv({
             title: '提示',
-            msg: DATA.CQBG.cqbgData.name + '下的嫌疑对象列表必须勾选',
-            icon: 'warning'
+            msg: DATA.CQBG.cqbgData.name + '下的嫌疑对象列表必须勾选'
         });
         return;
     }
@@ -158,10 +157,9 @@ function saveFlws(bm) {
     DATA.FLWS[bm].isValidArry = [];
 
     if (DATA.FLWS[bm].flwsData.bx && !DATA.FLWS[bm].status.selected) {
-        $.messager.alert({
+        alertDiv({
             title: '提示',
-            msg: DATA.FLWS[bm].flwsData.name + '下的嫌疑对象列表必须勾选',
-            icon: 'warning'
+            msg: DATA.FLWS[bm].flwsData.name + '下的嫌疑对象列表必须勾选'
         });
         return;
     }
@@ -183,16 +181,14 @@ function saveFlws(bm) {
                 flwsSave(DATA.FLWS[bm].flwsData.insertUrl, DATA.FLWS[bm].params, bm)
             } else {
                 if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
-                        msg: '法律文书多联中必填项不能为空',
-                        icon: 'warning'
+                        msg: '法律文书多联中必填项不能为空'
                     })
                 }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
-                        msg: '法律文书中选择框不能为空，必须勾选一个',
-                        icon: 'warning'
+                        msg: '法律文书中选择框不能为空，必须勾选一个'
                     })
                 }
             }
@@ -216,16 +212,14 @@ function saveFlws(bm) {
             flwsSave(DATA.FLWS[bm].flwsData.updateUrl, DATA.FLWS[bm].params, bm)
         } else {
             if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
-                    msg: '法律文书多联中必填项不能为空',
-                    icon: 'warning'
+                    msg: '法律文书多联中必填项不能为空'
                 })
             }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
-                    msg: '法律文书中选择框不能为空，必须勾选一个',
-                    icon: 'warning'
+                    msg: '法律文书中选择框不能为空，必须勾选一个'
                 })
             }
         }
@@ -630,10 +624,9 @@ function getFlwsQtsjEdit(bm) {
  */
 function shongshen(sessionBean) {
     if (DATA.CQBG.cqbgZj == undefined) {//呈请报告的填写
-        $.messager.alert({
+        alertDiv({
             title: '提示',
-            msg: '请填写呈请报告',
-            icon: 'warning'
+            msg: '请填写呈请报告'
         });
         return;
     } else if (DATA.FLWS.flwsData) {//有法律文书
@@ -655,10 +648,9 @@ function shongshen(sessionBean) {
                     success: function (json) {
                         var jsonRows = json.rows;
                         if (json.state != 'success') {
-                            $.messager.alert({
+                            alertDiv({
                                 title: '提示',
-                                msg: json.msg,
-                                icon: 'warning'
+                                msg: json.msg
                             });
                             skip = true;
                         }else if(jsonRows.length>0){
@@ -686,17 +678,15 @@ function shongshen(sessionBean) {
                 for (var i = 0; i < btflwsArray.length; i++) {
                     var bm = btflwsArray[i];
                     if (DATA.FLWS[bm] == undefined || !DATA.FLWS[bm] || DATA.FLWS[bm].flwsData == undefined) {
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
-                            msg: "请检查法律文书",
-                            icon: 'warning'
+                            msg: "请检查法律文书"
                         });
                         return;
                     } else if (!DATA.FLWS[bm].status.hasDone) {
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
-                            msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                            icon: 'warning'
+                            msg: "请填写" + DATA.FLWS[bm].flwsData.name
                         });
                         return;
                     }
@@ -779,10 +769,9 @@ function scflwsrwForNoCqbg(bm) {
             };
             scflwsRequest(params);
         } else {
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
-                msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                icon: 'warning'
+                msg: "请填写" + DATA.FLWS[bm].flwsData.name
             });
             return;
         }
@@ -811,10 +800,9 @@ function scflwsrwForNoCqbg(bm) {
                 scflwsRequest(params);
             }
         } else {
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
-                msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                icon: 'warning'
+                msg: "请填写" + DATA.FLWS[bm].flwsData.name
             });
             return;
         }
