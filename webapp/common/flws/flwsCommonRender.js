@@ -754,10 +754,16 @@ function flwsYclXyDxCheck(bm, $this) {
 
             //当前嫌疑人的法律文书主键
             var flwsZj = $this.attr('flwszj');
+            var xyrXxzjbh = $this.attr('xxzjbh');
             DATA.FLWS[bm].flwsZj = flwsZj;//法律文书主键
             DATA.FLWS[bm].params = {
                 ZJ: flwsZj
             };
+
+            //嫌疑人勾选其他接口请求信息复用（秀平）
+            if(bm == '042155'){
+                ajax_request(bm,xyrXxzjbh);
+            }
 
             //法律文书信息复用
             flwsDataXxfy(bm, flwsZj);
@@ -928,14 +934,17 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
             if (annotation == '/REPLACE/') {
                 $a.parent().next().val(val);
             } else {
-                //money的特殊处理
                 var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
                 if(textStyle == 'MONEY'){
                     $node.textbox({value: val});
-                    $a.attr('money',data[key + '_MASTER']);
+                    if(bm == '042114'){//取保候审特殊处理
+                        $a.attr('money',data[key + '_MASTER']);
+                    }else{
+                        $a.attr('money',data[key + '_DX']);
+                    }
                 }else if(textStyle == 'NUMBERCN'){
-                    $node.textbox({value: val});
-                    $a.attr('number',data[key + '_MASTER']);
+                    $a.attr('number',val);
+                    $node.textbox({value: data[key + '_MASTER']});
                 }else{
                     if ($node.hasClass('easyuitextbox')) {
                         $node.textbox({value: val});
@@ -1008,17 +1017,30 @@ function flwsDataXxfy(bm, zj) {
             for (var key in data[i]) {
                 var $node = $("#flws_cl_area_" + bm + " form a ." + key);//节点
                 var val = data[i][key];
-                //版本切换赋值的处理
                 var $a = $node.parent();
-                if ($a.attr('annotation') == '/REPLACE/') {
+                var annotation = $a.attr('annotation');
+                //版本切换赋值的处理
+                if (annotation == '/REPLACE/') {
                     $a.parent().next().val(val);
                 } else {
                     if ($node.hasClass('easyuitextbox')) {
-                        $node.textbox({value: val});
+                        if (bm == '042155' && $node.hasClass('BZR_XM') && val) {
+                            $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
+                                required: false, value: '', readonly: true
+                            }).next().addClass('clear-border');
+                            $node.textbox({value: val});
+                        }else if (bm == '042155' && $node.hasClass('BZJ') && val) {
+                            $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
+                                required: false, value: '', readonly: true
+                            }).next().addClass('clear-border');
+                            $node.textbox({value: data[i][key+'_DX']});
+                        }else{
+                            $node.textbox({value: val});
+                        }
                     } else if ($node.hasClass('easyuicombobox')) {
-                        if($node.hasClass('JYCS_GAJGMC')){
+                        if ($node.hasClass('JYCS_GAJGMC')) {
                             $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
-                        }else {
+                        } else {
                             $node.combobox({value: val})
                         }
                     } else if ($node.hasClass('easyuicombotree')) {

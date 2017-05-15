@@ -427,6 +427,10 @@ function getFlwsQtsjAdd(bm) {
                     if(DATA.CQBG.btflwsRuleSelected!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
                         DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                     }
+
+                    //特殊提交数据的处理
+                    especiallyDataFun(bm);
+
                     return false;
                 } else {
                     return false;// 返回false终止表单提交
@@ -600,6 +604,8 @@ function getFlwsQtsjEdit(bm) {
                     DATA.FLWS[bm].params.SETU_CQXGZJ = DATA.FLWS.flwsxgsqbZj;
                 }
 
+                //特殊提交数据的处理
+                especiallyDataFun(bm);
 
                 //更新DATA.FLWS[bm].flwsRow中的数据;
                 if(bm == 'X030004' || bm == '020005'){
@@ -811,6 +817,21 @@ function scflwsrwForNoCqbg(bm) {
                 icon: 'warning'
             });
             return;
+        }
+    }
+}
+
+/**
+ * 提交数据的特殊处理
+ */
+function especiallyDataFun(bm){
+    if(bm == '042155'){//取保候审人保|财保
+        if(DATA.FLWS[bm].params.BZR_XM && !DATA.FLWS[bm].params.BZJ){
+            DATA.FLWS[bm].params.ASJFLWSDM = '042155';
+            DATA.FLWS[bm].params.QBLX = 'R';
+        }else if(!DATA.FLWS[bm].params.BZR_XM && DATA.FLWS[bm].params.BZJ){
+            DATA.FLWS[bm].params.ASJFLWSDM = '042104';
+            DATA.FLWS[bm].params.QBLX = 'C';
         }
     }
 }

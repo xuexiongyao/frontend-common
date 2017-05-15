@@ -511,8 +511,12 @@ function checkBtflwsRuleSelected(bm) {
                             XT_ZXBZ: '0'
                         };
                         param[DATA.CQBG.btflwsRuleSelected.FIELD] = DATA.CQBG.btflwsRuleSelected.VALUE;
+                        var url=DATA.FLWS.flwsData[key].queryUrl;
+                        if(DATA.CQBG.btflwsRuleSelected.REPLACEBM){
+                            url=url.replace(flwsMainBm,DATA.CQBG.btflwsRuleSelected.REPLACEBM);
+                        }
                         $.ajax({
-                            url: DATA.FLWS.flwsData[key].queryUrl,
+                            url:url ,
                             data: param,
                             dataType: 'json',
                             async: false,
@@ -537,7 +541,7 @@ function checkBtflwsRuleSelected(bm) {
                         break;
                     }
                 }
-            } else {
+            } else if(!DATA.CQBG.btflwsRuleSelected.FCX){
                 for (var index = 0; index < DATA.CQBG.btflwsRule.length; index++) {
                     var flwsOther = DATA.CQBG.btflwsRule[index];
                     var flwsOtherMainBm = flwsOther.BM.split(",")[0];
@@ -549,8 +553,12 @@ function checkBtflwsRuleSelected(bm) {
                                     XT_ZXBZ: '0'
                                 };
                                 param[flwsOther.FIELD] = flwsOther.VALUE;
+                                var url=DATA.FLWS.flwsData[key].queryUrl;
+                                if(DATA.CQBG.btflwsRuleSelected.REPLACEBM){
+                                    url=url.replace(flwsMainBm,DATA.CQBG.btflwsRuleSelected.REPLACEBM);
+                                }
                                 $.ajax({
-                                    url: DATA.FLWS.flwsData[key].queryUrl,
+                                    url: url,
                                     data: param,
                                     dataType: 'json',
                                     async: false,
@@ -618,8 +626,12 @@ function flwsDxListRenderOther(bm) {
                             XT_ZXBZ: '0'
                         };
                         param[DATA.CQBG.btflwsRuleSelected.FIELD] = DATA.CQBG.btflwsRuleSelected.VALUE;
+                        var url=DATA.FLWS.flwsData[key].queryUrl;
+                        if(DATA.CQBG.btflwsRuleSelected.REPLACEBM){
+                            url=url.replace(flwsMainBm,DATA.CQBG.btflwsRuleSelected.REPLACEBM);
+                        }
                         $.ajax({
-                            url: DATA.FLWS.flwsData[key].queryUrl,
+                            url: url,
                             data: param,
                             dataType: 'json',
                             async: false,
@@ -653,7 +665,7 @@ function flwsDxListRenderOther(bm) {
                         break;
                     }
                 }
-            } else {
+            } else if(!DATA.CQBG.btflwsRuleSelected.FCX){
                 for (var index = 0; index < DATA.CQBG.btflwsRule.length; index++) {
                     var flwsOther = DATA.CQBG.btflwsRule[index];
                     var flwsOtherMainBm = flwsOther.BM.split(",")[0];
@@ -665,8 +677,12 @@ function flwsDxListRenderOther(bm) {
                                     XT_ZXBZ: '0'
                                 };
                                 param[flwsOther.FIELD] = flwsOther.VALUE;
+                                var url=DATA.FLWS.flwsData[key].queryUrl;
+                                if(DATA.CQBG.btflwsRuleSelected.REPLACEBM){
+                                    url=url.replace(flwsMainBm,DATA.CQBG.btflwsRuleSelected.REPLACEBM);
+                                }
                                 $.ajax({
-                                    url: DATA.FLWS.flwsData[key].queryUrl,
+                                    url: url,
                                     data: param,
                                     dataType: 'json',
                                     async: false,
