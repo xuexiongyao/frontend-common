@@ -442,7 +442,7 @@ function flwsRightPagePj(flwsData) {
         '<div class="flws-mode-right">' +
         '<div class="flws_cl_area" id="flws_cl_area_' + bm + '">' + iframecon + '</div>' +
         '</div>'+
-        '<div class="flws_main_con_r_mask" id="flws_main_con_r_mask_' + bm +'"><span>请勾选嫌疑人！</span></div>';
+        '<div class="flws_main_con_r_mask" id="flws_main_con_r_mask_' + bm +'"><span>请勾选待处理对象，若没有请到相关页面中登记新增！</span></div>';
 
     $('#flws_main_con_r_' + bm).append(str);
     setPage();//设置页面高度
