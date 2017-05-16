@@ -549,27 +549,27 @@ function getIEVersion() {
 			}
 			//之前的处理方式
 			//if (opts.isTopLoad && window && window.publicDictArray) {
-				/*data = window.getPublicDict(opts.url);
-				opts.loaded = true;
-				success(data);*/
+			/*data = window.getPublicDict(opts.url);
+			 opts.loaded = true;
+			 success(data);*/
 			//}
 			/*else {
-				$.ajax({
-					type: opts.method,
-					url: opts.url,
-					data: param,
-					dataType: 'json',
-					xhrFields:{withCredentials:true},
-					crossDomain:true,
-					success: function(data) {
-						opts.loaded = true;
-						success(data);
-					},
-					error: function() {
-						error.apply(this, arguments);
-					}
-				});
-			}*/
+			 $.ajax({
+			 type: opts.method,
+			 url: opts.url,
+			 data: param,
+			 dataType: 'json',
+			 xhrFields:{withCredentials:true},
+			 crossDomain:true,
+			 success: function(data) {
+			 opts.loaded = true;
+			 success(data);
+			 },
+			 error: function() {
+			 error.apply(this, arguments);
+			 }
+			 });
+			 }*/
 		},
 
 		loadFilter: function(data) {
@@ -625,8 +625,8 @@ function getIEVersion() {
 			var oldValue = $(this).combobox("getValues");
 			setValues(this, oldValue);
 			/*if($(this).attr('choose') !== 'yes'){
-				$(this).combobox('setValue','');
-			}*/
+			 $(this).combobox('setValue','');
+			 }*/
 
 			//combobox值为空时,添加value=""发送给后台
 			$(this).parent().find('input.add-null').remove();
@@ -651,11 +651,11 @@ function getIEVersion() {
 			this.value = oldValue;
 		},
 		/*onSelect:function(){
-			$(this).attr('choose','yes');
-		},
-		onChange: function (n, o) {
-			$(this).attr('choose','no');
-		}*/
+		 $(this).attr('choose','yes');
+		 },
+		 onChange: function (n, o) {
+		 $(this).attr('choose','no');
+		 }*/
 	});
 
 	var methods = $.extend({}, $.fn.combobox.methods, {
@@ -848,18 +848,18 @@ function getIEVersion() {
 			}
 		},
 
-        //点击节点展开收缩开关
-        onClick: function (node) {
-            $(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
-            //点击节点展开收缩
-            //if (node.children) {
-            //    if (node.state == 'closed') {
-            //        $(this).tree('expand', node.target);
-            //    }else{
-            //        $(this).tree('collapse', node.target);
-            //    }
-            //}
-        },
+		//点击节点展开收缩开关
+		onClick: function (node) {
+			$(this).tree(node.state === 'closed' ? 'expand' : 'collapse', node.target);
+			//点击节点展开收缩
+			//if (node.children) {
+			//    if (node.state == 'closed') {
+			//        $(this).tree('expand', node.target);
+			//    }else{
+			//        $(this).tree('collapse', node.target);
+			//    }
+			//}
+		},
 		//阻止右键菜单
 		onContextMenu: function(e, node){
 			e.preventDefault();
@@ -984,11 +984,11 @@ function getIEVersion() {
 			return resultNode;
 		},
 
-        //获得树的层级
-        getLevel:function(jq,target){
-            var l = $(target).parentsUntil("ul.tree","ul");
-            return l.length+1;
-        },
+		//获得树的层级
+		getLevel:function(jq,target){
+			var l = $(target).parentsUntil("ul.tree","ul");
+			return l.length+1;
+		},
 
 		//获取树选中节点（子节点）
 		getCheckedExt: function(jq){
@@ -1016,12 +1016,12 @@ function getIEVersion() {
 			return checked;
 		},
 
-        //unSelect
-        unSelect:function(jq,target){
-            return jq.each(function(){
-                $(target).removeClass("tree-node-selected");
-            });
-        }
+		//unSelect
+		unSelect:function(jq,target){
+			return jq.each(function(){
+				$(target).removeClass("tree-node-selected");
+			});
+		}
 
 	});
 
@@ -1405,16 +1405,16 @@ function getIEVersion() {
 
 		/*onShowPanel: function() {
 
-			var opts = $(this).combotree('options');
-			if (!opts.multiple) {
-				var tree = $(this).combotree('tree');
-				var selectNode = tree.tree('getSelected');
-				if (selectNode != null) {
-					tree.tree('expandTo', selectNode.target);
-					tree.tree('scrollTo', selectNode.target);
-				}
-			}
-		},*/
+		 var opts = $(this).combotree('options');
+		 if (!opts.multiple) {
+		 var tree = $(this).combotree('tree');
+		 var selectNode = tree.tree('getSelected');
+		 if (selectNode != null) {
+		 tree.tree('expandTo', selectNode.target);
+		 tree.tree('scrollTo', selectNode.target);
+		 }
+		 }
+		 },*/
 		onChange:function(new_v,old_v){
 			$(this).parent().find('input.add-null').remove();
 			if(new_v == '' || new_v == undefined || new_v == [] ||  new_v == [""]){
@@ -1464,7 +1464,6 @@ function getIEVersion() {
 		onClick: function (node) {
 			var $this = $(this);
 			var opts = $this.tree('options');
-			//如果只能选择叶子节点并且选中的不是叶子节点  不隐藏
 			if(opts.onlyLeaf && node.children){
 				$this.parents('div.combo-p').show();
 			}
@@ -1961,16 +1960,20 @@ function getIEVersion() {
 				}
 			}
 		},
-		onLoadError: function(){
+		onLoadError: function(jqXHR, textStatus, errorThrown){
 			//加载失败时,显示空数据
 			$(this).datagrid('loadData',[]);
-			try{
-				$.messager.show({
-					title: '列表数据错误',
-					msg: '列表数据加载出错,请检查系统后台数据!'
-				});
-			}catch(e){
-				alert('列表数据加载错误,请检查系统后台数据!');
+			if(jqXHR.status == 418){
+				sessionTimeOut();
+			}else{
+				try{
+					$.messager.show({
+						title: '列表数据错误',
+						msg: '列表数据加载出错,请检查系统后台数据!'
+					});
+				}catch(e){
+					alert('列表数据加载错误,请检查系统后台数据!');
+				}
 			}
 		}
 	});
@@ -2014,7 +2017,23 @@ function getIEVersion() {
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			loading('close');
-			console.log('ajax错误信息:',this,jqXHR, textStatus, errorThrown);
+			var status = 0;
+			switch (jqXHR.status) {
+				case (500):
+					//TODO 服务器系统内部错误
+					status = 500;
+					break;
+				case (418):
+					//TODO 未登录
+					status = 418;
+					break;
+				default:
+					status = 1;
+				//TODO 未知错误
+			}
+			if(status == 418){
+				sessionTimeOut();
+			}
 		}
 	});
 })();
@@ -2057,6 +2076,14 @@ function topMessagerAlert(title, msg, type) {
 	title = title ? title : MESSAGER_TITLE;
 	type = type ? type : 'error';
 	window.$.messager.alert(title, msg, type);
+}
+
+function sessionTimeOut(){
+	$.messager.confirm('系统提示','超时或此账号在其他地方登录，请重新登录',function(r){
+		if(r){
+			location.href =reLoginPath;
+		}
+	});
 }
 
 function getEvent() {
@@ -2555,8 +2582,8 @@ function formReadonly(formID, isReadonly) {
 		$('#'+ formID).form('disableValidation');
 		$('#'+ formID +' input:not(:button,:hidden)').prop('readonly', isReadonly).addClass("inputReadonly");
 		$('#'+ formID +' input').next(".combo").addClass("inputReadonly textbox-readonly");
-        $('#'+ formID +' input').next(".combo").find('span a').addClass('textbox-icon-disabled');
-        $('#'+ formID +' input').next(".combo").find('input').attr('readonly','readonly');
+		$('#'+ formID +' input').next(".combo").find('span a').addClass('textbox-icon-disabled');
+		$('#'+ formID +' input').next(".combo").find('input').attr('readonly','readonly');
 		$('#'+ formID +' input:button').prop('disabled', isReadonly);
 		$('#'+ formID +' input:reset').prop('disabled', isReadonly);
 		$('#'+ formID +' input:submit').prop('disabled', isReadonly);
@@ -2568,8 +2595,8 @@ function formReadonly(formID, isReadonly) {
 	else {
 		$('#'+ formID +' input:not(:button,:hidden)').prop('readonly', isReadonly).removeClass("inputReadonly");
 		$('#'+ formID +' input').next(".combo").removeClass("inputReadonly textbox-readonly");
-        $('#'+ formID +' input').next(".combo").find('span a').removeClass('textbox-icon-disabled');
-        $('#'+ formID +' input').next(".combo").find('input').removeAttr('readonly');
+		$('#'+ formID +' input').next(".combo").find('span a').removeClass('textbox-icon-disabled');
+		$('#'+ formID +' input').next(".combo").find('input').removeAttr('readonly');
 		$('#'+ formID +' input:button').prop('disabled', isReadonly);
 		$('#'+ formID +' input:reset').prop('disabled', isReadonly);
 		$('#'+ formID +' input:submit').prop('disabled', isReadonly);
@@ -2628,8 +2655,8 @@ function setInputDisabled(inputID, isDisabled) {
 			$('#'+ inputID).validatebox({novalidate:true});
 			$('#'+ inputID).prop('disabled', isDisabled).addClass("inputReadonly");
 			$('#'+ inputID).next(".combo").addClass("inputReadonly textbox-disabled");
-            $('#'+ inputID).next(".combo").find('span a').addClass('textbox-icon-disabled');
-            $('#'+ inputID).next(".combo").find('input').attr('disabled','disabled');
+			$('#'+ inputID).next(".combo").find('span a').addClass('textbox-icon-disabled');
+			$('#'+ inputID).next(".combo").find('input').attr('disabled','disabled');
 			var comboText = $('#'+ inputID).next(".combo").children(".combo-text");
 			comboText.validatebox({novalidate:true});
 			comboText.prop('disabled', isDisabled).addClass("inputReadonly");
@@ -2638,8 +2665,8 @@ function setInputDisabled(inputID, isDisabled) {
 			$('#'+ inputID).prop('disabled', isDisabled).removeClass("inputReadonly");
 			$('#'+ inputID).validatebox({novalidate:false});
 			$('#'+ inputID).next(".combo").removeClass("inputReadonly textbox-disabled");
-            $('#'+ inputID).next(".combo").find('span a').removeClass('textbox-icon-disabled');
-            $('#'+ inputID).next(".combo").find('input').removeAttr('disabled');
+			$('#'+ inputID).next(".combo").find('span a').removeClass('textbox-icon-disabled');
+			$('#'+ inputID).next(".combo").find('input').removeAttr('disabled');
 			var comboText = $('#'+ inputID).next(".combo").children(".combo-text");
 			comboText.validatebox({novalidate:false});
 			comboText.prop('disabled', isDisabled).removeClass("inputReadonly");
