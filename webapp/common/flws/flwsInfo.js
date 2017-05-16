@@ -5,10 +5,11 @@
 
 /**
  * 获取法律文书数据
+ * @param cqbgzj 呈请报告主键
  */
-function getCqbgMapData() {
+function getCqbgMapData(cqbgzj) {
     var openUrl = '';
-    if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB') {//无呈请报告法律文书的处理
+    if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB' && DATA.asjflwsbm != 'TB_XW_FLWS_HJFZXYRSQB') {//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath + '/wenshu/source/FLWS_' + DATA.flwsAsjflwsdm + '/DIC.json'
     } else {
         openUrl = pathConfig.basePath + '/wenshu/source/CQBG_' + DATA.flwsAsjflwsdm + '/DIC.json'
@@ -18,6 +19,9 @@ function getCqbgMapData() {
     //发送请求
     $.ajax({
         url: openUrl,
+        data:{
+           cqbgZj: cqbgzj
+        },
         success: function (json) {
             loading('close');
             var jsonDatas = eval('(' + json + ')');//json化数据
@@ -308,6 +312,16 @@ function queryFlwsData(title, render) {
                 //}
 
                 loading("open", "正在获取法律文书数据,请稍等...");
+                if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){
+                    if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
+                        var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
+                        for(var index=0;index<btflwsRule.length;index++){
+                            if(btflwsRule[index].BM.split(",")[0]==bm&&btflwsRule[index].FIELD&&!btflwsRule[index].FCX){
+                                param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
+                            }
+                        }
+                    }
+                }
                 $.ajax({
                     url: flwsData[k].queryUrl,
                     data: param,
@@ -316,9 +330,9 @@ function queryFlwsData(title, render) {
                         loading('close');
                         //console.log(json)
                         if (json.state == 'success') {
-                            if (json.rows.length > 0 && json.rows != undefined) {//有数据 执行编辑渲染
-                                DATA.FLWS[bm].flwsRow = json.rows;
-
+                            var jsonRows = json.rows;
+                            if (jsonRows.length > 0) {//有数据 执行编辑渲染
+                                DATA.FLWS[bm].flwsRow = jsonRows;
                             } else {//没有数据 执行新增渲染
                                 DATA.FLWS[bm].flwsRow = [];
                             }
@@ -329,7 +343,6 @@ function queryFlwsData(title, render) {
                         }
                     }
                 });
-                break;
             }
         }
     }
@@ -396,12 +409,18 @@ function flwsXxfyA(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-        $($target[j]).html('');
-        if (aName.indexOf('_T_') != -1) {
-            var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
-            var val = data[name];//对应数据的值
-            $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+
+
+        if(typeof aName !='undefined'){
+            try{
+                if (aName.indexOf('_T_') != -1) {
+                    var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
+                    var val = data[name];//对应数据的值
+                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                }
+            }catch(e){}
         }
+
         for (var k in data) {
             if (k == aName) {
                 if (annotation) {//日期的处理
@@ -409,7 +428,7 @@ function flwsXxfyA(bm) {
                     var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                     var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
                     var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
-                    if (textStyle && !isEdit) {
+                    if (textStyle) {
                         if (textStyle == 'DATE') {//2016年12月28日
                             var val = data[k + '_MASTER'];
                             var array = val.split('-');
@@ -420,10 +439,12 @@ function flwsXxfyA(bm) {
                             }
                             $($target[j]).text(newVal);
                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                            var strTextbox = "<textarea class='easyuivalidatebox "+textStyle+"" + aName + "' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
+                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
                             $($target[j]).html(strTextbox);
                             autoTextarea($($target[j]).find('textarea')[0]);
                         } else if (textStyle == 'DATE_CN') {
+                            $($target[j]).text(data[k]);
+                        } else {
                             $($target[j]).text(data[k]);
                         }
                     } else if (dictStyle || treeStyle) {
@@ -436,6 +457,7 @@ function flwsXxfyA(bm) {
                         $($target[j]).text(data[k]);
                     }
                 } else {
+                    $($target[j]).text(data[k]);
                 }
             }
         }
@@ -487,11 +509,13 @@ function flwsXxfyB(bm,isCustomized) {
 
         //checkbox、radiobox的处理
         if (typeof aName != 'undefined') {
-            if (aName.indexOf('_T_') > -1) {
-                var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
-                var val = data[name];//对应数据的值
-                $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
-            }
+            try{
+                if (aName.indexOf('_T_') > -1) {
+                    var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
+                    var val = data[name];//对应数据的值
+                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                }
+            }catch(e){}
         }
 
         for (var k in data) {
@@ -501,7 +525,7 @@ function flwsXxfyB(bm,isCustomized) {
                     var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                     var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
                     var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
-                    if (textStyle && isEdit) {//日期的处理
+                    if (textStyle) {//日期的处理
                         if (textStyle == 'DATE') {//2016年12月28日
                             var val = data[k + '_MASTER'];
                             var array = val.split('-');
@@ -514,7 +538,7 @@ function flwsXxfyB(bm,isCustomized) {
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                            var strTextbox = "<textarea class='easyuivalidatebox "+textStyle+"" + aName + "' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
+                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
                             $($target[j]).html(strTextbox);
                             autoTextarea($($target[j]).find('textarea')[0]);
                         } else {
@@ -556,20 +580,44 @@ function xydxListRenderC(bm) {
     var data = flwsRow;
     if (data.length > 0) {//有数据
         //只有一条数据(有嫌疑对象但是未勾选，并且非必选，也只能有一条数据)
-        if (data.length == 1) {//默认选中
-            flwsXxfyB(bm,true);
-            $('#flws_xyr_area_' + bm).hide();
-            $('#flws_main_con_r_' + bm).css({width: '100%'});
-            $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
-            $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
-            $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
-        } else {
+        //if (data.length == 1) {//默认选中
+        //    flwsXxfyB(bm,true);
+        //    $('#flws_xyr_area_' + bm).hide();
+        //    $('#flws_main_con_r_' + bm).css({width: '100%'});
+        //    $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
+        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
+        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
+        //} else {
             for (var i = 0; i < data.length; i++) {
                 if (data[0].CLDXLB) {
                     xyrCldxlb = data[0].CLDXLB;
                     for (var k in xyrObj) {
-                        if (xyrCldxlb == xyrObj[k].cldxlb)
-                            xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                        if (xyrCldxlb == xyrObj[k].cldxlb){
+                            if(data[i][(xyrObj[k].param)]){
+                                xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                            }else{
+                                if(!DATA.DX.xydxData){
+                                    $.ajax({
+                                        url: pathConfig.basePath + '/api/dtbm/' + DATA.FLWS[bm].flwsData.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
+                                        type: 'get',
+                                        async:false,
+                                        success: function (json) {
+                                            if (json) {
+                                                DATA.DX.xydxData = json;
+                                            }
+                                        }
+                                    })
+                                }
+
+                                var xydxArray = DATA.DX.xydxData[k];
+                                for(var j=0;j<xydxArray.length;j++){
+                                    if(xydxArray[j].xxzjbh == data[i].CLDX_XXZJBH){
+                                        xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + xydxArray[j][(xyrObj[k].param)] + '</span></label></li>';
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -580,7 +628,7 @@ function xydxListRenderC(bm) {
                         '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
             }
-        }
+        //}
     } else {//无数据
         checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
             '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
@@ -620,7 +668,6 @@ function flwsXxfyC1(bm, $this) {
                     for (var j = 0; j < $target.length; j++) {
                         var aName = $($target[j]).attr('name');//a标签的name属性
                         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-                        $($target[j]).html('');
 
                         //多版本处理（行政案件）
                         data[i].VERSION = parseInt(data[i].VERSION);
@@ -637,12 +684,17 @@ function flwsXxfyC1(bm, $this) {
                         }
 
                         //checkbox、radiobox的处理
-                        if (aName.indexOf('_T_') != -1) {
-                            var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
-                            var val = data[name];//对应数据的值
-                            $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                        if (typeof aName != 'undefined') {
+                            try{
+                                if (aName.indexOf('_T_') != -1) {
+                                    var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
+                                    var val = data[i][name];//对应数据的值
+                                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                                }
+                            }catch(e){}
                         }
 
+                        //$($target[j]).text('');
                         for (var a in data[i]) {
                             if (a == aName) {
                                 if (annotation) {
@@ -651,7 +703,7 @@ function flwsXxfyC1(bm, $this) {
                                     var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                     var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
                                     var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
-                                    if (textStyle && !isEdit) {
+                                    if (textStyle) {
                                         if (textStyle == 'DATE') {//2016年12月28日
                                             var val = data[i][a + '_MASTER'];
                                             var array = val.split('-');
@@ -664,7 +716,7 @@ function flwsXxfyC1(bm, $this) {
                                         } else if (textStyle == 'DATE_CN') {
                                             $($target[j]).text(data[i][a]);
                                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                                            var strTextbox = "<textarea class='easyuivalidatebox "+textStyle+"" + aName + "' name='" + aName + "' readonly style='border: 0;'>"+data[i][a]+"</textarea>";
+                                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[i][a]+"</textarea>";
                                             $($target[j]).html(strTextbox);
                                             autoTextarea($($target[j]).find('textarea')[0]);
                                         } else {
@@ -840,7 +892,7 @@ function lcriZs() {
                 });
 
             } else {
-                $.messager.alert({
+                alertDiv({
                     title: '提示',
                     msg: json.message
                 });

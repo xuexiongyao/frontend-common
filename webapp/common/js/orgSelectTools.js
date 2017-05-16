@@ -97,6 +97,121 @@ function initHtmlDiv(textboxID,filterData,multi_single){
 }
 
 
+/**
+ * 组织机构多选初始方法
+ * @param textboxID 弹出框触发和显示的textbox对象ID
+ * @param filterData 过滤条件：rootOrgCode 根节点orgcode、orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
+ * @param returnFieldData 返回数据存储对象：ID 部门编号、TEXT 部门名称
+ * @param onSelectedFun 回掉方法
+ */
+function initMultiSelectOrgForTztb(textboxID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData)
+		filterData={};
+	filterDataAry[textboxID]=filterData;
+	initHtmlDivForTztb(textboxID,filterData,'multi',returnFieldData);
+
+	//初始化弹出框
+	$("#"+normalHtmlDivId+textboxID).dialog({
+		title: '组织机构多选',
+		height: 'auto',
+		width:800,
+		resizable: true,
+		modal: true,
+		closed: true,
+		buttons:[{
+			text:'确定',
+			handler:function(){
+				returnSelected(textboxID,returnFieldData,'multi');
+				$("#"+normalHtmlDivId+textboxID).dialog('close');
+
+				if (typeof onSelectedFun == 'function') {
+					var fn = eval(onSelectedFun);
+					fn();
+				}
+			}
+
+		},
+			{
+				text:'关闭',
+				handler:function(){
+					$("#"+normalHtmlDivId+textboxID).dialog('close');
+				}
+
+			}]
+	});
+
+	//绑定弹出事件
+	$('#'+textboxID).textbox({
+		'editable':false,
+		'prompt':'点击”选择“可弹出选择框',
+		'buttonText':'选择',
+		'onClickButton' : function(){
+			var _top = parseInt($(document).scrollTop()+200);
+			$("#"+normalHtmlDivId+textboxID).show().dialog('open').dialog('move', {top: _top});
+			//$("#"+normalHtmlDivId+textboxID).show().dialog('open');
+		}
+	});
+
+}
+
+
+/**
+ * 专门用于 门户通知通报
+ * @param textboxID 弹出框触发和显示的textbox对象ID
+ */
+function initHtmlDivForTztb(textboxID,filterData,multi_single,returnFieldData){
+	//添加DIV标签
+	if($("#"+normalHtmlDivId+textboxID).length > 0){
+		//console.log("组织机构多选DIV已存在");
+	}else{
+		//console.log("组织机构多选DIV不存在");
+		var sfqfDiv = '<div style="padding:10px 0px;text-align: center;">是否群发：' +
+						'<span class="sfqf-span selected" style="cursor: pointer;">' +
+							'<input type="radio" name="sfqf" checked="true" value="1" style="vertical-align: bottom;margin-bottom: 2px;"/>是</span>' +
+					  	'&nbsp;&nbsp;&nbsp;&nbsp;' +
+						'<span class="sfqf-span" style="cursor: pointer;">' +
+							'<input type="radio" name="sfqf" value="0" style="vertical-align: bottom;margin-bottom: 2px;" />否</span>' +
+					  '</div>';
+
+		var orgDiv = document.createElement('div');
+		orgDiv.setAttribute('id',normalHtmlDivId+textboxID);
+		orgDiv.setAttribute('class',"frame-window");
+		orgDiv.setAttribute('style',"display:none;");
+
+		var body = document.getElementsByTagName('body');
+		body[0].appendChild(orgDiv);
+		if(multi_single == 'multi'){
+			$("#"+normalHtmlDivId+textboxID).html(getMultiDivHtml(textboxID));
+
+			//通知通报-是否群发-改动部分
+			$("#"+normalHtmlDivId+textboxID).prepend(sfqfDiv);
+
+			$('.sfqf-span').off('click').on('click',function(){
+				$('.selected').removeClass('selected').find('input').prop("checked",'false');
+				$(this).addClass('selected').find('input').prop('checked','true');
+
+				//设置值
+				var sfqfInputId = returnFieldData['sfqf'];
+				if(sfqfInputId){
+					var value = $(this).addClass('selected').find('input').val();
+					$('#' + sfqfInputId).val(value);
+				}
+			});
+
+
+			initMultiTree(textboxID,filterData);
+		}else{
+			$("#"+normalHtmlDivId+textboxID).html(getSingleDivHtml(textboxID));
+			initSingleTree(textboxID,filterData);
+		}
+
+		$('#searchKey_'+textboxID).textbox();
+		$('#searchBtn_'+textboxID).linkbutton();
+		$('#treeDiv_'+textboxID).panel();
+	}
+}
+
+
 
 /**
  * 初始化选择树

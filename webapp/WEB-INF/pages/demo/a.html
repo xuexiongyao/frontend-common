@@ -24,7 +24,7 @@
     <script src="../../../common/js/function.js"></script>
     <script src="../../../common/js/ajax.js"></script>
     <script src="../../../common/datepicker/WdatePicker.js"></script>
-    <script src="../../../common/datepicker/picker.js"></script>
+    <!--<script src="../../../common/datepicker/picker.js"></script>-->
 </head>
 <body style="margin:10px;background: #bebebe;">
 <!--<div class="easyui-tabs" id="tt" data-options="" style="height: 300px;">-->
@@ -137,9 +137,19 @@
     var test = 'usertask4';
     var b = test.substring(test.indexOf('k')+1);
 
+    var testA = {
+        'a':'b'
+    };
+    var testB = ['22'];
 
-    var picker = new Picker("test1","test2",3);
-    picker.init();
+    console.log(Array.isArray(testA));
+    console.log(Array.isArray(testB));
+
+//    var picker = new Picker("test1","test2",3);
+//    picker.init();
+
+    var a = '1991-04-21';
+    console.log(jsGetAge(a));
 
     $(function () {
         var val = '打飞机规范和违法和违法和王菲为覅贺卫方IEWiFi额外个很好改一个号 该好好干 公共\n' +
@@ -157,7 +167,7 @@
         });
 
 
-        var a = '2017-04-10 25:25';
+        var a = '1991-04-10 25:25';
         var b = parseTimeToCN(a);
         console.log(b);
 
@@ -196,6 +206,45 @@
         });
 
     });
+
+    function jsGetAge(strBirthday){
+        var returnAge;
+        var strBirthdayArr=strBirthday.split("-");
+        var birthYear = strBirthdayArr[0];
+        var birthMonth = strBirthdayArr[1];
+        var birthDay = strBirthdayArr[2];
+
+        d = new Date();
+        var nowYear = d.getFullYear();
+        var nowMonth = d.getMonth() + 1;
+        var nowDay = d.getDate();
+
+        if(nowYear == birthYear){
+            returnAge = 0;//同年 则为0岁
+        } else {
+            var ageDiff = nowYear - birthYear ; //年之差
+            if(ageDiff > 0){
+                if(nowMonth == birthMonth) {
+                    var dayDiff = nowDay - birthDay;//日之差
+                    if(dayDiff < 0) {
+                        returnAge = ageDiff - 1;
+                    } else {
+                        returnAge = ageDiff ;
+                    }
+                } else {
+                    var monthDiff = nowMonth - birthMonth;//月之差
+                    if(monthDiff < 0) {
+                        returnAge = ageDiff - 1;
+                    } else {
+                        returnAge = ageDiff ;
+                    }
+                }
+            } else {
+                returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+            }
+        }
+        return returnAge;//返回周岁年龄
+    }
 
     var log = function(msg){
         window.console && console.log(msg)

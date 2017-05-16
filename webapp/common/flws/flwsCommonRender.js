@@ -64,21 +64,43 @@ function cqbgFlwsOtherXxfy() {
                 if (val == undefined || val == '' || val == null) {//返回数据为空
                     console.log(key + '为空');
                 } else {
-                    var $node = $(".flws-main-con-r form input." + key);
-                    if ($node.hasClass('easyuitextbox')) {
-                        $node.textbox({value: val})
-                    } else if ($node.hasClass('easyuicombobox')) {
-                        $node.combobox({value: val})
-                    } else if ($node.hasClass('easyuicombotree')) {
-                        $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                        $node.val(val).validatebox();
-                    }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                        $node.val(val).validatebox();
+                    //办案人的特殊处理(BAR02)[ZCRY_XM]
+                    if(key == 'ZCRY_XM'){
+                        var $nodeT = $(".flws-main-con-r form input." + key);
+                        if(DATA.CQBG.cqbgRow.BAMJXM && typeof DATA.CQBG.cqbgRow.BAMJXM !='undefined'){
+                            var valT = DATA.CQBG.cqbgRow.BAMJXM;//获取呈请报告办案民警姓名
+                            $nodeT.textbox({value: valT})
+                        }
+                    }else{
+                        var $node = $(".flws-main-con-r form input." + key);
+                        if ($node.hasClass('easyuitextbox')) {
+                            $node.textbox({value: val})
+                        } else if ($node.hasClass('easyuicombobox')) {
+                            $node.combobox({value: val})
+                        } else if ($node.hasClass('easyuicombotree')) {
+                            $node.combotree({value: val})
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(val).validatebox();
+                        }else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
+                        }
                     }
                 }
             }
         }
+    }
+    editSwitch(false,'clear-border','iptreadonly');
+}
+
+/**
+ * 法律文书【填发人】默认复用当前登录者,可编辑
+ */
+function flwsTfrXxFy(){
+    //登录者填发人字段名：TFR_XM
+    var userData = DATA.OWN;//当前登录者信息
+    if(userData){
+        var $node = $(".flws-main-con-r form input.TFR_XM");
+        $node.textbox({value:userData.userName})
     }
 }
 
@@ -96,7 +118,9 @@ function cqbgDataXxfy() {
             var val = data[key];
             if (key == 'CQNR') {//呈请内容单独处理
                 $('#cqbg_main_con form textarea').val(val);
-                autoTextarea($('#cqbg_main_con form textarea')[0]);
+                try{//todo 违法行为人
+                    autoTextarea($('#cqbg_main_con form textarea')[0]);
+                }catch (e){}
                 $node.textbox({
                     value: val
                 })
@@ -123,8 +147,7 @@ function cqbgDataXxfy() {
 /**
  * 呈请报告查询接口返回数据 嫌疑人对象列表的渲染
  */
-function cqbgXyrDataXxfy() {
-    var xyrids = DATA.CQBG.cqbgRow.XYRID;
+function cqbgXyrDataXxfy(xyrids) {
     var xyridArry = [];
 
     if (xyrids) {//嫌疑人id可能为多个
@@ -211,7 +234,7 @@ function flwsYclXydxDelete(bm,$this) {
             loading('close');
             var json = eval('('+data+')');
             if(json.state == 'success'){
-                $.messager.alert({
+                alertDiv({
                     title: '温馨提示',
                     msg: '操作成功',
                     fn: function () {
@@ -352,21 +375,38 @@ function flwsXydxZhxxFyForXzaj(bm, $this) {
                 }
             }
 
-            var zhxx = {};
-            var xydxpzObj = eval('(' + flwsData[xyrObj[k].xydxpz] + ')');
+            var xydxpzData = eval('(' + flwsData[xyrObj[k].xydxpz] + ')');
 
-            for (var fieldName in xydxpzObj) {
-                var xyrpzArr = xydxpzObj[fieldName].split(",");
-                for (var j = 0; j < xyrpzArr.length; j++) {
-                    var field = xyrpzArr[j];
-                    var val = zhxxObj[field];
-                    if (val) {
-                        zhxx[field] = val;
-                    }
+            if(Array.isArray(xydxpzData)){//如果是数组，按下面方式处理
+                for(var s=0;s<xydxpzData.length;s++){
+                    xydxZhxxBlPz(xydxpzData[s],zhxxObj,bm);
                 }
-                fzxyDxXxfy(fieldName, filedToParagraph(zhxx, DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz), bm);
+            }else{//如果是对象，按下面方式处理
+                xydxZhxxBlPz(xydxpzData,zhxxObj,bm);
+            }
+            break;
+        }
+    }
+}
+
+/**
+ * 嫌疑对象组合信息遍历拼装
+ * @param xydxpzData 嫌疑对象配置数据
+ * @param currentXydxData 当前嫌疑人数据
+ * @param bm 法律文书编码
+ */
+function xydxZhxxBlPz(xydxpzData,currentXydxData,bm){
+    for (var fieldName in xydxpzData) {
+        var zhxx = {};//组合信息初始化
+        var xyrpzArr = xydxpzData[fieldName].split(",");
+        for (var j = 0; j < xyrpzArr.length; j++) {
+            var field = xyrpzArr[j];
+            var val = currentXydxData[field];
+            if (val) {
+                zhxx[field] = val;
             }
         }
+        fzxyDxXxfy(fieldName, filedToParagraph(zhxx, DATA.FLWS[bm].prefixpz, DATA.FLWS[bm].splitpz), bm);
     }
 }
 
@@ -402,7 +442,7 @@ function flwsRightPagePj(flwsData) {
         '<div class="flws-mode-right">' +
         '<div class="flws_cl_area" id="flws_cl_area_' + bm + '">' + iframecon + '</div>' +
         '</div>'+
-        '<div id="flws_main_con_r_mask"><span>请勾选嫌疑人！</span></div>';
+        '<div class="flws_main_con_r_mask" id="flws_main_con_r_mask_' + bm +'"><span>请勾选待处理对象，若没有请到相关页面中登记新增！</span></div>';
 
     $('#flws_main_con_r_' + bm).append(str);
     setPage();//设置页面高度
@@ -454,7 +494,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     flwsRightPagePj(flwsData);
 
     if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
-        $('#flws_main_con_r_mask').show();
+        $('#flws_main_con_r_mask_'+bm).show();
     }
 
     //新增页面保存按钮修改
@@ -462,9 +502,10 @@ function flwsRightPageRenderForAdd(flwsData) {
 
     //法律文书页面的初始化 (新增渲染)
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
-    easyuiReset(flwsIpts, true, bm);
+    easyuiReset(flwsIpts, true, bm ,true);
     if(DATA.publicJkXx){
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        flwsTfrXxFy();//填发人信息复用
         //法律文书中类呈请报告呈请内容的信息复用
         flwsLsCqbgNrXxfy(bm);
     }
@@ -503,7 +544,7 @@ function flwsRightPageRenderForEdit(flwsData) {
 
     //法律文书页面的初始化 （编辑渲染）
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
-    easyuiReset(flwsIpts, false, bm);
+    easyuiReset(flwsIpts, false, bm, true);
     //法律文书中类呈请报告呈请内容的信息复用
     flwsLsCqbgNrXxfy(bm);
 
@@ -542,6 +583,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         //法律文书新增页面渲染
         flwsRightPageRenderForAdd(flwsData);
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        flwsTfrXxFy();//填发人信息复用
 
         //已处理|未处理嫌疑对象选中的互斥
         var yclXyrLen = $('#flws_xyr_area_ycl_' + bm + ' .xyrList li');
@@ -550,7 +592,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         }
 
         //法律文书蒙层隐藏
-        $('#flws_main_con_r_mask').hide();
+        $('#flws_main_con_r_mask_'+bm).hide();
 
         //多个嫌疑对象列表同一时间只能操作一个
         parentDiv.show();
@@ -607,7 +649,11 @@ function flwsWclXyDxCheck(bm, $this, event) {
                     }
 
                     //犯罪嫌疑人信息复用
-                    fzxyrXxfy(xyrCurrent, bm);
+                    if(typeof xyrCurrent.fyFlwsData != 'undefined'){
+                        flwsDataXxfyCopyFromOtherFlws(bm,xyrCurrent.fyFlwsData);
+                    }else{
+                        fzxyrXxfy(xyrCurrent, bm);
+                    }
                     break;
                 }
             }
@@ -620,7 +666,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
     } else {//未选中
         if (flwsData.bx) {//是否必选的校验
             event.stopPropagation();
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: '必须选择一项',
                 fn: function () {
@@ -708,10 +754,16 @@ function flwsYclXyDxCheck(bm, $this) {
 
             //当前嫌疑人的法律文书主键
             var flwsZj = $this.attr('flwszj');
+            var xyrXxzjbh = $this.attr('xxzjbh');
             DATA.FLWS[bm].flwsZj = flwsZj;//法律文书主键
             DATA.FLWS[bm].params = {
                 ZJ: flwsZj
             };
+
+            //嫌疑人勾选其他接口请求信息复用（秀平）
+            if(bm == '042155'){
+                ajax_request(bm,xyrXxzjbh);
+            }
 
             //法律文书信息复用
             flwsDataXxfy(bm, flwsZj);
@@ -723,7 +775,7 @@ function flwsYclXyDxCheck(bm, $this) {
         }
     } else {//未选中
         if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改不能取消选中】
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
                 msg: '必须选择一项',
                 fn: function () {
@@ -832,6 +884,93 @@ function fzxyrXxfy(currentXyr, bm) {
 }
 
 /**
+ * 法律文书 查询接口返回数据的渲染 （从另外一个法律文书复用）
+ * @param bm 法律文书编码
+ * @param data 法律文书主键
+ */
+function flwsDataXxfyCopyFromOtherFlws(bm, data){
+    var $target = $('#flws_cl_area_' + bm + ' form a');
+
+    //查询嫌疑人结果信息复用
+    //自定义页面处理
+    if (DATA.FLWS[bm].flwsData.customized) {
+        eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
+    }
+    //多版本处理（行政案件）
+    data.VERSION = parseInt(data.VERSION);
+    if (DATA.FLWS[bm].flwsData.switchVersion) {
+        var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+        if (tabs.length > data.VERSION) {
+            for (var index = data.VERSION; index < tabs.length; index++) {
+                $('#flws_cl_area_' + bm).tabs("close", index);
+            }
+        }
+        for (var index = data.VERSION - 2; index >= 0; index--) {
+            $('#flws_cl_area_' + bm).tabs("close", index);
+        }
+    }
+
+    //checkbox、radio的处理
+    for(var j=0;j<$target.length;j++){
+        var aName = $($target[j]).attr('name');//a标签的name属性
+        var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+        try{//行政案件CheckBox、radio的赋值
+            if(aName.indexOf('_T_') != -1){
+                var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
+                var val = data[name];//对应数据的值
+                $($target[j]).find("input[value='"+val+"']").click();
+            }
+        }catch(e){}
+    }
+
+    //数据处理
+    for (var key in data) {
+        var $node = $("#flws_cl_area_" + bm + " form a ." + key);//节点
+        var val = data[key];
+        //版本切换赋值的处理
+        var $a = $node.parent();
+        var annotation = $a.attr('annotation');
+        if(annotation){
+            if (annotation == '/REPLACE/') {
+                $a.parent().next().val(val);
+            } else {
+                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
+                if(textStyle == 'MONEY'){
+                    $node.textbox({value: val});
+                    if(bm == '042114'){//取保候审特殊处理
+                        $a.attr('money',data[key + '_MASTER']);
+                    }else{
+                        $a.attr('money',data[key + '_DX']);
+                    }
+                }else if(textStyle == 'NUMBERCN'){
+                    $a.attr('number',val);
+                    $node.textbox({value: data[key + '_MASTER']});
+                }else{
+                    if ($node.hasClass('easyuitextbox')) {
+                        $node.textbox({value: val});
+                    } else if ($node.hasClass('easyuicombobox')) {
+                        if($node.hasClass('JYCS_GAJGMC')){
+                            $node.combobox({value: data['JYCS_GAJGJGDM']})
+                        }else {
+                            $node.combobox({value: val})
+                        }
+                    } else if ($node.hasClass('easyuicombotree')) {
+                        $node.combotree({value: val})
+                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                        $node.val(data[key + '_MASTER']);
+                        wdateValidate("#flws_cl_area_" + bm + " form input." + key);
+                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                        $node.val(val).validatebox();
+                    }
+                }
+            }
+        }
+    }
+
+    editSwitch(false, 'clear-border', 'iptreadonly');//清除easyui样式
+}
+
+/**
  * 法律文书 查询接口返回数据的渲染
  * @param bm 法律文书编码
  * @param zj 法律文书主键
@@ -878,15 +1017,32 @@ function flwsDataXxfy(bm, zj) {
             for (var key in data[i]) {
                 var $node = $("#flws_cl_area_" + bm + " form a ." + key);//节点
                 var val = data[i][key];
-                //版本切换赋值的处理
                 var $a = $node.parent();
-                if ($a.attr('annotation') == '/REPLACE/') {
+                var annotation = $a.attr('annotation');
+                //版本切换赋值的处理
+                if (annotation == '/REPLACE/') {
                     $a.parent().next().val(val);
                 } else {
                     if ($node.hasClass('easyuitextbox')) {
-                        $node.textbox({value: val});
+                        if (bm == '042155' && $node.hasClass('BZR_XM') && val) {
+                            $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
+                                required: false, value: '', readonly: true
+                            }).next().addClass('clear-border');
+                            $node.textbox({value: val});
+                        }else if (bm == '042155' && $node.hasClass('BZJ') && val) {
+                            $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
+                                required: false, value: '', readonly: true
+                            }).next().addClass('clear-border');
+                            $node.textbox({value: data[i][key+'_DX']});
+                        }else{
+                            $node.textbox({value: val});
+                        }
                     } else if ($node.hasClass('easyuicombobox')) {
-                        $node.combobox({value: val})
+                        if ($node.hasClass('JYCS_GAJGMC')) {
+                            $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                        } else {
+                            $node.combobox({value: val})
+                        }
                     } else if ($node.hasClass('easyuicombotree')) {
                         $node.combotree({value: val})
                     } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
@@ -935,7 +1091,7 @@ function fzxyDxXxfy(currentName, currentValue, bm) {
 function filedToParagraph(xyrinfo, prefixpz, splitpz) {
     var xyrinfoStr = '';
     if (!splitpz) {
-        splitpz = ',';//如果为空，默认为逗号
+        splitpz = '，';//如果为空，默认为逗号
     }
 
     for (var key in xyrinfo) {
@@ -965,6 +1121,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'cyzj_cyzjdm':
                         xyrinfoStr += "证件类型:" + getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
                         break;
+                    case 'cyzj_zjhm':
+                        xyrinfoStr += "证件号码:" + value + splitpz;
+                        break;
                     case 'fzxyr_csrq':
                         xyrinfoStr += parseTimeToCN(value) + "出生" + splitpz;
                         break;
@@ -980,7 +1139,6 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'fzxyr_sg':
                         xyrinfoStr += "身高:" + value + "厘米" + splitpz;
                         break;
-                        break;
                     case 'fzxyr_tmtzms':
                         xyrinfoStr += value + splitpz;
                         break;
@@ -995,6 +1153,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         break;
                     case 'xzz_dzmc':
                         xyrinfoStr += "现住址:" + value + splitpz;
+                        break;
+                    case 'lxdh':
+                        xyrinfoStr += "联系方式:" + value + splitpz;
                         break;
                     case 'dwmc':
                         xyrinfoStr += "单位名称:" + value + splitpz;
@@ -1017,6 +1178,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'cyzj_cyzjdm':
                         xyrinfoStr += getDictName(pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js', value) + splitpz;
                         break;
+                    case 'cyzj_zjhm':
+                        xyrinfoStr += value + splitpz;
+                        break;
                     case 'fzxyr_csrq':
                         xyrinfoStr += parseTimeToCN(value) + splitpz;
                         break;
@@ -1031,7 +1195,6 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         break;
                     case 'fzxyr_sg':
                         xyrinfoStr += value + splitpz;
-                        break;
                         break;
                     case 'fzxyr_tmtzms':
                         xyrinfoStr += value + splitpz;
@@ -1048,6 +1211,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'xzz_dzmc':
                         xyrinfoStr += value + splitpz;
                         break;
+                    case 'lxdh':
+                        xyrinfoStr += value + splitpz;
+                        break;
                     case 'dwmc':
                         xyrinfoStr += value + splitpz;
                         break;
@@ -1061,6 +1227,11 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
             }
 
         }
+    }
+    //组合信息末尾处理: 如果组合信息以逗号结尾，则删除末尾逗号
+    var lastStr = xyrinfoStr.charAt(xyrinfoStr.length-1);
+    if(lastStr == ',' || lastStr == '，'){
+        xyrinfoStr = xyrinfoStr.substring(0, xyrinfoStr.length-1);
     }
     return xyrinfoStr;
 }

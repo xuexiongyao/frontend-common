@@ -184,10 +184,12 @@ function queryCqbgData(render) {
                         DATA.CQBG.cqbgRow = {};
                     }
 
-                    render();//回调函数
+                    try{
+                        render();//回调函数
+                    }catch (e){}
                 } else if (json.state == 'error') {//查询错误
                     // console.log('error');
-                    $.messager.alert({
+                    alertDiv({
                         title: '温馨提示',
                         msg: json.msg,
                         fn: function () {
@@ -214,10 +216,16 @@ function queryFlwsData(title, render) {
                 //法律文书必填及分组规则
                 var btflwsRule =  DATA.CQBG.btflwsRule;
                 if(btflwsRule!=undefined){
-                    for(var z in btflwsRule){
-                        if(btflwsRule[z].BM.indexOf(flwsData[k].bianMa)!=-1){
-                            DATA.CQBG.btflwsRuleSelected=btflwsRule[z];
-                            break;
+                    DATA.CQBG.btflwsRuleSelected = undefined;
+                    for(var z=0;z<btflwsRule.length;z++){
+                    	var index=btflwsRule[z].BM.indexOf(flwsData[k].bianMa);
+                        if(index!=-1){
+                        	DATA.CQBG.btflwsRuleSelected = btflwsRule[z];
+                        	if(index==0){
+                    		  continue;
+                        	}else{//以 被约束方为主
+                    		  break;
+                        	}
                         }
                     }
                 }
@@ -286,6 +294,16 @@ function queryFlwsData(title, render) {
                 }
                 if(param){
                     loading("open","正在获取法律文书数据,请稍等...");
+                    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){
+                        if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
+                            var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
+                            for(var index=0;index<btflwsRule.length;index++){
+                                if(btflwsRule[index].BM.split(",")[0] == flwsData[k].bianMa && btflwsRule[index].FIELD&&!btflwsRule[index].FCX){
+                                    param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
+                                }
+                            }
+                        }
+                    }
                     //获取法律文书数据请求
                     $.ajax({
                         url: flwsData[k].queryUrl,
@@ -300,9 +318,9 @@ function queryFlwsData(title, render) {
                                     DATA.FLWS[flwsData[k].bianMa].flwsRow = jsonRows;
                                     if (only) {
                                         //已经呈请的法律文书不能再改
-                                        if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
-                                            DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
-                                        }
+                                        //if (DATA.FLWS[flwsData[k].bianMa].flwsRow[0].CQZT == '1') {
+                                        //    DATA.FLWS[flwsData[k].bianMa].status.disabled = true;
+                                        //}
 
                                         //法律文书跟呈请报告绑定
                                         for (var i = 0; i < jsonRows.length; i++) {
@@ -350,9 +368,10 @@ function cqbgSaveComplete(data) {
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
-            if (DATA.CQBG.cqbgZj == undefined) {
+            if (DATA.CQBG.cqbgZj == undefined && json.ID) {
                 DATA.CQBG.cqbgZj = json.ID;
             }
+            queryCqbgData('');//重新查询数据
             $.messager.show({
                 title: '提示',
                 msg: '呈请报告保存成功'
@@ -451,7 +470,7 @@ function scflwsRequest(params) {
             if(data){
                 var json = eval('(' + data + ')');
                 if (json.status == 'success') {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: '生成法律文书成功',
                         fn: function () {
@@ -459,7 +478,7 @@ function scflwsRequest(params) {
                         }
                     });
                 } else if (json.status == 'error') {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: '生成法律文书失败',
                         fn: function () {
@@ -486,7 +505,7 @@ function cqxgWsScflwsRequest(params){
             if(data){
                 var json = eval('(' + data + ')');
                 if (json.state == 'success') {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: '生成法律文书成功',
                         fn: function () {
@@ -494,7 +513,7 @@ function cqxgWsScflwsRequest(params){
                         }
                     });
                 } else if (json.state == 'error') {
-                    $.messager.alert({
+                    alertDiv({
                         title: '提示',
                         msg: '生成法律文书失败',
                         fn: function () {

@@ -92,7 +92,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                     }
                                     //呈请移送案件报告书 请求接口  行政案件
                                     if(asjflwsdm == 'X030003'){
-                                        saveAjyjData(DATA.asjbh , DATA.FLWS['X030004'].flwsRow[0].SWDW_GAJGJGDM,DATA.FLWS['X030004'].flwsRow[0].SWDW_GAJGMC,DATA.FLWS['X030004'].flwsRow[0].CQBG_ZJ)
+                                        saveAjyjData(DATA.asjbh , DATA.FLWS['X030004'].flwsRow[0].YSJGDM,DATA.FLWS['X030004'].flwsRow[0].YSJG,DATA.FLWS['X030004'].flwsRow[0].CQBG_ZJ)
                                     }
                                     //发送短信请求
                                     if(isCheckMsger){
@@ -100,17 +100,20 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                         sendMsg(nameIdStr,content,json.message);
                                     }else{
                                         loading('close');
-                                        $.messager.alert({
+                                        alertDiv({
                                             title : '提示',
                                             msg: '保存成功!',
                                             fn: function () {
+                                                try {
+                                                  parent.crossCloseTab('refresh_table_list');
+                                                }catch (e){}
                                                 crossCloseTab('refresh_table_list');
                                             }
                                         });
                                     }
                                 }else{
                                     loading('close');
-                                    $.messager.alert({
+                                    alertDiv({
                                         title : '提示',
                                         msg: json.message
                                     });
@@ -139,10 +142,13 @@ function sendMsg(userid,con,msg){
         type: 'post',
         success: function (data) {
             loading('close');
-            $.messager.alert({
+            alertDiv({
                 title : '提示',
                 msg: '保存成功!',
                 fn: function () {
+                    try {
+                        parent.crossCloseTab('refresh_table_list');
+                    }catch (e){}
                     crossCloseTab('refresh_table_list');
                 }
             });

@@ -8,10 +8,9 @@
  */
 function saveCqbg() {
     if (DATA.CQBG.cqbgData.bx && !DATA.CQBG.status.selected) {
-        $.messager.alert({
+        alertDiv({
             title: '提示',
-            msg: DATA.CQBG.cqbgData.name + '下的嫌疑对象列表必须勾选',
-            icon: 'warning'
+            msg: DATA.CQBG.cqbgData.name + '下的嫌疑对象列表必须勾选'
         });
         return;
     }
@@ -158,10 +157,9 @@ function saveFlws(bm) {
     DATA.FLWS[bm].isValidArry = [];
 
     if (DATA.FLWS[bm].flwsData.bx && !DATA.FLWS[bm].status.selected) {
-        $.messager.alert({
+        alertDiv({
             title: '提示',
-            msg: DATA.FLWS[bm].flwsData.name + '下的嫌疑对象列表必须勾选',
-            icon: 'warning'
+            msg: DATA.FLWS[bm].flwsData.name + '下的嫌疑对象列表必须勾选'
         });
         return;
     }
@@ -179,14 +177,20 @@ function saveFlws(bm) {
                 }
             }
 
-            if (isvalid) {
+            if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
                 flwsSave(DATA.FLWS[bm].flwsData.insertUrl, DATA.FLWS[bm].params, bm)
             } else {
-                $.messager.alert({
-                    title: '提示',
-                    msg: '法律文书多联中必填项不能为空',
-                    icon: 'warning'
-                })
+                if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
+                    alertDiv({
+                        title: '提示',
+                        msg: '法律文书多联中必填项不能为空'
+                    })
+                }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
+                    alertDiv({
+                        title: '提示',
+                        msg: '法律文书中选择框不能为空，必须勾选一个'
+                    })
+                }
             }
         } else {
             flwsSave(DATA.FLWS[bm].flwsData.insertUrl, DATA.FLWS[bm].params, bm)
@@ -204,14 +208,20 @@ function saveFlws(bm) {
             }
         }
 
-        if (isvalid) {
+        if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
             flwsSave(DATA.FLWS[bm].flwsData.updateUrl, DATA.FLWS[bm].params, bm)
         } else {
-            $.messager.alert({
-                title: '提示',
-                msg: '法律文书多联中必填项不能为空',
-                icon: 'warning'
-            })
+            if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
+                alertDiv({
+                    title: '提示',
+                    msg: '法律文书多联中必填项不能为空'
+                })
+            }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
+                alertDiv({
+                    title: '提示',
+                    msg: '法律文书中选择框不能为空，必须勾选一个'
+                })
+            }
         }
     }
 }
@@ -246,6 +256,7 @@ function getFlwsQtsjAdd(bm) {
                 var currentForm = $(this);
                 var isValid = currentForm.form('validate');
                 DATA.FLWS[bm].isValidArry.push(isValid);
+                DATA.FLWS[bm].checkBoxIsChecked = true;
 
                 if (isValid) {
 
@@ -314,11 +325,12 @@ function getFlwsQtsjAdd(bm) {
                                     var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                     if (dicturl) {
                                         var dictValue = getDictName(dicturl, val, false);
-                                        DATA.FLWS[bm].params[dataname] = val;
-                                        DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                         if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
                                             DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
                                             DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = val;
+                                            DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                         }
                                     }
                                 } else if ($(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
@@ -376,6 +388,16 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
 
+                    //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
+                    var checkboxs = currentForm.find("input[type='checkbox'][name^='XX']");
+                    if(checkboxs.length > 0){
+                        if(currentForm.find('input[type="checkbox"]:checked').length < 1){
+                            DATA.FLWS[bm].checkBoxIsChecked = false;
+                        }else{
+                            DATA.FLWS[bm].checkBoxIsChecked = true;
+                        }
+                    }
+
                     //文书中radio 处理（主要针对行政案件）
                     currentForm.find("input[type='radio']").each(function (i,radio) {
                         var param = DATA.FLWS[bm].params;
@@ -396,9 +418,13 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
                     //法律文书必填及分组规则
-                    if(DATA.CQBG.btflwsRule!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
+                    if(DATA.CQBG.btflwsRuleSelected!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
                         DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                     }
+
+                    //特殊提交数据的处理
+                    especiallyDataFun(bm);
+
                     return false;
                 } else {
                     return false;// 返回false终止表单提交
@@ -418,6 +444,7 @@ function getFlwsQtsjEdit(bm) {
         onSubmit: function () {
             var isValid = $(this).form('validate');
             DATA.FLWS[bm].isValidArry.push(isValid);
+            DATA.FLWS[bm].checkBoxIsChecked = true;
             if (isValid) {
                 //法律文书主键
                 if (!DATA.FLWS[bm].flwsData.one) {
@@ -458,15 +485,15 @@ function getFlwsQtsjEdit(bm) {
                                     //所有(树形)字典新增DICTMC后缀
                                     if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox') || $(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
                                         var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
-                                        var annotation = parentA.attr('annotation');
                                         var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
                                         if (dicturl) {
                                             var dictValue = getDictName(dicturl, val, false);
-                                            DATA.FLWS[bm].params[dataname] = val;
-                                            DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                             if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
                                                 DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
                                                 DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
+                                            }else{
+                                                DATA.FLWS[bm].params[dataname] = val;
+                                                DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                             }
                                         }
                                     } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
@@ -508,6 +535,16 @@ function getFlwsQtsjEdit(bm) {
                                 }
                             }
 
+                            //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
+                            var checkboxs = $(flwsA[a]).find("input[type='checkbox'][name^='XX']");
+                            if(checkboxs.length > 0){
+                                if($(flwsA[a]).find('input[type="checkbox"]:checked').length < 1){
+                                    DATA.FLWS[bm].checkBoxIsChecked = false;
+                                }else{
+                                    DATA.FLWS[bm].checkBoxIsChecked = true;
+                                }
+                            }
+
                             //文书中radio 处理（主要针对行政案件）
                             var radioIpt = $(flwsA[a]).find("input[type='radio']");
                             for(var m=0;m<radioIpt.length;m++){
@@ -543,9 +580,38 @@ function getFlwsQtsjEdit(bm) {
                     }
                 });
 
+                //文书中自定义的input[type=hidden]的处理
+                currentForm.find("a>input[type='hidden']").each(function (i,ipt) {
+                    var param = DATA.FLWS[bm].params;
+                    var _this = $(ipt);
+                    var annotation = _this.attr('annotation');
+                    if(!annotation){
+                        param[_this.attr('name')] = _this.val();
+                    }
+                });
+
+                //法律文书必填及分组规则
+                if(DATA.CQBG.btflwsRuleSelected!=undefined&&DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]==undefined){
+                    DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
+                }
+
                 if(DATA.FLWS.flwsxgsqbZj){//【呈请法律文书修改】
                     DATA.FLWS[bm].params.SETU_CQXGZJ = DATA.FLWS.flwsxgsqbZj;
                 }
+
+                //特殊提交数据的处理
+                especiallyDataFun(bm);
+
+                //更新DATA.FLWS[bm].flwsRow中的数据;
+                if(bm == 'X030004' || bm == '020005'){
+                    var flwsRow = DATA.FLWS[bm].flwsRow;
+                    for(var i = 0;i<flwsRow.length;i++){
+                        if(DATA.FLWS[bm].flwsZj == flwsRow[i].ZJ){
+                           jQuery.extend(flwsRow[i], DATA.FLWS[bm].params);
+                        }
+                    }
+                }
+
                 return false;
             } else {
                 return false;// 返回false终止表单提交
@@ -559,10 +625,9 @@ function getFlwsQtsjEdit(bm) {
  */
 function shongshen(sessionBean) {
     if (DATA.CQBG.cqbgZj == undefined) {//呈请报告的填写
-        $.messager.alert({
+        alertDiv({
             title: '提示',
-            msg: '请填写呈请报告',
-            icon: 'warning'
+            msg: '请填写呈请报告'
         });
         return;
     } else if (DATA.FLWS.flwsData) {//有法律文书
@@ -584,10 +649,9 @@ function shongshen(sessionBean) {
                     success: function (json) {
                         var jsonRows = json.rows;
                         if (json.state != 'success') {
-                            $.messager.alert({
+                            alertDiv({
                                 title: '提示',
-                                msg: json.msg,
-                                icon: 'warning'
+                                msg: json.msg
                             });
                             skip = true;
                         }else if(jsonRows.length>0){
@@ -615,24 +679,15 @@ function shongshen(sessionBean) {
                 for (var i = 0; i < btflwsArray.length; i++) {
                     var bm = btflwsArray[i];
                     if (DATA.FLWS[bm] == undefined || !DATA.FLWS[bm] || DATA.FLWS[bm].flwsData == undefined) {
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
-                            msg: '请填写法律文书',
-                            icon: 'warning'
+                            msg: "请检查法律文书"
                         });
                         return;
                     } else if (!DATA.FLWS[bm].status.hasDone) {
-                        $.messager.alert({
+                        alertDiv({
                             title: '提示',
-                            msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                            icon: 'warning'
-                        });
-                        return;
-                    } else if (bm == 'X020003' && !DATA.FLWS[bm].status.zfgked) {
-                        $.messager.alert({
-                            title: '提示',
-                            msg: "请填写" + DATA.FLWS[bm].flwsData.name + '的执法公开',
-                            icon: 'warning'
+                            msg: "请填写" + DATA.FLWS[bm].flwsData.name
                         });
                         return;
                     }
@@ -715,10 +770,9 @@ function scflwsrwForNoCqbg(bm) {
             };
             scflwsRequest(params);
         } else {
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
-                msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                icon: 'warning'
+                msg: "请填写" + DATA.FLWS[bm].flwsData.name
             });
             return;
         }
@@ -747,12 +801,26 @@ function scflwsrwForNoCqbg(bm) {
                 scflwsRequest(params);
             }
         } else {
-            $.messager.alert({
+            alertDiv({
                 title: '提示',
-                msg: "请填写" + DATA.FLWS[bm].flwsData.name,
-                icon: 'warning'
+                msg: "请填写" + DATA.FLWS[bm].flwsData.name
             });
             return;
+        }
+    }
+}
+
+/**
+ * 提交数据的特殊处理
+ */
+function especiallyDataFun(bm){
+    if(bm == '042155'){//取保候审人保|财保
+        if(DATA.FLWS[bm].params.BZR_XM && !DATA.FLWS[bm].params.BZJ){
+            DATA.FLWS[bm].params.ASJFLWSDM = '042155';
+            DATA.FLWS[bm].params.QBLX = 'R';
+        }else if(!DATA.FLWS[bm].params.BZR_XM && DATA.FLWS[bm].params.BZJ){
+            DATA.FLWS[bm].params.ASJFLWSDM = '042104';
+            DATA.FLWS[bm].params.QBLX = 'C';
         }
     }
 }

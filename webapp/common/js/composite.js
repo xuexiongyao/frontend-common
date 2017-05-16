@@ -638,7 +638,8 @@ function openOtherTable(isExport) {
                         var $this = $(this);
                         var isMaster = $this.attr('isMaster');
                         if (isMaster === 'false') {
-                            $this.removeClass('item-check-border').find('input').prop('checked', false);
+                        	////导出可勾选多个子表了
+                            //$this.removeClass('item-check-border').find('input').prop('checked', false);
                         }
                     });
                     $parent.addClass('item-check-border');
@@ -667,7 +668,8 @@ function openOtherTable(isExport) {
                         var $this = $(this);
                         var isMaster = $this.attr('isMaster');
                         if (isMaster === 'false') {
-                            $this.removeClass('item-check-border').find('input').prop('checked', false);
+                        	//导出可勾选多个子表了
+                            //$this.removeClass('item-check-border').find('input').prop('checked', false);
                         }
                     });
                     $parent.addClass('item-check-border');
@@ -734,9 +736,9 @@ function batchExprot(search_config_obj) {
 
                 var noticeMsg;
                 if (data.maxNum < data.totalNum) {
-                    noticeMsg = "系统最大允许导出" + data.maxNum + "条，本次导出" + data.exportNum + "条";
+                    noticeMsg = "系统每张表最大允许导出" + data.maxNum + "条，本次导出"+data.exportSheet+"张表，共" + data.exportNum + "条";
                 } else {
-                    noticeMsg = "本次导出" + data.exportNum + "条";
+                    noticeMsg = "本次导出"+data.exportSheet+"张表，共" + data.exportNum + "条";
                 }
 
                 $.messager.show({

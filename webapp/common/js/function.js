@@ -707,6 +707,8 @@ function editSwitch(bool, border_class, box_class) {
                 _this.combobox({readonly: false}).next().removeClass(_border_class);//移除样式还原边框
             } else if (_this.hasClass('easyui-textbox')) {
                 _this.textbox({readonly: false}).next().removeClass(_border_class);
+            } else if (_this.hasClass('easyui-numberbox')) {
+                _this.numberbox({readonly: false}).next().removeClass(_border_class);
             } else if (_this.hasClass('easyui-datebox')) {
                 _this.datebox({readonly: false}).next().removeClass(_border_class);
             } else if (_this.hasClass('easyui-datetimebox')) {
@@ -735,6 +737,8 @@ function editSwitch(bool, border_class, box_class) {
                 _this.combobox({readonly: true,required:false}).next().addClass(_border_class);//添加样式取消边框
             } else if (_this.hasClass('easyui-textbox') || _this.hasClass('easyuitextbox')) {
                 _this.textbox({readonly: true,required:false}).next().addClass(_border_class);
+            } else if (_this.hasClass('easyui-numberbox') || _this.hasClass('easyuinumberbox')) {
+                _this.numberbox({readonly: true,required:false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-datebox') || _this.hasClass('easyuidatebox')) {
                 _this.datebox({readonly: true,required:false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-datetimebox') || _this.hasClass('easyuidatetimebox')) {
