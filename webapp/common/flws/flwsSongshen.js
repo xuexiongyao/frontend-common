@@ -180,8 +180,15 @@ function selectApprove(shjl) {
     $('#next_link_area,#next_over').hide();
     $('#over_area').hide();
     if (shjl == '1') {
-        $('#next_select_title').text('下一环节及审批人');
-        $('#next_link_area').show();
+        if (isFinally) {
+            $('#next_select_title').text('下一环节：结束');
+            $('#next_link_area').show();
+            $('#select_approve').hide();
+        } else {
+            $('#next_select_title').text('下一环节及审批人');
+            $('#next_link_area').show();
+            $('#select_approve').show();
+        }
     }
     //不同意
     else if (shjl == '2') {
@@ -190,14 +197,17 @@ function selectApprove(shjl) {
             $('#next_select_title').text('选择处理方式');
             $('#over_area').show();
             $('#next_link_area').show();
+            $('#select_approve').show();
         } else {
             $('#next_over').show();
+            $('#select_approve').hide();
         }
     }
     //退回
     else if (shjl == '3') {
         $('#next_select_title').text('请选择退回的状态');
         $('#next_link_area').show();
+        $('#select_approve').show();
     }
     /*****END*****/
 
@@ -566,7 +576,7 @@ function end(shjl, shsj, shyj) {
                     loading('close');
                     alertDiv({
                         title: '提示',
-                        msg: msg,
+                        msg: json.message,
                         fn: function () {
                             crossCloseTab('refresh_flwstask');
                         }
@@ -625,6 +635,8 @@ function lctShow() {
                             spzt = '<i class="fa fa-times"></i>';
                         } else if (data[i].shjl == '3') {
                             spzt = '<i class="fa fa-reply"></i>';
+                        } else if (data[i].shjl == '4') {//待审批状态
+                            spzt = '<i class="fa fa-spin fa-spinner"></i>';
                         }
 
                         str += '<div class="lct-node" title="' + data[i].shyj + '">' +
