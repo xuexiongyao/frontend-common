@@ -1151,8 +1151,7 @@ function flwsDxListRenderC(bm) {
             }
 
             for (var i = 0; i < tmpArray.length; i++) {
-                console.log($('#flws_xyr_area_' + bm).find("input[xxzjbh='" + tmpArray[i] + "']"));
-
+                //console.log($('#flws_xyr_area_' + bm).find("input[xxzjbh='" + tmpArray[i] + "']"));
                 $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + tmpArray[i] + "']").click();
             }
         }
@@ -1215,6 +1214,12 @@ function flwsClXyrCheckC(bm, $this) {
             xyrzhxxData = $(checkXyr[i]).next().attr('xyrzhxx');
             xyrryidData = $(checkXyr[i]).attr('ryid');
             xyrasjxgrybhData = $(checkXyr[i]).attr('asjxgrybh');
+            if(xyrryidData == 'null'){
+                xyrryidData = '';
+            }
+            if(xyrasjxgrybhData == 'null'){
+                xyrasjxgrybhData = '';
+            }
             //xyrxmArry.push(xyrxmData);
             xyridArry.push(xyridData);
             xyrzhxxArry.push(xyrzhxxData);

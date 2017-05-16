@@ -170,7 +170,7 @@ function cqbgXyrDataXxfy(xyrids) {
 }
 
 /**
- * 嫌疑对象字符串模板函数
+ * 嫌疑对象字符串模板函数 单选
  * @param title title属性，提示内容
  * @param disabled disabled属性
  * @param xxzjbh 嫌疑对象的主键
@@ -192,7 +192,7 @@ function xydxStrTmpFun(title, disabled, xxzjbh, xytype, xyzhxx, xydxmc,isFlws) {
 }
 
 /**
- * 嫌疑对象字符串模板函数
+ * 嫌疑对象字符串模板函数 多选
  * @param title title属性，提示内容
  * @param disabled disabled属性
  * @param xxzjbh 嫌疑对象的主键
