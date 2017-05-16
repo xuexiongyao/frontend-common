@@ -388,8 +388,8 @@ function getFlwsQtsjAdd(bm) {
                         }
                     });
 
-                    //文书中checkbox验证不能为空
-                    var checkboxs = currentForm.find("input[type='checkbox']");
+                    //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
+                    var checkboxs = currentForm.find("input[type='checkbox'][name^='XX']");
                     if(checkboxs.length > 0){
                         if(currentForm.find('input[type="checkbox"]:checked').length < 1){
                             DATA.FLWS[bm].checkBoxIsChecked = false;
@@ -535,8 +535,9 @@ function getFlwsQtsjEdit(bm) {
                                 }
                             }
 
-                            //文书中checkbox验证不能为空
-                            if(checkboxIpt.length > 0){
+                            //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
+                            var checkboxs = $(flwsA[a]).find("input[type='checkbox'][name^='XX']");
+                            if(checkboxs.length > 0){
                                 if($(flwsA[a]).find('input[type="checkbox"]:checked').length < 1){
                                     DATA.FLWS[bm].checkBoxIsChecked = false;
                                 }else{
