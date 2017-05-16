@@ -2027,12 +2027,17 @@ function getIEVersion() {
 					//TODO 未登录
 					status = 418;
 					break;
+				case (200):
+					status = 200;
+					break;
 				default:
 					status = 1;
 				//TODO 未知错误
 			}
 			if(status == 418){
 				sessionTimeOut();
+			}else if(status == 200){
+
 			}else{
 				console.log('submitForm ajax err');
 				var errorMsg = '数据提交服务失败！';
