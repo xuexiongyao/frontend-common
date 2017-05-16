@@ -2033,6 +2033,25 @@ function getIEVersion() {
 			}
 			if(status == 418){
 				sessionTimeOut();
+			}else{
+				console.log('submitForm ajax err');
+				var errorMsg = '数据提交服务失败！';
+				if (jqXHR && (jqXHR.status == 400 || jqXHR.status == 500) && jqXHR.responseText) {
+					errorMsg = jqXHR.responseText;
+					try {
+						var messageJson = eval("(" + errorMsg + ")");
+						if (messageJson.message) {
+							errorMsg = messageJson.message;
+						} else if (messageJson.errors) {
+							errorMsg = messageJson.errors;
+						}
+					} catch (e) {
+					}
+				}
+				$.messager.alert({
+					title: '错误信息',
+					msg: errorMsg
+				});
 			}
 		}
 	});
