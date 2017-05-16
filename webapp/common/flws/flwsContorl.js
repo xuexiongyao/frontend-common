@@ -455,6 +455,31 @@ function getFlwsQtsjEdit(bm) {
                     }
                 }
 
+                //嫌疑人id
+                if (DATA.FLWS[bm].xyrXxzjbh) {
+                    DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrXxzjbh;//嫌疑人主键id
+                }
+                if (DATA.FLWS[bm].xyrCldxlb) {
+                    DATA.FLWS[bm].params.CLDXLB = DATA.FLWS[bm].xyrCldxlb;//嫌疑人处理对象类别
+                }
+                if (DATA.FLWS[bm].asjxgry) {
+                    DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].asjxgry;//嫌疑人案事件相关人员编号
+                }
+                if (DATA.FLWS[bm].fzxyrRyid) {
+                    DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].fzxyrRyid;//嫌疑人人员id
+                }
+
+                //多选
+                if (DATA.FLWS[bm].xyrids) {
+                    DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
+                }
+                if (DATA.FLWS[bm].xyrryids) {
+                    DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].xyrryids.join(',');//嫌疑人人员id
+                }
+                if (DATA.FLWS[bm].xyrasjxgrybhs) {
+                    DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].xyrasjxgrybhs.join(',');//嫌疑人案事件相关人员编号
+                }
+
                 var flwsA = $('#flws_cl_area_' + bm + ' form p>a');
                 for (var a = 0; a < flwsA.length; a++) {
                     var annotation = $(flwsA[a]).attr('annotation');
