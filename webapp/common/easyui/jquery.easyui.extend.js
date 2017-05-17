@@ -2053,10 +2053,12 @@ function getIEVersion() {
 					} catch (e) {
 					}
 				}
-				$.messager.alert({
-					title: '错误信息',
-					msg: errorMsg
-				});
+				if(!this.msgType || this.msgType == 'alert'){
+					$.messager.alert({
+						title: '错误信息',
+						msg: errorMsg
+					});
+				}
 			}
 		}
 	});
