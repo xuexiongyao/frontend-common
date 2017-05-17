@@ -413,8 +413,8 @@ function flwsSaveComplete(data, bm) {
                 if (bm == 'X020003') {
                     DATA.FLWS[bm].status.zfgked = false;
                 }
-                queryFlwsData(DATA.FLWS.title, flwsPageRender);
             }
+            queryFlwsData(DATA.FLWS.title, flwsPageRender);
             $.messager.show({
                 title: '提示',
                 msg: '法律文书保存成功'
