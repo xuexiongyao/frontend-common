@@ -454,13 +454,14 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             $(ipts[i]).textbox(textboxObj);
                             break;
                         case 'TEXTAREA': //换行文本   不换行
+                            var dataOpts = $(ipts[i]).attr('data-options');//驗證規則
                             var readonly = '';
                             if(!isEdit){
                                 readonly = 'readonly="readonly"'
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA " + aName + "' name='" + aName + "' "+readonly+"></textarea>";
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -492,13 +493,14 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             });
                             break;
                         case 'TEXTAREA_R': //换行文本不换行
+                            var dataOpts = $(ipts[i]).attr('data-options');//驗證規則
                             var readonly = '';
                             if(!isEdit){
                                 readonly = 'readonly="readonly"'
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = "<textarea class='easyuivalidatebox TEXTAREA_R " + aName + "' name='" + aName + "' "+readonly+"></textarea>";
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -584,13 +586,14 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             });
                             break;
                         case 'TEXTBOX'://文本框  换行文本
+                            var dataOpts = $(ipts[i]).attr('data-options');//驗證規則
                             var readonly = '';
                             if(!isEdit){
                                 readonly = 'readonly="readonly"'
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = "<textarea class='easyuivalidatebox TEXTBOX " + aName + "' name='" + aName + "' "+readonly+"></textarea>";
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
