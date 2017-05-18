@@ -580,14 +580,14 @@ function xydxListRenderC(bm) {
     var data = flwsRow;
     if (data.length > 0) {//有数据
         //只有一条数据(有嫌疑对象但是未勾选，并且非必选，也只能有一条数据)
-        //if (data.length == 1) {//默认选中
-        //    flwsXxfyB(bm,true);
-        //    $('#flws_xyr_area_' + bm).hide();
-        //    $('#flws_main_con_r_' + bm).css({width: '100%'});
-        //    $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
-        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
-        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
-        //} else {
+        if (data.length == 1 && !data[0].CLDXLB) {//默认选中
+            flwsXxfyB(bm,true);
+            $('#flws_xyr_area_' + bm).hide();
+            $('#flws_main_con_r_' + bm).css({width: '100%'});
+            $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
+            $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
+            $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
+        } else {
             for (var i = 0; i < data.length; i++) {
                 if (data[0].CLDXLB) {
                     xyrCldxlb = data[0].CLDXLB;
@@ -619,6 +619,9 @@ function xydxListRenderC(bm) {
                             }
                         }
                     }
+                }else{
+                    checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
+                        '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
             }
 
@@ -628,7 +631,7 @@ function xydxListRenderC(bm) {
                         '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
             }
-        //}
+        }
     } else {//无数据
         checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
             '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
@@ -639,9 +642,13 @@ function xydxListRenderC(bm) {
 
     //绑定点击事件
     if (data.length > 0) {
-        $('#flws_xyr_area_' + bm + ' div li label').off('click').on('click', function () {
-            flwsXxfyC1(bm, $(this));
-        })
+        if(data[0].CLDXLB){//勾選了嫌疑對象
+            $('#flws_xyr_area_' + bm + ' div li label').off('click').on('click', function () {
+                flwsXxfyC1(bm, $(this));
+            })
+        }else{//不必選，沒有勾選嫌疑對象
+            flwsXxfyB(bm,true);
+        }
     } else {
         flwsXxfyC2(bm);
     }
