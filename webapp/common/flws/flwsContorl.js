@@ -385,6 +385,8 @@ function getFlwsQtsjAdd(bm) {
                         //选中的值
                         if(_this.prop('checked')){
                             param[_this.attr('name')] = _this.val();
+                        }else{
+                            param[_this.attr('name')] = "";
                         }
                     });
 
@@ -405,6 +407,8 @@ function getFlwsQtsjAdd(bm) {
                         //选中的值
                         if(_this.prop('checked')){
                             param[_this.attr('name')] = _this.val();
+                        }else{
+                            param[_this.attr('name')] = "";
                         }
                     });
 
@@ -545,43 +549,6 @@ function getFlwsQtsjEdit(bm) {
                                 var val = $(areaArry[i]).val();//值
                                 DATA.FLWS[bm].params[dataname] = val;
                             }
-
-
-                            //文书中checkbox 处理（主要针对行政案件）
-                            var checkboxIpt = $(flwsA[a]).find("input[type='checkbox']");
-                            for(var n=0;n<checkboxIpt.length;n++){
-                                var param = DATA.FLWS[bm].params;
-                                var _this = $(checkboxIpt[n]);
-                                //选中的值
-                                if(_this.prop('checked')){
-                                    param[_this.attr('name')] = _this.val();
-                                }else{
-                                    param[_this.attr('name')] = '';
-                                }
-                            }
-
-                            //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
-                            var checkboxs = $(flwsA[a]).find("input[type='checkbox'][name^='XX']");
-                            if(checkboxs.length > 0){
-                                if($(flwsA[a]).find('input[type="checkbox"]:checked').length < 1){
-                                    DATA.FLWS[bm].checkBoxIsChecked = false;
-                                }else{
-                                    DATA.FLWS[bm].checkBoxIsChecked = true;
-                                }
-                            }
-
-                            //文书中radio 处理（主要针对行政案件）
-                            var radioIpt = $(flwsA[a]).find("input[type='radio']");
-                            for(var m=0;m<radioIpt.length;m++){
-                                var param = DATA.FLWS[bm].params;
-                                var _this = $(radioIpt[m]);
-                                //选中的值
-                                if(_this.prop('checked')){
-                                    param[_this.attr('name')] = _this.val();
-                                }else{
-                                    param[_this.attr('name')] = '';
-                                }
-                            }
                         }
                     }else{
                         //文书中自定义的input[type=hidden]的处理
@@ -594,7 +561,6 @@ function getFlwsQtsjEdit(bm) {
                         }
                     }
                 }
-
                 var currentForm = $('#flws_cl_area_' + bm + ' form');
                 //文书中textarea 处理
                 currentForm.find('td>textarea').each(function (i, textarea) {
@@ -604,6 +570,42 @@ function getFlwsQtsjEdit(bm) {
                         param[a.attr("name")] = $(textarea).val();
                     }
                 });
+
+                //文书中checkbox 处理（主要针对行政案件）
+                var checkboxIpt = currentForm.find("input[type='checkbox']");
+                for(var n=0;n<checkboxIpt.length;n++){
+                    var param = DATA.FLWS[bm].params;
+                    var _this = $(checkboxIpt[n]);
+                    //选中的值
+                    if(_this.prop('checked')){
+                        param[_this.attr('name')] = _this.val();
+                    }else{
+                        param[_this.attr('name')] = '';
+                    }
+                }
+
+                //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
+                var checkboxs = currentForm.find("input[type='checkbox'][name^='XX']");
+                if(checkboxs.length > 0){
+                    if(currentForm.find('input[type="checkbox"]:checked').length < 1){
+                        DATA.FLWS[bm].checkBoxIsChecked = false;
+                    }else{
+                        DATA.FLWS[bm].checkBoxIsChecked = true;
+                    }
+                }
+
+                //文书中radio 处理（主要针对行政案件）
+                var radioIpt = currentForm.find("input[type='radio']");
+                for(var m=0;m<radioIpt.length;m++){
+                    var param = DATA.FLWS[bm].params;
+                    var _this = $(radioIpt[m]);
+                    //选中的值
+                    if(_this.prop('checked')){
+                        param[_this.attr('name')] = _this.val();
+                    }else{
+                        param[_this.attr('name')] = '';
+                    }
+                }
 
                 //文书中自定义的input[type=hidden]的处理
                 currentForm.find("a>input[type='hidden']").each(function (i,ipt) {
