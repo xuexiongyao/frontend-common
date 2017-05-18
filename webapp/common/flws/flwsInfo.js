@@ -580,14 +580,14 @@ function xydxListRenderC(bm) {
     var data = flwsRow;
     if (data.length > 0) {//有数据
         //只有一条数据(有嫌疑对象但是未勾选，并且非必选，也只能有一条数据)
-        //if (data.length == 1) {//默认选中
-        //    flwsXxfyB(bm,true);
-        //    $('#flws_xyr_area_' + bm).hide();
-        //    $('#flws_main_con_r_' + bm).css({width: '100%'});
-        //    $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
-        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
-        //    $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
-        //} else {
+        if (data.length == 1 && !data[0].CLDXLB) {//默认选中
+            flwsXxfyB(bm,true);
+            $('#flws_xyr_area_' + bm).hide();
+            $('#flws_main_con_r_' + bm).css({width: '100%'});
+            $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
+            $('#flws_cl_area_' + bm + ' .tabs-panels .panel').css('width', '1168px');
+            $('#flws_cl_area_' + bm + ' .tabs-panels .panel .panel-body').css('width', '1168px');
+        } else {
             for (var i = 0; i < data.length; i++) {
                 if (data[0].CLDXLB) {
                     xyrCldxlb = data[0].CLDXLB;
@@ -619,6 +619,9 @@ function xydxListRenderC(bm) {
                             }
                         }
                     }
+                }else{
+                    checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
+                        '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
             }
 
@@ -628,7 +631,7 @@ function xydxListRenderC(bm) {
                         '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
             }
-        //}
+        }
     } else {//无数据
         checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
             '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
@@ -639,9 +642,13 @@ function xydxListRenderC(bm) {
 
     //绑定点击事件
     if (data.length > 0) {
-        $('#flws_xyr_area_' + bm + ' div li label').off('click').on('click', function () {
-            flwsXxfyC1(bm, $(this));
-        })
+        if(data[0].CLDXLB){//勾選了嫌疑對象
+            $('#flws_xyr_area_' + bm + ' div li label').off('click').on('click', function () {
+                flwsXxfyC1(bm, $(this));
+            })
+        }else{//不必選，沒有勾選嫌疑對象
+            flwsXxfyB(bm,true);
+        }
     } else {
         flwsXxfyC2(bm);
     }
@@ -664,76 +671,76 @@ function flwsXxfyC1(bm, $this) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
                 if (DATA.FLWS[bm].flwsData.customized) {
                     eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
-                } else {
-                    for (var j = 0; j < $target.length; j++) {
-                        var aName = $($target[j]).attr('name');//a标签的name属性
-                        var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+                }
 
-                        //多版本处理（行政案件）
-                        data[i].VERSION = parseInt(data[i].VERSION);
-                        if (DATA.FLWS[bm].flwsData.switchVersion) {
-                            var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
-                            if (tabs.length > data[i].VERSION) {
-                                for (var index = data[i].VERSION; index < tabs.length; index++) {
-                                    $('#flws_cl_area_' + bm).tabs("close", index);
-                                }
-                            }
-                            for (var index = data[i].VERSION - 2; index >= 0; index--) {
+                for (var j = 0; j < $target.length; j++) {
+                    var aName = $($target[j]).attr('name');//a标签的name属性
+                    var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+
+                    //多版本处理（行政案件）
+                    data[i].VERSION = parseInt(data[i].VERSION);
+                    if (DATA.FLWS[bm].flwsData.switchVersion) {
+                        var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                        if (tabs.length > data[i].VERSION) {
+                            for (var index = data[i].VERSION; index < tabs.length; index++) {
                                 $('#flws_cl_area_' + bm).tabs("close", index);
                             }
                         }
-
-                        //checkbox、radiobox的处理
-                        if (typeof aName != 'undefined') {
-                            try{
-                                if (aName.indexOf('_T_') != -1) {
-                                    var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
-                                    var val = data[i][name];//对应数据的值
-                                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
-                                }
-                            }catch(e){}
+                        for (var index = data[i].VERSION - 2; index >= 0; index--) {
+                            $('#flws_cl_area_' + bm).tabs("close", index);
                         }
+                    }
 
-                        //$($target[j]).text('');
-                        for (var a in data[i]) {
-                            if (a == aName) {
-                                if (annotation) {
-                                    //日期的处理
-                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                    var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
-                                    var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
-                                    var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
-                                    if (textStyle) {
-                                        if (textStyle == 'DATE') {//2016年12月28日
-                                            var val = data[i][a + '_MASTER'];
-                                            var array = val.split('-');
-                                            var newVal = '';
+                    //checkbox、radiobox的处理
+                    if (typeof aName != 'undefined') {
+                        try{
+                            if (aName.indexOf('_T_') != -1) {
+                                var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
+                                var val = data[i][name];//对应数据的值
+                                $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                            }
+                        }catch(e){}
+                    }
 
-                                            for (var m = 0; m < array.length; m++) {
-                                                newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
-                                            }
-                                            $($target[j]).text(newVal);
-                                        } else if (textStyle == 'DATE_CN') {
-                                            $($target[j]).text(data[i][a]);
-                                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[i][a]+"</textarea>";
-                                            $($target[j]).html(strTextbox);
-                                            autoTextarea($($target[j]).find('textarea')[0]);
-                                        } else {
-                                            $($target[j]).text(data[i][a]);
+                    //$($target[j]).text('');
+                    for (var a in data[i]) {
+                        if (a == aName) {
+                            if (annotation) {
+                                //日期的处理
+                                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
+                                var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
+                                var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
+                                if (textStyle) {
+                                    if (textStyle == 'DATE') {//2016年12月28日
+                                        var val = data[i][a + '_MASTER'];
+                                        var array = val.split('-');
+                                        var newVal = '';
+
+                                        for (var m = 0; m < array.length; m++) {
+                                            newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
                                         }
-                                    } else if (dictStyle || treeStyle) {
-                                        if(a == 'JYCS_GAJGMC'){
-                                            $($target[j]).text(data[i][a]);
-                                        }else{
-                                            $($target[j]).text(data[i][a + '_DICTMC']);
-                                        }
+                                        $($target[j]).text(newVal);
+                                    } else if (textStyle == 'DATE_CN') {
+                                        $($target[j]).text(data[i][a]);
+                                    } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
+                                        var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[i][a]+"</textarea>";
+                                        $($target[j]).html(strTextbox);
+                                        autoTextarea($($target[j]).find('textarea')[0]);
                                     } else {
                                         $($target[j]).text(data[i][a]);
+                                    }
+                                } else if (dictStyle || treeStyle) {
+                                    if(a == 'JYCS_GAJGMC'){
+                                        $($target[j]).text(data[i][a]);
+                                    }else{
+                                        $($target[j]).text(data[i][a + '_DICTMC']);
                                     }
                                 } else {
                                     $($target[j]).text(data[i][a]);
                                 }
+                            } else {
+                                $($target[j]).text(data[i][a]);
                             }
                         }
                     }

@@ -7,11 +7,12 @@
  * 当字符串长度过大（string>5000）时，在本页面请求获取文书map结构数据
  * @param data  前一个页面传过来的map数据
  * @param cqbgBm  呈请报告的编码
+ * @param wslx  文书类型
  */
-function wsMainPageRender(data,cqbgBm){
+function wsMainPageRender(data,cqbgBm,wslx){
     if(typeof data == 'undefined' && typeof cqbgBm != 'undefined'){
         $.ajax({
-            url: pathConfig.basePath + '/wenshu/source/CQBG_' + cqbgBm + '/DIC.json',
+            url: pathConfig.basePath + '/wenshu/source/'+wslx+'_' + cqbgBm + '/DIC.json',
             success: function (json) {
                 initFlwsMain(json);
             }
@@ -413,8 +414,8 @@ function flwsSaveComplete(data, bm) {
                 if (bm == 'X020003') {
                     DATA.FLWS[bm].status.zfgked = false;
                 }
-                queryFlwsData(DATA.FLWS.title, flwsPageRender);
             }
+            queryFlwsData(DATA.FLWS.title, flwsPageRender);
             $.messager.show({
                 title: '提示',
                 msg: '法律文书保存成功'

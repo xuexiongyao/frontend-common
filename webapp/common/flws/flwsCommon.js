@@ -557,3 +557,12 @@ function jsGetAge(strBirthday){
     }
     return returnAge;//返回周岁年龄
 }
+
+/**
+ * textarea中换行、空格的转译处理
+ */
+function strEnterSpace(obj){
+    if(typeof obj == 'string'){
+        return obj.replace('\n','\\n').replace('\t','\\t');
+    }
+}
