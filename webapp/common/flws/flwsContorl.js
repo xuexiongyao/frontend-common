@@ -182,8 +182,8 @@ function saveFlws(bm) {
             } else {
                 if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
                     alertDiv({
-                        title: '提示',
-                        msg: '法律文书多联中必填项不能为空'
+                        title: '温馨提示',
+                        msg: '请检查法律文书多联中，必填项是否已填写和符合填写规范'
                     })
                 }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
                     alertDiv({
@@ -213,8 +213,8 @@ function saveFlws(bm) {
         } else {
             if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
                 alertDiv({
-                    title: '提示',
-                    msg: '法律文书多联中必填项不能为空'
+                    title: '温馨提示',
+                    msg: '请检查法律文书多联中，必填项是否已填写和符合填写规范'
                 })
             }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
                 alertDiv({
