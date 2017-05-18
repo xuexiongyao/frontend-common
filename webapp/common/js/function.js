@@ -1553,7 +1553,7 @@ function openCombotree(ID){
                     checkbox: true,
                     lines: true,
                     onBeforeCheck: function(node, checked){
-                        console.log(node);
+                        //console.log(node);
                         if(checked && !dictMultiple){
                             var roots = $(this).tree('getRoots');
                             $('#'+dictTreeID).tree('uncheck',roots[0].target);
