@@ -14,7 +14,7 @@ $(function(){
 });
 
 function reLogin(){
-    location.href = loginPath;
+    location.href = reLoginPath;
 }
 
 /*跨域请求子页面
@@ -72,7 +72,7 @@ function addTab(title,url,tab_id,return_tab_id,repeat){
     if ($('#frameTabs').tabs('existsById', tab_id)){
         $('#frameTabs').tabs('selectById', tab_id);
         loading('close');
-    //不存在,新建
+        //不存在,新建
     } else {
         var random = Math.random();
         var randomUrl = url;
@@ -95,19 +95,19 @@ function addTab(title,url,tab_id,return_tab_id,repeat){
     }
 
     /*//调用打开或选择的tab中的方法
-    if(fn_name){
-        //添加或选择的iframe
-        var iframe = $('#'+tab_id).find('iframe')[0];
-        var fn_name = return_fn_name.split(',');
-        for(var i=0;i<fn_name.length;i++){
-            var _fn_name = fn_name[i];
-            var msg = {
-                status : 'run_fn',
-                content : 'window.return_fn.'+_fn_name+'()'
-            };
-            crossRequestIframe(msg,iframe);
-        }
-    }*/
+     if(fn_name){
+     //添加或选择的iframe
+     var iframe = $('#'+tab_id).find('iframe')[0];
+     var fn_name = return_fn_name.split(',');
+     for(var i=0;i<fn_name.length;i++){
+     var _fn_name = fn_name[i];
+     var msg = {
+     status : 'run_fn',
+     content : 'window.return_fn.'+_fn_name+'()'
+     };
+     crossRequestIframe(msg,iframe);
+     }
+     }*/
     handleTab();        //绑定菜单事件:右键,双击等
     setTimeout(function(){loading('close');},1000);
 }
@@ -193,18 +193,18 @@ function closeTabRefreshOther(return_tab_id,return_fn_name){
             if(return_fn_name){
                 callIframeFn(return_tab_id,return_fn_name);
                 /*var return_iframe = $('#'+return_tab_id).find('iframe')[0];
-                //同域下调用iframe中的某个方法
-                //return_iframe[0].contentWindow['return_fn'][return_fn_name]();
-                //使用跨域方法执行返回后的方法,多个方法名用","隔开
-                var fn_name = return_fn_name.split(',');
-                for(var i=0;i<fn_name.length;i++){
-                    var _fn_name = fn_name[i];
-                    var msg = {
-                        status : 'run_fn',
-                        content : 'window.return_fn.'+_fn_name+'()'
-                    };
-                    crossRequestIframe(msg,return_iframe);
-                }*/
+                 //同域下调用iframe中的某个方法
+                 //return_iframe[0].contentWindow['return_fn'][return_fn_name]();
+                 //使用跨域方法执行返回后的方法,多个方法名用","隔开
+                 var fn_name = return_fn_name.split(',');
+                 for(var i=0;i<fn_name.length;i++){
+                 var _fn_name = fn_name[i];
+                 var msg = {
+                 status : 'run_fn',
+                 content : 'window.return_fn.'+_fn_name+'()'
+                 };
+                 crossRequestIframe(msg,return_iframe);
+                 }*/
             }
             fraTabs.tabs('close',currentTabTitle);//关闭当前标签
         }else{
@@ -224,7 +224,7 @@ function callIframeFn(tabID,fnName){
     var fn_name = fnName.split(',');
     for(var i=0;i<fn_name.length;i++){
         var _fn_name = fn_name[i];
-        
+
         //兼容传递的函数带参数的情况
         var content = null;
         if(_fn_name.indexOf('|') == -1){
