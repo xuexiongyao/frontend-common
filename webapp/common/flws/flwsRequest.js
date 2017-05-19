@@ -349,7 +349,10 @@ function queryFlwsData(title, render) {
 
                                 render(flwsData[k].bianMa);
                             } else if (json.state == 'error') {
-                                console.log('error');
+                                $.messager.show({
+                                    title: '提示',
+                                    msg: json.msg
+                                });
                             }
                         }
                     });
