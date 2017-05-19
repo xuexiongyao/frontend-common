@@ -370,6 +370,12 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         $(ipts[i]).attr('dicturl', url);
                         $(ipts[i]).combobox(comboboxObj);
                         break;
+                    case 'GB_D_GJHDQDM'://国籍
+                        var url = pathConfig.mainPath + '/common/dict/GB_D_GJHDQDM.js';
+                        comboboxObj.data = flwsDictObj.GB_D_GJHDQDM;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
                 }
             } else if ($(ipts[i]).hasClass('easyuicombotree')) {//combotree字典
                 var dictTree = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%')); //combotree字典名称
