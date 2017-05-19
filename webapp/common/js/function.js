@@ -1489,6 +1489,11 @@ function alertDiv(options){
 function openCombotree(ID){
     clickShowPanel(ID, false);
     var $box = $('#'+ID);
+    //设置组件不可点
+    $box.combotree({
+        editable: false,
+        readonly: true
+    });
     var options = $box.combotree('options');
     var boxSourceValue = $box.combotree('getValue');
     var btnID = ID + '_select';
@@ -1503,11 +1508,7 @@ function openCombotree(ID){
     }else{
         boxSourceValue = $box.combotree('getValue');
     }
-    //设置组件不可点
-    $box.combotree({
-        editable: false,
-        readonly: true
-    });
+
     //按钮文字更改
     $box.next().find('span').html('<a style="border:0;" id="'+btnID+'">点击选择</a>');
     //初始化按钮
