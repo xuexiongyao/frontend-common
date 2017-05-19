@@ -247,6 +247,9 @@ function xyrCheckedXxfy($this) {
                 }
             }
 
+            //嫌疑人勾选其他接口请求信息复用（秀平）
+            ajax_request(DATA.CQBG.cqbgData.bianMa, xyrXxzjbh);
+
             eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedDx('" + JSON.stringify(xydxCheckData) + "')");
             return;
         }

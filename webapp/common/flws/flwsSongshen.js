@@ -495,13 +495,13 @@ function complete(shjl, shsj, shyj) {
         'fjrxm': fjrxm
     };
     if (isLastTask) {
-        param.xwFlwsLajdsZjs = 'd036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
+        //param.xwFlwsLajdsZjs = 'd036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
         param.asjzcxwlbdm = asjzcxwlbdm;
         param.asjflwsdm = asjflwsdm;//+asjflwsdm;
         param.dxmc = dxmc;
         param.flwsmc = flwsmc;
         param.asjbh = asjbh;
-        param.cjsj = cjsj || '2012-08-08 20:00:00';
+        param.cjsj = cjsj;
         param.cqbgZj = businessKey;
         param.ajmc = ajmc;
     }
@@ -629,15 +629,20 @@ function lctShow() {
 
                     for (var i = 0; i < data.length; i++) {
                         //审批状态
-                        if (data[i].shjl == '1') {
+                        if (data[i].shjl == '1') {//成功
                             spzt = '<i class="fa fa-check"></i>';
-                        } else if (data[i].shjl == '2') {
+                        } else if (data[i].shjl == '2') {//退回
                             spzt = '<i class="fa fa-times"></i>';
-                        } else if (data[i].shjl == '3') {
+                        } else if (data[i].shjl == '3') {//不同意
                             spzt = '<i class="fa fa-reply"></i>';
-                        } else if (data[i].shjl == '4') {//待审批状态
-                            spzt = '<i class="fa fa-spin fa-spinner"></i>';
                         }
+                        //else if (data[i].shjl == '4') {//待处理
+                        //    spzt = '<i class="fa fa-spin fa-spinner"></i>';
+                        //} else if (data[i].shjl == '5') {//取回
+                        //    spzt = '<i class="fa fa-rotate-left"></i>';
+                        //}
+
+                        //如果审核人姓名为空，根据id获取审核人姓名
 
                         str += '<div class="lct-node" title="' + data[i].shyj + '">' +
                             '<div class="text">' +
@@ -758,6 +763,23 @@ function sendMsgLast(asjbh,businessKey,asjflwsdm,con,msg){
                     crossCloseTab('refresh_flwstask');
                 }
             });
+        }
+    })
+}
+
+/**
+ * 获取审核人姓名从组织机构
+ * @param ryid 审核人id
+ */
+function getShrxmFromJcj(ryid){
+    $.ajax({
+        url:pathConfig.managePath+'/api/user/queryOrgUserList',
+        data: {
+            identitycard:ryid
+        },
+        type: 'post',
+        success: function (data) {
+            console.log(data);
         }
     })
 }
