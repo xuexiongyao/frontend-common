@@ -4,7 +4,7 @@ function crossRequestParent(_msg) {
     var messenger = new Messenger('iframe', 'toParent');
     sendToMain(_msg);
     function sendToMain(msg) {
-        messenger.addTarget(window.parent, 'parent');
+        messenger.addTarget(window.top, 'parent');
         messenger.targets['parent'].send(msg);
     }
 
