@@ -416,7 +416,18 @@ function flwsXxfyA(bm) {
                 if (aName.indexOf('_T_') != -1) {
                     var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                     var val = data[name];//对应数据的值
-                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                    // checkbox多选框多个值的处理
+                    var valArr = [];
+                    if (val) {
+                        if (val.indexOf(',') == -1) {
+                            valArr.push(val);
+                        } else {
+                            valArr = val.split(',');
+                        }
+                    }
+                    for(var g=0;g<valArr.length;g++){
+                        $($target[j]).find("input[value='" + valArr[g] + "']").prop('checked', true).attr('disabled', 'disabled');
+                    }
                 }
             }catch(e){}
         }
@@ -513,7 +524,18 @@ function flwsXxfyB(bm,isCustomized) {
                 if (aName.indexOf('_T_') > -1) {
                     var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                     var val = data[name];//对应数据的值
-                    $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                    // checkbox多选框多个值的处理
+                    var valArr = [];
+                    if (val) {
+                        if (val.indexOf(',') == -1) {
+                            valArr.push(val);
+                        } else {
+                            valArr = val.split(',');
+                        }
+                    }
+                    for(var g=0;g<valArr.length;g++){
+                        $($target[j]).find("input[value='" + valArr[g] + "']").prop('checked', true).attr('disabled', 'disabled');
+                    }
                 }
             }catch(e){}
         }
@@ -697,7 +719,18 @@ function flwsXxfyC1(bm, $this) {
                             if (aName.indexOf('_T_') != -1) {
                                 var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                                 var val = data[i][name];//对应数据的值
-                                $($target[j]).find("input[value='" + val + "']").prop('checked', true).attr('disabled', 'disabled');
+                                //checkbox多选框多个值的处理
+                                var valArr = [];
+                                if (val) {
+                                    if (val.indexOf(',') == -1) {
+                                        valArr.push(val);
+                                    } else {
+                                        valArr = val.split(',');
+                                    }
+                                }
+                                for(var g=0;g<valArr.length;g++){
+                                    $($target[j]).find("input[value='" + valArr[g] + "']").prop('checked', true).attr('disabled', 'disabled');
+                                }
                             }
                         }catch(e){}
                     }

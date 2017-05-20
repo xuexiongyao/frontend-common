@@ -987,16 +987,18 @@ function flwsDataXxfy(bm, zj) {
                 eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
             }
             //多版本处理（行政案件）
-            data[i].VERSION = parseInt(data[i].VERSION);
-            if (DATA.FLWS[bm].flwsData.switchVersion) {
-                var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
-                if (tabs.length > data[i].VERSION) {
-                    for (var index = data[i].VERSION; index < tabs.length; index++) {
+            if(data[i].VERSION){
+                data[i].VERSION = parseInt(data[i].VERSION);
+                if (DATA.FLWS[bm].flwsData.switchVersion) {
+                    var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                    if (tabs.length > data[i].VERSION) {
+                        for (var index = data[i].VERSION; index < tabs.length; index++) {
+                            $('#flws_cl_area_' + bm).tabs("close", index);
+                        }
+                    }
+                    for (var index = data[i].VERSION - 2; index >= 0; index--) {
                         $('#flws_cl_area_' + bm).tabs("close", index);
                     }
-                }
-                for (var index = data[i].VERSION - 2; index >= 0; index--) {
-                    $('#flws_cl_area_' + bm).tabs("close", index);
                 }
             }
 
@@ -1008,7 +1010,18 @@ function flwsDataXxfy(bm, zj) {
                     if(aName.indexOf('_T_') != -1){
                         var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
                         var val = data[i][name];//对应数据的值
-                        $($target[j]).find("input[value='"+val+"']").click();
+                        //checkbox多选框多个值的处理
+                        var valArr = [];
+                        if (val) {
+                            if (val.indexOf(',') == -1) {
+                                valArr.push(val);
+                            } else {
+                                valArr = val.split(',');
+                            }
+                        }
+                        for(var g=0;g<valArr.length;g++){
+                            $($target[j]).find("input[value='"+valArr[g]+"']").click();
+                        }
                     }
                 }catch(e){}
             }

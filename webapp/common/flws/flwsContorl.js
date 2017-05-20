@@ -378,17 +378,18 @@ function getFlwsQtsjAdd(bm) {
                             param[a.attr("name")] = $(textarea).val();
                         }
                     });
+
                     //文书中checkbox 处理（主要针对行政案件）
-                    currentForm.find("input[type='checkbox']").each(function (i,checkbox) {
+                    var checkArr = [];
+                    var checkboxIpt = currentForm.find("input[type='checkbox']");
+                    for(var n=0;n<checkboxIpt.length;n++){
                         var param = DATA.FLWS[bm].params;
-                        var _this = $(checkbox);
-                        //选中的值
+                        var _this = $(checkboxIpt[n]);
                         if(_this.prop('checked')){
-                            param[_this.attr('name')] = _this.val();
-                        }else{
-                            param[_this.attr('name')] = "";
+                            checkArr.push(_this.val());
                         }
-                    });
+                        param[_this.attr('name')] = checkArr.join(',');
+                    }
 
                     //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
                     var checkboxs = currentForm.find("input[type='checkbox'][name^='XX']");
@@ -401,15 +402,15 @@ function getFlwsQtsjAdd(bm) {
                     }
 
                     //文书中radio 处理（主要针对行政案件）
+                    var checkRadioArr = [];
                     currentForm.find("input[type='radio']").each(function (i,radio) {
                         var param = DATA.FLWS[bm].params;
                         var _this = $(radio);
                         //选中的值
                         if(_this.prop('checked')){
-                            param[_this.attr('name')] = _this.val();
-                        }else{
-                            param[_this.attr('name')] = "";
+                            checkRadioArr.push(_this.val());
                         }
+                        param[_this.attr('name')] = checkRadioArr.join(',');
                     });
 
                     //文书中自定义的input[type=hidden]的处理
@@ -572,16 +573,15 @@ function getFlwsQtsjEdit(bm) {
                 });
 
                 //文书中checkbox 处理（主要针对行政案件）
+                var checkArr = [];
                 var checkboxIpt = currentForm.find("input[type='checkbox']");
                 for(var n=0;n<checkboxIpt.length;n++){
                     var param = DATA.FLWS[bm].params;
                     var _this = $(checkboxIpt[n]);
-                    //选中的值
                     if(_this.prop('checked')){
-                        param[_this.attr('name')] = _this.val();
-                    }else{
-                        param[_this.attr('name')] = '';
+                        checkArr.push(_this.val());
                     }
+                    param[_this.attr('name')] = checkArr.join(',');
                 }
 
                 //文书中checkbox验证不能为空【目前只针对行政案件XX选择框】
@@ -595,16 +595,16 @@ function getFlwsQtsjEdit(bm) {
                 }
 
                 //文书中radio 处理（主要针对行政案件）
+                var checkRadioArr = [];
                 var radioIpt = currentForm.find("input[type='radio']");
                 for(var m=0;m<radioIpt.length;m++){
                     var param = DATA.FLWS[bm].params;
                     var _this = $(radioIpt[m]);
                     //选中的值
                     if(_this.prop('checked')){
-                        param[_this.attr('name')] = _this.val();
-                    }else{
-                        param[_this.attr('name')] = '';
+                        checkRadioArr.push(_this.val());
                     }
+                    param[_this.attr('name')] = checkRadioArr.join(',');
                 }
 
                 //文书中自定义的input[type=hidden]的处理
@@ -634,7 +634,7 @@ function getFlwsQtsjEdit(bm) {
                     var flwsRow = DATA.FLWS[bm].flwsRow;
                     for(var i = 0;i<flwsRow.length;i++){
                         if(DATA.FLWS[bm].flwsZj == flwsRow[i].ZJ){
-                           jQuery.extend(flwsRow[i], DATA.FLWS[bm].params);
+                            jQuery.extend(flwsRow[i], DATA.FLWS[bm].params);
                         }
                     }
                 }
@@ -841,13 +841,18 @@ function scflwsrwForNoCqbg(bm) {
  * 提交数据的特殊处理
  */
 function especiallyDataFun(bm){
-    if(bm == '042155'){//取保候审人保|财保
-        if(DATA.FLWS[bm].params.BZR_XM && !DATA.FLWS[bm].params.BZJ){
-            DATA.FLWS[bm].params.ASJFLWSDM = '042155';
-            DATA.FLWS[bm].params.QBLX = 'R';
-        }else if(!DATA.FLWS[bm].params.BZR_XM && DATA.FLWS[bm].params.BZJ){
-            DATA.FLWS[bm].params.ASJFLWSDM = '042104';
-            DATA.FLWS[bm].params.QBLX = 'C';
-        }
+    switch (bm){
+        case '042155'://取保候审人保|财保
+            if(DATA.FLWS[bm].params.BZR_XM && !DATA.FLWS[bm].params.BZJ){
+                DATA.FLWS[bm].params.ASJFLWSDM = '042155';
+                DATA.FLWS[bm].params.QBLX = 'R';
+            }else if(!DATA.FLWS[bm].params.BZR_XM && DATA.FLWS[bm].params.BZJ){
+                DATA.FLWS[bm].params.ASJFLWSDM = '042104';
+                DATA.FLWS[bm].params.QBLX = 'C';
+            }
+            break;
+        case '110006'://告知书  批准时间(PZSJ)获取当前系统时间
+            DATA.FLWS[bm].params.PZSJ = getCurrentTime();
+            break;
     }
 }
