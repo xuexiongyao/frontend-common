@@ -80,6 +80,7 @@ function getNext() {
                 isLastTask = true;
                 // console.log('下一环节:', json);
                 alertDiv({
+                    top: 120,
                     title: '获取下一环节出错',
                     msg: json.message
                 });
@@ -103,6 +104,7 @@ function getCurrent() {
             } else {
                 // console.log('当前环节:', json);
                 alertDiv({
+                    top: 120,
                     title: '获取当前环节出错',
                     msg: json.message
                 });
@@ -261,6 +263,7 @@ function selectApprove(shjl) {
                                         });
                                     } else {
                                         alertDiv({
+                                            top: 120,
                                             title: '提示',
                                             msg: '请选择审批人!'
                                         });
@@ -353,27 +356,36 @@ function saveAndSsShyj(backObj) {
         var shsj = $('#shsj').val();
         var shyj = $('#shyj').val();
         if (!shjl) {
-            $.messager.show({
-                title: '提示',
-                msg: '请选择审核结论!'
+            alertDiv({
+                top:120,
+                title: '温馨提示',
+                msg: '请选择审核结论!',
+                fn: function(){
+                    $('#shjl').focus();
+                }
             });
-            $('#shjl').focus();
             return false;
         }
         if (!shsj) {
-            $.messager.show({
-                title: '提示',
-                msg: '请选择审核时间!'
+            alertDiv({
+                top: 120,
+                title: '温馨提示',
+                msg: '请选择审核时间!',
+                fn: function(){
+                    $('#shsj').focus();
+                }
             });
-            $('#shsj').focus();
             return false;
         }
         if (!shyj) {
-            $.messager.show({
-                title: '提示',
-                msg: '请选择审核时间!'
+            alertDiv({
+                top: 120,
+                title: '温馨提示',
+                msg: '请选择审核意见!',
+                fn: function(){
+                    $('#shyj').focus();
+                }
             });
-            $('#shyj').focus();
             return false;
         }
 
@@ -388,6 +400,7 @@ function saveAndSsShyj(backObj) {
                     complete(shjl, shsj, shyj);
                 } else {
                     alertDiv({
+                        top:120,
                         title: '提示',
                         msg: '请选择下一环节及审批人!'
                     });
@@ -407,6 +420,7 @@ function saveAndSsShyj(backObj) {
                     //console.log('不同意,但是选择审批人:',candidateUsers);
                 } else {
                     alertDiv({
+                        top: 120,
                         title: '提示',
                         msg: '请选择处理方式'
                     });
@@ -456,6 +470,7 @@ function saveAndSsShyj(backObj) {
                     success: function (json) {
                         loading('close');
                         alertDiv({
+                            top: 120,
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -466,6 +481,7 @@ function saveAndSsShyj(backObj) {
                 });
             } else {
                 alertDiv({
+                    top: 120,
                     title: '提示',
                     msg: '请选择退回状态!'
                 });
@@ -473,7 +489,22 @@ function saveAndSsShyj(backObj) {
 
         }
     });
+    //意见签章
+    $('#yjqzBtn').off('click').on('click', function () {
+        var shyj = $('#shyj').val();
+        console.log('backObj:',backObj);
+        window.frames[0].yjqz(shyj,'1');
+    });
+    //保存pdf
+    $('#yjqzPDFSave').off('click').on('click', function () {
+        window.frames[0].qzPDFSave();
+    });
+    //姓名签章
+    $('#xmqzBtn').off('click').on('click', function () {
+        window.frames[0].sign();
+    });
 }
+
 
 
 //完成流程,到下一级
@@ -523,6 +554,7 @@ function complete(shjl, shsj, shyj) {
                     } else {
                         loading('close');
                         alertDiv({
+                            top: 120,
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -537,6 +569,7 @@ function complete(shjl, shsj, shyj) {
                     } else {
                         loading('close');
                         alertDiv({
+                            top: 120,
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -548,6 +581,7 @@ function complete(shjl, shsj, shyj) {
             } else {
                 loading('close');
                 alertDiv({
+                    top: 120,
                     title: '提示',
                     msg: json.message
                 });
@@ -575,6 +609,7 @@ function end(shjl, shsj, shyj) {
                 } else {
                     loading('close');
                     alertDiv({
+                        top: 120,
                         title: '提示',
                         msg: json.message,
                         fn: function () {
@@ -664,6 +699,7 @@ function lctShow() {
                     $('.lct-node').tooltip();
                 } else {
                     alertDiv({
+                        top: 120,
                         title: '提示',
                         msg: '请求数据有误，请联系相关工作人员',
                         fn: function () {
@@ -673,6 +709,7 @@ function lctShow() {
                 }
             } else {
                 alertDiv({
+                    top: 120,
                     title: '提示',
                     msg: json.message
                 });
@@ -728,6 +765,7 @@ function sendMsg(userid, con, msg) {
         success: function (data) {
             loading('close');
             alertDiv({
+                top: 120,
                 title: '提示',
                 msg: msg,
                 fn: function () {
@@ -757,6 +795,7 @@ function sendMsgLast(asjbh,businessKey,asjflwsdm,con,msg){
         success: function (data) {
             loading('close');
             alertDiv({
+                top: 120,
                 title: '提示',
                 msg: msg,
                 fn: function () {
