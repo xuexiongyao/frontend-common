@@ -841,18 +841,47 @@ function scflwsrwForNoCqbg(bm) {
  * 提交数据的特殊处理
  */
 function especiallyDataFun(bm){
+    var params = DATA.FLWS[bm].params;
     switch (bm){
         case '042155'://取保候审人保|财保
-            if(DATA.FLWS[bm].params.BZR_XM && !DATA.FLWS[bm].params.BZJ){
-                DATA.FLWS[bm].params.ASJFLWSDM = '042155';
-                DATA.FLWS[bm].params.QBLX = 'R';
-            }else if(!DATA.FLWS[bm].params.BZR_XM && DATA.FLWS[bm].params.BZJ){
-                DATA.FLWS[bm].params.ASJFLWSDM = '042104';
-                DATA.FLWS[bm].params.QBLX = 'C';
+            if(params.BZR_XM && !params.BZJ){
+                params.ASJFLWSDM = '042155';
+                params.QBLX = 'R';
+            }else if(!params.BZR_XM && params.BZJ){
+                params.ASJFLWSDM = '042104';
+                params.QBLX = 'C';
             }
             break;
         case '110006'://告知书  批准时间(PZSJ)获取当前系统时间
-            DATA.FLWS[bm].params.PZSJ = getCurrentTime();
+            params.PZSJ = getCurrentTime();
+            break;
+        case 'X060003'://拘留审查决定书
+            if(params.QXXZ == '1'){
+                params.ASJFLWSDM = 'X060003';
+            }else if(params.QXXZ == '2'){
+                params.ASJFLWSDM = 'X060012';
+            }
+            break;
+        case 'X060007'://限制活动范围决定书
+            if(params.QXXZ == '1'){
+                params.ASJFLWSDM = 'X060007';
+            }else if(params.QXXZ == '2'){
+                params.ASJFLWSDM = 'X060013';
+            }
+            break;
+        case 'X020001'://行政处罚告知笔录（行政案件）
+            if(params.XX == '1,2'){
+                params.ASJFLWSDM = 'X020001';//行政处罚告知笔录
+            }else{
+                params.ASJFLWSDM = 'X020016';//行政处罚告知笔录（无听证）
+            }
+            break;
+        case '042162'://行政处罚告知笔录（刑事案件）
+            if(params.XX == '1,2'){
+                params.ASJFLWSDM = '042162';//行政处罚告知笔录
+            }else{
+                params.ASJFLWSDM = '042161';//行政处罚告知笔录（无听证）
+            }
             break;
     }
 }
