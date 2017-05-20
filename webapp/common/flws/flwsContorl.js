@@ -278,6 +278,9 @@ function getFlwsQtsjAdd(bm) {
                     }
 
                     //多选
+                    if (DATA.FLWS[bm].xyrxms) {
+                        DATA.FLWS[bm].params.FZXYR_XM = DATA.FLWS[bm].xyrxms.join(',');//嫌疑人姓名
+                    }
                     if (DATA.FLWS[bm].xyrids) {
                         DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
                     }
@@ -475,6 +478,9 @@ function getFlwsQtsjEdit(bm) {
                 }
 
                 //多选
+                if (DATA.FLWS[bm].xyrxms) {
+                    DATA.FLWS[bm].params.FZXYR_XM = DATA.FLWS[bm].xyrxms.join(',');//嫌疑人姓名
+                }
                 if (DATA.FLWS[bm].xyrids) {
                     DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
                 }

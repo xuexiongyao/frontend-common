@@ -1172,12 +1172,12 @@ function flwsClXyrCheckC(bm, $this) {
     var parentLi = $this.parent().parent();//父级li
 
     //针对嫌疑人多选组合信息的初始化
-    //var xyrxmData = '';
+    var xyrxmData = '';
     var xyridData = '';
     var xyrzhxxData = '';
     var xyrryidData = '';
     var xyrasjxgrybhData = '';
-    //var xyrxmArry = [];//嫌疑人姓名
+    var xyrxmArry = [];//嫌疑人姓名
     var xyridArry = [];//嫌疑人ID
     var xyrzhxxArry = [];
     var xyrryidArry = [];
@@ -1212,7 +1212,7 @@ function flwsClXyrCheckC(bm, $this) {
         checkXyr = $this.parent().parent().parent().find('input:checked');
 
         for (var i = 0; i < checkXyr.length; i++) {
-            //xyrxmData = $(checkXyr[i]).next().text();
+            xyrxmData = $(checkXyr[i]).next().text();
             xyridData = $(checkXyr[i]).attr('xxzjbh');
             xyrzhxxData = $(checkXyr[i]).next().attr('xyrzhxx');
             xyrryidData = $(checkXyr[i]).attr('ryid');
@@ -1223,7 +1223,7 @@ function flwsClXyrCheckC(bm, $this) {
             if(xyrasjxgrybhData == 'null'){
                 xyrasjxgrybhData = '';
             }
-            //xyrxmArry.push(xyrxmData);
+            xyrxmArry.push(xyrxmData);
             xyridArry.push(xyridData);
             xyrzhxxArry.push(xyrzhxxData);
             xyrryidArry.push(xyrryidData);
@@ -1237,7 +1237,7 @@ function flwsClXyrCheckC(bm, $this) {
 
         $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData + '\t');
 
-        //DATA.FLWS[bm].xyrxms = xyrxmArry;
+        DATA.FLWS[bm].xyrxms = xyrxmArry;
         DATA.FLWS[bm].xyrids = xyridArry;
         DATA.FLWS[bm].xyrryids = xyrryidArry;
         DATA.FLWS[bm].xyrasjxgrybhs = xyrasjxgrybhArry;
