@@ -1489,25 +1489,25 @@ function alertDiv(options){
 function openCombotree(ID){
     clickShowPanel(ID, false);
     var $box = $('#'+ID);
-    //设置组件不可点
-    $box.combotree({
-        editable: false,
-        readonly: true
-    });
-    var options = $box.combotree('options');
-    var boxSourceValue = $box.combotree('getValue');
-    var btnID = ID + '_select';
-    var dictPanelID = 'dictPanel_'+ID;
-    var dictSearchID = 'dictSearch_'+ID;
-    var dictTreeID = 'dictTree_'+ID;
-    var dictMultiple = options.multiple;
-    var dictUrl = options.url;
+    var boxSourceValue = '';
     //获取组件初始值
     if(dictMultiple){
         boxSourceValue = $box.combotree('getValues');
     }else{
         boxSourceValue = $box.combotree('getValue');
     }
+    //设置组件不可点
+    $box.combotree({
+        editable: false,
+        readonly: true
+    });
+    var options = $box.combotree('options');
+    var btnID = ID + '_select';
+    var dictPanelID = 'dictPanel_'+ID;
+    var dictSearchID = 'dictSearch_'+ID;
+    var dictTreeID = 'dictTree_'+ID;
+    var dictMultiple = options.multiple;
+    var dictUrl = options.url;
 
     //按钮文字更改
     $box.next().find('span').html('<a style="border:0;" id="'+btnID+'">点击选择</a>');
