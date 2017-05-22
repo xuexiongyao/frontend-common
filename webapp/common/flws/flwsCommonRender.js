@@ -66,13 +66,13 @@ function cqbgFlwsOtherXxfy() {
                 } else {
                     //办案人的特殊处理(BAR02)[ZCRY_XM]
                     if(key == 'ZCRY_XM'){
-                        var $nodeT = $(".flws-main-con-r form input." + key);
+                        var $nodeT = $(".flws-main-con-r form ." + key);
                         if(DATA.CQBG.cqbgRow.BAMJXM && typeof DATA.CQBG.cqbgRow.BAMJXM !='undefined'){
                             var valT = DATA.CQBG.cqbgRow.BAMJXM;//获取呈请报告办案民警姓名
                             $nodeT.textbox({value: valT})
                         }
                     }else{
-                        var $node = $(".flws-main-con-r form input." + key);
+                        var $node = $(".flws-main-con-r form ." + key);
                         if ($node.hasClass('easyuitextbox')) {
                             $node.textbox({value: val})
                         } else if ($node.hasClass('easyuicombobox')) {
@@ -692,7 +692,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         if (!flwsData.customized) {
             var xyrDom = DATA.URLATTR[xyrApiName];
             for (var j = 0; j < xyrDom.length; j++) {
-                var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
+                var $node = $("#flws_cl_area_" + bm + " .panel form a>." + xyrDom[j]);
 
                 if ($node.hasClass('easyuitextbox')) {
                     $node.textbox({value: ''})
@@ -850,7 +850,7 @@ function fzxyrXxfy(currentXyr, bm) {
                 var key = DATA.URLATTR[k][j];//法律文书中对应的组件名字
                 if (key) {
                     var val = data[key.toLowerCase()];//嫌疑人数据参数对应的值
-                    var $node = $("#flws_cl_area_" + bm + " form input." + key);
+                    var $node = $("#flws_cl_area_" + bm + " form ." + key);
                     if (val == undefined || val == '' || val == null) {//返回数据为空
                         console.log(key + '为空');
                         if ($node.hasClass('easyuitextbox')) {
@@ -958,7 +958,7 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
                         $node.combotree({value: val})
                     } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
                         $node.val(data[key + '_MASTER']);
-                        wdateValidate("#flws_cl_area_" + bm + " form input." + key);
+                        wdateValidate("#flws_cl_area_" + bm + " form ." + key);
                     } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
                         $node.val(val).validatebox();
                     }
@@ -1060,7 +1060,7 @@ function flwsDataXxfy(bm, zj) {
                         $node.combotree({value: val})
                     } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
                         $node.val(data[i][key + '_MASTER']);
-                        wdateValidate("#flws_cl_area_" + bm + " form input." + key);
+                        wdateValidate("#flws_cl_area_" + bm + " form ." + key);
                     } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
                         $node.val(val).validatebox();
                     }
