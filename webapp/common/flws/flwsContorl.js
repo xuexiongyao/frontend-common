@@ -537,17 +537,25 @@ function getFlwsQtsjEdit(bm) {
                                                 DATA.FLWS[bm].params[dataname] = val;
                                                 DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                             }
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = '';
+                                            DATA.FLWS[bm].params[dataname + '_DICTMC'] = '';
                                         }
                                     } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
                                         var moneyNum = $(dataArry[i]).parent().parent().attr('money');
                                         if (moneyNum) {
                                             DATA.FLWS[bm].params[dataname] = moneyNum;
                                             DATA.FLWS[bm].params[dataname + '_DX'] = val;
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = '';
+                                            DATA.FLWS[bm].params[dataname + '_DX'] = '';
                                         }
                                     }  else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
                                         var numberNum = $(dataArry[i]).parent().parent().attr('number');
                                         if (numberNum) {
                                             DATA.FLWS[bm].params[dataname] = numberNum;
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = '';
                                         }
                                     } else {
                                         DATA.FLWS[bm].params[dataname] = val;

@@ -467,7 +467,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + params + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -506,7 +506,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + params + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -599,7 +599,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + params + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
