@@ -99,6 +99,9 @@ function getCqbgQtsjAdd() {
                     DATA.CQBG.params.CQXG_XQ = JSON.stringify(DATA.FLWS_PARAM.CQXG_XQ);
                 }
 
+                //特殊提交数据的处理（针对不同呈请报告）
+                especiallyDataFunForCqbg(DATA.CQBG.asjflwsdm);
+
                 return false;
             } else {
                 return false;	// 返回false终止表单提交
@@ -139,6 +142,9 @@ function getCqbgQtsjEdit() {
                 if (DATA.CQBG.xyrids) {
                     DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
                 }
+
+                //特殊提交数据的处理（针对不同呈请报告）
+                especiallyDataFunForCqbg(DATA.CQBG.asjflwsdm);
 
                 return false;
             } else {
@@ -430,8 +436,8 @@ function getFlwsQtsjAdd(bm) {
                         DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                     }
 
-                    //特殊提交数据的处理
-                    especiallyDataFun(bm);
+                    //特殊提交数据的处理（针对不同法律文书）
+                    especiallyDataFunForFlws(bm);
 
                     return false;
                 } else {
@@ -633,7 +639,7 @@ function getFlwsQtsjEdit(bm) {
                 }
 
                 //特殊提交数据的处理
-                especiallyDataFun(bm);
+                especiallyDataFunForFlws(bm);
 
                 //更新DATA.FLWS[bm].flwsRow中的数据;
                 if(bm == 'X030004' || bm == '020005'){
@@ -844,9 +850,24 @@ function scflwsrwForNoCqbg(bm) {
 }
 
 /**
- * 提交数据的特殊处理
+ * 提交数据的特殊处理  呈请报告
+ * @param bm  呈请报告编码
  */
-function especiallyDataFun(bm){
+function especiallyDataFunForCqbg(bm){
+    var params = DATA.CQBG.params;
+    switch (bm){
+        case '090006'://呈请犯罪嫌疑人申请
+            params.BAMJID = DATA.OWN.userId;//当前登录者民警ID
+            params.BAMJXM = DATA.OWN.userName;//当前登录者民警姓名
+            break;
+    }
+}
+
+/**
+ * 提交数据的特殊处理  法律文书
+ * @param bm  法律文书编码
+ */
+function especiallyDataFunForFlws(bm){
     var params = DATA.FLWS[bm].params;
     switch (bm){
         case '042155'://取保候审人保|财保
