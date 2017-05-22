@@ -1,6 +1,5 @@
 ﻿var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
 var table_header_info = [];	//表头数组
-var expandInfoArr = [];		//扩展信息数组
 var config = [];
 var pageN = 1;
 var pageNumAll = 1;
@@ -515,8 +514,6 @@ function openOtherTable(isExport) {
     //通过勾选获取查询配置条件
     var search_config_obj = {};
     $('#other_table_dialog').empty();
-   // console.log('expandInfoArr:',expandInfoArr);
-    //console.log('tableArr:',tableArr);
     for (var i = start; i < search_config_arr.length; i++) {
         var isMaster = false;
         if (i == 0) isMaster = true;
@@ -582,7 +579,6 @@ function openOtherTable(isExport) {
                     var input = $(this).attr('input');
                     var formatter = $(this).attr('formatter');
                     var lishu = $(this).attr('lishu');
-                    expandInfoArr.push(module);
                     formatter = datePattern[formatter];
                     if (!formatter)
                         formatter = datePattern.date19;
@@ -595,6 +591,7 @@ function openOtherTable(isExport) {
 
                     } else {
                         if (isExport) {
+                        	search_config_obj[module+'_TABNAME'] = search_config[module + '_title'];
                             search_config_obj[module] = [field + '|' + text + '|' + input + '|' + formatter + '|' + lishu];
                         } else {
                             search_config_obj[module] = [field];
