@@ -761,7 +761,7 @@ function flwsYclXyDxCheck(bm, $this) {
             };
 
             //嫌疑人勾选其他接口请求信息复用（秀平）
-            if(bm == '042155'){
+            if(bm == '042155' || bm == '042140'){//取保候审 || 释放通知书
                 ajax_request(bm,xyrXxzjbh);
             }
 
@@ -1037,12 +1037,12 @@ function flwsDataXxfy(bm, zj) {
                     $a.parent().next().val(val);
                 } else {
                     if ($node.hasClass('easyuitextbox')) {
-                        if (bm == '042155' && $node.hasClass('BZR_XM') && val) {
+                        if (bm == '042155' && $node.hasClass('BZR_XM') && val) {//取保候审-人保
                             $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
                                 required: false, value: '', readonly: true
                             }).next().addClass('clear-border');
                             $node.textbox({value: val});
-                        }else if (bm == '042155' && $node.hasClass('BZJ') && val) {
+                        }else if (bm == '042155' && $node.hasClass('BZJ') && val) {//取保候审-财报
                             $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
                                 required: false, value: '', readonly: true
                             }).next().addClass('clear-border');
@@ -1053,6 +1053,15 @@ function flwsDataXxfy(bm, zj) {
                     } else if ($node.hasClass('easyuicombobox')) {
                         if ($node.hasClass('JYCS_GAJGMC')) {
                             $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                        } else if (bm == '042140' && $node.hasClass('QZCSLBDM') && val) {//释放通知书
+                            if(val == '2'){//拘留
+                                $('#flws_cl_area_'+bm).tabs('disableTab','四联');
+                                editDisableForAj('RMJCY_DWMC');
+                            }else if(val == '5'){//逮捕
+                                $('#flws_cl_area_'+bm).tabs('enableTab','四联');
+                                editEnableForAj('RMJCY_DWMC');
+                            }
+                            $node.combobox({value: val})
                         } else {
                             $node.combobox({value: val})
                         }

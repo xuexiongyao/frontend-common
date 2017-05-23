@@ -467,13 +467,11 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var className = '';
+                            var classNames = aName;
                             if(params){
-                                className = params;
-                            }else{
-                                className = aName;
+                                classNames += ' ' + params
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + className + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -512,13 +510,11 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var className = '';
+                            var classNames = aName;
                             if(params){
-                                className = params;
-                            }else{
-                                className = aName;
+                                classNames += ' ' + params
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + className + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -611,13 +607,11 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var className = '';
+                            var classNames = aName;
                             if(params){
-                                className = params;
-                            }else{
-                                className = aName;
+                                classNames += ' ' + params
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + className + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
