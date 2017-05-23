@@ -438,7 +438,7 @@ function flwsPageRender(bm) {
     }
 
     cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-    flwsTfrXxFy();//填发人信息复用
+    flwsTfrXxFy(bm);//填发人信息复用
 }
 
 /**********************类型A************************/
