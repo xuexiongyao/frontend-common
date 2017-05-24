@@ -927,7 +927,18 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
             if(aName.indexOf('_T_') != -1){
                 var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
                 var val = data[name];//对应数据的值
-                $($target[j]).find("input[value='"+val+"']").click();
+                // checkbox多选框多个值的处理
+                var valArr = [];
+                if (val) {
+                    if (val.indexOf(',') == -1) {
+                        valArr.push(val);
+                    } else {
+                        valArr = val.split(',');
+                    }
+                }
+                for(var g=0;g<valArr.length;g++){
+                    $($target[j]).find("input[value='" + valArr[g] + "']").click();
+                }
             }
         }catch(e){}
     }
