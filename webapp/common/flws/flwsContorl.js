@@ -878,7 +878,7 @@ function especiallyDataFunForCqbg(bm){
 function especiallyDataFunForFlws(bm){
     var params = DATA.FLWS[bm].params;
     switch (bm){
-        case '042155'://取保候审人保|财保
+        case '042155'://取保候审人保|财保(刑事案件)
             if(params.BZR_XM && !params.BZJ){
                 params.ASJFLWSDM = '042155';
                 params.QBLX = 'R';
@@ -887,17 +887,17 @@ function especiallyDataFunForFlws(bm){
                 params.QBLX = 'C';
             }
             break;
-        case '110006'://告知书  批准时间(PZSJ)获取当前系统时间
+        case '110006'://告知书(刑事案件)  批准时间(PZSJ)获取当前系统时间
             params.PZSJ = getCurrentTime();
             break;
-        case 'X060003'://拘留审查决定书
+        case 'X060003'://拘留审查决定书(行政案件)
             if(params.QXXZ == '1'){
                 params.ASJFLWSDM = 'X060003';
             }else if(params.QXXZ == '2'){
                 params.ASJFLWSDM = 'X060012';
             }
             break;
-        case 'X060007'://限制活动范围决定书
+        case 'X060007'://限制活动范围决定书(行政案件)
             if(params.QXXZ == '1'){
                 params.ASJFLWSDM = 'X060007';
             }else if(params.QXXZ == '2'){
@@ -916,6 +916,13 @@ function especiallyDataFunForFlws(bm){
                 params.ASJFLWSDM = '042162';//行政处罚告知笔录
             }else{
                 params.ASJFLWSDM = '042161';//行政处罚告知笔录（无听证）
+            }
+            break;
+        case 'X040002'://传唤证（行政案件）
+            if(params.CLDXLB == '1'){//对违法嫌疑人传唤
+                params.ASJFLWSDM = 'X040002';
+            }else if(params.CLDXLB == '2'){//对违法嫌疑单位传唤
+                params.ASJFLWSDM = 'X040023';
             }
             break;
     }
