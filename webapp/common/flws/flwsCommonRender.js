@@ -354,8 +354,8 @@ function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
             }
             DATA.CQBG.xydxZhxx = filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz);//嫌疑对象组合信息
             $("#cqbg_main_con form textarea").val('\t' + filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
+            break;
         }
-        break;
     }
 }
 
@@ -1208,7 +1208,7 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         xyrinfoStr += "办公地址:" + value + splitpz;
                         break;
                     case 'fddbr_xm':
-                        xyrinfoStr += "法定待辨认姓名:" + value + splitpz;
+                        xyrinfoStr += "法定代表人姓名:" + value + splitpz;
                         break;
                 }
             } else {
