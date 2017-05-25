@@ -954,34 +954,31 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
             if (annotation == '/REPLACE/') {
                 $a.parent().next().val(val);
             } else {
-                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
-                if(textStyle == 'MONEY'){
-                    $node.textbox({value: val});
-                    if(bm == '042114'){//取保候审特殊处理
-                        $a.attr('money',data[key + '_MASTER']);
-                    }else{
-                        $a.attr('money',data[key + '_DX']);
-                    }
-                }else if(textStyle == 'NUMBERCN'){
-                    $a.attr('number',val);
-                    $node.textbox({value: data[key + '_MASTER']});
-                }else{
-                    if ($node.hasClass('easyuitextbox')) {
+                if ($node.hasClass('easyuitextbox')) {
+                    //money、numbercn赋值后不做校验
+                    var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                    if (textLx == 'MONEY') {
+                        $a.attr('money', data[key + '_MASTER']);
+                        $node.textbox({value: val}).textbox('disableValidation');
+                    }else if(textLx == 'NUMBERCN'){
+                        $a.attr('number', data[key + '_MASTER']);
+                        $node.textbox({value: val}).textbox('disableValidation');
+                    }else {
                         $node.textbox({value: val});
-                    } else if ($node.hasClass('easyuicombobox')) {
-                        if($node.hasClass('JYCS_GAJGMC')){
-                            $node.combobox({value: data['JYCS_GAJGJGDM']})
-                        }else {
-                            $node.combobox({value: val})
-                        }
-                    } else if ($node.hasClass('easyuicombotree')) {
-                        $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                        $node.val(data[key + '_MASTER']);
-                        wdateValidate("#flws_cl_area_" + bm + " form ." + key);
-                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                        $node.val(val).validatebox();
                     }
+                } else if ($node.hasClass('easyuicombobox')) {
+                    if($node.hasClass('JYCS_GAJGMC')){
+                        $node.combobox({value: data['JYCS_GAJGJGDM']})
+                    }else {
+                        $node.combobox({value: val})
+                    }
+                } else if ($node.hasClass('easyuicombotree')) {
+                    $node.combotree({value: val})
+                } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                    $node.val(data[key + '_MASTER']);
+                    wdateValidate("#flws_cl_area_" + bm + " form ." + key);
+                } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                    $node.val(val).validatebox();
                 }
             }
         }
@@ -1067,9 +1064,20 @@ function flwsDataXxfy(bm, zj) {
                                 $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
                                     required: false, value: '', readonly: true
                                 }).next().addClass('clear-border');
+                                $("#flws_cl_area_" + bm + " form a .BZR_CSRQ").addClass('iptreadonly').textbox({
+                                    required: false, value: '', readonly: true
+                                }).next().addClass('clear-border');
                                 $node.textbox({value: data[i][key+'_DX']});
                             }else{
                                 $node.textbox({value: val});
+                            }
+
+                            //money、numbercn赋值后不做校验
+                            if(annotation){
+                                var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                if(textLx == 'MONEY' || textLx == 'NUMBERCN'){
+                                    $node.textbox('disableValidation');
+                                }
                             }
                         } else if ($node.hasClass('easyuicombobox')) {
                             if ($node.hasClass('JYCS_GAJGMC')) {
