@@ -99,6 +99,9 @@ function getCqbgQtsjAdd() {
                     DATA.CQBG.params.CQXG_XQ = JSON.stringify(DATA.FLWS_PARAM.CQXG_XQ);
                 }
 
+                //特殊提交数据的处理（针对不同呈请报告）
+                especiallyDataFunForCqbg(DATA.CQBG.asjflwsdm);
+
                 return false;
             } else {
                 return false;	// 返回false终止表单提交
@@ -139,6 +142,9 @@ function getCqbgQtsjEdit() {
                 if (DATA.CQBG.xyrids) {
                     DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
                 }
+
+                //特殊提交数据的处理（针对不同呈请报告）
+                especiallyDataFunForCqbg(DATA.CQBG.asjflwsdm);
 
                 return false;
             } else {
@@ -278,6 +284,9 @@ function getFlwsQtsjAdd(bm) {
                     }
 
                     //多选
+                    if (DATA.FLWS[bm].xyrxms) {
+                        DATA.FLWS[bm].params.FZXYR_XM = DATA.FLWS[bm].xyrxms.join(',');//嫌疑人姓名
+                    }
                     if (DATA.FLWS[bm].xyrids) {
                         DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
                     }
@@ -427,8 +436,8 @@ function getFlwsQtsjAdd(bm) {
                         DATA.FLWS[bm].params[ DATA.CQBG.btflwsRuleSelected.FIELD]= DATA.CQBG.btflwsRuleSelected.VALUE;
                     }
 
-                    //特殊提交数据的处理
-                    especiallyDataFun(bm);
+                    //特殊提交数据的处理（针对不同法律文书）
+                    especiallyDataFunForFlws(bm);
 
                     return false;
                 } else {
@@ -475,6 +484,9 @@ function getFlwsQtsjEdit(bm) {
                 }
 
                 //多选
+                if (DATA.FLWS[bm].xyrxms) {
+                    DATA.FLWS[bm].params.FZXYR_XM = DATA.FLWS[bm].xyrxms.join(',');//嫌疑人姓名
+                }
                 if (DATA.FLWS[bm].xyrids) {
                     DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
                 }
@@ -492,7 +504,6 @@ function getFlwsQtsjEdit(bm) {
                     if (annotation) {
                         //只获取可编辑选项的值
                         var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));//可编辑的
-                        var isMoney = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));//金额的
                         if (isEdit.length > 0) {
                             //日期插件my97单独处理
                             var dateArry = $(flwsA[a]).find('input.Wdate');
@@ -525,17 +536,25 @@ function getFlwsQtsjEdit(bm) {
                                                 DATA.FLWS[bm].params[dataname] = val;
                                                 DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                             }
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = '';
+                                            DATA.FLWS[bm].params[dataname + '_DICTMC'] = '';
                                         }
                                     } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
                                         var moneyNum = $(dataArry[i]).parent().parent().attr('money');
                                         if (moneyNum) {
                                             DATA.FLWS[bm].params[dataname] = moneyNum;
                                             DATA.FLWS[bm].params[dataname + '_DX'] = val;
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = '';
+                                            DATA.FLWS[bm].params[dataname + '_DX'] = '';
                                         }
                                     }  else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
                                         var numberNum = $(dataArry[i]).parent().parent().attr('number');
                                         if (numberNum) {
                                             DATA.FLWS[bm].params[dataname] = numberNum;
+                                        }else{
+                                            DATA.FLWS[bm].params[dataname] = '';
                                         }
                                     } else {
                                         DATA.FLWS[bm].params[dataname] = val;
@@ -627,7 +646,7 @@ function getFlwsQtsjEdit(bm) {
                 }
 
                 //特殊提交数据的处理
-                especiallyDataFun(bm);
+                especiallyDataFunForFlws(bm);
 
                 //更新DATA.FLWS[bm].flwsRow中的数据;
                 if(bm == 'X030004' || bm == '020005'){
@@ -838,21 +857,79 @@ function scflwsrwForNoCqbg(bm) {
 }
 
 /**
- * 提交数据的特殊处理
+ * 提交数据的特殊处理  呈请报告
+ * @param bm  呈请报告编码
  */
-function especiallyDataFun(bm){
+function especiallyDataFunForCqbg(bm){
+    var params = DATA.CQBG.params;
     switch (bm){
-        case '042155'://取保候审人保|财保
-            if(DATA.FLWS[bm].params.BZR_XM && !DATA.FLWS[bm].params.BZJ){
-                DATA.FLWS[bm].params.ASJFLWSDM = '042155';
-                DATA.FLWS[bm].params.QBLX = 'R';
-            }else if(!DATA.FLWS[bm].params.BZR_XM && DATA.FLWS[bm].params.BZJ){
-                DATA.FLWS[bm].params.ASJFLWSDM = '042104';
-                DATA.FLWS[bm].params.QBLX = 'C';
+        case '090006'://呈请犯罪嫌疑人申请
+            params.BAMJID = DATA.OWN.userId;//当前登录者民警ID
+            params.BAMJXM = DATA.OWN.userName;//当前登录者民警姓名
+            break;
+    }
+}
+
+/**
+ * 提交数据的特殊处理  法律文书
+ * @param bm  法律文书编码
+ */
+function especiallyDataFunForFlws(bm){
+    var params = DATA.FLWS[bm].params;
+    switch (bm){
+        case '042155'://取保候审人保|财保(刑事案件)
+            if(params.BZR_XM && !params.BZJ){
+                params.ASJFLWSDM = '042155';
+                params.QBLX = 'R';
+            }else if(!params.BZR_XM && params.BZJ){
+                params.ASJFLWSDM = '042104';
+                params.QBLX = 'C';
             }
             break;
-        case '110006'://告知书  批准时间(PZSJ)获取当前系统时间
-            DATA.FLWS[bm].params.PZSJ = getCurrentTime();
+        case '110006'://告知书(刑事案件)  批准时间(PZSJ)获取当前系统时间
+            params.PZSJ = getCurrentTime();
+            break;
+        case 'X060003'://拘留审查决定书(行政案件)
+            if(params.QXXZ == '1'){
+                params.ASJFLWSDM = 'X060003';
+            }else if(params.QXXZ == '2'){
+                params.ASJFLWSDM = 'X060012';
+            }
+            break;
+        case 'X060007'://限制活动范围决定书(行政案件)
+            if(params.QXXZ == '1'){
+                params.ASJFLWSDM = 'X060007';
+            }else if(params.QXXZ == '2'){
+                params.ASJFLWSDM = 'X060013';
+            }
+            break;
+        case 'X020001'://行政处罚告知笔录（行政案件）
+            if(params.XX == '1,2'){
+                params.ASJFLWSDM = 'X020001';//行政处罚告知笔录
+            }else{
+                params.ASJFLWSDM = 'X020016';//行政处罚告知笔录（无听证）
+            }
+            break;
+        case '042162'://行政处罚告知笔录（刑事案件）
+            if(params.XX == '1,2'){
+                params.ASJFLWSDM = '042162';//行政处罚告知笔录
+            }else{
+                params.ASJFLWSDM = '042161';//行政处罚告知笔录（无听证）
+            }
+            break;
+        case 'X040002'://传唤证（行政案件）
+            if(params.CLDXLB == '1'){//对违法嫌疑人传唤
+                params.ASJFLWSDM = 'X040002';
+            }else if(params.CLDXLB == '2'){//对违法嫌疑单位传唤
+                params.ASJFLWSDM = 'X040023';
+            }
+            break;
+        case 'X050002'://当场处罚决定书（行政案件）
+            if(params.SJWPQD == '1,1' || params.SJWPQD == '2,1' ||params.SJWPQD == '3,1'){//对违法嫌疑人传唤
+                params.SJWPQD = '1';
+            }else{
+                params.SJWPQD = '';
+            }
             break;
     }
 }

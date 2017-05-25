@@ -195,6 +195,7 @@ function xyrCheckedXxfy($this) {
     var checkXyr = [];
 
     var xydxZhxx = $this.next().attr('xyrzhxx');//嫌疑对象组合信息
+    var xydxLb = $this.next().attr('xyrtype');//嫌疑对象类别(同一时间只能操作一种类别)
 
     var isCheck = $this.prop('checked');//当前checkbox框是否勾选
     //勾选嫌疑人
@@ -226,6 +227,13 @@ function xyrCheckedXxfy($this) {
         }
         DATA.CQBG.xyrxms = xyrxmArry;
         DATA.CQBG.xyrids = xyridArry;
+        for (var k in xyrObj) {
+            if (xydxLb == xyrObj[k].id) {
+                xydxData = DATA.DX.xydxData[k];//嫌疑对象数据
+                DATA.CQBG.xydxlb = xyrObj[k].cldxlb;//嫌疑對象類別
+                DATA.CQBG.xydxbm = k;//嫌疑對象表名
+            }
+        }
 
         //自定义页面的处理(传递当前选中的嫌疑对象数据)  【会见犯罪嫌疑人申请表】
         if (DATA.CQBG.cqbgData.customized) {
@@ -438,7 +446,7 @@ function flwsPageRender(bm) {
     }
 
     cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-    flwsTfrXxFy();//填发人信息复用
+    flwsTfrXxFy(bm);//填发人信息复用
 }
 
 /**********************类型A************************/
@@ -504,7 +512,7 @@ function checkBtflwsRuleSelected(bm) {
     if (typeof DATA.CQBG.btflwsRuleSelected != 'undefined' && DATA.CQBG.btflwsRuleSelected) {
         var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
         if(!DATA.CQBG.btflwsRuleSelected.ALONE){
-        	if (bm != flwsMainBm) {
+            if (bm != flwsMainBm) {
                 for (var key in DATA.FLWS.flwsData) {
                     if (DATA.FLWS.flwsData[key].bianMa == flwsMainBm) {
                         var param = {
@@ -590,7 +598,6 @@ function checkBtflwsRuleSelected(bm) {
                 }
             }
         }
-        
     }
 }
 
@@ -606,7 +613,16 @@ function flwsDxListRenderOther(bm) {
     //后台查询回来的法律文书数据
     var flwsRow = DATA.FLWS[bm].flwsRow;
     //嫌疑对象数据
-    var xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);
+    var xydxDatas = {};//嫌疑对象数据
+
+    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//有呈请报告
+        //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
+        xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(jQuery.extend(true, {}, DATA.DX.xydxData),DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
+    }else{
+        xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);//嫌疑对象数据
+    }
+
+    // var xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);
     // if (DATA.FLWS[bm].flwsData.wdx) {
     //     $('#flws_xyr_area_' + bm).hide();
     //     $('#flws_main_con_r_' + bm).css({width: '100%'});
@@ -616,8 +632,8 @@ function flwsDxListRenderOther(bm) {
 
     //法律文書必選及規則【法律文書關聯規則】可參考法律文書取保候審
     if (typeof DATA.CQBG.btflwsRuleSelected != 'undefined' && DATA.CQBG.btflwsRuleSelected) {
-    	if(!DATA.CQBG.btflwsRuleSelected.ALONE){
-    		var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
+        if(!DATA.CQBG.btflwsRuleSelected.ALONE){
+            var flwsMainBm = DATA.CQBG.btflwsRuleSelected.BM.split(",")[0];
             if (bm != flwsMainBm) {
                 for (var key in DATA.FLWS.flwsData) {
                     if (DATA.FLWS.flwsData[key].bianMa == flwsMainBm) {
@@ -713,7 +729,7 @@ function flwsDxListRenderOther(bm) {
                     }
                 }
             }
-    	}
+        }
     }
 
     //申明未处理嫌疑对象，已处理嫌疑对象
@@ -919,8 +935,15 @@ function flwsDxListRenderOther(bm) {
 function flwsDxListRenderB(bm) {
     //法律文书嫌疑对象DOM树清空
     $('#flws_xyr_area_' + bm).html('');
+    var xydxDatas = {};//嫌疑对象数据
 
-    var xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
+    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//如果无呈请报告
+        //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
+        xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(DATA.DX.xydxData,DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
+    }else{
+        xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
+    }
+
     var xyrListStr = '';//嫌疑人list字符串
 
     if (xydxDatas) {
@@ -1107,7 +1130,14 @@ function flwsDxListRenderC(bm) {
     //法律文书嫌疑对象DOM树清空
     $('#flws_xyr_area_' + bm).html('');
 
-    var xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
+    var xydxDatas = {};//嫌疑对象数据
+
+    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//如果无呈请报告
+        //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
+        xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(DATA.DX.xydxData,DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
+    }else{
+        xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
+    }
     var xyrListStr = '';//嫌疑人list字符串
 
     if (xydxDatas) {
@@ -1172,12 +1202,12 @@ function flwsClXyrCheckC(bm, $this) {
     var parentLi = $this.parent().parent();//父级li
 
     //针对嫌疑人多选组合信息的初始化
-    //var xyrxmData = '';
+    var xyrxmData = '';
     var xyridData = '';
     var xyrzhxxData = '';
     var xyrryidData = '';
     var xyrasjxgrybhData = '';
-    //var xyrxmArry = [];//嫌疑人姓名
+    var xyrxmArry = [];//嫌疑人姓名
     var xyridArry = [];//嫌疑人ID
     var xyrzhxxArry = [];
     var xyrryidArry = [];
@@ -1212,7 +1242,7 @@ function flwsClXyrCheckC(bm, $this) {
         checkXyr = $this.parent().parent().parent().find('input:checked');
 
         for (var i = 0; i < checkXyr.length; i++) {
-            //xyrxmData = $(checkXyr[i]).next().text();
+            xyrxmData = $(checkXyr[i]).next().text();
             xyridData = $(checkXyr[i]).attr('xxzjbh');
             xyrzhxxData = $(checkXyr[i]).next().attr('xyrzhxx');
             xyrryidData = $(checkXyr[i]).attr('ryid');
@@ -1223,7 +1253,7 @@ function flwsClXyrCheckC(bm, $this) {
             if(xyrasjxgrybhData == 'null'){
                 xyrasjxgrybhData = '';
             }
-            //xyrxmArry.push(xyrxmData);
+            xyrxmArry.push(xyrxmData);
             xyridArry.push(xyridData);
             xyrzhxxArry.push(xyrzhxxData);
             xyrryidArry.push(xyrryidData);
@@ -1237,7 +1267,7 @@ function flwsClXyrCheckC(bm, $this) {
 
         $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData + '\t');
 
-        //DATA.FLWS[bm].xyrxms = xyrxmArry;
+        DATA.FLWS[bm].xyrxms = xyrxmArry;
         DATA.FLWS[bm].xyrids = xyridArry;
         DATA.FLWS[bm].xyrryids = xyrryidArry;
         DATA.FLWS[bm].xyrasjxgrybhs = xyrasjxgrybhArry;
@@ -1292,3 +1322,28 @@ function flwsClXyrCheckC(bm, $this) {
 }
 
 /**********************END ************************/
+
+/**
+ * 呈请报告已呈请嫌疑对象列表数据关联到法律文书：
+ * 1、嫌疑对象类型关联：如果呈请报告选择的嫌疑对象为嫌疑人，则关联的后续法律文书为嫌疑人列表；
+ * 2、如果呈请报告无嫌疑对象列表，则关联的法律文书也应无嫌疑对象；
+ * @param xydxData  嫌疑对象数据
+ * @param xydxbm  嫌疑对象表名
+ * @param xydxids  嫌疑对象id数组
+ * @return {Array} 返回已呈请嫌疑对象数据
+ */
+function xydxDataFromCqbgHasCq(xydxData,xydxbm,xydxids) {
+    var currentXydxData = xydxData[xydxbm];//当前嫌疑对象数据
+
+    var checkedXydxData = [];//呈请报告已呈请的嫌疑对象数据
+
+    for(var i=0;i<currentXydxData.length;i++){
+        for(var j=0;j<xydxids.length;j++){
+            if(xydxids[j] == currentXydxData[i].xxzjbh){
+                checkedXydxData.push(currentXydxData[i]);
+            }
+        }
+    }
+
+    return checkedXydxData;
+}

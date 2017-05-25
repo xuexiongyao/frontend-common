@@ -66,13 +66,13 @@ function cqbgFlwsOtherXxfy() {
                 } else {
                     //办案人的特殊处理(BAR02)[ZCRY_XM]
                     if(key == 'ZCRY_XM'){
-                        var $nodeT = $(".flws-main-con-r form input." + key);
+                        var $nodeT = $(".flws-main-con-r form ." + key);
                         if(DATA.CQBG.cqbgRow.BAMJXM && typeof DATA.CQBG.cqbgRow.BAMJXM !='undefined'){
                             var valT = DATA.CQBG.cqbgRow.BAMJXM;//获取呈请报告办案民警姓名
                             $nodeT.textbox({value: valT})
                         }
                     }else{
-                        var $node = $(".flws-main-con-r form input." + key);
+                        var $node = $(".flws-main-con-r form ." + key);
                         if ($node.hasClass('easyuitextbox')) {
                             $node.textbox({value: val})
                         } else if ($node.hasClass('easyuicombobox')) {
@@ -94,13 +94,20 @@ function cqbgFlwsOtherXxfy() {
 
 /**
  * 法律文书【填发人】默认复用当前登录者,可编辑
+ * @param bm  法律文书编码
  */
-function flwsTfrXxFy(){
+function flwsTfrXxFy(bm){
     //登录者填发人字段名：TFR_XM
     var userData = DATA.OWN;//当前登录者信息
     if(userData){
         var $node = $(".flws-main-con-r form input.TFR_XM");
-        $node.textbox({value:userData.userName})
+        $node.textbox({value:userData.userName});
+
+        //刑事案件、行政案件中：行政处罚告知笔录‘执行告知单位’默认复用当前登录者单位
+        if(bm == 'X020001' || bm == '042162'){
+            var $n = $(".flws-main-con-r form input.GZDW");
+            $n.textbox({value:userData.userOrgName});
+        }
     }
 }
 
@@ -347,8 +354,8 @@ function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
             }
             DATA.CQBG.xydxZhxx = filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz);//嫌疑对象组合信息
             $("#cqbg_main_con form textarea").val('\t' + filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
+            break;
         }
-        break;
     }
 }
 
@@ -472,11 +479,6 @@ function flwsRightPagePj(flwsData) {
      */
     var initFun = 'init_'+bm;
     try{
-        ajax_request(bm);
-    }catch(e){
-        console.log("没有ajax_request函数");
-    }
-    try{
         eval(initFun+'()');
     }catch(e){
         console.log(initFun+"()不存在！");
@@ -493,6 +495,13 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面拼接
     flwsRightPagePj(flwsData);
 
+    //新增页面法律文书的信息复用（编辑页面不需要）
+    try{
+        ajax_request(bm);
+    }catch(e){
+        console.log("没有ajax_request函数");
+    }
+
     if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
         $('#flws_main_con_r_mask_'+bm).show();
     }
@@ -505,7 +514,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     easyuiReset(flwsIpts, true, bm ,true);
     if(DATA.publicJkXx){
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-        flwsTfrXxFy();//填发人信息复用
+        flwsTfrXxFy(bm);//填发人信息复用
         //法律文书中类呈请报告呈请内容的信息复用
         flwsLsCqbgNrXxfy(bm);
     }
@@ -583,7 +592,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         //法律文书新增页面渲染
         flwsRightPageRenderForAdd(flwsData);
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-        flwsTfrXxFy();//填发人信息复用
+        flwsTfrXxFy(bm);//填发人信息复用
 
         //已处理|未处理嫌疑对象选中的互斥
         var yclXyrLen = $('#flws_xyr_area_ycl_' + bm + ' .xyrList li');
@@ -692,7 +701,7 @@ function flwsWclXyDxCheck(bm, $this, event) {
         if (!flwsData.customized) {
             var xyrDom = DATA.URLATTR[xyrApiName];
             for (var j = 0; j < xyrDom.length; j++) {
-                var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
+                var $node = $("#flws_cl_area_" + bm + " .panel form a>." + xyrDom[j]);
 
                 if ($node.hasClass('easyuitextbox')) {
                     $node.textbox({value: ''})
@@ -761,7 +770,7 @@ function flwsYclXyDxCheck(bm, $this) {
             };
 
             //嫌疑人勾选其他接口请求信息复用（秀平）
-            if(bm == '042155'){
+            if(bm == '042155' || bm == '042140'){//取保候审 || 释放通知书
                 ajax_request(bm,xyrXxzjbh);
             }
 
@@ -850,7 +859,7 @@ function fzxyrXxfy(currentXyr, bm) {
                 var key = DATA.URLATTR[k][j];//法律文书中对应的组件名字
                 if (key) {
                     var val = data[key.toLowerCase()];//嫌疑人数据参数对应的值
-                    var $node = $("#flws_cl_area_" + bm + " form input." + key);
+                    var $node = $("#flws_cl_area_" + bm + " form ." + key);
                     if (val == undefined || val == '' || val == null) {//返回数据为空
                         console.log(key + '为空');
                         if ($node.hasClass('easyuitextbox')) {
@@ -918,7 +927,18 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
             if(aName.indexOf('_T_') != -1){
                 var name = aName.substring(0,aName.indexOf('_T_'));//对应数据的name值
                 var val = data[name];//对应数据的值
-                $($target[j]).find("input[value='"+val+"']").click();
+                // checkbox多选框多个值的处理
+                var valArr = [];
+                if (val) {
+                    if (val.indexOf(',') == -1) {
+                        valArr.push(val);
+                    } else {
+                        valArr = val.split(',');
+                    }
+                }
+                for(var g=0;g<valArr.length;g++){
+                    $($target[j]).find("input[value='" + valArr[g] + "']").click();
+                }
             }
         }catch(e){}
     }
@@ -934,34 +954,31 @@ function flwsDataXxfyCopyFromOtherFlws(bm, data){
             if (annotation == '/REPLACE/') {
                 $a.parent().next().val(val);
             } else {
-                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
-                if(textStyle == 'MONEY'){
-                    $node.textbox({value: val});
-                    if(bm == '042114'){//取保候审特殊处理
-                        $a.attr('money',data[key + '_MASTER']);
-                    }else{
-                        $a.attr('money',data[key + '_DX']);
-                    }
-                }else if(textStyle == 'NUMBERCN'){
-                    $a.attr('number',val);
-                    $node.textbox({value: data[key + '_MASTER']});
-                }else{
-                    if ($node.hasClass('easyuitextbox')) {
+                if ($node.hasClass('easyuitextbox')) {
+                    //money、numbercn赋值后不做校验
+                    var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                    if (textLx == 'MONEY') {
+                        $a.attr('money', data[key + '_MASTER']);
+                        $node.textbox({value: val}).textbox('disableValidation');
+                    }else if(textLx == 'NUMBERCN'){
+                        $a.attr('number', data[key + '_MASTER']);
+                        $node.textbox({value: val}).textbox('disableValidation');
+                    }else {
                         $node.textbox({value: val});
-                    } else if ($node.hasClass('easyuicombobox')) {
-                        if($node.hasClass('JYCS_GAJGMC')){
-                            $node.combobox({value: data['JYCS_GAJGJGDM']})
-                        }else {
-                            $node.combobox({value: val})
-                        }
-                    } else if ($node.hasClass('easyuicombotree')) {
-                        $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                        $node.val(data[key + '_MASTER']);
-                        wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                        $node.val(val).validatebox();
                     }
+                } else if ($node.hasClass('easyuicombobox')) {
+                    if($node.hasClass('JYCS_GAJGMC')){
+                        $node.combobox({value: data['JYCS_GAJGJGDM']})
+                    }else {
+                        $node.combobox({value: val})
+                    }
+                } else if ($node.hasClass('easyuicombotree')) {
+                    $node.combotree({value: val})
+                } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                    $node.val(data[key + '_MASTER']);
+                    wdateValidate("#flws_cl_area_" + bm + " form ." + key);
+                } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                    $node.val(val).validatebox();
                 }
             }
         }
@@ -1029,40 +1046,62 @@ function flwsDataXxfy(bm, zj) {
             //数据处理
             for (var key in data[i]) {
                 var $node = $("#flws_cl_area_" + bm + " form a ." + key);//节点
-                var val = data[i][key];
-                var $a = $node.parent();
-                var annotation = $a.attr('annotation');
-                //版本切换赋值的处理
-                if (annotation == '/REPLACE/') {
-                    $a.parent().next().val(val);
-                } else {
-                    if ($node.hasClass('easyuitextbox')) {
-                        if (bm == '042155' && $node.hasClass('BZR_XM') && val) {
-                            $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
-                                required: false, value: '', readonly: true
-                            }).next().addClass('clear-border');
-                            $node.textbox({value: val});
-                        }else if (bm == '042155' && $node.hasClass('BZJ') && val) {
-                            $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
-                                required: false, value: '', readonly: true
-                            }).next().addClass('clear-border');
-                            $node.textbox({value: data[i][key+'_DX']});
-                        }else{
-                            $node.textbox({value: val});
+                if($node.length>0){
+                    var val = data[i][key];
+                    var $a = $node.parent();
+                    var annotation = $a.attr('annotation');
+                    //版本切换赋值的处理
+                    if (annotation == '/REPLACE/') {
+                        $a.parent().next().val(val);
+                    } else {
+                        if ($node.hasClass('easyuitextbox')) {
+                            if (bm == '042155' && $node.hasClass('BZR_XM') && val) {//取保候审-人保
+                                $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
+                                    required: false, value: '', readonly: true
+                                }).next().addClass('clear-border');
+                                $node.textbox({value: val});
+                            }else if (bm == '042155' && $node.hasClass('BZJ') && val) {//取保候审-财报
+                                $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
+                                    required: false, value: '', readonly: true
+                                }).next().addClass('clear-border');
+                                $("#flws_cl_area_" + bm + " form a .BZR_CSRQ").addClass('iptreadonly').textbox({
+                                    required: false, value: '', readonly: true
+                                }).next().addClass('clear-border');
+                                $node.textbox({value: data[i][key+'_DX']});
+                            }else{
+                                $node.textbox({value: val});
+                            }
+
+                            //money、numbercn赋值后不做校验
+                            if(annotation){
+                                var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                if(textLx == 'MONEY' || textLx == 'NUMBERCN'){
+                                    $node.textbox('disableValidation');
+                                }
+                            }
+                        } else if ($node.hasClass('easyuicombobox')) {
+                            if ($node.hasClass('JYCS_GAJGMC')) {
+                                $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                            } else if (bm == '042140' && $node.hasClass('QZCSLBDM') && val) {//释放通知书
+                                if(val == '2'){//拘留
+                                    $('#flws_cl_area_'+bm).tabs('disableTab','四联');
+                                    editDisableForAj('RMJCY_DWMC');
+                                }else if(val == '5'){//逮捕
+                                    $('#flws_cl_area_'+bm).tabs('enableTab','四联');
+                                    editEnableForAj('RMJCY_DWMC');
+                                }
+                                $node.combobox({value: val})
+                            } else {
+                                $node.combobox({value: val})
+                            }
+                        } else if ($node.hasClass('easyuicombotree')) {
+                            $node.combotree({value: val})
+                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                            $node.val(data[i][key + '_MASTER']);
+                            wdateValidate("#flws_cl_area_" + bm + " form ." + key);
+                        } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                            $node.val(val).validatebox();
                         }
-                    } else if ($node.hasClass('easyuicombobox')) {
-                        if ($node.hasClass('JYCS_GAJGMC')) {
-                            $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
-                        } else {
-                            $node.combobox({value: val})
-                        }
-                    } else if ($node.hasClass('easyuicombotree')) {
-                        $node.combotree({value: val})
-                    } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                        $node.val(data[i][key + '_MASTER']);
-                        wdateValidate("#flws_cl_area_" + bm + " form input." + key);
-                    } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                        $node.val(val).validatebox();
                     }
                 }
             }
@@ -1177,7 +1216,7 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         xyrinfoStr += "办公地址:" + value + splitpz;
                         break;
                     case 'fddbr_xm':
-                        xyrinfoStr += "法定待辨认姓名:" + value + splitpz;
+                        xyrinfoStr += "法定代表人姓名:" + value + splitpz;
                         break;
                 }
             } else {

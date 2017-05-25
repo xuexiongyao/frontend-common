@@ -177,7 +177,7 @@ function queryCqbgData(render) {
                         DATA.CQBG.status.hasDone = true;
 
                         if (typeof(DATA.CQBG.cqbgRow.XXZJBH) == 'undefined') {
-                            DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.ZJ;
+                            DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.CQBG_ZJ;
                         } else {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.XXZJBH;
                         }
@@ -373,7 +373,12 @@ function cqbgSaveComplete(data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
             if (DATA.CQBG.cqbgZj == undefined && json.ID) {
-                DATA.CQBG.cqbgZj = json.ID;
+                //法律文书当成呈请报告处理（受案登记表、呈请嫌疑人申请表），呈请报告主键的处理
+                if(DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG'){
+                    DATA.CQBG.cqbgZj = json.CQBG_ZJ;
+                }else{
+                    DATA.CQBG.cqbgZj = json.ID;
+                }
             }
             queryCqbgData('');//重新查询数据
             $.messager.show({

@@ -104,7 +104,7 @@ function getCqbgFlwsHtmlPage() {
         for(var k in flwsData){
             flwsTmpArray.push(flwsData[k]);
         }
-        var sortedFlwsData = flwsTmpArray.sort(compare('bianMa'));
+        var sortedFlwsData = flwsTmpArray.sort(compare('index'));
         //法律文书字符串
         for (var a=0;a<sortedFlwsData.length;a++) {
             flwsstr = '<div class="flws-tabs-title" title="' + sortedFlwsData[a].name + '">' +
@@ -409,11 +409,13 @@ function flwsXxfyA(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-
-
         if(typeof aName !='undefined'){
             try{
                 if (aName.indexOf('_T_') != -1) {
+                    var type = $($target[j]).find('input').attr('type');//input框类型
+                    if(type == 'radio' || type == 'checkbox'){
+                        $($target[j]).find('input[type="'+type+'"]').prop('checked',false);
+                    }
                     var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                     var val = data[name];//对应数据的值
                     // checkbox多选框多个值的处理
@@ -522,6 +524,10 @@ function flwsXxfyB(bm,isCustomized) {
         if (typeof aName != 'undefined') {
             try{
                 if (aName.indexOf('_T_') > -1) {
+                    var type = $($target[j]).find('input').attr('type');//input框类型
+                    if(type == 'radio' || type == 'checkbox'){
+                        $($target[j]).find('input[type="'+type+'"]').prop('checked',false);
+                    }
                     var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                     var val = data[name];//对应数据的值
                     // checkbox多选框多个值的处理
@@ -717,6 +723,10 @@ function flwsXxfyC1(bm, $this) {
                     if (typeof aName != 'undefined') {
                         try{
                             if (aName.indexOf('_T_') != -1) {
+                                var type = $($target[j]).find('input').attr('type');//input框类型
+                                if(type == 'radio' || type == 'checkbox'){
+                                    $($target[j]).find('input[type="'+type+'"]').prop('checked',false);
+                                }
                                 var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                                 var val = data[i][name];//对应数据的值
                                 //checkbox多选框多个值的处理

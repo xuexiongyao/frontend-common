@@ -64,7 +64,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             var val = $this.next().find('input:hidden').val();
                             if (val && bm && isFlws) {
                                 if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, val, 'combobox','');
+                                    flwsLdXxfy(bm, className, '', val, 'combobox','');
                                 }
                             }
                         }
@@ -85,7 +85,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                     var val = $this.next().find('input:hidden').val();
                                     if (val && bm && isFlws) {
                                         if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, val, 'combobox','');
+                                            flwsLdXxfy(bm, className, '', val, 'combobox','');
                                         }
                                     }
                                 }
@@ -395,7 +395,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             var val = $this.next().find('input:hidden').val();
                             if (val && bm && isFlws) {
                                 if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, val, 'combotree','');
+                                    flwsLdXxfy(bm, className, '', val, 'combotree','');
                                 }
                             }
                         }
@@ -431,7 +431,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                 var $this = $(this);
                                 var className = $this.attr('textboxname');//组件class name值
                                 if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, newValue, 'textbox','');
+                                    flwsLdXxfy(bm, className, '', newValue, 'textbox','');
                                 }
                             }
                         }
@@ -447,7 +447,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                             var $this = $(this);
                                             var className = $this.attr('textboxname');//组件class name值
                                             if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                                flwsLdXxfy(bm, className, newValue, 'textbox','');
+                                                flwsLdXxfy(bm, className, '', newValue, 'textbox','');
                                             }
                                         }
                                     }
@@ -467,7 +467,11 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var classNames = aName;
+                            if(params){
+                                classNames += ' ' + params
+                            }
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -493,7 +497,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                     var className = $this.attr('name');//组件class name值
                                     $this.validatebox();//失去焦点验证必填
                                     if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'textarea','');
+                                        flwsLdXxfy(bm, className, '', val, 'textarea','');
                                     }
                                 }
                             });
@@ -506,7 +510,11 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var classNames = aName;
+                            if(params){
+                                classNames += ' ' + params
+                            }
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -532,7 +540,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                     var className = $this.attr('name');//组件class name值
                                     $this.validatebox();//失去焦点验证必填
                                     if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, val, 'textarea','');
+                                        flwsLdXxfy(bm, className, '', val, 'textarea','');
                                     }
                                 }
                             });
@@ -540,26 +548,19 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         case 'NUMBERCN'://数字转大写
                             $(ipts[i]).textbox({
                                 required: isTrue,
+                                validType:['naturalNumber'],
                                 onChange: function (newValue, oldValue) {
-                                    //输入框值得处理
-                                    var iptVal = Number(newValue);//输入框的值
-                                    var $this = $(this);
-                                    var className = $this.attr('textboxname');//组件class name值
-                                    if (!isNaN(iptVal) && bm && isFlws) {
-                                        $this.parent().attr('number', newValue);
-                                        var chNum = NumberToChinese(iptVal);//转化之后的汉字
-                                        $this.textbox({value: chNum});
-                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, chNum, 'textbox','numbercn');
-                                        }
-                                    } else {
-                                        alertDiv({
-                                            title: '提示',
-                                            msg: '只能输入数字',
-                                            fn: function () {
-                                                $this.textbox({value: ''})
+                                    if(newValue && bm && isFlws){
+                                        var $this = $(this);
+                                        $this.textbox('enableValidation');
+                                        if (!isNaN(newValue)) {
+                                            var iptVal = Number(newValue);//输入框的值
+                                            var className = $this.attr('textboxname');//组件class name值
+                                            var chNum = NumberToChinese(iptVal);//转化之后的汉字
+                                            if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                                flwsLdXxfy(bm, className, chNum, iptVal, 'textbox', 'number');
                                             }
-                                        })
+                                        }
                                     }
                                 }
                             });
@@ -567,26 +568,21 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         case 'MONEY'://金额转大写
                             $(ipts[i]).textbox({
                                 required: isTrue,
+                                validType:['numeric[\'+f\',2]'],
                                 onChange: function (newValue, oldValue) {
-                                    //输入框值得处理
-                                    var iptVal = Number(newValue);//输入框的值
-                                    var $this = $(this);
-                                    var className = $this.attr('textboxname');//组件class name值
-                                    if (!isNaN(iptVal) && bm && isFlws) {
-                                        $this.parent().attr('money', newValue);
-                                        var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
-                                        $this.textbox({value: chNum});
-                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, chNum, 'textbox','money');
-                                        }
-                                    } else {
-                                        alertDiv({
-                                            title: '提示',
-                                            msg: '只能输入数字',
-                                            fn: function () {
-                                                $this.textbox({value: ''})
+                                    if (newValue && bm && isFlws) {
+                                        if(newValue && bm && isFlws){
+                                            var $this = $(this);
+                                            $this.textbox('enableValidation');
+                                            if (!isNaN(newValue)) {
+                                                var className = $this.attr('textboxname');//组件class name值
+                                                var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
+
+                                                if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                                    flwsLdXxfy(bm, className, chNum, newValue, 'textbox', 'money');
+                                                }
                                             }
-                                        })
+                                        }
                                     }
                                 }
                             });
@@ -599,7 +595,11 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }else {
                                 readonly = '';
                             }
-                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + aName + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
+                            var classNames = aName;
+                            if(params){
+                                classNames += ' ' + params
+                            }
+                            var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
@@ -625,7 +625,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                     var className = $this.attr('name');//组件class name值
                                     $this.validatebox();//失去焦点验证必填
                                     if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion  && isFlws) {
-                                        flwsLdXxfy(bm, className, val, 'textarea','');
+                                        flwsLdXxfy(bm, className, '', val, 'textarea','');
                                     }
                                 }
                             });
@@ -646,7 +646,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
                                 if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion && isFlws) {
-                                    flwsLdXxfy(bm, className, val, 'Wdate','');
+                                    flwsLdXxfy(bm, className, '', val, 'Wdate','');
                                 }
                             });
                             break;
@@ -656,7 +656,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                 var val = $this.val();
                                 var className = $this.attr('name');//组件class name值
                                 if (bm && DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion && isFlws) {
-                                    flwsLdXxfy(bm, className, val, 'Wdate','');
+                                    flwsLdXxfy(bm, className, '', val, 'Wdate','');
                                 }
                             });
                             break;
@@ -691,25 +691,33 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
  * 法律文书多级联动
  * @param bm 法律文书编码
  * @param className 当前操作的class name
+ * @param chNum 当前操作的输入框的值为转化之前的值
  * @param vals 当前操作的输入框的值
  * @param funName 当前操作的输入框类型
  * @param tx 特性
  */
-function flwsLdXxfy(bm, className, vals, funName, tx) {
+function flwsLdXxfy(bm,className,chNum,vals,funName,tx) {
     var ipts = $('#flws_cl_area_'+ bm +' .panel .panel-body form a');
     for (var i = 0; i < ipts.length; i++) {
         if (funName == 'textbox') {
-            if(tx){
-                $(ipts[i]).find('.' + className).textbox({value: vals});
+            if(tx && chNum){
+                switch (tx){
+                    case 'number':
+                        $(ipts[i]).removeAttr('number').attr('number',vals);
+                        $(ipts[i]).find('.' + className).textbox('setValue', chNum).textbox('disableValidation');
+                        break;
+                    case 'money':
+                        $(ipts[i]).removeAttr('money').attr('money',vals);
+                        $(ipts[i]).find('.' + className).textbox('setValue', chNum).textbox('disableValidation');
+                        break;
+                }
             }else{
                 $(ipts[i]).find('.' + className).textbox('setValue', vals);
             }
         } else if (funName == 'combobox') {
             $(ipts[i]).find('.' + className).combobox({value: vals});
-            // $(ipts[i]).find('.' + className).combobox('setValue', vals);
         } else if (funName == 'combotree') {
             $(ipts[i]).find('.' + className).combotree({value: vals});
-            // $(ipts[i]).find('.' + className).combotree('setValue', vals);
         } else if (funName == 'validatebox' || funName == 'Wdate') {
             $(ipts[i]).find('.' + className).val(vals).validatebox();
         } else if(funName == 'textarea'){
