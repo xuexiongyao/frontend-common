@@ -764,6 +764,7 @@ function flwsYclXyDxCheck(bm, $this) {
             //当前嫌疑人的法律文书主键
             var flwsZj = $this.attr('flwszj');
             var xyrXxzjbh = $this.attr('xxzjbh');
+            DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
             DATA.FLWS[bm].flwsZj = flwsZj;//法律文书主键
             DATA.FLWS[bm].params = {
                 ZJ: flwsZj
@@ -794,6 +795,7 @@ function flwsYclXyDxCheck(bm, $this) {
             return false;
         }else{
             DATA.FLWS[bm]['status']['selected'] = false;
+            DATA.FLWS[bm].xyrXxzjbh = '';
             //新增渲染
             flwsRightPageRenderForAdd(flwsData);
         }
@@ -1075,7 +1077,11 @@ function flwsDataXxfy(bm, zj) {
                             //money、numbercn赋值后不做校验
                             if(annotation){
                                 var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                if(textLx == 'MONEY' || textLx == 'NUMBERCN'){
+                                if(textLx == 'MONEY'){
+                                    $node.parent().attr('money',data[i][key+'_MASTER']);
+                                    $node.textbox('disableValidation');
+                                }else if(textLx == 'NUMBERCN'){
+                                    $node.parent().attr('number',data[i][key+'_MASTER']);
                                     $node.textbox('disableValidation');
                                 }
                             }

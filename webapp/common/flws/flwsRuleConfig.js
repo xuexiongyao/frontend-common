@@ -703,11 +703,11 @@ function flwsLdXxfy(bm,className,chNum,vals,funName,tx) {
             if(tx && chNum){
                 switch (tx){
                     case 'number':
-                        $(ipts[i]).removeAttr('number').attr('number',vals);
+                        $(ipts[i]).find('.' + className).parent().attr('number',vals);
                         $(ipts[i]).find('.' + className).textbox('setValue', chNum).textbox('disableValidation');
                         break;
                     case 'money':
-                        $(ipts[i]).removeAttr('money').attr('money',vals);
+                        $(ipts[i]).find('.' + className).parent().attr('money',vals);
                         $(ipts[i]).find('.' + className).textbox('setValue', chNum).textbox('disableValidation');
                         break;
                 }
