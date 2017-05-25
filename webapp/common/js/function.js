@@ -1486,122 +1486,161 @@ function alertDiv(options){
 }
 
 //combotree弹框方式选择
-function openCombotree(ID){
+function openCombotree(ID) {
     clickShowPanel(ID, false);
-    var $box = $('#'+ID);
+    var $box = $('#' + ID);
     var boxSourceValue = '';
     //获取组件初始值
-    if(dictMultiple){
+    if (dictMultiple) {
         boxSourceValue = $box.combotree('getValues');
-    }else{
+    } else {
         boxSourceValue = $box.combotree('getValue');
     }
     //设置组件不可点
     $box.combotree({
-        editable: false,
         readonly: true
     });
     var options = $box.combotree('options');
     var btnID = ID + '_select';
-    var dictPanelID = 'dictPanel_'+ID;
-    var dictSearchID = 'dictSearch_'+ID;
-    var dictTreeID = 'dictTree_'+ID;
+    var dictPanelID = 'dictPanel_' + ID;
+    var dictSearchID = 'dictSearch_' + ID;
+    var dictTreeID = 'dictTree_' + ID;
     var dictMultiple = options.multiple;
     var dictUrl = options.url;
 
     //按钮文字更改
-    $box.next().find('span').html('<a style="border:0;" id="'+btnID+'">点击选择</a>');
+    $box.next().find('span').html('<a style="padding:0 5px;cursor:pointer;color:#0F6596" id="' + btnID + '"><span>点击选择</span></a>');
     //初始化按钮
-    $('#'+ btnID).linkbutton({
-        fit:true,
-        onClick:function(){
-            if(!$('#' + dictPanelID).length){
-                var panelDivHtml = '<div style="display:none;position:relative;" id="'+dictPanelID+'">' +
-                    '<div class="dict-search" style="padding:5px 20px;margin-bottom:5px;border-bottom:1px #ccc dashed;"><input id="'+dictSearchID+'"></div>' +
-                    '<div clss="dict-tree" style="width:100%;height:350px;overflow:auto;"><ul id="'+dictTreeID+'"></ul></div>' +
-                    '</div>';
-                $('body').append(panelDivHtml);
-                //初始化搜索框
-                $('#'+dictSearchID).searchbox({
-                    prompt:'请输入查询',
-                    width: 300,
-                    height:25,
-                    searcher:function(value,name){
-                        var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
-                        if (searchKeyValue != "") {
-                            var treeObject = $('#'+dictTreeID);
-                            var node = treeObject.tree('searchTreeNode', {searchKey:searchKeyValue.toUpperCase()});
-                            if (node != null) {
-                                var locateNode = treeObject.tree('find', node['id']);
-                                treeObject.tree('expandTo', locateNode.target);
-                                treeObject.tree('scrollTo', locateNode.target);
-                                treeObject.tree('select', locateNode.target);
-                            }
-                            else {
-                                $.messager.show({
-                                    title : '搜索结果',
-                                    msg : '无匹配的数据项！'
-                                });
-                            }
-                        }
-                    }
+    $('#' + btnID).off('click').on('click', function () {
+        if (!$('#' + dictPanelID).length) {
+            var panelDivHtml = '<div style="display:none;position:relative;" id="' + dictPanelID + '">' +
+                '<div class="dict-search" style="padding:5px 20px;margin-bottom:5px;border-bottom:1px #ccc dashed;"><input id="' + dictSearchID + '"></div>' +
+                '<div class="dict-tree" style="width:100%;height:350px;overflow:auto;"><ul id="' + dictTreeID + '"></ul></div>' +
+                '</div>';
+            $('body').append(panelDivHtml);
+        }
+        //打开弹框
+        openDivForm({
+            id: dictPanelID,
+            title: '字典选择',
+            width: 600
 
-                });
-                //初始化字典树
-                $('#'+dictTreeID).tree({
-                    method: 'get',
-                    url: dictUrl,
-                    checkbox: true,
-                    lines: true,
-                    onBeforeCheck: function(node, checked){
-                        //console.log(node);
-                        if(checked && !dictMultiple){
-                            var roots = $(this).tree('getRoots');
-                            $('#'+dictTreeID).tree('uncheck',roots[0].target);
-                            if(node.children){
-                                return false;
+        }, [
+            {
+                text: '确定',
+                handler: function () {
+                    var dictData = $('#' + dictTreeID).tree('getChecked');
+                    if (dictMultiple) {
+                        var values = [];
+                        for (var i = 0; i < dictData.length; i++) {
+                            if (!dictData[i]['children']) {
+                                values.push(dictData[i]['id']);
                             }
                         }
+                        $box.combotree('setValues', values);
+                    } else {
+                        if (dictData.length) {
+                            $box.combotree('setValue', dictData[0]['id']);
+                        } else {
+                            $box.combotree('setValue', '');
+                        }
+
                     }
-                });
+                    $('#' + dictPanelID).dialog('close');
+                }
+            }, {
+                text: '取消',
+                handler: function () {
+                    $('#' + dictPanelID).dialog('close');
+                }
             }
-            //打开弹框
-            openDivForm({
-                id: dictPanelID,
-                title: '字典选择',
-                width: 600
+        ]);
 
-            }, [
-                {
-                    text: '确定',
-                    handler: function () {
-                        var dictData = $('#'+dictTreeID).tree('getChecked');
-                        if(dictMultiple){
-                            var values = [];
-                            for(var i=0;i<dictData.length;i++){
-                                if(!dictData[i]['children']){
-                                    values.push(dictData[i]['id']);
-                                }
-                            }
-                            $box.combotree('setValues',values);
-                        }else{
-                            $box.combotree('setValue',dictData[0]['id']);
-                        }
-                        $('#' + dictPanelID).dialog('close');
+        //初始化搜索框
+        $('#' + dictSearchID).searchbox({
+            prompt: '输入关键字查询,输入空查询全部',
+            width: 300,
+            height: 25,
+            searcher: function (value, name) {
+                var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
+                $('#' + dictTreeID).tree('doFilter', searchKeyValue);
+                if (searchKeyValue != "") {
+                    var treeObject = $('#' + dictTreeID);
+                    var node = treeObject.tree('searchTreeNode', {searchKey: searchKeyValue.toUpperCase()});
+                    if (node != null) {
+                        var locateNode = treeObject.tree('find', node['id']);
+                        treeObject.tree('expandTo', locateNode.target);
+                        treeObject.tree('scrollTo', locateNode.target);
+                        treeObject.tree('select', locateNode.target);
                     }
-                }, {
-                    text: '关闭',
-                    handler: function () {
-                        $('#' + dictPanelID).dialog('close');
+                    else {
+                        $.messager.show({
+                            title: '搜索结果',
+                            msg: '无匹配的数据项！'
+                        });
                     }
                 }
-            ]);
-        }
+            }
+
+        });
+        //初始化字典树
+        $('#' + dictTreeID).tree({
+            method: 'get',
+            url: dictUrl,
+            checkbox: true,
+            lines: true,
+            onBeforeCheck: function (node, checked) {
+                if (checked && !dictMultiple) {
+                    var roots = $(this).tree('getRoots');
+                    $('#' + dictTreeID).tree('uncheck', roots[0].target);
+                    if (node.children) {
+                        return false;
+                    }
+                }
+            },
+            formatter: function (node) {
+                if (node.id == 'ROOT') {
+                    return node.text;
+                } else {
+                    return node.id + ' | ' + node.text;
+                }
+            },
+            filter: function (q, node) {
+                var judgeID = -1, judgeText = -1, judgePY = -1, judgeWB = -1;
+                if (node.id)  judgeID = (node.id).indexOf(q);
+                if (node.text) judgeText = (node.text).indexOf(q);
+                if (node.py) judgePY = (node.py).indexOf(q);
+                if (node.wb) judgeWB = (node.wb).indexOf(q);
+                if (judgeText != -1 || judgeID != -1 || judgePY != -1 || judgeWB != -1) {
+                    return true;
+                }
+            },
+            onLoadSuccess: function () {
+                var treeObject = $('#' + dictTreeID);
+                if (dictMultiple) {
+                    boxSourceValue = $box.combotree('getValues');
+                    for (var i = 0; i < boxSourceValue.length; i++) {
+                        var locateNode_i = treeObject.tree('find', boxSourceValue[i]);
+                        treeObject.tree('expandTo', locateNode_i.target);
+                        treeObject.tree('scrollTo', locateNode_i.target);
+                        treeObject.tree('check', locateNode_i.target);
+                    }
+                } else {
+                    boxSourceValue = $box.combotree('getValue');
+                    if (boxSourceValue) {
+                        var locateNode = treeObject.tree('find', boxSourceValue);
+                        treeObject.tree('expandTo', locateNode.target);
+                        treeObject.tree('scrollTo', locateNode.target);
+                        treeObject.tree('check', locateNode.target);
+                    }
+                }
+            }
+        });
     });
-    //回填组件的值
-    if(dictMultiple){
-        $box.combotree('setValues',boxSourceValue);
-    }else{
-        $box.combotree('setValue',boxSourceValue);
+    //初始化回填组件的值
+    if (dictMultiple) {
+        $box.combotree('setValues', boxSourceValue);
+    } else {
+        $box.combotree('setValue', boxSourceValue);
     }
 }
