@@ -504,7 +504,6 @@ function getFlwsQtsjEdit(bm) {
                     if (annotation) {
                         //只获取可编辑选项的值
                         var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));//可编辑的
-                        var isMoney = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));//金额的
                         if (isEdit.length > 0) {
                             //日期插件my97单独处理
                             var dateArry = $(flwsA[a]).find('input.Wdate');
@@ -923,6 +922,13 @@ function especiallyDataFunForFlws(bm){
                 params.ASJFLWSDM = 'X040002';
             }else if(params.CLDXLB == '2'){//对违法嫌疑单位传唤
                 params.ASJFLWSDM = 'X040023';
+            }
+            break;
+        case 'X050002'://当场处罚决定书（行政案件）
+            if(params.SJWPQD == '1,1' || params.SJWPQD == '2,1' ||params.SJWPQD == '3,1'){//对违法嫌疑人传唤
+                params.SJWPQD = '1';
+            }else{
+                params.SJWPQD = '';
             }
             break;
     }
