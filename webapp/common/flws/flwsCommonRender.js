@@ -1224,6 +1224,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                     case 'fddbr_xm':
                         xyrinfoStr += "法定代表人姓名:" + value + splitpz;
                         break;
+                    case 'fddbr_lxdh':
+                        xyrinfoStr += "法定代表人联系电话:" + value + splitpz;
+                        break;
                 }
             } else {
                 switch (caseValue) {
@@ -1279,6 +1282,9 @@ function filedToParagraph(xyrinfo, prefixpz, splitpz) {
                         xyrinfoStr += value + splitpz;
                         break;
                     case 'fddbr_xm':
+                        xyrinfoStr += value + splitpz;
+                        break;
+                    case 'fddbr_lxdh':
                         xyrinfoStr += value + splitpz;
                         break;
                 }
