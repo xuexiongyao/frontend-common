@@ -550,11 +550,13 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                 required: isTrue,
                                 validType:['naturalNumber'],
                                 onChange: function (newValue, oldValue) {
-                                    if(newValue && bm && isFlws){
-                                        var $this = $(this);
+                                    if(bm && isFlws){
+                                        var $this = $(this),iptVal = '';
                                         $this.textbox('enableValidation');
-                                        if (!isNaN(newValue)) {
-                                            var iptVal = Number(newValue);//输入框的值
+                                        if (!isNaN(newValue)) {//只有输入数字转化才符合规则
+                                            if(newValue){
+                                                iptVal = Number(newValue);//输入框的值
+                                            }
                                             var className = $this.attr('textboxname');//组件class name值
                                             var chNum = NumberToChinese(iptVal);//转化之后的汉字
                                             if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
@@ -570,17 +572,18 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                 required: isTrue,
                                 validType:['numeric[\'+f\',2]'],
                                 onChange: function (newValue, oldValue) {
-                                    if (newValue && bm && isFlws) {
-                                        if(newValue && bm && isFlws){
-                                            var $this = $(this);
-                                            $this.textbox('enableValidation');
-                                            if (!isNaN(newValue)) {
-                                                var className = $this.attr('textboxname');//组件class name值
-                                                var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
+                                    if(bm && isFlws){
+                                        var $this = $(this),iptVal = '';
+                                        $this.textbox('enableValidation');
+                                        if (!isNaN(newValue)) {
+                                            if(newValue){
+                                                iptVal = Number(newValue);
+                                            }
+                                            var className = $this.attr('textboxname');//组件class name值
+                                            var chNum = Arabia_to_Chinese(String(newValue));//转化之后的汉字
 
-                                                if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                                    flwsLdXxfy(bm, className, chNum, newValue, 'textbox', 'money');
-                                                }
+                                            if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                                flwsLdXxfy(bm, className, chNum, iptVal, 'textbox', 'money');
                                             }
                                         }
                                     }
