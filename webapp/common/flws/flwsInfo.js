@@ -409,6 +409,7 @@ function flwsXxfyA(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
+
         if(typeof aName !='undefined'){
             try{
                 if (aName.indexOf('_T_') != -1) {
@@ -434,6 +435,13 @@ function flwsXxfyA(bm) {
             }catch(e){}
         }
 
+        if(annotation){
+            var tlx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+            if(tlx != 'CHECKBOX' && tlx != 'RADIOBOX'){
+                $($target[j]).text('');
+            }
+        }
+
         for (var k in data) {
             if (k == aName) {
                 if (annotation) {//日期的处理
@@ -457,6 +465,8 @@ function flwsXxfyA(bm) {
                             autoTextarea($($target[j]).find('textarea')[0]);
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
+                        } else if(textStyle == 'MONEY'){
+                            $($target[j]).text(data[k + '_DX']);
                         } else {
                             $($target[j]).text(data[k]);
                         }
@@ -546,6 +556,13 @@ function flwsXxfyB(bm,isCustomized) {
             }catch(e){}
         }
 
+        if(annotation){
+            var tlx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+            if(tlx != 'CHECKBOX' && tlx != 'RADIOBOX'){
+                $($target[j]).text('');
+            }
+        }
+
         for (var k in data) {
             if (k == aName) {
                 if (annotation) {
@@ -569,6 +586,8 @@ function flwsXxfyB(bm,isCustomized) {
                             var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
                             $($target[j]).html(strTextbox);
                             autoTextarea($($target[j]).find('textarea')[0]);
+                        } else if(textStyle == 'MONEY'){
+                            $($target[j]).text(data[k + '_DX']);
                         } else {
                             $($target[j]).text(data[k]);
                         }
@@ -745,7 +764,14 @@ function flwsXxfyC1(bm, $this) {
                         }catch(e){}
                     }
 
-                    //$($target[j]).text('');
+                    if(annotation){
+                        var tlx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                        if(tlx != 'CHECKBOX' && tlx != 'RADIOBOX'){
+                            $($target[j]).text('');
+                        }else{
+                        }
+                    }
+
                     for (var a in data[i]) {
                         if (a == aName) {
                             if (annotation) {
@@ -770,6 +796,8 @@ function flwsXxfyC1(bm, $this) {
                                         var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[i][a]+"</textarea>";
                                         $($target[j]).html(strTextbox);
                                         autoTextarea($($target[j]).find('textarea')[0]);
+                                    } else if(textStyle == 'MONEY'){
+                                        $($target[j]).text(data[i][a + '_DX']);
                                     } else {
                                         $($target[j]).text(data[i][a]);
                                     }
