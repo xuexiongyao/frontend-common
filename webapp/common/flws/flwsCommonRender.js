@@ -771,7 +771,7 @@ function flwsYclXyDxCheck(bm, $this) {
             };
 
             //嫌疑人勾选其他接口请求信息复用（秀平）
-            if(bm == '042155' || bm == '042140'){//取保候审 || 释放通知书
+            if(bm == '042155' || bm == '042140' || bm == '042126'){//取保候审 || 释放通知书 || 解除取保候审
                 ajax_request(bm,xyrXxzjbh);
             }
 
