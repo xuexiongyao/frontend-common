@@ -640,7 +640,7 @@ function xydxListRenderC(bm) {
                     xyrCldxlb = data[0].CLDXLB;
                     for (var k in xyrObj) {
                         if (xyrCldxlb == xyrObj[k].cldxlb){
-                            if(data[i][(xyrObj[k].param)]){
+                            if(data[i][(xyrObj[k].param).toUpperCase()]){
                                 xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
                             }else{
                                 if(!DATA.DX.xydxData){
