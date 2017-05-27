@@ -178,6 +178,7 @@ function queryCqbgData(render) {
 
                         if (typeof(DATA.CQBG.cqbgRow.XXZJBH) == 'undefined') {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.CQBG_ZJ;
+                            DATA.CQBG.cqbgFlwsZj = DATA.CQBG.cqbgRow.ZJ;//当前法律文书的主键（当成呈请报告的法律文书）例如：受案登记表
                         } else {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.XXZJBH;
                         }
@@ -376,6 +377,7 @@ function cqbgSaveComplete(data) {
                 //法律文书当成呈请报告处理（受案登记表、呈请嫌疑人申请表），呈请报告主键的处理
                 if(DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG'){
                     DATA.CQBG.cqbgZj = json.CQBG_ZJ;
+                    DATA.CQBG.cqbgFlwsZj = json.ID;//当前法律文书的主键（当成呈请报告的法律文书）
                 }else{
                     DATA.CQBG.cqbgZj = json.ID;
                 }

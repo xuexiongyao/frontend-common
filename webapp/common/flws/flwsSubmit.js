@@ -73,7 +73,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                         param += '&asjbh='+DATA.asjbh;
                         param += '&asjflwsdm='+asjflwsdm;
                         param += '&shjl=1';
-                        param += '&shyj=1';
+                        param += '&shyj=同意';
                         param += '&shsj='+getCurrentTime();
 
                         //发送短信请求
