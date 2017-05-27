@@ -1,10 +1,34 @@
+/*
+* 生成法律文书
+* */
+function scflwsQuery(cqbgzj,asjflwsdm){
+
+    var param = {
+        flwsywZj:cqbgzj,
+        asjbh:DATA.asjbh,
+        asjflwsdm:asjflwsdm
+    };
+    console.log(param);
+    loading('open','正在发送生成任务,请稍候...');
+    $.ajax({
+        url : pathConfig.basePath+'/qzrw/cqbg_scflws',
+        type: 'post',
+        data: param,
+        dataType: 'json',
+        success : function(json){
+            loading('close');
+            console.log(json);
+        }
+    });
+}
+
+
 /**
  * Created by zhuwei on 2016/9/2.
  * description: 法律文书送审请求js文件
  */
 //送审人物选择
 function selectName(cqbgzj,asjflwsdm,sessionBean){
-    console.log(sessionBean);
     var gajgjgdm = null;
     var ssFsxCode = sessionBean.extendMap.ssFsxCode; //分县局代码
     var ssDsjCode = sessionBean.extendMap.ssDsjCode; //市局代码

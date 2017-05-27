@@ -669,7 +669,7 @@ function getFlwsQtsjEdit(bm) {
 /**
  * 送审呈请报告
  */
-function shongshen(sessionBean) {
+function shongshen(sessionBean,isScflws) {
     if (DATA.CQBG.cqbgZj == undefined) {//呈请报告的填写
         alertDiv({
             title: '提示',
@@ -743,6 +743,7 @@ function shongshen(sessionBean) {
         }
     }
     //如果不是呈请报告
+    debugger;
     if(DATA.CQBG.cqbgData.tableName!="TB_ST_ASJ_CQBG"){
         if(DATA.CQBG.cqbgRow.CQBG_ZJ==undefined){
             $.ajax({
@@ -756,16 +757,28 @@ function shongshen(sessionBean) {
                     if (json.state == 'success') {//查询成功
                         if (json.rows.length > 0) {//有数据 编辑
                             DATA.CQBG.cqbgRow = json.rows[0];
-                            selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                            if(isScflws){
+                                scflwsQuery(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm)
+                            }else{
+                                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                            }
                         }
                     }
                 }
             });
         }else{
-            selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+            if(isScflws){
+                scflwsQuery(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm)
+            }else{
+                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+            }
         }
     }else{
-        selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+        if(isScflws){
+            scflwsQuery(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean)
+        }else{
+            selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+        }
     }
 }
 

@@ -131,6 +131,14 @@ function initFlwsMain(data){
             shongshen(DATA.OWN);
         }
     });
+
+    //绑定送审事件
+    $('#scflwsBtn').off('click').on('click', function () {
+        if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
+            var isScflws = true;    //生成法律文书处理
+            shongshen(DATA.OWN,isScflws);
+        }
+    });
 }
 
 
