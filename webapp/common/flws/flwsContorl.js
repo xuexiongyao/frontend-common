@@ -350,28 +350,12 @@ function getFlwsQtsjAdd(bm) {
                                         DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                     }
                                 } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
-                                    var annotation = parentA.attr('annotation');
                                     var moneyNum = parentA.attr('money');
-                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                    if (textStyle) {
-                                        if (textStyle == 'MONEY') {
-                                            if (moneyNum) {
-                                                DATA.FLWS[bm].params[dataname] = moneyNum;
-                                                DATA.FLWS[bm].params[dataname + '_DX'] = val;
-                                            }
-                                        }
-                                    }
+                                    DATA.FLWS[bm].params[dataname] = moneyNum;
+                                    DATA.FLWS[bm].params[dataname + '_DX'] = val;
                                 } else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
-                                    var annotation = parentA.attr('annotation');
                                     var numberNum = parentA.attr('number');
-                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                    if (textStyle) {
-                                        if (textStyle == 'NUMBERCN') {
-                                            if (numberNum) {
-                                                DATA.FLWS[bm].params[dataname] = numberNum;
-                                            }
-                                        }
-                                    }
+                                    DATA.FLWS[bm].params[dataname] = numberNum;
                                 } else {
                                     DATA.FLWS[bm].params[dataname] = val;
                                 }

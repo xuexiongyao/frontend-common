@@ -703,15 +703,21 @@ function flwsLdXxfy(bm,className,chNum,vals,funName,tx) {
     var ipts = $('#flws_cl_area_'+ bm +' .panel .panel-body form a');
     for (var i = 0; i < ipts.length; i++) {
         if (funName == 'textbox') {
-            if(tx && chNum){
+            if(tx){
                 switch (tx){
                     case 'number':
                         $(ipts[i]).find('.' + className).parent().attr('number',vals);
-                        $(ipts[i]).find('.' + className).textbox('setValue', chNum).textbox('disableValidation');
+                        $(ipts[i]).find('.' + className).textbox('setValue', chNum);
+                        if(chNum){
+                            $(ipts[i]).find('.' + className).textbox('disableValidation');
+                        }
                         break;
                     case 'money':
                         $(ipts[i]).find('.' + className).parent().attr('money',vals);
-                        $(ipts[i]).find('.' + className).textbox('setValue', chNum).textbox('disableValidation');
+                        $(ipts[i]).find('.' + className).textbox('setValue', chNum);
+                        if(chNum){
+                            $(ipts[i]).find('.' + className).textbox('disableValidation');
+                        }
                         break;
                 }
             }else{
