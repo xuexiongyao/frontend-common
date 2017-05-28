@@ -1371,7 +1371,6 @@ function getSessionBean(){
         async: false,
         success: function(json){
             sessionBean = json.sessionBean;
-            console.log('sessionbean:',json);
         }
     });
     return sessionBean;
@@ -1457,7 +1456,7 @@ function alertDiv(options){
     var opts = $.extend({}, {
         id: "alertDiv1956",
         title: "提示",
-        msg: "提示信息",
+        msg: "提示信息为空!",
         width: 350,
         height: 150,
         onClose: function(){
