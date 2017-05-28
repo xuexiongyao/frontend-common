@@ -727,7 +727,6 @@ function shongshen(sessionBean,isScflws) {
         }
     }
     //如果不是呈请报告
-    debugger;
     if(DATA.CQBG.cqbgData.tableName!="TB_ST_ASJ_CQBG"){
         if(DATA.CQBG.cqbgRow.CQBG_ZJ==undefined){
             $.ajax({

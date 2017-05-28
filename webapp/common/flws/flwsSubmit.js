@@ -2,13 +2,11 @@
 * 生成法律文书
 * */
 function scflwsQuery(cqbgzj,asjflwsdm){
-
     var param = {
-        flwsywZj:cqbgzj,
+        flwsywzj:cqbgzj,
         asjbh:DATA.asjbh,
         asjflwsdm:asjflwsdm
     };
-    console.log(param);
     loading('open','正在发送生成任务,请稍候...');
     $.ajax({
         url : pathConfig.basePath+'/qzrw/cqbg_scflws',
@@ -17,7 +15,20 @@ function scflwsQuery(cqbgzj,asjflwsdm){
         dataType: 'json',
         success : function(json){
             loading('close');
-            console.log(json);
+            if(json.status == 'success'){
+                alertDiv({
+                    title: '提示信息',
+                    msg: '生成任务发送成功!',
+                    fn: function(){
+                        crossCloseTab();
+                    }
+                })
+            }else{
+                alertDiv({
+                    title: '错误提示',
+                    msg: json.message
+                });
+            }
         }
     });
 }
