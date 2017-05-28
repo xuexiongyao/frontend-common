@@ -99,25 +99,35 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                             nameIdArr.push(bizID);
                         });
                         var nameIdStr = nameIdArr.join(',');
-                        console.log('nameIdStr:',nameIdStr);
-                        var param = 'businessKey='+cqbgzj;
-                        param += '&lcpzXxzjbh='+lcpzXxzjbh;
-                        param += '&nextCandidateUsers='+nameIdStr;
-                        param += '&candidateUsers=511002198504095614,510502199410238742';
+                        //console.log('nameIdStr:',nameIdStr);
 
-                        param += '&asjbh='+DATA.asjbh;
-                        param += '&asjflwsdm='+asjflwsdm;
-                        param += '&shjl=1';
-                        param += '&shyj=同意';
-                        param += '&shsj='+getCurrentTime();
+                        //提交的数据
+                        var param = {
+                            businessKey:cqbgzj,
+                            lcpzXxzjbh:lcpzXxzjbh,
+                            nextCandidateUsers:nameIdStr,
+                            asjbh:DATA.asjbh,
+                            asjflwsdm:asjflwsdm,
+                            shjl:'1',
+                            shyj:'同意'
+
+                        };
+
+                        //第一次启动流程，审核时间的获取
+                        if(DATA.CQBG.cqbgRow.CQRQ_MASTER){//有呈请报告
+                            param.shsj = DATA.CQBG.cqbgRow.CQRQ_MASTER;
+                        }else{//无呈请报告，例如：受案登记表
+                            param.shsj = getCurrentTime();
+                        }
 
                         //发送短信请求
                         var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
 
                         //第三次
                         $.ajax({
-                            url: pathConfig.basePath+'/workflowRelated/startProcessInstance?'+param,
+                            url: pathConfig.basePath+'/workflowRelated/startProcessInstance',
                             type: 'post',
+                            data:param,
                             dataType: 'json',
                             success: function (json) {
                                 if(json.status == 'success'){
