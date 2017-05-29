@@ -411,15 +411,15 @@ function saveAndSsShyj(backObj) {
             if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                 $.messager.confirm({
                     title: '是否签章',
-                    msg: '未安装签章插件,签不了哦!!',
-                    ok: '马上签章',
-                    cancel: '算了不签',
+                    msg: '若未安装签章插件,将无法签章!',
+                    ok: '直接送审',
+                    cancel: '就想签章',
                     closeable: false,
                     fn: function(r){
                         if(r){
-                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
-                        }else{
                             wclc(); //完成流程
+                        }else{
+                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
                         }
                     }
                 });
