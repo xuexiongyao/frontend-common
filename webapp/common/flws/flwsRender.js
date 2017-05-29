@@ -496,6 +496,14 @@ function flwsPageRenderA(bm) {
 
         //法律文书数据信息复用
         flwsDataXxfy(bm, flwsZj);
+
+        //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
+        if(bm == '080002' || bm == '080004'){
+            //选中已经保存的法律文书
+            if (flwsRow.length > 0) {
+                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
+            }
+        }
     }
 }
 /**********************END ************************/
@@ -972,16 +980,15 @@ function flwsDxListRenderB(bm) {
         //不能做嫌疑对象的处理
         $('#flws_xyr_area_' + bm + ' ul.xyrList').find("label[disabled='disabled']").tooltip({position: 'right'});
 
+        //嫌疑对象的勾选
+        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+            flwsClXyDxCheckB(bm, $(this));
+        });
 
         //选中已经保存的法律文书
         if (DATA.FLWS[bm].flwsRow.length > 0) {
             $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + (DATA.FLWS[bm].flwsRow)[0].CLDX_XXZJBH + "']").click();
         }
-
-        //嫌疑对象的勾选
-        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
-            flwsClXyDxCheckB(bm, $(this));
-        });
     }
 }
 
@@ -1068,7 +1075,6 @@ function flwsClXyDxCheckB(bm, $this) {
                 }
             }
         }
-
     } else {//未选中
         if (flwsData.bx) {
             event.stopPropagation();
@@ -1096,6 +1102,10 @@ function flwsClXyDxCheckB(bm, $this) {
         }
         DATA.FLWS[bm].params.CLDX_XXZJBH = "";//嫌疑人主键id
         DATA.FLWS[bm].params.CLDXLB = "";//嫌疑人处理对象类别
+        DATA.FLWS[bm].xyrXxzjbh = '';
+        DATA.FLWS[bm].xyrCldxlb = '';
+        DATA.FLWS[bm].asjxgry = '';
+        DATA.FLWS[bm].fzxyrRyid = '';
 
         if (!flwsData.customized) {
             var xyrDom = DATA.URLATTR[xyrApiName];
@@ -1103,13 +1113,13 @@ function flwsClXyDxCheckB(bm, $this) {
                 var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
 
                 if ($node.hasClass('easyuitextbox')) {
-                    $node.textbox({value: ''})
+                    $node.textbox({value: '',readonly:false});
                 } else if ($node.hasClass('easyuicombobox')) {
-                    $node.combobox({value: ''});
+                    $node.combobox({value: '',readonly:false});
                 } else if ($node.hasClass('easyuicombotree')) {
-                    $node.combotree({value: ''})
-                } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-                    $node.val('');
+                    $node.combotree({value: '',readonly:false});
+                } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                    $node.val('').removeAttr('disabled');
                     wdateValidate($node[0]);
                 }
             }
