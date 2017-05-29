@@ -19,7 +19,7 @@ var badwGajgmc = pathObj.badwGajgmc;
 var fjrid = pathObj.fjrid;
 var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
-var hxshyjbz = '';
+var hxshyjbzCurrent = null;  //当前回写审核意见标识
 var candidateUsers;
 var isFinally = false;
 var backInitial = {};
@@ -43,7 +43,7 @@ $(function () {
     getNext();                  //下一环节状态
     getCurrent();               //当前环节
     saveAndSsShyj();            //保存并送审
-    selectCheckOpinion();       //选择审核结论
+    getPrevAndOri();            //获取上一节点数据和初始节点数据
     lctShow();                  //流程图展示接口
     linkToJz();                 //跳转到卷宗页面
 });
@@ -86,18 +86,20 @@ function getNext() {
 
 //获取当前环节
 function getCurrent() {
+    loading('open','正在获取当前环节信息,请稍候...');
     $.ajax({
         url: ajaxUrl + '/findCurrentTask?&processInstanceId=' + processInstanceId + '&name=' + name,
         type: 'post',
         dataType: 'json',
         success: function (json) {
+            loading('close');
             if (json.status == 'success') {
                 var data = json.data;
                 if (data.length) {
-                    hxshyjbz = data[0].hxshyjbz;
+                    //保存 当前回写审核意见标识
+                    hxshyjbzCurrent = data[0].hxshyjbz;
                 }
             } else {
-                // console.log('当前环节:', json);
                 alertDiv({
                     top: 120,
                     title: '获取当前环节出错',
@@ -108,9 +110,9 @@ function getCurrent() {
     });
 }
 
-//选择审核结论
-function selectCheckOpinion() {
-    //获取上一节点
+//获取上一节点数据和初始节点数据
+function getPrevAndOri() {
+    //1.获取上一节点
     loading('open', '正在获取上一节点信息,请稍候...');
     $.ajax({
         url: ajaxUrl + '/findPreviousTask?processInstanceId=' + processInstanceId + '&name=' + name,
@@ -119,25 +121,6 @@ function selectCheckOpinion() {
         success: function (json) {
             console.log('上一节点信息', json);
             loading('close');
-            //取初始节点
-            loading('open', '正在获取初始节点信息,请稍候...');
-            $.ajax({
-                url: ajaxUrl + '/findInitialTask?processInstanceId=' + processInstanceId + '&name=' + name,
-                type: 'post',
-                dataType: 'json',
-                success: function (json) {
-                    loading('close');
-                    var data = json.data;
-                    var csjd = data[0]['csjd'];
-                    var jdId = data[0]['jdId'];
-                    var jdmc = data[0]['jdmc'];
-                    var hxshyjbz = data[0]['hxshyjbz'];
-                    backInitial.csjd = csjd;
-                    backInitial.jdid = jdId;
-                    backInitial.jdmc = jdmc;
-                    backInitial.hxshyjbz = hxshyjbz;
-                }
-            });
             var data = json.data;
             var dataLen = data.length;
             //选择审核意见
@@ -161,12 +144,32 @@ function selectCheckOpinion() {
                 var csjd = data[0]['csjd'];
                 var jdId = data[0]['jdId'];
                 var jdmc = data[0]['jdmc'];
-                var hxshyjbz = data[0]['hxshyjbz'];
+                var hxshyjbzPrev = data[0]['hxshyjbz'];
                 backPrev.csjd = csjd;
                 backPrev.jdid = jdId;
                 backPrev.jdmc = jdmc;
-                backPrev.hxshyjbz = hxshyjbz;
+                backPrev.hxshyjbz = hxshyjbzPrev;
             }
+
+            //2.取初始节点
+            loading('open', '正在获取初始节点信息,请稍候...');
+            $.ajax({
+                url: ajaxUrl + '/findInitialTask?processInstanceId=' + processInstanceId + '&name=' + name,
+                type: 'post',
+                dataType: 'json',
+                success: function (json) {
+                    loading('close');
+                    var data = json.data;
+                    var csjd = data[0]['csjd'];
+                    var jdId = data[0]['jdId'];
+                    var jdmc = data[0]['jdmc'];
+                    var hxshyjbzOri = data[0]['hxshyjbz'];
+                    backInitial.csjd = csjd;
+                    backInitial.jdid = jdId;
+                    backInitial.jdmc = jdmc;
+                    backInitial.hxshyjbz = hxshyjbzOri;
+                }
+            });
         }
     });
 }
@@ -237,6 +240,7 @@ function selectApprove(shjl) {
                     }
                     loading('close');
                     openDivForm({
+                        top:120,
                         id: 'next_link_panel', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
                         title: '选择环节及审批人',
                         width: 540
@@ -376,7 +380,7 @@ function saveAndSsShyj(backObj) {
             alertDiv({
                 top: 120,
                 title: '温馨提示',
-                msg: '请选择审核意见!',
+                msg: '请填写审核意见!',
                 fn: function () {
                     $('#shyj').focus();
                 }
@@ -386,20 +390,28 @@ function saveAndSsShyj(backObj) {
 
         //同意
         if (shjl == '1') {
-            //获取选择的审批人
-            if (isFinally) {
-                candidateUsers = '';
-                complete(shjl, shsj, shyj);
-            } else {
-                if (candidateUsers) {
+            var wclc = function(){
+                //获取选择的审批人
+                if (isFinally) {    //最后一级没有审批人
+                    candidateUsers = '';
                     complete(shjl, shsj, shyj);
                 } else {
-                    alertDiv({
-                        top: 120,
-                        title: '提示',
-                        msg: '请选择下一环节及审批人!'
-                    });
+                    if (candidateUsers) {
+                        complete(shjl, shsj, shyj);
+                    } else {
+                        alertDiv({
+                            top: 120,
+                            title: '提示',
+                            msg: '请选择下一环节及审批人!'
+                        });
+                    }
                 }
+            };
+            //执行签章
+            if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
+                window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
+            }else{
+                wclc(); //完成流程
             }
         }
         //不同意
@@ -428,7 +440,7 @@ function saveAndSsShyj(backObj) {
                 var jdId = backObj.jdid;
                 var jdmc = backObj.jdmc;
                 var csjd = backObj.csjd;
-                var hxshyjbz = backObj.hxshyjbz;
+                var hxshyjbzBack = backObj.hxshyjbz;
                 var UsersStr = '';
                 $.ajax({
                     url: ajaxUrl + '/findBamjids?businessKey=' + businessKey + '&asjbh=' + asjbh + '&asjflwsdm=' + asjflwsdm,
@@ -453,7 +465,7 @@ function saveAndSsShyj(backObj) {
                 param += '&taskId=' + taskId;
                 param += '&activityId=' + jdId;
                 param += '&csjd=' + csjd;
-                param += '&hxshyjbz=' + hxshyjbz;
+                param += '&hxshyjbz=' + hxshyjbzBack;
                 param += '&businessKey=' + businessKey;
                 param += '&asjbh=' + asjbh;
                 param += '&asjflwsdm=' + asjflwsdm;
@@ -483,31 +495,12 @@ function saveAndSsShyj(backObj) {
             }
         }
     });
-
-
-    //意见签章
-    $('#yjqzBtn').off('click').on('click', function () {
-        var shyj = $('#shyj').val();
-        console.log('backObj:', backObj);
-        window.frames[0].yjqz(shyj, '1');
-    });
-    //保存pdf
-    $('#yjqzPDFSave').off('click').on('click', function () {
-        window.frames[0].qzPDFSave();
-    });
-    //姓名签章
-    $('#xmqzBtn').off('click').on('click', function () {
-        window.frames[0].sign();
-    });
 }
 
 
 //完成流程,到下一级
 function complete(shjl, shsj, shyj) {
-
-    //alert('complete');
-    //return;
-    loading('open', '信息保存中...');
+    loading('open', '审核信息保存中,请稍候...');
     var param = {
         'taskId': taskId,
         'candidateUsers': candidateUsers,
@@ -516,7 +509,7 @@ function complete(shjl, shsj, shyj) {
         'shyj': shyj,
         'businessKey': businessKey,
         'isLastTask': isLastTask,
-        'hxshyjbz': hxshyjbz,
+        'hxshyjbz': hxshyjbzCurrent,
         'fjrid': fjrid,
         'fjrxm': fjrxm
     };

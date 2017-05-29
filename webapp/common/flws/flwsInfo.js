@@ -85,9 +85,10 @@ function getCqbgFlwsHtmlPage() {
     var cqbgstr = '';
     var cqbgData = DATA.CQBG.cqbgData;//呈请报告数据
     var cqbgzj = DATA.cqbgzj;
+    console.log('呈请报告数据:',DATA);
     if (!jQuery.isEmptyObject(cqbgData)) {
         //呈请报告审批签章
-        var dzqzPdfUrl = pathConfig.basePath + '/html/pdfqz/cqbgSpqz.html?xxzjbh=' + cqbgzj;
+        var dzqzPdfUrl = pathConfig.basePath + '/html/pdfqz/cqbgSpqz.html?xxzjbh='+cqbgzj;
         var cqbgcon = '<iframe scrolling="hidden" frameborder="0" src="' + dzqzPdfUrl + '" style="width:100%;height: 99%;"> </iframe>';
         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
             '<div class="flws-main-con">' +
