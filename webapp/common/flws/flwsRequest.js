@@ -125,17 +125,17 @@ function initFlwsMain(data){
     // 页面操作
     tabSwitch();//tab切换
 
-    //绑定送审事件
+    //绑定【送审】事件
     $('#sent').off('click').on('click', function () {
         if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
             shongshen(DATA.OWN);
         }
     });
 
-    //绑定送审事件
+    //【生成法律文书】
     $('#scflwsBtn').off('click').on('click', function () {
         if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
-            var isScflws = true;    //生成法律文书处理
+            var isScflws = true;            //生成法律文书处理
             shongshen(DATA.OWN,isScflws);
         }
     });
