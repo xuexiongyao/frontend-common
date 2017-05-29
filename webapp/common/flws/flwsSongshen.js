@@ -37,7 +37,11 @@ var sessionBean = getSessionBean();     //获取登陆者信息
 var role = sessionBean.userOrgBiztype || '04';  //登陆角色 02为法制民警
 
 var flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
-var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+
+//【注意】 原来引用的是flwsInfo.html,签章审批后使用flwsInfo2.html
+//var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+
+var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo2.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
 $('.right-report').append(str);
 
 $(function () {
