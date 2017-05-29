@@ -410,6 +410,7 @@ function saveAndSsShyj(backObj) {
             //执行签章
             if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                 $.messager.confirm({
+                    top: 120,
                     title: '是否签章',
                     msg: '若未安装签章插件,将无法签章!',
                     ok: '直接送审',
