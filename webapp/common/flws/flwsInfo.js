@@ -59,7 +59,8 @@ function getCqbgMapData(cqbgzj) {
             getCqbgFlwsHtmlPage();//呈请报告(法律文书)iframe页面的获取
             //呈请报告数据查询
             if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
-                queryCqbgData();//获取呈请报告数据
+                //获取呈请报告数据
+                //queryCqbgData();//【电子签章不需要获取】
             } else {
                 if (DATA.FLWS.flwsData.customer) {//只有法律文书,并且需要生成法律文书
                     onlyFlwsRender();
@@ -83,8 +84,22 @@ function getCqbgFlwsHtmlPage() {
     /***呈请报告***/
     var cqbgstr = '';
     var cqbgData = DATA.CQBG.cqbgData;//呈请报告数据
+    var cqbgzj = DATA.cqbgzj;
+    console.log(DATA);
     if (!jQuery.isEmptyObject(cqbgData)) {
-        //呈请报告字符串
+        //呈请报告审批签章
+        var dzqzPdfUrl = pathConfig.basePath + '/html/pdfqz/cqbgSpqz.html?xxzjbh=' + cqbgzj;
+        var cqbgcon = '<iframe scrolling="hidden" frameborder="0" src="'+dzqzPdfUrl+'" style="width:100%;height: 99%;"> </iframe>';
+        cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
+            '<div class="flws-main-con">' +
+            '<div class="flws-main-con-r" id="cqbg_main_con" style="width: 100%;">' + cqbgcon +
+            '</div>' +
+            '</div>' +
+            '</div>';
+
+
+        //呈请报告字符串【未使用签章时引用的方式】
+        /*
         var cqbgcon = getHtmlByAjax(cqbgData.url);
         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
             '<div class="flws-main-con">' +
@@ -92,6 +107,7 @@ function getCqbgFlwsHtmlPage() {
             '</div>' +
             '</div>' +
             '</div>';
+        */
     }
 
     $("#flwsTabs").append(cqbgstr);
@@ -138,6 +154,7 @@ function queryCqbgData() {
         },
         dataType: 'json',
         success: function (json) {
+            loading('close');
             if (json.state == 'success') {//成功
                 var data = json.rows[0];//呈请报告返回的数据
                 DATA.CQBG.cqbgRow = data;//呈请报告返回的数据
@@ -170,7 +187,7 @@ function queryCqbgData() {
                     icon: 'warning'
                 });
             }
-            loading('close');
+
         }
     })
 }
