@@ -20,22 +20,15 @@ var fjrid = pathObj.fjrid;
 var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
 var hxshyjbz = '';
-
 var candidateUsers;
 var isFinally = false;
 var backInitial = {};
 var backPrev = {};
-var localObj = getThisLocationObj();//当前页面location对象
-//var ajaxUrl = localObj.origin+localObj.proname+'/workflowRelated';
-//var ajaxUrl = localObj.origin+'/workflowRelated';
 var ajaxUrl = pathConfig.basePath + '/workflowRelated';
 var isLastTask = true;
-
 var isOver = false;
-var sessionBean = getSessionBean();     //获取登陆者信息
-//console.log('sessionBean:',sessionBean);
+var sessionBean = getSessionBean();             //获取登陆者信息
 var role = sessionBean.userOrgBiztype || '04';  //登陆角色 02为法制民警
-
 var flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
 
 //【注意】 原来引用的是flwsInfo.html,签章审批后使用flwsInfo2.html
@@ -46,14 +39,13 @@ $('.right-report').append(str);
 
 $(function () {
     clickShowPanel();
-    selectApprove('1');    //选择审批人
-    getNext();          //下一环节状态
-    getCurrent();      //当前环节
-    saveAndSsShyj();         //保存并送审
-    selectCheckOpinion();//选择审核结论
-    //alert(11);
-    lctShow();//流程图展示接口
-    linkToJz();//跳转到卷宗页面
+    selectApprove('1');         //选择审批人
+    getNext();                  //下一环节状态
+    getCurrent();               //当前环节
+    saveAndSsShyj();            //保存并送审
+    selectCheckOpinion();       //选择审核结论
+    lctShow();                  //流程图展示接口
+    linkToJz();                 //跳转到卷宗页面
 });
 
 //获取下一节点数据
@@ -82,7 +74,6 @@ function getNext() {
                 }
             } else {
                 isLastTask = true;
-                // console.log('下一环节:', json);
                 alertDiv({
                     top: 120,
                     title: '获取下一环节出错',
@@ -119,22 +110,23 @@ function getCurrent() {
 
 //选择审核结论
 function selectCheckOpinion() {
-    loading('open', '正在获取上一节点信息...');
-    //退回,取上一节点
+    //获取上一节点
+    loading('open', '正在获取上一节点信息,请稍候...');
     $.ajax({
         url: ajaxUrl + '/findPreviousTask?processInstanceId=' + processInstanceId + '&name=' + name,
         type: 'post',
         dataType: 'json',
         success: function (json) {
-            // console.log('退回,取上一节点:', json);
+            console.log('上一节点信息', json);
             loading('close');
-            //退回,取初始节点
+            //取初始节点
+            loading('open', '正在获取初始节点信息,请稍候...');
             $.ajax({
                 url: ajaxUrl + '/findInitialTask?processInstanceId=' + processInstanceId + '&name=' + name,
                 type: 'post',
                 dataType: 'json',
                 success: function (json) {
-                    // console.log('退回,取初始节点:', json);
+                    loading('close');
                     var data = json.data;
                     var csjd = data[0]['csjd'];
                     var jdId = data[0]['jdId'];
@@ -353,18 +345,17 @@ function minDateFun(prevDate) {
 
 //【保存并送审】审核意见
 function saveAndSsShyj(backObj) {
-    //保存审核意见
+    //注册保存按钮事件,保存审核意见
     $('#saveAndss').off('click').on('click', function () {
-        //console.log('candidateUsers',candidateUsers);
         var shjl = $('#shjl').val();
         var shsj = $('#shsj').val();
         var shyj = $('#shyj').val();
         if (!shjl) {
             alertDiv({
-                top:120,
+                top: 120,
                 title: '温馨提示',
                 msg: '请选择审核结论!',
-                fn: function(){
+                fn: function () {
                     $('#shjl').focus();
                 }
             });
@@ -375,7 +366,7 @@ function saveAndSsShyj(backObj) {
                 top: 120,
                 title: '温馨提示',
                 msg: '请选择审核时间!',
-                fn: function(){
+                fn: function () {
                     $('#shsj').focus();
                 }
             });
@@ -386,7 +377,7 @@ function saveAndSsShyj(backObj) {
                 top: 120,
                 title: '温馨提示',
                 msg: '请选择审核意见!',
-                fn: function(){
+                fn: function () {
                     $('#shyj').focus();
                 }
             });
@@ -404,7 +395,7 @@ function saveAndSsShyj(backObj) {
                     complete(shjl, shsj, shyj);
                 } else {
                     alertDiv({
-                        top:120,
+                        top: 120,
                         title: '提示',
                         msg: '请选择下一环节及审批人!'
                     });
@@ -466,7 +457,7 @@ function saveAndSsShyj(backObj) {
                 param += '&businessKey=' + businessKey;
                 param += '&asjbh=' + asjbh;
                 param += '&asjflwsdm=' + asjflwsdm;
-                loading('open', '正在退回操作...');
+                loading('open', '正在执行退回操作,请稍候...');
                 $.ajax({
                     url: ajaxUrl + '/jump?' + param,
                     type: 'post',
@@ -490,14 +481,15 @@ function saveAndSsShyj(backObj) {
                     msg: '请选择退回状态!'
                 });
             }
-
         }
     });
+
+
     //意见签章
     $('#yjqzBtn').off('click').on('click', function () {
         var shyj = $('#shyj').val();
-        console.log('backObj:',backObj);
-        window.frames[0].yjqz(shyj,'1');
+        console.log('backObj:', backObj);
+        window.frames[0].yjqz(shyj, '1');
     });
     //保存pdf
     $('#yjqzPDFSave').off('click').on('click', function () {
@@ -508,7 +500,6 @@ function saveAndSsShyj(backObj) {
         window.frames[0].sign();
     });
 }
-
 
 
 //完成流程,到下一级
@@ -554,7 +545,7 @@ function complete(shjl, shsj, shyj) {
                 if (isLastTask) {
                     if (isCheckMsger) {
                         var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
-                        sendMsgLast(asjbh,businessKey,asjflwsdm,content,json.message);
+                        sendMsgLast(asjbh, businessKey, asjflwsdm, content, json.message);
                     } else {
                         loading('close');
                         alertDiv({
@@ -609,7 +600,7 @@ function end(shjl, shsj, shyj) {
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
                 if (isCheckMsger) {
                     var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
-                    sendMsgLast(asjbh,businessKey,asjflwsdm,content,json.message);
+                    sendMsgLast(asjbh, businessKey, asjflwsdm, content, json.message);
                 } else {
                     loading('close');
                     alertDiv({
@@ -788,12 +779,12 @@ function sendMsg(userid, con, msg) {
  * @param con  短信内容
  * @param msg  提示信息
  */
-function sendMsgLast(asjbh,businessKey,asjflwsdm,con,msg){
+function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
     $.ajax({
-        url: pathConfig.basePath + '/api/xx/sendMsg/'+asjbh+'/'+businessKey,
+        url: pathConfig.basePath + '/api/xx/sendMsg/' + asjbh + '/' + businessKey,
         data: {
             content: con,
-            asjflwsdm:asjflwsdm
+            asjflwsdm: asjflwsdm
         },
         type: 'post',
         success: function (data) {
@@ -814,11 +805,11 @@ function sendMsgLast(asjbh,businessKey,asjflwsdm,con,msg){
  * 获取审核人姓名从组织机构
  * @param ryid 审核人id
  */
-function getShrxmFromJcj(ryid){
+function getShrxmFromJcj(ryid) {
     $.ajax({
-        url:pathConfig.managePath+'/api/user/queryOrgUserList',
+        url: pathConfig.managePath + '/api/user/queryOrgUserList',
         data: {
-            identitycard:ryid
+            identitycard: ryid
         },
         type: 'post',
         success: function (data) {
