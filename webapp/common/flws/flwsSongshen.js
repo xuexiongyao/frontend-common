@@ -409,7 +409,20 @@ function saveAndSsShyj(backObj) {
             };
             //执行签章
             if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
-                window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
+                $.messager.confirm({
+                    title: '是否签章',
+                    msg: '未安装签章插件,签不了哦!!',
+                    ok: '马上签章',
+                    cancel: '算了不签',
+                    closeable: false,
+                    fn: function(r){
+                        if(r){
+                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
+                        }else{
+                            wclc(); //完成流程
+                        }
+                    }
+                });
             }else{
                 wclc(); //完成流程
             }
