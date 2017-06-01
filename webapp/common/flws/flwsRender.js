@@ -1343,10 +1343,13 @@ function flwsClXyrCheckC(bm, $this) {
  * @return {Array} 返回已呈请嫌疑对象数据
  */
 function xydxDataFromCqbgHasCq(xydxData,xydxbm,xydxids) {
+
     var currentXydxData = xydxData[xydxbm];//当前嫌疑对象数据
 
     var checkedXydxData = [];//呈请报告已呈请的嫌疑对象数据
-
+    if(!xydxids){
+        return checkedXydxData;
+    }
     for(var i=0;i<currentXydxData.length;i++){
         for(var j=0;j<xydxids.length;j++){
             if(xydxids[j] == currentXydxData[i].xxzjbh){
