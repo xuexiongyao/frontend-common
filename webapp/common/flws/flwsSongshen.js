@@ -389,8 +389,10 @@ function saveAndSsShyj(backObj) {
         }
 
         //同意
+
         if (shjl == '1') {
             var wclc = function(){
+                console.log('是否最后一级isFinally:',isFinally);
                 //获取选择的审批人
                 if (isFinally) {    //最后一级没有审批人
                     candidateUsers = '';
