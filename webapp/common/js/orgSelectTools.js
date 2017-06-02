@@ -165,12 +165,12 @@ function initHtmlDivForTztb(textboxID,filterData,multi_single,returnFieldData){
 		//console.log("组织机构多选DIV已存在");
 	}else{
 		//console.log("组织机构多选DIV不存在");
-		var sfqfDiv = '<div style="padding:10px 0px;text-align: center;">是否群发：' +
+		var sfqfDiv = '<div style="padding:10px 0px;text-align: center;">' +
 						'<span class="sfqf-span selected" style="cursor: pointer;">' +
-							'<input type="radio" name="sfqf" checked="true" value="1" style="vertical-align: bottom;margin-bottom: 2px;"/>是</span>' +
+							'<input type="radio" name="sfqf" checked="true" value="1" style="vertical-align: bottom;margin-bottom: 2px;"/>发送勾选部门及其下属部门</span>' +
 					  	'&nbsp;&nbsp;&nbsp;&nbsp;' +
 						'<span class="sfqf-span" style="cursor: pointer;">' +
-							'<input type="radio" name="sfqf" value="0" style="vertical-align: bottom;margin-bottom: 2px;" />否</span>' +
+							'<input type="radio" name="sfqf" value="0" style="vertical-align: bottom;margin-bottom: 2px;" />发送勾选部门</span>' +
 					  '</div>';
 
 		var orgDiv = document.createElement('div');
