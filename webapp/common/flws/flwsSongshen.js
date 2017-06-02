@@ -101,7 +101,6 @@ function getCurrent() {
                 }
             } else {
                 alertDiv({
-                    top: 120,
                     title: '获取当前环节出错',
                     msg: json.message
                 });
@@ -214,6 +213,8 @@ function selectApprove(shjl) {
 
         //点击【选择】按钮
     $('#select_approve').off('click').on('click', function () {
+        var $report = $('.right-report');
+        $report.css('visibility','hidden');
         //同意,不同意
         if (shjl == '1' || shjl == '2') {
             $('#next_link').show();
@@ -243,7 +244,10 @@ function selectApprove(shjl) {
                         top:120,
                         id: 'next_link_panel', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
                         title: '选择环节及审批人',
-                        width: 540
+                        width: 540,
+                        onClose: function(){
+                            $report.css('visibility','visible');
+                        }
                     }, [                       //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
                         {
                             text: '确定',
@@ -263,7 +267,6 @@ function selectApprove(shjl) {
                                         });
                                     } else {
                                         alertDiv({
-                                            top: 120,
                                             title: '提示',
                                             msg: '请选择审批人!'
                                         });
@@ -351,26 +354,29 @@ function minDateFun(prevDate) {
 function saveAndSsShyj(backObj) {
     //注册保存按钮事件,保存审核意见
     $('#saveAndss').off('click').on('click', function () {
+        var $report = $('.right-report')
+        $report.css('visibility','hidden');
         var shjl = $('#shjl').val();
         var shsj = $('#shsj').val();
         var shyj = $('#shyj').val();
         if (!shjl) {
             alertDiv({
-                top: 120,
                 title: '温馨提示',
                 msg: '请选择审核结论!',
                 fn: function () {
+                    $report.css('visibility','visible');
                     $('#shjl').focus();
                 }
             });
             return false;
         }
         if (!shsj) {
+
             alertDiv({
-                top: 120,
                 title: '温馨提示',
                 msg: '请选择审核时间!',
                 fn: function () {
+                    $report.css('visibility','visible');
                     $('#shsj').focus();
                 }
             });
@@ -378,10 +384,10 @@ function saveAndSsShyj(backObj) {
         }
         if (!shyj) {
             alertDiv({
-                top: 120,
                 title: '温馨提示',
                 msg: '请填写审核意见!',
                 fn: function () {
+                    $report.css('visibility','visible');
                     $('#shyj').focus();
                 }
             });
@@ -391,43 +397,46 @@ function saveAndSsShyj(backObj) {
         //同意
 
         if (shjl == '1') {
-            var wclc = function(){
-                console.log('是否最后一级isFinally:',isFinally);
-                //获取选择的审批人
-                if (isFinally) {    //最后一级没有审批人
-                    candidateUsers = '';
-                    complete(shjl, shsj, shyj);
-                } else {
-                    if (candidateUsers) {
-                        complete(shjl, shsj, shyj);
-                    } else {
-                        alertDiv({
-                            top: 120,
-                            title: '提示',
-                            msg: '请选择下一环节及审批人!'
-                        });
-                    }
-                }
-            };
-            //执行签章
-            if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
-                $.messager.confirm({
-                    top: 120,
-                    title: '是否签章',
-                    msg: '若未安装签章插件,将无法签章!',
-                    ok: '直接送审',
-                    cancel: '就想签章',
-                    closeable: false,
-                    fn: function(r){
-                        if(r){
-                            wclc(); //完成流程
-                        }else{
-                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
-                        }
+            console.log('是否最后一级isFinally:',isFinally);
+            if(!isFinally && !candidateUsers){
+                alertDiv({
+                    title: '提示',
+                    msg: '请选择下一环节及审批人!',
+                    fn: function(){
+                        $report.css('visibility','visible');
                     }
                 });
             }else{
-                wclc(); //完成流程
+                var wclc = function(){
+                    //获取选择的审批人
+                    if (isFinally) {    //最后一级没有审批人
+                        candidateUsers = '';
+                        complete(shjl, shsj, shyj);
+                    }
+                    else if (candidateUsers) {
+                        complete(shjl, shsj, shyj);
+                    }
+                };
+                //执行签章
+                if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
+                    $.messager.confirm({
+                        title: '是否签章',
+                        msg: '若未安装签章插件,将无法签章!',
+                        ok: '直接送审',
+                        cancel: '就想签章',
+                        closeable: false,
+                        fn: function(r){
+                            if(r){
+                                wclc(); //完成流程
+                            }else{
+                                $report.css('visibility','visible');
+                                window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
+                            }
+                        }
+                    });
+                }else{
+                    wclc(); //完成流程
+                }
             }
         }
         //不同意
@@ -443,7 +452,6 @@ function saveAndSsShyj(backObj) {
                     //console.log('不同意,但是选择审批人:',candidateUsers);
                 } else {
                     alertDiv({
-                        top: 120,
                         title: '提示',
                         msg: '请选择处理方式'
                     });
@@ -493,7 +501,6 @@ function saveAndSsShyj(backObj) {
                     success: function (json) {
                         loading('close');
                         alertDiv({
-                            top: 120,
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -504,7 +511,6 @@ function saveAndSsShyj(backObj) {
                 });
             } else {
                 alertDiv({
-                    top: 120,
                     title: '提示',
                     msg: '请选择退回状态!'
                 });
@@ -546,7 +552,7 @@ function complete(shjl, shsj, shyj) {
         type: 'post',
         dataType: 'json',
         success: function (json) {
-            //loading('close');
+            loading('close');
             // console.log('complete:', json);
             if (json.status == 'success') {
                 //发送短信请求
@@ -556,9 +562,7 @@ function complete(shjl, shsj, shyj) {
                         var content = "您送审的" + ajmc + "的【" + flwsmc + "】已审批完成，请及时查收。";
                         sendMsgLast(asjbh, businessKey, asjflwsdm, content, json.message);
                     } else {
-                        loading('close');
                         alertDiv({
-                            top: 120,
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -571,9 +575,7 @@ function complete(shjl, shsj, shyj) {
                         var content = badwGajgmc + "送审的【" + flwsmc + "】已到审批任务中，请您及时处理。";
                         sendMsg(candidateUsers, content, json.message);
                     } else {
-                        loading('close');
                         alertDiv({
-                            top: 120,
                             title: '提示',
                             msg: json.message,
                             fn: function () {
@@ -582,12 +584,15 @@ function complete(shjl, shsj, shyj) {
                         });
                     }
                 }
-            } else {
+            }
+            else {
                 loading('close');
                 alertDiv({
-                    top: 120,
                     title: '提示',
-                    msg: json.message
+                    msg: json.message,
+                    fn: function(){
+                        $report.css('visibility','visible');
+                    }
                 });
             }
         }
@@ -595,8 +600,6 @@ function complete(shjl, shsj, shyj) {
 }
 //结束流程
 function end(shjl, shsj, shyj) {
-    //alert('end');
-    //return;
     loading('open', '最后一级,数据提交中...');
     $.ajax({
         url: ajaxUrl + '/end?taskId=' + taskId + '&sourceName=' + name + '&shjl=' + shjl + '&shsj=' + shsj + '&shyj=' + shyj + '&asjbh=' + asjbh + '&asjflwsdm=' + asjflwsdm + '&businessKey=' + businessKey + '&fjrid=' + fjrid + '&fjrxm=' + fjrxm,
@@ -604,6 +607,7 @@ function end(shjl, shsj, shyj) {
         dataType: 'json',
         success: function (json) {
             // console.log('结束:', json);
+            loading('close');
             if (json.status == 'success') {
                 //发送短信请求
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
@@ -613,7 +617,6 @@ function end(shjl, shsj, shyj) {
                 } else {
                     loading('close');
                     alertDiv({
-                        top: 120,
                         title: '提示',
                         msg: json.message,
                         fn: function () {
@@ -622,8 +625,13 @@ function end(shjl, shsj, shyj) {
                     });
                 }
             } else {
-                loading('close');
-                //console.log('结束:',json);
+                alertDiv({
+                    title: '错误提示',
+                    msg: json.message,
+                    fn: function(){
+                        $report.css('visibility','visible');
+                    }
+                });
             }
         }
     });
@@ -703,7 +711,6 @@ function lctShow() {
                     $('.lct-node').tooltip();
                 } else {
                     alertDiv({
-                        top: 120,
                         title: '提示',
                         msg: '请求数据有误，请联系相关工作人员',
                         fn: function () {
@@ -713,7 +720,6 @@ function lctShow() {
                 }
             } else {
                 alertDiv({
-                    top: 120,
                     title: '提示',
                     msg: json.message
                 });
@@ -760,16 +766,16 @@ function compareTime(startTime, endTime, i) {
  * @param msg  提示信息
  */
 function sendMsg(userid, con, msg) {
+    loading('open','正在发送短信信息,请稍候...');
     $.ajax({
         url: pathConfig.basePath + '/api/xx/sendMsg/' + userid,
         data: {
             content: con
         },
         type: 'post',
-        success: function (data) {
+        success: function () {
             loading('close');
             alertDiv({
-                top: 120,
                 title: '提示',
                 msg: msg,
                 fn: function () {
@@ -799,7 +805,6 @@ function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
         success: function (data) {
             loading('close');
             alertDiv({
-                top: 120,
                 title: '提示',
                 msg: msg,
                 fn: function () {
