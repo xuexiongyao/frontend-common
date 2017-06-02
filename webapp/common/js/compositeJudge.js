@@ -48,7 +48,8 @@ var judge8 = [
     {"id": "NN","text": "不为空"}
 ];
 var judge9 = [
-    {"id": "IN","text": "隶属"}
+    {"id": "IN","text": "隶属"},
+    {"id": "=","text": "等于"}
 ];
 var judge10 = [
     {"id": "=","text": "等于"},
