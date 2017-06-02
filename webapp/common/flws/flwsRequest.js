@@ -376,8 +376,23 @@ function queryFlwsData(title, render) {
  * 呈请报告  保存函数
  * @param data
  */
+function cqbgSave(url, param) {
+    if (DATA.CQBG.cqbgData.customized) {
+        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
+    } else {
+        loading("open","正在保存呈请报告,请稍候...");
+        $.ajax({
+            url: url,
+            data: param,
+            success: function (data) {
+                loading('close');
+                cqbgSaveComplete(data);
+            }
+        });
+    }
+
+}
 function cqbgSaveComplete(data) {
-    loading('close');//完成后关闭...转圈
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
@@ -391,33 +406,26 @@ function cqbgSaveComplete(data) {
                 }
             }
             queryCqbgData('');//重新查询数据
-            $.messager.show({
-                title: '提示',
-                msg: '呈请报告保存成功'
+            $.messager.confirm({
+                title: '温馨提示',
+                msg: '呈请报告保存成功,是否生成PDF?',
+                ok: '生成PDF',
+                cancel: '暂不生成',
+                fn: function(r){
+                    if(r){
+                        scflwsQuery(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm)
+                    }
+                }
             });
         } else if (json.state == 'error') {
-            $.messager.show({
+            alertDiv({
                 title: '提示',
                 msg: '呈请报告保存失败'
             });
         }
     }
 }
-function cqbgSave(url, param) {
-    if (DATA.CQBG.cqbgData.customized) {
-        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
-    } else {
-        loading("open","数据处理中...");
-        $.ajax({
-            url: url,
-            data: param,
-            success: function (data) {
-                cqbgSaveComplete(data);
-            }
-        });
-    }
 
-}
 
 function flwsSaveComplete(data, bm) {
     loading('close');//完成后关闭...转圈

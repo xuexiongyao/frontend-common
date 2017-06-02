@@ -256,7 +256,9 @@ function xyrCheckedXxfy($this) {
             }
 
             //嫌疑人勾选其他接口请求信息复用（秀平）
-            ajax_request(DATA.CQBG.cqbgData.bianMa, xyrXxzjbh);
+            if(jQuery.isEmptyObject(DATA.CQBG.cqbgRow)){//新增 请求接口复用信息
+                ajax_request(DATA.CQBG.cqbgData.bianMa, xyrXxzjbh);
+            }
 
             eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedDx('" + JSON.stringify(xydxCheckData) + "')");
             return;
@@ -1343,10 +1345,13 @@ function flwsClXyrCheckC(bm, $this) {
  * @return {Array} 返回已呈请嫌疑对象数据
  */
 function xydxDataFromCqbgHasCq(xydxData,xydxbm,xydxids) {
+
     var currentXydxData = xydxData[xydxbm];//当前嫌疑对象数据
 
     var checkedXydxData = [];//呈请报告已呈请的嫌疑对象数据
-
+    if(!xydxids){
+        return checkedXydxData;
+    }
     for(var i=0;i<currentXydxData.length;i++){
         for(var j=0;j<xydxids.length;j++){
             if(xydxids[j] == currentXydxData[i].xxzjbh){

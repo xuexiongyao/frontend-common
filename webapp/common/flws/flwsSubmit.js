@@ -7,6 +7,7 @@ function scflwsQuery(cqbgzj,asjflwsdm){
         asjbh:DATA.asjbh,
         asjflwsdm:asjflwsdm
     };
+    //console.log('scflwsQuery:',param);
     loading('open','正在发送生成任务,请稍候...');
     $.ajax({
         url : pathConfig.basePath+'/qzrw/cqbg_scflws',
