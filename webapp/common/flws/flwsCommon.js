@@ -243,6 +243,7 @@ var chnUnitChar = ["", "十", "百", "千"];
 
 //节内转换算法
 function SectionToChinese(section) {
+    var oldSection = section;//初始值
     var strIns = '', chnStr = '';
     var unitPos = 0;
     var zero = true;
@@ -255,7 +256,11 @@ function SectionToChinese(section) {
             }
         } else {
             zero = false;
-            strIns = chnNumChar[v];
+            if(unitPos == 1 && oldSection <=19 && oldSection >=10){
+                strIns = chnUnitChar[0];
+            }else{
+                strIns = chnNumChar[v];
+            }
             strIns += chnUnitChar[unitPos];
             chnStr = strIns + chnStr;
         }
@@ -273,10 +278,6 @@ function NumberToChinese(num) {
 
     if (num === 0) {
         return chnNumChar[0];
-    }
-
-    if(num == 10){
-        return chnUnitChar[1];
     }
 
     while (num > 0) {
