@@ -430,7 +430,7 @@ function saveAndSsShyj(backObj) {
                                 wclc(); //完成流程
                             }else{
                                 $report.css('visibility','visible');
-                                window.frames[0].yjqz(shyj,hxshyjbzCurrent,wclc);
+                                window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
                             }
                         }
                     });
