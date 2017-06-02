@@ -125,10 +125,18 @@ function initFlwsMain(data){
     // 页面操作
     tabSwitch();//tab切换
 
-    //绑定送审事件
+    //绑定【送审】事件
     $('#sent').off('click').on('click', function () {
         if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
             shongshen(DATA.OWN);
+        }
+    });
+
+    //【生成法律文书】
+    $('#scflwsBtn').off('click').on('click', function () {
+        if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
+            var isScflws = true;            //生成法律文书处理
+            shongshen(DATA.OWN,isScflws);
         }
     });
 }
@@ -178,6 +186,7 @@ function queryCqbgData(render) {
 
                         if (typeof(DATA.CQBG.cqbgRow.XXZJBH) == 'undefined') {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.CQBG_ZJ;
+                            DATA.CQBG.cqbgFlwsZj = DATA.CQBG.cqbgRow.ZJ;//当前法律文书的主键（当成呈请报告的法律文书）例如：受案登记表
                         } else {
                             DATA.CQBG.cqbgZj = DATA.CQBG.cqbgRow.XXZJBH;
                         }
@@ -367,8 +376,23 @@ function queryFlwsData(title, render) {
  * 呈请报告  保存函数
  * @param data
  */
+function cqbgSave(url, param) {
+    if (DATA.CQBG.cqbgData.customized) {
+        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
+    } else {
+        loading("open","正在保存呈请报告,请稍候...");
+        $.ajax({
+            url: url,
+            data: param,
+            success: function (data) {
+                loading('close');
+                cqbgSaveComplete(data);
+            }
+        });
+    }
+
+}
 function cqbgSaveComplete(data) {
-    loading('close');//完成后关闭...转圈
     if (data) {
         var json = eval('(' + data + ')');
         if (json.state == 'success') {
@@ -376,38 +400,32 @@ function cqbgSaveComplete(data) {
                 //法律文书当成呈请报告处理（受案登记表、呈请嫌疑人申请表），呈请报告主键的处理
                 if(DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG'){
                     DATA.CQBG.cqbgZj = json.CQBG_ZJ;
+                    DATA.CQBG.cqbgFlwsZj = json.ID;//当前法律文书的主键（当成呈请报告的法律文书）
                 }else{
                     DATA.CQBG.cqbgZj = json.ID;
                 }
             }
             queryCqbgData('');//重新查询数据
-            $.messager.show({
-                title: '提示',
-                msg: '呈请报告保存成功'
+            $.messager.confirm({
+                title: '温馨提示',
+                msg: '呈请报告保存成功,是否生成PDF?',
+                ok: '生成PDF',
+                cancel: '暂不生成',
+                fn: function(r){
+                    if(r){
+                        scflwsQuery(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm)
+                    }
+                }
             });
         } else if (json.state == 'error') {
-            $.messager.show({
+            alertDiv({
                 title: '提示',
                 msg: '呈请报告保存失败'
             });
         }
     }
 }
-function cqbgSave(url, param) {
-    if (DATA.CQBG.cqbgData.customized) {
-        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
-    } else {
-        loading("open","数据处理中...");
-        $.ajax({
-            url: url,
-            data: param,
-            success: function (data) {
-                cqbgSaveComplete(data);
-            }
-        });
-    }
 
-}
 
 function flwsSaveComplete(data, bm) {
     loading('close');//完成后关闭...转圈

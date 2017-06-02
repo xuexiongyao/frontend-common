@@ -19,8 +19,8 @@ function getCqbgMapData(cqbgzj) {
     //发送请求
     $.ajax({
         url: openUrl,
-        data:{
-           cqbgZj: cqbgzj
+        data: {
+            cqbgZj: cqbgzj
         },
         success: function (json) {
             loading('close');
@@ -52,14 +52,15 @@ function getCqbgMapData(cqbgzj) {
                 };
             }
 
-            if(pathObj.pageFrom != 'undefined' && pathObj.pageFrom == 'cqwsxg'){//【呈请文书修改详情】
+            if (pathObj.pageFrom != 'undefined' && pathObj.pageFrom == 'cqwsxg') {//【呈请文书修改详情】
                 DATA.FLWS.cqFlwsZj = pathObj.flwsxxzjbh;//呈请法律文书主键
             }
 
             getCqbgFlwsHtmlPage();//呈请报告(法律文书)iframe页面的获取
             //呈请报告数据查询
             if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
-                queryCqbgData();//获取呈请报告数据
+                //获取呈请报告数据
+                //queryCqbgData();//【电子签章不需要获取】
             } else {
                 if (DATA.FLWS.flwsData.customer) {//只有法律文书,并且需要生成法律文书
                     onlyFlwsRender();
@@ -83,15 +84,30 @@ function getCqbgFlwsHtmlPage() {
     /***呈请报告***/
     var cqbgstr = '';
     var cqbgData = DATA.CQBG.cqbgData;//呈请报告数据
+    var cqbgzj = DATA.cqbgzj;
+    console.log('呈请报告数据:',DATA);
     if (!jQuery.isEmptyObject(cqbgData)) {
-        //呈请报告字符串
-        var cqbgcon = getHtmlByAjax(cqbgData.url);
+        //呈请报告审批签章
+        var dzqzPdfUrl = pathConfig.basePath + '/html/pdfqz/cqbgSpqz.html?xxzjbh='+cqbgzj;
+        var cqbgcon = '<iframe scrolling="hidden" frameborder="0" src="' + dzqzPdfUrl + '" style="width:100%;height: 99%;"> </iframe>';
         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
             '<div class="flws-main-con">' +
             '<div class="flws-main-con-r" id="cqbg_main_con" style="width: 100%;">' + cqbgcon +
             '</div>' +
             '</div>' +
             '</div>';
+
+
+        //呈请报告字符串【未使用签章时引用的方式】
+        /*
+         var cqbgcon = getHtmlByAjax(cqbgData.url);
+         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
+         '<div class="flws-main-con">' +
+         '<div class="flws-main-con-r" id="cqbg_main_con" style="width: 100%;">' + cqbgcon +
+         '</div>' +
+         '</div>' +
+         '</div>';
+         */
     }
 
     $("#flwsTabs").append(cqbgstr);
@@ -101,12 +117,12 @@ function getCqbgFlwsHtmlPage() {
     var flwsData = DATA.FLWS.flwsData;//法律文书数据
     if (!jQuery.isEmptyObject(flwsData)) {
         var flwsTmpArray = [];//法律文书临时数组
-        for(var k in flwsData){
+        for (var k in flwsData) {
             flwsTmpArray.push(flwsData[k]);
         }
         var sortedFlwsData = flwsTmpArray.sort(compare('index'));
         //法律文书字符串
-        for (var a=0;a<sortedFlwsData.length;a++) {
+        for (var a = 0; a < sortedFlwsData.length; a++) {
             flwsstr = '<div class="flws-tabs-title" title="' + sortedFlwsData[a].name + '">' +
                 '<div class="flws-main-con" id="flws_main_con_' + sortedFlwsData[a].bianMa + '">' +
                 '</div>' +
@@ -138,6 +154,7 @@ function queryCqbgData() {
         },
         dataType: 'json',
         success: function (json) {
+            loading('close');
             if (json.state == 'success') {//成功
                 var data = json.rows[0];//呈请报告返回的数据
                 DATA.CQBG.cqbgRow = data;//呈请报告返回的数据
@@ -152,7 +169,7 @@ function queryCqbgData() {
                         if (a == 'CQNR') {//呈请内容单独处理
                             $('#cqbg_main_con form textarea').val(data[a]).prop('readonly', true);
                             autoTextarea($('#cqbg_main_con form textarea')[0]);
-                        }else {
+                        } else {
                             for (var i = 0; i < $target.length; i++) {
                                 var aName = $($target[i]).attr('name');//a标签的name属性
                                 if (a == aName) {
@@ -170,7 +187,7 @@ function queryCqbgData() {
                     icon: 'warning'
                 });
             }
-            loading('close');
+
         }
     })
 }
@@ -276,11 +293,11 @@ function queryFlwsData(title, render) {
                 var bm = flwsData[k].bianMa;//法律文书编码
 
                 //目前只能查看有呈请报告的法律文书，没有的还未设计 todo
-                if(DATA.FLWS.cqFlwsZj){//【呈请法律文书修改】
+                if (DATA.FLWS.cqFlwsZj) {//【呈请法律文书修改】
                     param = {
                         ZJ: DATA.FLWS.cqFlwsZj
                     };
-                }else{
+                } else {
                     param = {
                         CQBG_ZJ: DATA.cqbgzj,
                         XT_ZXBZ: '0',
@@ -312,11 +329,11 @@ function queryFlwsData(title, render) {
                 //}
 
                 loading("open", "正在获取法律文书数据,请稍等...");
-                if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){
-                    if(DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[')>-1){
-                        var btflwsRule = eval('('+DATA.CQBG.cqbgData.btflws+')');//处理
-                        for(var index=0;index<btflwsRule.length;index++){
-                            if(btflwsRule[index].BM.split(",")[0]==bm&&btflwsRule[index].FIELD&&!btflwsRule[index].FCX){
+                if (!jQuery.isEmptyObject(DATA.CQBG.cqbgData)) {
+                    if (DATA.CQBG.cqbgData.btflws && DATA.CQBG.cqbgData.btflws.indexOf('[') > -1) {
+                        var btflwsRule = eval('(' + DATA.CQBG.cqbgData.btflws + ')');//处理
+                        for (var index = 0; index < btflwsRule.length; index++) {
+                            if (btflwsRule[index].BM.split(",")[0] == bm && btflwsRule[index].FIELD && !btflwsRule[index].FCX) {
                                 param[btflwsRule[index].FIELD] = btflwsRule[index].VALUE;
                             }
                         }
@@ -409,12 +426,13 @@ function flwsXxfyA(bm) {
     for (var j = 0; j < $target.length; j++) {
         var aName = $($target[j]).attr('name');//a标签的name属性
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
-        if(typeof aName !='undefined'){
-            try{
+
+        if (typeof aName != 'undefined') {
+            try {
                 if (aName.indexOf('_T_') != -1) {
                     var type = $($target[j]).find('input').attr('type');//input框类型
-                    if(type == 'radio' || type == 'checkbox'){
-                        $($target[j]).find('input[type="'+type+'"]').prop('checked',false);
+                    if (type == 'radio' || type == 'checkbox') {
+                        $($target[j]).find('input[type="' + type + '"]').prop('checked', false);
                     }
                     var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                     var val = data[name];//对应数据的值
@@ -427,11 +445,19 @@ function flwsXxfyA(bm) {
                             valArr = val.split(',');
                         }
                     }
-                    for(var g=0;g<valArr.length;g++){
+                    for (var g = 0; g < valArr.length; g++) {
                         $($target[j]).find("input[value='" + valArr[g] + "']").prop('checked', true).attr('disabled', 'disabled');
                     }
                 }
-            }catch(e){}
+            } catch (e) {
+            }
+        }
+
+        if (annotation) {
+            var tlx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+            if (tlx != 'CHECKBOX' && tlx != 'RADIOBOX') {
+                $($target[j]).text('');
+            }
         }
 
         for (var k in data) {
@@ -452,18 +478,20 @@ function flwsXxfyA(bm) {
                             }
                             $($target[j]).text(newVal);
                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
+                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox " + textStyle + "' name='" + aName + "' readonly style='border: 0;'>" + data[k] + "</textarea>";
                             $($target[j]).html(strTextbox);
                             autoTextarea($($target[j]).find('textarea')[0]);
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
+                        } else if (textStyle == 'MONEY') {
+                            $($target[j]).text(data[k + '_DX']);
                         } else {
                             $($target[j]).text(data[k]);
                         }
                     } else if (dictStyle || treeStyle) {
-                        if(k == 'JYCS_GAJGMC'){
+                        if (k == 'JYCS_GAJGMC') {
                             $($target[j]).text(data[k]);
-                        }else{
+                        } else {
                             $($target[j]).text(data[k + '_DICTMC']);
                         }
                     } else {
@@ -485,18 +513,18 @@ function flwsXxfyA(bm) {
  * @param bm  法律文书编码
  */
 function xydxListRenderB(bm) {
-    flwsXxfyB(bm,false);
+    flwsXxfyB(bm, false);
 }
 
 /**
  * 法律文书信息复用B
  * @param bm  法律文书编码
  */
-function flwsXxfyB(bm,isCustomized) {
+function flwsXxfyB(bm, isCustomized) {
     var data = DATA.FLWS[bm].flwsRow[0];
     var $target = $('#flws_cl_area_' + bm + ' form a');
 
-    if(isCustomized){
+    if (isCustomized) {
         if (DATA.FLWS[bm].flwsData.customized) {
             eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
         }
@@ -522,11 +550,11 @@ function flwsXxfyB(bm,isCustomized) {
 
         //checkbox、radiobox的处理
         if (typeof aName != 'undefined') {
-            try{
+            try {
                 if (aName.indexOf('_T_') > -1) {
                     var type = $($target[j]).find('input').attr('type');//input框类型
-                    if(type == 'radio' || type == 'checkbox'){
-                        $($target[j]).find('input[type="'+type+'"]').prop('checked',false);
+                    if (type == 'radio' || type == 'checkbox') {
+                        $($target[j]).find('input[type="' + type + '"]').prop('checked', false);
                     }
                     var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                     var val = data[name];//对应数据的值
@@ -539,11 +567,19 @@ function flwsXxfyB(bm,isCustomized) {
                             valArr = val.split(',');
                         }
                     }
-                    for(var g=0;g<valArr.length;g++){
+                    for (var g = 0; g < valArr.length; g++) {
                         $($target[j]).find("input[value='" + valArr[g] + "']").prop('checked', true).attr('disabled', 'disabled');
                     }
                 }
-            }catch(e){}
+            } catch (e) {
+            }
+        }
+
+        if (annotation) {
+            var tlx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+            if (tlx != 'CHECKBOX' && tlx != 'RADIOBOX') {
+                $($target[j]).text('');
+            }
         }
 
         for (var k in data) {
@@ -566,16 +602,18 @@ function flwsXxfyB(bm,isCustomized) {
                         } else if (textStyle == 'DATE_CN') {
                             $($target[j]).text(data[k]);
                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[k]+"</textarea>";
+                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox " + textStyle + "' name='" + aName + "' readonly style='border: 0;'>" + data[k] + "</textarea>";
                             $($target[j]).html(strTextbox);
                             autoTextarea($($target[j]).find('textarea')[0]);
+                        } else if (textStyle == 'MONEY') {
+                            $($target[j]).text(data[k + '_DX']);
                         } else {
                             $($target[j]).text(data[k]);
                         }
                     } else if (dictStyle || treeStyle) {
-                        if(k == 'JYCS_GAJGMC'){
+                        if (k == 'JYCS_GAJGMC') {
                             $($target[j]).text(data[k]);
-                        }else{
+                        } else {
                             $($target[j]).text(data[k + '_DICTMC']);
                         }
                     } else {
@@ -609,7 +647,7 @@ function xydxListRenderC(bm) {
     if (data.length > 0) {//有数据
         //只有一条数据(有嫌疑对象但是未勾选，并且非必选，也只能有一条数据)
         if (data.length == 1 && !data[0].CLDXLB) {//默认选中
-            flwsXxfyB(bm,true);
+            flwsXxfyB(bm, true);
             $('#flws_xyr_area_' + bm).hide();
             $('#flws_main_con_r_' + bm).css({width: '100%'});
             $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs();
@@ -620,15 +658,15 @@ function xydxListRenderC(bm) {
                 if (data[0].CLDXLB) {
                     xyrCldxlb = data[0].CLDXLB;
                     for (var k in xyrObj) {
-                        if (xyrCldxlb == xyrObj[k].cldxlb){
-                            if(data[i][(xyrObj[k].param)]){
+                        if (xyrCldxlb == xyrObj[k].cldxlb) {
+                            if (data[i][(xyrObj[k].param).toUpperCase()]) {
                                 xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
-                            }else{
-                                if(!DATA.DX.xydxData){
+                            } else {
+                                if (!DATA.DX.xydxData) {
                                     $.ajax({
                                         url: pathConfig.basePath + '/api/dtbm/' + DATA.FLWS[bm].flwsData.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
                                         type: 'get',
-                                        async:false,
+                                        async: false,
                                         success: function (json) {
                                             if (json) {
                                                 DATA.DX.xydxData = json;
@@ -638,8 +676,8 @@ function xydxListRenderC(bm) {
                                 }
 
                                 var xydxArray = DATA.DX.xydxData[k];
-                                for(var j=0;j<xydxArray.length;j++){
-                                    if(xydxArray[j].xxzjbh == data[i].CLDX_XXZJBH){
+                                for (var j = 0; j < xydxArray.length; j++) {
+                                    if (xydxArray[j].xxzjbh == data[i].CLDX_XXZJBH) {
                                         xyrstr += '<li><label xxzjbh="' + data[i].CLDX_XXZJBH + '"><span>' + xydxArray[j][(xyrObj[k].param)] + '</span></label></li>';
                                         break;
                                     }
@@ -647,7 +685,7 @@ function xydxListRenderC(bm) {
                             }
                         }
                     }
-                }else{
+                } else {
                     checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
                         '<ul class="choose-list chooseXyr">' + xyrstr + '</ul></div>';
                 }
@@ -670,12 +708,12 @@ function xydxListRenderC(bm) {
 
     //绑定点击事件
     if (data.length > 0) {
-        if(data[0].CLDXLB){//勾選了嫌疑對象
+        if (data[0].CLDXLB) {//勾選了嫌疑對象
             $('#flws_xyr_area_' + bm + ' div li label').off('click').on('click', function () {
                 flwsXxfyC1(bm, $(this));
             })
-        }else{//不必選，沒有勾選嫌疑對象
-            flwsXxfyB(bm,true);
+        } else {//不必選，沒有勾選嫌疑對象
+            flwsXxfyB(bm, true);
         }
     } else {
         flwsXxfyC2(bm);
@@ -721,11 +759,11 @@ function flwsXxfyC1(bm, $this) {
 
                     //checkbox、radiobox的处理
                     if (typeof aName != 'undefined') {
-                        try{
+                        try {
                             if (aName.indexOf('_T_') != -1) {
                                 var type = $($target[j]).find('input').attr('type');//input框类型
-                                if(type == 'radio' || type == 'checkbox'){
-                                    $($target[j]).find('input[type="'+type+'"]').prop('checked',false);
+                                if (type == 'radio' || type == 'checkbox') {
+                                    $($target[j]).find('input[type="' + type + '"]').prop('checked', false);
                                 }
                                 var name = aName.substring(0, aName.indexOf('_T_'));//对应数据的name值
                                 var val = data[i][name];//对应数据的值
@@ -738,14 +776,22 @@ function flwsXxfyC1(bm, $this) {
                                         valArr = val.split(',');
                                     }
                                 }
-                                for(var g=0;g<valArr.length;g++){
+                                for (var g = 0; g < valArr.length; g++) {
                                     $($target[j]).find("input[value='" + valArr[g] + "']").prop('checked', true).attr('disabled', 'disabled');
                                 }
                             }
-                        }catch(e){}
+                        } catch (e) {
+                        }
                     }
 
-                    //$($target[j]).text('');
+                    if (annotation) {
+                        var tlx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                        if (tlx != 'CHECKBOX' && tlx != 'RADIOBOX') {
+                            $($target[j]).text('');
+                        } else {
+                        }
+                    }
+
                     for (var a in data[i]) {
                         if (a == aName) {
                             if (annotation) {
@@ -767,16 +813,18 @@ function flwsXxfyC1(bm, $this) {
                                     } else if (textStyle == 'DATE_CN') {
                                         $($target[j]).text(data[i][a]);
                                     } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                                        var strTextbox = "<textarea class='" + aName + " easyuivalidatebox "+textStyle+"' name='" + aName + "' readonly style='border: 0;'>"+data[i][a]+"</textarea>";
+                                        var strTextbox = "<textarea class='" + aName + " easyuivalidatebox " + textStyle + "' name='" + aName + "' readonly style='border: 0;'>" + data[i][a] + "</textarea>";
                                         $($target[j]).html(strTextbox);
                                         autoTextarea($($target[j]).find('textarea')[0]);
+                                    } else if (textStyle == 'MONEY') {
+                                        $($target[j]).text(data[i][a + '_DX']);
                                     } else {
                                         $($target[j]).text(data[i][a]);
                                     }
                                 } else if (dictStyle || treeStyle) {
-                                    if(a == 'JYCS_GAJGMC'){
+                                    if (a == 'JYCS_GAJGMC') {
                                         $($target[j]).text(data[i][a]);
-                                    }else{
+                                    } else {
                                         $($target[j]).text(data[i][a + '_DICTMC']);
                                     }
                                 } else {

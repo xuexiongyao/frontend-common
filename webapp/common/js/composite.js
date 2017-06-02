@@ -686,27 +686,39 @@ function openOtherTable(isExport) {
 function batchExprot(search_config_obj) {
     //将查询条件赋给导出查询条件
     //var export_condition_obj = condition_obj;
-	var export_condition_obj = cloneObj(condition_obj);
-    export_condition_obj['start'] = 0;
-    export_condition_obj['export']='1';
+	//var export_condition_obj = cloneObj(condition_obj);
+	var export_condition_obj = {'start':0,'export':'1',mainTable: search_config.main_type, sort: search_config.sort};
+    //export_condition_obj['start'] = 0;
+    //export_condition_obj['export']='1';
 
-    if (checked_id_arr.length > 0) {//有勾选的
+    if (checked_id_arr.length > 0) {//有勾选的    	
+    	export_condition_obj.key='';
+    	export_condition_obj.option = 'ad';
+    	
     	if(!export_condition_obj.query)
     		export_condition_obj.query = [];
     	
-    	var query = export_condition_obj.query;
-    	for (var i = 0; i < query.length; i++) {
-    		//主表有查询条件,全部删除，导出的时候，主表条件不用了
-            if (search_config.main_type.toUpperCase() == query[i]['type'].toUpperCase()) {
-            	query.splice(i, 1);
-            	break;
-            }
-        }
+    	var query = condition_obj.query;
+    	if(query){
+	    	for (var i = 0; i < query.length; i++) {
+	    		//主表有查询条件,全部删除，导出的时候，主表条件不用了
+	            if (search_config.main_type.toUpperCase() == query[i]['type'].toUpperCase()) {            	
+	            	continue;
+	            }else{//复制子表条件
+	            	export_condition_obj.query.push(query[i]);
+	            }
+	        }
+    	}
     	
+    	//添加勾选的的主键
 		export_condition_obj.query.push({
             "type": search_config.main_type.toUpperCase(),
             "condition": [{"k": search_config.primary_key, "v": checked_id_arr.join(' '), "op": "="}]
         });
+    }else{
+    	export_condition_obj.query = condition_obj.query;
+    	export_condition_obj.key = condition_obj.key;
+    	export_condition_obj.option = condition_obj.option;
     }
 
     loading('open', '数据处理中,请稍候...');
@@ -1974,7 +1986,6 @@ function cloneObj(srcObj){
 	if(typeof(srcObj) != 'object') return srcObj; 
 	if(srcObj == null) return srcObj; 
 	var newObj = new Object(); 
-	for(var i in srcObj) 
-		newObj[i] = srcObj[i];
+	$.extend(newObj,srcObj); 
 	return newObj; 
 }

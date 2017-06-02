@@ -62,12 +62,12 @@ function getCqbgQtsjAdd() {
                     BADW_GAJGMC: DATA.publicJkXx.BADW01.BAJG_GAJGMC//办案机关公安机关名称
                 };
                 /*嫌疑人姓名*/
-                if (DATA.CQBG.xyrxms) {
+                if (typeof DATA.CQBG.xyrxms != 'undefined' && DATA.CQBG.xyrxms != null) {
                     DATA.CQBG.params.XYRXM = DATA.CQBG.xyrxms.join(',');//嫌疑人姓名
                 }
 
                 /*嫌疑人ID*/
-                if (DATA.CQBG.xyrids) {
+                if (typeof DATA.CQBG.xyrids != 'undefined' && DATA.CQBG.xyrxms != null) {
                     DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
                 }
 
@@ -134,12 +134,12 @@ function getCqbgQtsjEdit() {
                     CQRQ: cqrq//呈请日期
                 };
                 /*嫌疑人姓名*/
-                if (DATA.CQBG.xyrxms) {
+                if (typeof DATA.CQBG.xyrxms != 'undefined' && DATA.CQBG.xyrxms != null) {
                     DATA.CQBG.params.XYRXM = DATA.CQBG.xyrxms.join(',');//嫌疑人姓名
                 }
 
                 /*嫌疑人ID*/
-                if (DATA.CQBG.xyrids) {
+                if (typeof DATA.CQBG.xyrids != 'undefined' && DATA.CQBG.xyrids != null) {
                     DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
                 }
 
@@ -270,30 +270,30 @@ function getFlwsQtsjAdd(bm) {
                         DATA.FLWS[bm].params.CQBG_ZJ = DATA.CQBG.cqbgZj;//呈请报告主键
                     }
                     //嫌疑人id
-                    if (DATA.FLWS[bm].xyrXxzjbh) {
+                    if (typeof DATA.FLWS[bm].xyrXxzjbh != 'undefined' && DATA.FLWS[bm].xyrXxzjbh != null) {
                         DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrXxzjbh;//嫌疑人主键id
                     }
-                    if (DATA.FLWS[bm].xyrCldxlb) {
+                    if (typeof DATA.FLWS[bm].xyrCldxlb != 'undefined' && DATA.FLWS[bm].xyrCldxlb != null) {
                         DATA.FLWS[bm].params.CLDXLB = DATA.FLWS[bm].xyrCldxlb;//嫌疑人处理对象类别
                     }
-                    if (DATA.FLWS[bm].asjxgry) {
+                    if (typeof DATA.FLWS[bm].asjxgry != 'undefined' && DATA.FLWS[bm].asjxgry != null) {
                         DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].asjxgry;//嫌疑人案事件相关人员编号
                     }
-                    if (DATA.FLWS[bm].fzxyrRyid) {
+                    if (typeof DATA.FLWS[bm].fzxyrRyid != 'undefined' && DATA.FLWS[bm].fzxyrRyid != null) {
                         DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].fzxyrRyid;//嫌疑人人员id
                     }
 
                     //多选
-                    if (DATA.FLWS[bm].xyrxms) {
+                    if (typeof DATA.FLWS[bm].xyrxms != 'undefined' && DATA.FLWS[bm].xyrxms != null) {
                         DATA.FLWS[bm].params.FZXYR_XM = DATA.FLWS[bm].xyrxms.join(',');//嫌疑人姓名
                     }
-                    if (DATA.FLWS[bm].xyrids) {
+                    if (typeof DATA.FLWS[bm].xyrids != 'undefined' && DATA.FLWS[bm].xyrids != null) {
                         DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
                     }
-                    if (DATA.FLWS[bm].xyrryids) {
+                    if (typeof DATA.FLWS[bm].xyrryids != 'undefined' && DATA.FLWS[bm].xyrryids != null) {
                         DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].xyrryids.join(',');//嫌疑人人员id
                     }
-                    if (DATA.FLWS[bm].xyrasjxgrybhs) {
+                    if (typeof DATA.FLWS[bm].xyrasjxgrybhs != 'undefined' && DATA.FLWS[bm].xyrasjxgrybhs != null) {
                         DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].xyrasjxgrybhs.join(',');//嫌疑人案事件相关人员编号
                     }
 
@@ -350,28 +350,12 @@ function getFlwsQtsjAdd(bm) {
                                         DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
                                     }
                                 } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
-                                    var annotation = parentA.attr('annotation');
                                     var moneyNum = parentA.attr('money');
-                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                    if (textStyle) {
-                                        if (textStyle == 'MONEY') {
-                                            if (moneyNum) {
-                                                DATA.FLWS[bm].params[dataname] = moneyNum;
-                                                DATA.FLWS[bm].params[dataname + '_DX'] = val;
-                                            }
-                                        }
-                                    }
+                                    DATA.FLWS[bm].params[dataname] = moneyNum;
+                                    DATA.FLWS[bm].params[dataname + '_DX'] = val;
                                 } else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
-                                    var annotation = parentA.attr('annotation');
                                     var numberNum = parentA.attr('number');
-                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                    if (textStyle) {
-                                        if (textStyle == 'NUMBERCN') {
-                                            if (numberNum) {
-                                                DATA.FLWS[bm].params[dataname] = numberNum;
-                                            }
-                                        }
-                                    }
+                                    DATA.FLWS[bm].params[dataname] = numberNum;
                                 } else {
                                     DATA.FLWS[bm].params[dataname] = val;
                                 }
@@ -470,30 +454,30 @@ function getFlwsQtsjEdit(bm) {
                 }
 
                 //嫌疑人id
-                if (DATA.FLWS[bm].xyrXxzjbh) {
+                if (typeof DATA.FLWS[bm].xyrXxzjbh != 'undefined' && DATA.FLWS[bm].xyrXxzjbh != null) {
                     DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrXxzjbh;//嫌疑人主键id
                 }
-                if (DATA.FLWS[bm].xyrCldxlb) {
+                if (typeof DATA.FLWS[bm].xyrCldxlb != 'undefined' && DATA.FLWS[bm].xyrCldxlb != null) {
                     DATA.FLWS[bm].params.CLDXLB = DATA.FLWS[bm].xyrCldxlb;//嫌疑人处理对象类别
                 }
-                if (DATA.FLWS[bm].asjxgry) {
+                if (typeof DATA.FLWS[bm].asjxgry != 'undefined' && DATA.FLWS[bm].asjxgry != null) {
                     DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].asjxgry;//嫌疑人案事件相关人员编号
                 }
-                if (DATA.FLWS[bm].fzxyrRyid) {
+                if (typeof DATA.FLWS[bm].fzxyrRyid != 'undefined' && DATA.FLWS[bm].fzxyrRyid != null) {
                     DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].fzxyrRyid;//嫌疑人人员id
                 }
 
                 //多选
-                if (DATA.FLWS[bm].xyrxms) {
+                if (typeof DATA.FLWS[bm].xyrxms != 'undefined' && DATA.FLWS[bm].xyrxms != null) {
                     DATA.FLWS[bm].params.FZXYR_XM = DATA.FLWS[bm].xyrxms.join(',');//嫌疑人姓名
                 }
-                if (DATA.FLWS[bm].xyrids) {
+                if (typeof DATA.FLWS[bm].xyrids != 'undefined' && DATA.FLWS[bm].xyrids != null) {
                     DATA.FLWS[bm].params.CLDX_XXZJBH = DATA.FLWS[bm].xyrids.join(',');//嫌疑人主键id
                 }
-                if (DATA.FLWS[bm].xyrryids) {
+                if (typeof DATA.FLWS[bm].xyrryids != 'undefined' && DATA.FLWS[bm].xyrryids != null) {
                     DATA.FLWS[bm].params.FZXYR_RYID = DATA.FLWS[bm].xyrryids.join(',');//嫌疑人人员id
                 }
-                if (DATA.FLWS[bm].xyrasjxgrybhs) {
+                if (typeof DATA.FLWS[bm].xyrasjxgrybhs != 'undefined' && DATA.FLWS[bm].xyrasjxgrybhs != null) {
                     DATA.FLWS[bm].params.ASJXGRYBH = DATA.FLWS[bm].xyrasjxgrybhs.join(',');//嫌疑人案事件相关人员编号
                 }
 
@@ -669,7 +653,7 @@ function getFlwsQtsjEdit(bm) {
 /**
  * 送审呈请报告
  */
-function shongshen(sessionBean) {
+function shongshen(sessionBean,isScflws) {
     if (DATA.CQBG.cqbgZj == undefined) {//呈请报告的填写
         alertDiv({
             title: '提示',
@@ -756,16 +740,28 @@ function shongshen(sessionBean) {
                     if (json.state == 'success') {//查询成功
                         if (json.rows.length > 0) {//有数据 编辑
                             DATA.CQBG.cqbgRow = json.rows[0];
-                            selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                            if(isScflws){
+                                scflwsQuery(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm)
+                            }else{
+                                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                            }
                         }
                     }
                 }
             });
         }else{
-            selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+            if(isScflws){
+                scflwsQuery(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm)
+            }else{
+                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+            }
         }
     }else{
-        selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+        if(isScflws){
+            scflwsQuery(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean)
+        }else{
+            selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+        }
     }
 }
 
