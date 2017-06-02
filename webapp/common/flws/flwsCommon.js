@@ -275,6 +275,10 @@ function NumberToChinese(num) {
         return chnNumChar[0];
     }
 
+    if(num == 10){
+        return chnUnitChar[1];
+    }
+
     while (num > 0) {
         var section = num % 10000;
         if (needZero) {
