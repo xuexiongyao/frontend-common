@@ -1,4 +1,4 @@
-﻿var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
+﻿﻿var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
 var table_header_info = [];	//表头数组
 var config = [];
 var pageN = 1;
@@ -1233,7 +1233,10 @@ function parseInput(config, judge_id,condition_id,moduleData) {
         $('#' + new_condition_id).parent().attr('field_time', field_time);
         $('#' + new_condition_id).parent().append('<input type="hidden" value="'+conditionValue+'" class="condition" id="' + field + '_org_' + field_time + '">');
         if (config.lishu) {//隶属的时候只能单选
-            initSingleSelectOrg(new_condition_id, {orgLevel: '00,10,21,32,50'}, {
+        	var dataFilter = config.dataFilter;
+        	if(!dataFilter)
+        		dataFilter = '00,10,21,32,50';
+            initSingleSelectOrg(new_condition_id, {orgLevel: dataFilter}, {
                 text: new_condition_id,
                 id: field + '_org_' + field_time
             }, null);
