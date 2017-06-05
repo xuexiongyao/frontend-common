@@ -1,4 +1,4 @@
-﻿﻿var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
+﻿var condition_obj = {mainTable: search_config.main_type, sort: search_config.sort};
 var table_header_info = [];	//表头数组
 var config = [];
 var pageN = 1;
