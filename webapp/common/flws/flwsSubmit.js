@@ -17,12 +17,9 @@ function scflwsQuery(cqbgzj,asjflwsdm){
         success : function(json){
             loading('close');
             if(json.status == 'success'){
-                alertDiv({
+                $.messager.show({
                     title: '提示信息',
-                    msg: '生成任务发送成功!',
-                    fn: function(){
-                        crossCloseTab();
-                    }
+                    msg: '生成任务发送成功!'
                 })
             }else{
                 alertDiv({
