@@ -11,12 +11,12 @@ $(function () {
         alertDiv({
             width: 600,
             height: 300,
-            title: '重大提示!',
-            msg: '重大提示,一定要看完!!! \n 无法读取到综合查询系统的类别,请马上要求开发人员在search_config_xxxx.js中添加sysType属性,参照实有人口(search_config_syrk.js)。否则，综合查询将【无法正常使用！！！】',
+            title: '温馨提示!',
+            msg: '无法读取到综合查询系统的类别,即无法获取search_config_xxxx.js中添加sysType属性,请参照实有人口(search_config_syrk.js)进行修改。',
             fn: function(){
                 alertDiv({
-                    title: '再次提示',
-                    msg: '再次提示，当前子系统下的综合查询无法正常使用，我将关闭此页面~~╮(︶︿︶）╭',
+                    title: '【再次提示】',
+                    msg: '综合查询无法正常使用，系统维护后可正常使用，点击【确定】关闭页面',
                     fn: function(){
                         crossCloseTab();
                     }
