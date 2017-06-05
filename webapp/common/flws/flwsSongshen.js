@@ -682,11 +682,11 @@ function lctShow() {
                             spzt = '<i class="fa fa-times"></i>';
                         } else if (data[i].shjl == '3') {//不同意
                             spzt = '<i class="fa fa-reply"></i>';
+                        }else if (data[i].shjl == '5') {//取回
+                            spzt = '<i class="fa fa-rotate-left"></i>';
                         }
                         //else if (data[i].shjl == '4') {//待处理
                         //    spzt = '<i class="fa fa-spin fa-spinner"></i>';
-                        //} else if (data[i].shjl == '5') {//取回
-                        //    spzt = '<i class="fa fa-rotate-left"></i>';
                         //}
 
                         //如果审核人姓名为空，根据id获取审核人姓名
