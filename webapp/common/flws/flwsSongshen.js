@@ -420,10 +420,10 @@ function saveAndSsShyj(backObj) {
                 //执行签章
                 if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                     $.messager.confirm({
-                        title: '是否签章',
-                        msg: '若未安装签章插件,将无法签章!',
+                        title: '温馨提示',
+                        msg: '若未安装签章插件,将无法获取PDF,无法签章!!!',
                         ok: '直接送审',
-                        cancel: '就想签章',
+                        cancel: '签章送审',
                         closeable: false,
                         fn: function(r){
                             if(r){
