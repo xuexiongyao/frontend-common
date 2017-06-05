@@ -72,6 +72,12 @@
                         i.fa-reply{
                             color: colors(black);
                         }
+                        i.fa-spinner{
+                            color: colors(yellow);
+                        }
+                        i.fa-rotate-left{
+                            color: #ee9460;
+                        }
                     }
                 }
                 .point{
@@ -204,6 +210,12 @@
                      }
                      i.fa-reply{
                          color: colors(black);
+                     }
+                     i.fa-spinner{
+                         color: colors(yellow);
+                     }
+                     i.fa-rotate-left{
+                         color: #ee9460;
                      }
                  }
              }
