@@ -927,5 +927,17 @@ function especiallyDataFunForFlws(bm){
                 params.SJWPQD = '';
             }
             break;
+        case 'X040017'://证据保全决定书（行政案件）
+            if(params.KYKL == '1'){//扣押扣留
+                params.ASJFLWSDM = 'X040024';
+            }else if(params.KYKL == '2'){//延长扣押扣留
+                params.ASJFLWSDM = 'X040025';
+            }else if(params.CF == '1'){//查封
+                params.ASJFLWSDM = 'X040026';
+            }else if(params.CF == '2'){//延长查封
+                params.ASJFLWSDM = 'X040027';
+            }else{
+                params.ASJFLWSDM = 'X040017';
+            }
     }
 }
