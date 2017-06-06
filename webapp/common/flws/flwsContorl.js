@@ -939,5 +939,6 @@ function especiallyDataFunForFlws(bm){
             }else{
                 params.ASJFLWSDM = 'X040017';
             }
+            break;
     }
 }
