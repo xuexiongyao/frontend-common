@@ -376,6 +376,18 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         $(ipts[i]).attr('dicturl', url);
                         $(ipts[i]).combobox(comboboxObj);
                         break;
+                    case 'BD_D_CF'://查封
+                        var url = pathConfig.mainPath + '/common/dict/BD_D_CF.js';
+                        comboboxObj.data = flwsDictObj.BD_D_CF;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
+                    case 'BD_D_KYKL'://扣押
+                        var url = pathConfig.mainPath + '/common/dict/BD_D_KYKL.js';
+                        comboboxObj.data = flwsDictObj.BD_D_KYKL;
+                        $(ipts[i]).attr('dicturl', url);
+                        $(ipts[i]).combobox(comboboxObj);
+                        break;
                 }
             } else if ($(ipts[i]).hasClass('easyuicombotree')) {//combotree字典
                 var dictTree = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%')); //combotree字典名称
