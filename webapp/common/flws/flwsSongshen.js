@@ -420,17 +420,17 @@ function saveAndSsShyj(backObj) {
                 //执行签章
                 if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                     $.messager.confirm({
-                        title: '温馨提示',
-                        msg: '若未安装签章插件,将无法获取PDF,无法签章!!!',
-                        ok: '直接送审',
-                        cancel: '签章送审',
+                        title: '签章提示',
+                        msg: '是否签章送审',
+                        ok: '签章送审',
+                        cancel: '直接送审',
                         closeable: false,
                         fn: function(r){
                             if(r){
-                                wclc(); //完成流程
-                            }else{
                                 $report.css('visibility','visible');
                                 window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
+                            }else{
+                                wclc(); //完成流程
                             }
                         }
                     });
