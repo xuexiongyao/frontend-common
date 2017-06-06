@@ -779,8 +779,15 @@ var flwsDictObj = {
         {"id":"891","text":"南斯拉夫","py":"NSLF","wb":"FARF"},
         {"id":"894","text":"赞比亚","py":"ZBY","wb":"TXG"},
         {"id":"999","text":"其它国家（地区）","py":"QTGJ（DQ）","wb":"APLP（FA）"}
+    ],
+    'BD_D_CF':[//查封
+        {"id":"1","text":"查封","py":"CF","wb":"SF"},
+        {"id":"2","text":"延长查封","py":"YZCF","wb":"TTSF"}
+    ],
+    'BD_D_KYKL':[//扣押
+        {"id":"1","text":"扣押、扣留","py":"KY、KL","wb":"RR、RQ"},
+        {"id":"2","text":"延长扣押、扣留","py":"YZKY、KL","wb":"TTRR、RQ"}
     ]
-
 };
 
 //树形字典
