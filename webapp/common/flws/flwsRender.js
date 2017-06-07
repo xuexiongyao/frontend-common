@@ -1274,7 +1274,7 @@ function flwsClXyrCheckC(bm, $this) {
 
         var xyrZhxxData = '';
         for (var j = 0; j < xyrzhxxArry.length; j++) {
-            xyrZhxxData += '\n' + xyrzhxxArry[j];
+            xyrZhxxData +=  xyrzhxxArry[j] + '\n';
         }
 
         $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData);

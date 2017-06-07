@@ -667,6 +667,11 @@ function flwsWclXyDxCheck(bm, $this, event) {
                 }
             }
 
+            if(bm == '042142'){//强制医疗组合信息复用
+                var xyrZhxx = $this.next().attr('xyrzhxx');//嫌疑人信息主键编号
+                $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxx + '\n');
+            }
+
             /*******行政案件组合信息拼接*******/
             if (flwsData.xyrpz || flwsData.xydwpz || flwsData.xgrpz) {//行政案件组合信息复用
                 flwsXydxZhxxFyForXzaj(bm, $this);

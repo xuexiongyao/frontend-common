@@ -473,6 +473,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             break;
                         case 'TEXTAREA': //换行文本   不换行
                             var dataOpts = $(ipts[i]).attr('data-options');//驗證規則
+                            var height = $(ipts[i]).css('height');//高度
                             var readonly = '';
                             if(!isEdit){
                                 readonly = 'readonly="readonly"'
@@ -485,6 +486,9 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }
                             var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
+                            if(height && parseInt(height) > 100){
+                                parentA.find('textarea').css('height',height);
+                            }
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
                             }
@@ -511,6 +515,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             break;
                         case 'TEXTAREA_R': //换行文本不换行
                             var dataOpts = $(ipts[i]).attr('data-options');//驗證規則
+                            var height = $(ipts[i]).css('height');//高度
                             var readonly = '';
                             if(!isEdit){
                                 readonly = 'readonly="readonly"'
@@ -523,6 +528,9 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }
                             var strTextbox = '<textarea class="easyuivalidatebox TEXTAREA_R ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
+                            if(height && parseInt(height) > 100){
+                                parentA.find('textarea').css('height',height);
+                            }
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
                             }
@@ -594,6 +602,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             break;
                         case 'TEXTBOX'://文本框  换行文本
                             var dataOpts = $(ipts[i]).attr('data-options');//驗證規則
+                            var height = $(ipts[i]).css('height');//文本框的高度
                             var readonly = '';
                             if(!isEdit){
                                 readonly = 'readonly="readonly"'
@@ -606,6 +615,9 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }
                             var strTextbox = '<textarea class="easyuivalidatebox TEXTBOX ' + classNames + '" name="' + aName + '" '+readonly+' data-options="'+dataOpts+'"></textarea>';
                             parentA.html(strTextbox);
+                            if(height && parseInt(height) > 100){
+                                parentA.find('textarea').css('height',height);
+                            }
                             if(!isEdit){
                                 parentA.find('textarea').css('border','0');
                             }
