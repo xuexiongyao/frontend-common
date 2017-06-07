@@ -353,7 +353,7 @@ function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
                 }
             }
             DATA.CQBG.xydxZhxx = filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz);//嫌疑对象组合信息
-            $("#cqbg_main_con form textarea").val('\t' + filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
             break;
         }
     }

@@ -494,11 +494,6 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
                             parentA.find('textarea').off().on({
-                                keyup: function (e) {
-                                    if (e.which == 13) {
-                                        $(this).val($(this).val() + "\t");
-                                    }
-                                },
                                 input: function () {
                                     this.style.height = '0px';
                                     this.style.height = (this.scrollHeight + 'px');
@@ -537,11 +532,6 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
                             parentA.find('textarea').off().on({
-                                keyup: function (e) {
-                                    if (e.which == 13) {
-                                        $(this).val($(this).val() + "\t");
-                                    }
-                                },
                                 input: function () {
                                     this.style.height = '0px';
                                     this.style.height = (this.scrollHeight + 'px');
@@ -625,11 +615,6 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             autoTextarea(parentA.find('textarea')[0]);
                             //输入框的联动处理
                             parentA.find('textarea').off().on({
-                                keyup: function (e) {
-                                    if (e.which == 13) {
-                                        $(this).val($(this).val() + "\t");
-                                    }
-                                },
                                 input: function () {
                                     this.style.height = '0px';
                                     this.style.height = (this.scrollHeight + 'px');

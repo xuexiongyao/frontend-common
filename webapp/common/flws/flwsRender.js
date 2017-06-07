@@ -273,7 +273,7 @@ function xyrCheckedXxfy($this) {
                 xydxXxfyCqbg(textareaValNew, $this);
             } else {
                 /*****刑事案件组合信息复用*****/
-                var xyrZhxxData = '\t' + xydxZhxx + '\n';
+                var xyrZhxxData = xydxZhxx + '\n';
                 $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
                 /***嫌疑对象接口信息的复用***/
                 xydxXxfyCqbg(xyrZhxxData + textareaVal, $this);
@@ -298,7 +298,7 @@ function xyrCheckedXxfy($this) {
                     cqbgXydxZhxxFyForXzaj($this, textareaVal);
                 } else {
                     /*****刑事案件组合信息复用*****/
-                    var xyrZhxxData = '\t' + xydxZhxx + '\n';
+                    var xyrZhxxData = xydxZhxx + '\n';
                     $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
                     /***嫌疑对象接口信息的复用***/
                     xydxXxfyCqbg(xyrZhxxData + textareaVal, $this);
@@ -315,7 +315,7 @@ function xyrCheckedXxfy($this) {
             //                 cqbgXydxZhxxFyForXzaj($this,textareaVal);
             //             }else {
             //                 /*****刑事案件组合信息复用*****/
-            //                 var xyrZhxxData = '\t' + xydxZhxx +'\n';
+            //                 var xyrZhxxData = xydxZhxx +'\n';
             //                 $("#cqbg_main_con form textarea").val(xyrZhxxData + textareaVal);
             //             }
             //         }
@@ -348,9 +348,9 @@ function xyrCheckedXxfy($this) {
         //呈请报告嫌疑对象内容去掉
         var textareaVal = $("#cqbg_main_con form textarea").val();
         if (DATA.CQBG.xydxZhxx && typeof DATA.CQBG.xydxZhxx != 'undefined') {//行政案件处理
-            textareaVal = textareaVal.replace('\t' + DATA.CQBG.xydxZhxx + '\n', '');
+            textareaVal = textareaVal.replace(DATA.CQBG.xydxZhxx + '\n', '');
         } else {
-            textareaVal = textareaVal.replace('\t' + xydxZhxx + '\n', '');
+            textareaVal = textareaVal.replace(xydxZhxx + '\n', '');
         }
         $("#cqbg_main_con form textarea").val(textareaVal);
     }
@@ -1274,10 +1274,10 @@ function flwsClXyrCheckC(bm, $this) {
 
         var xyrZhxxData = '';
         for (var j = 0; j < xyrzhxxArry.length; j++) {
-            xyrZhxxData += '\n' + '\t' + xyrzhxxArry[j];
+            xyrZhxxData += '\n' + xyrzhxxArry[j];
         }
 
-        $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData + '\t');
+        $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData);
 
         DATA.FLWS[bm].xyrxms = xyrxmArry;
         DATA.FLWS[bm].xyrids = xyridArry;
