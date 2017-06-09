@@ -129,6 +129,10 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                             dataType: 'json',
                             success: function (json) {
                                 if(json.status == 'success'){
+                                    /*
+                                    * 后台直接请求接口,下面的调取直接注释
+                                    * */
+                                    /*
                                     //呈请移送案件报告书 请求接口  刑事案件
                                     if(asjflwsdm == '020004'){
                                         saveAjyjData(DATA.asjbh , DATA.FLWS['020005'].flwsRow[0].SWDW_GAJGJGDM,DATA.FLWS['020005'].flwsRow[0].SWDW_GAJGMC,DATA.FLWS['020005'].flwsRow[0].CQBG_ZJ)
@@ -137,6 +141,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
                                     if(asjflwsdm == 'X030003'){
                                         saveAjyjData(DATA.asjbh , DATA.FLWS['X030004'].flwsRow[0].YSJGDM,DATA.FLWS['X030004'].flwsRow[0].YSJG,DATA.FLWS['X030004'].flwsRow[0].CQBG_ZJ)
                                     }
+                                    */
                                     //发送短信请求
                                     if(isCheckMsger){
                                         var content = DATA.publicJkXx.BADW01.BAJG_GAJGMC+"送审的【"+DATA.CQBG.asjflwsmc+"】已到审批任务中，请您及时处理。";
