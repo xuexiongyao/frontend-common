@@ -107,23 +107,12 @@ function resizeTextarea() {
     t.style.height = h + "px";
 }
 
-//用'\t'替换回车
+//自适应高度
 function replaceEnterForCqbg() {
-    //$("textarea").off('keyup').on('keyup', function (e) {
-    //    resizeTextarea();
-    //    if(e.which == 13){
-    //        $(this).val($(this).val()+"\t");
-    //    }
-    //})
     $('#cqbg_main_con form textarea').off().on({
         keydown: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');
-        },
-        keyup: function (e) {
-            if (e.which == 13) {
-                $(this).val($(this).val() + "\t");
-            }
         },
         propertychange: function () {
             this.style.height = (this.scrollHeight + 'px');
@@ -133,6 +122,10 @@ function replaceEnterForCqbg() {
             this.style.height = (this.scrollHeight + 'px');
         },
         scroll: function () {
+            this.style.height = '0px';
+            this.style.height = (this.scrollHeight + 'px');
+        },
+        focus: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');
         }

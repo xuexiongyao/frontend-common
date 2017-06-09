@@ -353,7 +353,7 @@ function cqbgXydxZhxxFyForXzaj($this, textareaVal) {
                 }
             }
             DATA.CQBG.xydxZhxx = filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz);//嫌疑对象组合信息
-            $("#cqbg_main_con form textarea").val('\t' + filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
+            $("#cqbg_main_con form textarea").val(filedToParagraph(zhxx, cqbgData.prefixpz, cqbgData.splitpz) + '\n' + textareaVal);
             break;
         }
     }
@@ -665,6 +665,11 @@ function flwsWclXyDxCheck(bm, $this, event) {
                     }
                     break;
                 }
+            }
+
+            if(bm == '042142'){//强制医疗组合信息复用
+                var xyrZhxx = $this.next().attr('xyrzhxx');//嫌疑人信息主键编号
+                $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxx + '\n');
             }
 
             /*******行政案件组合信息拼接*******/
