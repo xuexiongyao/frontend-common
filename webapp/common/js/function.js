@@ -1531,17 +1531,19 @@ function openCombotree(ID) {
                 text: '确定',
                 handler: function () {
                     var dictData = $('#' + dictTreeID).tree('getChecked');
+                    var dictLen = dictData.length;
                     if (dictMultiple) {
                         var values = [];
-                        for (var i = 0; i < dictData.length; i++) {
+                        for (var i = 0; i < dictLen; i++) {
                             if (!dictData[i]['children']) {
                                 values.push(dictData[i]['id']);
                             }
                         }
                         $box.combotree('setValues', values);
                     } else {
-                        if (dictData.length) {
-                            $box.combotree('setValue', dictData[0]['id']);
+                        if (dictLen) {
+                            //如果只有一个子节点,父节点也会选中,所以取最后节点
+                            $box.combotree('setValue', dictData[dictLen-1]['id']);
                         } else {
                             $box.combotree('setValue', '');
                         }
@@ -1645,3 +1647,4 @@ function openCombotree(ID) {
         $box.combotree('setValue', boxSourceValue);
     }
 }
+
