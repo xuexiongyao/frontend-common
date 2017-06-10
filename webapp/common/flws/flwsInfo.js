@@ -914,8 +914,14 @@ function getLctCord(url, paramname, param) {
                     $('#' + now_data[j].id).css('border-color', 'red');
                 }
             }
-
             lcriZs();//流程日志的展示
+        },
+        error: function(e){
+            alertDiv({
+                title: '温馨提示',
+                msg: '无法获取流程图坐标信息,请联系管理员!'
+            });
+            console.log('获取流程图坐标信息失败:' + e);
         }
     })
 }
