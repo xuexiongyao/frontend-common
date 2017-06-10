@@ -68,10 +68,6 @@ function getCqbgMapData(cqbgzj) {
             }
             clearAllStyle();
 
-            if (DATA.CQBG.cqbgData || typeof (DATA.CQBG.cqbgData) != 'undefined') {
-                lctShow();//流程图的显示
-            }
-
             tabSwitch();//法律文书tab切换
         }
     });
@@ -865,8 +861,8 @@ function clearAllStyle() {
  * cqzt 等于1（已呈请）或2（已审批）
  */
 function lctShow() {
-    if (DATA.cqzt != 0 && DATA.cqzt) {
-        if (DATA.lcslid && DATA.lcdyid) {
+    if (DATA.cqzt != 0 && DATA.cqzt && DATA.cqzt !='undefined' && DATA.cqzt !='null') {
+        if (DATA.lcslid && DATA.lcdyid && DATA.lcslid !='undefined' && DATA.lcslid !='null' && DATA.lcdyid !='undefined' && DATA.lcdyid !='null') {
             $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
             $('#cklcBtn').show();
             if (DATA.cqzt == '1') {//已呈请
