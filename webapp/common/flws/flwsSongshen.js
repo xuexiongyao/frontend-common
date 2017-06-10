@@ -419,6 +419,17 @@ function saveAndSsShyj(backObj) {
                 };
                 //执行签章
                 if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
+                    //签章送审
+                    alertDiv({
+                        title: '温馨提示',
+                        msg: '立即执行签章送审流程,请耐心等待...',
+                        fn: function(){
+                            $report.css('visibility','visible');
+                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
+                        }
+                    });
+                    //选择签章还是送审
+                    /*
                     $.messager.confirm({
                         title: '签章提示',
                         msg: '是否签章送审',
@@ -434,6 +445,7 @@ function saveAndSsShyj(backObj) {
                             }
                         }
                     });
+                    */
                 }else{
                     wclc(); //完成流程
                 }
