@@ -1289,7 +1289,7 @@ function getBaseInfoObj(type) {
                 textValue = $this.find('.textbox-value')[1].value;
             }catch(e){}
             var param = search_config[type][field_index];
-            if (param && param.lishu) {//隶属
+            if (search_data[0] == 'IN' && param && param.lishu) {//隶属
 
                 var lishu_obj = param.lishu;
                 lishu_obj.v = search_data[1];
