@@ -1524,8 +1524,15 @@ function openCombotree(ID) {
         openDivForm({
             id: dictPanelID,
             title: '字典选择',
-            width: 600
+            width: 600,
+            onClose: function () {
+                //清除上次生成的tree
+                $('#' + dictTreeID).empty();
+                //取消固定弹框位置
+                //$('#' + dictPanelID).parent().css('position','absolute');
+                //$('#' + dictPanelID).parent().next().css('position','absolute');
 
+            }
         }, [
             {
                 text: '确定',
@@ -1558,6 +1565,9 @@ function openCombotree(ID) {
                 }
             }
         ]);
+        //固定弹框位置
+        //$('#' + dictPanelID).parent().css('position','fixed');
+        //$('#' + dictPanelID).parent().next().css('position','fixed');
 
         //初始化搜索框
         $('#' + dictSearchID).searchbox({
@@ -1598,6 +1608,15 @@ function openCombotree(ID) {
                     $('#' + dictTreeID).tree('uncheck', roots[0].target);
                     if (node.children) {
                         return false;
+                    }
+                }
+            },
+            onDblClick: function (node) {
+                //单选适用
+                if (!dictMultiple) {
+                    if (!node.children) {
+                        $box.combotree('setValue', node.id);
+                        $('#' + dictPanelID).dialog('close');
                     }
                 }
             },
