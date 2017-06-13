@@ -402,6 +402,11 @@ function flwsPageRender(bm) {
             xydxListRenderC(bm);
         }
     }
+
+    //默认勾选第一个嫌疑对象
+    if($('#flws_xyr_area_' + bm + ' div li').length>0){//如果有数据
+        $('#flws_xyr_area_' + bm + ' div li:first-child label').click();
+    }
 }
 /**************************A类型************************/
 /**
