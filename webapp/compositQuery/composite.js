@@ -1289,7 +1289,7 @@ function getBaseInfoObj(type) {
                 textValue = $this.find('.textbox-value')[1].value;
             }catch(e){}
             var param = search_config[type][field_index];
-            if (param && param.lishu) {//隶属
+            if (search_data[0] == 'IN' && param && param.lishu) {//隶属
 
                 var lishu_obj = param.lishu;
                 lishu_obj.v = search_data[1];
@@ -1513,7 +1513,7 @@ function paginationQuery(pageNumber, pageSize){
     var total = pageNumber*pageSize;
     pageNumAll = pageNumber;
     pageSizeAll = pageSize;
-    if(total >= 10000){
+    if(total > 10000){
         $.messager.alert({
             title: '查询数据提示!',
             msg: '数据操作超过10000条之后,查询数据重复。'
