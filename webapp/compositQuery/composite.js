@@ -1513,7 +1513,7 @@ function paginationQuery(pageNumber, pageSize){
     var total = pageNumber*pageSize;
     pageNumAll = pageNumber;
     pageSizeAll = pageSize;
-    if(total >= 10000){
+    if(total > 10000){
         $.messager.alert({
             title: '查询数据提示!',
             msg: '数据操作超过10000条之后,查询数据重复。'
