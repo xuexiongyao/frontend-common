@@ -211,7 +211,10 @@ function getQueryModel() {
                 try{
                     var lishuArr = conditionArr[i]['lishu'];
                     if(lishuArr.length){
-                        if(typeof type !='undefined' && type == 'SYDW_DWDZB' ){
+                        if(lishuArr[0]['fieldName']){
+                            lishuArr[0]['k'] = lishuArr[0]['fieldName'];
+                        }
+                        else if(typeof type !='undefined' && type == 'SYDW_DWDZB' ){
                             lishuArr[0]['k'] = 'DWDZ_GXDW';
                         }
                         else{
