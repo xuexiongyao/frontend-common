@@ -1486,6 +1486,15 @@ function alertDiv(options){
     }]);
 }
 
+//批量实现页面所有combotree弹框
+function openCombotrees(){
+    $('input.easyui-combotree').each(function(){
+        var $this = $(this);
+        var thisId = $this.attr('id');
+        openCombotree(thisId);
+    });
+}
+
 //combotree弹框方式选择
 function openCombotree(ID) {
     clickShowPanel(ID, false);
