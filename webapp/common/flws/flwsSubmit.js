@@ -37,7 +37,7 @@ function scflwsQuery(cqbgzj,asjflwsdm){
  * description: 法律文书送审请求js文件
  */
 //送审人物选择
-function selectName(cqbgzj,asjflwsdm,sessionBean){
+function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
     var gajgjgdm = null;
     var ssFsxCode = sessionBean.extendMap.ssFsxCode; //分县局代码
     var ssDsjCode = sessionBean.extendMap.ssDsjCode; //市局代码
@@ -51,7 +51,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean){
     loading('open','正在获取审批人信息...');
     //第一次
     $.ajax({
-        url : pathConfig.basePath+'/workflowRelated/findSysPzFlwsLcjbpzbs?flwsDms='+asjflwsdm+'&gajgjgdm='+gajgjgdm,
+        url : pathConfig.basePath+'/workflowRelated/findSysPzFlwsLcjbpzbs?flwsDms='+asjflwsdm+'&gajgjgdm='+gajgjgdm+'&asjbh='+asjbh,
         type: 'post',
         dataType: 'json',
         success : function(json){

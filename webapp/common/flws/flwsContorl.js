@@ -743,7 +743,7 @@ function shongshen(sessionBean,isScflws) {
                             if(isScflws){
                                 scflwsQuery(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm)
                             }else{
-                                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean,DATA.asjbh);
                             }
                         }
                     }
@@ -753,14 +753,14 @@ function shongshen(sessionBean,isScflws) {
             if(isScflws){
                 scflwsQuery(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm)
             }else{
-                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean);
+                selectName(DATA.CQBG.cqbgRow.CQBG_ZJ, DATA.CQBG.asjflwsdm, sessionBean,DATA.asjbh);
             }
         }
     }else{
         if(isScflws){
             scflwsQuery(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean)
         }else{
-            selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean);
+            selectName(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm, sessionBean,DATA.asjbh);
         }
     }
 }
