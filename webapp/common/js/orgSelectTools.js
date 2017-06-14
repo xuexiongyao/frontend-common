@@ -56,6 +56,11 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData, onSelectedFu
         'onClickButton': function () {
             var _top = parseInt($(document).scrollTop() + 200);
             $("#" + normalHtmlDivId + textboxID).show().dialog('open').dialog('move', {top: _top});
+            $('#searchKey_' + textboxID).parent().off('keydown').on('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    searchTree(textboxID);
+                }
+            });
             //$("#"+normalHtmlDivId+textboxID).show().dialog('open');
         }
     });
@@ -146,6 +151,11 @@ function initMultiSelectOrgForTztb(textboxID, filterData, returnFieldData, onSel
         'onClickButton': function () {
             var _top = parseInt($(document).scrollTop() + 200);
             $("#" + normalHtmlDivId + textboxID).show().dialog('open').dialog('move', {top: _top});
+            $('#searchKey_' + textboxID).parent().off('keydown').on('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    searchTree(textboxID);
+                }
+            });
         }
     });
 
@@ -201,14 +211,7 @@ function initHtmlDivForTztb(textboxID, filterData, multi_single, returnFieldData
             $("#" + normalHtmlDivId + textboxID).html(getSingleDivHtml(textboxID));
             initSingleTree(textboxID, filterData);
         }
-
-        //$('#searchKey_'+textboxID).textbox();
-        $('#searchKey_' + textboxID).next().find('span').off('keydown').on('keydown', function (e) {
-            if (e.keyCode == 13) {
-                alert(2);
-            }
-
-        });
+        $('#searchKey_'+textboxID).textbox();
         $('#searchBtn_' + textboxID).linkbutton();
         $('#treeDiv_' + textboxID).panel();
     }
@@ -729,6 +732,11 @@ function initSingleSelectOrgReturnByClass(textboxID, filterData, returnFieldData
         'onClickButton': function () {
             var _top = parseInt($(document).scrollTop() + 200);
             $("#" + normalHtmlDivId + textboxID).show().dialog('open').dialog('move', {top: _top});
+            $('#searchKey_' + textboxID).parent().off('keydown').on('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    searchTree(textboxID);
+                }
+            });
         }
     });
 
