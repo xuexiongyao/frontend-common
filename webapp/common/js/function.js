@@ -703,6 +703,7 @@ function editSwitch(bool, border_class, box_class) {
         box.each(function () {
             var _this = $(this);
             _this.prev().find('i').show();
+            _this.parent().prev().find('i').show();
             if (_this.hasClass('easyui-combobox')) {
                 _this.combobox({readonly: false}).next().removeClass(_border_class);//移除样式还原边框
             } else if (_this.hasClass('easyui-textbox')) {
@@ -733,6 +734,7 @@ function editSwitch(bool, border_class, box_class) {
             var _this = $(this);
             //清除“*”
             _this.prev().find('i').hide();
+            _this.parent().prev().find('i').hide();
             if (_this.hasClass('easyui-combobox') || _this.hasClass('easyuicombobox')) {
                 _this.combobox({readonly: true,required:false}).next().addClass(_border_class);//添加样式取消边框
             } else if (_this.hasClass('easyui-textbox') || _this.hasClass('easyuitextbox')) {
@@ -1522,24 +1524,33 @@ function openCombotree(ID) {
         openDivForm({
             id: dictPanelID,
             title: '字典选择',
-            width: 600
+            width: 600,
+            onClose: function () {
+                //清除上次生成的tree
+                $('#' + dictTreeID).empty();
+                //取消固定弹框位置
+                //$('#' + dictPanelID).parent().css('position','absolute');
+                //$('#' + dictPanelID).parent().next().css('position','absolute');
 
+            }
         }, [
             {
                 text: '确定',
                 handler: function () {
                     var dictData = $('#' + dictTreeID).tree('getChecked');
+                    var dictLen = dictData.length;
                     if (dictMultiple) {
                         var values = [];
-                        for (var i = 0; i < dictData.length; i++) {
+                        for (var i = 0; i < dictLen; i++) {
                             if (!dictData[i]['children']) {
                                 values.push(dictData[i]['id']);
                             }
                         }
                         $box.combotree('setValues', values);
                     } else {
-                        if (dictData.length) {
-                            $box.combotree('setValue', dictData[0]['id']);
+                        if (dictLen) {
+                            //如果只有一个子节点,父节点也会选中,所以取最后节点
+                            $box.combotree('setValue', dictData[dictLen-1]['id']);
                         } else {
                             $box.combotree('setValue', '');
                         }
@@ -1554,6 +1565,9 @@ function openCombotree(ID) {
                 }
             }
         ]);
+        //固定弹框位置
+        //$('#' + dictPanelID).parent().css('position','fixed');
+        //$('#' + dictPanelID).parent().next().css('position','fixed');
 
         //初始化搜索框
         $('#' + dictSearchID).searchbox({
@@ -1594,6 +1608,15 @@ function openCombotree(ID) {
                     $('#' + dictTreeID).tree('uncheck', roots[0].target);
                     if (node.children) {
                         return false;
+                    }
+                }
+            },
+            onDblClick: function (node) {
+                //单选适用
+                if (!dictMultiple) {
+                    if (!node.children) {
+                        $box.combotree('setValue', node.id);
+                        $('#' + dictPanelID).dialog('close');
                     }
                 }
             },
@@ -1643,3 +1666,4 @@ function openCombotree(ID) {
         $box.combotree('setValue', boxSourceValue);
     }
 }
+

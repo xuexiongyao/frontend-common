@@ -234,7 +234,7 @@ SYDW_DWDZB : [
 	{field:'XT_ZXYY',text:'注销原因',input:'textbox',judge_dict: judge1},   
 	{field:'BZ',text:'备注',input:'textbox',judge_dict: judge1},   
 	{field:'ZXYYBZ',text:'注销备注',input:'textbox',judge_dict: judge1},   
-	{field:'DWDZ_GXDW',text:'管辖单位',input:'textbox_org',judge_dict: judge9,isOrganization:true,lishu:{sj:'SJDM',fxj:'FXJDM',pcs:'PCSID',zrq:'ZRQID'}},
+	{field:'DWDZ_GXDW',text:'管辖单位',input:'textbox_org',judge_dict: judge9,isOrganization:true,lishu:{sj:'SJDM',fxj:'FXJDM',pcs:'PCSID',zrq:'ZRQID'},dataFilter:'00,10,21,32,50'},
 //	{field:'PCSID',text:'辖区派出所',input:'textbox_org',judge_dict: judge9,isOrganization:true},
 //	{field:'SQID',text:'所在社区',input:'textbox_org',judge_dict: judge9,isOrganization:true},
 //	{field:'ZRQID',text:'所在责任区',input:'textbox_org',judge_dict: judge9,isOrganization:true},
