@@ -21,6 +21,7 @@ var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
 var hxshyjbzCurrent = null;  //当前回写审核意见标识
 var candidateUsers;
+var flagText = null;
 var isFinally = false;
 var backInitial = {};
 var backPrev = {};
@@ -253,6 +254,7 @@ function selectApprove(shjl) {
                             text: '确定',
                             handler: function () {
                                 isOver = $('#over_area input').prop('checked');
+                                flagText = $('#links input:checked').parent().text();
                                 if (!isOver) {
                                     var candidateUsersArr = [];
                                     $('#role_name input:checked').each(function () {
@@ -293,6 +295,7 @@ function selectApprove(shjl) {
                             $('#next_link_panel').dialog();
                         }
                     });
+
                     //下一节
                     $('#links input').off('click').on('click', function () {
                         var isCheck = $(this).prop('checked');
@@ -546,7 +549,8 @@ function complete(shjl, shsj, shyj) {
         'isLastTask': isLastTask,
         'hxshyjbz': hxshyjbzCurrent,
         'fjrid': fjrid,
-        'fjrxm': fjrxm
+        'fjrxm': fjrxm,
+        'flag': flagText
     };
     if (isLastTask) {
         //param.xwFlwsLajdsZjs = 'd036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
