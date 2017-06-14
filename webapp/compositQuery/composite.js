@@ -1306,8 +1306,9 @@ function getBaseInfoObj(type) {
 
                 var lishu_obj = param.lishu;
                 lishu_obj.v = search_data[1];
-                lishu_obj.op = "=";
+                lishu_obj.op = "IN";
                 lishu_obj.textValue = textValue;
+                lishu_obj.fieldName = field;
                 if (!query_obj.lishu) query_obj.lishu = [];
                 query_obj.lishu.push(lishu_obj);
 
