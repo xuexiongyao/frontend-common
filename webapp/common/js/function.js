@@ -1538,6 +1538,7 @@ function openCombotree(ID) {
                 text: '确定',
                 handler: function () {
                     var dictData = $('#' + dictTreeID).tree('getChecked');
+                    //console.log('dictData:',dictData);
                     var dictLen = dictData.length;
                     if (dictMultiple) {
                         var values = [];
@@ -1575,6 +1576,8 @@ function openCombotree(ID) {
             width: 300,
             height: 25,
             searcher: function (value, name) {
+                var roots = $('#' + dictTreeID).tree('getRoots');
+                $('#' + dictTreeID).tree('uncheck', roots[0].target);
                 var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
                 $('#' + dictTreeID).tree('doFilter', searchKeyValue);
                 if (searchKeyValue != "") {
