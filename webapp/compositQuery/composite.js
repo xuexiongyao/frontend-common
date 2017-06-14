@@ -5,6 +5,7 @@ var pageN = 1;
 var pageNumAll = 1;
 var pageSizeAll = 0;
 var sysType = search_config.sysType || null;
+var sessionBean = undefined;
 
 $(function () {
     if(!sysType){
@@ -320,10 +321,15 @@ function getQueryModel() {
     });
     changeLinkButtonIcon();
 }
-//模板列表操作解析
-function modelHandle(val, row, index){
-    //return '<i title="查询此条件" condition  = "'+condition+'" class="fa fa-search"></i><i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
-	var result = '';
+
+/**
+ * 获取用户信息
+ */
+function getSessionBean(){
+    if(sessionBean){
+        return sessionBean;
+    }
+
     $.ajax({
         url: pathConfig.managePath+'/api/userLogin/getSetuSession',
         type: 'get',
@@ -333,14 +339,21 @@ function modelHandle(val, row, index){
         async: false,
         success: function(json){
             sessionBean = json.sessionBean;
-            if(typeof sessionBean != 'undefined' && typeof row.userid != 'undefined'){
-                if(row.userid == sessionBean.userId){//当前录入此模版的才能删除
-                    result =  '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
-                }
-            }
+            return sessionBean;
         }
     });
+}
 
+//模板列表操作解析
+function modelHandle(val, row, index){
+    //return '<i title="查询此条件" condition  = "'+condition+'" class="fa fa-search"></i><i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+	var result = '';
+    var sessionBean = getSessionBean();
+    if(typeof sessionBean != 'undefined' && typeof row.userid != 'undefined'){
+        if(row.userid == sessionBean.userId){//当前录入此模版的才能删除
+            result =  '<i zj="'+row.id+'" title="删除条件" class="fa fa-times"></i>';
+        }
+    }
 	return result;
 }
 //可见范围解析
