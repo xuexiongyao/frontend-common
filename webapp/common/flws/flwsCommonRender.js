@@ -67,7 +67,7 @@ function cqbgFlwsOtherXxfy() {
                     //办案人的特殊处理(BAR02)[ZCRY_XM]
                     if(key == 'ZCRY_XM'){
                         var $nodeT = $(".flws-main-con-r form ." + key);
-                        if(DATA.CQBG.cqbgRow.BAMJXM && typeof DATA.CQBG.cqbgRow.BAMJXM !='undefined'){
+                        if(DATA.CQBG.cqbgRow && DATA.CQBG.cqbgRow.BAMJXM && typeof DATA.CQBG.cqbgRow.BAMJXM !='undefined'){
                             var valT = DATA.CQBG.cqbgRow.BAMJXM;//获取呈请报告办案民警姓名
                             $nodeT.textbox({value: valT})
                         }
