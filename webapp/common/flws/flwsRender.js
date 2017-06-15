@@ -432,19 +432,34 @@ function flwsPageRender(bm) {
             flwsPageRenderA(bm);
         }
     } else if (!flwsData.wdx && flwsData.only && !flwsData.dx) {
-        /**类型B**/
-            //法律文书有嫌疑对象，不能多选,法律文书只能做一份儿（ wdx：false && only：true && dx:false）
-        flwsDxListRenderB(bm);
-        flwsPageRenderA(bm);
+        if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
+            flwsDxListRenderForCx(bm);
+            flwsPageRenderForCx(bm);
+        }else{
+            /**类型B**/
+                //法律文书有嫌疑对象，不能多选,法律文书只能做一份儿（ wdx：false && only：true && dx:false）
+            flwsDxListRenderB(bm);
+            flwsPageRenderA(bm);
+        }
     } else if (!flwsData.wdx && flwsData.dx && flwsData.only) {
-        /**类型C**/
-            //法律文书有嫌疑对象，可以多选,法律文书只能做一份儿（ wdx：false && only：true && dx:true）
-        flwsDxListRenderC(bm);
-        flwsPageRenderA(bm);
+        if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
+            flwsDxListRenderForCx(bm);
+            flwsPageRenderForCx(bm);
+        }else {
+            /**类型C**/
+                //法律文书有嫌疑对象，可以多选,法律文书只能做一份儿（ wdx：false && only：true && dx:true）
+            flwsDxListRenderC(bm);
+            flwsPageRenderA(bm);
+        }
     } else {
-        /**其他类型**/
-            //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
-        flwsDxListRenderOther(bm);
+        if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
+            flwsDxListRenderForCx(bm);
+            flwsPageRenderForCx(bm);
+        }else {
+            /**其他类型**/
+                //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
+            flwsDxListRenderOther(bm);
+        }
     }
 
     cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
@@ -1361,4 +1376,174 @@ function xydxDataFromCqbgHasCq(xydxData,xydxbm,xydxids) {
     }
 
     return checkedXydxData;
+}
+
+/****************类型：法律文书修改任务查询列表文书*****************************/
+/**
+ * 法律文书对象列表的渲染方法  针对法律文书修改任务查询列表文书
+ * @param bm
+ */
+function flwsDxListRenderForCx(bm){
+    //法律文书嫌疑对象DOM树清空
+    $('#flws_xyr_area_' + bm).html('');
+
+    var flwsRow = DATA.FLWS[bm].flwsRow;
+
+    //拼接选嫌疑人
+    var checkedXyrStr = '', xyrstr = '';//嫌疑人列表字符串
+    var xyrCldxlb;//嫌疑人处理对象类别
+
+    var data = flwsRow;
+    if (data.length > 0) {//有数据
+        for (var i = 0; i < data.length; i++) {
+            if (data[0].CLDXLB) {
+                xyrCldxlb = data[0].CLDXLB;
+                for (var k in xyrObj) {
+                    if (xyrCldxlb == xyrObj[k].cldxlb) {
+                        if (data[i][(xyrObj[k].param).toUpperCase()]) {
+                            xyrstr += '<li><label><input xxzjbh="' + data[i].CLDX_XXZJBH + '" flwsZj="'+data[i].ZJ+'" type="checkbox" />' +
+                                '<span xyrtype="' + xyrObj[k].id + '">' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                        } else {
+                            if (!DATA.DX.xydxData) {
+                                $.ajax({
+                                    url: pathConfig.basePath + '/api/dtbm/' + DATA.FLWS[bm].flwsData.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
+                                    type: 'get',
+                                    async: false,
+                                    success: function (json) {
+                                        if (json) {
+                                            DATA.DX.xydxData = json;
+                                        }
+                                    }
+                                })
+                            }
+
+                            var xydxArray = DATA.DX.xydxData[k];
+                            for (var j = 0; j < xydxArray.length; j++) {
+                                if (xydxArray[j].xxzjbh == data[i].CLDX_XXZJBH) {
+                                    xyrstr += '<li><label><input xxzjbh="' + data[i].CLDX_XXZJBH + '" flwsZj="'+data[i].ZJ+'" type="checkbox" />' +
+                                        '<span xyrtype="' + xyrObj[k].id + '" >' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
+                    '<ul class="xyrList">' + xyrstr + '</ul></div>';
+            }
+        }
+
+        for (var k2 in xyrObj) {
+            if (xyrCldxlb == xyrObj[k2].cldxlb) {
+                checkedXyrStr = '<div><p><i class="fa fa-bars"></i>' + xyrObj[k2].text + '</p>' +
+                    '<ul class="xyrList">' + xyrstr + '</ul></div>';
+            }
+        }
+    } else {//无数据
+        checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
+            '<ul class="xyrList">' + xyrstr + '</ul></div>';
+    }
+
+    //嫌疑对象列表的背景色处理
+    $('#flws_xyr_area_' + bm).css('background', '#f5f5f5').append(checkedXyrStr);
+
+    //绑定点击事件
+    $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+        flwsClXyrCheckForCx(bm, $(this));
+    });
+
+    //保存数据成功后获取法律文书主键，再次点击为编辑
+    //if (typeof (DATA.FLWS[bm].status.currentFlwsId) != 'undefined') {
+    //    $('#flws_xyr_area_' + bm).find("input[flwsZj='" + DATA.FLWS[bm].status.currentFlwsId + "']").click();
+    //}
+}
+
+/**
+ * 多个嫌疑对象列表同一时间只能操作一个
+ * 法律文书 嫌疑对象 勾选
+ */
+function flwsClXyrCheckForCx(bm, $this){
+    var parentDiv = $this.parent().parent().parent().parent();//父级div
+    var parentLi = $this.parent().parent();//父级li
+    var flwsData = DATA.FLWS[bm].flwsData;//法律文书数据
+
+    //勾选嫌疑人
+    if (parentDiv.find('input:checked').length > 0) {//选中
+        //是否有法律文书的数据
+        var flwsRow = DATA.FLWS[bm].flwsRow;
+
+        var flwsZj = '';//法律文书主键
+        //单选处理
+        parentLi.siblings().find('input:checked').attr('checked', false);
+
+        //多个嫌疑对象列表同一时间只能操作一个
+        parentDiv.show();
+        parentDiv.siblings().hide();
+
+        //选中状态
+        DATA.FLWS[bm]["status"]["selected"] = true;
+
+        /*嫌疑人信息的复用*/
+        var xyrXxzjbh = $this.attr('xxzjbh');//嫌疑人信息主键编号
+
+        DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
+
+        //法律文书主键
+        if(flwsRow.length>0){
+            for(var i=0;i<flwsRow.length;i++){
+                if(xyrXxzjbh == flwsRow[i].CLDX_XXZJBH){
+                    flwsZj = flwsRow[i].ZJ;
+                    break;
+                }
+            }
+
+
+            DATA.FLWS[bm].flwsZj = flwsZj;
+            DATA.FLWS[bm].params = {
+                ZJ: flwsZj
+            };
+
+            //数据复用
+            flwsDataXxfy(bm, flwsZj);
+        }
+
+    } else {//未选中
+        if (flwsData.bx) {
+            event.stopPropagation();
+            alertDiv({
+                title: '提示',
+                msg: '必须选择一项',
+                fn: function () {
+                    $this.prop('checked', true);
+                }
+            });
+            return false;
+        }
+    }
+}
+
+/**
+ * 法律文书页面的渲染方法
+ * @param bm 法律文书编码
+ */
+function flwsPageRenderForCx(bm) {
+    //是否有法律文书的数据
+    var flwsRow = DATA.FLWS[bm].flwsRow;
+
+    if (flwsRow.length > 0) {//有数据
+        //编辑标识
+        DATA.FLWS[bm]['status']['isAdd'] = false;
+
+        //编辑渲染
+        flwsRightPageRenderForEdit(DATA.FLWS[bm].flwsData);
+
+        //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
+        if(bm == '080002' || bm == '080004'){
+            //选中已经保存的法律文书
+            if (flwsRow.length > 0) {
+                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
+            }
+        }
+    }
 }
