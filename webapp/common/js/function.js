@@ -1,4 +1,3 @@
-
 //跨域请求父页面(向父框架发送消息)
 function crossRequestParent(_msg) {
     var messenger = new Messenger('iframe', 'toParent');
@@ -19,25 +18,25 @@ function pageJump() {
  * 1.type: open,打开;close,关闭
  * 2.msg : 显示的文字,默认为加载中...
  * */
-function loading(type,msg){
+function loading(type, msg) {
     var msg = msg || '加载中...';
     //var staticPath = staticPath;
     //if(!staticPath) alert('loading()方法无法获取静态资源路径');
-    var loading_img_url = staticPath +'/framework/default/images/loading.gif';
-    var loading_html='<div id="loadingMsk">'
-        +'<div class="loadingPage">'
-        +'<img src="'+loading_img_url+'" alt="loading">'
-        +'<span class="msg">'+msg+'</span>'
-        +'</div>'
-        +'</div>';
-    if($('#loadingMsk').length == 0){
+    var loading_img_url = staticPath + '/framework/default/images/loading.gif';
+    var loading_html = '<div id="loadingMsk">'
+        + '<div class="loadingPage">'
+        + '<img src="' + loading_img_url + '" alt="loading">'
+        + '<span class="msg">' + msg + '</span>'
+        + '</div>'
+        + '</div>';
+    if ($('#loadingMsk').length == 0) {
         $('body').append(loading_html);
     }
-    if(type == 'open'){
+    if (type == 'open') {
         $('#loadingMsk').fadeIn('fast');
-    }else if(type == 'close'){
+    } else if (type == 'close') {
         $('#loadingMsk').fadeOut('fast').remove();
-    }else{
+    } else {
         console.log('加载效果处理方式参数错误!');
         return false;
     }
@@ -137,9 +136,9 @@ function clickShowPanel(box_id, bool) {
     if (box_id) {
         if (bool) {
             $('#' + box_id).next().on('click.showPanel', function () {
-                if($(this).hasClass('inputReadonly') || $(this).hasClass('textbox-readonly')){
+                if ($(this).hasClass('inputReadonly') || $(this).hasClass('textbox-readonly')) {
                     $(this).prev().combobox("hidePanel");
-                }else{
+                } else {
                     $(this).prev().combobox("showPanel");
                 }
             });
@@ -150,9 +149,9 @@ function clickShowPanel(box_id, bool) {
         }
     } else {
         $(".combo").on('click.showPanel', function () {
-            if($(this).hasClass('inputReadonly') || $(this).hasClass('textbox-readonly')){
+            if ($(this).hasClass('inputReadonly') || $(this).hasClass('textbox-readonly')) {
                 $(this).prev().combobox("hidePanel");
-            }else{
+            } else {
                 $(this).prev().combobox("showPanel");
             }
         });
@@ -262,41 +261,41 @@ function ltToday(start_id, end_id) {
 }
 
 /*form提交,依赖easyui [不带提示信息],
-* 1.form_id : 表单ID
-* 2.call_back : 提交成功后的回调函数处理
-* 3.url : 提交表单地址,默认为form上的action属性
-* 4.queryParams : 额外的参数
-* */
-function formSubmit(form_id, call_back, url,queryParams){
+ * 1.form_id : 表单ID
+ * 2.call_back : 提交成功后的回调函数处理
+ * 3.url : 提交表单地址,默认为form上的action属性
+ * 4.queryParams : 额外的参数
+ * */
+function formSubmit(form_id, call_back, url, queryParams) {
     var $submit_form = $('#' + form_id);
     var submit_url = url || $submit_form.action;
     var params = {};
-    if(queryParams) params = queryParams;
+    if (queryParams) params = queryParams;
     $submit_form.form('submit', {
         url: submit_url,
         queryParams: params,
         onSubmit: function () {
             var isValid = $(this).form('validate');
-            if(isValid){
-                loading('open','数据提交中,请稍候...');
+            if (isValid) {
+                loading('open', '数据提交中,请稍候...');
             }
             return isValid;	// 返回false终止表单提交
         },
         success: function (data) {
-            try{
+            try {
                 var json = eval('(' + data + ')');
-            }catch(e){
-                var json=data;
+            } catch (e) {
+                var json = data;
             }
-            if(json.status == 'success'){
-                if(typeof call_back == 'function'){
+            if (json.status == 'success') {
+                if (typeof call_back == 'function') {
                     call_back(data);
                     loading('close');//完成后关闭...转圈
-                }else{
-                    alert(call_back+'is not a function');
+                } else {
+                    alert(call_back + 'is not a function');
                 }
-            }else{
-                alertDiv('提示',json.message);
+            } else {
+                alertDiv('提示', json.message);
                 loading('close');//完成后关闭...转圈
             }
 
@@ -305,21 +304,22 @@ function formSubmit(form_id, call_back, url,queryParams){
             loading('close');
             resetToken();
             console.log('submitForm ajax err');
-            var errorMsg='数据提交服务失败！';
-            if(data && (data.status == 400 || data.status == 500) && data.responseText){
-                errorMsg=data.responseText;
-                try{
-                    var messageJson = eval("("+errorMsg+")");
-                    if(messageJson.message){
+            var errorMsg = '数据提交服务失败！';
+            if (data && (data.status == 400 || data.status == 500) && data.responseText) {
+                errorMsg = data.responseText;
+                try {
+                    var messageJson = eval("(" + errorMsg + ")");
+                    if (messageJson.message) {
                         errorMsg = messageJson.message;
-                    }else if(messageJson.errors){
+                    } else if (messageJson.errors) {
                         errorMsg = messageJson.errors;
                     }
-                }catch(e){}
+                } catch (e) {
+                }
             }
             alertDiv({
-                title : '错误信息',
-                msg : errorMsg
+                title: '错误信息',
+                msg: errorMsg
             });
         }
     });
@@ -337,17 +337,17 @@ function normalSubmit(form_id, call_back, url) {
         url: submit_url,
         onSubmit: function () {
             var isValid = $(this).form('validate');
-            if(isValid){
-                loading('open','数据处理中,请稍候...');//验证通过提交后台，开始....转圈！
+            if (isValid) {
+                loading('open', '数据处理中,请稍候...');//验证通过提交后台，开始....转圈！
             }
             return isValid;	// 返回false终止表单提交
         },
 
         success: function (data) {
             loading('close');//完成后关闭...转圈
-            try{
+            try {
                 var json = eval('(' + data + ')');
-            }catch(e){
+            } catch (e) {
                 var json = data;
             }
             formTips(json, call_back, 'tips');
@@ -356,21 +356,22 @@ function normalSubmit(form_id, call_back, url) {
             loading('close');
             resetToken();
             console.log('submitForm ajax err');
-            var errorMsg='数据提交服务失败！';
-            if(data && (data.status == 400 || data.status == 500) && data.responseText){
-                errorMsg=data.responseText;
-                try{
-                    var messageJson = eval("("+errorMsg+")");
-                    if(messageJson.message){
+            var errorMsg = '数据提交服务失败！';
+            if (data && (data.status == 400 || data.status == 500) && data.responseText) {
+                errorMsg = data.responseText;
+                try {
+                    var messageJson = eval("(" + errorMsg + ")");
+                    if (messageJson.message) {
                         errorMsg = messageJson.message;
-                    }else if(messageJson.errors){
+                    } else if (messageJson.errors) {
                         errorMsg = messageJson.errors;
                     }
-                }catch(e){}
+                } catch (e) {
+                }
             }
             alertDiv({
-                title : '错误信息',
-                msg : errorMsg
+                title: '错误信息',
+                msg: errorMsg
             });
         }
     });
@@ -392,7 +393,7 @@ function formTips(json, success_fn, type) {
                     $.messager.show({
                         title: '提示信息',
                         msg: json.message,
-                        height:'auto'
+                        height: 'auto'
                     });
                     setTimeout(function () {
                         fn(json);
@@ -412,12 +413,12 @@ function formTips(json, success_fn, type) {
     } else {
 
         //if (json.status == 308) {
-        if (json){//有错误信息，不是重复提交，无错误信息，则是重复提交
+        if (json) {//有错误信息，不是重复提交，无错误信息，则是重复提交
             resetToken();
         }
 
         if (json.message && json.message.indexOf('{') == -1) {   //系统异常错误抛出
-            alertDiv('提示信息',json.message);
+            alertDiv('提示信息', json.message);
         } else {
             var message = eval("(" + json.message + ")");
             var message_arr = [];
@@ -496,11 +497,11 @@ function openUrlForm(options) {
      cache:true,         //是否缓存
      });*/
     //只创建一次DIV
-    if($('#' + options.id).length > 0 && options.cache){
+    if ($('#' + options.id).length > 0 && options.cache) {
         //缓存窗口
         options.open_status = options.cache;
         var dlg_div = $('#' + options.id);
-    }else{
+    } else {
         var dlg_div = $('<div id="' + options.id + '"></div>').css({
             overflow: 'hidden'
         });
@@ -536,26 +537,27 @@ function openUrlForm(options) {
     var _top = self_top; //自适应高度
     dlg_div.dialog({
         //href:options.url,1
-        cache:_cache,
+        cache: _cache,
         modal: true,
         title: _title,
         width: _width,
         height: _height,
         top: _top,
         //buttons: _buttons,   //打开url的弹框暂时不使用面板按钮
-        onBeforeOpen:function(){
+        onBeforeOpen: function () {
             //没有缓存,重新加载
-            if(options.open_status != true){
+            if (options.open_status != true) {
                 $('#' + options.id + '_iframe').prop('src', options.url);
             }
         },
-        onClose:function(){
-            if(options.open_status != true){
+        onClose: function () {
+            if (options.open_status != true) {
                 dlg_div.remove();
             }
-            try{
+            try {
                 _close();
-            }catch(e){}
+            } catch (e) {
+            }
         }
     });
     //弹框高度自适应
@@ -572,37 +574,37 @@ function openDivForm(options, btn_diy) {
     //参数使用说明举例
     //只弹窗的用法
     /*openDivForm({
-        id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
-        title: '表单提交',
-        width: 800,
-        height: 200,
-    }, []);*/
+     id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+     title: '表单提交',
+     width: 800,
+     height: 200,
+     }, []);*/
     //提交表单的用法
     /*openDivForm({
-        id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
-        title: '表单提交',
-        width: 800,
-        height: 200,
-        top: 200,
-        beforeSubmit: function () {
-        }, //return false,阻止提交
-        afterSubmit: function (data) {
-        }, //提交成功,data为返回的数据
-        onClose: function () {
-        },             //关闭时提交的函数
-    }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
-        {
-            text: '确定',
-            handler: function () {
-                $('#div_id').dialog('close');
-            }
-        }, {
-            text: '关闭',
-            handler: function () {
-                $('#div_id').dialog('close');
-            }
-        },
-    ]);*/
+     id: 'div_id', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+     title: '表单提交',
+     width: 800,
+     height: 200,
+     top: 200,
+     beforeSubmit: function () {
+     }, //return false,阻止提交
+     afterSubmit: function (data) {
+     }, //提交成功,data为返回的数据
+     onClose: function () {
+     },             //关闭时提交的函数
+     }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
+     {
+     text: '确定',
+     handler: function () {
+     $('#div_id').dialog('close');
+     }
+     }, {
+     text: '关闭',
+     handler: function () {
+     $('#div_id').dialog('close');
+     }
+     },
+     ]);*/
     var dlg_id = options.id;
     var dlg_div = $('#' + dlg_id);
     var defualt_beforeSubmit = function () {
@@ -697,7 +699,9 @@ function openDivForm(options, btn_diy) {
 function editSwitch(bool, border_class, box_class) {
     var _border_class = border_class || 'clear-border';
     var box = $('.val');
-    if (box_class) {box = $('.' + box_class);}
+    if (box_class) {
+        box = $('.' + box_class);
+    }
     //启用编辑
     if (bool) {
         box.each(function () {
@@ -717,15 +721,21 @@ function editSwitch(bool, border_class, box_class) {
             } else if (_this.hasClass('easyui-combotree')) {
                 _this.combotree({readonly: false}).next().removeClass(_border_class);
             } else if (_this.hasClass('easyui-validatebox')) {
-                if(_this.hasClass('Wdate')){
+                if (_this.hasClass('Wdate')) {
                     _this.removeAttr('disabled');
-                    _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
-                }else{
+                    _this.css({
+                        'border': '1px solid #ccc',
+                        'background': 'url(' + pathConfig.staticPath + '/common/datepicker/skin/christ/datePicker.png) no-repeat right'
+                    });
+                } else {
                     _this.validatebox({readonly: false}).next().removeClass(_border_class);
                 }
-            }else if(_this.hasClass('Wdate')){
+            } else if (_this.hasClass('Wdate')) {
                 _this.removeAttr('disabled');
-                _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
+                _this.css({
+                    'border': '1px solid #ccc',
+                    'background': 'url(' + pathConfig.staticPath + '/common/datepicker/skin/christ/datePicker.png) no-repeat right'
+                });
             }
             _this.next().find('span.textbox-addon').show();//显示按钮
         });
@@ -736,27 +746,27 @@ function editSwitch(bool, border_class, box_class) {
             _this.prev().find('i').hide();
             _this.parent().prev().find('i').hide();
             if (_this.hasClass('easyui-combobox') || _this.hasClass('easyuicombobox')) {
-                _this.combobox({readonly: true,required:false}).next().addClass(_border_class);//添加样式取消边框
+                _this.combobox({readonly: true, required: false}).next().addClass(_border_class);//添加样式取消边框
             } else if (_this.hasClass('easyui-textbox') || _this.hasClass('easyuitextbox')) {
-                _this.textbox({readonly: true,required:false}).next().addClass(_border_class);
+                _this.textbox({readonly: true, required: false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-numberbox') || _this.hasClass('easyuinumberbox')) {
-                _this.numberbox({readonly: true,required:false}).next().addClass(_border_class);
+                _this.numberbox({readonly: true, required: false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-datebox') || _this.hasClass('easyuidatebox')) {
-                _this.datebox({readonly: true,required:false}).next().addClass(_border_class);
+                _this.datebox({readonly: true, required: false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-datetimebox') || _this.hasClass('easyuidatetimebox')) {
-                _this.datetimebox({readonly: true,required:false}).next().addClass(_border_class);
+                _this.datetimebox({readonly: true, required: false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-combotree') || _this.hasClass('easyuicombotree')) {
-                _this.combotree({readonly: true,required:false}).next().addClass(_border_class);
+                _this.combotree({readonly: true, required: false}).next().addClass(_border_class);
             } else if (_this.hasClass('easyui-validatebox') || _this.hasClass('easyuivalidatebox')) {
-                if(_this.hasClass('Wdate')){
-                    _this.attr('disabled','disabled');
-                    _this.css({'border':'0','background':'#fff'})
-                }else{
-                    _this.validatebox({readonly: true,required:false}).next().addClass(_border_class);
+                if (_this.hasClass('Wdate')) {
+                    _this.attr('disabled', 'disabled');
+                    _this.css({'border': '0', 'background': '#fff'})
+                } else {
+                    _this.validatebox({readonly: true, required: false}).next().addClass(_border_class);
                 }
-            } else if(_this.hasClass('Wdate')){
-                _this.attr('disabled','disabled');
-                _this.css({'border':'0','background':'#fff'})
+            } else if (_this.hasClass('Wdate')) {
+                _this.attr('disabled', 'disabled');
+                _this.css({'border': '0', 'background': '#fff'})
             }
             _this.next().find('span.textbox-addon').hide();//隐藏按钮
         });
@@ -764,43 +774,43 @@ function editSwitch(bool, border_class, box_class) {
 }
 
 //input禁用编辑(easyui组件)
-function editDisable(input_class){
-    var box = $('.'+input_class);
+function editDisable(input_class) {
+    var box = $('.' + input_class);
     var border_class = 'clear-border';//确保此样式已经加载
     box.each(function () {
         var _this = $(this);
         //隐藏“*”
         _this.prev().find('i').hide();
         if (_this.hasClass('easyui-combobox')) {
-            _this.combobox({readonly: true,required:false,prompt:''}).next().addClass(border_class);//添加样式取消边框
+            _this.combobox({readonly: true, required: false, prompt: ''}).next().addClass(border_class);//添加样式取消边框
         } else if (_this.hasClass('easyui-textbox')) {
-            _this.textbox({readonly: true,required:false,prompt:''}).next().addClass(border_class);
+            _this.textbox({readonly: true, required: false, prompt: ''}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-datebox')) {
-            _this.datebox({readonly: true,required:false,prompt:''}).next().addClass(border_class);
-        }else if (_this.hasClass('easyui-numberbox')) {
-            _this.numberbox({readonly: true,required:false,prompt:''}).next().addClass(border_class);
+            _this.datebox({readonly: true, required: false, prompt: ''}).next().addClass(border_class);
+        } else if (_this.hasClass('easyui-numberbox')) {
+            _this.numberbox({readonly: true, required: false, prompt: ''}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-datetimebox')) {
-            _this.datetimebox({readonly: true,required:false}).next().addClass(border_class);
+            _this.datetimebox({readonly: true, required: false}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-combotree')) {
-            _this.combotree({readonly: true,required:false,prompt:''}).next().addClass(border_class);
+            _this.combotree({readonly: true, required: false, prompt: ''}).next().addClass(border_class);
         } else if (_this.hasClass('easyui-validatebox')) {
-            if(_this.hasClass('Wdate')){
-                _this.attr('disabled','disabled');
-                _this.css({'border':'0','background':'#fff'})
-            }else{
-                _this.validatebox({readonly: true,required:false}).next().addClass(border_class);
+            if (_this.hasClass('Wdate')) {
+                _this.attr('disabled', 'disabled');
+                _this.css({'border': '0', 'background': '#fff'})
+            } else {
+                _this.validatebox({readonly: true, required: false}).next().addClass(border_class);
             }
-        } else if(_this.hasClass('Wdate')){
-            _this.attr('disabled','disabled');
-            _this.css({'border':'0','background':'#fff'})
+        } else if (_this.hasClass('Wdate')) {
+            _this.attr('disabled', 'disabled');
+            _this.css({'border': '0', 'background': '#fff'})
         }
         _this.next().find('span.textbox-addon').hide();//隐藏按钮
     });
 }
 
 //input启用编辑(easyui组件)
-function editEnable(input_class){
-    var box = $('.'+input_class);
+function editEnable(input_class) {
+    var box = $('.' + input_class);
     var border_class = 'clear-border';//确保此样式已经加载
     box.each(function () {
         var _this = $(this);
@@ -810,60 +820,70 @@ function editEnable(input_class){
             _this.combobox({readonly: false}).next().removeClass(border_class);//移除样式还原边框
         } else if (_this.hasClass('easyui-textbox')) {
             _this.textbox({readonly: false}).next().removeClass(border_class);
-        }else if (_this.hasClass('easyui-numberbox')) {
+        } else if (_this.hasClass('easyui-numberbox')) {
             _this.numberbox({readonly: false}).next().removeClass(border_class);
-        }else if (_this.hasClass('easyui-datebox')) {
+        } else if (_this.hasClass('easyui-datebox')) {
             _this.datebox({readonly: false}).next().removeClass(border_class);
         } else if (_this.hasClass('easyui-datetimebox')) {
             _this.datetimebox({readonly: false}).next().removeClass(border_class);
         } else if (_this.hasClass('easyui-combotree')) {
             _this.combotree({readonly: false}).next().removeClass(border_class);
         } else if (_this.hasClass('easyui-validatebox')) {
-            if(_this.hasClass('Wdate')){
+            if (_this.hasClass('Wdate')) {
                 _this.removeAttr('disabled');
-                _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
-            }else{
+                _this.css({
+                    'border': '1px solid #ccc',
+                    'background': 'url(' + pathConfig.staticPath + '/common/datepicker/skin/christ/datePicker.png) no-repeat right'
+                });
+            } else {
                 _this.validatebox({readonly: false}).next().removeClass(border_class);
             }
-        } else if(_this.hasClass('Wdate')){
+        } else if (_this.hasClass('Wdate')) {
             _this.removeAttr('disabled');
-            _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
+            _this.css({
+                'border': '1px solid #ccc',
+                'background': 'url(' + pathConfig.staticPath + '/common/datepicker/skin/christ/datePicker.png) no-repeat right'
+            });
         }
         _this.next().find('span.textbox-addon').show();//显示按钮
     });
 }
 
 //input禁用编辑(easyui组件)
-function editDisableForAj(input_class){
-    var box = $('.'+input_class);
+function editDisableForAj(input_class) {
+    var box = $('.' + input_class);
     var border_class = 'clear-border';//确保此样式已经加载
     box.each(function () {
         var _this = $(this);
         //隐藏“*”
         _this.prev().find('i').hide();
         if (_this.hasClass('easyuicombobox')) {
-            _this.combobox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);//添加样式取消边框
+            _this.combobox({value: '', readonly: true, required: false, prompt: ''}).next().addClass(border_class);//添加样式取消边框
         } else if (_this.hasClass('easyuitextbox')) {
-            _this.textbox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+            _this.textbox({value: '', readonly: true, required: false, prompt: ''}).next().addClass(border_class);
         } else if (_this.hasClass('easyuidatebox')) {
-            _this.datebox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
-        }else if (_this.hasClass('easyuinumberbox')) {
-            _this.numberbox({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+            _this.datebox({value: '', readonly: true, required: false, prompt: ''}).next().addClass(border_class);
+        } else if (_this.hasClass('easyuinumberbox')) {
+            _this.numberbox({value: '', readonly: true, required: false, prompt: ''}).next().addClass(border_class);
         } else if (_this.hasClass('easyuidatetimebox')) {
-            _this.datetimebox({value:'',readonly: true,required:false}).next().addClass(border_class);
+            _this.datetimebox({value: '', readonly: true, required: false}).next().addClass(border_class);
         } else if (_this.hasClass('easyuicombotree')) {
-            _this.combotree({value:'',readonly: true,required:false,prompt:''}).next().addClass(border_class);
+            _this.combotree({value: '', readonly: true, required: false, prompt: ''}).next().addClass(border_class);
         } else if (_this.hasClass('easyuivalidatebox')) {
-            if(_this.hasClass('Wdate')){
-                _this.val('').attr('disabled','disabled');
-                _this.css({'border':'0','background':'#fff'});
-                _this.validatebox({required:false});
-            }else if(_this.hasClass('TEXTAREA') || _this.hasClass('TEXTAREA_R') ||_this.hasClass('TEXTBOX')){
-                _this.val('').attr('readonly','readonly').css('border','0');
-                _this.validatebox({required:false});
-            }else{
-                _this.attr('disabled','disabled').css('background','#ffffff').addClass(border_class);
-                _this.validatebox({value:'',readonly: true,required:false}).attr('disabled','disabled').next().addClass(border_class);
+            if (_this.hasClass('Wdate')) {
+                _this.val('').attr('disabled', 'disabled');
+                _this.css({'border': '0', 'background': '#fff'});
+                _this.validatebox({required: false});
+            } else if (_this.hasClass('TEXTAREA') || _this.hasClass('TEXTAREA_R') || _this.hasClass('TEXTBOX')) {
+                _this.val('').attr('readonly', 'readonly').css('border', '0');
+                _this.validatebox({required: false});
+            } else {
+                _this.attr('disabled', 'disabled').css('background', '#ffffff').addClass(border_class);
+                _this.validatebox({
+                    value: '',
+                    readonly: true,
+                    required: false
+                }).attr('disabled', 'disabled').next().addClass(border_class);
             }
         }
         _this.next().find('span.textbox-addon').hide();//隐藏按钮
@@ -871,36 +891,39 @@ function editDisableForAj(input_class){
 }
 
 //input启用编辑(easyui组件)
-function editEnableForAj(input_class){
-    var box = $('.'+input_class);
+function editEnableForAj(input_class) {
+    var box = $('.' + input_class);
     var border_class = 'clear-border';//确保此样式已经加载
     box.each(function () {
         var _this = $(this);
         //显示"*"
         _this.prev().find('i').show();
         if (_this.hasClass('easyuicombobox')) {
-            _this.combobox({readonly: false,required:true}).next().removeClass(border_class);//移除样式还原边框
+            _this.combobox({readonly: false, required: true}).next().removeClass(border_class);//移除样式还原边框
         } else if (_this.hasClass('easyuitextbox')) {
-            _this.textbox({readonly: false,required:true}).next().removeClass(border_class);
-        }else if (_this.hasClass('easyuinumberbox')) {
-            _this.numberbox({readonly: false,required:true}).next().removeClass(border_class);
-        }else if (_this.hasClass('easyuidatebox')) {
-            _this.datebox({readonly: false,required:true}).next().removeClass(border_class);
+            _this.textbox({readonly: false, required: true}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyuinumberbox')) {
+            _this.numberbox({readonly: false, required: true}).next().removeClass(border_class);
+        } else if (_this.hasClass('easyuidatebox')) {
+            _this.datebox({readonly: false, required: true}).next().removeClass(border_class);
         } else if (_this.hasClass('easyuidatetimebox')) {
-            _this.datetimebox({readonly: false,required:true}).next().removeClass(border_class);
+            _this.datetimebox({readonly: false, required: true}).next().removeClass(border_class);
         } else if (_this.hasClass('easyuicombotree')) {
-            _this.combotree({readonly: false,required:true}).next().removeClass(border_class);
+            _this.combotree({readonly: false, required: true}).next().removeClass(border_class);
         } else if (_this.hasClass('easyuivalidatebox')) {
-            if(_this.hasClass('Wdate')){
+            if (_this.hasClass('Wdate')) {
                 _this.removeAttr('disabled');
-                _this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
-                _this.validatebox({required:true});
-            }else if(_this.hasClass('TEXTAREA') || _this.hasClass('TEXTAREA_R') ||_this.hasClass('TEXTBOX')){
-                _this.removeAttr('readonly').css('border','1px solid #ccc');
-                _this.validatebox({required:true});
-            }else{
+                _this.css({
+                    'border': '1px solid #ccc',
+                    'background': 'url(' + pathConfig.staticPath + '/common/datepicker/skin/christ/datePicker.png) no-repeat right'
+                });
+                _this.validatebox({required: true});
+            } else if (_this.hasClass('TEXTAREA') || _this.hasClass('TEXTAREA_R') || _this.hasClass('TEXTBOX')) {
+                _this.removeAttr('readonly').css('border', '1px solid #ccc');
+                _this.validatebox({required: true});
+            } else {
                 _this.removeAttr('disabled').removeClass(border_class);
-                _this.validatebox({readonly: false,required:true}).next().removeClass(border_class);
+                _this.validatebox({readonly: false, required: true}).next().removeClass(border_class);
             }
         }
         _this.next().find('span.textbox-addon').show();//显示按钮
@@ -908,31 +931,34 @@ function editEnableForAj(input_class){
 }
 
 //组件的边框和图标是否显示
-function isBorder(bool,boxClass){
-    var $box = $('.'+boxClass);
+function isBorder(bool, boxClass) {
+    var $box = $('.' + boxClass);
     var noBorderClass = 'clear-border';
     //显示边框和图标
-    if(bool){
-        $box.each(function(){
+    if (bool) {
+        $box.each(function () {
             var $this = $(this);
             $this.next().removeClass(noBorderClass).find('span.textbox-addon').show();
             $this.prev().find('i').show();
             //My97日期处理
-            if($this.hasClass('Wdate')){
+            if ($this.hasClass('Wdate')) {
                 $this.removeAttr('disabled');
-                $this.css({'border':'1px solid #ccc','background':'url('+pathConfig.staticPath+'/common/datepicker/skin/christ/datePicker.png) no-repeat right'});
+                $this.css({
+                    'border': '1px solid #ccc',
+                    'background': 'url(' + pathConfig.staticPath + '/common/datepicker/skin/christ/datePicker.png) no-repeat right'
+                });
             }
         });
-    //隐藏边框和图标
-    }else{
-        $box.each(function(){
+        //隐藏边框和图标
+    } else {
+        $box.each(function () {
             var $this = $(this);
             $this.next().addClass(noBorderClass).find('span.textbox-addon').hide();
             $this.prev().find('i').hide();
             //My97日期处理
-            if($this.hasClass('Wdate')){
-                $this.attr('disabled','disabled');
-                $this.css({'border':'0','background':'#fff'})
+            if ($this.hasClass('Wdate')) {
+                $this.attr('disabled', 'disabled');
+                $this.css({'border': '0', 'background': '#fff'})
             }
         });
     }
@@ -949,13 +975,13 @@ function markInputStatus(form_id) {
     $('#' + form_id + ' span.textbox input').off('focus.status').on({
         'focus.status': function () {
             var input_module = $(this).parent().prev();  //组件input
-            if(input_module.hasClass('readonly') == false){
+            if (input_module.hasClass('readonly') == false) {
                 input_module.attr('sb_status', 1);
             }
         },
         'change': function () {
             var input_module = $(this).parent().prev();  //组件input
-            if(input_module.hasClass('readonly') == false){
+            if (input_module.hasClass('readonly') == false) {
                 input_module.attr('sb_status', 1);
             }
         }
@@ -963,13 +989,13 @@ function markInputStatus(form_id) {
     $('#' + form_id + ' textarea').off('focus.status').on({
         'focus.status': function () {
             var input_module = $(this);
-            if(input_module.hasClass('readonly') == false){
+            if (input_module.hasClass('readonly') == false) {
                 input_module.attr('sb_status', 1);
             }
         },
         'change': function () {
             var input_module = $(this);
-            if(input_module.hasClass('readonly') == false){
+            if (input_module.hasClass('readonly') == false) {
                 input_module.attr('sb_status', 1);
             }
         }
@@ -1007,7 +1033,7 @@ function changeInputStatus(form_id) {
     }
 }
 //3.未作任何修改还原input状态
-function returnInputStatus(form_id){
+function returnInputStatus(form_id) {
     $('#' + form_id + ' span.textbox').each(function () { //所有上传到后台的隐藏输入框
         var input_module = $(this).prev();  //组件input
         input_module.next().find('input').prop("disabled", false);
@@ -1136,8 +1162,8 @@ function getLastUploadImage(lyid, lybm, add_btn, manage_btn) {
                 if (manage_btn) {
                     manage_btn.css('display', 'block');
                 }
-            }else {
-                updatePicUrl('info_pic',basePath + '/images/default.jpg', basePath + '/images/default.jpg');
+            } else {
+                updatePicUrl('info_pic', basePath + '/images/default.jpg', basePath + '/images/default.jpg');
             }
         },
         error: function () {
@@ -1164,9 +1190,9 @@ function resetToken() {
 
 //combobox下拉显示,只显示textValue
 //页面直接引用,并在组件中添加show-text样式
-function comboboxShowText(){
+function comboboxShowText() {
     $('.show-text').combobox({
-        formatter: function(row){
+        formatter: function (row) {
             var opts = $(this).combobox('options');
             return row[opts.textField];
         }
@@ -1177,50 +1203,50 @@ function comboboxShowText(){
  * 2.input_type:组件类型
  * 3.multiple:是否获取去多选值数组结果
  * */
-function getInputValue(input,input_type,multiple){
-    if(input_type == 'textbox'){
+function getInputValue(input, input_type, multiple) {
+    if (input_type == 'textbox') {
         return input.textbox('getValue');
-    }else if(input_type == 'datebox'){
+    } else if (input_type == 'datebox') {
         return input.val();
         //return input.datebox('getValue');
-    }else if(input_type == 'combobox'){
-        if(multiple){
+    } else if (input_type == 'combobox') {
+        if (multiple) {
             return input.combobox('getValues');
-        }else{
+        } else {
             return input.combobox('getValue');
         }
-    }else if(input_type == 'combotree'){
-        if(multiple){
+    } else if (input_type == 'combotree') {
+        if (multiple) {
             return input.combobox('getValues');
-        }else{
+        } else {
             return input.combobox('getValue');
         }
-    }else{
+    } else {
         alert('请输入正确的组件类型');
     }
 }
 
 //批量清除组件数据
-function clearInput(input_class){
+function clearInput(input_class) {
     $('.Wdate').val('');
-    $('.'+input_class).each(function(){
+    $('.' + input_class).each(function () {
         var _this = $(this);
-        try{
-            _this.combobox('setValue','');
-            _this.combobox('select','');
-        }catch(e){
-            try{
-                _this.textbox('setValue','');
-            }catch(e){
-                try{
-                    _this.datebox('setValue','');
-                }catch(e){
-                    try{
-                        _this.combotree('setValue','');
-                    }catch(e){
-                        try{
-                            _this.validate('setValue','');
-                        }catch(e){
+        try {
+            _this.combobox('setValue', '');
+            _this.combobox('select', '');
+        } catch (e) {
+            try {
+                _this.textbox('setValue', '');
+            } catch (e) {
+                try {
+                    _this.datebox('setValue', '');
+                } catch (e) {
+                    try {
+                        _this.combotree('setValue', '');
+                    } catch (e) {
+                        try {
+                            _this.validate('setValue', '');
+                        } catch (e) {
                             _this.val('');
                         }
                     }
@@ -1231,54 +1257,54 @@ function clearInput(input_class){
 }
 
 //设置组件的值
-function setInputValue($input,val){
-    try{
-        $input.combotree('setValue',val);
-    }catch(e){
-        try{
-            $input.combobox('setValue',val);
-        }catch(e){
-            try{
-                $input.datebox('setValue',val);
-            }catch(e){
-                try{
-                    $input.textbox('setValue',val);
-                }catch(e){
-                    try{
-                        $input.validatebox('setValue',val);
-                    }catch(e){
+function setInputValue($input, val) {
+    try {
+        $input.combotree('setValue', val);
+    } catch (e) {
+        try {
+            $input.combobox('setValue', val);
+        } catch (e) {
+            try {
+                $input.datebox('setValue', val);
+            } catch (e) {
+                try {
+                    $input.textbox('setValue', val);
+                } catch (e) {
+                    try {
+                        $input.validatebox('setValue', val);
+                    } catch (e) {
                         $input.val(val);
                     }
                 }
             }
         }
     }
-    if($input.hasClass('easyui-validatebox')){
+    if ($input.hasClass('easyui-validatebox')) {
         $input.validatebox();
     }
 }
 
 //combobox自动填值
-function comboAutoComplete(combobox_id,dictUrl){
-    var $combobox = $('#'+combobox_id);
+function comboAutoComplete(combobox_id, dictUrl) {
+    var $combobox = $('#' + combobox_id);
     var domain = getThisLocationObj();
     var hostname = domain.hostname;
     var randomUrl = dictUrl;
-    if(dictUrl.indexOf('?') == -1){
-        randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
-    }else{
-        randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
+    if (dictUrl.indexOf('?') == -1) {
+        randomUrl = dictUrl + '?domain=' + hostname + '&v=' + jwzhVersion;
+    } else {
+        randomUrl = dictUrl + '&domain=' + hostname + '&v=' + jwzhVersion;
     }
     $.ajax({
-        cache:true,
-        url : randomUrl,
-        type:'get',
-        dataType:'json',
-        xhrFields: {withCredentials:true},
+        cache: true,
+        url: randomUrl,
+        type: 'get',
+        dataType: 'json',
+        xhrFields: {withCredentials: true},
         crossDomain: true,
-        success : function(data){
-            if(data.length === 1){
-                $combobox.combobox('select',data[0]['id']);
+        success: function (data) {
+            if (data.length === 1) {
+                $combobox.combobox('select', data[0]['id']);
             }
         }
     });
@@ -1290,7 +1316,7 @@ function getParamLinkUrl() {
     if (this.location.search.indexOf("?") == 0 && this.location.search.indexOf("=") > 1) {
         var arrSource = decodeURI(this.location.search).substring(1, this.location.search.length).split("&");
 
-        for(var i=0;i<arrSource.length;i++){
+        for (var i = 0; i < arrSource.length; i++) {
             var paramName = arrSource[i].split("=")[0];//参数名称
             var paramVal = arrSource[i].split("=")[1];//参数值
             pathObj[paramName] = paramVal;
@@ -1300,25 +1326,25 @@ function getParamLinkUrl() {
 }
 
 //获取当前location对象
-function getThisLocationObj(){
+function getThisLocationObj() {
     var locaObj = location;
     var locaTmp = {
-        hash:locaObj.hash,//锚点
-        host:locaObj.host,//主机
-        hostname:locaObj.hostname,//域名
+        hash: locaObj.hash,//锚点
+        host: locaObj.host,//主机
+        hostname: locaObj.hostname,//域名
         href: locaObj.href,//url字符串
         origin: locaObj.origin,//完整域名
-        pathname : locaObj.pathname,//参数(查询)部分,
+        pathname: locaObj.pathname,//参数(查询)部分,
         port: locaObj.port,//端口
         protocol: locaObj.protocol,//协议
-        proname: locaObj.pathname.substr(0,locaObj.pathname.substr(1).indexOf("/")+1)//项目名称
+        proname: locaObj.pathname.substr(0, locaObj.pathname.substr(1).indexOf("/") + 1)//项目名称
     };
 
     return locaTmp;
 }
 
 //获取当前时间并格式化为'yyyy-MM-dd HH:mm:ss'
-function getCurrentTime(){
+function getCurrentTime(type) {
     var myDate = new Date();
     var yyyy = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
     var MM = myDate.getMonth() + 1;       //获取当前月份(0-11,0代表1月)
@@ -1326,52 +1352,59 @@ function getCurrentTime(){
     var HH = myDate.getHours();       //获取当前小时数(0-23)
     var mm = myDate.getMinutes();     //获取当前分钟数(0-59)
     var ss = myDate.getSeconds();     //获取当前秒数(0-59)
-    if(MM < 10) MM = '0' + MM;
-    if(dd < 10) dd = '0' + dd;
-    if(HH < 10) HH = '0' + HH;
-    if(mm < 10) mm = '0' + mm;
-    if(ss < 10) ss = '0' + ss;
-    return yyyy+'-'+MM+'-'+dd+' '+HH+':'+mm+':'+ss;
+    if (MM < 10) MM = '0' + MM;
+    if (dd < 10) dd = '0' + dd;
+    if (HH < 10) HH = '0' + HH;
+    if (mm < 10) mm = '0' + mm;
+    if (ss < 10) ss = '0' + ss;
+    var formatDate = '';
+    if (type == 'string') {
+        formatDate = yyyy + MM + dd + HH + mm + ss;
+    }
+    else {
+        formatDate = yyyy + '-' + MM + '-' + dd + ' ' + HH + ':' + mm + ':' + ss;
+    }
+    return formatDate;
 }
 
 //将时间格式转化为yyyy年MM月dd日 HH时mm分ss秒
-function parseTimeToCN(time){
-    try{
-        var newTime =  time.replace(/\-/, '年');
-        newTime =  newTime.replace(/\-/, '月');
-        newTime =  newTime.replace(/ /, '日');
-        newTime =  newTime.replace(/:/, '时');
-        newTime =  newTime.replace(/:/, '分');
-        if(newTime.indexOf('分') != -1){
+function parseTimeToCN(time) {
+    try {
+        var newTime = time.replace(/\-/, '年');
+        newTime = newTime.replace(/\-/, '月');
+        newTime = newTime.replace(/ /, '日');
+        newTime = newTime.replace(/:/, '时');
+        newTime = newTime.replace(/:/, '分');
+        if (newTime.indexOf('分') != -1) {
             newTime += '秒';
-        }else{
+        } else {
             newTime += '日';
         }
         return newTime;
-    }catch(e){
+    } catch (e) {
         return time;
     }
 
 }
 
 //将时间格式转化为yyyy年MM月dd日
-function parseTimeToDayCN(time){
+function parseTimeToDayCN(time) {
     var CN = parseTimeToCN(time);
-    return CN.substr(0,11);
+    return CN.substr(0, 11);
 }
 
 
 //获取sessionbean
-function getSessionBean(){
+function getSessionBean() {
     var sessionBean = null;
     $.ajax({
-        url: pathConfig.managePath+'/api/userLogin/getSetuSession',
+        url: pathConfig.managePath + '/api/userLogin/getSetuSession',
         type: 'get',
         dataType: 'json',
         xhrFields: {withCredentials: true},
         crossDomain: true,
         async: false,
-        success: function(json){
+        success: function (json) {
             sessionBean = json.sessionBean;
         }
     });
@@ -1383,72 +1416,74 @@ function getSessionBean(){
  * @param tag_id 放置帮助链接的DIV的ID
  * @param type 帮助文档类型
  */
-function openHelpWindow(tag_id,type){
-	$.ajax({
-		url : managerPath+'/api/sysXtcsGlobal/queryPage',
-		type : 'post',
-		dataType : 'json',
-		xhrFields:{withCredentials:true},
-		crossDomain:true,
-		data :{
-			cslb : '13',
-			csmc :'helpUrlAry'
-		},
-		success : function(data){
-			if(data && data.length>0){
-				var csz=data[0].csz;
-				var json = eval('(' + csz + ')');
-				var fileUrl = json[type];
-				if(fileUrl)
-					$("#"+tag_id).html('<a href="'+fileUrl+'" target="_blank"><i class="fa fa-question-circle"></i><span>帮助</span></a>');
-			}
-		},
-		error:function(e){
-			
-		}
-	});
+function openHelpWindow(tag_id, type) {
+    $.ajax({
+        url: managerPath + '/api/sysXtcsGlobal/queryPage',
+        type: 'post',
+        dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        data: {
+            cslb: '13',
+            csmc: 'helpUrlAry'
+        },
+        success: function (data) {
+            if (data && data.length > 0) {
+                var csz = data[0].csz;
+                var json = eval('(' + csz + ')');
+                var fileUrl = json[type];
+                if (fileUrl)
+                    $("#" + tag_id).html('<a href="' + fileUrl + '" target="_blank"><i class="fa fa-question-circle"></i><span>帮助</span></a>');
+            }
+        },
+        error: function (e) {
+
+        }
+    });
 }
 
 //1.绑定storage事件函数
-function onStorage(fn){
-    localStorage.setItem('storageStatus','true');
-    $(window).off('storage').on('storage',function(){
-        if(typeof fn == 'function'){
+function onStorage(fn) {
+    localStorage.setItem('storageStatus', 'true');
+    $(window).off('storage').on('storage', function () {
+        if (typeof fn == 'function') {
             fn();
             $(window).off('storage');
-            localStorage.setItem('storageStatus','true');
-        }else{
+            localStorage.setItem('storageStatus', 'true');
+        } else {
             alert('onStorage的参数不合法,请传递回调函数.');
         }
     });
 }
 //2.改变storage的状态
-function changeStorage(){
-    localStorage.setItem('storageStatus','false');
+function changeStorage() {
+    localStorage.setItem('storageStatus', 'false');
 }
 
 /**
  * wdate时间控件内容校验
  * @param obj:当前对象this
  */
-function wdateValidate(obj){
+function wdateValidate(obj) {
     var $this = $(obj);
     $this.validatebox();
 }
 
 //自定义弹框,默认在屏幕正中间
-function alertDiv(options){
+function alertDiv(options) {
     var arguments = arguments;
     var type = typeof options;
     var fn = arguments[2];
 
-    if(typeof fn != 'undefined' && typeof fn != 'function'){
+    if (typeof fn != 'undefined' && typeof fn != 'function') {
         fn = arguments[3];
-        if(typeof fn !== 'function'){
-            fn = function(){console.log('alertDiv()传递的参数格式不正确')}
+        if (typeof fn !== 'function') {
+            fn = function () {
+                console.log('alertDiv()传递的参数格式不正确')
+            }
         }
     }
-    if(type == 'string'){
+    if (type == 'string') {
         options = {
             title: arguments[0],
             msg: arguments[1],
@@ -1461,20 +1496,21 @@ function alertDiv(options){
         msg: "提示信息为空!",
         width: 350,
         height: 150,
-        onClose: function(){
-            try{
+        onClose: function () {
+            try {
                 var fn1 = opts.fn;
-                if(fn1){
+                if (fn1) {
                     fn1();
                 }
-            }catch(e){}
+            } catch (e) {
+            }
         }
     }, options);
 
     var divHtml = '<div id="alertDiv1956" style="display:none;overflow:auto;padding:10px 10px 0 10px;"></div>';
-    var msgHtml = '<div>'+opts.msg+'</div>';
+    var msgHtml = '<div>' + opts.msg + '</div>';
     var $alertDiv = $('#alertDiv1956');
-    if(!$alertDiv.length){
+    if (!$alertDiv.length) {
         $('body').append(divHtml);
     }
     $('#alertDiv1956').empty().append(msgHtml);
@@ -1487,8 +1523,8 @@ function alertDiv(options){
 }
 
 //批量实现页面所有combotree弹框
-function openCombotrees(){
-    $('input.easyui-combotree').each(function(){
+function openCombotrees() {
+    $('input.easyui-combotree').each(function () {
         var $this = $(this);
         var thisId = $this.attr('id');
         openCombotree(thisId);
@@ -1560,7 +1596,7 @@ function openCombotree(ID) {
                     } else {
                         if (dictLen) {
                             //如果只有一个子节点,父节点也会选中,所以取最后节点
-                            $box.combotree('setValue', dictData[dictLen-1]['id']);
+                            $box.combotree('setValue', dictData[dictLen - 1]['id']);
                         } else {
                             $box.combotree('setValue', '');
                         }
@@ -1679,3 +1715,203 @@ function openCombotree(ID) {
     }
 }
 
+//combotree弹框方式选择
+function openCombotree2($box) {
+    var ID = $box.attr('id') || 'combotree_' + getCurrentTime('string');
+    var options = $box.combotree('options');
+    var dictPanelID = 'dictPanel_' + ID;
+    var dictSearchID = 'dictSearch_' + ID;
+    var dictTreeID = 'dictTree_' + ID;
+    var dictMultiple = options.multiple;
+    var dictUrl = options.url;
+    if(dictUrl) {
+        $box.combotree('hidePanel');
+    }
+    //本地字典数据
+    else {
+        return false;
+    }
+    //初始化按钮
+    if (!$('#' + dictPanelID).length) {
+        var panelDivHtml = '<div style="display:none;position:relative;" id="' + dictPanelID + '">' +
+            '<div class="dict-search" style="padding:5px 20px;margin-bottom:5px;border-bottom:1px #ccc dashed;"><input id="' + dictSearchID + '"></div>' +
+            '<div class="dict-tree" style="width:100%;height:350px;overflow:auto;"><ul id="' + dictTreeID + '"></ul></div>' +
+            '</div>';
+        $('body').append(panelDivHtml);
+    }
+    //打开弹框
+    openDivForm({
+        id: dictPanelID,
+        title: '字典选择',
+        width: 600,
+        onClose: function () {
+            //清除上次生成的tree
+            $('#' + dictTreeID).empty();
+            //取消固定弹框位置
+            //$('#' + dictPanelID).parent().css('position','absolute');
+            //$('#' + dictPanelID).parent().next().css('position','absolute');
+
+        }
+    }, [
+        {
+            text: '确定',
+            handler: function () {
+                var dictData = $('#' + dictTreeID).tree('getChecked');
+                //console.log('dictData:',dictData);
+                var dictLen = dictData.length;
+                if (dictMultiple) {
+                    var values = [];
+                    for (var i = 0; i < dictLen; i++) {
+                        if (!dictData[i]['children']) {
+                            values.push(dictData[i]['id']);
+                        }
+                    }
+                    $box.combotree('setValues', values);
+                } else {
+                    if (dictLen) {
+                        //如果只有一个子节点,父节点也会选中,所以取最后节点
+                        $box.combotree('setValue', dictData[dictLen - 1]['id']);
+                    } else {
+                        $box.combotree('setValue', '');
+                    }
+
+                }
+                $('#' + dictPanelID).dialog('close');
+            }
+        }, {
+            text: '取消',
+            handler: function () {
+                $('#' + dictPanelID).dialog('close');
+            }
+        }
+    ]);
+    //固定弹框位置
+    //$('#' + dictPanelID).parent().css('position','fixed');
+    //$('#' + dictPanelID).parent().next().css('position','fixed');
+
+    //初始化搜索框
+    $('#' + dictSearchID).searchbox({
+        prompt: '输入关键字查询,输入空查询全部',
+        width: 300,
+        height: 25,
+        searcher: function (value, name) {
+            var roots = $('#' + dictTreeID).tree('getRoots');
+            $('#' + dictTreeID).tree('uncheck', roots[0].target);
+            var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
+            $('#' + dictTreeID).tree('doFilter', searchKeyValue);
+            if (searchKeyValue != "") {
+                var treeObject = $('#' + dictTreeID);
+                var node = treeObject.tree('searchTreeNode', {searchKey: searchKeyValue.toUpperCase()});
+                if (node != null) {
+                    var locateNode = treeObject.tree('find', node['id']);
+                    treeObject.tree('expandTo', locateNode.target);
+                    treeObject.tree('scrollTo', locateNode.target);
+                    treeObject.tree('select', locateNode.target);
+                }
+                else {
+                    $.messager.show({
+                        title: '搜索结果',
+                        msg: '无匹配的数据项！'
+                    });
+                }
+            }
+        }
+
+    });
+    //初始化字典树
+    $('#' + dictTreeID).tree({
+        method: 'get',
+        url: dictUrl,
+        checkbox: true,
+        lines: true,
+        loader: function(param,success,error){
+            var opts = $(this).tree('options');
+            var dictUrl = opts.url;
+            if(dictUrl){
+                var domain = getThisLocationObj();
+                var hostname = domain.hostname;
+                var randomUrl = dictUrl;
+                if(dictUrl.indexOf('?') == -1){
+                    randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
+                }else{
+                    randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
+                }
+                $.ajax({
+                    cache: true,
+                    type: opts.method,
+                    url: randomUrl,
+                    data: param,
+                    dataType: 'json',
+                    xhrFields: {withCredentials:true},
+                    crossDomain: true,
+                    beforeSend: function(xhr) {
+                        xhr.withCredentials = true;
+                    },
+                    success: function(data) {
+                        opts.loaded = true;
+                        success(data);
+                    },
+                    error: function () {
+                        console.log('弹框tree跨域获取字典错误,url:'+dictUrl);
+                        error.apply(this, arguments);
+                    }
+                });
+            }
+        },
+        onBeforeCheck: function (node, checked) {
+            if (checked && !dictMultiple) {
+                var roots = $(this).tree('getRoots');
+                $('#' + dictTreeID).tree('uncheck', roots[0].target);
+                if (node.children) {
+                    return false;
+                }
+            }
+        },
+        onDblClick: function (node) {
+            //单选适用
+            if (!dictMultiple) {
+                if (!node.children) {
+                    $box.combotree('setValue', node.id);
+                    $('#' + dictPanelID).dialog('close');
+                }
+            }
+        },
+        formatter: function (node) {
+            if (node.id == 'ROOT') {
+                return node.text;
+            } else {
+                return node.id + ' | ' + node.text;
+            }
+        },
+        filter: function (q, node) {
+            var judgeID = -1, judgeText = -1, judgePY = -1, judgeWB = -1;
+            if (node.id)  judgeID = (node.id).indexOf(q);
+            if (node.text) judgeText = (node.text).indexOf(q);
+            if (node.py) judgePY = (node.py).indexOf(q);
+            if (node.wb) judgeWB = (node.wb).indexOf(q);
+            if (judgeText != -1 || judgeID != -1 || judgePY != -1 || judgeWB != -1) {
+                return true;
+            }
+        },
+        onLoadSuccess: function () {
+            var treeObject = $('#' + dictTreeID);
+            if (dictMultiple) {
+                boxSourceValue = $box.combotree('getValues');
+                for (var i = 0; i < boxSourceValue.length; i++) {
+                    var locateNode_i = treeObject.tree('find', boxSourceValue[i]);
+                    treeObject.tree('expandTo', locateNode_i.target);
+                    treeObject.tree('scrollTo', locateNode_i.target);
+                    treeObject.tree('check', locateNode_i.target);
+                }
+            } else {
+                boxSourceValue = $box.combotree('getValue');
+                if (boxSourceValue) {
+                    var locateNode = treeObject.tree('find', boxSourceValue);
+                    treeObject.tree('expandTo', locateNode.target);
+                    treeObject.tree('scrollTo', locateNode.target);
+                    treeObject.tree('check', locateNode.target);
+                }
+            }
+        }
+    });
+}

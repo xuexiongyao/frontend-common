@@ -1402,19 +1402,9 @@ function getIEVersion() {
 				});
 			}
 		},
-
-		/*onShowPanel: function() {
-
-		 var opts = $(this).combotree('options');
-		 if (!opts.multiple) {
-		 var tree = $(this).combotree('tree');
-		 var selectNode = tree.tree('getSelected');
-		 if (selectNode != null) {
-		 tree.tree('expandTo', selectNode.target);
-		 tree.tree('scrollTo', selectNode.target);
-		 }
-		 }
-		 },*/
+		onShowPanel: function(){
+			openCombotree2($(this));
+		},
 		onChange:function(new_v,old_v){
 			$(this).parent().find('input.add-null').remove();
 			if(new_v == '' || new_v == undefined || new_v == [] ||  new_v == [""]){
