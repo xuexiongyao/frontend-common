@@ -899,14 +899,28 @@ function especiallyDataFunForFlws(bm){
                 params.ASJFLWSDM = 'X060013';
             }
             break;
-        case 'X020001'://行政处罚告知笔录（行政案件）
+        case 'X020001'://行政处罚告知笔录-有听证（行政案件）
             if(params.XX == '1,2'){
                 params.ASJFLWSDM = 'X020001';//行政处罚告知笔录
             }else{
                 params.ASJFLWSDM = 'X020016';//行政处罚告知笔录（无听证）
             }
             break;
-        case '042162'://行政处罚告知笔录（刑事案件）
+        case 'X020016'://行政处罚告知笔录-无听证（行政案件）
+            if(params.XX == '1,2'){
+                params.ASJFLWSDM = 'X020001';//行政处罚告知笔录
+            }else{
+                params.ASJFLWSDM = 'X020016';//行政处罚告知笔录（无听证）
+            }
+            break;
+        case '042162'://行政处罚告知笔录-有听证（刑事案件）
+            if(params.XX == '1,2'){
+                params.ASJFLWSDM = '042162';//行政处罚告知笔录
+            }else{
+                params.ASJFLWSDM = '042161';//行政处罚告知笔录（无听证）
+            }
+            break;
+        case '042161'://行政处罚告知笔录-无听证（刑事案件）
             if(params.XX == '1,2'){
                 params.ASJFLWSDM = '042162';//行政处罚告知笔录
             }else{

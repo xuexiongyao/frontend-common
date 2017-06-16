@@ -70,324 +70,81 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         }
                     }
                 };
-                switch (dictName) {
-                    case 'TB_ST_BARY': //办案人员
-                        comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
-                        comboboxObj.multiple = true;
-                        $(ipts[i]).attr('dicturl', comboboxObj.url);
-                        $(ipts[i]).combobox({
-                            url: comboboxObj.url, multiple: true,
-                            required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
-                            onChange: function (newValue, oldValue) {
-                                if (newValue) {
-                                    var $this = $(this);
-                                    var className = $this.attr('textboxname');//组件class name值
-                                    var val = $this.next().find('input:hidden').val();
-                                    if (val && bm && isFlws) {
-                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, '', val, 'combobox','');
-                                        }
-                                    }
-                                }
-                            },
-                            onHidePanel: function () {
+                if(dictName == 'TB_ST_BARY'){//办案人员
+                    comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
+                    comboboxObj.multiple = true;
+                    $(ipts[i]).attr('dicturl', comboboxObj.url);
+                    $(ipts[i]).combobox({
+                        url: comboboxObj.url, multiple: true,
+                        required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
+                        onChange: function (newValue, oldValue) {
+                            if (newValue) {
                                 var $this = $(this);
-                                var getBary = $this.combobox('getValues');
-                                //必须勾选当前登录者
-                                var currentUserId = DATA.OWN.userId;//当前登录者用户ID
-                                var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
-                                var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
-                                if(!isFlws && bm != 'X050028'){
-                                    // 行政案件'当场处罚决定书（X050028）'办案民警可以只勾选一个
-                                    if(isCheckCurUser == -1 && getBary.length < 2){
-                                        alertDiv({
-                                            title: '提示信息',
-                                            msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
-                                            fn: function () {
-                                                $this.combobox('clear');
-                                                $this.next().find('input').focus();
-                                            }
-                                        })
-                                    } else if(isCheckCurUser > -1 && getBary.length < 2){
-                                        alertDiv({
-                                            title: '提示信息',
-                                            msg: '办案民警至少选两名',
-                                            fn: function () {
-                                                $this.combobox('clear');
-                                                $this.next().find('input').focus();
-                                            }
-                                        })
-                                    } else if(isCheckCurUser == -1 && getBary.length >= 2){
-                                        alertDiv({
-                                            title: '提示信息',
-                                            msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
-                                            fn: function () {
-                                                $this.combobox('clear');
-                                                $this.next().find('input').focus();
-                                            }
-                                        })
-                                    }
-                                }else{
-                                    if(isCheckCurUser == -1){
-                                        alertDiv({
-                                            title: '提示信息',
-                                            msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
-                                            fn: function () {
-                                                $this.combobox('clear');
-                                                $this.next().find('input').focus();
-                                            }
-                                        })
+                                var className = $this.attr('textboxname');//组件class name值
+                                var val = $this.next().find('input:hidden').val();
+                                if (val && bm && isFlws) {
+                                    if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                        flwsLdXxfy(bm, className, '', val, 'combobox','');
                                     }
                                 }
                             }
-                        });
-                        break;
-                    case 'GB_D_XBDM': //性别
-                        var url = pathConfig.mainPath + '/common/dict/GB_D_XBDM.js';
-                        comboboxObj.data = flwsDictObj.GB_D_XBDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_LA_FLTKDM': //法律条款
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_LA_FLTKDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_LA_FLTKDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_SFDM': //是否
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_SFDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_SFDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_QBHS_QBHSLXDM'://取保候审类型
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_QBHS_QBHSLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_QBHS_QBHSLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'KX_D_CYZJDM'://成员证件
-                        var url = pathConfig.mainPath + '/common/dict/KX_D_CYZJDM.js';
-                        comboboxObj.data = flwsDictObj.KX_D_CYZJDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BYLA_TZDXDM'://不予立案通知对象
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BYLA_TZDXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BYLA_TZDXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BYLA_SQFYQXDM'://不予立案申请复议期限
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BYLA_SQFYQXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BYLA_SQFYQXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BYLA_TCLXDM'://不予立案提出类型
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BYLA_TCLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BYLA_TCLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_TGFLYZ_FLTKDM'://提供法律援助法律条款
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_TGFLYZ_FLTKDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_TGFLYZ_FLTKDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_TGFLYZ_ZXDDLXDM'://提供法律援助
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_TGFLYZ_ZXDDLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_TGFLYZ_ZXDDLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BZYHJ_FZLXDM'://不准予会见犯罪类型
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BZYHJ_FZLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BZYHJ_FZLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_DBZ_PZJDDM'://批准决定
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_DBZ_PZJDDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_DBZ_PZJDDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_JSJZ_JSJZHZDJS'://监视居住
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_JSJZ_JSJZHZDJS.js';
-                        comboboxObj.data = flwsDictObj.BD_D_JSJZ_JSJZHZDJS;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'GA_D_XSAJRSQZCSDM'://强制措施
-                        var url = pathConfig.mainPath + '/common/dict/GA_D_XSAJRSQZCSDM.js';
-                        comboboxObj.data = flwsDictObj.GA_D_XSAJRSQZCSDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BYSFBG_GRHDWLXDM'://个人或单位
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BYSFBG_GRHDWLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BYSFBG_GRHDWLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BYSFBG_JYHSQLXDM'://建议或申请
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BYSFBG_JYHSQLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BYSFBG_JYHSQLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BYSFBG_SFHBGQZCSLBDM'://是否会变更强制措施类别
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BYSFBG_SFHBGQZCSLBDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BYSFBG_SFHBGQZCSLBDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'GA_D_RSQZCSDM'://强制措施
-                        var url = pathConfig.mainPath + '/common/dict/GA_D_RSQZCSDM.js';
-                        comboboxObj.data = flwsDictObj.GA_D_RSQZCSDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_CX_FLTK'://传讯法律条款
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_CX_FLTK.js';
-                        comboboxObj.data = flwsDictObj.BD_D_CX_FLTK;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_JDYJ_ZPPQLXDM'://指派类型
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_JDYJ_ZPPQLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_JDYJ_ZPPQLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_JSZC_CSZLDM'://措施种类
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_JSZC_CSZLDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_JSZC_CSZLDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_XZDJCC_FLTKDM'://协助冻结
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_XZDJCC_FLTKDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_XZDJCC_FLTKDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BGJYQX_PZHJDJGDM'://
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BGJYQX_PZHJDJGDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BGJYQX_PZHJDJGDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BGJYQX_JYQXBGYYDM'://
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BGJYQX_JYQXBGYYDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BGJYQX_JYQXBGYYDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BGJYQX_PZHJDLXDM'://
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BGJYQX_PZHJDLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BGJYQX_PZHJDLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_BAXZ_QWWTDM'://前往委托
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_BAXZ_QWWTDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_BAXZ_QWWTDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_JSJZ_FLTK'://监视居住法律条款
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_JSJZ_FLTK.js';
-                        comboboxObj.data = flwsDictObj.BD_D_JSJZ_FLTK;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_KSSDM'://看守所代码
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_KSSDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_KSSDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_WCNRFDDLR_ZRHBHRLXDM':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_WCNRFDDLR_ZRHBHRLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_WCNRFDDLR_ZRHBHRLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_WCNRFDDLR_XWLXDM':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_WCNRFDDLR_XWLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_WCNRFDDLR_XWLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_HJFZXYR_RSCSDM':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_HJFZXYR_RSCSDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_HJFZXYR_RSCSDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_SWTZ_RYJSDM':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_SWTZ_RYJSDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_SWTZ_RYJSDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_ZJBQFLMC':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_ZJBQFLMC.js';
-                        comboboxObj.data = flwsDictObj.BD_D_ZJBQFLMC;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_JXFS'://举行方式
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_JXFS.js';
-                        comboboxObj.data = flwsDictObj.BD_D_JXFS;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_SFTZ_JLDBLXDM'://释放通知逮捕拘留类型代码
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_SFTZ_JLDBLXDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_SFTZ_JLDBLXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_HYZ_SDFSDM'://送达方式
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_HYZ_SDFSDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_HYZ_SDFSDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_CX_QZCS':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_CX_QZCS.js';
-                        comboboxObj.data = flwsDictObj.BD_D_CX_QZCS;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_HYZ_HYYYDM':
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_HYZ_HYYYDM.js';
-                        comboboxObj.data = flwsDictObj.BD_D_HYZ_HYYYDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'GB_D_GJHDQDM'://国籍
-                        var url = pathConfig.mainPath + '/common/dict/GB_D_GJHDQDM.js';
-                        comboboxObj.data = flwsDictObj.GB_D_GJHDQDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_CF'://查封
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_CF.js';
-                        comboboxObj.data = flwsDictObj.BD_D_CF;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
-                    case 'BD_D_KYKL'://扣押
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_KYKL.js';
-                        comboboxObj.data = flwsDictObj.BD_D_KYKL;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combobox(comboboxObj);
-                        break;
+                        },
+                        onHidePanel: function () {
+                            var $this = $(this);
+                            var getBary = $this.combobox('getValues');
+                            //必须勾选当前登录者
+                            var currentUserId = DATA.OWN.userId;//当前登录者用户ID
+                            var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
+                            var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
+                            if(!isFlws && bm != 'X050028'){
+                                // 行政案件'当场处罚决定书（X050028）'办案民警可以只勾选一个
+                                if(isCheckCurUser == -1 && getBary.length < 2){
+                                    alertDiv({
+                                        title: '提示信息',
+                                        msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
+                                        fn: function () {
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
+                                        }
+                                    })
+                                } else if(isCheckCurUser > -1 && getBary.length < 2){
+                                    alertDiv({
+                                        title: '提示信息',
+                                        msg: '办案民警至少选两名',
+                                        fn: function () {
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
+                                        }
+                                    })
+                                } else if(isCheckCurUser == -1 && getBary.length >= 2){
+                                    alertDiv({
+                                        title: '提示信息',
+                                        msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
+                                        fn: function () {
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
+                                        }
+                                    })
+                                }
+                            }else{
+                                if(isCheckCurUser == -1){
+                                    alertDiv({
+                                        title: '提示信息',
+                                        msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
+                                        fn: function () {
+                                            $this.combobox('clear');
+                                            $this.next().find('input').focus();
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    });
+                }else{
+                    var url = pathConfig.mainPath + '/common/dict/'+dictName+'.js';
+                    comboboxObj.url = url;
+                    $(ipts[i]).attr('dicturl', url);
+                    $(ipts[i]).combobox(comboboxObj);
                 }
             } else if ($(ipts[i]).hasClass('easyuicombotree')) {//combotree字典
                 var dictTree = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%')); //combotree字典名称
@@ -413,26 +170,10 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         }
                     }
                 };
-                switch (dictTree) {
-                    case 'KX_D_ZYLBDM': //职业类别代码
-                        var url = pathConfig.mainPath + '/common/dict/KX_D_ZYLBDM.js';
-                        combotreeObj.data = flwsTreeDictObj.KX_D_ZYLBDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combotree(combotreeObj);
-                        break;
-                    case 'BD_D_GXDM': //关系树
-                        var url = pathConfig.mainPath + '/common/dict/BD_D_GXDM.js';
-                        combotreeObj.data = flwsTreeDictObj.BD_D_GXDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combotree(combotreeObj);
-                        break;
-                    case 'GA_D_XZAJLBDM': //行政案件类别代码
-                        var url = pathConfig.mainPath + '/common/dict/GA_D_XZAJLBDM.js';
-                        combotreeObj.data = flwsTreeDictObj.GA_D_XZAJLBDM;
-                        $(ipts[i]).attr('dicturl', url);
-                        $(ipts[i]).combotree(combotreeObj);
-                        break;
-                }
+                var url = pathConfig.mainPath + '/common/dict/'+dictTree+'.js';
+                combotreeObj.url = url;
+                $(ipts[i]).attr('dicturl', url);
+                $(ipts[i]).combotree(combotreeObj);
             } else if ($(ipts[i]).hasClass('easyuitextbox')) {//输入框
                 if (annotation) {
                     var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>')); //文本框类型
