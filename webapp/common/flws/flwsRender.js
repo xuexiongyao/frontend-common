@@ -1407,8 +1407,14 @@ function flwsDxListRenderForCx(bm){
                                 '<span xyrtype="' + xyrObj[k].id + '">' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
                         } else {
                             if (!DATA.DX.xydxData || bm.indexOf('X') != '-1') {
+                                var dxbm = '';//嫌疑对象表名
+                                if(DATA.FLWS[bm].flwsData.dxbm){
+                                    dxbm = DATA.FLWS[bm].flwsData.dxbm;
+                                }else{
+                                    dxbm = k.toLowerCase();
+                                }
                                 $.ajax({
-                                    url: pathConfig.basePath + '/api/dtbm/' + DATA.FLWS[bm].flwsData.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
+                                    url: pathConfig.basePath + '/api/dtbm/' + dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
                                     type: 'get',
                                     async: false,
                                     success: function (json) {
