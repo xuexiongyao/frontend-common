@@ -934,6 +934,13 @@ function especiallyDataFunForFlws(bm){
                 params.ASJFLWSDM = 'X040023';
             }
             break;
+        case 'X040023'://传唤证（行政案件）
+            if(params.CLDXLB == '1'){//对违法嫌疑人传唤
+                params.ASJFLWSDM = 'X040002';
+            }else if(params.CLDXLB == '2'){//对违法嫌疑单位传唤
+                params.ASJFLWSDM = 'X040023';
+            }
+            break;
         case 'X050002'://当场处罚决定书（行政案件）
             if(params.SJWPQD == '1,1' || params.SJWPQD == '2,1' ||params.SJWPQD == '3,1'){//对违法嫌疑人传唤
                 params.SJWPQD = '1';
@@ -942,6 +949,58 @@ function especiallyDataFunForFlws(bm){
             }
             break;
         case 'X040017'://证据保全决定书（行政案件）
+            if(params.KYKL == '1'){//扣押扣留
+                params.ASJFLWSDM = 'X040024';
+            }else if(params.KYKL == '2'){//延长扣押扣留
+                params.ASJFLWSDM = 'X040025';
+            }else if(params.CF == '1'){//查封
+                params.ASJFLWSDM = 'X040026';
+            }else if(params.CF == '2'){//延长查封
+                params.ASJFLWSDM = 'X040027';
+            }else{
+                params.ASJFLWSDM = 'X040017';
+            }
+            break;
+        case 'X040024'://证据保全决定书（行政案件）
+            if(params.KYKL == '1'){//扣押扣留
+                params.ASJFLWSDM = 'X040024';
+            }else if(params.KYKL == '2'){//延长扣押扣留
+                params.ASJFLWSDM = 'X040025';
+            }else if(params.CF == '1'){//查封
+                params.ASJFLWSDM = 'X040026';
+            }else if(params.CF == '2'){//延长查封
+                params.ASJFLWSDM = 'X040027';
+            }else{
+                params.ASJFLWSDM = 'X040017';
+            }
+            break;
+        case 'X040025'://证据保全决定书（行政案件）
+            if(params.KYKL == '1'){//扣押扣留
+                params.ASJFLWSDM = 'X040024';
+            }else if(params.KYKL == '2'){//延长扣押扣留
+                params.ASJFLWSDM = 'X040025';
+            }else if(params.CF == '1'){//查封
+                params.ASJFLWSDM = 'X040026';
+            }else if(params.CF == '2'){//延长查封
+                params.ASJFLWSDM = 'X040027';
+            }else{
+                params.ASJFLWSDM = 'X040017';
+            }
+            break;
+        case 'X040026'://证据保全决定书（行政案件）
+            if(params.KYKL == '1'){//扣押扣留
+                params.ASJFLWSDM = 'X040024';
+            }else if(params.KYKL == '2'){//延长扣押扣留
+                params.ASJFLWSDM = 'X040025';
+            }else if(params.CF == '1'){//查封
+                params.ASJFLWSDM = 'X040026';
+            }else if(params.CF == '2'){//延长查封
+                params.ASJFLWSDM = 'X040027';
+            }else{
+                params.ASJFLWSDM = 'X040017';
+            }
+            break;
+        case 'X040027'://证据保全决定书（行政案件）
             if(params.KYKL == '1'){//扣押扣留
                 params.ASJFLWSDM = 'X040024';
             }else if(params.KYKL == '2'){//延长扣押扣留
