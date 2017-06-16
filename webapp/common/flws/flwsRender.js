@@ -642,12 +642,12 @@ function flwsDxListRenderOther(bm) {
     //嫌疑对象数据
     var xydxDatas = {};//嫌疑对象数据
 
-    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//有呈请报告
-        //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
-        xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(jQuery.extend(true, {}, DATA.DX.xydxData),DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
-    }else{
-        xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);//嫌疑对象数据
-    }
+    //if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//有呈请报告
+    //    //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
+    //    xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(jQuery.extend(true, {}, DATA.DX.xydxData),DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
+    //}else{
+    xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);//嫌疑对象数据
+    //}
 
     // var xydxDatas = jQuery.extend(true, {}, DATA.DX.xydxData);
     // if (DATA.FLWS[bm].flwsData.wdx) {
@@ -964,12 +964,12 @@ function flwsDxListRenderB(bm) {
     $('#flws_xyr_area_' + bm).html('');
     var xydxDatas = {};//嫌疑对象数据
 
-    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//如果无呈请报告
-        //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
-        xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(DATA.DX.xydxData,DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
-    }else{
-        xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
-    }
+    //if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//如果无呈请报告
+    //    //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
+    //    xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(DATA.DX.xydxData,DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
+    //}else{
+    xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
+    //}
 
     var xyrListStr = '';//嫌疑人list字符串
 
@@ -1161,12 +1161,12 @@ function flwsDxListRenderC(bm) {
 
     var xydxDatas = {};//嫌疑对象数据
 
-    if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//如果无呈请报告
-        //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
-        xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(DATA.DX.xydxData,DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
-    }else{
-        xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
-    }
+    //if(!jQuery.isEmptyObject(DATA.CQBG.cqbgData)){//如果无呈请报告
+    //    //嫌疑对象数据关联呈请报告；呈请报告呈请了的嫌疑对象映射到关联的法律文书
+    //    xydxDatas[DATA.CQBG.xydxbm] = xydxDataFromCqbgHasCq(DATA.DX.xydxData,DATA.CQBG.xydxbm,DATA.CQBG.xyrids);
+    //}else{
+    xydxDatas = DATA.DX.xydxData;//嫌疑对象数据
+    //}
     var xyrListStr = '';//嫌疑人list字符串
 
     if (xydxDatas) {
