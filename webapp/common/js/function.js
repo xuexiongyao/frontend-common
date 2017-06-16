@@ -1718,7 +1718,6 @@ function openCombotree(ID) {
 //combotree弹框方式选择
 function openCombotree2($box) {
     var ID = $box.attr('id') || 'combotree_' + getCurrentTime('string');
-    console.log(ID);
     var options = $box.combotree('options');
     var dictPanelID = 'dictPanel_' + ID;
     var dictSearchID = 'dictSearch_' + ID;
