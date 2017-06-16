@@ -413,8 +413,10 @@ function flwsPageRender(bm) {
     //將復用法律文書設置為空
     for(var xylx in DATA.DX.xydxData){
         var xydxDatas=DATA.DX.xydxData[xylx];
-        for(var i=0;i<xydxDatas.length;i++){
-            xydxDatas[i].fyFlwsData=undefined;
+        if(xydxDatas && xydxDatas.length>0){
+            for(var i=0;i<xydxDatas.length;i++){
+                xydxDatas[i].fyFlwsData=undefined;
+            }
         }
     }
     DATA.FLWS.fyFlwsData=undefined;
@@ -1400,11 +1402,11 @@ function flwsDxListRenderForCx(bm){
                 xyrCldxlb = data[0].CLDXLB;
                 for (var k in xyrObj) {
                     if (xyrCldxlb == xyrObj[k].cldxlb) {
-                        if (data[i][(xyrObj[k].param).toUpperCase()]) {
+                        if (data[i][(xyrObj[k].param).toUpperCase()] && bm.indexOf('X') == '-1') {
                             xyrstr += '<li><label><input xxzjbh="' + data[i].CLDX_XXZJBH + '" flwsZj="'+data[i].ZJ+'" type="checkbox" />' +
                                 '<span xyrtype="' + xyrObj[k].id + '">' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
                         } else {
-                            if (!DATA.DX.xydxData) {
+                            if (!DATA.DX.xydxData || bm.indexOf('X') != '-1') {
                                 $.ajax({
                                     url: pathConfig.basePath + '/api/dtbm/' + DATA.FLWS[bm].flwsData.dxbm + '/getByForeignKey/ASJBH/' + DATA.asjbh,
                                     type: 'get',
@@ -1421,7 +1423,7 @@ function flwsDxListRenderForCx(bm){
                             for (var j = 0; j < xydxArray.length; j++) {
                                 if (xydxArray[j].xxzjbh == data[i].CLDX_XXZJBH) {
                                     xyrstr += '<li><label><input xxzjbh="' + data[i].CLDX_XXZJBH + '" flwsZj="'+data[i].ZJ+'" type="checkbox" />' +
-                                        '<span xyrtype="' + xyrObj[k].id + '" >' + data[i][(xyrObj[k].param).toUpperCase()] + '</span></label></li>';
+                                        '<span xyrtype="' + xyrObj[k].id + '" >' + xydxArray[j][xyrObj[k].param] + '</span></label></li>';
                                     break;
                                 }
                             }
@@ -1488,6 +1490,9 @@ function flwsClXyrCheckForCx(bm, $this){
         var xyrXxzjbh = $this.attr('xxzjbh');//嫌疑人信息主键编号
 
         DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
+
+        //嫌疑人勾选其他接口请求信息复用（秀平）
+        ajax_request(bm, xyrXxzjbh);
 
         //法律文书主键
         if(flwsRow.length>0){
