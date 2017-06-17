@@ -59,7 +59,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
             var lcpzXxzjbh = (json.data)[0].lcpzXxzjbh;
             //第二次
             $.ajax({
-                url : pathConfig.basePath+'/workflowRelated/findCandidateUsers?lcpzXxzjbh='+lcpzXxzjbh+'&jdId=usertask1&jdmc=StartEvent',
+                url : pathConfig.basePath+'/workflowRelated/findCandidateUsers?lcpzXxzjbh='+lcpzXxzjbh+'&jdId=usertask1&jdmc=StartEvent&asjbh='+asjbh,
                 type: 'post',
                 dataType: 'json',
                 success : function(json){
