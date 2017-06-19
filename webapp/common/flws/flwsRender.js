@@ -1108,6 +1108,13 @@ function flwsClXyDxCheckB(bm, $this) {
             return false;
         }
 
+        //取消选择调用函数（未成年人法定代理人-041802）
+        try{
+            uncheck_request(bm);
+        }catch(e){
+            console.log("没有uncheck_request函数");
+        }
+
         //选中状态
         DATA.FLWS[bm]["status"]["selected"] = false;
 

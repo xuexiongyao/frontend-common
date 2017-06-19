@@ -495,13 +495,6 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面拼接
     flwsRightPagePj(flwsData);
 
-    //新增页面法律文书的信息复用（编辑页面不需要）
-    try{
-        ajax_request(bm);
-    }catch(e){
-        console.log("没有ajax_request函数");
-    }
-
     if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
         $('#flws_main_con_r_mask_'+bm).show();
     }
@@ -512,6 +505,14 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面的初始化 (新增渲染)
     var flwsIpts = $('#flws_main_con_r_' + bm + ' form input');
     easyuiReset(flwsIpts, true, bm ,true);
+
+    //新增页面法律文书的信息复用（编辑页面不需要）
+    try{
+        ajax_request(bm);
+    }catch(e){
+        console.log("没有ajax_request函数");
+    }
+
     if(DATA.publicJkXx){
         cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
         flwsTfrXxFy(bm);//填发人信息复用
