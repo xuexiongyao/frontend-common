@@ -66,9 +66,9 @@ function getNext() {
                         var html = '<label><input type="radio" jdId="' + data_i.jdId + '" name="link">' + data_i.jdmc + '</label>';
                         $('#links').append(html);
                     }
-                    $('#links label').off('click').on('click',function(e){
+                    $('#links input').off('click').on('click',function(e){
                         e.stopPropagation();
-                        var _name = $(this).text();
+                        var _name = $(this).parent().text();
                         $.ajax({
                             url: ajaxUrl + '/findTaskCandidateUsers?processInstanceId=' + processInstanceId + '&name=' + _name,
                             type: 'post',
