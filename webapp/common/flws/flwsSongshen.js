@@ -80,6 +80,7 @@ function getNext() {
                                 } else {
                                     data = treeJson;
                                 }
+                                $('#role_name').empty();
                                 for (var i = 0; i < data.length; i++) {
                                     var data_i = data[i];
                                     if (data_i.nodeType == 'user') {
@@ -249,7 +250,6 @@ function selectApprove(shjl) {
         $report.css('visibility','hidden');
         //同意,不同意
         if (shjl == '1' || shjl == '2') {
-            $('#role_name').empty();
             $('#next_link').show();
             getNext();                  //下一环节状态
             openDivForm({
