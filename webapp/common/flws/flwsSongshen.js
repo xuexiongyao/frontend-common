@@ -79,13 +79,12 @@ function getNext() {
                                     data = treeJson[0]['children'];
                                 } else {
                                     data = treeJson;
-                                }
-                                $('#role_name').empty();
+                                }\
                                 for (var i = 0; i < data.length; i++) {
                                     var data_i = data[i];
                                     if (data_i.nodeType == 'user') {
                                         var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
-                                        $('#role_name').append(htmlLabel)
+                                        $('#role_name').empty().append(htmlLabel)
                                     }
                                 }
                             },
