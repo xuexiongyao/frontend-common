@@ -50,6 +50,7 @@ $(function () {
 
 //获取下一节点数据
 function getNext() {
+    loading('open', '正在获取审批人信息...');
     $.ajax({
         url: ajaxUrl + '/findNextTasks?&processInstanceId=' + processInstanceId + '&name=' + name,
         type: 'post',
@@ -108,6 +109,9 @@ function getNext() {
                     msg: json.message
                 });
             }
+        },
+        complete:function(){
+            loading('close');
         }
     });
 }
@@ -310,7 +314,6 @@ function selectApprove(shjl) {
                     $('#role_name').parent().show();
                 }
             });
-            loading('open', '正在获取审批人信息...');
             //$.ajax({
             //    url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + name,
             //    type: 'post',
