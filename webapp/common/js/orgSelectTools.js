@@ -641,7 +641,7 @@ function searchTree(textboxID,searchKeyValue) {
 
 
 /**
- * 组织机构单选初始方法
+ * 组织机构单选初始方法,设置id输入框的值可实现初始化勾选
  * @param textboxID 弹出框触发和显示的textbox对象ID
  * @param filterData 过滤条件：rootOrgCode 根节点orgcode、orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
  * @param returnFieldData 返回数据存储对象：ID 部门编号、TEXT 部门名称
