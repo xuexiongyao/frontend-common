@@ -64,7 +64,7 @@ function getNext() {
                     for (var i = 0; i < data.length; i++) {
                         var data_i = data[i];
                         var html = '<label><input type="radio" jdId="' + data_i.jdId + '" name="link">' + data_i.jdmc + '</label>';
-                        $('#links').append(html);
+                        $('#links').empty().append(html);
                     }
                     $('#links input').off('click').on('click',function(e){
                         var _name = $(this).parent().text();
