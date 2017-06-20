@@ -69,7 +69,7 @@ function getNext() {
                     $('#links label').off('click').on('click',function(){
                         var _name = $(this).text();
                         $.ajax({
-                            url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + _name,
+                            url: ajaxUrl + '/findTaskCandidateUsers?processInstanceId=' + processInstanceId + '&name=' + _name,
                             type: 'post',
                             dataType: 'json',
                             success: function (json) {
