@@ -61,10 +61,11 @@ function getNext() {
                 if (data.length) {
                     isLastTask = false;
                     $('#next_link_area').show();
+                    $('#links').empty();
                     for (var i = 0; i < data.length; i++) {
                         var data_i = data[i];
                         var html = '<label><input type="radio" jdId="' + data_i.jdId + '" name="link">' + data_i.jdmc + '</label>';
-                        $('#links').empty().append(html);
+                        $('#links').append(html);
                     }
                     $('#links input').off('click').on('click',function(e){
                         var _name = $(this).parent().text();
@@ -80,11 +81,12 @@ function getNext() {
                                 } else {
                                     data = treeJson;
                                 }
+                                $('#role_name').empty();
                                 for (var i = 0; i < data.length; i++) {
                                     var data_i = data[i];
                                     if (data_i.nodeType == 'user') {
                                         var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
-                                        $('#role_name').empty().append(htmlLabel)
+                                        $('#role_name').append(htmlLabel)
                                     }
                                 }
                             },
