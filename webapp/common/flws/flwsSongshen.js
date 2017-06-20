@@ -79,7 +79,7 @@ function getNext() {
                                     data = treeJson[0]['children'];
                                 } else {
                                     data = treeJson;
-                                }\
+                                }
                                 for (var i = 0; i < data.length; i++) {
                                     var data_i = data[i];
                                     if (data_i.nodeType == 'user') {
