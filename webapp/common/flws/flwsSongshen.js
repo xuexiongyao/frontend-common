@@ -66,7 +66,35 @@ function getNext() {
                         var html = '<label><input type="radio" jdId="' + data_i.jdId + '" name="link">' + data_i.jdmc + '</label>';
                         $('#links').append(html);
                     }
-                    $('#links input')[0].checked = true;
+                    $('#links label').off('click').on('click',function(){
+                        var _name = $(this).text();
+                        $.ajax({
+                            url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + _name,
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (json) {
+                                var treeJson = eval('(' + json['data']['treeJson'] + ')');
+                                var data = null;
+                                if (json['data'].yyzlx == 'O') {
+                                    data = treeJson[0]['children'];
+                                } else {
+                                    data = treeJson;
+                                }
+                                for (var i = 0; i < data.length; i++) {
+                                    var data_i = data[i];
+                                    if (data_i.nodeType == 'user') {
+                                        var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
+                                        $('#role_name').append(htmlLabel)
+                                    }
+                                }
+                            },
+                            error:function(){
+                                console.log("ajax error");
+                            }
+                        });
+                    });
+
+                    //$('#links input')[0].checked = true;
                 } else {
                     isLastTask = true;
                     isFinally = true;
@@ -233,13 +261,13 @@ function selectApprove(shjl) {
                         data = treeJson;
                     }
                     $('#role_name').empty();
-                    for (var i = 0; i < data.length; i++) {
-                        var data_i = data[i];
-                        if (data_i.nodeType == 'user') {
-                            var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
-                            $('#role_name').append(htmlLabel)
-                        }
-                    }
+                    //for (var i = 0; i < data.length; i++) {
+                    //    var data_i = data[i];
+                    //    if (data_i.nodeType == 'user') {
+                    //        var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
+                    //        $('#role_name').append(htmlLabel)
+                    //    }
+                    //}
                     loading('close');
                     openDivForm({
                         top:120,
