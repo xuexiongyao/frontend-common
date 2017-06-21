@@ -41,7 +41,6 @@ $('.right-report').append(str);
 $(function () {
     clickShowPanel();
     selectApprove('1');         //选择审批人
-    getNext();                  //下一环节状态
     getCurrent();               //当前环节
     saveAndSsShyj();            //保存并送审
     getPrevAndOri();            //获取上一节点数据和初始节点数据
@@ -51,6 +50,7 @@ $(function () {
 
 //获取下一节点数据
 function getNext() {
+    loading('open', '正在获取审批人信息...');
     $.ajax({
         url: ajaxUrl + '/findNextTasks?&processInstanceId=' + processInstanceId + '&name=' + name,
         type: 'post',
@@ -61,12 +61,42 @@ function getNext() {
                 if (data.length) {
                     isLastTask = false;
                     $('#next_link_area').show();
+                    $('#links').empty();
                     for (var i = 0; i < data.length; i++) {
                         var data_i = data[i];
                         var html = '<label><input type="radio" jdId="' + data_i.jdId + '" name="link">' + data_i.jdmc + '</label>';
                         $('#links').append(html);
                     }
-                    $('#links input')[0].checked = true;
+                    $('#links input').off('click').on('click',function(e){
+                        var _name = $(this).parent().text();
+                        $.ajax({
+                            url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + _name,
+                            type: 'post',
+                            dataType: 'json',
+                            success: function (json) {
+                                var treeJson = eval('(' + json['data']['treeJson'] + ')');
+                                var data = null;
+                                if (json['data'].yyzlx == 'O') {
+                                    data = treeJson[0]['children'];
+                                } else {
+                                    data = treeJson;
+                                }
+                                $('#role_name').empty();
+                                for (var i = 0; i < data.length; i++) {
+                                    var data_i = data[i];
+                                    if (data_i.nodeType == 'user') {
+                                        var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
+                                        $('#role_name').append(htmlLabel)
+                                    }
+                                }
+                            },
+                            error:function(){
+                                console.log("ajax error");
+                            }
+                        });
+                    });
+
+                    $($('#links input')[0]).click();
                 } else {
                     isLastTask = true;
                     isFinally = true;
@@ -81,6 +111,9 @@ function getNext() {
                     msg: json.message
                 });
             }
+        },
+        complete:function(){
+            loading('close');
         }
     });
 }
@@ -219,92 +252,92 @@ function selectApprove(shjl) {
         //同意,不同意
         if (shjl == '1' || shjl == '2') {
             $('#next_link').show();
-            loading('open', '正在获取审批人信息...');
-            $.ajax({
-                url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + name,
-                type: 'post',
-                dataType: 'json',
-                success: function (json) {
-                    var treeJson = eval('(' + json['data']['treeJson'] + ')');
-                    var data = null;
-                    if (json['data'].yyzlx == 'O') {
-                        data = treeJson[0]['children'];
-                    } else {
-                        data = treeJson;
-                    }
-                    $('#role_name').empty();
-                    for (var i = 0; i < data.length; i++) {
-                        var data_i = data[i];
-                        if (data_i.nodeType == 'user') {
-                            var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
-                            $('#role_name').append(htmlLabel)
-                        }
-                    }
-                    loading('close');
-                    openDivForm({
-                        top:120,
-                        id: 'next_link_panel', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
-                        title: '选择环节及审批人',
-                        width: 540,
-                        onClose: function(){
-                            $report.css('visibility','visible');
-                        }
-                    }, [                       //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
-                        {
-                            text: '确定',
-                            handler: function () {
-                                isOver = $('#over_area input').prop('checked');
-                                flagText = $('#links input:checked').parent().text();
-                                if (!isOver) {
-                                    var candidateUsersArr = [];
-                                    $('#role_name input:checked').each(function () {
-                                        candidateUsersArr.push($(this).attr('bizID'));
-                                    });
-                                    candidateUsers = candidateUsersArr.join(',');
-                                    if (candidateUsers) {
-                                        $('#next_link_panel').dialog('close');
-                                        $.messager.show({
-                                            title: '提示',
-                                            msg: '审批人选择成功!'
-                                        });
-                                    } else {
-                                        alertDiv({
-                                            title: '提示',
-                                            msg: '请选择审批人!'
-                                        });
-                                    }
-                                } else {
-                                    $('#next_link_panel').dialog('close');
-                                }
-                                //console.log(isOver,candidateUsers);
-                            }
-                        }, {
-                            text: '关闭',
-                            handler: function () {
+            getNext();                  //下一环节状态
+            openDivForm({
+                top:120,
+                id: 'next_link_panel', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+                title: '选择环节及审批人',
+                width: 540,
+                onClose: function(){
+                    $report.css('visibility','visible');
+                }
+            }, [                       //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
+                {
+                    text: '确定',
+                    handler: function () {
+                        isOver = $('#over_area input').prop('checked');
+                        flagText = $('#links input:checked').parent().text();
+                        if (!isOver) {
+                            var candidateUsersArr = [];
+                            $('#role_name input:checked').each(function () {
+                                candidateUsersArr.push($(this).attr('bizID'));
+                            });
+                            candidateUsers = candidateUsersArr.join(',');
+                            if (candidateUsers) {
                                 $('#next_link_panel').dialog('close');
+                                $.messager.show({
+                                    title: '提示',
+                                    msg: '审批人选择成功!'
+                                });
+                            } else {
+                                alertDiv({
+                                    title: '提示',
+                                    msg: '请选择审批人!'
+                                });
                             }
+                        } else {
+                            $('#next_link_panel').dialog('close');
                         }
-                    ]);
-                    //选择结束的处理方式
-                    //结束
-                    $('#over_area input').off('click').on('click', function () {
-                        var isCheck = $(this).prop('checked');
-                        if (isCheck) {
-                            $('#role_name input').prop('checked', false);
-                            $('#role_name').parent().hide();
-                            $('#next_link_panel').dialog();
-                        }
-                    });
-
-                    //下一节
-                    $('#links input').off('click').on('click', function () {
-                        var isCheck = $(this).prop('checked');
-                        if (isCheck) {
-                            $('#role_name').parent().show();
-                        }
-                    });
+                        //console.log(isOver,candidateUsers);
+                    }
+                }, {
+                    text: '关闭',
+                    handler: function () {
+                        $('#next_link_panel').dialog('close');
+                    }
+                }
+            ]);
+            //选择结束的处理方式
+            //结束
+            $('#over_area input').off('click').on('click', function () {
+                var isCheck = $(this).prop('checked');
+                if (isCheck) {
+                    $('#role_name input').prop('checked', false);
+                    $('#role_name').parent().hide();
+                    $('#next_link_panel').dialog();
                 }
             });
+
+            //下一节
+            $('#links input').off('click').on('click', function () {
+                var isCheck = $(this).prop('checked');
+                if (isCheck) {
+                    $('#role_name').parent().show();
+                }
+            });
+            //$.ajax({
+            //    url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + name,
+            //    type: 'post',
+            //    dataType: 'json',
+            //    success: function (json) {
+            //        var treeJson = eval('(' + json['data']['treeJson'] + ')');
+            //        var data = null;
+            //        if (json['data'].yyzlx == 'O') {
+            //            data = treeJson[0]['children'];
+            //        } else {
+            //            data = treeJson;
+            //        }
+            //        $('#role_name').empty();
+            //        for (var i = 0; i < data.length; i++) {
+            //            var data_i = data[i];
+            //            if (data_i.nodeType == 'user') {
+            //                var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
+            //                $('#role_name').append(htmlLabel)
+            //            }
+            //        }
+            //        loading('close');
+            //    }
+            //});
         }
         //退回
         else if (shjl == '3') {

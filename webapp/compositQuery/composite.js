@@ -1168,7 +1168,6 @@ function createSearchInput(type) {
 
 //初始化组件
 function parseInput(config, judge_id,condition_id,moduleData) {
-    //console.log('moduleData:',moduleData);
     var op=null,v=null,fxj=null,textValue=null;
     var valid_type = config.valid_type || '';
     var multiple = config.multiple || false;
@@ -1360,7 +1359,6 @@ function getSearchData($this) {
 
 //提交查询请求
 function ajaxQuery(condition_obj) {
-    console.log(pageN,pageNumAll,pageSizeAll);
     //console.log('condition_obj:',condition_obj);
     try {
         if (!beforeSubmit(condition_obj))
@@ -1515,12 +1513,10 @@ function pagination() {
         pageSize: 5,
         pageList: [5, 10, 15, 20, 30, 50],
         onSelectPage: function (pageNumber, pageSize) {
-            console.log('onSelectPage');
             paginationQuery(pageNumber, pageSize);
         },
         onRefresh: function(pageNumber, pageSize){
             paginationQuery(pageNumber, pageSize);
-            console.log('onRefresh');
         }
     });
 }

@@ -16,7 +16,7 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData, onSelectedFu
     if (!filterData)
         filterData = {};
     filterDataAry[textboxID] = filterData;
-    initHtmlDiv(textboxID, filterData, 'multi');
+    initHtmlDiv(textboxID, filterData,null, 'multi');
 
     //初始化弹出框
     $("#" + normalHtmlDivId + textboxID).dialog({
@@ -72,7 +72,7 @@ function initMultiSelectOrg(textboxID, filterData, returnFieldData, onSelectedFu
  *
  * @param textboxID 弹出框触发和显示的textbox对象ID
  */
-function initHtmlDiv(textboxID, filterData, multi_single) {
+function initHtmlDiv(textboxID, filterData,initSelected, multi_single) {
     //添加DIV标签
     if ($("#" + normalHtmlDivId + textboxID).length > 0) {
         //console.log("组织机构多选DIV已存在");
@@ -90,7 +90,7 @@ function initHtmlDiv(textboxID, filterData, multi_single) {
             initMultiTree(textboxID, filterData);
         } else {
             $("#" + normalHtmlDivId + textboxID).html(getSingleDivHtml(textboxID));
-            initSingleTree(textboxID, filterData);
+            initSingleTree(textboxID, filterData,initSelected);
         }
 
         $('#searchKey_' + textboxID).textbox();
@@ -209,7 +209,7 @@ function initHtmlDivForTztb(textboxID, filterData, multi_single, returnFieldData
             initMultiTree(textboxID, filterData);
         } else {
             $("#" + normalHtmlDivId + textboxID).html(getSingleDivHtml(textboxID));
-            initSingleTree(textboxID, filterData);
+            initSingleTree(textboxID, filterData,null);
         }
         $('#searchKey_'+textboxID).textbox();
         $('#searchBtn_' + textboxID).linkbutton();
@@ -500,13 +500,20 @@ function searchOrgByCondition(textboxID) {
 /**
  * 组织机构树搜索，支持多根结点，但是一旦搜索出结果，就不会再搜索下一个根结点
  * @param textboxID
+ * @param searchKeyValue 搜索的关键字，有值就不取输入框的
  */
-function searchTree(textboxID) {
+function searchTree(textboxID,searchKeyValue) {
     var managerPath = managerPath || pathConfig.managePath;
     var filterData = filterDataAry[textboxID];
-    var searchKeyValue = $('#searchKey_' + textboxID).textbox('getValue');
-    searchKeyValue = searchKeyValue.replace(/(^\s*)|(\s*$)/g, "");
-    $('#searchKey_' + textboxID).textbox('setValue', searchKeyValue);
+    
+    var initSelected = true;//是否初始化选择
+    if(!searchKeyValue){//没有值，取搜索框的值
+    	initSelected = false;
+    	searchKeyValue = $('#searchKey_' + textboxID).textbox('getValue');
+    	searchKeyValue = searchKeyValue.replace(/(^\s*)|(\s*$)/g, "");
+        $('#searchKey_' + textboxID).textbox('setValue', searchKeyValue);
+    }
+    
     if (searchKeyValue != "") {
         var treeObject = $('#treeSelect_' + textboxID);
         var url = managerPath + '/orgPublicSelect/queryPublicOrgTreeSearchResultByOrgCode';
@@ -521,9 +528,14 @@ function searchTree(textboxID) {
 
         var urlParam = "";
         for (var item in filterData) {
-            urlParam += "&" + item + "=" + filterData[item];
+        	if(filterData[item]){
+        		urlParam += "&" + item + "=" + filterData[item];
+        	}
         }
-        url += "?" + urlParam.substr(1);
+        
+        if(urlParam && urlParam.length>1){
+        	url += "?" + urlParam.substr(1);
+        }
         //第一次搜索时无法获取
         try {
             var resultObject = treeObject.tree('serverSearchTreeNode', {
@@ -531,11 +543,13 @@ function searchTree(textboxID) {
                 url: url
             });
         } catch (e) {
-            $.messager.show({
-                title: '搜索结果',
-                msg: '搜索无匹配的结果！',
-                timeout: 1500,
-            });
+        	if(!initSelected){
+	            $.messager.show({
+	                title: '搜索结果',
+	                msg: '搜索无匹配的结果！',
+	                timeout: 1500,
+	            });
+        	}
             return false;
         }
         if (resultObject != null) {
@@ -595,6 +609,9 @@ function searchTree(textboxID) {
 
                     var locateNode = treeObject.tree('find', resultObject.id);
                     if (locateNode != null) {
+                    	if(initSelected){
+                    		treeObject.tree('check', locateNode.target);
+                    	}
                         treeObject.tree('expandTo', locateNode.target);
                         treeObject.tree('scrollTo', locateNode.target);
                         treeObject.tree('select', locateNode.target);
@@ -603,6 +620,9 @@ function searchTree(textboxID) {
             } else {
                 var locateNode = treeObject.tree('find', resultObject.id);
                 if (locateNode != null) {
+                	if(initSelected){
+                		treeObject.tree('check', locateNode.target);
+                	}
                     treeObject.tree('expandTo', locateNode.target);
                     treeObject.tree('scrollTo', locateNode.target);
                     treeObject.tree('select', locateNode.target);
@@ -621,7 +641,7 @@ function searchTree(textboxID) {
 
 
 /**
- * 组织机构单选初始方法
+ * 组织机构单选初始方法,设置id输入框的值可实现初始化勾选
  * @param textboxID 弹出框触发和显示的textbox对象ID
  * @param filterData 过滤条件：rootOrgCode 根节点orgcode、orgType 部门类型、orgLevel 部门等级、orgBizType 部门业务类型
  * @param returnFieldData 返回数据存储对象：ID 部门编号、TEXT 部门名称
@@ -631,7 +651,16 @@ function initSingleSelectOrg(textboxID, filterData, returnFieldData, onSelectedF
     if (!filterData)
         filterData = {};
     filterDataAry[textboxID] = filterData;
-    initHtmlDiv(textboxID, filterData, 'single');
+    
+    var initSelected = null;
+    try{
+    	//获取已有的值
+	    if(returnFieldData && returnFieldData.id){
+	    	initSelected = $("#"+returnFieldData.id).val();
+	    }
+    }catch(e){}
+    
+    initHtmlDiv(textboxID, filterData,initSelected, 'single');
 
     //初始化弹出框
     $("#" + normalHtmlDivId + textboxID).dialog({
@@ -671,14 +700,20 @@ function initSingleSelectOrg(textboxID, filterData, returnFieldData, onSelectedF
         'onClickButton': function () {
             var _top = parseInt($(document).scrollTop() + 200);
             $("#" + normalHtmlDivId + textboxID).show().dialog('open').dialog('move', {top: _top});
-            $('#searchKey_' + textboxID).parent().off('keydown').on('keydown', function (e) {
-                if (e.keyCode == 13) {
-                    searchTree(textboxID);
-                }
-            });
+            //滚动到勾选的节点
+            var treeObject = $('#treeSelect_' + textboxID);
+            var nodes = treeObject.tree('getChecked');
+            if(nodes && nodes.length>0){//已有勾选的节点
+            	treeObject.tree('scrollTo', nodes[0].target);
+            }
         }
     });
-
+    
+    $('#searchKey_' + textboxID).parent().off('keydown').on('keydown', function (e) {
+        if (e.keyCode == 13) {
+            searchTree(textboxID);
+        }
+    });
 }
 
 /**
@@ -692,7 +727,7 @@ function initSingleSelectOrgReturnByClass(textboxID, filterData, returnFieldData
     if (!filterData)
         filterData = {};
     filterDataAry[textboxID] = filterData;
-    initHtmlDiv(textboxID, filterData, 'single');
+    initHtmlDiv(textboxID, filterData,null, 'single');
 
     //初始化弹出框
     $("#" + normalHtmlDivId + textboxID).dialog({
@@ -829,8 +864,10 @@ function getSingleDivHtml(textboxID) {
 /**
  * 初始化单选选择树
  * @param textboxID 弹出框触发和显示的textbox对象ID
+ * @param filterData 过滤的条件
+ * @param initSelected 已选择的机构代码
  */
-function initSingleTree(textboxID, filterData) {
+function initSingleTree(textboxID, filterData,initSelected) {
     filterData['loadType'] = 'initTree';//返回包括当前结点的树
     var managerPath = managerPath || pathConfig.managePath;
     $.ajax({
@@ -883,11 +920,19 @@ function initSingleTree(textboxID, filterData) {
 
                 }
             });
+            
+            //初始化已选中的机构
+            initSingleSelected(textboxID,initSelected);
         },
         error: function () {
             console.log('queryByOrgcode ajax err');
         }
     });
+}
+
+function initSingleSelected(textboxID,initSelected){
+	if(!initSelected) return;
+	searchTree(textboxID,initSelected);
 }
 
 /**
@@ -926,7 +971,6 @@ function getOrgLevel(node) {
     }
 
     if (!orgLevel) {
-        console.log(node);
         console.log("组织机构级别为空，无法判定级别！");
     }
 
@@ -951,7 +995,6 @@ function getOrgId(node) {
     }
 
     if (!orgId) {
-        console.log(node);
         console.log("组织机构ID为空！");
     }
 
