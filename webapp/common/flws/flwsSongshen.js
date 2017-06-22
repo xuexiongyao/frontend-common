@@ -823,15 +823,25 @@ function sendMsg(userid, con, msg) {
             content: con
         },
         type: 'post',
-        success: function () {
+        success: function (data) {
+            if(data.state == 'success'){//发送短信成功
+                alertDiv({
+                    title: '提示',
+                    msg: msg+',短信发送成功！',
+                    fn: function () {
+                        crossCloseTab('refresh_flwstask');
+                    }
+                });
+            }else if(data.state == 'error'){//发送短信失败
+                alertDiv({
+                    title : '提示',
+                    msg: msg+'，短信发送失败：'+data.message,
+                    fn: function () {
+                        crossCloseTab('refresh_flwstask');
+                    }
+                });
+            }
             loading('close');
-            alertDiv({
-                title: '提示',
-                msg: msg,
-                fn: function () {
-                    crossCloseTab('refresh_flwstask');
-                }
-            });
         }
     })
 }
@@ -853,14 +863,24 @@ function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
         },
         type: 'post',
         success: function (data) {
+            if(data.state == 'success'){//发送短信成功
+                alertDiv({
+                    title: '提示',
+                    msg: msg+',短信发送成功！',
+                    fn: function () {
+                        crossCloseTab('refresh_flwstask');
+                    }
+                });
+            }else if(data.state == 'error'){//发送短信失败
+                alertDiv({
+                    title : '提示',
+                    msg: msg+'，短信发送失败：'+data.message,
+                    fn: function () {
+                        crossCloseTab('refresh_flwstask');
+                    }
+                });
+            }
             loading('close');
-            alertDiv({
-                title: '提示',
-                msg: msg,
-                fn: function () {
-                    crossCloseTab('refresh_flwstask');
-                }
-            });
         }
     })
 }
