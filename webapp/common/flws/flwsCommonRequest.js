@@ -117,27 +117,48 @@ function getDxxxData() {
                                         disabled = "disabled ='disabled'";
                                         title = "title = '" + rule.message + "'";
                                         for (var z = 0; z < rule.item.length; z++) {
-                                            if (DATA.CQBG.asjflwsdm == rule.item[z].dm) {
-                                                if(rule.item[z].message ){
-                                                    title = "title = '" + rule.item[z].message + "'";
+                                            if (DATA.CQBG.asjflwsdm){//有呈请报告
+                                                if (DATA.CQBG.asjflwsdm == rule.item[z].dm) {
+                                                    if(rule.item[z].message ){
+                                                        title = "title = '" + rule.item[z].message + "'";
+                                                    }
+                                                    disabled = "";
+                                                    title = "";
+                                                    break;
                                                 }
-                                                disabled = "";
-                                                title = "";
-                                                break;
+                                            }else{//无呈请报告
+                                                if (DATA.FLWS.flwsData.customer.bianMa == rule.item[z].dm) {
+                                                    if(rule.item[z].message ){
+                                                        title = "title = '" + rule.item[z].message + "'";
+                                                    }
+                                                    disabled = "";
+                                                    title = "";
+                                                    break;
+                                                }
                                             }
                                         }
                                     } else {//包含的能做
                                         disabled = "";
                                         title = "";
                                         for (var z = 0; z < rule.item.length; z++) {
-                                            if (DATA.CQBG.asjflwsdm == rule.item[z].dm) {
-                                                if(rule.item[z].message ){
-                                                    title = "title = '" + rule.item[z].message + "'";
-                                                }else{
-                                                    title = "title = '" + rule.message + "'";
+                                            if (DATA.CQBG.asjflwsdm) {//有呈请报告
+                                                if (DATA.CQBG.asjflwsdm == rule.item[z].dm) {
+                                                    if(rule.item[z].message ){
+                                                        title = "title = '" + rule.item[z].message + "'";
+                                                    }else{
+                                                        title = "title = '" + rule.message + "'";
+                                                    }
+                                                    disabled = "disabled='disabled'";
                                                 }
-                                                disabled = "disabled='disabled'";
-
+                                            }else{//无呈请报告
+                                                if (DATA.FLWS.flwsData.customer.bianMa == rule.item[z].dm) {
+                                                    if(rule.item[z].message ){
+                                                        title = "title = '" + rule.item[z].message + "'";
+                                                    }else{
+                                                        title = "title = '" + rule.message + "'";
+                                                    }
+                                                    disabled = "disabled='disabled'";
+                                                }
                                             }
                                         }
                                     }
