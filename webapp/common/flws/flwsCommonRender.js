@@ -106,7 +106,7 @@ function flwsTfrXxFy(bm){
         //刑事案件、行政案件中：行政处罚告知笔录‘执行告知单位’默认复用当前登录者单位
         if(bm == 'X020001' || bm == '042162'){
             var $n = $(".flws-main-con-r form input.GZDW");
-            $n.textbox({value:userData.userOrgName});
+            $n.textbox({value:userData.extendMap.UserOrgGzjgmc});
         }
     }
 }
