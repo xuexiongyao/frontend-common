@@ -330,6 +330,9 @@ function getFlwsQtsjAdd(bm) {
                                 var nodeVal = '';//值
                                 if (nodeTarget.hasClass('easyuitextbox')) {//金额的处理
                                     nodeVal = nodeTarget.textbox('getValue');//值
+                                    if(!nodeVal){
+                                        nodeVal = '';
+                                    }
                                     if (nodeTarget.hasClass('MONEY')) {
                                         var moneyNum = $(flwsA[a]).attr('money');
                                         DATA.FLWS[bm].params[paramName] = moneyNum;
@@ -347,6 +350,8 @@ function getFlwsQtsjAdd(bm) {
                                     var dictValue = '';//字典翻译的值
                                     if (nodeVal) {
                                         dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
                                     }
                                     if (dictName == 'BD_D_KSSDM') {//羁押处所特殊处理
                                         DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
@@ -362,6 +367,8 @@ function getFlwsQtsjAdd(bm) {
                                     var dictValue = '';//字典翻译的值
                                     if (nodeVal) {
                                         dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
                                     }
                                     DATA.FLWS[bm].params[paramName] = nodeVal;
                                     DATA.FLWS[bm].params[paramName + '_DICTMC'] = dictValue;
@@ -513,6 +520,9 @@ function getFlwsQtsjEdit(bm) {
                                 var nodeVal = '';//值
                                 if(nodeTarget.hasClass('easyuitextbox')){//金额的处理
                                     nodeVal = nodeTarget.textbox('getValue');//值
+                                    if(!nodeVal){
+                                        nodeVal = '';
+                                    }
                                     if(nodeTarget.hasClass('MONEY')){
                                         var moneyNum = $(flwsA[a]).attr('money');
                                         DATA.FLWS[bm].params[paramName] = moneyNum;
@@ -530,6 +540,8 @@ function getFlwsQtsjEdit(bm) {
                                     var dictValue = '';//字典翻译的值
                                     if(nodeVal){
                                         dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
                                     }
                                     if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
                                         DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
@@ -545,6 +557,8 @@ function getFlwsQtsjEdit(bm) {
                                     var dictValue = '';//字典翻译的值
                                     if(nodeVal){
                                         dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
                                     }
                                     DATA.FLWS[bm].params[paramName] = nodeVal;
                                     DATA.FLWS[bm].params[paramName + '_DICTMC'] = dictValue;
