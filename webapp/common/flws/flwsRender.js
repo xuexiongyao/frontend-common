@@ -529,8 +529,7 @@ function flwsPageRenderA(bm) {
         }
 
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
-        //未成年人法定代理人 041802
-        if(bm == '080002' || bm == '080004' || bm == '041802'){
+        if(bm == '080002' || bm == '080004'){
             //选中已经保存的法律文书
             if (flwsRow.length > 0) {
                 $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
@@ -1120,13 +1119,6 @@ function flwsClXyDxCheckB(bm, $this) {
             return false;
         }
 
-        //取消选择调用函数（未成年人法定代理人-041802）
-        try{
-            uncheck_request(bm);
-        }catch(e){
-            console.log("没有uncheck_request函数");
-        }
-
         //选中状态
         DATA.FLWS[bm]["status"]["selected"] = false;
 
@@ -1570,7 +1562,7 @@ function flwsPageRenderForCx(bm) {
         flwsRightPageRenderForEdit(DATA.FLWS[bm].flwsData);
 
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
-        if(bm == '080002' || bm == '080004' || bm == '041802'){
+        if(bm == '080002' || bm == '080004'){
             //选中已经保存的法律文书
             if (flwsRow.length > 0) {
                 $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
