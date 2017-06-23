@@ -242,6 +242,8 @@ function getTableData(get_header_info){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:datagridProcessFormater_asjbh};
         }else if(_title[5] == 'address'){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:parseAddress};
+        }else if(_title[6]){
+            info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:_title[6]};
         }else if(_title[2] == null){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true};
         }else{
