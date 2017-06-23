@@ -83,7 +83,7 @@ label {
 
 /* line 28, ../sass/sass/_common.scss */
 .main {
-  margin: 30px auto 0 auto;
+  margin: auto;
   padding: 1px 0 20px 0;
   width: 1198px;
   height: auto;
