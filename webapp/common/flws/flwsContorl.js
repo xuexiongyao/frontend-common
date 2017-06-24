@@ -318,46 +318,60 @@ function getFlwsQtsjAdd(bm) {
                             DATA.FLWS[bm].params[dataname] = val;
                         }
                     }
-                    //除了日期之外的组件
-                    var dataArry = currentForm.find('a input[type="hidden"]');
-                    for (var i = 0; i < dataArry.length; i++) {
-                        var parentA = $(dataArry[i]).parent().parent();//a标签
-                        var dataname = $(dataArry[i]).attr('name');//参数名
-                        var val = $(dataArry[i]).val();//值
 
-                        if (parentA) {
-                            if (dataname) {
-                                //所有(树形)字典新增DICTMC后缀
-                                if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox')) {
-                                    var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
-                                    var annotation = parentA.attr('annotation');
-                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
-                                    if (dicturl) {
-                                        var dictValue = getDictName(dicturl, val, false);
-                                        if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
-                                            DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
-                                            DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
-                                        }else{
-                                            DATA.FLWS[bm].params[dataname] = val;
-                                            DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
-                                        }
+                    var flwsA = currentForm.find('p>a');
+                    for (var a = 0; a < flwsA.length; a++) {
+                        var annotation = $(flwsA[a]).attr('annotation');
+                        if(annotation){
+                            //除了日期之外的组件
+                            var nodeTarget = $(flwsA[a]).children('.val');
+                            if (nodeTarget.length > 0) {
+                                var paramName = nodeTarget.attr('textboxname');//参数名
+                                var nodeVal = '';//值
+                                if (nodeTarget.hasClass('easyuitextbox')) {//金额的处理
+                                    nodeVal = nodeTarget.textbox('getValue');//值
+                                    if(!nodeVal){
+                                        nodeVal = '';
                                     }
-                                } else if ($(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
-                                    var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
-                                    if (dicturl) {
-                                        var dictValue = getDictName(dicturl, val, false);
-                                        DATA.FLWS[bm].params[dataname] = val;
-                                        DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
+                                    if (nodeTarget.hasClass('MONEY')) {
+                                        var moneyNum = $(flwsA[a]).attr('money');
+                                        DATA.FLWS[bm].params[paramName] = moneyNum;
+                                        DATA.FLWS[bm].params[paramName + '_DX'] = nodeVal;
+                                    } else if (nodeTarget.hasClass('NUMBERCN')) {//数字转大写的处理
+                                        var numberNum = $(flwsA[a]).attr('number');
+                                        DATA.FLWS[bm].params[paramName] = numberNum;
+                                    } else {
+                                        DATA.FLWS[bm].params[paramName] = nodeVal;
                                     }
-                                } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
-                                    var moneyNum = parentA.attr('money');
-                                    DATA.FLWS[bm].params[dataname] = moneyNum;
-                                    DATA.FLWS[bm].params[dataname + '_DX'] = val;
-                                } else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
-                                    var numberNum = parentA.attr('number');
-                                    DATA.FLWS[bm].params[dataname] = numberNum;
-                                } else {
-                                    DATA.FLWS[bm].params[dataname] = val;
+                                } else if (nodeTarget.hasClass('easyuicombobox')) {
+                                    nodeVal = nodeTarget.combobox('getValue');//值
+                                    var dicturl = nodeTarget.attr('dicturl');//字典路径
+                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));//字典名字
+                                    var dictValue = '';//字典翻译的值
+                                    if (nodeVal) {
+                                        dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
+                                    }
+                                    if (dictName == 'BD_D_KSSDM') {//羁押处所特殊处理
+                                        DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
+                                        DATA.FLWS[bm].params.JYCS_GAJGJGDM = nodeVal;
+                                    } else {
+                                        DATA.FLWS[bm].params[paramName] = nodeVal;
+                                        DATA.FLWS[bm].params[paramName + '_DICTMC'] = dictValue;
+                                    }
+                                } else if (nodeTarget.hasClass('easyuicombotree')) {
+                                    nodeVal = nodeTarget.combotree('getValue');//值
+                                    var dicturl = nodeTarget.attr('dicturl');//字典路径
+                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));//字典名字
+                                    var dictValue = '';//字典翻译的值
+                                    if (nodeVal) {
+                                        dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
+                                    }
+                                    DATA.FLWS[bm].params[paramName] = nodeVal;
+                                    DATA.FLWS[bm].params[paramName + '_DICTMC'] = dictValue;
                                 }
                             }
                         }
@@ -500,49 +514,54 @@ function getFlwsQtsjEdit(bm) {
                             }
 
                             //除了日期之外的组件
-                            var dataArry = $(flwsA[a]).find('input[type="hidden"]');
-                            for (var i = 0; i < dataArry.length; i++) {
-                                var parentA = $(dataArry[i]).parent().parent();//a标签
-                                var dataname = $(dataArry[i]).attr('name');//参数名
-                                var val = $(dataArry[i]).val();//值
-
-                                if (dataname) {
-                                    //所有(树形)字典新增DICTMC后缀
-                                    if ($(dataArry[i]).parent().prev().hasClass('easyuicombobox') || $(dataArry[i]).parent().prev().hasClass('easyuicombotree')) {
-                                        var dicturl = $(dataArry[i]).parent().prev().attr('dicturl');
-                                        var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
-                                        if (dicturl) {
-                                            var dictValue = getDictName(dicturl, val, false);
-                                            if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
-                                                DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
-                                                DATA.FLWS[bm].params.JYCS_GAJGJGDM = val;
-                                            }else{
-                                                DATA.FLWS[bm].params[dataname] = val;
-                                                DATA.FLWS[bm].params[dataname + '_DICTMC'] = dictValue;
-                                            }
-                                        }else{
-                                            DATA.FLWS[bm].params[dataname] = '';
-                                            DATA.FLWS[bm].params[dataname + '_DICTMC'] = '';
-                                        }
-                                    } else if ($(dataArry[i]).parent().prev().hasClass('MONEY')) {//金额的处理
-                                        var moneyNum = $(dataArry[i]).parent().parent().attr('money');
-                                        if (moneyNum) {
-                                            DATA.FLWS[bm].params[dataname] = moneyNum;
-                                            DATA.FLWS[bm].params[dataname + '_DX'] = val;
-                                        }else{
-                                            DATA.FLWS[bm].params[dataname] = '';
-                                            DATA.FLWS[bm].params[dataname + '_DX'] = '';
-                                        }
-                                    }  else if ($(dataArry[i]).parent().prev().hasClass('NUMBERCN')) {//金额的处理
-                                        var numberNum = $(dataArry[i]).parent().parent().attr('number');
-                                        if (numberNum) {
-                                            DATA.FLWS[bm].params[dataname] = numberNum;
-                                        }else{
-                                            DATA.FLWS[bm].params[dataname] = '';
-                                        }
-                                    } else {
-                                        DATA.FLWS[bm].params[dataname] = val;
+                            var nodeTarget = $(flwsA[a]).children('.val');
+                            if(nodeTarget.length>0){
+                                var paramName = nodeTarget.attr('textboxname');//参数名
+                                var nodeVal = '';//值
+                                if(nodeTarget.hasClass('easyuitextbox')){//金额的处理
+                                    nodeVal = nodeTarget.textbox('getValue');//值
+                                    if(!nodeVal){
+                                        nodeVal = '';
                                     }
+                                    if(nodeTarget.hasClass('MONEY')){
+                                        var moneyNum = $(flwsA[a]).attr('money');
+                                        DATA.FLWS[bm].params[paramName] = moneyNum;
+                                        DATA.FLWS[bm].params[paramName + '_DX'] = nodeVal;
+                                    }else if(nodeTarget.hasClass('NUMBERCN')){//数字转大写的处理
+                                        var numberNum = $(flwsA[a]).attr('number');
+                                        DATA.FLWS[bm].params[paramName] = numberNum;
+                                    }else{
+                                        DATA.FLWS[bm].params[paramName] = nodeVal;
+                                    }
+                                }else if(nodeTarget.hasClass('easyuicombobox')){
+                                    nodeVal = nodeTarget.combobox('getValue');//值
+                                    var dicturl = nodeTarget.attr('dicturl');//字典路径
+                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));//字典名字
+                                    var dictValue = '';//字典翻译的值
+                                    if(nodeVal){
+                                        dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
+                                    }
+                                    if(dictName == 'BD_D_KSSDM'){//羁押处所特殊处理
+                                        DATA.FLWS[bm].params.JYCS_GAJGMC = dictValue;
+                                        DATA.FLWS[bm].params.JYCS_GAJGJGDM = nodeVal;
+                                    }else{
+                                        DATA.FLWS[bm].params[paramName] = nodeVal;
+                                        DATA.FLWS[bm].params[paramName + '_DICTMC'] = dictValue;
+                                    }
+                                }else if(nodeTarget.hasClass('easyuicombotree')){
+                                    nodeVal = nodeTarget.combotree('getValue');//值
+                                    var dicturl = nodeTarget.attr('dicturl');//字典路径
+                                    var dictName = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));//字典名字
+                                    var dictValue = '';//字典翻译的值
+                                    if(nodeVal){
+                                        dictValue = getDictName(dicturl, nodeVal, false);
+                                    }else{
+                                        nodeVal = '';
+                                    }
+                                    DATA.FLWS[bm].params[paramName] = nodeVal;
+                                    DATA.FLWS[bm].params[paramName + '_DICTMC'] = dictValue;
                                 }
                             }
 

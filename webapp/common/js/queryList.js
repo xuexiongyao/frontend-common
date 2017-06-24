@@ -216,8 +216,15 @@ function getTableData(get_header_info){
     var length = table_header_info.length;
     var thead_arr = [];//表头数组
     thead_arr[0] = {title : '编号',field : '_num',sortable : true,width : 100,checkbox:true};
+    if(init.rowNumber){
+        thead_arr[1] = {title : '序号',field : 'num',align:'center',sortable : false,width : 20,formatter:numberParse};
+    }
     if(init.isHandle){
-        thead_arr[length + 1] = {
+        var czLen = length + 1;
+        if(init.rowNumber) {
+            czLen ++;
+        }
+        thead_arr[czLen] = {
             title : '操作',
             field : 'process',
             width : 100,
@@ -235,12 +242,19 @@ function getTableData(get_header_info){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:datagridProcessFormater_asjbh};
         }else if(_title[5] == 'address'){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:parseAddress};
+        }else if(_title[6]){
+            info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:_title[6]};
         }else if(_title[2] == null){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true};
         }else{
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:dictFormatter,dictName:_title[2]};
         }
-        thead_arr[i+1] = info_obj;
+        if(init.rowNumber){
+            thead_arr[i+2] = info_obj;
+        }else{
+            thead_arr[i+1] = info_obj;
+        }
+
     }
     //继承传递的属性和事件参数
     var tableOptions = $.extend({
@@ -335,6 +349,10 @@ function getTableSetDom(){
             $('#waiting_ul').append(_html_li);
         }
     }
+}
+
+function numberParse(val,row,index){
+    return (index + 1);
 }
 
 //地址信息靠右显示

@@ -109,6 +109,9 @@ function cqbgPageRender() {
     if (DATA.CQBG.cqbgData.customized) {
         //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
         eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(DATA.CQBG.cqbgRow) + "')");
+        if(DATA.CQBG.cqbgData.bianMa == '010001'){//受案登记表
+            ajax_request(DATA.CQBG.cqbgData.bianMa);
+        }
     } else {
         if (!DATA.CQBG.cqbgZj) {//新增渲染
             easyuiReset(cqbgIpts, true, DATA.CQBG.cqbgData.bianMa, false);
@@ -516,9 +519,17 @@ function flwsPageRenderA(bm) {
         //法律文书数据信息复用
         flwsDataXxfy(bm, flwsZj);
 
+        //新增页面法律文书的信息复用
+        if(bm == '040804' || bm == '041802' || bm == '041303'){
+            try{
+                ajax_request(bm);
+            }catch(e){
+                console.log("没有ajax_request函数");
+            }
+        }
+
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
-        //未成年人法定代理人 041802
-        if(bm == '080002' || bm == '080004' || bm == '041802'){
+        if(bm == '080002' || bm == '080004'){
             //选中已经保存的法律文书
             if (flwsRow.length > 0) {
                 $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
@@ -1108,13 +1119,6 @@ function flwsClXyDxCheckB(bm, $this) {
             return false;
         }
 
-        //取消选择调用函数（未成年人法定代理人-041802）
-        try{
-            uncheck_request(bm);
-        }catch(e){
-            console.log("没有uncheck_request函数");
-        }
-
         //选中状态
         DATA.FLWS[bm]["status"]["selected"] = false;
 
@@ -1558,7 +1562,7 @@ function flwsPageRenderForCx(bm) {
         flwsRightPageRenderForEdit(DATA.FLWS[bm].flwsData);
 
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
-        if(bm == '080002' || bm == '080004' || bm == '041802'){
+        if(bm == '080002' || bm == '080004'){
             //选中已经保存的法律文书
             if (flwsRow.length > 0) {
                 $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
