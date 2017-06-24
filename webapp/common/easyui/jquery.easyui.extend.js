@@ -1403,7 +1403,7 @@ function getIEVersion() {
 			}
 		},
 		onShowPanel: function(){
-			openCombotree2($(this));
+			//openCombotree2($(this));
 		},
 		onChange:function(new_v,old_v){
 			$(this).parent().find('input.add-null').remove();
