@@ -1068,7 +1068,7 @@ function flwsDataXxfy(bm, zj) {
                                     required: false, value: '', readonly: true
                                 }).next().addClass('clear-border');
                                 $node.textbox({value: val});
-                            }else if (bm == '042155' && $node.hasClass('BZJ') && val) {//取保候审-财报
+                            }else if(bm == '042155' && $node.hasClass('BZJ') && val){//取保候审-财报
                                 $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
                                     required: false, value: '', readonly: true
                                 }).next().addClass('clear-border');
@@ -1076,6 +1076,16 @@ function flwsDataXxfy(bm, zj) {
                                     required: false, value: '', readonly: true
                                 }).next().addClass('clear-border');
                                 $node.textbox({value: data[i][key+'_DX']});
+                            }else if(bm == '041802' && $node.hasClass('FZXYR_XM') && val){//未成年人法定代理人--嫌疑人
+                                var tmpArray = ['ZRHBHRLXDM','ZRHBHR_XM','ZRHBHR_XBDM'];
+                                for(var k0=0;k0<tmpArray.length;k0++){
+                                    if(tmpArray[k0] == 'ZRHBHR_XM'){
+                                        $("#flws_cl_area_" + bm + " form a ."+tmpArray[k0]).textbox('disableValidation').textbox('setValue','');
+                                    }else if(tmpArray[k0] == 'ZRHBHRLXDM' || tmpArray[k0] == 'ZRHBHR_XBDM'){
+                                        $("#flws_cl_area_" + bm + " form a ."+tmpArray[k0]).combobox('disableValidation').combobox('setValue','');
+                                    }
+                                }
+                                $node.textbox({value: val});
                             }else{
                                 $node.textbox({value: val});
                             }
@@ -1103,7 +1113,20 @@ function flwsDataXxfy(bm, zj) {
                                     editEnableForAj('RMJCY_DWMC');
                                 }
                                 $node.combobox({value: val})
-                            } else {
+                            } else if(bm == '041802' && $node.hasClass('ZRHBHRLXDM') && val){//证人|被害人
+                                var tmpObj = {
+                                    FZXYR_XM :'textbox',
+                                    FZXYR_XBDM:'combobox'
+                                };
+                                for(var k in tmpObj){
+                                    if(tmpObj[k] == 'textbox'){
+                                        $("#flws_cl_area_" + bm + " form a ."+k).textbox('disableValidation').textbox('setValue','');
+                                    }else if(tmpObj[k] == 'combobox'){
+                                        $("#flws_cl_area_" + bm + " form a ."+k).combobox('disableValidation').combobox('setValue','');
+                                    }
+                                }
+                                $node.combobox({value: val})
+                            }else {
                                 $node.combobox({value: val})
                             }
                         } else if ($node.hasClass('easyuicombotree')) {

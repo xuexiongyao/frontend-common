@@ -23,7 +23,7 @@ FrameTools.Map = function(){
 	this.copyRight = "&nbsp;";      				  //地图版权信息
 	this.proxy = "/Proxy";                            //地图代理
 	this.zIndex = 100;                                //地图对象的层级
-	this.imgPath = "../images/map/";                  //地图图片路径
+	this.imgPath = location.origin + location.pathname.substr(0,location.pathname.substr(1).indexOf("/")+1)+"/images/map/";                  //地图图片路径
 };
 /**
  * @title: onloadMap
@@ -185,7 +185,8 @@ FrameTools.Map.prototype.initMarker = function(title,zbx,zby,imgName,msgHtml,mou
 	}else{
 		pIcon.height = imgHeight;
 	}
-	pIcon.image = "../images/map/icons/";
+
+	pIcon.image = this.imgPath+"/icons/";
 	if(imgName==null||imgName=="")
 		pIcon.image += "tack.gif";
 	else
