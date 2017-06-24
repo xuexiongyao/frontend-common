@@ -40,6 +40,7 @@ $('.right-report').append(str);
 
 $(function () {
     clickShowPanel();
+    getNext();
     selectApprove('1');         //选择审批人
     getCurrent();               //当前环节
     saveAndSsShyj();            //保存并送审
