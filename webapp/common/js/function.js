@@ -2021,7 +2021,7 @@ function exportExcel(options) {
                             if (json.status == 'success') {
                                 var fileurl = json.message;
                                 if (fileurl.indexOf("http") == -1) {
-                                    fileurl = basePath + '/' + json.message;
+                                    fileurl = pathConfig.basePath + '/' + json.message;
                                 }
                                 location.href = fileurl;
                                 $('#' + exportPanelId).dialog('close');
