@@ -1915,3 +1915,132 @@ function openCombotree2($box) {
         }
     });
 }
+
+//导出处理,放在每次生成表格数据后执行
+function exportExcel(options) {
+    console.log('导出参数:', options);
+    var exportZjField = options.exportZjField;//表格主键字段名
+    var exportFileName = options.exportFileName;//导出文件名称
+    var exportBtnId = options.exportBtnId;// 导出按钮ID
+    var exportUrl = options.exportUrl;//导出请求路径
+    var headConfig = options.headConfig; //表头参数,一般通过config文件获取
+    var listTableId = options.listTableId;//表格的ID
+    var queryParams = options.queryParams;//列表查询参数
+    var queryUrl = options.queryUrl;   //请求表格的url
+    var exportPanelId = 'exportPanelId';
+
+    //点击[批量导出]
+    $('#' + exportBtnId).off('click').on('click', function () {
+        if ($('#' + exportPanelId).length == 0) {
+            var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
+                + '<div class="base-info">'
+                + '<div class="title">'
+                + '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+                + '</div>'
+                + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
+                + '</div>'
+                + '<div class="tips" style="color:#999;font-size:12px;">'
+                + '<i class="fa fa-info-circle"></i> '
+                + '<span>请勾选需要导出的数据项</span>'
+                + '</div>'
+                + '</div>';
+            $('body').append(exportHeadSelect);
+            for (var headKey in headConfig) {
+                var headValue = headConfig[headKey];
+                var headText = headValue[1];
+                var html = '<div class="item" style="float:left;min-width:120px;margin-top:3px;"><label><input type="checkbox" rel="' + headKey + '"><span>' + headText + '</span></label></div>';
+                $('#' + exportPanelId + ' .base-info .content').append(html);
+            }
+        }
+
+        //全选事件all-select
+        $('#' + exportPanelId + ' .all-select').off('click').on('click', function () {
+            var checked_status = $(this).prop('checked');
+            $(this).parent().parent().parent().next().find('input:checkbox').prop('checked', checked_status);
+        });
+
+        $('#' + exportPanelId + ' .all-select').attr("checked",false);
+        $('#' + exportPanelId + ' .all-select').click();
+
+        openDivForm({
+            id: exportPanelId,
+            title: exportFileName + '导出选项',
+            width: 700,
+            onClose: function () {
+            }
+        }, [
+            {
+                text: '确定',
+                handler: function () {
+                    //选中的ID
+                    var checkedIdArr = [];
+                    var checkData = $('#' + listTableId).datagrid('getChecked');//下阶段改为获取全局变量的方式获取所有勾选的
+                    for (var i = 0; i < checkData.length; i++) {
+                        checkedIdArr.push(checkData[i][exportZjField]);
+                    }
+
+                    //选中的表头项目
+                    var paramNameArr = [];
+                    var headNameArr = [];
+                    var dictClumns = {};
+                    $('#' + exportPanelId + ' .base-info .content .item input:checked').each(function () {
+                        var rel = $(this).attr('rel');
+                        var dictData = headConfig[rel][2];
+                        if (dictData) dictClumns[rel] = dictData;
+                        paramNameArr.push(rel);
+                        headNameArr.push($(this).next().text());
+                    });
+                    if(headNameArr.length == 0) {
+                        alertDiv({
+                            title: '温馨提示',
+                            msg: '请勾选导出的数据项!'
+                        });
+                        return false;
+                    }
+
+                    var exportParams = {
+                        checkedIdAryStr: checkedIdArr.join('|'),
+                        headNameAryStr: headNameArr.join('|'),
+                        paramNameAryStr: paramNameArr.join('|'),
+                        queryUrl: queryUrl,
+                        queryParams: queryParams,
+                        sheetTitle: exportFileName,
+                        fileName: exportFileName,
+                        dictClumns: JSON.stringify(dictClumns)
+                    };
+                    loading('open', '正在获取导出信息,请稍候...');
+                    $.ajax({
+                        url: exportUrl,
+                        type: 'post',
+                        xhrFields: {withCredentials: true},
+                        crossDomain: true,
+                        data: exportParams,
+                        success: function (json) {
+                            console.log('导出数据信息:', json);
+                            loading('close');
+                            if (json.status == 'success') {
+                                var fileurl = json.message;
+                                if (fileurl.indexOf("http") == -1) {
+                                    fileurl = basePath + '/' + json.message;
+                                }
+                                location.href = fileurl;
+                                $('#' + exportPanelId).dialog('close');
+                            } else {
+                                $.messager.show({
+                                    title: '导出失败',
+                                    msg: json.message
+                                });
+                            }
+                        }
+                    });
+                }
+            }, {
+                text: '关闭',
+                handler: function () {
+                    $('#' + exportPanelId).dialog('close');
+                }
+            }
+        ]);
+
+    });
+}
