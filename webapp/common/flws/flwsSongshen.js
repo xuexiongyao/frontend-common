@@ -69,6 +69,7 @@ function getNext() {
                         $('#links').append(html);
                     }
                     $('#links input').off('click').on('click',function(e){
+                        $('#role_name').parent().show();
                         var _name = $(this).parent().text();
                         $.ajax({
                             url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + _name,
