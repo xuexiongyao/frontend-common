@@ -1403,7 +1403,14 @@ function getIEVersion() {
 			}
 		},
 		onShowPanel: function(){
-			openCombotree2($(this));
+			var opts = $(this).combotree('options');
+			var dictUrl = opts.url;
+			if(dictUrl.indexOf('BD_D_JQLBDM') != -1
+				|| dictUrl.indexOf('GA_D_XSAJLBDM') != -1
+				|| dictUrl.indexOf('GA_D_WPLBDM') != -1
+				|| dictUrl.indexOf('GA_D_XZAJLBDM') != -1) {
+				openCombotree2($(this));
+			}
 		},
 		onChange:function(new_v,old_v){
 			$(this).parent().find('input.add-null').remove();
