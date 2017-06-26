@@ -445,14 +445,14 @@ function saveAndSsShyj(backObj) {
                     }
                 });
             }else{
-                var wclc = function(){
+                var wclc = function(formData){
                     //获取选择的审批人
                     if (isFinally) {    //最后一级没有审批人
                         candidateUsers = '';
-                        complete(shjl, shsj, shyj);
+                        complete(shjl, shsj, shyj,formData);
                     }
                     else if (candidateUsers) {
-                        complete(shjl, shsj, shyj);
+                        complete(shjl, shsj, shyj,formData);
                     }
                 };
                 //执行签章
@@ -572,37 +572,42 @@ function saveAndSsShyj(backObj) {
 
 
 //完成流程,到下一级
-function complete(shjl, shsj, shyj) {
-    loading('open', '审核信息保存中,请稍候...');
-    var param = {
-        'taskId': taskId,
-        'candidateUsers': candidateUsers,
-        'shsj': shsj,
-        'shjl': shjl,
-        'shyj': shyj,
-        'businessKey': businessKey,
-        'isLastTask': isLastTask,
-        'hxshyjbz': hxshyjbzCurrent,
-        'fjrid': fjrid,
-        'fjrxm': fjrxm,
-        'flag': flagText
-    };
-    if (isLastTask) {
-        //param.xwFlwsLajdsZjs = 'd036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
-        param.asjzcxwlbdm = asjzcxwlbdm;
-        param.asjflwsdm = asjflwsdm;//+asjflwsdm;
-        param.dxmc = dxmc;
-        param.flwsmc = flwsmc;
-        param.asjbh = asjbh;
-        param.cjsj = cjsj;
-        param.cqbgZj = businessKey;
-        param.ajmc = ajmc;
+function complete(shjl, shsj, shyj,formData) {
+    var formDataParam = new FormData();
+    if(formData){
+        formDataParam = formData;
     }
+    formDataParam.append("taskId", taskId);
+    formDataParam.append("candidateUsers", candidateUsers);
+    formDataParam.append("shsj", shsj);
+    formDataParam.append("shjl", shjl);
+    formDataParam.append("shyj", shyj);
+    formDataParam.append("businessKey", businessKey);
+    formDataParam.append("isLastTask", isLastTask);
+    formDataParam.append("hxshyjbz", hxshyjbzCurrent);
+    formDataParam.append("fjrid", fjrid);
+    formDataParam.append("fjrxm", fjrxm);
+    formDataParam.append("flag", flagText);
+    formDataParam.append("asjflwsdm", asjflwsdm);
+    if (isLastTask) {
+        formDataParam.append("asjzcxwlbdm", asjzcxwlbdm);
+        formDataParam.append("dxmc", dxmc);
+        formDataParam.append("flwsmc", flwsmc);
+        formDataParam.append("asjbh", asjbh);
+        formDataParam.append("cjsj", cjsj);
+        formDataParam.append("cqbgZj", businessKey);
+        formDataParam.append("ajmc", ajmc);
+    }
+    loading('open', '审核信息保存中,请稍候...');
     $.ajax({
         url: ajaxUrl + '/complete',
-        data: param,
+        data: formDataParam,
         type: 'post',
         dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        contentType: false,//必须false才会自动加上正确的Content-Type
+        processData: false,//必须false才会避开jQuery对 formdata 的默认处理XMLHttpRequest会对 formdata 进行正确的处理
         success: function (json) {
             loading('close');
             // console.log('complete:', json);
