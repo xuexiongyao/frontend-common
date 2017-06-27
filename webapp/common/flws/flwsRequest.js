@@ -405,6 +405,10 @@ function cqbgSaveComplete(data) {
                     DATA.CQBG.cqbgZj = json.ID;
                 }
             }
+            $.messager.show({
+                title: '温馨提示',
+                msg: '保存成功!'
+            });
             queryCqbgData('');//重新查询数据
             /*
             alertDiv({
