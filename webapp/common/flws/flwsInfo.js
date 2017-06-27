@@ -60,7 +60,7 @@ function getCqbgMapData(cqbgzj) {
             //呈请报告数据查询
             if (typeof (DATA.CQBG.cqbgData) != 'undefined') {
                 //获取呈请报告数据
-                //queryCqbgData();//【电子签章不需要获取】
+                queryCqbgData();//【电子签章不需要获取】
             } else {
                 if (DATA.FLWS.flwsData.customer) {//只有法律文书,并且需要生成法律文书
                     onlyFlwsRender();
@@ -83,6 +83,7 @@ function getCqbgFlwsHtmlPage() {
     var cqbgzj = DATA.cqbgzj;
     console.log('呈请报告数据:',DATA);
     if (!jQuery.isEmptyObject(cqbgData)) {
+        /*
         //呈请报告审批签章
         var dzqzPdfUrl = pathConfig.basePath + '/html/pdfqz/cqbgSpqz.html?xxzjbh='+cqbgzj;
         var cqbgcon = '<iframe scrolling="hidden" frameborder="0" src="' + dzqzPdfUrl + '" style="width:100%;height: 99%;"> </iframe>';
@@ -92,18 +93,16 @@ function getCqbgFlwsHtmlPage() {
             '</div>' +
             '</div>' +
             '</div>';
-
+        */
 
         //呈请报告字符串【未使用签章时引用的方式】
-        /*
-         var cqbgcon = getHtmlByAjax(cqbgData.url);
-         cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
-         '<div class="flws-main-con">' +
-         '<div class="flws-main-con-r" id="cqbg_main_con" style="width: 100%;">' + cqbgcon +
-         '</div>' +
-         '</div>' +
-         '</div>';
-         */
+        var cqbgcon = getHtmlByAjax(cqbgData.url);
+        cqbgstr = '<div class="flws-tabs-title" id="flws_cqbg" title="' + cqbgData.name + '">' +
+        '<div class="flws-main-con">' +
+        '<div class="flws-main-con-r" id="cqbg_main_con" style="width: 100%;">' + cqbgcon +
+        '</div>' +
+        '</div>' +
+        '</div>';
     }
 
     $("#flwsTabs").append(cqbgstr);

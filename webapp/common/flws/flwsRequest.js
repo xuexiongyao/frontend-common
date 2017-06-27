@@ -406,6 +406,13 @@ function cqbgSaveComplete(data) {
                 }
             }
             queryCqbgData('');//重新查询数据
+            alertDiv({
+                title: '温馨提示',
+                msg: '点击【确定】生成法律文书',
+                fn: function() {
+                    scflwsQuery(DATA.CQBG.cqbgZj, DATA.CQBG.asjflwsdm)
+                }
+            });
             /** 暂时屏蔽提示生成PDF的选择提示框
             $.messager.confirm({
                 title: '温馨提示',
