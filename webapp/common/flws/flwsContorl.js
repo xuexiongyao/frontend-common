@@ -161,7 +161,6 @@ function getCqbgQtsjEdit() {
 function saveFlws(bm) {
     //法律文书多联必填项的数组初始化
     DATA.FLWS[bm].isValidArry = [];
-
     if (DATA.FLWS[bm].flwsData.bx && !DATA.FLWS[bm].status.selected) {
         alertDiv({
             title: '提示',
@@ -568,8 +567,8 @@ function getFlwsQtsjEdit(bm) {
                             //textarea框的处理
                             var areaArry = $(flwsA[a]).find('textarea');
                             for (var l = 0; l < areaArry.length; l++) {
-                                var dataname = $(areaArry[i]).attr('name');//参数名
-                                var val = $(areaArry[i]).val();//值
+                                var dataname = $(areaArry[l]).attr('name');//参数名
+                                var val = $(areaArry[l]).val();//值
                                 DATA.FLWS[bm].params[dataname] = val;
                             }
                         }
