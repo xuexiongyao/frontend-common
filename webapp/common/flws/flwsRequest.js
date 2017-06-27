@@ -406,7 +406,7 @@ function cqbgSaveComplete(data) {
                 }
             }
             queryCqbgData('');//重新查询数据
-            /** 屏蔽提示生成PDF的选择提示框
+            /** 暂时屏蔽提示生成PDF的选择提示框
             $.messager.confirm({
                 title: '温馨提示',
                 msg: '呈请报告保存成功,是否生成PDF?',
