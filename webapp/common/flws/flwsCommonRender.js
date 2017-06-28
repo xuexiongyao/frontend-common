@@ -1009,7 +1009,7 @@ function flwsDataXxfy(bm, zj) {
         if (zj == data[i].ZJ) {
             //自定义页面处理
             if (DATA.FLWS[bm].flwsData.customized) {
-                eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
+                eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]).replace(/'/g,"\\'")   + "')");
             }
             //多版本处理（行政案件）
             if(data[i].VERSION){

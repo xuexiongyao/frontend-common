@@ -736,7 +736,7 @@ function flwsXxfyC1(bm, $this) {
         for (var i = 0; i < data.length; i++) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
                 if (DATA.FLWS[bm].flwsData.customized) {
-                    eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
+                    eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]).replace(/'/g,"\\'")   + "')");
                 }
 
                 for (var j = 0; j < $target.length; j++) {
