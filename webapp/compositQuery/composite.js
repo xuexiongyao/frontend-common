@@ -1516,7 +1516,7 @@ function pagination() {
             paginationQuery(pageNumber, pageSize);
         },
         onRefresh: function(pageNumber, pageSize){
-            paginationQuery(pageNumber, pageSize);
+            //paginationQuery(pageNumber, pageSize);
         }
     });
 }
@@ -1534,7 +1534,8 @@ function paginationQuery(pageNumber, pageSize){
         return false;
     }
     pageN = (pageNumber - 1) * pageSize;
-    condition_obj.start = (pageNumber - 1) * pageSize;
+    if(pageN || pageN<0) pageN = 0;
+    condition_obj.start = pageN;
     condition_obj.limit = pageSize;
     ajaxQuery(condition_obj);
 }
