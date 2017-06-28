@@ -1,0 +1,452 @@
+@charset "UTF-8";
+/*********************************/
+/**
+ * 获取颜色map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取字体map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取字体大小map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取行高map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取圆角map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取z-index map方法
+ * @param $key 颜色的key值
+ */
+/**!
+ * @author christ
+ * 本配置基于sass框架compass,在运用时请注意是否安装sass,compass
+ */
+/*按钮移入渐变*/
+/*disabled btn*/
+/*selected button*/
+/* line 5, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar {
+  background-color: #fff;
+  width: 5px;
+  height: 10px;
+}
+
+/* line 11, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+/* line 15, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.65);
+}
+
+/* line 2, ../sass/sass/_songshen.scss */
+.main {
+  position: relative;
+  *zoom: 1;
+  padding: 0;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.main:before, .main:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.main:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 6, ../sass/sass/_songshen.scss */
+.main .left-examine {
+  float: left;
+  z-index: 2;
+  width: 50%;
+}
+/* line 10, ../sass/sass/_songshen.scss */
+.main .left-examine ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 40px;
+  *zoom: 1;
+  min-height: 186px;
+  border-right: 1px dashed #999;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.main .left-examine ul:before, .main .left-examine ul:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.main .left-examine ul:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 17, ../sass/sass/_songshen.scss */
+.main .left-examine ul li {
+  float: left;
+  _display: inline;
+  width: 50%;
+  min-height: 22px;
+  margin-bottom: 10px;
+}
+/* line 22, ../sass/sass/_songshen.scss */
+.main .left-examine ul li span.pro {
+  display: inline-block;
+  min-width: 48px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+/* line 29, ../sass/sass/_songshen.scss */
+.main .left-examine ul li.li-full {
+  width: 100%;
+}
+/* line 31, ../sass/sass/_songshen.scss */
+.main .left-examine ul li.li-full .pro-top {
+  vertical-align: top;
+}
+/* line 34, ../sass/sass/_songshen.scss */
+.main .left-examine ul li.li-full textarea {
+  width: 86%;
+}
+/* line 40, ../sass/sass/_songshen.scss */
+.main .lct-box {
+  width: 50%;
+  min-height: 100px;
+  float: left;
+  _display: inline;
+  z-index: 2;
+  overflow-x: auto;
+}
+/* line 46, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container {
+  *zoom: 1;
+  position: relative;
+  margin-right: 40px;
+  overflow: hidden;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.main .lct-box .lct-container:before, .main .lct-box .lct-container:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.main .lct-box .lct-container:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 52, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node {
+  float: left;
+  _display: inline;
+  padding: 10px;
+  min-width: 120px;
+  margin-right: 36px;
+  margin-top: 15px;
+}
+/* line 58, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text {
+  text-align: center;
+  color: #0e6595;
+}
+/* line 61, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text .lcspr {
+  font-weight: bold;
+  padding-right: 5px;
+}
+/* line 66, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text .lcspzt i.fa-check {
+  color: #39980f;
+}
+/* line 69, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text .lcspzt i.fa-times {
+  color: #ed4848;
+}
+/* line 72, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text .lcspzt i.fa-reply {
+  color: #000;
+}
+/* line 75, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text .lcspzt i.fa-spinner {
+  color: #f0ad4e;
+}
+/* line 78, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .text .lcspzt i.fa-rotate-left {
+  color: #ee9460;
+}
+/* line 83, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .point {
+  margin: 7px 0;
+}
+/* line 85, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .point b {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 2px solid #0e6595;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -o-border-radius: 100%;
+  -ms-border-radius: 100%;
+  margin: 0 auto;
+}
+/* line 93, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .point b .h-line {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: #0e6595;
+  left: 16px;
+  top: 4px;
+}
+/* line 103, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .time {
+  text-align: center;
+}
+/* line 105, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node .time span {
+  color: #5a5a5a;
+}
+/* line 113, ../sass/sass/_songshen.scss */
+.main .lct-box .lct-container .lct-node:last-child .point b .h-line {
+  width: 0;
+  height: 0;
+}
+/* line 121, ../sass/sass/_songshen.scss */
+.main .right-report {
+  float: left;
+  width: 1198px;
+  min-height: 650px;
+  z-index: 1;
+}
+/* line 127, ../sass/sass/_songshen.scss */
+.main .report-table {
+  border-top: #333 solid 1px;
+  height: auto;
+  margin: auto;
+  margin-bottom: 40px;
+  width: 500px;
+}
+/* line 133, ../sass/sass/_songshen.scss */
+.main .report-table .report-table-item {
+  border-bottom: #333 solid 1px;
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.main .report-table .report-table-item:before, .main .report-table .report-table-item:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.main .report-table .report-table-item:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 136, ../sass/sass/_songshen.scss */
+.main .report-table .report-table-item .pro {
+  padding: 15px 0;
+  text-align: center;
+  font-size: 14px;
+  float: left;
+  width: 120px;
+  height: auto;
+  border-right: #333 solid 1px;
+}
+/* line 145, ../sass/sass/_songshen.scss */
+.main .report-table .report-table-item .val {
+  width: 360px;
+  float: left;
+  text-align: left;
+  font-size: 12px;
+  padding: 15px 0 0 10px;
+}
+/* line 154, ../sass/sass/_songshen.scss */
+.main .report-content {
+  margin: auto;
+  width: 500px;
+}
+/* line 157, ../sass/sass/_songshen.scss */
+.main .report-content .report-content-title {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+/* line 164, ../sass/sass/_songshen.scss */
+.main .report-content .report-content-text {
+  font-size: 12px;
+}
+/* line 168, ../sass/sass/_songshen.scss */
+.main .btn-area-top {
+  position: absolute;
+  right: 30px;
+  top: 14px;
+}
+/* line 173, ../sass/sass/_songshen.scss */
+.main #flws_send {
+  position: static;
+  text-align: right;
+  margin: 10px 30px 0;
+}
+
+/* line 180, ../sass/sass/_songshen.scss */
+#lctBox {
+  width: 100%;
+  min-height: 100px;
+  z-index: 2;
+  overflow-x: auto;
+}
+/* line 185, ../sass/sass/_songshen.scss */
+#lctBox .lct-container {
+  *zoom: 1;
+  position: relative;
+  margin-right: 40px;
+  overflow: hidden;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+#lctBox .lct-container:before, #lctBox .lct-container:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+#lctBox .lct-container:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 191, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node {
+  float: left;
+  _display: inline;
+  padding: 10px;
+  min-width: 120px;
+  margin-right: 36px;
+  margin-top: 15px;
+}
+/* line 197, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text {
+  text-align: center;
+  color: #0e6595;
+}
+/* line 200, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text .lcspr {
+  font-weight: bold;
+  padding-right: 5px;
+}
+/* line 205, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text .lcspzt i.fa-check {
+  color: #39980f;
+}
+/* line 208, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text .lcspzt i.fa-times {
+  color: #ed4848;
+}
+/* line 211, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text .lcspzt i.fa-reply {
+  color: #000;
+}
+/* line 214, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text .lcspzt i.fa-spinner {
+  color: #f0ad4e;
+}
+/* line 217, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .text .lcspzt i.fa-rotate-left {
+  color: #ee9460;
+}
+/* line 222, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .point {
+  margin: 7px 0;
+}
+/* line 224, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .point b {
+  position: relative;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 2px solid #0e6595;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -o-border-radius: 100%;
+  -ms-border-radius: 100%;
+  margin: 0 auto;
+}
+/* line 232, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .point b .h-line {
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: #0e6595;
+  left: 16px;
+  top: 4px;
+}
+/* line 242, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .time {
+  text-align: center;
+}
+/* line 244, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node .time span {
+  color: #5a5a5a;
+}
+/* line 252, ../sass/sass/_songshen.scss */
+#lctBox .lct-container .lct-node:last-child .point b .h-line {
+  width: 0;
+  height: 0;
+}
+
+/*选择审批人和环节*/
+/* line 262, ../sass/sass/_songshen.scss */
+#next_link_panel {
+  padding: 0 20px;
+  max-height: 800px;
+  overflow: auto;
+}
+/* line 266, ../sass/sass/_songshen.scss */
+#next_link_panel .next-link {
+  margin: 8px 0 15px 0;
+}
+/* line 268, ../sass/sass/_songshen.scss */
+#next_link_panel .next-link .pro {
+  color: #0e6595;
+  display: inline-block;
+}
+/* line 273, ../sass/sass/_songshen.scss */
+#next_link_panel .next-link .val label {
+  color: #5a5a5a;
+  font-size: 12px;
+  margin-right: 15px;
+}
+/* line 281, ../sass/sass/_songshen.scss */
+#next_link_panel .role .title {
+  color: #0e6595;
+  height: 20px;
+  line-height: 20px;
+  border-bottom: 1px dashed #ccc;
+}
+/* line 288, ../sass/sass/_songshen.scss */
+#next_link_panel .role .role-name {
+  margin-bottom: 10px;
+}
+/* line 290, ../sass/sass/_songshen.scss */
+#next_link_panel .role .role-name label {
+  display: inline-block;
+  min-width: 80px;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #5a5a5a;
+}
+/* line 296, ../sass/sass/_songshen.scss */
+#next_link_panel .role .role-name label input {
+  vertical-align: top;
+}

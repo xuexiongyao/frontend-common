@@ -437,6 +437,10 @@ function dict_multiSelectTree(isCache, windowID, parentWindow, dictName, dictInp
 	openWindow(isCache, windowID, openURL, paramArray, dataOptions);
 }
 function initAddressSearch2(comboID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData) filterData = {};
+	if(!filterData.sort) filterData.sort = 'DZJB ASC,MPH ASC,MPHHZ_HFH ASC,MPHHZ_ZHFH ASC';
+	if(!filterData.order) filterData.order = 'MULTIPLE_SORT';
+	
 	var basePath = basePath || pathConfig.basePath;
 	var url=basePath + '/solrSearcher/doBzdzSelect';
 	initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun);
@@ -449,6 +453,10 @@ function initCompanySearch(comboID, filterData, returnFieldData,onSelectedFun){
 }
 
 function initHouseSearch(comboID, filterData, returnFieldData,onSelectedFun){
+	if(!filterData) filterData = {};
+	if(!filterData.sort) filterData.sort = 'FWDZ_DZJB';
+	if(!filterData.order) filterData.order = 'ASC';
+	
 	var basePath = basePath || pathConfig.basePath;
 	var url=basePath + '/solrSearcher/doSyfwSelect';
 	var bzdzUrl=basePath + '/solrSearcher/doBzdzListSelect';
@@ -670,6 +678,7 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 		onClick: function(){return false;},
 		//展示面板时,清空input的值并执行不带参数的回调函数
 		onShowPanel :function(){
+			/*
 			for (var item in returnFieldData) {
 				$('#' + returnFieldData[item]).val('');
 			}
@@ -677,6 +686,18 @@ function initSolrSearch(comboID, filterData, returnFieldData,url,onSelectedFun) 
 			if (typeof onSelectedFun == 'function') {
 				var fn = eval(onSelectedFun);
 				try{fn();}catch(e){console.log(e)}
+			}
+			*/
+		},
+		onHidePanel : function(){
+			for (var item in returnFieldData) {
+				if (item == "text") {
+					var text = $(this).combobox('getValue');
+					if('' == text || typeof (text) == 'undefined'){
+                        $(this).textbox('setText','');
+						$('#' + returnFieldData[item]).val('');
+					}
+				}
 			}
 		}
 	});

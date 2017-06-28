@@ -4,11 +4,14 @@
 
 //获取cookie值
 function getCookie(name){
-	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-	if(arr=document.cookie.match(reg))
-		return unescape(arr[2]);
-	else
-		return null;
+	try{
+		name = name.replace(/\*/g,"\\*");
+		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+		if(arr=document.cookie.match(reg))
+			return unescape(arr[2]);
+		else
+			return null;
+	}catch (e) {}
 }
 
 //写入到Cookie

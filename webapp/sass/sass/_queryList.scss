@@ -1,5 +1,5 @@
 @charset "utf-8";
-.query-com-main{
+//.query-com-main{
     .query-top-btn{
         margin-top:15px;
         .help{
@@ -45,7 +45,8 @@
                 @include clearfix;
                 display: none;
                 float: left;
-                width:33.333%;
+                margin-right:5px;
+                //width:33.333%;
                 margin-top:10px;
                 font-size: 12px;
                 .pro{
@@ -59,6 +60,9 @@
                     height: 20px;
                     line-height: 20px;
                 }
+            }
+            .Wdate{
+                @include text-vertical-center(20px);
             }
         }
         .query-btn{
@@ -76,7 +80,7 @@
             margin-bottom:5px;
         }
     }
-}
+//}
 
 /*更多条件查询面板样式*/
 #other_condition_panel{
@@ -151,4 +155,7 @@
             line-height: 30px;
         }
     }
+}
+.datagrid-body{
+    overflow: hidden;
 }

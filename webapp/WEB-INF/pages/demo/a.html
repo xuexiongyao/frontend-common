@@ -21,45 +21,668 @@
     <script src="../../../common/js/windowTopPage.js"></script>
     <script src="../../../common/js/messenger.js"></script>
     <script src="../../../common/js/common.js"></script>
+    <script src="../../../common/js/function.js"></script>
     <script src="../../../common/js/ajax.js"></script>
     <script src="../../../common/datepicker/WdatePicker.js"></script>
+    <!--<script src="../../../common/datepicker/picker.js"></script>-->
 </head>
 <body style="margin:10px;background: #bebebe;">
-<div class="easyui-tabs" id="tt" data-options="" style="height: 300px;">
-    <div title="test1">
-        <form action="#">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-        </form>
-    </div>
-    <div title="test2">
-        <form action="#">
-            <Ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-            </Ul>
-        </form>
-    </div>
-</div>
+<!--<div class="easyui-tabs" id="tt" data-options="" style="height: 300px;">-->
+    <!--<div title="test1">-->
+        <!--<form action="#">-->
+            <!--<div>1</div>-->
+            <!--<div>2</div>-->
+            <!--<div>3</div>-->
+            <!--<div>4</div>-->
+            <!--<div>5</div>-->
+        <!--</form>-->
+    <!--</div>-->
+    <!--<a href="javascript:;" style="color: #808080;cursor: not-allowed;text-decoration: none;"></a>-->
+    <!--<div title="test2">-->
+        <!--<form action="#">-->
+            <!--<Ul>-->
+                <!--<li>1</li>-->
+                <!--<li>2</li>-->
+                <!--<li>3</li>-->
+                <!--<li>4</li>-->
+                <!--<li>5</li>-->
+            <!--</Ul>-->
+        <!--</form>-->
+    <!--</div>-->
+<!--</div>-->
 <!--<input type="text" id="cc">-->
+<!--
+1、复选框控制单选框，输入框
+2、单选框控制下面的输入框
+-->
+<form action="#" id="form">
+<input type="checkbox" cascade="cb1" name="xx" value="1">选项1<br>
+    <input type="text" readonly name="xm" cascade="cb1-ipt-xm"><br>
+    <input type="text" readonly name="xb" cascade="cb1-ipt-xb"><br>
+    <input type="radio" disabled cascade="cb1-radio-1" name="gdxx" value="1">1.1<br>
+        <input type="text" cascade="cb1-radio-1-ipt-a1" name="a1" readonly><br>
+        <input type="text" cascade="cb1-radio-1-ipt-a2" name="a2" readonly><br>
+    <input type="radio" disabled cascade="cb1-radio-2" name="gdxx" value="2">1.2<br>
+        <input type="text" cascade="cb1-radio-2-ipt-b1" name="b1" readonly><br>
+        <input type="text" cascade="cb1-radio-2-ipt-b2" name="b2" readonly><br>
+
+
+    <input type="checkbox" cascade="cb2"  name="xx" value="2">选项2<br>
+    <input type="radio" disabled cascade="cb2-radio-1"  name="gdxx" value="3">2.1<br>
+    <input type="text" cascade="cb2-radio-1-ipt-c1"  name="c1" readonly><br>
+    <input type="text" cascade="cb2-radio-1-ipt-c2"  name="c2" readonly><br>
+    <input type="radio" disabled cascade="cb2-radio-2"  name="gdxx" value="4">2.2<br>
+    <input type="text" cascade="cb2-radio-2-ipt-d1"  name="d1" readonly><br>
+    <input type="text" cascade="cb2-radio-2-ipt-d2"  name="d2" readonly><br>
+
+    <input type="button" value="tijiao" id="tj">
+</form>
+
+<textarea id="textArea" name="name" style="width: 400px;overflow: visible;margin: 0 auto;"></textarea>
+
+<textarea id="" cols="30" rows="10" class="easyui-validatebox" data-options="validType:['minLength[20]']"></textarea>
+
+<input type="text" id="check">
+
+<textarea class="easyuivalidatebox TEXTAREA JCYY" name="JCYY" id="test" style="resize: none; height: 20px; overflow-y: hidden;"></textarea>
+
+<ul class="item-container">
+    <li class="item-two">
+        <p class="pro"><i class="fa fa-asterisk"></i>案事件发生开始时间:</p>
+        <div class="ipt">
+            <input id="asjfskssj" name="asjfssj_asjfskssj"
+                   class="val easyui-validatebox Wdate "
+                   style="width:99.7%" placeholder="请选择案事件发生开始时间"
+                   onblur="wdateValidate(this)"
+                   onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'asjfsjssj\'||\'new Date()\')}',errDealMode:2,autoPickDate:true});"
+                   data-options="validType:['date[\'yyyy-MM-dd HH:mm:ss\']'],required:true"/>
+        </div>
+    </li>
+    <li class="item-two">
+        <p class="pro"><i class="fa fa-asterisk"></i>案事件发生结束时间:</p>
+        <div class="ipt">
+            <input id="asjfsjssj" name="asjfssj_asjfsjssj"
+                   class="val easyui-validatebox Wdate "
+                   style="width:99.7%" placeholder="请选择案事件发生结束时间"
+                   onblur="wdateValidate(this)"
+                   onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'asjfskssj\')}',maxDate:'%y-%M-%d %H:%m:%s',errDealMode:2,autoPickDate:true});"
+                   data-options="validType:['date[\'yyyy-MM-dd HH:mm:ss\']'],required:true"/>
+        </div>
+    </li>
+</ul>
+
+<input type="text" id="test1"
+       class="val easyui-validatebox Wdate"
+       style="width:99.7%" placeholder="请选择案事件发生开始时间"
+       onblur="wdateValidate(this)"
+       onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd HH:mm:ss',errDealMode:2,autoPickDate:true});"
+       data-options="validType:['date[\'yyyy-MM-dd HH:mm:ss\']'],required:true">
+<input type="text" id="test2"
+       class="val easyui-validatebox Wdate"
+       style="width:99.7%" placeholder="请选择案事件发生开始时间"
+       onblur="wdateValidate(this)"
+       onfocus="WdatePicker({skin: 'christ',dateFmt: 'yyyy-MM-dd HH:mm:ss',errDealMode:2,autoPickDate:true});"
+       data-options="validType:['date[\'yyyy-MM-dd HH:mm:ss\']'],required:true">
+
+
+<input type="text" class="easyui-combotree" data-options="">
+
+<input type="text" id="id" class="easyui-numberbox" data-options="">
+
+<textarea name="hh" id="ta" cols="30" rows="10"></textarea>
+
 </body>
 </html>
 
 <script type="text/javascript">
-    var window_type = 'open_url';
-    var flwsbms = '';
-    var flwsbmArry = [];
+    $('#test').validatebox({required:true});
+
+    var obj = {};
+
+    $('#ta').on('blur', function () {
+        var val = $(this).val();
+        var json = val.replace('/\n/','\\n').replace('/\t/','\\t');
+        obj.text = json;
+        var a = JSON.stringify(obj);
+        console.log(a);
+        var b = eval(obj);
+//        var b = eval('('+obj+')');
+        console.log(b);
+    });
+    /**
+     * textarea中换行、空格的转译处理
+     */
+    function strEnterSpace(obj){
+        if(typeof obj == 'string'){
+            return obj.replace('/\n/','\\n').replace('/\t/','\\t');
+        }
+    }
+
+    var a = '{"ASJFLWSMC":"呈请受案","FLWS_ASJFLWSDM":"010001","ASJBH":"A5111024000002017050005","AJMC":"薛雄耀测试案件，勿动","CQZT":"0","BADW_GAJGJGDM":"511102400000","BADW_GAJGMC":"张公桥派出所","BAMJID":"","BAMJXM":"","CQNR":"薛雄耀测试案件，勿动\n\t\n\t\n\t\n\tdw\n\twdw我 \n\t "}';
+
+    console.log(strEnterSpace(a));
+    console.log(a);
+
+    var xx = 'XX:1';
+    console.log(xx.split(":"));
+
+
+    $('#id').numberbox({
+        formatter: function(value){
+            if (isNaN(value) || value > Math.pow(10, 12)||value=="")
+                return "";
+            else
+                return NumberToChinese(value.toString()) ;
+        }
+//        ,
+//        parser:function(s){
+//            return ChineseToNumber(s);//需要一个反格式化函数转成数字
+//        }
+    });
+
+    /**************************数字转汉字*******************************/
+    //对“零”的第三个规则，把检测放在循环的最前面并默认为false，可以自然的丢弃最高小节的加零判断。
+    //单个数字转换用数组实现，
+    var arabiaNumChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    //节权位同样用数组实现，
+    var arabiaUnitSection = ["", "10000", "1000000000", "10000000000000", "1000000000000000000"];
+    //节内权位同样用数组实现，
+    var arabiaUnitChar = ["", "10", "100", "1000"];
+
+    //节内转换算法
+    function ChineseToSection(section) {
+        var strIns = '', chnStr = '';
+        var unitPos = 0;
+        var zero = true;
+        while (section > 0) {
+            var v = section % 10;
+            if (v === 0) {
+                if (!zero) {
+                    zero = true;
+                    chnStr = chnNumChar[v] + chnStr;
+                }
+            } else {
+                zero = false;
+                strIns = chnNumChar[v];
+                strIns += chnUnitChar[unitPos];
+                chnStr = strIns + chnStr;
+            }
+            unitPos++;
+            section = Math.floor(section / 10);
+        }
+        return chnStr;
+    }
+
+    //转换算法主函数：
+    function ChineseToNumber(num) {
+        var unitPos = 0;
+        var strIns = '', chnStr = '';
+        var needZero = false;
+
+        if (num === 0) {
+            return chnNumChar[0];
+        }
+
+        while (num > 0) {
+            var section = num % 10000;
+            if (needZero) {
+                chnStr = chnNumChar[0] + chnStr;
+            }
+            strIns = ChineseToSection(section);
+            strIns += (section !== 0) ? chnUnitSection[unitPos] : chnUnitSection[0];
+            chnStr = strIns + chnStr;
+            needZero = (section < 1000) && (section > 0);
+            num = Math.floor(num / 10000);
+            unitPos++;
+        }
+
+        return chnStr;
+    }
+
+    /**************************数字转汉字*******************************/
+    //对“零”的第三个规则，把检测放在循环的最前面并默认为false，可以自然的丢弃最高小节的加零判断。
+    //单个数字转换用数组实现，
+    var chnNumChar = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    //节权位同样用数组实现，
+    var chnUnitSection = ["", "万", "亿", "万亿", "亿亿"];
+    //节内权位同样用数组实现，
+    var chnUnitChar = ["", "十", "百", "千"];
+
+    //节内转换算法
+    function SectionToChinese(section) {
+        var strIns = '', chnStr = '';
+        var unitPos = 0;
+        var zero = true;
+        while (section > 0) {
+            var v = section % 10;
+            if (v === 0) {
+                if (!zero) {
+                    zero = true;
+                    chnStr = chnNumChar[v] + chnStr;
+                }
+            } else {
+                zero = false;
+                strIns = chnNumChar[v];
+                strIns += chnUnitChar[unitPos];
+                chnStr = strIns + chnStr;
+            }
+            unitPos++;
+            section = Math.floor(section / 10);
+        }
+        return chnStr;
+    }
+
+    //转换算法主函数：
+    function NumberToChinese(num) {
+        var unitPos = 0;
+        var strIns = '', chnStr = '';
+        var needZero = false;
+
+        if (num === 0) {
+            return chnNumChar[0];
+        }
+
+        while (num > 0) {
+            var section = num % 10000;
+            if (needZero) {
+                chnStr = chnNumChar[0] + chnStr;
+            }
+            strIns = SectionToChinese(section);
+            strIns += (section !== 0) ? chnUnitSection[unitPos] : chnUnitSection[0];
+            chnStr = strIns + chnStr;
+            needZero = (section < 1000) && (section > 0);
+            num = Math.floor(num / 10000);
+            unitPos++;
+        }
+
+        return chnStr;
+    }
+
+
+    var test = 'usertask4';
+    var b = test.substring(test.indexOf('k')+1);
+
+    var testA = {
+        'a':'b'
+    };
+    var testB = ['22'];
+
+    console.log(Array.isArray(testA));
+    console.log(Array.isArray(testB));
+
+//    var picker = new Picker("test1","test2",3);
+//    picker.init();
+
+    var a = '1991-04-21';
+    console.log(jsGetAge(a));
+
     $(function () {
-        var tab = $('#tt').tabs('getSelected');
-        var index = $('#tt').tabs('getTabIndex',tab);
-        console.log(tab);
-        console.log(index);
+        var val = '打飞机规范和违法和违法和王菲为覅贺卫方IEWiFi额外个很好改一个号 该好好干 公共'+'\n' +
+            '';
+        $('#textArea').text(val);
+
+        autoTextarea( $('#textArea')[0]);
+
+        $('#textArea').on({
+            keyup: function (e) {
+                if (e.keyCode == 13) {
+                    $(this).val($(this).val()+ "\t");
+                }
+            }
+        });
+
+
+        var a = '1991-04-10 25:25';
+        var b = parseTimeToCN(a);
+        console.log(b);
+
+        //将时间格式转化为yyyy年MM月dd日 HH时mm分ss秒
+        function parseTimeToCN(time){
+            try{
+                var newTime =  time.replace(/\-/, '年');
+                newTime =  newTime.replace(/\-/, '月');
+                newTime =  newTime.replace(/ /, '日');
+                newTime =  newTime.replace(/:/, '时');
+                newTime =  newTime.replace(/:/, '分');
+                if(newTime.indexOf('时') != -1){
+                    newTime += '分';
+                }else{
+                    newTime += '日';
+                }
+                return newTime;
+            }catch(e){
+                return time;
+            }
+        }
+
+        checkboxClick();
+
+        $('#tj').on('click',function () {
+            var param = {};
+            var checkName = $('#form').find("input:checked[type='checkbox']").attr('name');
+            var checkVal = $('#form').find("input:checked[type='checkbox']").val();
+            param[checkName] = checkVal;
+
+            var radioName = $('#form').find("input:checked[type='radio']").attr('name');
+            var radioVal = $('#form').find("input:checked[type='radio']").val();
+            param[radioName] = radioVal;
+
+            console.log(param);
+        });
+
+    });
+
+    function jsGetAge(strBirthday){
+        var returnAge;
+        var strBirthdayArr=strBirthday.split("-");
+        var birthYear = strBirthdayArr[0];
+        var birthMonth = strBirthdayArr[1];
+        var birthDay = strBirthdayArr[2];
+
+        d = new Date();
+        var nowYear = d.getFullYear();
+        var nowMonth = d.getMonth() + 1;
+        var nowDay = d.getDate();
+
+        if(nowYear == birthYear){
+            returnAge = 0;//同年 则为0岁
+        } else {
+            var ageDiff = nowYear - birthYear ; //年之差
+            if(ageDiff > 0){
+                if(nowMonth == birthMonth) {
+                    var dayDiff = nowDay - birthDay;//日之差
+                    if(dayDiff < 0) {
+                        returnAge = ageDiff - 1;
+                    } else {
+                        returnAge = ageDiff ;
+                    }
+                } else {
+                    var monthDiff = nowMonth - birthMonth;//月之差
+                    if(monthDiff < 0) {
+                        returnAge = ageDiff - 1;
+                    } else {
+                        returnAge = ageDiff ;
+                    }
+                }
+            } else {
+                returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+            }
+        }
+        return returnAge;//返回周岁年龄
+    }
+
+    var log = function(msg){
+        window.console && console.log(msg)
+    };
+
+    function asyncThing1(){
+        var dfd = $.Deferred();
+        setTimeout(function(){
+            log('asyncThing1 seems to be done...');
+            dfd.resolve('1111');
+        },1000);
+        return dfd.promise();
+    }
+    function asyncThing2(){
+        var dfd = $.Deferred();
+        setTimeout(function(){
+            log('asyncThing2 seems to be done...');
+            dfd.resolve('222');
+        },1500);
+        return dfd.promise();
+    }
+    function asyncThing3(){
+        var dfd = $.Deferred();
+        setTimeout(function(){
+            log('asyncThing3 seems to be done...');
+            dfd.resolve('333');
+        },2000);
+        return dfd.promise();
+    }
+    /* do it */
+    $.when( asyncThing1(), asyncThing2(), asyncThing3() ).done(function(res1, res2, res3){
+//        log('all done!');
+//        log(res1 + ', ' + res2 + ', ' + res3);
+    });
+
+    function autoTextarea(elem, extra, maxHeight) {
+        extra = extra || 0;
+        var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+            isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+            addEvent = function (type, callback) {
+                elem.addEventListener ?
+                    elem.addEventListener(type, callback, false) :
+                    elem.attachEvent('on' + type, callback);
+            },
+            getStyle = elem.currentStyle ? function (name) {
+                var val = elem.currentStyle[name];
+
+                if (name === 'height' && val.search(/px/i) !== 1) {
+                    var rect = elem.getBoundingClientRect();
+                    return rect.bottom - rect.top -
+                        parseFloat(getStyle('paddingTop')) -
+                        parseFloat(getStyle('paddingBottom')) + 'px';
+                }
+
+                return val;
+            } : function (name) {
+                return getComputedStyle(elem, null)[name];
+            },
+            minHeight = parseFloat(getStyle('height'));
+
+        elem.style.resize = 'none';
+
+        var change = function () {
+            var scrollTop, height,
+                padding = 0,
+                style = elem.style;
+
+            if (elem._length === elem.value.length) return;
+            elem._length = elem.value.length;
+
+            if (!isFirefox && !isOpera) {
+                padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+            }
+            scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            elem.style.height = minHeight + 'px';
+            if (elem.scrollHeight > minHeight) {
+                if (maxHeight && elem.scrollHeight > maxHeight) {
+                    height = maxHeight - padding;
+                    style.overflowY = 'auto';
+                } else {
+                    height = elem.scrollHeight - padding;
+                    style.overflowY = 'hidden';
+                }
+                style.height = height + extra + 'px';
+                scrollTop += parseInt(style.height) - elem.currHeight;
+                document.body.scrollTop = scrollTop;
+                document.documentElement.scrollTop = scrollTop;
+                elem.currHeight = parseInt(style.height);
+            }
+
+        };
+
+        addEvent('propertychange', change);
+        addEvent('input', change);
+        addEvent('focus', change);
+        change();
+    }
+
+    /**
+     * 两个数组比较去重
+     * @param a 数组a
+     * @param b 数组b
+     */
+    function uniqueTwoArray(a,b){
+        var tempArray = [];//临时数组
+        var resultArray = [];//结果数组
+
+        for (var i = 0; i < a.length; i++) {
+            tempArray[a[i]] = true;
+        }
+
+        for (var j = 0; j < b.length; j++) {
+            if (!tempArray[b[j]]) {
+                resultArray.push(b[j]);
+            }
+        }
+        return resultArray;
+    }
+
+    /**
+     * 新构造一个数组
+     * @param a 数组
+     * @param p 参数
+     */
+    function newArray(a,p){
+        var temp = [];
+        for(var i=0;i<a.length;i++){
+            temp.push($(a[i]).attr(p))
+        }
+        return temp;
+    }
+
+    //checkbox复选框
+    function checkboxClick() {
+        var $checkbox = $("input[type='checkbox']");
+        $.each($checkbox,function (i,o) {
+            $(o).off('click').on('click',function (e) {
+                var $this = $(this);
+                var cascade = $this.attr('cascade');//checkbox的级联属性
+                var isCheck = $this.prop('checked');//是否勾选
+
+                //当前复选框checkbox下的相邻input输入框
+                var cbIpt = $this.parent().find("input[type='text'][cascade^='"+cascade+"-ipt']");
+                //当前复选框checkbox下的单选框radio
+                var cbRadio = $this.parent().find("input[type='radio'][cascade^='"+cascade+"-radio']");
+                //当前复选框checkbox下的单选框radio下的input输入框
+                var cbRadioIpt = $this.parent().find("input[type='text'][cascade^='"+cascade+"-radio'][cascade*='-ipt-']");
+                console.log(cbRadioIpt);
+
+                //单选框radio的点击调用
+                radioClick(cascade);
+
+                if(isCheck){//选中
+                    //输入框的处理
+                    $(cbIpt).each(function (iptI,iptO) {
+                        $(iptO).removeAttr('readonly');
+                    });
+                    //输入框下的单选框radio
+                    $(cbRadio).each(function (radioI,radioO) {
+                        $(radioO).removeAttr('disabled');
+                    });
+
+                }else{//取消勾选
+                    //输入框的处理
+                    $(cbIpt).each(function (iptI,iptO) {
+                        $(iptO).val('').attr('readonly','readonly');
+                    });
+
+                    //输入框下的单选框radio
+                    $(cbRadio).each(function (radioI,radioO) {
+                        $(radioO).prop('checked',false).attr('disabled','disabled');
+                    });
+
+                    $(cbRadioIpt).each(function (cbRadioIptI,cbRadioIptO) {
+                        $(cbRadioIptO).val('').attr('readonly','readonly');
+                    })
+                }
+            })
+        });
+    }
+
+    /**
+     * radio单选框的勾选
+     * @param checkAttr checkbox的属性名
+     */
+    function radioClick(checkAttr){
+        var $radio = $("input[type='radio'][cascade^='"+checkAttr+"-radio']");
+        $.each($radio,function (i,o) {
+            $(o).off('click').on('click',function (e) {
+                var $this = $(this);
+                var cascade = $this.attr('cascade');//radio的级联属性
+                var isCheck = $this.prop('checked');//是否勾选
+
+                var cbRadio = cascade.substring(0,cascade.lastIndexOf('-'));
+
+                //当前radio单选框下的input输入框
+                var cbRadioIpt = $this.parent().find("input[type='text'][cascade^='"+cascade+"'][cascade*='-ipt-']");
+                var lowI = newArray(cbRadioIpt,'cascade');
+
+                //所有radio单选框下的input输入框
+                var allCbRadioIpt = $this.parent().find("input[type='text'][cascade^='"+cbRadio+"'][cascade*='-ipt-']");
+                var upI = newArray(allCbRadioIpt,'cascade');
+
+                //筛选后input的属性值
+                var uniqueCascade = uniqueTwoArray(lowI,upI);
+
+                if(isCheck){
+                    //输入框的处理
+                    $(cbRadioIpt).each(function (iptI,iptO) {
+                        $(iptO).removeAttr('readonly');
+                    });
+                    //其他radio下input框地处理
+                    for(var n=0;n<uniqueCascade.length;n++){
+                        $this.parent().find("input[type='text'][cascade='"+uniqueCascade[n]+"']").val('').attr('readonly','readonly');
+                    }
+                }
+            })
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var window_type = 'open_url';
+//    var flwsbms = '';
+//    var flwsbmArry = [];
+//
+//    function getObjLength(obj) {
+//        var count = 0;
+//        for(var k in obj){
+//            if(obj.hasOwnProperty(k)){
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
+//    var on = {
+//        "34432":{
+//            'hehe':1
+//        },
+//        "dsffefe":{
+//            'hhe':2
+//        }
+//    };
+//    console.log(getObjLength(on));
+
+//    $(function () {
+//        var tab = $('#tt').tabs('getSelected');
+//        var index = $('#tt').tabs('getTabIndex',tab);
+//        console.log(tab);
+//        console.log(index);
 
 
 //        var flwsData = {
@@ -78,10 +701,10 @@
 //        console.log(flwsbms)
 
 
-    });
+//    });
 
     //easyui字典路径
-    var portal = '../../..';
+//    var portal = '../../..';
 
 //    var aes = [
 //       111,101,204,305,1158,505,547,258

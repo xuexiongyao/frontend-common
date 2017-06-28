@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+
 .main{
     /*页码查询框的宽度添加*/
     .pagination{
@@ -52,57 +53,60 @@
         //min-height: 100px;
         background-color: #fff;
         box-shadow: 0 0 8px #aaa;
-        >div{
-            padding: 0 10px;
-            margin-top: 10px;
+        .condition-area{
             >div{
-                @include clearfix;
-                border-bottom:1px dashed #ccc;
-                height: 20px;
-                line-height: 20px;
-                .search-title{
-                    float:left;
-                    color: #0D6193;
-                    font-size: fontSize(base);
-                }
-                .search-add{
-                    float:right;
-                }
-            }
-            ul{
-                list-style-type: none;
-                margin: 10px 0 0px 0;
-                padding: 0;
-                border: 0;
-                width: 100%;
-                height: auto;
-                @include clearfix;
-                li{
-                    float: left;
-                    margin: 5px 0;
-                    width:33.33333%;
-                    .pro{
-                        display: inline-block;
-                        font-size: fontSize(small);
-                        //font-weight: bold;
-                        margin:  0 5px;
-                        text-align: right;
-                        width:80px;
-                        vertical-align: top;
+                padding: 0 10px;
+                margin-top: 10px;
+                >div{
+                    @include clearfix;
+                    border-bottom:1px dashed #ccc;
+                    height: 20px;
+                    line-height: 20px;
+                    .search-title{
+                        float:left;
+                        color: #0D6193;
+                        font-size: fontSize(base);
                     }
-                    .condition{
-                        margin-left: 10px;
+                    .search-add{
+                        float:right;
                     }
-                    .del-condition{
-                        display:none;
-                        color: #ff3a41;
-                        cursor:pointer;
-                        margin-left:2px;
-                        font-size: 14px;
+                }
+                ul{
+                    list-style-type: none;
+                    margin: 10px 0 0px 0;
+                    padding: 0;
+                    border: 0;
+                    width: 100%;
+                    height: auto;
+                    @include clearfix;
+                    li{
+                        float: left;
+                        margin: 5px 0;
+                        width:33.33333%;
+                        .pro{
+                            display: inline-block;
+                            font-size: fontSize(small);
+                            //font-weight: bold;
+                            margin:  0 5px;
+                            text-align: right;
+                            width:80px;
+                            vertical-align: top;
+                        }
+                        .condition{
+                            margin-left: 10px;
+                        }
+                        .del-condition{
+                            display:none;
+                            color: #ff3a41;
+                            cursor:pointer;
+                            margin-left:2px;
+                            font-size: 14px;
+                        }
                     }
                 }
             }
         }
+
         .bottom-btn{
             margin: 30px auto 20px auto;
             text-align: center;
@@ -320,6 +324,67 @@
             input{
                 vertical-align: middle;
             }
+        }
+    }
+}
+
+//模版查询
+#model_dialog{
+    .model-name{
+        height:30px;
+        line-height: 30px;
+        margin:20px 60px;
+        .pro{
+            display: inline-block;
+            margin-right:24px;
+        }
+    }
+    .model-limit{
+        margin:0 60px;
+        .pro{
+            display: inline-block;
+            margin-right:20px;
+            vertical-align: top;
+        }
+        .content{
+            width:400px;
+            display: inline-block;
+            .item{
+                width: 120px;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
+
+//模板列表
+.model-accordion{
+    box-shadow: 0 0 8px #aaa;
+    width:1100px;
+    margin:10px auto;
+    .panel-title{
+        color: #0D6193 !important;
+    }
+    .quick-query{
+        text-align: center;
+        margin: 10px 0;
+        .pro{
+            margin-right: 15px;
+            color: #0D6193;
+        }
+        .search-btn{
+            color:  #0e6595;
+            margin-left: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
+    .model-limit{
+        text-align: center;
+        margin:10px 0;
+        a{
+            margin: 0 5px;
         }
     }
 }

@@ -1,20 +1,20 @@
 ﻿/**
-* jQuery EasyUI 1.3.6
-* Copyright (c) 2009-2014 www.jeasyui.com. All rights reserved.
-*
-* Licensed under the GPL or commercial licenses
-* To use it on other terms please contact author: info@jeasyui.com
-* http://www.gnu.org/licenses/gpl.txt
-* http://www.jeasyui.com/license_commercial.php
-* 
-* jQuery EasyUI 1.3.6 validatebox 组件扩展 
-* author : redstorm 
-* 2014-05-01
-* 
-* 依赖文件：
-*   1、tools.js
-* 
-*/
+ * jQuery EasyUI 1.3.6
+ * Copyright (c) 2009-2014 www.jeasyui.com. All rights reserved.
+ *
+ * Licensed under the GPL or commercial licenses
+ * To use it on other terms please contact author: info@jeasyui.com
+ * http://www.gnu.org/licenses/gpl.txt
+ * http://www.jeasyui.com/license_commercial.php
+ *
+ * jQuery EasyUI 1.3.6 validatebox 组件扩展
+ * author : redstorm
+ * 2014-05-01
+ *
+ * 依赖文件：
+ *   1、tools.js
+ *
+ */
 
 (function ($) {
 
@@ -188,7 +188,7 @@
 		},
 
 		money: {
-			validator: function (value) { 
+			validator: function (value) {
 				var returnValue = /(^-?|^\+?|\d)\d+$/.test(value) || /(^-?|^\+?|^\d?)\d*\.\d+$/.test(value);
 				if (returnValue) {
 					var dotPos = value.indexOf(".");
@@ -199,13 +199,13 @@
 				if(value<0){
 					returnValue=false;
 				}
-				return returnValue; 
+				return returnValue;
 			},
 			message: "请输入正确的货币金额（小数两位）"
 		},
 
 		letter: {
-			validator: function (value) { 
+			validator: function (value) {
 				return /^[a-zA-Z]*$/.test(value);
 			},
 			message: "请输入英文字母"
@@ -219,14 +219,14 @@
 		},
 
 		lowerLetterOrNum: {
-			validator: function (value) { 
+			validator: function (value) {
 				return /^[0-9a-z]*$/.test(value);
 			},
 			message: "请输入小写字母或数字"
 		},
 
 		upperLetterOrNum: {
-			validator: function (value) { 
+			validator: function (value) {
 				return /^[0-9A-Z]*$/.test(value);
 			},
 			message: "请输入大写字母或数字"
@@ -240,7 +240,7 @@
 		},
 
 		chinese: {
-			validator: function (value) { 
+			validator: function (value) {
 				return /^[\u4E00-\u9FA5]+$/i.test(value); // [\u4E00-\u9FA5]为汉字﹐[\uFE30-\uFFA0]为全角符号
 			},
 			message: "请输入纯中文汉字"
@@ -254,21 +254,21 @@
 		},
 
 		variable: {
-			validator: function (value) { 
+			validator: function (value) {
 				return /^[0-9a-zA-Z_]*$/.test(value);
 			},
 			message: "请输入正确的变量（由字母、数字、下划线组成）"
 		},
 
 		jndi: {
-			validator: function (value) { 
+			validator: function (value) {
 				return /^[0-9A-Za-z_\/]*$/.test(value);
 			},
 			message: "请输入正确的数据源jndi（字母、数字、下划线、反斜杠组成）"
 		},
 
 		javaClass: {
-			validator: function (value) { 
+			validator: function (value) {
 				if (/^[0-9A-Za-z_\.]*$/.test(value)) {
 					if (!/(.?)\.$/.test(value) && !/^\.(.?)/.test(value) && /^(?!.*?\.\.).*$/.test(value)) {
 						return true;
@@ -280,7 +280,7 @@
 		},
 
 		ip: {
-			validator: function (value) { 
+			validator: function (value) {
 				var re=/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/; //匹配IP地址的正则表达式
 				if (re.test(value)) {
 					if (RegExp.$1.length > 3 || RegExp.$2.length > 3 || RegExp.$3.length > 3 || RegExp.$4.length > 3) {
@@ -296,7 +296,7 @@
 		},
 
 		port: {
-			validator: function (value) { 
+			validator: function (value) {
 				if (/^[+]?[1-9]+\d*$/i.test(value)) {
 					var valueInt = parseInt(value);
 					if (value > 0 && value < 65535) {
@@ -309,7 +309,7 @@
 		},
 
 		folder: {
-			validator: function (value) { 
+			validator: function (value) {
 				var regu =/(^[^\.])/;
 				var re = new RegExp(regu);
 				if (!re.test(value)) {
@@ -327,7 +327,7 @@
 
 		fileName: {
 			validator: function (value) {
-				return !/[\\\/\*\?\|:<>]/g.test(value); 
+				return !/[\\\/\*\?\|:<>]/g.test(value);
 			},
 			message: "请输入正确的文件名（不能包含字符 \\/:*?\"<>|）"
 		},
@@ -343,7 +343,7 @@
 						returnValue = true;
 					}
 				}
-				return returnValue; 
+				return returnValue;
 			},
 			message: "请选择一个图片格式的文件（JPG,JPEG,GIF,PNG,BMP）"
 		},
@@ -364,7 +364,7 @@
 
 		phone: {
 			validator : function(value) {
-				return /(^([0][1-9]{1}[0-9]{1,2}[-]?)?\d{7,8}(-\d{1,4})?$)|(^[1][3|4|5|7|8]{1}\d{9}$)|(^\d{3,8}$)/.test(value);
+				return /(^([0][1-9]{1}[0-9]{1,2}[-]?)?\d{7,8}(-\d{1,4})?$)|(^[1][3|4|5|7|8]{1}\d{9}$)/.test(value);
 			},
 			message : "请输入正确的电话号码（固定电话或移动电话）"
 		},
@@ -382,18 +382,18 @@
 				}
 				return bSuccess;
 			},
-			message : "请输入正确的电话号码（多个号码之间用'/'分隔）"			
-			
+			message : "请输入正确的电话号码（多个号码之间用'/'分隔）"
+
 		},
 		mobile: {
 			validator : function(value) {
-				return /(^[1][3|5|7|8]{1}\d{9}$)/.test(value);
+				return /(^[1][3|4|5|7|8]{1}\d{9}$)/.test(value);
 			},
 			message : "请输入正确的移动电话"
 		},
 		manyMobils:{
 			validator : function(value) {
-				var pattern=/(^[1][3|5|7|8]{1}\d{9}$)/;
+				var pattern=/(^[1][3|4|5|7|8]{1}\d{9}$)/;
 				var phoneArray=value.split('/'); //
 				var bSuccess=true;
 				for(var i=0;i<phoneArray.length;i++){
@@ -404,8 +404,8 @@
 				}
 				return bSuccess;
 			},
-			message : "请输入正确的移动电话（多个号码之间用'/'分隔）"					
-			
+			message : "请输入正确的移动电话（多个号码之间用'/'分隔）"
+
 		},
 		zipCode: {
 			validator : function(value) {
@@ -415,7 +415,7 @@
 		},
 
 		contains: {
-			validator: function (value, param) { 
+			validator: function (value, param) {
 				if (param) {
 					if (param[0]) {
 						if (value.indexOf(param[0]) == -1) {
@@ -423,13 +423,13 @@
 						}
 					}
 				}
-				return true; 
+				return true;
 			},
 			message: "输入的内容包含“{0}”"
 		},
 
 		startsWith: {
-			validator: function (value, param) { 
+			validator: function (value, param) {
 				if (param) {
 					if (param[0]) {
 						if (value.indexOf(param[0]) != 0) {
@@ -437,13 +437,13 @@
 						}
 					}
 				}
-				return true; 
+				return true;
 			},
 			message: "输入的内容以“{0}”作为起始字符"
 		},
 
 		endsWith: {
-			validator: function (value, param) { 
+			validator: function (value, param) {
 				if (param) {
 					if (param[0]) {
 						if (value.substr(value.length - param[0].length) != param[0]) {
@@ -451,7 +451,7 @@
 						}
 					}
 				}
-				return true; 
+				return true;
 			},
 			message: "输入的内容以“{0}”作为结束字符"
 		},
@@ -469,6 +469,26 @@
 			},
 
 			message: "输入长度在 {0} 与 {1} 之间的字符,一个汉字等于三个字符"
+		},
+
+		noSpaceLength: {
+			validator : function(value, param) {
+				var spaceRe = /\s/g;
+				if(spaceRe.test(value)){
+					return false;
+				}else{
+					//根据第三位字符串来分割验证 //检测空格(/\s/.test('as df')
+					if(param[2]){
+						var arr = value.split(param[2]);
+						return arr.length >= param[0] && arr.length <= param[1];
+					}
+
+					var len = $.trim(value.replace(/[^\x00-\xff]/g,'aaa')).length;
+					return len >= param[0] && len <= param[1];
+				}
+			},
+
+			message: "输入长度在 {0} 与 {1} 之间的无空格字符,一个汉字等于三个字符"
 		},
 
 		minLength: {
@@ -497,6 +517,23 @@
 				return true;
 			},
 			message: "输入最多输入 {0} 个字符"
+		},
+
+		noSpaceMaxLength: {
+			validator: function (value, param) {
+				var spaceRe = /\s/g;
+				if(spaceRe.test(value)){
+					return false;
+				}else if (param) {
+					if (param[0] != undefined) {
+						if (value.length > param[0]) {
+							return false;
+						}
+					}
+				}
+				return true;
+			},
+			message: "输入最多输入 {0} 个字符,无空格"
 		},
 
 		date: {
@@ -544,7 +581,7 @@
 		equals: {
 			validator: function (value, param) {
 				var type = param[0];
-				var val = param[1]; 
+				var val = param[1];
 				if (type) {
 					switch (String(type).toLowerCase()) {
 						case "jquery":
@@ -563,7 +600,7 @@
 			},
 			message: "输入的内容不匹配"
 		},
-		
+
 		notEmpty: {
 			validator: function (value, param) {
 				if (param) {
@@ -582,9 +619,72 @@
 				var re=/^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$/;
 				return re.test(value);
 			},
+
 			message: "请输入正确的车牌号码"
 		},
-
+		cjh: {
+			validator: function (value) {
+				var re=/^[A-Z0-9]{17}$/;
+				return re.test(value);
+			},
+			message: "请输入正确的(VIN)车架号"
+		},
+		fdjh: {
+			validator: function (value) {
+				var re=/^[0-9A-Z]{0,30}$/;
+				return re.test(value);
+			},
+			message: "请输入正确的发动机号(30位内的数字和大写字母)"
+		},
+		yhkh: {
+			validator: function (value) {
+				var re=/^([0-9]{16}|[0-9]{19})$/;
+				return re.test(value);
+			},
+			message: "输入正确的16位或者19位银行卡号!"
+		},
+		imei: {
+			validator: function (value) {
+				var re=/^([A-Za-z0-9]{15})$/;
+				return re.test(value);
+			},
+			message: "输入正确的(15位数字(英文字母))IMEI号!"
+		},
+		imsi: {
+			validator: function (value) {
+				var re=/^([0-9]{15})$/;
+				return re.test(value);
+			},
+			message: "输入正确的(15位数字)IMSI号!"
+		},
+		xlh: {
+			validator: function (value) {
+				var re=/^[0-9A-Z]{0,50}$/;
+				return re.test(value);
+			},
+			message: "序列号必须是50位以下的数字或大写字母!"
+		},
+		xckybh: {
+			validator: function (value) {
+				var re=/^K[0-9]{22}$/;
+				return re.test(value);
+			},
+			message: "现场勘验编号输入不合法（23位字符组成，首字母为K,其他字符为数字）！"
+		},
+		djhgyh: {
+			validator: function (value) {
+				var re=/^[A-Z|0-9|\-]{0,20}$/;
+				return re.test(value);
+			},
+			message: "电机或钢印号输入不合法（20位以内的大写字母、数字或-）！"
+		},
+		iccid: {
+			validator: function (value) {
+				var re=/^[8][9][8][6][0][A-Z0-9]{15}$/;
+				return re.test(value);
+			},
+			message: "ICCID输入不合法（89860+15位数字和大写字母组合）！"
+		}
 	};
 
 	$.extend($.fn.validatebox.defaults.rules, rules);

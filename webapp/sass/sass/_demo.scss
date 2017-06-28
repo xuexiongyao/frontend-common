@@ -1,6 +1,6 @@
 @charset "utf-8";
 body{
-    @include attrMarginPadding(10px);
+    @include attrMarginPadding(0);
     font-family:fontFamily(yh);
     color: colors(textColor);
 }
@@ -74,6 +74,12 @@ body{
                     &:hover{
                         border-color: colors(borderFocus);
                         @include box-shadow(0 0 3px 0 colors(borderFocus));
+                    }
+                }
+                >textarea[readonly],>textarea[readonly='readonly']{
+                    &:hover{
+                        border:0;
+                        box-shadow: none;
                     }
                 }
             }

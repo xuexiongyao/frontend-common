@@ -11,7 +11,17 @@ $(function(){
 
 var listConfig = init.listConfig || new ListConfig();
 var tableCookieName = init.cookieName || (location.pathname).substr(0,location.pathname.indexOf('.')) + '_tableHeaderC';
-var queryListParam = init.queryListParam || {};    //查询条件
+var queryListParam = {};    //查询条件
+paramRest();
+//重置查询条件
+function paramRest(){
+    queryListParam = {};
+    if(init.queryListParam){
+        for(var k in init.queryListParam){
+            queryListParam[k] = init.queryListParam[k];
+        }
+    }
+}
 //生成查询条件模块
 function queryModule(){
     //查询条件输入框,勾选项
@@ -34,15 +44,42 @@ function queryModule(){
                 +'<span class="pro">'+list_config[k][1]+'</span>'
                 +'<input name="'+k+'" id="query_input_'+k_mark+'" class="easyui-validatebox Wdate validatebox-text val"'
                 +'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',errDealMode:2,autoPickDate:true});"'
-                +'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>'
-                +'</div>';
+                +'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
+            if (list_config[k].length > 5) {
+                query_item = '<div class="item ' + k_mark + '" >'
+                    + '<span class="pro">' + list_config[k][1] + '</span>'
+                    + '<input name="' + k + '" id="query_input_' + k_mark + '" class="easyui-validatebox Wdate validatebox-text" '
+                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',maxDate:\'#F{$dp.$D(\\\'query_input_'+list_config[k][5]+'\\\')||\\\'%y-%M-%d\\\'}\',errDealMode:2,autoPickDate:true});"'
+                    + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
+
+                query_item += '至'
+                    + '<input name="'+list_config[k][5]+'" id="query_input_'+list_config[k][5]+'" class="easyui-validatebox Wdate validatebox-text" style="width:120;height:22;"'
+                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd\',minDate:\'#F{$dp.$D(\\\'query_input_' + k_mark + '\\\')}\',maxDate:\'%y-%M-%d\',errDealMode:2,autoPickDate:true});"'
+                    + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd\\\']\']"/>';
+
+            }
+            query_item += '</div>';
         }else if(list_config[k][0] == 'datetimebox'){
             query_item = '<div class="item '+k_mark+'" >'
                 +'<span class="pro">'+list_config[k][1]+'</span>'
                 +'<input name="'+k+'" id="query_input_'+k_mark+'" class="easyui-validatebox Wdate validatebox-text val"'
                 +'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',errDealMode:2,autoPickDate:true});"'
-                +'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd HH:mm:ss\\\']\']"/>'
-                +'</div>';
+                +'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd HH:mm:ss\\\']\']"/>';
+
+            if (list_config[k].length > 5) {
+                query_item = '<div class="item ' + k_mark + '" >'
+                    + '<span class="pro">' + list_config[k][1] + '</span>'
+                    + '<input name="' + k + '" id="query_input_' + k_mark + '" class="easyui-validatebox Wdate validatebox-text" '
+                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',maxDate:\'#F{$dp.$D(\\\'query_input_'+list_config[k][5]+'\\\')||\\\'%y-%M-%d %H:%m:%s\\\'}\',errDealMode:2,autoPickDate:true});"'
+                    + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd HH:mm:ss\\\']\']"/>';
+
+                query_item += '至'
+                    + '<input name="'+list_config[k][5]+'" id="query_input_'+list_config[k][5]+'" class="easyui-validatebox Wdate validatebox-text" style="width:120;height:22;"'
+                    + 'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate:\'#F{$dp.$D(\\\'query_input_' + k_mark + '\\\')}\',maxDate:\'%y-%M-%d %H:%m:%s\',errDealMode:2,autoPickDate:true});"'
+                    + 'data-options="required:false,validType:[\'date[\\\'yyyy-MM-dd HH:mm:ss\\\']\']"/>';
+
+            }
+            query_item += '</div>';
         }
 
         $('#query_panel .query-item').append(query_item);
@@ -73,6 +110,16 @@ function queryModule(){
                 panelMaxHeight:200,
                 panelWidth: 'auto'
             });
+        }else if (list_config[k][0] == 'textbox_org') {
+            var orgNameInput = 'query_input_' + k_mark;//机构名显示框
+            //生成一个保存机构代码的输入框
+            //var orgCodeInput = k_mark.replace("_orgname", "");
+            //去掉文字框的name,并添加隐藏字段
+            //$("#" + orgNameInput).removeAttr('name').after('<input type="hidden" class="val" id="' + orgCodeInput + '" name="' + orgCodeInput + '">');
+            initSingleSelectOrg(orgNameInput, {rootOrgCode:init.rootOrgCode || null}, {text: orgNameInput, id: ''}, null);
+            //$('#query_input_badw_gajgmc').textbox();
+            $('#'+orgNameInput).textbox();
+            //$('#query_input_gxdw_orgname').next().width(178);
         }
 
         //显示查询勾选项
@@ -145,7 +192,7 @@ function queryModule(){
 
     //点击查询
     $('#query_btn').on('click',function(){
-        queryListParam = init.queryListParam || {};
+        paramRest();
         $('#query_panel input[name]').each(function(){
             var _this = $(this);
             var pro = _this.prop('name');
@@ -169,8 +216,15 @@ function getTableData(get_header_info){
     var length = table_header_info.length;
     var thead_arr = [];//表头数组
     thead_arr[0] = {title : '编号',field : '_num',sortable : true,width : 100,checkbox:true};
+    if(init.rowNumber){
+        thead_arr[1] = {title : '序号',field : 'num',align:'center',sortable : false,width : 20,formatter:numberParse};
+    }
     if(init.isHandle){
-        thead_arr[length + 1] = {
+        var czLen = length + 1;
+        if(init.rowNumber) {
+            czLen ++;
+        }
+        thead_arr[czLen] = {
             title : '操作',
             field : 'process',
             width : 100,
@@ -184,14 +238,23 @@ function getTableData(get_header_info){
         var _title = listConfig.config[_field];
         //生成表头
         var info_obj;
-        if(_title[5] == 'address'){
+        if(_field == 'asjbh'){
+            info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:datagridProcessFormater_asjbh};
+        }else if(_title[5] == 'address'){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:parseAddress};
+        }else if(_title[6]){
+            info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:_title[6]};
         }else if(_title[2] == null){
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true};
         }else{
             info_obj = {title:_title[1],field:_field,align:'center',width:_title[3],sortable : true,formatter:dictFormatter,dictName:_title[2]};
         }
-        thead_arr[i+1] = info_obj;
+        if(init.rowNumber){
+            thead_arr[i+2] = info_obj;
+        }else{
+            thead_arr[i+1] = info_obj;
+        }
+
     }
     //继承传递的属性和事件参数
     var tableOptions = $.extend({
@@ -288,10 +351,19 @@ function getTableSetDom(){
     }
 }
 
+function numberParse(val,row,index){
+    return (index + 1);
+}
+
 //地址信息靠右显示
 function parseAddress(val,row,index){
     var adress = val || '';
     return '<div style="float:right" title="'+adress+'">'+adress+'</div>';
+}
+
+function datagridProcessFormater_asjbh(val, row, index) {
+    var res = '<span style="float:right;text-decoration:underline;cursor:pointer;">' + row.asjbh + '</span>';
+    return res;
 }
 
 //获取表头cookie信息(数组)

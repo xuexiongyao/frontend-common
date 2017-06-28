@@ -1,5 +1,6 @@
 /**
  * Created by christ on 2016/11/3.
+ * description：法律文书公共方法js文件
  */
 
 /**
@@ -7,11 +8,11 @@
  */
 function setPage() {
     var bodyHeight = $(window).height();
-    $('.flws-main').css('height', (bodyHeight - 160) + 'px');
-    $('.flws-tabs-title').css('height', (bodyHeight - 192) + 'px');
-    $('.flws-main-con').css('height', (bodyHeight - 226) + 'px');
-    $('.flws-main-con-l,.flws-main-con-r,.flws-mode-right').css('height', (bodyHeight - 226) + 'px');
-    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 226) * 0.49 - 39) + 'px')
+    $('.flws-main').css('height', (bodyHeight - 15) + 'px');
+    $('.flws-main-con').css('height', (bodyHeight - 52) + 'px');
+    $('.flws-main-con-l,.flws-main-con-r,.flws-mode-right').css('height', (bodyHeight - 52) + 'px');
+    $('.flws-main-con-l .flws_xyr_area_wcl .xyr_box,.flws-main-con-l .flws_xyr_area_ycl .xyr_box').css('height', ((bodyHeight - 52) * 0.49 - 39) + 'px');
+    $('.flws_main_con_r_mask span').css('margin-top',(bodyHeight-72)/2 + 'px');
 }
 
 /**
@@ -106,23 +107,12 @@ function resizeTextarea() {
     t.style.height = h + "px";
 }
 
-//用'\t'替换回车
-function replaceEnter() {
-    //$("textarea").off('keyup').on('keyup', function (e) {
-    //    resizeTextarea();
-    //    if(e.which == 13){
-    //        $(this).val($(this).val()+"\t");
-    //    }
-    //})
-    $('textarea').off().on({
+//自适应高度
+function replaceEnterForCqbg() {
+    $('#cqbg_main_con form textarea').off().on({
         keydown: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');
-        },
-        keyup: function (e) {
-            if (e.which == 13) {
-                $(this).val($(this).val() + "\t");
-            }
         },
         propertychange: function () {
             this.style.height = (this.scrollHeight + 'px');
@@ -134,8 +124,76 @@ function replaceEnter() {
         scroll: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');
+        },
+        focus: function () {
+            this.style.height = '0px';
+            this.style.height = (this.scrollHeight + 'px');
         }
     });
+}
+
+//textarea框根据内容高度自适应高度
+function autoTextarea(elem, extra, maxHeight) {
+    extra = extra || 0;
+    var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+        isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+        addEvent = function (type, callback) {
+            elem.addEventListener ?
+                elem.addEventListener(type, callback, false) :
+                elem.attachEvent('on' + type, callback);
+        },
+        getStyle = elem.currentStyle ? function (name) {
+            var val = elem.currentStyle[name];
+
+            if (name === 'height' && val.search(/px/i) !== 1) {
+                var rect = elem.getBoundingClientRect();
+                return rect.bottom - rect.top -
+                    parseFloat(getStyle('paddingTop')) -
+                    parseFloat(getStyle('paddingBottom')) + 'px';
+            }
+
+            return val;
+        } : function (name) {
+            return getComputedStyle(elem, null)[name];
+        },
+        minHeight = parseFloat(getStyle('height'));
+
+    elem.style.resize = 'none';
+
+    var change = function () {
+        var scrollTop, height,
+            padding = 0,
+            style = elem.style;
+
+        if (elem._length === elem.value.length) return;
+        elem._length = elem.value.length;
+
+        if (!isFirefox && !isOpera) {
+            padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+        }
+        scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+        elem.style.height = minHeight + 'px';
+        if (elem.scrollHeight > minHeight) {
+            if (maxHeight && elem.scrollHeight > maxHeight) {
+                height = maxHeight - padding;
+                style.overflowY = 'auto';
+            } else {
+                height = elem.scrollHeight - padding;
+                style.overflowY = 'hidden';
+            }
+            style.height = height + extra + 'px';
+            scrollTop += parseInt(style.height) - elem.currHeight;
+            document.body.scrollTop = scrollTop;
+            document.documentElement.scrollTop = scrollTop;
+            elem.currHeight = parseInt(style.height);
+        }
+    };
+
+    addEvent('propertychange', change);
+    addEvent('input', change);
+    addEvent('focus', change);
+    change();
 }
 
 /**
@@ -178,6 +236,7 @@ var chnUnitChar = ["", "十", "百", "千"];
 
 //节内转换算法
 function SectionToChinese(section) {
+    var oldSection = section;//初始值
     var strIns = '', chnStr = '';
     var unitPos = 0;
     var zero = true;
@@ -190,7 +249,11 @@ function SectionToChinese(section) {
             }
         } else {
             zero = false;
-            strIns = chnNumChar[v];
+            if(unitPos == 1 && oldSection <=19 && oldSection >=10){
+                strIns = chnUnitChar[0];
+            }else{
+                strIns = chnNumChar[v];
+            }
             strIns += chnUnitChar[unitPos];
             chnStr = strIns + chnStr;
         }
@@ -240,7 +303,9 @@ function Arabia_to_Chinese(Num) {
         Num = Num.replace(",", "");//替换tomoney()中的“,”
         Num = Num.replace(" ", "");//替换tomoney()中的空格
     }
-    Num = Num.replace("￥", "");//替换掉可能出现的￥字符
+    if(Num.indexOf('￥') > -1){
+        Num = Num.replace("￥", "");//替换掉可能出现的￥字符
+    }
     if (isNaN(Num)) { //验证输入的字符是否为数字
         $.messager.show({
             title: '提示',
@@ -435,4 +500,67 @@ function hashObjUnique(o) {
  */
 function isContains(str, substr) {
     return str.indexOf(substr) >= 0;
+}
+
+/**
+ * 是否为中文字符的判断
+ * @param str 字符串
+ * @returns {boolean} 返回值
+ */
+function isChineseChar(str){
+    var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+    return reg.test(str);
+}
+
+/**
+ * 根据出生日期计算年龄
+ * @param strBirthday 出生日期
+ * @returns {*}  年龄
+ */
+function jsGetAge(strBirthday){
+    var returnAge;
+    var strBirthdayArr=strBirthday.split("-");
+    var birthYear = strBirthdayArr[0];
+    var birthMonth = strBirthdayArr[1];
+    var birthDay = strBirthdayArr[2];
+
+    d = new Date();
+    var nowYear = d.getFullYear();
+    var nowMonth = d.getMonth() + 1;
+    var nowDay = d.getDate();
+
+    if(nowYear == birthYear){
+        returnAge = 0;//同年 则为0岁
+    } else {
+        var ageDiff = nowYear - birthYear ; //年之差
+        if(ageDiff > 0){
+            if(nowMonth == birthMonth) {
+                var dayDiff = nowDay - birthDay;//日之差
+                if(dayDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff ;
+                }
+            } else {
+                var monthDiff = nowMonth - birthMonth;//月之差
+                if(monthDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff ;
+                }
+            }
+        } else {
+            returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+        }
+    }
+    return returnAge;//返回周岁年龄
+}
+
+/**
+ * textarea中换行、空格的转译处理
+ */
+function strEnterSpace(obj){
+    if(typeof obj == 'string'){
+        return obj.replace('\n','\\n').replace('\t','\\t');
+    }
 }

@@ -1,30 +1,32 @@
 
-//版本管理获取最新版本号进行对比,如果变化则强制刷新页面
-var jwzhVersion = '1.1.0.8';                       //项目更新时手动修改版本号
-var staticPath = 'http://static.jwzh.com:7777/jwzh';//注意:请同步修改pathConfig.js中的路径!!!
-var pathname = location.pathname;
-
+//【注意】:请同步修改pathConfig.js中的路径!!!
+var staticPath = 'http://static.jwzh.com:7777/jwzh';
+var jwzhVersion = null;
 try{
-	if(staticVersion) jwzhVersion=staticVersion;//门户会生成静态资源的版本号
-}catch (e) {
-	
-}
+    //门户会生成静态资源的版本号
+	if(staticVersion) jwzhVersion = staticVersion;
+}catch (e) {}
 
-
+//之前通过强行刷新页面的方式更新版本
+/*
+var pathname = location.pathname;
 var jwzhVersionOld =  localStorage.getItem(pathname);
 if(jwzhVersionOld){
     if(jwzhVersionOld != jwzhVersion){
         console.log('当前页面地址:',pathname,'版本已更新:'+jwzhVersion);
         localStorage.setItem(pathname, jwzhVersion);
-        /*if(confirm('当前系统版本已更新,是否获取最新页面?')){
+        //if(confirm('当前系统版本已更新,是否获取最新页面?')){
             //localStorage.setItem(pathname, jwzhVersion);
             //location.reload(true);
-        }*/
+        //}
     }
 }else{
     console.log('初始存储版本号:',jwzhVersion);
     localStorage.setItem(pathname, jwzhVersion);
 }
+*/
+
+
 
 //静态资源路径
 //1.各个子项目的路径

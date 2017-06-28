@@ -192,6 +192,9 @@
         height: auto;
         width: 100%;
         border: none;
+        >span{
+            font-size: fontSize(small);
+        }
         .person-add{
             margin: 20px 0 0;
             font-size: 12px;
