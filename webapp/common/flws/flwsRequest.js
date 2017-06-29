@@ -452,7 +452,7 @@ function flwsSaveComplete(data, bm) {
                 DATA.FLWS[bm].status.hasDone = true;
 
                 //TODO 执法公开的单独处理(只针对行政案件)
-                if (bm == 'X020003') {
+                if (bm == 'X020003' || bm == '042164') {
                     DATA.FLWS[bm].status.zfgked = false;
                 }
             }

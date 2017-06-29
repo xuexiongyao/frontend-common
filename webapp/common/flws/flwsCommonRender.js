@@ -548,7 +548,7 @@ function flwsRightPageRenderForEdit(flwsData) {
     $('#saveFlwsAdd_' + bm).text('法律文书编辑保存');
 
     /****行政案件 行政处罚报告书  执法公开编辑按钮单独处理****/
-    if (bm == 'X020003') {
+    if (bm == 'X020003' || bm == '042164') {
         $('#saveFlwsZfgk_' + bm).show().text('执法公开编辑');
     }
 
