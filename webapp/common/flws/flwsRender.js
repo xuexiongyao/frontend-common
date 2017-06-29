@@ -1468,10 +1468,15 @@ function flwsDxListRenderForCx(bm){
     //嫌疑对象列表的背景色处理
     $('#flws_xyr_area_' + bm).css('background', '#f5f5f5').append(checkedXyrStr);
 
-    //绑定点击事件
-    $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
-        flwsClXyrCheckForCx(bm, $(this));
-    });
+    if(xyrCldxlb){//如果有嫌疑对象
+        //绑定点击事件
+        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+            flwsClXyrCheckForCx(bm, $(this));
+        });
+    }else{//无嫌疑对象，嫌疑对象非必选（bx=false）
+        flwsPageRenderForCx(bm);
+    }
+
 
     //保存数据成功后获取法律文书主键，再次点击为编辑
     //if (typeof (DATA.FLWS[bm].status.currentFlwsId) != 'undefined') {
