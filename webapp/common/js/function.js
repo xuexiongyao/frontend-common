@@ -2045,64 +2045,88 @@ function exportExcel(options) {
     });
 }
 
-//笔录人员信息处理
-function userInfoHandle() {
-    var sessionBean = getSessionBean();
+
+//笔录选择人员框处理
+function selectUser(options) {
+    var userId = options.userId;
+    var userDwId = options.userDwId;
+    var exportPanelId = 'blryInfoPanelId';
+    var sessionBean = options.sessionBean;
+    var userOrgId = sessionBean.userOrgId;
     var userOrgName = sessionBean.userOrgName;
-
-    //自动填入开始时间,保存时自动填写结束时间
-    $('#xwxwKssj').val(getCurrentTime()).validatebox();
-    //自动填入询问地点
-    $('#xwxwDdDzmc').textbox('setValue', userOrgName + '询问室');
-    //证件类型
-    $('#bxwxwrCyzjlb').combobox({
-        onChange: function (n, o) {
-            if (n) {
-                if (n == 111) {
-                    $('#bxwxwrZjhm').textbox({
-                        validType: ['sfzh'],
-                        prompt: '请输入正确的身份证号'
-                    })
-                }
-                else {
-                    $('#bxwxwrZjhm').textbox({
-                        validType: '',
-                        prompt: ''
-                    });
-
+    var userName = sessionBean.userName;
+    var userInfoUrl = pathConfig.managePath + '/api/orgUserPublicSelect/expandNode';
+    //点击本人
+    if (options.isBr) {
+        $('#' + userId).textbox('setValue', userName);
+        $('#' + userDwId).textbox('setValue', userOrgName);
+        return false;
+    }
+    //点击选择
+    if ($('#' + exportPanelId).length == 0) {
+        var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
+            + '<div class="base-info">'
+            + '<div class="title">'
+            + '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+            + '</div>'
+            + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
+            + '</div>'
+            + '<div class="tips" style="color:#999;font-size:12px;">'
+            + '<i class="fa fa-info-circle"></i> '
+            + '<span>请选择人员信息</span>'
+            + '</div>'
+            + '</div>';
+        $('body').append(exportHeadSelect);
+        $.ajax({
+            type: 'post',
+            url: userInfoUrl,
+            data: {orgid: userOrgId},
+            dataType: 'json',
+            xhrFields: {withCredentials: true},
+            crossDomain: true,
+            success: function (json) {
+                if (json && json.length) {
+                    for (var i = 0; i < json.length; i++) {
+                        var item = json[i];
+                        var headText = item.text;
+                        var headKey = item.id;
+                        var html = '<div class="item" style="float:left;min-width:120px;margin-top:3px;"><label><input type="checkbox" rel="' + headKey + '"><span>' + headText + '</span></label></div>';
+                        $('#' + exportPanelId + ' .base-info .content').append(html);
+                    }
                 }
             }
-
+        });
+    }
+    //全选事件all-select
+    $('#' + exportPanelId + ' .all-select').off('click').on('click', function () {
+        var checked_status = $(this).prop('checked');
+        $(this).parent().parent().parent().next().find('input:checkbox').prop('checked', checked_status);
+    });
+    $('#' + exportPanelId + ' input:checkbox').prop("checked", false);
+    openDivForm({
+        id: exportPanelId,
+        title: '选择人员',
+        width: 650,
+        onClose: function () {
         }
-    });
-    //出生日期-计算年龄
-    $('#bxwxwrCsrq').change(function(){
-        console.log($(this).val());
-    });
-
-    //记录人--选择
-    $('#jlrBtn').off('click').on('click', function () {
-        selectUser({
-            sessionBean: sessionBean,
-            userId: 'jlrXm',
-            userDwId: 'jlrGzdwDwmc'
-        });
-    });
-    //询问人--选择
-    $('#xwrBtn').off('click').on('click', function () {
-        selectUser({
-            sessionBean: sessionBean,
-            userId: 'xwxwrXm',
-            userDwId: 'xwxwrGzdwDwmc'
-        });
-    });
-    //询问人--本人
-    $('#brBtn').off('click').on('click', function () {
-        selectUser({
-            sessionBean: sessionBean,
-            userId: 'xwxwrXm',
-            userDwId: 'xwxwrGzdwDwmc',
-            isBr: true
-        });
-    });
+    }, [
+        {
+            text: '确定',
+            handler: function () {
+                var userArr = [];
+                $('#' + exportPanelId + ' .base-info .content .item input:checked').each(function () {
+                    var rel = $(this).attr('rel');
+                    userArr.push($(this).next().text());
+                });
+                $('#' + userId).textbox('setValue', userArr.join(','));
+                $('#' + userDwId).textbox('setValue', userOrgName);
+                $('#' + exportPanelId).dialog('close');
+            }
+        }, {
+            text: '关闭',
+            handler: function () {
+                $('#' + exportPanelId).dialog('close');
+            }
+        }
+    ]);
 }
