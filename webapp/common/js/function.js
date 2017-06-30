@@ -2044,3 +2044,65 @@ function exportExcel(options) {
 
     });
 }
+
+//笔录人员信息处理
+function userInfoHandle() {
+    var sessionBean = getSessionBean();
+    var userOrgName = sessionBean.userOrgName;
+
+    //自动填入开始时间,保存时自动填写结束时间
+    $('#xwxwKssj').val(getCurrentTime()).validatebox();
+    //自动填入询问地点
+    $('#xwxwDdDzmc').textbox('setValue', userOrgName + '询问室');
+    //证件类型
+    $('#bxwxwrCyzjlb').combobox({
+        onChange: function (n, o) {
+            if (n) {
+                if (n == 111) {
+                    $('#bxwxwrZjhm').textbox({
+                        validType: ['sfzh'],
+                        prompt: '请输入正确的身份证号'
+                    })
+                }
+                else {
+                    $('#bxwxwrZjhm').textbox({
+                        validType: '',
+                        prompt: ''
+                    });
+
+                }
+            }
+
+        }
+    });
+    //出生日期-计算年龄
+    $('#bxwxwrCsrq').change(function(){
+        console.log($(this).val());
+    });
+
+    //记录人--选择
+    $('#jlrBtn').off('click').on('click', function () {
+        selectUser({
+            sessionBean: sessionBean,
+            userId: 'jlrXm',
+            userDwId: 'jlrGzdwDwmc'
+        });
+    });
+    //询问人--选择
+    $('#xwrBtn').off('click').on('click', function () {
+        selectUser({
+            sessionBean: sessionBean,
+            userId: 'xwxwrXm',
+            userDwId: 'xwxwrGzdwDwmc'
+        });
+    });
+    //询问人--本人
+    $('#brBtn').off('click').on('click', function () {
+        selectUser({
+            sessionBean: sessionBean,
+            userId: 'xwxwrXm',
+            userDwId: 'xwxwrGzdwDwmc',
+            isBr: true
+        });
+    });
+}
