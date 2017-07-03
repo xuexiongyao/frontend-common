@@ -1798,7 +1798,7 @@ function openCombotree2($box) {
             var roots = $('#' + dictTreeID).tree('getRoots');
             $('#' + dictTreeID).tree('uncheck', roots[0].target);
             var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
-            $('#' + dictTreeID).tree('doFilter', searchKeyValue);
+            //$('#' + dictTreeID).tree('doFilter', searchKeyValue); //需要搜索非叶子节点所以不作过滤
             if (searchKeyValue != "") {
                 var treeObject = $('#' + dictTreeID);
                 var node = treeObject.tree('searchTreeNode', {searchKey: searchKeyValue.toUpperCase()});
@@ -1820,6 +1820,7 @@ function openCombotree2($box) {
     });
     //初始化字典树
     $('#' + dictTreeID).tree({
+        onlyLeaf: false,
         method: 'get',
         url: dictUrl,
         checkbox: true,
