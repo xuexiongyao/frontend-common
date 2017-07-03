@@ -2068,13 +2068,13 @@ function selectUser(options) {
         var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
             + '<div class="base-info">'
             + '<div class="title">'
-            + '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+            //+ '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
             + '</div>'
             + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
             + '</div>'
             + '<div class="tips" style="color:#999;font-size:12px;">'
             + '<i class="fa fa-info-circle"></i> '
-            + '<span>请选择人员信息</span>'
+            + '<span>请选择人员信息,最多勾选3名人员!</span>'
             + '</div>'
             + '</div>';
         $('body').append(exportHeadSelect);
@@ -2119,6 +2119,13 @@ function selectUser(options) {
                     var rel = $(this).attr('rel');
                     userArr.push($(this).next().text());
                 });
+                if (userArr.length > 3) {
+                    $.messager.show({
+                        title: '温馨提示',
+                        msg: '最多选择3名人员,请重新勾选!'
+                    });
+                    return false;
+                }
                 $('#' + userId).textbox('setValue', userArr.join(','));
                 $('#' + userDwId).textbox('setValue', userOrgName);
                 $('#' + exportPanelId).dialog('close');
@@ -2130,4 +2137,50 @@ function selectUser(options) {
             }
         }
     ]);
+
+
+}
+
+/**
+ * 根据出生日期计算年龄
+ * @param strBirthday 出生日期
+ * @returns {*}  年龄
+ */
+function jsGetAge(strBirthday){
+    var returnAge;
+    var strBirthdayArr=strBirthday.split("-");
+    var birthYear = strBirthdayArr[0];
+    var birthMonth = strBirthdayArr[1];
+    var birthDay = strBirthdayArr[2];
+
+    d = new Date();
+    var nowYear = d.getFullYear();
+    var nowMonth = d.getMonth() + 1;
+    var nowDay = d.getDate();
+
+    if(nowYear == birthYear){
+        returnAge = 0;//同年 则为0岁
+    } else {
+        var ageDiff = nowYear - birthYear ; //年之差
+        if(ageDiff > 0){
+            if(nowMonth == birthMonth) {
+                var dayDiff = nowDay - birthDay;//日之差
+                if(dayDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff ;
+                }
+            } else {
+                var monthDiff = nowMonth - birthMonth;//月之差
+                if(monthDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff ;
+                }
+            }
+        } else {
+            returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+        }
+    }
+    return returnAge;//返回周岁年龄
 }
