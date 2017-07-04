@@ -88,8 +88,8 @@ function initFlwsMain(data){
         if(pathObj.flwsxgsqbZj && typeof (pathObj.flwsxgsqbZj) != 'undefined'){
             DATA.FLWS.flwsxgsqbZj = pathObj.flwsxgsqbZj;//法律文书修改申请表主键【针对呈请法律文书修改】
         }
-
-
+        //呈请修改呈请报告
+        $("#cqXgScflwsBtn").hide();
         $("#sent").hide();
     }
 
