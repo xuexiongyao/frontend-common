@@ -132,14 +132,36 @@ function cqbgDataXxfy() {
                     value: val
                 })
             } else if (key == 'CQRQ') {//呈请日期
+
                 $('#cqbg_main_con form input.' + key).val(data[key + '_MASTER']);
-                wdateValidate('#cqbg_main_con form input.Wdate');
+
+                if(DATA.FLWS.cqFlwsZj){
+                    $('#cqbg_main_con form input.' + key).attr("readonly", true);
+                    $('#cqbg_main_con form input.' + key).datebox({ disabled: true });
+                }else{
+                    wdateValidate('#cqbg_main_con form input.Wdate');
+                }
             } else {
                 if ($node.hasClass('easyuitextbox')) {
                     $node.textbox({value: val})
                 } else if ($node.hasClass('easyuicombobox')) {
+
                     if (key == 'BAMJXM') {
-                        $node.combobox({value: data.BAMJID})
+                        if(!DATA.FLWS.cqFlwsZj){
+                            $node.combobox({value: data.BAMJID})
+                            //呈请报告嫌疑对象的勾选
+                            if (DATA.CQBG.cqbgRow.XYRID) {
+                                var interval = setInterval(function () {
+                                    if (DATA.DX && DATA.DX.hasData) {//必须保证嫌疑人列表已经渲染
+                                        cqbgXyrDataXxfy(DATA.CQBG.cqbgRow.XYRID);//呈请报告嫌疑人信息复用
+                                        clearInterval(interval);
+                                    }
+                                }, 10);
+                            }
+                        }else{
+                            $node.val(data.BAMJXM);
+                            $node.attr("readonly", true);
+                        }
                     } else {
                         $node.combobox({value: val})
                     }

@@ -120,15 +120,7 @@ function cqbgPageRender() {
             easyuiReset(cqbgIpts, false, DATA.CQBG.cqbgData.bianMa, false);
             cqbgDataXxfy();//呈请报告数据信息复用
 
-            //呈请报告嫌疑对象的勾选
-            if (DATA.CQBG.cqbgRow.XYRID) {
-                var interval = setInterval(function () {
-                    if (DATA.DX && DATA.DX.hasData) {//必须保证嫌疑人列表已经渲染
-                        cqbgXyrDataXxfy(DATA.CQBG.cqbgRow.XYRID);//呈请报告嫌疑人信息复用
-                        clearInterval(interval);
-                    }
-                }, 10);
-            }
+
         }
     }
 
