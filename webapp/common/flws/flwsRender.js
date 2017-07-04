@@ -517,7 +517,7 @@ function flwsPageRenderA(bm) {
         flwsDataXxfy(bm, flwsZj);
 
         //新增页面法律文书的信息复用
-        if(bm == '040804' || bm == '041802' || bm == '041303'){
+        if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
             try{
                 ajax_request(bm);
             }catch(e){
