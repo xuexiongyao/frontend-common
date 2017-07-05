@@ -508,7 +508,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面拼接
     flwsRightPagePj(flwsData);
 
-    if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
+    if(flwsData.bx && !flwsData.wdx){
         $('#flws_main_con_r_mask_'+bm).show();
     }
 
