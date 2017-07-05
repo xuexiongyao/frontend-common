@@ -185,7 +185,7 @@ FrameTools.Map.prototype.initMarker = function(title,zbx,zby,imgName,msgHtml,mou
 	}else{
 		pIcon.height = imgHeight;
 	}
-	pIcon.image = this.imgPath+"icons";
+	pIcon.image = this.imgPath+"icons/";
 	if(imgName==null||imgName=="")
 		pIcon.image += "tack.gif";
 	else
