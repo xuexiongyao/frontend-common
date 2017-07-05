@@ -204,12 +204,12 @@ function saveFlws(bm) {
                 if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
                     alertDiv({
                         title: '温馨提示',
-                        msg: '请检查法律文书多联中，必填项是否已填写和符合填写规范'
+                        msg: '请检查法律文书多联中，必填项是否已填写、是否符合填写规范'
                     })
                 }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
                     alertDiv({
                         title: '提示',
-                        msg: '法律文书中选择框不能为空，必须勾选一个'
+                        msg: '请检查文书中的单选框、复选框是否已勾选'
                     })
                 }
             }
@@ -235,12 +235,12 @@ function saveFlws(bm) {
             if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
                 alertDiv({
                     title: '温馨提示',
-                    msg: '请检查法律文书多联中，必填项是否已填写和符合填写规范'
+                    msg: '请检查法律文书多联中，必填项是否已填写、是否符合填写规范'
                 })
             }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
                 alertDiv({
                     title: '提示',
-                    msg: '法律文书中选择框不能为空，必须勾选一个'
+                    msg: '请检查文书中的单选框、复选框是否已勾选'
                 })
             }
         }
