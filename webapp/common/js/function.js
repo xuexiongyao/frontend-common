@@ -1798,7 +1798,7 @@ function openCombotree2($box) {
             var roots = $('#' + dictTreeID).tree('getRoots');
             $('#' + dictTreeID).tree('uncheck', roots[0].target);
             var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
-            $('#' + dictTreeID).tree('doFilter', searchKeyValue);
+            //$('#' + dictTreeID).tree('doFilter', searchKeyValue); //需要搜索非叶子节点所以不作过滤
             if (searchKeyValue != "") {
                 var treeObject = $('#' + dictTreeID);
                 var node = treeObject.tree('searchTreeNode', {searchKey: searchKeyValue.toUpperCase()});
@@ -1820,6 +1820,7 @@ function openCombotree2($box) {
     });
     //初始化字典树
     $('#' + dictTreeID).tree({
+        onlyLeaf: false,
         method: 'get',
         url: dictUrl,
         checkbox: true,
@@ -2043,4 +2044,143 @@ function exportExcel(options) {
         ]);
 
     });
+}
+
+
+//笔录选择人员框处理
+function selectUser(options) {
+    var userId = options.userId;
+    var userDwId = options.userDwId;
+    var exportPanelId = 'blryInfoPanelId';
+    var sessionBean = options.sessionBean;
+    var userOrgId = sessionBean.userOrgId;
+    var userOrgName = sessionBean.userOrgName;
+    var userName = sessionBean.userName;
+    var userInfoUrl = pathConfig.managePath + '/api/orgUserPublicSelect/expandNode';
+    //点击本人
+    if (options.isBr) {
+        $('#' + userId).textbox('setValue', userName);
+        $('#' + userDwId).textbox('setValue', userOrgName);
+        return false;
+    }
+    //点击选择
+    if ($('#' + exportPanelId).length == 0) {
+        var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
+            + '<div class="base-info">'
+            + '<div class="title">'
+            //+ '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+            + '</div>'
+            + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
+            + '</div>'
+            + '<div class="tips" style="color:#999;font-size:12px;">'
+            + '<i class="fa fa-info-circle"></i> '
+            + '<span>请选择人员信息,最多勾选3名人员!</span>'
+            + '</div>'
+            + '</div>';
+        $('body').append(exportHeadSelect);
+        $.ajax({
+            type: 'post',
+            url: userInfoUrl,
+            data: {orgid: userOrgId},
+            dataType: 'json',
+            xhrFields: {withCredentials: true},
+            crossDomain: true,
+            success: function (json) {
+                if (json && json.length) {
+                    for (var i = 0; i < json.length; i++) {
+                        var item = json[i];
+                        var headText = item.text;
+                        var headKey = item.id;
+                        var html = '<div class="item" style="float:left;min-width:120px;margin-top:3px;"><label><input type="checkbox" rel="' + headKey + '"><span>' + headText + '</span></label></div>';
+                        $('#' + exportPanelId + ' .base-info .content').append(html);
+                    }
+                }
+            }
+        });
+    }
+    //全选事件all-select
+    $('#' + exportPanelId + ' .all-select').off('click').on('click', function () {
+        var checked_status = $(this).prop('checked');
+        $(this).parent().parent().parent().next().find('input:checkbox').prop('checked', checked_status);
+    });
+    $('#' + exportPanelId + ' input:checkbox').prop("checked", false);
+    openDivForm({
+        id: exportPanelId,
+        title: '选择人员',
+        width: 650,
+        onClose: function () {
+        }
+    }, [
+        {
+            text: '确定',
+            handler: function () {
+                var userArr = [];
+                $('#' + exportPanelId + ' .base-info .content .item input:checked').each(function () {
+                    var rel = $(this).attr('rel');
+                    userArr.push($(this).next().text());
+                });
+                if (userArr.length > 3) {
+                    $.messager.show({
+                        title: '温馨提示',
+                        msg: '最多选择3名人员,请重新勾选!'
+                    });
+                    return false;
+                }
+                $('#' + userId).textbox('setValue', userArr.join(','));
+                $('#' + userDwId).textbox('setValue', userOrgName);
+                $('#' + exportPanelId).dialog('close');
+            }
+        }, {
+            text: '关闭',
+            handler: function () {
+                $('#' + exportPanelId).dialog('close');
+            }
+        }
+    ]);
+
+
+}
+
+/**
+ * 根据出生日期计算年龄
+ * @param strBirthday 出生日期
+ * @returns {*}  年龄
+ */
+function jsGetAge(strBirthday){
+    var returnAge;
+    var strBirthdayArr=strBirthday.split("-");
+    var birthYear = strBirthdayArr[0];
+    var birthMonth = strBirthdayArr[1];
+    var birthDay = strBirthdayArr[2];
+
+    d = new Date();
+    var nowYear = d.getFullYear();
+    var nowMonth = d.getMonth() + 1;
+    var nowDay = d.getDate();
+
+    if(nowYear == birthYear){
+        returnAge = 0;//同年 则为0岁
+    } else {
+        var ageDiff = nowYear - birthYear ; //年之差
+        if(ageDiff > 0){
+            if(nowMonth == birthMonth) {
+                var dayDiff = nowDay - birthDay;//日之差
+                if(dayDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff ;
+                }
+            } else {
+                var monthDiff = nowMonth - birthMonth;//月之差
+                if(monthDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff ;
+                }
+            }
+        } else {
+            returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+        }
+    }
+    return returnAge;//返回周岁年龄
 }

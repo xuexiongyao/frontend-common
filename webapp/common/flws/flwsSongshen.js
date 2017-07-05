@@ -834,7 +834,7 @@ function sendMsg(userid, con, msg) {
             if(data.state == 'success'){//发送短信成功
                 alertDiv({
                     title: '提示',
-                    msg: msg+',短信发送成功！',
+                    msg: msg+'短信发送成功！',
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }
@@ -842,7 +842,7 @@ function sendMsg(userid, con, msg) {
             }else if(data.state == 'error'){//发送短信失败
                 alertDiv({
                     title : '提示',
-                    msg: msg+'，短信发送失败：'+data.message,
+                    msg: msg+'短信发送失败：'+data.message,
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }
@@ -873,7 +873,7 @@ function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
             if(data.state == 'success'){//发送短信成功
                 alertDiv({
                     title: '提示',
-                    msg: msg+',短信发送成功！',
+                    msg: msg+'短信发送成功！',
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }
@@ -881,7 +881,7 @@ function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
             }else if(data.state == 'error'){//发送短信失败
                 alertDiv({
                     title : '提示',
-                    msg: msg+'，短信发送失败：'+data.message,
+                    msg: msg+'短信发送失败：'+data.message,
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }

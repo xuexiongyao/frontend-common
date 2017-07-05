@@ -73,6 +73,12 @@ function initFlwsMain(data){
             DATA.FLWS.cqbgZj = pathObj.flwsxxzjbh;//呈请报告主键
         }
 
+        //呈请修改呈请报告
+        $("#cqXgScflwsBtn").hide();
+        $("#sent").hide();
+    }
+
+    if(pathObj.flwsxgsqbZj && typeof (pathObj.flwsxgsqbZj) != 'undefined'){
         if(pathObj.flwsZj && typeof (pathObj.flwsZj) != 'undefined'){
             DATA.FLWS.cqFlwsZj = pathObj.flwsZj;//法律文书主键【针对呈请法律文书修改】
         }
@@ -84,13 +90,7 @@ function initFlwsMain(data){
         if(pathObj.flwsdm && typeof (pathObj.flwsdm) != 'undefined'){
             DATA.FLWS.flwsdm = pathObj.flwsdm;//法律文书代码【针对呈请法律文书修改】
         }
-
-        if(pathObj.flwsxgsqbZj && typeof (pathObj.flwsxgsqbZj) != 'undefined'){
-            DATA.FLWS.flwsxgsqbZj = pathObj.flwsxgsqbZj;//法律文书修改申请表主键【针对呈请法律文书修改】
-        }
-
-
-        $("#sent").hide();
+        DATA.FLWS.flwsxgsqbZj = pathObj.flwsxgsqbZj;//法律文书修改申请表主键【针对呈请法律文书修改】
     }
 
     //页面初始化
@@ -131,7 +131,10 @@ function initFlwsMain(data){
             shongshen(DATA.OWN);
         }
     });
-
+    //呈请修改呈请报告生成法律文书
+    $('#cqXgScflwsBtn').off('click').on('click', function () {
+        scflwsrwForCqbg();
+    });
     //【生成法律文书】
     $('#scflwsBtn').off('click').on('click', function () {
         if (DATA.OWN || typeof (DATA.OWN) != 'undefined') {
@@ -150,7 +153,12 @@ function queryCqbgData(render) {
     if (DATA.CQBG.cqbgData) {
         var one = DATA.CQBG.cqbgData.one;
         var param = {};
-        if (one) {//只能出一份文书
+
+        if(DATA.FLWS.cqFlwsZj){//呈请法律文书修改
+            param = {
+                XXZJBH: DATA.FLWS.cqFlwsZj
+            }
+        }else if (one) {//只能出一份文书
             param = {
                 ASJBH: DATA.asjbh,
                 FLWS_ASJFLWSDM: DATA.CQBG.cqbgData.bianMa,
@@ -381,6 +389,8 @@ function cqbgSave(url, param) {
         eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
     } else {
         loading("open","正在保存呈请报告,请稍候...");
+
+
         $.ajax({
             url: url,
             data: param,
@@ -452,7 +462,7 @@ function flwsSaveComplete(data, bm) {
                 DATA.FLWS[bm].status.hasDone = true;
 
                 //TODO 执法公开的单独处理(只针对行政案件)
-                if (bm == 'X020003') {
+                if (bm == 'X020003' || bm == '042164') {
                     DATA.FLWS[bm].status.zfgked = false;
                 }
             }

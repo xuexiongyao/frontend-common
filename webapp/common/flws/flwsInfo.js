@@ -11,7 +11,11 @@ function getCqbgMapData(cqbgzj) {
     var openUrl = '';
     if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB' && DATA.asjflwsbm != 'TB_XW_FLWS_HJFZXYRSQB') {//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath + '/wenshu/source/FLWS_' + DATA.flwsAsjflwsdm + '/DIC.json'
-    } else {
+    }
+    else if(pathObj.pageFrom=="cqwsxg"){
+        openUrl = pathConfig.basePath + '/wenshu/source/FLWS/DIC?dms='+ DATA.flwsAsjflwsdm;
+    }
+    else {
         openUrl = pathConfig.basePath + '/wenshu/source/CQBG_' + DATA.flwsAsjflwsdm + '/DIC.json'
     }
 
@@ -865,15 +869,12 @@ function clearAllStyle() {
  * cqzt 等于1（已呈请）或2（已审批）
  */
 function lctShow() {
-    if (DATA.cqzt != 0 && DATA.cqzt && DATA.cqzt !='undefined' && DATA.cqzt !='null') {
-        if (DATA.lcslid && DATA.lcdyid && DATA.lcslid !='undefined' && DATA.lcslid !='null' && DATA.lcdyid !='undefined' && DATA.lcdyid !='null') {
-            $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
-            $('#cklcBtn').show();
-            if (DATA.cqzt == '1') {//已呈请
-                getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
-            } else if (DATA.cqzt == '2') {//已送审
-                getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
-            }
+    if (DATA.lcslid && DATA.lcdyid && DATA.lcslid !='undefined' && DATA.lcslid !='null' && DATA.lcdyid !='undefined' && DATA.lcdyid !='null') {
+        $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
+        if (DATA.lczt == '0') {//流程中
+            getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
+        } else if (DATA.lczt == '1') {//流程已结束
+            getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
         }
     }
 }

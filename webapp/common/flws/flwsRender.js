@@ -439,7 +439,6 @@ function flwsPageRender(bm) {
     } else if (!flwsData.wdx && flwsData.only && !flwsData.dx) {
         if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
-            flwsPageRenderForCx(bm);
         }else{
             /**类型B**/
                 //法律文书有嫌疑对象，不能多选,法律文书只能做一份儿（ wdx：false && only：true && dx:false）
@@ -449,7 +448,6 @@ function flwsPageRender(bm) {
     } else if (!flwsData.wdx && flwsData.dx && flwsData.only) {
         if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
-            flwsPageRenderForCx(bm);
         }else {
             /**类型C**/
                 //法律文书有嫌疑对象，可以多选,法律文书只能做一份儿（ wdx：false && only：true && dx:true）
@@ -459,7 +457,6 @@ function flwsPageRender(bm) {
     } else {
         if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
-            flwsPageRenderForCx(bm);
         }else {
             /**其他类型**/
                 //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
@@ -520,7 +517,7 @@ function flwsPageRenderA(bm) {
         flwsDataXxfy(bm, flwsZj);
 
         //新增页面法律文书的信息复用
-        if(bm == '040804' || bm == '041802' || bm == '041303'){
+        if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
             try{
                 ajax_request(bm);
             }catch(e){
@@ -1468,10 +1465,15 @@ function flwsDxListRenderForCx(bm){
     //嫌疑对象列表的背景色处理
     $('#flws_xyr_area_' + bm).css('background', '#f5f5f5').append(checkedXyrStr);
 
-    //绑定点击事件
-    $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
-        flwsClXyrCheckForCx(bm, $(this));
-    });
+    if(xyrCldxlb){//如果有嫌疑对象
+        //绑定点击事件
+        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+            flwsClXyrCheckForCx(bm, $(this));
+        });
+    }else{//无嫌疑对象，嫌疑对象非必选（bx=false）
+        flwsPageRenderA(bm);
+    }
+
 
     //保存数据成功后获取法律文书主键，再次点击为编辑
     //if (typeof (DATA.FLWS[bm].status.currentFlwsId) != 'undefined') {
@@ -1527,8 +1529,23 @@ function flwsClXyrCheckForCx(bm, $this){
                 ZJ: flwsZj
             };
 
+            //编辑标识
+            DATA.FLWS[bm]['status']['isAdd'] = false;
+
+            //编辑渲染
+            flwsRightPageRenderForEdit(DATA.FLWS[bm].flwsData);
+
             //数据复用
             flwsDataXxfy(bm, flwsZj);
+
+
+            //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
+            if(bm == '080002' || bm == '080004'){
+                //选中已经保存的法律文书
+                if (flwsRow.length > 0) {
+                    $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + flwsRow[0].CLDX_XXZJBH + "']").prop('checked',false).click();
+                }
+            }
         }
 
     } else {//未选中
