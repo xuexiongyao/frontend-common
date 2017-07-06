@@ -517,7 +517,7 @@ function flwsPageRenderA(bm) {
         flwsDataXxfy(bm, flwsZj);
 
         //新增页面法律文书的信息复用
-        if(bm == '040804' || bm == '041802' || bm == '041303'){
+        if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
             try{
                 ajax_request(bm);
             }catch(e){
@@ -1242,18 +1242,21 @@ function flwsClXyrCheckC(bm, $this) {
     //针对嫌疑人多选组合信息的初始化
     var xyrxmData = '';
     var xyridData = '';
-    var xyrzhxxData = '';
     var xyrryidData = '';
     var xyrasjxgrybhData = '';
     var xyrxmArry = [];//嫌疑人姓名
     var xyridArry = [];//嫌疑人ID
-    var xyrzhxxArry = [];
     var xyrryidArry = [];
     var xyrasjxgrybhArry = [];
-    var checkXyr = [];
+
+    var xydxZhxx = $this.next().attr('xyrzhxx');//嫌疑对象组合信息
+    var xyrtype = $this.next().attr('xyrtype');//嫌疑对象类别(同一时间只能操作一种类别)
+    var isCheck = $this.prop('checked');//当前checkbox框是否勾选
+
+    var checkXyr = $this.parent().parent().parent().find('input:checked');
 
     //勾选嫌疑人
-    if (parentUl.find('input:checked').length > 0) {//选中
+    if (isCheck) {//选中
 
         //多个嫌疑对象列表同一时间只能操作一个
         parentDiv.show();
@@ -1265,7 +1268,6 @@ function flwsClXyrCheckC(bm, $this) {
         //法律文书蒙层隐藏
         $('#flws_main_con_r_mask_' + bm).hide();
 
-        var xyrtype = $this.next().attr('xyrtype');//嫌疑人类别
         for (var k in xyrObj) {
             if (xyrtype == xyrObj[k].id) {
                 DATA.FLWS[bm].xyrCldxlb = xyrObj[k].cldxlb;
@@ -1275,14 +1277,19 @@ function flwsClXyrCheckC(bm, $this) {
             }
         }
 
+
         //textarea框的值
-        var textareaVal = $('#flws_cl_area_' + bm + ' form a textarea').val();
-        checkXyr = $this.parent().parent().parent().find('input:checked');
+        var textareaVal;
+        if(bm == '042109') {
+            textareaVal = $('#flws_cl_area_' + bm + ' form a textarea.TQPZDBSNR').val();
+        }else{
+            textareaVal = $('#flws_cl_area_' + bm + ' form a textarea').val();
+        }
+
 
         for (var i = 0; i < checkXyr.length; i++) {
             xyrxmData = $(checkXyr[i]).next().text();
             xyridData = $(checkXyr[i]).attr('xxzjbh');
-            xyrzhxxData = $(checkXyr[i]).next().attr('xyrzhxx');
             xyrryidData = $(checkXyr[i]).attr('ryid');
             xyrasjxgrybhData = $(checkXyr[i]).attr('asjxgrybh');
             if(xyrryidData == 'null'){
@@ -1293,17 +1300,18 @@ function flwsClXyrCheckC(bm, $this) {
             }
             xyrxmArry.push(xyrxmData);
             xyridArry.push(xyridData);
-            xyrzhxxArry.push(xyrzhxxData);
             xyrryidArry.push(xyrryidData);
             xyrasjxgrybhArry.push(xyrasjxgrybhData);
         }
 
-        var xyrZhxxData = '';
-        for (var j = 0; j < xyrzhxxArry.length; j++) {
-            xyrZhxxData +=  xyrzhxxArry[j] + '\n';
-        }
+        var xyrZhxxData = xydxZhxx + '\n';
 
-        $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData);
+        //提请批准逮捕书（042109）登记时复用呈请报告的呈请内容
+        if(bm == '042109'){
+            $('#flws_cl_area_' + bm + ' form a textarea.TQPZDBSNR').val(xyrZhxxData+textareaVal).validatebox();
+        }else{
+            $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData+textareaVal).validatebox();
+        }
 
         DATA.FLWS[bm].xyrxms = xyrxmArry;
         DATA.FLWS[bm].xyrids = xyridArry;
@@ -1311,7 +1319,7 @@ function flwsClXyrCheckC(bm, $this) {
         DATA.FLWS[bm].xyrasjxgrybhs = xyrasjxgrybhArry;
 
     } else {//未选中
-        if (DATA.FLWS[bm].flwsData.bx) {
+        if (DATA.FLWS[bm].flwsData.bx && checkXyr.length<1) {
             event.stopPropagation();
             alertDiv({
                 title: '提示',
@@ -1329,28 +1337,48 @@ function flwsClXyrCheckC(bm, $this) {
         parentDiv.show();
         parentDiv.siblings().show();
 
+        //嫌疑对象内容去掉
+        var textareaVal;
+        if(bm == '042109') {
+            textareaVal = $('#flws_cl_area_' + bm + ' form a textarea.TQPZDBSNR').val();
+        }else{
+            textareaVal = $('#flws_cl_area_' + bm + ' form a textarea').val();
+        }
+
+        textareaVal = textareaVal.replace(xydxZhxx + '\n', '');
+
+        if(bm == '042109') {
+            $('#flws_cl_area_' + bm + ' form a textarea.TQPZDBSNR').val(textareaVal);
+        }else{
+            $('#flws_cl_area_' + bm + ' form a textarea').val(textareaVal);
+        }
+
         //置空
-        for (var j = 0; j < DATA.URLATTR[xyrApiName].length; j++) {
-            var key = DATA.URLATTR[xyrApiName][j];
-            DATA.FLWS[bm].params[key] = "";
+        if(DATA.URLATTR[xyrApiName]){
+            for (var j = 0; j < DATA.URLATTR[xyrApiName].length; j++) {
+                var key = DATA.URLATTR[xyrApiName][j];
+                DATA.FLWS[bm].params[key] = "";
+            }
         }
         DATA.FLWS[bm].params.CLDX_XXZJBH = "";//嫌疑人主键id
         DATA.FLWS[bm].params.CLDXLB = "";//嫌疑人处理对象类别
 
         if (!DATA.FLWS[bm].flwsData.customized) {
             var xyrDom = DATA.URLATTR[xyrApiName];
-            for (var j = 0; j < xyrDom.length; j++) {
-                var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
+            if(xyrDom){
+                for (var j = 0; j < xyrDom.length; j++) {
+                    var $node = $("#flws_cl_area_" + bm + " .panel form a>input." + xyrDom[j]);
 
-                if ($node.hasClass('easyuitextbox')) {
-                    $node.textbox({value: ''})
-                } else if ($node.hasClass('easyuicombobox')) {
-                    $node.combobox({value: ''});
-                } else if ($node.hasClass('easyuicombotree')) {
-                    $node.combotree({value: ''})
-                } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
-                    $node.val('');
-                    wdateValidate($node[0]);
+                    if ($node.hasClass('easyuitextbox')) {
+                        $node.textbox({value: ''})
+                    } else if ($node.hasClass('easyuicombobox')) {
+                        $node.combobox({value: ''});
+                    } else if ($node.hasClass('easyuicombotree')) {
+                        $node.combotree({value: ''})
+                    } else if ($node.hasClass('easyuivalidatebox') || $node.hasClass('Wdate')) {
+                        $node.val('');
+                        wdateValidate($node[0]);
+                    }
                 }
             }
 

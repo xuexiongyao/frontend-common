@@ -71,75 +71,78 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                     }
                 };
                 if(dictName == 'TB_ST_BARY'){//办案人员
-                    comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
-                    comboboxObj.multiple = true;
-                    $(ipts[i]).attr('dicturl', comboboxObj.url);
-                    $(ipts[i]).combobox({
-                        url: comboboxObj.url, multiple: true,
-                        required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
-                        onChange: function (newValue, oldValue) {
-                            if (newValue) {
+                    if(pathObj.flwsxgsqbZj && typeof (pathObj.flwsxgsqbZj) != 'undefined'){
+                    }else{
+                        comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
+                        comboboxObj.multiple = true;
+                        $(ipts[i]).attr('dicturl', comboboxObj.url);
+                        $(ipts[i]).combobox({
+                            url: comboboxObj.url, multiple: true,
+                            required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
+                            onChange: function (newValue, oldValue) {
+                                if (newValue) {
+                                    var $this = $(this);
+                                    var className = $this.attr('textboxname');//组件class name值
+                                    var val = $this.next().find('input:hidden').val();
+                                    if (val && bm && isFlws) {
+                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
+                                            flwsLdXxfy(bm, className, '', val, 'combobox','');
+                                        }
+                                    }
+                                }
+                            },
+                            onHidePanel: function () {
                                 var $this = $(this);
-                                var className = $this.attr('textboxname');//组件class name值
-                                var val = $this.next().find('input:hidden').val();
-                                if (val && bm && isFlws) {
-                                    if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                        flwsLdXxfy(bm, className, '', val, 'combobox','');
+                                var getBary = $this.combobox('getValues');
+                                //必须勾选当前登录者
+                                var currentUserId = DATA.OWN.userId;//当前登录者用户ID
+                                var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
+                                var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
+                                if(!isFlws && bm != 'X050028'){
+                                    // 行政案件'当场处罚决定书（X050028）'办案民警可以只勾选一个
+                                    if(isCheckCurUser == -1 && getBary.length < 2){
+                                        alertDiv({
+                                            title: '提示信息',
+                                            msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    } else if(isCheckCurUser > -1 && getBary.length < 2){
+                                        alertDiv({
+                                            title: '提示信息',
+                                            msg: '办案民警至少选两名',
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    } else if(isCheckCurUser == -1 && getBary.length >= 2){
+                                        alertDiv({
+                                            title: '提示信息',
+                                            msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
+                                    }
+                                }else{
+                                    if(isCheckCurUser == -1){
+                                        alertDiv({
+                                            title: '提示信息',
+                                            msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
+                                            fn: function () {
+                                                $this.combobox('clear');
+                                                $this.next().find('input').focus();
+                                            }
+                                        })
                                     }
                                 }
                             }
-                        },
-                        onHidePanel: function () {
-                            var $this = $(this);
-                            var getBary = $this.combobox('getValues');
-                            //必须勾选当前登录者
-                            var currentUserId = DATA.OWN.userId;//当前登录者用户ID
-                            var currentUserName = DATA.OWN.userName;//当前登录者用户姓名
-                            var isCheckCurUser = jQuery.inArray(currentUserId,getBary);//是否勾选当前登录者用户
-                            if(!isFlws && bm != 'X050028'){
-                                // 行政案件'当场处罚决定书（X050028）'办案民警可以只勾选一个
-                                if(isCheckCurUser == -1 && getBary.length < 2){
-                                    alertDiv({
-                                        title: '提示信息',
-                                        msg: '办案民警至少选两名并且必须勾选当前登录者用户:' + currentUserName,
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
-                                } else if(isCheckCurUser > -1 && getBary.length < 2){
-                                    alertDiv({
-                                        title: '提示信息',
-                                        msg: '办案民警至少选两名',
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
-                                } else if(isCheckCurUser == -1 && getBary.length >= 2){
-                                    alertDiv({
-                                        title: '提示信息',
-                                        msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
-                                }
-                            }else{
-                                if(isCheckCurUser == -1){
-                                    alertDiv({
-                                        title: '提示信息',
-                                        msg: '办案民警必须勾选当前登录者用户:'+currentUserName,
-                                        fn: function () {
-                                            $this.combobox('clear');
-                                            $this.next().find('input').focus();
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                    });
+                        });
+                    }
                 }else{
                     var url = pathConfig.mainPath + '/common/dict/'+dictName+'.js';
                     comboboxObj.url = url;

@@ -11,7 +11,11 @@ function getCqbgMapData(cqbgzj) {
     var openUrl = '';
     if (DATA.asjflwsbm && DATA.asjflwsbm != 'null' && DATA.asjflwsbm != 'undefined' && DATA.asjflwsbm != 'TB_XW_FLWS_SADJ' && DATA.asjflwsbm != 'TB_FLWS_SADJB' && DATA.asjflwsbm != 'TB_XW_FLWS_HJFZXYRSQB') {//无呈请报告法律文书的处理
         openUrl = pathConfig.basePath + '/wenshu/source/FLWS_' + DATA.flwsAsjflwsdm + '/DIC.json'
-    } else {
+    }
+    else if(pathObj.pageFrom=="cqwsxg"){
+        openUrl = pathConfig.basePath + '/wenshu/source/FLWS/DIC?dms='+ DATA.flwsAsjflwsdm;
+    }
+    else {
         openUrl = pathConfig.basePath + '/wenshu/source/CQBG_' + DATA.flwsAsjflwsdm + '/DIC.json'
     }
 

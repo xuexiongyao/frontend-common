@@ -147,7 +147,23 @@ function getCqbgQtsjEdit() {
                 especiallyDataFunForCqbg(DATA.CQBG.asjflwsdm);
 
                 return false;
-            } else {
+            } else if(DATA.FLWS.cqFlwsZj){  //呈请修改呈请报告只能能修改以下字段
+                var cqnr = $('#cqbg_main_con form textarea').val();//呈请内容
+                DATA.CQBG.params = {
+                    XXZJBH: DATA.CQBG.cqbgZj,//呈请报告主键
+                    CQNR: cqnr,//呈请内容
+                };
+                /*嫌疑人姓名*/
+                if (typeof DATA.CQBG.xyrxms != 'undefined' && DATA.CQBG.xyrxms != null) {
+                    DATA.CQBG.params.XYRXM = DATA.CQBG.xyrxms.join(',');//嫌疑人姓名
+                }
+
+                /*嫌疑人ID*/
+                if (typeof DATA.CQBG.xyrids != 'undefined' && DATA.CQBG.xyrids != null) {
+                    DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
+                }
+                DATA.CQBG.isValid=true;
+            }else {
                 return false;	// 返回false终止表单提交
             }
         }
@@ -188,12 +204,12 @@ function saveFlws(bm) {
                 if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
                     alertDiv({
                         title: '温馨提示',
-                        msg: '请检查法律文书多联中，必填项是否已填写和符合填写规范'
+                        msg: '请检查法律文书多联中，必填项是否已填写、是否符合填写规范'
                     })
                 }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
                     alertDiv({
                         title: '提示',
-                        msg: '法律文书中选择框不能为空，必须勾选一个'
+                        msg: '请检查文书中的单选框、复选框是否已勾选'
                     })
                 }
             }
@@ -219,12 +235,12 @@ function saveFlws(bm) {
             if(!isvalid && DATA.FLWS[bm].checkBoxIsChecked){
                 alertDiv({
                     title: '温馨提示',
-                    msg: '请检查法律文书多联中，必填项是否已填写和符合填写规范'
+                    msg: '请检查法律文书多联中，必填项是否已填写、是否符合填写规范'
                 })
             }else if(isvalid && !DATA.FLWS[bm].checkBoxIsChecked){
                 alertDiv({
                     title: '提示',
-                    msg: '法律文书中选择框不能为空，必须勾选一个'
+                    msg: '请检查文书中的单选框、复选框是否已勾选'
                 })
             }
         }
@@ -810,8 +826,16 @@ function msgListTab(data){
     }
     return str;
 }
-
-
+/**
+ * 呈请修改呈请报告
+ */
+function scflwsrwForCqbg(){
+    var params = {
+        FLWSYW_ZJ:pathObj.flwsZj,
+        FLWSXGSQB_ZJ:pathObj.flwsxgsqbZj
+    };
+    cqxgWsScflwsRequest(params);
+}
 /**
  * 没有呈请报告的法律文书，无法走流程，只能发送请求生成法律文书任务，生成pdf
  */
