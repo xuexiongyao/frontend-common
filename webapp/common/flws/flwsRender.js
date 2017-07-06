@@ -1254,7 +1254,28 @@ function flwsClXyrCheckC(bm, $this) {
     var xyrtype = $this.next().attr('xyrtype');//嫌疑对象类别(同一时间只能操作一种类别)
     var isCheck = $this.prop('checked');//当前checkbox框是否勾选
 
-    var checkXyr = $this.parent().parent().parent().find('input:checked');
+    var checkXyr = parentUl.find('input:checked');
+
+    for (var i = 0; i < checkXyr.length; i++) {
+        xyrxmData = $(checkXyr[i]).next().text();
+        xyridData = $(checkXyr[i]).attr('xxzjbh');
+        xyrryidData = $(checkXyr[i]).attr('ryid');
+        xyrasjxgrybhData = $(checkXyr[i]).attr('asjxgrybh');
+        if(xyrryidData == 'null'){
+            xyrryidData = '';
+        }
+        if(xyrasjxgrybhData == 'null'){
+            xyrasjxgrybhData = '';
+        }
+        xyrxmArry.push(xyrxmData);
+        xyridArry.push(xyridData);
+        xyrryidArry.push(xyrryidData);
+        xyrasjxgrybhArry.push(xyrasjxgrybhData);
+    }
+    DATA.FLWS[bm].xyrxms = xyrxmArry;
+    DATA.FLWS[bm].xyrids = xyridArry;
+    DATA.FLWS[bm].xyrryids = xyrryidArry;
+    DATA.FLWS[bm].xyrasjxgrybhs = xyrasjxgrybhArry;
 
     //勾选嫌疑人
     if (isCheck) {//选中
@@ -1278,31 +1299,12 @@ function flwsClXyrCheckC(bm, $this) {
             }
         }
 
-
         //textarea框的值
         var textareaVal;
         if(bm == '042109') {
             textareaVal = $('#flws_cl_area_' + bm + ' form a textarea.TQPZDBSNR').val();
         }else{
             textareaVal = $('#flws_cl_area_' + bm + ' form a textarea').val();
-        }
-
-
-        for (var i = 0; i < checkXyr.length; i++) {
-            xyrxmData = $(checkXyr[i]).next().text();
-            xyridData = $(checkXyr[i]).attr('xxzjbh');
-            xyrryidData = $(checkXyr[i]).attr('ryid');
-            xyrasjxgrybhData = $(checkXyr[i]).attr('asjxgrybh');
-            if(xyrryidData == 'null'){
-                xyrryidData = '';
-            }
-            if(xyrasjxgrybhData == 'null'){
-                xyrasjxgrybhData = '';
-            }
-            xyrxmArry.push(xyrxmData);
-            xyridArry.push(xyridData);
-            xyrryidArry.push(xyrryidData);
-            xyrasjxgrybhArry.push(xyrasjxgrybhData);
         }
 
         var xyrZhxxData = xydxZhxx + '\n';
@@ -1313,11 +1315,6 @@ function flwsClXyrCheckC(bm, $this) {
         }else{
             $('#flws_cl_area_' + bm + ' form a textarea').val(xyrZhxxData+textareaVal).validatebox();
         }
-
-        DATA.FLWS[bm].xyrxms = xyrxmArry;
-        DATA.FLWS[bm].xyrids = xyridArry;
-        DATA.FLWS[bm].xyrryids = xyrryidArry;
-        DATA.FLWS[bm].xyrasjxgrybhs = xyrasjxgrybhArry;
 
     } else {//未选中
         if (DATA.FLWS[bm].flwsData.bx && checkXyr.length<1) {
@@ -1333,10 +1330,14 @@ function flwsClXyrCheckC(bm, $this) {
         }
 
         //选中状态
-        DATA.FLWS[bm]["status"]["selected"] = false;
-
-        parentDiv.show();
-        parentDiv.siblings().show();
+        if (checkXyr.length == 0) {
+            DATA.FLWS[bm]["status"]["selected"] = false;
+            //同一时间只能操作一个
+            parentDiv.show();
+            parentDiv.siblings().show();
+        } else if (checkXyr.length > 0) {
+            DATA.FLWS[bm]["status"]["selected"] = true;
+        }
 
         //嫌疑对象内容去掉
         var textareaVal;
