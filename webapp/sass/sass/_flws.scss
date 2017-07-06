@@ -15,9 +15,19 @@
                 margin:0;
                 padding: 10px;
                 color: colors(primary);
-                font-size: fontSize(base);
+                font-size: fontSize(small);
                 i{
                     margin-right:5px;
+                }
+                i.fa-refresh{
+                    margin-left:5px;
+                    margin-right:0;
+                    color: colors(green);
+                    cursor: pointer;
+                    &:hover{
+                        animation: fa-spin 2s infinite linear;
+                        -webkit-animation: fa-spin 2s infinite linear;
+                    }
                 }
             }
             p.mustcheck{
