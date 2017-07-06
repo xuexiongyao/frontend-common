@@ -464,7 +464,7 @@
 					return arr.length >= param[0] && arr.length <= param[1];
 				}
 
-				var len = $.trim(value.replace(/[^\x00-\xff]/g,'aaa')).length;
+				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
 				return len >= param[0] && len <= param[1];
 			},
 
@@ -507,16 +507,18 @@
 
 		maxLength: {
 			validator: function (value, param) {
-				if (param) {
-					if (param[0] != undefined) {
-						if (value.length > param[0]) {
-							return false;
-						}
-					}
-				}
-				return true;
+				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
+				return len<=param[0];
+				//if (param) {
+				//	if (param[0] != undefined) {
+				//		if (value.length > param[0]) {
+				//			return false;
+				//		}
+				//	}
+				//}
+				//return true;
 			},
-			message: "输入最多输入 {0} 个字符"
+			message: "输入最多输入 {0} 个字符,一个汉字等于三个字符"
 		},
 
 		noSpaceMaxLength: {
