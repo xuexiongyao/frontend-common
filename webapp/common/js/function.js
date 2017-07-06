@@ -2274,6 +2274,7 @@ function previewPic(options) {
         title: '材料预览',
         width: 960,
         onClose: function () {
+            $('#' + previewPanelId).remove();
         }
     }, [
         /*
