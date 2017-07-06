@@ -2184,3 +2184,174 @@ function jsGetAge(strBirthday){
     }
     return returnAge;//返回周岁年龄
 }
+
+//刑事行政系统材料扫描图片预览
+function previewPic(options) {
+    var picZj = options.picZj;
+    var picXh = options.picXh;
+    var imgId = 'imgItem_' + picXh; //选中进来的图片ID
+    var previewPanelId = options.previewPanelId;
+    var lastPicXh = 1;
+    var firstPicXh = 1;
+    //弹框DOM
+    if ($('#' + previewPanelId).length == 0) {
+        var previewPanel = '<div id="' + previewPanelId + '" style="display:none;">'
+            + '<div style="width:100%;height:540px;overflow:hidden;margin-bottom:15px;">'
+            + '<div style="float:left;width:175px;height:100%;border-right:1px #ccc dashed">'
+            + '<ul id="previewImgMenu" style="list-style-type:none;padding:0;margin:0;height:525px;overflow:auto;"></ul>'
+            + '<div class="tips" style="color:#999;font-size:12px;padding-left:10px;">'
+                //+ '<i class="fa fa-info-circle"></i> '
+                //+ '<span>点击箭头进行排序</span>'
+            + '</div>'
+            + '</div>'
+            + '<div style="float:left;width:780px;height:100%;background:#ddd;text-align:center">'
+            + '<img id="previewImg" src="" alt="预览图片不存在或者损坏" style="vertical-align:middle;max-width:780px;max-height:540px;position:relative">'
+            + '<div title="上一页" class="img-nav img-prev" id="imgPrevBtn"><i class="fa fa-chevron-left"></i></div>'
+            + '<div title="下一页"class="img-nav img-next" id="imgNextBtn"><i class="fa fa-chevron-right"></i></div>'
+            + '</div>'
+            + '</div>'
+            + '</div>';
+        $('body').append(previewPanel);
+
+        //获取数据生成左边菜单
+        creatImgMenu();
+
+        //点击查看图片
+        $('#previewImgMenu').off('click.img').on('click.img', '.img-span', function () {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var zj = $parent.attr('zj');
+            picXh = parseInt($parent.attr('xh'));
+            $parent.addClass('active').siblings().removeClass('active');
+            var imgSrc = pathConfig.s3Path + '/' + zj;
+            //var imgSrc = 'http://www.jwzh.online:9016/framework/default/images/bgi_' + zj + '.jpg';
+            console.log('图片路径:', imgSrc);
+            var loadingPath = staticPath + '/framework/default/images/loading.gif';
+            $('#previewImg').prop('src', loadingPath).css('margin-top', '250px');
+            loadImage(imgSrc, function () {
+                $('#previewImg').prop('src', imgSrc).css('margin-top', '0');
+            });
+        });
+        //点击上移下移
+        $('#previewImgMenu').off('click.move').on('click.move', '.move', function () {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var $prev = $parent.prev();
+            var $next = $parent.next();
+            if ($this.hasClass('fa-arrow-up')) {
+                $prev.before($parent);
+            }
+            else {
+                $next.after($parent);
+            }
+        });
+        //点击上一页
+        $('#imgPrevBtn').off('click').on('click', function () {
+            var $lastImg = $('#imgItem_' + lastPicXh);
+            var prevId = 'imgItem_' + (picXh - 1);
+            var $prevImg = $('#' + prevId);
+            if ($prevImg.length == 0) {
+                $prevImg = $lastImg;
+            }
+            $prevImg.click();
+        });
+        //点击下一页
+        $('#imgNextBtn').off('click').on('click', function () {
+            var $firstImg = $('#imgItem_' + firstPicXh);
+            var nextId = 'imgItem_' + (picXh + 1);
+            var $nextImg = $('#' + nextId);
+            if ($nextImg.length == 0) {
+                $nextImg = $firstImg
+            }
+            $nextImg.click();
+        });
+    }
+    else {
+        $('#' + imgId).click();//点击选中进来的图片
+    }
+    openDivForm({
+        id: previewPanelId,
+        title: '材料预览',
+        width: 960,
+        onClose: function () {
+        }
+    }, [
+        /*
+         {
+         text: '保存顺序',
+         handler: function () {
+         var zjArr = [];
+         var xhArr = [];
+         $('#previewImgMenu .img-li').each(function(index) {
+         var $this = $(this);
+         var zj = $this.attr('zj');
+         var xh = index + 1;
+         zjArr.push(zj);
+         xhArr.push(xh);
+         });
+         var param = {
+         zjs: zjArr.join(','),
+         xhs: xhArr.join(','),
+         };
+         console.log('重新排序的数据:', param);
+         //...等待后台接口完成
+         }
+         },
+         */
+        {
+            text: '关闭',
+            handler: function () {
+                $('#' + previewPanelId).dialog('close');
+            }
+        }
+    ]);
+    //获取数据生成左边菜单
+    function creatImgMenu() {
+        //获取数据
+        $.ajax({
+            url: pathConfig.basePath + '/saomiao/cl/query',
+            type: 'post',
+            dataType: 'json',
+            data: {smjl_zj: smjl_zj},
+            success: function (json) {
+                var rows = json.rows;
+                if (rows && rows.length) {
+                    $('#previewImgMenu').empty();
+                    for (var i = 0; i < rows.length; i++) {
+                        var imgItem = rows[i];
+                        var xh = imgItem.smj_ys;
+                        var page = '第' + xh + '页';
+                        var zj = imgItem.zj
+                        //var zj = i + 1;//imgItem.zj
+                        var imgMenu = '<li class="img-li" xh="' + xh + '" zj="' + zj + '" >' +
+                            '<span class="img-span" id="imgItem_' + xh + '" style="display:inline-block;width:100px;padding-left:30px;">' + page + '</span>' +
+                                //'<i class="fa fa-arrow-up move" title="上移"></i> ' +
+                                //'<i class="fa fa-arrow-down move" title="下移"></i>' +
+                            '</li>';
+                        $('#previewImgMenu').append(imgMenu);
+                    }
+                    firstPicXh = rows[0].smj_ys;                //起始页号
+                    lastPicXh = rows[rows.length - 1].smj_ys;   //结束页号
+                    $('#' + imgId).click();//点击选中进来的图片
+                }
+            }
+        });
+    }
+}
+
+//异步加载图片方法
+function loadImage(url, callback) {
+    var img = new Image(); //创建一个Image对象，实现图片的预下载
+    img.src = url;
+
+    if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数
+        callback.call(img);
+        return; // 直接返回，不用再处理onload事件
+    }
+    img.onload = function () { //图片下载完毕时异步调用callback函数。
+        callback.call(img);//将回调函数的this替换为Image对象
+    };
+    img.onerror = function () {
+        callback.call(img);
+    };
+};
