@@ -204,7 +204,8 @@ function flwsRightPageRender(flwsData) {
  */
 function flwsRightPagePj(flwsData) {
     var str = '';
-    $('#flws_main_con_' + flwsData.bianMa).html('');//清空
+    var bm = flwsData.bianMa;//法律文书编码
+    $('#flws_main_con_' + bm).html('');//清空
 
     var iframecon = '', emputArry = [], flwscon = '';
     var childs = flwsData.childMap;
@@ -218,34 +219,43 @@ function flwsRightPagePj(flwsData) {
     }
 
     if (flwsData.wdx) {//无嫌疑对象列表
-        str = '<div class="flws-main-con-r"  id="flws_main_con_r_' + flwsData.bianMa + '"  style="width: 100%;">' +
+        str = '<div class="flws-main-con-r"  id="flws_main_con_r_' + bm + '"  style="width: 100%;">' +
             '<div class="flws-mode-right">' +
-            '<div class="flws_cl_area" id="flws_cl_area_' + flwsData.bianMa + '" style="width: 100%;">' + iframecon + '</div>' +
+            '<div class="flws_cl_area" id="flws_cl_area_' + bm + '" style="width: 100%;">' + iframecon + '</div>' +
             '</div>' +
             '</div>';
     } else {//有嫌疑对象列表
         if (flwsData.dx && flwsData.only) {//多选 并且只能出一份儿
-            str = '<div class="flws-main-con-r"  id="flws_main_con_r_' + flwsData.bianMa + '"  style="width: 100%;">' +
+            str = '<div class="flws-main-con-r"  id="flws_main_con_r_' + bm + '"  style="width: 100%;">' +
                 '<div class="flws-mode-right">' +
-                '<div class="flws_cl_area" id="flws_cl_area_' + flwsData.bianMa + '" style="width: 100%;">' + iframecon + '</div>' +
+                '<div class="flws_cl_area" id="flws_cl_area_' + bm + '" style="width: 100%;">' + iframecon + '</div>' +
                 '</div>' +
                 '</div>';
         } else {//单选 出多份儿
-            str = '<div class="flws-main-con-l flws_xyr_area flws_xyr_area_add" id="flws_xyr_area_' + flwsData.bianMa + '">' +
+            str = '<div class="flws-main-con-l flws_xyr_area flws_xyr_area_add" id="flws_xyr_area_' + bm + '">' +
                 '</div>' +
-                '<div class="flws-main-con-r"  id="flws_main_con_r_' + flwsData.bianMa + '">' +
+                '<div class="flws-main-con-r"  id="flws_main_con_r_' + bm + '">' +
+                '<div class="save-btn-area">' +
+                '<a class="save-btn saveFlwsZfgk" id="linkFlwsZfgk_' + bm + '"></a>' +
+                '</div>' +
                 '<div class="flws-mode-right">' +
-                '<div class="flws_cl_area" id="flws_cl_area_' + flwsData.bianMa + '">' + iframecon + '</div>' +
+                '<div class="flws_cl_area" id="flws_cl_area_' + bm + '">' + iframecon + '</div>' +
+
                 '</div>' +
                 '</div>';
         }
 
     }
     //console.log(str);
-    $('#flws_main_con_' + flwsData.bianMa).append(str);
+    $('#flws_main_con_' + bm).append(str);
     setPage();//设置页面高度
 
-    $('#flws_cl_area_' + flwsData.bianMa).css({height: '100%', width: '100%'}).tabs({
+    /****行政案件 行政处罚报告书  执法公开编辑按钮单独处理****/
+    if (bm == 'X020003' || bm == '042164') {
+        $('#linkFlwsZfgk_' + bm).show().text('查看执法公开信息');
+    }
+
+    $('#flws_cl_area_' + bm).css({height: '100%', width: '100%'}).tabs({
         plain: true, pill: true, border: false
     });
 }
@@ -730,6 +740,7 @@ function xydxListRenderC(bm) {
 function flwsXxfyC1(bm, $this) {
     var xxzjbh = $this.attr('xxzjbh');
     var $target = $('#flws_cl_area_' + bm + ' form a');
+    var zfgkxxData = '';//执法公开信息数据
 
     //状态切换
     $this.parent().addClass('active');
@@ -739,6 +750,7 @@ function flwsXxfyC1(bm, $this) {
     if (data) {
         for (var i = 0; i < data.length; i++) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
+                zfgkxxData = data[i].WWGKNR;
                 if (DATA.FLWS[bm].flwsData.customized) {
                     eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]).replace(/'/g,"\\'")   + "')");
                 }
@@ -840,8 +852,14 @@ function flwsXxfyC1(bm, $this) {
                         }
                     }
                 }
+                break;
             }
         }
+
+        //查看执法公开信息 点击事件
+        $('#linkFlwsZfgk_' + bm).off('click').on('click', function () {
+            zfgkDetail(zfgkxxData);
+        });
     }
 }
 
@@ -1004,4 +1022,19 @@ function lcriZs() {
             }
         }
     })
+}
+
+/**
+ * 执法公开详情
+ * @param zfgkxx 执法公开信息
+ */
+function zfgkDetail(zfgkxx) {
+    openDivForm({
+        id: 'zfgk_info',
+        title: '执法公开详情',
+        width: 1000,
+        height:520
+    }, []);
+
+    $("#zfgk_info textarea").val(zfgkxx);
 }
