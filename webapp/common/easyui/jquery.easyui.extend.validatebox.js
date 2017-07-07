@@ -494,21 +494,22 @@
 
 		minLength: {
 			validator: function (value, param) {
-				if (param) {
-					if (param[0] != undefined) {
-						if (value.length < param[0]) {
-							return false;
-						}
-					}
-				}
-				return true;
+				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
+				return len>=param[0];
+				//if (param) {
+				//	if (param[0] != undefined) {
+				//		if (value.length < param[0]) {
+				//			return false;
+				//		}
+				//	}
+				//}
+				//return true;
 			},
 			message: "最少输入 {0} 个字符,一个汉字等于三个字符"
 		},
 
 		maxLength: {
 			validator: function (value, param) {
-				console.log(value);
 				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
 				return len<=param[0];
 				//if (param) {
