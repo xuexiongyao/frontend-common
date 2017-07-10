@@ -450,3 +450,13 @@
 #next_link_panel .role .role-name label input {
   vertical-align: top;
 }
+
+/* line 305, ../sass/sass/_songshen.scss */
+#next_link_area > span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+  max-width: 205px;
+  margin-right: 0;
+  overflow: hidden;
+}

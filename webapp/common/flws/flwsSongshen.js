@@ -270,11 +270,14 @@ function selectApprove(shjl) {
                         isOver = $('#over_area input').prop('checked');
                         flagText = $('#links input:checked').parent().text();
                         if (!isOver) {
-                            var candidateUsersArr = [];
+                            var candidateUsersArr = [];//下一环节审批人ID
+                            var candidateUsersNameArr = [];//下一环节审批人姓名
                             $('#role_name input:checked').each(function () {
+                                candidateUsersNameArr.push($(this).parent().text());
                                 candidateUsersArr.push($(this).attr('bizID'));
                             });
                             candidateUsers = candidateUsersArr.join(',');
+                            $('#next_select_title').text('下一环节及审批人：'+candidateUsersNameArr.join(',')).attr('title',candidateUsersNameArr.join(','));
                             if (candidateUsers) {
                                 $('#next_link_panel').dialog('close');
                                 $.messager.show({
@@ -356,7 +359,8 @@ function selectApprove(shjl) {
                 {
                     text: '确定',
                     handler: function () {
-                        var val = $('#role_name input:checked').val();
+                        var val = $('#role_name input:checked').val();//退回节点
+                        var backNodeText = $('#role_name input:checked').parent().text();//退回节点的名称
                         var backObj;
                         //alert('退回状态:'+val);
                         if (val == 'initial') {
@@ -365,6 +369,7 @@ function selectApprove(shjl) {
                             backObj = backPrev;
                         }
                         saveAndSsShyj(backObj);
+                        $('#next_select_title').text('请选择退回的状态：'+backNodeText).attr('title',backNodeText);
                         $('#next_link_panel').dialog('close');
                     }
                 }, {

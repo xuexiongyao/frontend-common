@@ -301,3 +301,12 @@
         }
     }
 }
+//送审下一环节样式
+#next_link_area>span{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width:auto;
+    max-width: 205px;
+    margin-right: 0;
+    overflow: hidden
+}
