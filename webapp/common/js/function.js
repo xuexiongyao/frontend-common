@@ -1724,7 +1724,7 @@ function openCombotree2($box) {
     var dictTreeID = 'dictTree_' + ID;
     var dictMultiple = options.multiple;
     var dictUrl = options.url;
-    if(dictUrl) {
+    if (dictUrl) {
         $box.combotree('hidePanel');
     }
     //本地字典数据
@@ -1825,17 +1825,17 @@ function openCombotree2($box) {
         url: dictUrl,
         checkbox: true,
         lines: true,
-        loader: function(param,success,error){
+        loader: function (param, success, error) {
             var opts = $(this).tree('options');
             var dictUrl = opts.url;
-            if(dictUrl){
+            if (dictUrl) {
                 var domain = getThisLocationObj();
                 var hostname = domain.hostname;
                 var randomUrl = dictUrl;
-                if(dictUrl.indexOf('?') == -1){
-                    randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
-                }else{
-                    randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
+                if (dictUrl.indexOf('?') == -1) {
+                    randomUrl = dictUrl + '?domain=' + hostname + '&v=' + jwzhVersion;
+                } else {
+                    randomUrl = dictUrl + '&domain=' + hostname + '&v=' + jwzhVersion;
                 }
                 $.ajax({
                     cache: true,
@@ -1843,17 +1843,17 @@ function openCombotree2($box) {
                     url: randomUrl,
                     data: param,
                     dataType: 'json',
-                    xhrFields: {withCredentials:true},
+                    xhrFields: {withCredentials: true},
                     crossDomain: true,
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.withCredentials = true;
                     },
-                    success: function(data) {
+                    success: function (data) {
                         opts.loaded = true;
                         success(data);
                     },
                     error: function () {
-                        console.log('弹框tree跨域获取字典错误,url:'+dictUrl);
+                        console.log('弹框tree跨域获取字典错误,url:' + dictUrl);
                         error.apply(this, arguments);
                     }
                 });
@@ -1960,7 +1960,7 @@ function exportExcel(options) {
             $(this).parent().parent().parent().next().find('input:checkbox').prop('checked', checked_status);
         });
 
-        $('#' + exportPanelId + ' .all-select').attr("checked",false);
+        $('#' + exportPanelId + ' .all-select').attr("checked", false);
         $('#' + exportPanelId + ' .all-select').click();
 
         openDivForm({
@@ -1991,7 +1991,7 @@ function exportExcel(options) {
                         paramNameArr.push(rel);
                         headNameArr.push($(this).next().text());
                     });
-                    if(headNameArr.length == 0) {
+                    if (headNameArr.length == 0) {
                         alertDiv({
                             title: '温馨提示',
                             msg: '请勾选导出的数据项!'
@@ -2068,7 +2068,7 @@ function selectUser(options) {
         var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
             + '<div class="base-info">'
             + '<div class="title">'
-            //+ '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+                //+ '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
             + '</div>'
             + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
             + '</div>'
@@ -2146,9 +2146,9 @@ function selectUser(options) {
  * @param strBirthday 出生日期
  * @returns {*}  年龄
  */
-function jsGetAge(strBirthday){
+function jsGetAge(strBirthday) {
     var returnAge;
-    var strBirthdayArr=strBirthday.split("-");
+    var strBirthdayArr = strBirthday.split("-");
     var birthYear = strBirthdayArr[0];
     var birthMonth = strBirthdayArr[1];
     var birthDay = strBirthdayArr[2];
@@ -2158,24 +2158,24 @@ function jsGetAge(strBirthday){
     var nowMonth = d.getMonth() + 1;
     var nowDay = d.getDate();
 
-    if(nowYear == birthYear){
+    if (nowYear == birthYear) {
         returnAge = 0;//同年 则为0岁
     } else {
-        var ageDiff = nowYear - birthYear ; //年之差
-        if(ageDiff > 0){
-            if(nowMonth == birthMonth) {
+        var ageDiff = nowYear - birthYear; //年之差
+        if (ageDiff > 0) {
+            if (nowMonth == birthMonth) {
                 var dayDiff = nowDay - birthDay;//日之差
-                if(dayDiff < 0) {
+                if (dayDiff < 0) {
                     returnAge = ageDiff - 1;
                 } else {
-                    returnAge = ageDiff ;
+                    returnAge = ageDiff;
                 }
             } else {
                 var monthDiff = nowMonth - birthMonth;//月之差
-                if(monthDiff < 0) {
+                if (monthDiff < 0) {
                     returnAge = ageDiff - 1;
                 } else {
-                    returnAge = ageDiff ;
+                    returnAge = ageDiff;
                 }
             }
         } else {
@@ -2189,6 +2189,7 @@ function jsGetAge(strBirthday){
 function previewPic(options) {
     var picZj = options.picZj;
     var picXh = options.picXh;
+    var callBack = options.callBack;
     var imgId = 'imgItem_' + picXh; //选中进来的图片ID
     var previewPanelId = options.previewPanelId;
     var lastPicXh = 1;
@@ -2200,8 +2201,8 @@ function previewPic(options) {
             + '<div style="float:left;width:175px;height:100%;border-right:1px #ccc dashed">'
             + '<ul id="previewImgMenu" style="list-style-type:none;padding:0;margin:0;height:525px;overflow:auto;"></ul>'
             + '<div class="tips" style="color:#999;font-size:12px;padding-left:10px;">'
-                //+ '<i class="fa fa-info-circle"></i> '
-                //+ '<span>点击箭头进行排序</span>'
+            + '<i class="fa fa-info-circle"></i> '
+            + '<span>点击箭头进行排序</span>'
             + '</div>'
             + '</div>'
             + '<div style="float:left;width:780px;height:100%;background:#ddd;text-align:center">'
@@ -2277,28 +2278,48 @@ function previewPic(options) {
             $('#' + previewPanelId).remove();
         }
     }, [
-        /*
-         {
-         text: '保存顺序',
-         handler: function () {
-         var zjArr = [];
-         var xhArr = [];
-         $('#previewImgMenu .img-li').each(function(index) {
-         var $this = $(this);
-         var zj = $this.attr('zj');
-         var xh = index + 1;
-         zjArr.push(zj);
-         xhArr.push(xh);
-         });
-         var param = {
-         zjs: zjArr.join(','),
-         xhs: xhArr.join(','),
-         };
-         console.log('重新排序的数据:', param);
-         //...等待后台接口完成
-         }
-         },
-         */
+        {
+            text: '保存顺序',
+            handler: function () {
+                var zjArr = [];
+                var xhArr = [];
+                $('#previewImgMenu .img-li').each(function (index) {
+                    var $this = $(this);
+                    var zj = $this.attr('zj');
+                    var xh = index + 1;
+                    zjArr.push(zj);
+                    xhArr.push(xh);
+                });
+                var param = {
+                    zjs: zjArr.join(','),
+                    xhs: xhArr.join(',')
+                };
+                loading('open','正在保存预览顺序,请稍候');
+                $.ajax({
+                    url: pathConfig.basePath + '/saomiao/updateXh',
+                    type: 'post',
+                    dataType: 'json',
+                    data: param,
+                    success: function(json) {
+                        loading('close');
+                        if (json.status == 'success') {
+                            $('#' + previewPanelId).dialog('close');
+                            callBack();
+                            $.messager.show({
+                                title: '温馨提示',
+                                msg: '保存成功!'
+                            });
+                        }
+                        else {
+                            alertDiv({
+                                title: '错误提示',
+                                msg: json.message
+                            });
+                        }
+                    }
+                });
+            }
+        },
         {
             text: '关闭',
             handler: function () {
@@ -2322,12 +2343,12 @@ function previewPic(options) {
                         var imgItem = rows[i];
                         var xh = imgItem.smj_ys;
                         var page = '第' + xh + '页';
-                        var zj = imgItem.zj
+                        var zj = imgItem.zj;
                         //var zj = i + 1;//imgItem.zj
                         var imgMenu = '<li class="img-li" xh="' + xh + '" zj="' + zj + '" >' +
                             '<span class="img-span" id="imgItem_' + xh + '" style="display:inline-block;width:100px;padding-left:30px;">' + page + '</span>' +
-                                //'<i class="fa fa-arrow-up move" title="上移"></i> ' +
-                                //'<i class="fa fa-arrow-down move" title="下移"></i>' +
+                            '<i class="fa fa-arrow-up move" title="上移"></i> ' +
+                            '<i class="fa fa-arrow-down move" title="下移"></i>' +
                             '</li>';
                         $('#previewImgMenu').append(imgMenu);
                     }
