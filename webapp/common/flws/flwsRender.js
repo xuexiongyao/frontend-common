@@ -371,28 +371,268 @@ function xyrCheckedXxfy($this) {
 function tabSwitch() {
     $("#flwsTabs").tabs({
         onSelect: function (title, index) {
+            var bm = $(this).tabs('getSelected').find('.flws-main-con-r').attr('id').substring(16);
             if (DATA.CQBG.cqbgData.bianMa != '000000' || typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
                 if (index > 0) {//操作法律文书
-                    if (!DATA.CQBG.cqbgZj) {//呈请报告主键还未生成
-                        alertDiv({
-                            title: '提示',
-                            msg: '请先保存呈请报告，再操作法律文书',
-                            fn: function () {
-                                $(this).removeClass('tabs-selected');
-                                $("#flwsTabs").tabs('select', 0)
-                            }
-                        })
-                    } else {//已经有呈请报告主键
+                    if (DATA.CQBG.cqbgZj) {//已经有呈请报告主键
                         DATA.FLWS.title = title;
+                        DATA.FLWS.bm = bm;
                         queryFlwsData(title, flwsPageRender);
                     }
                 }
             } else {//无呈请报告
                 DATA.FLWS.title = title;
+                DATA.FLWS.bm = bm;
                 queryFlwsData(title, flwsPageRender);
+            }
+        },
+        onUnselect:function (title,index) {
+            if (DATA.CQBG.cqbgData.bianMa != '000000' || typeof (DATA.CQBG.cqbgData) != 'undefined') {//有呈请报告
+                if(index == '0'){//呈请报告
+                    if(DATA.CQBG.status.hasDone &&　DATA.CQBG.cqbgZj){//编辑
+                        getCqbgQtsjEdit();//获取呈请报告编辑页面数据
+                        if (DATA.CQBG.isValid) {//必填校驗通過
+                            //获取修改的数据
+                            var changedData = getChangeData(DATA.CQBG.cqbgRow,DATA.CQBG.params,false,true);
+                            if(!jQuery.isEmptyObject(changedData)){//存在且不是空对象
+                                msgWindow('CQBG',title,DATA.CQBG.cqbgData.bianMa,false,true);//消息窗口
+                            }
+                        }
+                    }else{//新增
+                        getCqbgQtsjAdd();//获取呈请报告新增页面数据
+                        if (DATA.CQBG.isValid) {//必填校驗通過
+                            alertDiv({
+                                title: '文书切换提示',
+                                msg: '呈请报告【'+title+'】已经填写，但尚未保存，请立即返回保存',
+                                fn: function () {
+                                    $("#flwsTabs").tabs('select', index);
+                                }
+                            })
+                        }else{//必填校驗未通過
+                            alertDiv({
+                                title: '文书切换提示',
+                                msg: '请先保存呈请报告，再操作法律文书',
+                                fn: function () {
+                                    $("#flwsTabs").tabs('select', index);
+                                }
+                            })
+                        }
+                    }
+                }else{//法律文书
+                    var bm = '';//文书编码
+                    var obj = DATA.FLWS.flwsData;//文书结构化数据
+                    if(!jQuery.isEmptyObject(obj)){
+                        for(var k in obj){
+                            if(title == obj[k].name){
+                                bm = obj[k].bianMa;//编码
+                                break;
+                            }
+                        }
+                    }
+
+                    //法律文书多联必填项的数组初始化
+                    DATA.FLWS[bm].isValidArry = [];
+                    //前一个法律文书的数据
+                    var prevFlwsRow = DATA.FLWS[bm].flwsRow;
+
+                    if(prevFlwsRow && prevFlwsRow.length > 0){//编辑
+                        var isAddPage;//是否新增
+                        var hasEditedData = {};//已经保存过的数据
+
+                        if(DATA.FLWS[bm].flwsData.dx && DATA.FLWS[bm].flwsData.only){//dx:true,only:true
+                            getFlwsQtsjEdit(bm);//获取法律文书编辑页面数据
+
+                            //多联必填项的校验规则校验
+                            var isValidArry = DATA.FLWS[bm].isValidArry;
+                            if (isValidArry && isValidArry.length > 0) {
+                                var isvalid = false;
+                                for (var i = 0; i < isValidArry.length; i++) {
+                                    if ($.inArray(false, isValidArry) == -1) {
+                                        isvalid = true;
+                                    }
+                                }
+
+                                if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
+                                    //获取修改的数据
+                                    var changedData = getChangeData(prevFlwsRow[0],DATA.FLWS[bm].params,false,true);
+                                    if(!jQuery.isEmptyObject(changedData)){//存在且不是空对象
+                                        msgWindow('FLWS',title,bm,false,true);//消息窗口
+                                    }
+                                }
+                            }
+                        }else{
+                            for(var j=0;j<prevFlwsRow.length;j++){
+                                if(DATA.FLWS[bm].xyrXxzjbh == prevFlwsRow[j].CLDX_XXZJBH){//未处理新增
+                                    hasEditedData = prevFlwsRow[j];
+                                    isAddPage = false;
+                                }else{
+                                    isAddPage = true;
+                                }
+                            }
+
+                            if(isAddPage){//新增
+                                getFlwsQtsjAdd(bm);//获取法律文书新增页面数据
+
+                                //多联必填项的校验规则校验
+                                var isValidArry = DATA.FLWS[bm].isValidArry;
+                                if (isValidArry && isValidArry.length > 0) {
+                                    var isvalid = false;
+                                    for (var i = 0; i < isValidArry.length; i++) {
+                                        if ($.inArray(false, isValidArry) == -1) {
+                                            isvalid = true;
+                                        }
+                                    }
+
+                                    if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
+                                        if(DATA.FLWS[bm].flwsData.dx || DATA.FLWS[bm].flwsData.only){//多选 dx:true,only:true
+                                            msgWindow('FLWS',title,bm,true,true);//消息窗口
+                                        }else{//单选
+                                            msgWindow('FLWS',title,bm,true,false);//消息窗口
+                                        }
+                                    }
+                                }
+                            }else{//编辑
+                                getFlwsQtsjEdit(bm);//获取法律文书编辑页面数据
+
+                                //多联必填项的校验规则校验
+                                var isValidArry = DATA.FLWS[bm].isValidArry;
+                                if (isValidArry && isValidArry.length > 0) {
+                                    var isvalid = false;
+                                    for (var i = 0; i < isValidArry.length; i++) {
+                                        if ($.inArray(false, isValidArry) == -1) {
+                                            isvalid = true;
+                                        }
+                                    }
+
+                                    if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
+                                        //获取修改的数据
+                                        var changedData = getChangeData(hasEditedData,DATA.FLWS[bm].params,false,true);
+                                        if(!jQuery.isEmptyObject(changedData)){//存在且不是空对象
+                                            msgWindow('FLWS',title,bm,false,true);//消息窗口
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }else{//新增
+                        getFlwsQtsjAdd(bm);//获取法律文书新增页面数据
+
+                        //多联必填项的校验规则校验
+                        var isValidArry = DATA.FLWS[bm].isValidArry;
+                        if (isValidArry && isValidArry.length > 0) {
+                            var isvalid = false;
+                            for (var i = 0; i < isValidArry.length; i++) {
+                                if ($.inArray(false, isValidArry) == -1) {
+                                    isvalid = true;
+                                }
+                            }
+
+                            if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
+                                if(DATA.FLWS[bm].flwsData.dx || DATA.FLWS[bm].flwsData.only){//多选 dx:true,only:true
+                                    msgWindow('FLWS',title,bm,true,true);//消息提示窗口
+                                }else{//单选
+                                    msgWindow('FLWS',title,bm,true,false);//消息窗口
+                                }
+                            }
+                        }
+                    }
+                }
+            }else{//无呈请报告
+                //TODO 暂时无多联处理
             }
         }
     })
+}
+
+/**
+ * 消息提示窗口
+ * @param lx  文书类型 CQBG|FLWS
+ * @param title tab的title值
+ * @param bm 呈请报告编码|法律文书编码
+ * @param isAdd 新增|编辑(true:新增)
+ * @param isDirectSave 是否直接保存
+ */
+function msgWindow(lx,title,bm,isAdd,isDirectSave) {
+    var windowId = 'wsTabSwitch';//弹出窗口ID
+    var btnArray = [];//按钮区域
+
+    var wsLx = '';//文书类型
+    var msgText = '';//提示文本
+
+    var confirmBtn = '';//确认按钮
+    var cancelBtn = '不保存,直接切换';//取消按钮
+
+    if(lx == 'CQBG'){
+        wsLx = '呈请报告';
+    }else if(lx == 'FLWS'){
+        wsLx = '法律文书';
+    }
+
+    if(isDirectSave){//直接保存
+        confirmBtn = '立即保存';
+        if(isAdd){//新增
+            msgText = '已经填写，但尚未保存，是否立即保存?';
+        }else{//编辑
+            msgText = '有数据修改更新，但尚未保存，是否立即保存?';
+        }
+    }else{//返回页面点击按钮保存
+        confirmBtn = '立即返回保存';
+        if(isAdd){//新增
+            msgText = '已经填写，但尚未保存，是否立即返回保存?';
+        }else{//编辑
+            msgText = '有数据修改更新，但尚未保存，是否立即返回保存?';
+        }
+    }
+
+    var msgCon = wsLx + '【'+title+'】'+ msgText;//提示消息内容
+    $('#tip_con').text(msgCon);
+
+    var btnConfirmObj = {//确认按钮
+        text: confirmBtn,
+        handler: function () {
+            if(isDirectSave){//直接保存
+                if(lx == 'CQBG'){//呈请报告
+                    if(isAdd){//新增
+                        cqbgSave(DATA.CQBG.cqbgData.insertUrl, DATA.CQBG.params);
+                    }else{//编辑
+                        cqbgSave(DATA.CQBG.cqbgData.updateUrl, DATA.CQBG.params);
+                    }
+                }else if(lx == 'FLWS'){//法律文书
+                    if(isAdd){//新增
+                        flwsSave(DATA.FLWS[bm].flwsData.insertUrl, DATA.FLWS[bm].params, bm);
+                    }else{//编辑
+                        flwsSave(DATA.FLWS[bm].flwsData.updateUrl, DATA.FLWS[bm].params, bm);
+                    }
+                }
+            }else{//返回页面保存
+                $("#flwsTabs").tabs('select', title);
+            }
+            $('#'+windowId).dialog('close');
+        }
+    };
+
+    var btnCancelObj = {//取消按钮
+        text: cancelBtn,
+        handler: function () {
+            $('#'+windowId).dialog('close');
+        }
+    };
+
+    btnArray = [btnConfirmObj,btnCancelObj];
+
+    openDivForm({
+        id: windowId, //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
+        title: '文书切换提示',
+        width: 400,
+        onClose: function () {
+            try {
+                var fn = opts.fn;
+                if (fn) {
+                    fn();
+                }
+            } catch (e) {}
+        }
+    },btnArray);
 }
 
 /**
@@ -400,8 +640,10 @@ function tabSwitch() {
  * 无呈请报告，只有一个法律文书的的渲染
  */
 function onlyFlwsRender() {
+    var bm = $('#flwsTabs').tabs('getSelected').find('.flws-main-con-r').attr('id').substring(16);
     var title = DATA.FLWS.flwsData.customer.name;
     DATA.FLWS.title = title;
+    DATA.FLWS.bm = bm;
     queryFlwsData(title, flwsPageRender);
 }
 
@@ -467,6 +709,19 @@ function flwsPageRender(bm) {
 
     cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
     flwsTfrXxFy(bm);//填发人信息复用
+
+    //嫌疑对象勾选（单选）
+    if(DATA.FLWS[bm].xyrXxzjbh){
+        $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].xyrXxzjbh + "']").prop('checked',true);
+    }
+
+    //嫌疑对象勾选（多选）
+    var xyrryidsArray = DATA.FLWS[bm].xyrids;
+    if(xyrryidsArray && xyrryidsArray.length > 0){
+        for(var i=0;i<xyrryidsArray.length;i++){
+            $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + xyrryidsArray[i] + "']").prop('checked',true);
+        }
+    }
 }
 
 /**********************类型A************************/

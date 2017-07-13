@@ -264,7 +264,7 @@ function getFlwsQtsjAdd(bm) {
     };
 
     //法律文书是否切换版本【目前只针对行政案件中 行政处罚文书 一\二版】
-    if (DATA.FLWS[bm].flwsData.switchVersion) {
+    if (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.switchVersion != undefined && DATA.FLWS[bm].flwsData.switchVersion) {
         var tab = $('#flws_cl_area_' + bm).tabs('getSelected');
         var index = $('#flws_cl_area_' + bm).tabs('getTabIndex', tab);
         DATA.FLWS[bm].params.VERSION = index + 1;
