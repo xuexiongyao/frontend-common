@@ -2215,7 +2215,7 @@ function previewPic(options) {
         $('body').append(previewPanel);
 
         //获取数据生成左边菜单
-        creatImgMenu();
+        creatImgMenu(imgId);
 
         //点击查看图片
         $('#previewImgMenu').off('click.img').on('click.img', '.img-span', function () {
@@ -2341,7 +2341,7 @@ function previewPic(options) {
                     $('#previewImgMenu').empty();
                     for (var i = 0; i < rows.length; i++) {
                         var imgItem = rows[i];
-                        var xh = imgItem.smj_ys;
+                        var xh = imgItem.smj_ys || (i + 1);
                         var page = '第' + xh + '页';
                         var zj = imgItem.zj;
                         //var zj = i + 1;//imgItem.zj
@@ -2352,8 +2352,8 @@ function previewPic(options) {
                             '</li>';
                         $('#previewImgMenu').append(imgMenu);
                     }
-                    firstPicXh = rows[0].smj_ys;                //起始页号
-                    lastPicXh = rows[rows.length - 1].smj_ys;   //结束页号
+                    firstPicXh = rows[0].smj_ys || 0;                //起始页号
+                    lastPicXh = rows[rows.length - 1].smj_ys || rows.length;   //结束页号
                     $('#' + imgId).click();//点击选中进来的图片
                 }
             }
