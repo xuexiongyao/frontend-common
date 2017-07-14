@@ -354,7 +354,10 @@ function selectApprove(shjl) {
             openDivForm({
                 id: 'next_link_panel', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
                 title: '退回选项',
-                width: 300
+                width: 300,
+                onClose: function(){
+                    $report.css('visibility','visible');
+                }
             }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
                 {
                     text: '确定',
@@ -447,6 +450,8 @@ function saveAndSsShyj(backObj) {
                     msg: '请选择下一环节及审批人!',
                     fn: function(){
                         $report.css('visibility','visible');
+                        //保存并送审时如果没选择人员自动弹出人员选择框
+                        $('#select_approve').click();
                     }
                 });
             }else{
@@ -509,7 +514,12 @@ function saveAndSsShyj(backObj) {
                 } else {
                     alertDiv({
                         title: '提示',
-                        msg: '请选择处理方式'
+                        msg: '请选择处理方式',
+                        fn: function () {
+                            $report.css('visibility','visible');
+                            //保存并送审时如果没选择人员自动弹出人员选择框
+                            $('#select_approve').click();
+                        }
                     });
                 }
             }
@@ -568,7 +578,12 @@ function saveAndSsShyj(backObj) {
             } else {
                 alertDiv({
                     title: '提示',
-                    msg: '请选择退回状态!'
+                    msg: '请选择退回状态!',
+                    fn: function () {
+                        $report.css('visibility','visible');
+                        //保存并送审时如果没选择人员自动弹出人员选择框
+                        $('#select_approve').click();
+                    }
                 });
             }
         }
