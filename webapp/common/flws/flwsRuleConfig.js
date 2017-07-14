@@ -142,32 +142,6 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                             }
                         });
                     }
-                }else if(dictName == 'TB_ST_BARY_DIY'){//拘留通知书、逮捕通知书和逮捕证中办案人和执行人提供办案人员选择功能 且最多选两个
-                    comboboxObj.url = pathConfig.basePath + '/api/ajxx/' + DATA.asjbh + '/getBary';
-                    $(ipts[i]).attr('dicturl', comboboxObj.url);
-                    $(ipts[i]).combobox({
-                        url: comboboxObj.url, multiple: true,
-                        required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
-                        onSelect: function (r) {
-                            var vals = $(this).combobox('getValues');
-                            if(vals.length>2){
-                                $(this).combobox('unselect', r.id);
-                                alertDiv({
-                                    title: '提示信息',
-                                    msg: '最多选择两个办案人或执行人！'
-                                })
-                            }
-                        },
-                        onHidePanel: function () {
-                            var val = $(this).combobox('getValues');
-                            var className = $(this).attr('textboxname');//组件class name值
-                            if (val && bm && isFlws) {
-                                if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                    flwsLdXxfy(bm, className, '', val.join(','), 'combobox','');
-                                }
-                            }
-                        }
-                    })
                 }else{
                     var url = pathConfig.mainPath + '/common/dict/'+dictName+'.js';
                     comboboxObj.url = url;
