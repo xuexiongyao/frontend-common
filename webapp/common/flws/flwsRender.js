@@ -70,7 +70,7 @@ function cqbgPageRender() {
     var cqbgIpts = $('#cqbg_main_con form input');
 
     //受案登记表的特殊处理
-    if (DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG') {
+    if (DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG' && !DATA.wsxgRwcxWs) {
         loading('open', '正在获取数据...');
         $.ajax({
             url: pathConfig.basePath + '/wenshu/source/CQBG/INFO',
@@ -94,7 +94,7 @@ function cqbgPageRender() {
         })
     } else {
         //呈请报告只能做一份儿，并且已呈请的判断
-        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one) {
+        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one && !DATA.wsxgRwcxWs) {
             alertDiv({
                 title: '提示',
                 msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
@@ -147,7 +147,13 @@ function xydxRenderCqbg() {
     var xyrListStr = '';//嫌疑人list字符串
     $('#cqbg_xyr_con').html('');
 
-    if (xydxDatas && DATA.DX.dxbm && typeof DATA.CQBG.cqbgData != 'undefined') {
+    //呈请呈请报告修改，嫌疑对象不可操作
+    if(DATA.wsxgRwcxWs){
+        $('#cqbg_xyr_con').hide();
+        $('#cqbg_main_con').css('width','100%');
+    }
+
+    if (xydxDatas && DATA.DX.dxbm && typeof DATA.CQBG.cqbgData != 'undefined' && !DATA.wsxgRwcxWs) {
         for (var k in xydxDatas) {
             for (var key in xyrObj) {
                 if (k == key) {
@@ -1797,7 +1803,7 @@ function flwsClXyrCheckForCx(bm, $this){
         DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
 
         //嫌疑人勾选其他接口请求信息复用（秀平）
-        ajax_request(bm, xyrXxzjbh);
+        //ajax_request(bm, xyrXxzjbh);
 
         //法律文书主键
         if(flwsRow.length>0){

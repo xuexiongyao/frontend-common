@@ -136,8 +136,8 @@ function cqbgDataXxfy() {
                 $('#cqbg_main_con form input.' + key).val(data[key + '_MASTER']);
 
                 if(DATA.FLWS.cqFlwsZj){
-                    $('#cqbg_main_con form input.' + key).attr("readonly", true);
-                    $('#cqbg_main_con form input.' + key).datebox({ disabled: true });
+                    $('#cqbg_main_con form input.' + key).attr("disabled", 'disabled');
+                    $('#cqbg_main_con form input.' + key).css({'border': '0', 'background': '#fff'})
                 }else{
                     wdateValidate('#cqbg_main_con form input.Wdate');
                 }
