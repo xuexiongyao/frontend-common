@@ -110,21 +110,21 @@ function resizeTextarea() {
 //自适应高度
 function replaceEnterForCqbg() {
     $('#cqbg_main_con form textarea').off().on({
-        keydown: function () {
-            this.style.height = '0px';
-            this.style.height = (this.scrollHeight + 'px');
-        },
-        propertychange: function () {
-            this.style.height = (this.scrollHeight + 'px');
-        },
-        input: function () {
-            this.style.height = '0px';
-            this.style.height = (this.scrollHeight + 'px');
-        },
-        scroll: function () {
-            this.style.height = '0px';
-            this.style.height = (this.scrollHeight + 'px');
-        },
+        //keydown: function () {
+        //    this.style.height = '0px';
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
+        //propertychange: function () {
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
+        //input: function () {
+        //    this.style.height = '0px';
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
+        //scroll: function () {
+        //    this.style.height = '0px';
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
         focus: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');
