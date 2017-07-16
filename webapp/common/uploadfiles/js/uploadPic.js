@@ -38,6 +38,11 @@
 				var finishCallBack = opt.finish;
 				delete opt.finish;
 			}
+			//文件上传之前
+			if(opt.beforeSend){
+				var beforeSendCallBack = opt.beforeSend;
+				delete opt.beforeSend;
+			}
 			//加入队列
 			if(opt.filJoin){
 				var filJoinCallBack = opt.filJoin;
@@ -60,6 +65,13 @@
 				alert( ' 上传组件不支持您的浏览器！');
 				return false;
        		}
+
+            //绑定文件 上传之前事件;
+            webUploader.on('uploadBeforeSend', function(block,data) {
+                if(beforeSendCallBack){
+                    beforeSendCallBack(block,data);
+                }
+            });
 			
 			//绑定文件加入队列事件;
 			webUploader.on('fileQueued', function( file ) {
