@@ -196,7 +196,7 @@ function flwsQhzgxRequest() {
         success: function (data) {
             DATA.RULE = data;
 
-            dfd.resolve('获取前后只关系规则成功');
+            dfd.resolve('获取前后置关系规则成功');
         }
     });
     return dfd.promise();

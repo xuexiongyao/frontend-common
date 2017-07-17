@@ -78,6 +78,12 @@ function initFlwsMain(data){
         $("#sent").hide();
     }
 
+    //呈请过程中文书的修改
+    if(pathObj.cqgczCqbgZj && typeof (pathObj.cqgczCqbgZj) != 'undefined'){
+        DATA.CQBG.cqgczCqbgZj = pathObj.cqgczCqbgZj;//呈请过程中呈请报告主键
+    }
+
+    //呈请修改文书
     if(pathObj.flwsxgsqbZj && typeof (pathObj.flwsxgsqbZj) != 'undefined'){
         if(pathObj.flwsZj && typeof (pathObj.flwsZj) != 'undefined'){
             DATA.FLWS.cqFlwsZj = pathObj.flwsZj;//法律文书主键【针对呈请法律文书修改】
@@ -158,7 +164,11 @@ function queryCqbgData(render) {
             param = {
                 XXZJBH: DATA.FLWS.cqFlwsZj
             }
-        }else if (one) {//只能出一份文书
+        } else if(DATA.CQBG.cqgczCqbgZj){//呈请过程中的文书 呈请报告主键
+            param = {
+                XXZJBH: DATA.CQBG.cqgczCqbgZj
+            }
+        } else if (one) {//只能出一份文书
             param = {
                 ASJBH: DATA.asjbh,
                 FLWS_ASJFLWSDM: DATA.CQBG.cqbgData.bianMa,

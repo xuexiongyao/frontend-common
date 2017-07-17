@@ -6,10 +6,10 @@
 var pathObj = getParamLinkUrl();
 var taskId = pathObj.id;    //rwid
 var name = pathObj.name;    //rwmc
-var businessKey = pathObj.businessKey;
+var businessKey = pathObj.businessKey;//呈请报告主键
 var processInstanceId = pathObj.processInstanceId;
 var asjzcxwlbdm = pathObj.asjzcxwlbdm;
-var asjflwsdm = pathObj.asjflwsdm;
+var asjflwsdm = pathObj.asjflwsdm;//呈请报告编码
 var dxmc = pathObj.dxmc;
 var flwsmc = pathObj.flwsmc;
 var cjsj = pathObj.cjsj;
@@ -19,6 +19,7 @@ var badwGajgmc = pathObj.badwGajgmc;
 var fjrid = pathObj.fjrid;
 var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
+var lx = pathObj.lx;//文书类型 XSAJ|XZAJ
 var hxshyjbzCurrent = null;  //当前回写审核意见标识
 var candidateUsers;
 var flagText = null;
@@ -30,12 +31,23 @@ var isLastTask = true;
 var isOver = false;
 var sessionBean = getSessionBean();             //获取登陆者信息
 var role = sessionBean.userOrgBiztype || '04';  //登陆角色 02为法制民警
-var flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
+var flwsinfoaram = '',str = '';
+/****************************无签章页面*****************************/
+// flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
+// str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+/**********************************end**************************************/
 
+/**************************签章页面************************************/
 //【注意】 原来引用的是flwsInfo.html,签章审批后使用flwsInfo2.html
-//var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+// flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
+// str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo2.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+/******************************end********************************/
 
-var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo2.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+/********************************呈请过程中文书科修改*************************************/
+flwsinfoaram = 'asjbh=' + asjbh + '&cqgczCqbgZj=' + businessKey + '&asjzcxwdm=' + asjzcxwlbdm + "&CQBG_BM=" + asjflwsdm;
+str = '<iframe src="' + pathConfig.basePath + '/html/flws/ssFlwsMain.html?' + flwsinfoaram + '" frameborder="0" style="width: 1198px;min-height: 800px;padding:0;overflow-x: hidden;overflow-y:auto"></iframe>';
+/********************************end*************************************/
+
 $('.right-report').append(str);
 
 $(function () {
@@ -445,15 +457,16 @@ function saveAndSsShyj(backObj) {
         if (shjl == '1') {
             console.log('是否最后一级isFinally:',isFinally);
             if(!isFinally && !candidateUsers){
-                alertDiv({
-                    title: '提示',
-                    msg: '请选择下一环节及审批人!',
-                    fn: function(){
-                        $report.css('visibility','visible');
-                        //保存并送审时如果没选择人员自动弹出人员选择框
-                        $('#select_approve').click();
-                    }
-                });
+                //alertDiv({
+                //    title: '提示',
+                //    msg: '请选择下一环节及审批人!',
+                //    fn: function(){
+                //        $report.css('visibility','visible');
+                //        //保存并送审时如果没选择人员自动弹出人员选择框
+                //    }
+                //});
+                selectApprove('1');
+                $('#select_approve').click();
             }else{
                 var wclc = function(formData){
                     //获取选择的审批人
@@ -468,16 +481,14 @@ function saveAndSsShyj(backObj) {
                 //执行签章
                 if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                     //签章送审
-                    /*
-                    alertDiv({
-                        title: '温馨提示',
-                        msg: '立即执行签章送审流程,请耐心等待...',
-                        fn: function(){
-                            $report.css('visibility','visible');
-                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
-                        }
-                    });
-                    */
+                    //alertDiv({
+                    //    title: '温馨提示',
+                    //    msg: '立即执行签章送审流程,请耐心等待...',
+                    //    fn: function(){
+                    //        $report.css('visibility','visible');
+                    //        window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
+                    //    }
+                    //});
                     //选择签章还是送审
                     $.messager.confirm({
                         title: '签章提示',
@@ -517,8 +528,6 @@ function saveAndSsShyj(backObj) {
                         msg: '请选择处理方式',
                         fn: function () {
                             $report.css('visibility','visible');
-                            //保存并送审时如果没选择人员自动弹出人员选择框
-                            $('#select_approve').click();
                         }
                     });
                 }
@@ -581,8 +590,6 @@ function saveAndSsShyj(backObj) {
                     msg: '请选择退回状态!',
                     fn: function () {
                         $report.css('visibility','visible');
-                        //保存并送审时如果没选择人员自动弹出人员选择框
-                        $('#select_approve').click();
                     }
                 });
             }
