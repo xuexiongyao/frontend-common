@@ -21,7 +21,7 @@ var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
 var lx = pathObj.lx;//文书类型 XSAJ|XZAJ
 var hxshyjbzCurrent = null;  //当前回写审核意见标识
-var candidateUsers;
+var candidateUsers,candidateUsersName,backNodeText;
 var flagText = null;
 var isFinally = false;
 var backInitial = {};
@@ -174,6 +174,11 @@ function getPrevAndOri() {
             $('#shjl').combobox({
                 onSelect: function (n, o) {
                     selectApprove(n.id);
+                    if(candidateUsersName && n.id == '1'){
+                        $('#next_select_title').text('下一环节及审批人：'+candidateUsersName).attr('title',candidateUsersName);
+                    }else if(backNodeText && n.id == '3'){
+                        $('#next_select_title').text('请选择退回的状态：'+backNodeText).attr('title',backNodeText);
+                    }
                 }
             });
 
@@ -263,6 +268,9 @@ function selectApprove(shjl) {
     $('#select_approve').off('click').on('click', function () {
         var $report = $('.right-report');
         $report.css('visibility','hidden');
+        //置空
+        $('#role_name').empty();
+        $('#role_name').parent().show();
         //同意,不同意
         if (shjl == '1' || shjl == '2') {
             $('#next_link').show();
@@ -289,7 +297,8 @@ function selectApprove(shjl) {
                                 candidateUsersArr.push($(this).attr('bizID'));
                             });
                             candidateUsers = candidateUsersArr.join(',');
-                            $('#next_select_title').text('下一环节及审批人：'+candidateUsersNameArr.join(',')).attr('title',candidateUsersNameArr.join(','));
+                            candidateUsersName = candidateUsersNameArr.join(',');
+                            $('#next_select_title').text('下一环节及审批人：'+candidateUsersName).attr('title',candidateUsersName);
                             if (candidateUsers) {
                                 $('#next_link_panel').dialog('close');
                                 $.messager.show({
@@ -375,7 +384,7 @@ function selectApprove(shjl) {
                     text: '确定',
                     handler: function () {
                         var val = $('#role_name input:checked').val();//退回节点
-                        var backNodeText = $('#role_name input:checked').parent().text();//退回节点的名称
+                        backNodeText = $('#role_name input:checked').parent().text();//退回节点的名称
                         var backObj;
                         //alert('退回状态:'+val);
                         if (val == 'initial') {
@@ -465,7 +474,6 @@ function saveAndSsShyj(backObj) {
                 //        //保存并送审时如果没选择人员自动弹出人员选择框
                 //    }
                 //});
-                selectApprove('1');
                 $('#select_approve').click();
             }else{
                 var wclc = function(formData){
@@ -523,13 +531,14 @@ function saveAndSsShyj(backObj) {
                     complete(shjl, shsj, shyj);
                     //console.log('不同意,但是选择审批人:',candidateUsers);
                 } else {
-                    alertDiv({
-                        title: '提示',
-                        msg: '请选择处理方式',
-                        fn: function () {
-                            $report.css('visibility','visible');
-                        }
-                    });
+                    //alertDiv({
+                    //    title: '提示',
+                    //    msg: '请选择处理方式',
+                    //    fn: function () {
+                    //        $report.css('visibility','visible');
+                    //    }
+                    //});
+                    $('#select_approve').click();
                 }
             }
         }
@@ -585,13 +594,14 @@ function saveAndSsShyj(backObj) {
                     }
                 });
             } else {
-                alertDiv({
-                    title: '提示',
-                    msg: '请选择退回状态!',
-                    fn: function () {
-                        $report.css('visibility','visible');
-                    }
-                });
+                //alertDiv({
+                //    title: '提示',
+                //    msg: '请选择退回状态!',
+                //    fn: function () {
+                //        $report.css('visibility','visible');
+                //    }
+                //});
+                $('#select_approve').click();
             }
         }
     });
