@@ -2378,7 +2378,7 @@ function previewPicTab2(picXh) {
         dragSelector: "li",
         dragBetween: true,
         //dragEnd: saveOrder,//拖动结束触发函数
-        placeHolderTemplate: "<li class='img-li' style='border:1px #ccc dashed;'></li>"
+        placeHolderTemplate: "<li class='img-li' style='background:#ccc;'></li>"
     });
 
     //点击查看图片
