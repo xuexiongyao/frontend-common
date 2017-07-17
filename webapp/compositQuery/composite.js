@@ -1391,8 +1391,8 @@ function ajaxQuery(condition_obj) {
             changeLinkButtonIcon();
             searchResult(data); //展示查询结果
             
+            //记录日志
             logEntity.error_code = '200';
-            
             if(data.requestTime && data.responseTime){
             	logEntity.operate_time = data.requestTime;
             	logEntity.operate_endtime = data.responseTime;
@@ -1408,16 +1408,24 @@ function ajaxQuery(condition_obj) {
                 title : '错误信息',
                 msg : '综合查询服务请求失败！'
             });
+            
+            $('#pagination').pagination({
+                total: 0
+            }).show();
+            
+    		//记录日志
+            logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
+            logEntity.error_code = e.status;
+            writeLog(logEntity);
+            
             //本地调试时,注释这个retrun
             return;
+            
             $('#pagination').pagination({
                 total: 998
             }).show();
             changeLinkButtonIcon();
             searchResult(search_result_test);
-            logEntity.operate_endtime = getDateStr(new Date(),"yyyy-mm-dd hh:mi:ss");
-            logEntity.error_code = e.status;
-            writeLog(logEntity);
         }
     });
 

@@ -110,21 +110,21 @@ function resizeTextarea() {
 //自适应高度
 function replaceEnterForCqbg() {
     $('#cqbg_main_con form textarea').off().on({
-        keydown: function () {
-            this.style.height = '0px';
-            this.style.height = (this.scrollHeight + 'px');
-        },
-        propertychange: function () {
-            this.style.height = (this.scrollHeight + 'px');
-        },
-        input: function () {
-            this.style.height = '0px';
-            this.style.height = (this.scrollHeight + 'px');
-        },
-        scroll: function () {
-            this.style.height = '0px';
-            this.style.height = (this.scrollHeight + 'px');
-        },
+        //keydown: function () {
+        //    this.style.height = '0px';
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
+        //propertychange: function () {
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
+        //input: function () {
+        //    this.style.height = '0px';
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
+        //scroll: function () {
+        //    this.style.height = '0px';
+        //    this.style.height = (this.scrollHeight + 'px');
+        //},
         focus: function () {
             this.style.height = '0px';
             this.style.height = (this.scrollHeight + 'px');
@@ -563,4 +563,54 @@ function strEnterSpace(obj){
     if(typeof obj == 'string'){
         return obj.replace('\n','\\n').replace('\t','\\t');
     }
+}
+
+/**
+ * 获取两个对象中数据改变的数据
+ * @param objA 对象A
+ * @param objB 对象B
+ * @param isDeepContrast 是否深度对比
+ * @param isDifferNewOrOld 是否区分新老数据
+ * @returns 返回新的对象
+ */
+function getChangeData(objA,objB,isDeepContrast,isDifferNewOrOld){
+    var aL = getObjLength(objA);
+    var bL = getObjLength(objB);
+    var objTmpLarge,objTmpSmall;
+
+    var changedData = {};//修改的数据
+
+    if(isDifferNewOrOld){//区分新老数据
+        objTmpLarge = objA;
+        objTmpSmall = objB;
+    }else{//不区分
+        if(aL>bL){//对象a长度大于对象b
+            objTmpLarge = objA;
+            objTmpSmall = objB;
+        }else{
+            objTmpLarge = objB;
+            objTmpSmall = objA;
+        }
+    }
+
+
+    //深度对比
+    if(isDeepContrast){
+        for(var i in objTmpLarge){
+            if(!objTmpSmall[i]){
+                changedData[i] =  objTmpLarge[i];
+            }
+        }
+    }
+
+    for(var k1 in objTmpSmall){
+        if(objTmpSmall[k1] != objTmpLarge[k1+"_MASTER"] && objTmpLarge[k1+"_MASTER"]){
+            changedData[k1] = objTmpSmall[k1];
+        } else if(!objTmpLarge[k1+"_MASTER"]){
+            if(objTmpSmall[k1] != objTmpLarge[k1] && objTmpLarge[k1]){
+                changedData[k1] = objTmpSmall[k1];
+            }
+        }
+    }
+    return changedData;
 }

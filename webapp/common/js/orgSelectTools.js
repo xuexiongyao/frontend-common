@@ -666,7 +666,7 @@ function initSingleSelectOrg(textboxID, filterData, returnFieldData, onSelectedF
     $("#" + normalHtmlDivId + textboxID).dialog({
         title: '组织机构单选',
         height: 'auto',
-        width: 450,
+        width: 470,
         resizable: true,
         modal: true,
         closed: true,

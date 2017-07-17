@@ -40,6 +40,7 @@ $('.right-report').append(str);
 
 $(function () {
     clickShowPanel();
+    getNext();
     selectApprove('1');         //选择审批人
     getCurrent();               //当前环节
     saveAndSsShyj();            //保存并送审
@@ -68,6 +69,7 @@ function getNext() {
                         $('#links').append(html);
                     }
                     $('#links input').off('click').on('click',function(e){
+                        $('#role_name').parent().show();
                         var _name = $(this).parent().text();
                         $.ajax({
                             url: ajaxUrl + '/findTaskCandidateUsers?taskId=' + taskId + '&processInstanceId=' + processInstanceId + '&name=' + _name,
@@ -268,11 +270,14 @@ function selectApprove(shjl) {
                         isOver = $('#over_area input').prop('checked');
                         flagText = $('#links input:checked').parent().text();
                         if (!isOver) {
-                            var candidateUsersArr = [];
+                            var candidateUsersArr = [];//下一环节审批人ID
+                            var candidateUsersNameArr = [];//下一环节审批人姓名
                             $('#role_name input:checked').each(function () {
+                                candidateUsersNameArr.push($(this).parent().text());
                                 candidateUsersArr.push($(this).attr('bizID'));
                             });
                             candidateUsers = candidateUsersArr.join(',');
+                            $('#next_select_title').text('下一环节及审批人：'+candidateUsersNameArr.join(',')).attr('title',candidateUsersNameArr.join(','));
                             if (candidateUsers) {
                                 $('#next_link_panel').dialog('close');
                                 $.messager.show({
@@ -349,12 +354,16 @@ function selectApprove(shjl) {
             openDivForm({
                 id: 'next_link_panel', //页面上div的id,将div设置为display:none,在div中设置好form属性,自动提交第一个form
                 title: '退回选项',
-                width: 300
+                width: 300,
+                onClose: function(){
+                    $report.css('visibility','visible');
+                }
             }, [                     //以下为按钮添加配置,不传值为默认,传递[]时,清除所有按钮
                 {
                     text: '确定',
                     handler: function () {
-                        var val = $('#role_name input:checked').val();
+                        var val = $('#role_name input:checked').val();//退回节点
+                        var backNodeText = $('#role_name input:checked').parent().text();//退回节点的名称
                         var backObj;
                         //alert('退回状态:'+val);
                         if (val == 'initial') {
@@ -363,6 +372,7 @@ function selectApprove(shjl) {
                             backObj = backPrev;
                         }
                         saveAndSsShyj(backObj);
+                        $('#next_select_title').text('请选择退回的状态：'+backNodeText).attr('title',backNodeText);
                         $('#next_link_panel').dialog('close');
                     }
                 }, {
@@ -440,17 +450,19 @@ function saveAndSsShyj(backObj) {
                     msg: '请选择下一环节及审批人!',
                     fn: function(){
                         $report.css('visibility','visible');
+                        //保存并送审时如果没选择人员自动弹出人员选择框
+                        $('#select_approve').click();
                     }
                 });
             }else{
-                var wclc = function(){
+                var wclc = function(formData){
                     //获取选择的审批人
                     if (isFinally) {    //最后一级没有审批人
                         candidateUsers = '';
-                        complete(shjl, shsj, shyj);
+                        complete(shjl, shsj, shyj,formData);
                     }
                     else if (candidateUsers) {
-                        complete(shjl, shsj, shyj);
+                        complete(shjl, shsj, shyj,formData);
                     }
                 };
                 //执行签章
@@ -502,7 +514,12 @@ function saveAndSsShyj(backObj) {
                 } else {
                     alertDiv({
                         title: '提示',
-                        msg: '请选择处理方式'
+                        msg: '请选择处理方式',
+                        fn: function () {
+                            $report.css('visibility','visible');
+                            //保存并送审时如果没选择人员自动弹出人员选择框
+                            $('#select_approve').click();
+                        }
                     });
                 }
             }
@@ -561,7 +578,12 @@ function saveAndSsShyj(backObj) {
             } else {
                 alertDiv({
                     title: '提示',
-                    msg: '请选择退回状态!'
+                    msg: '请选择退回状态!',
+                    fn: function () {
+                        $report.css('visibility','visible');
+                        //保存并送审时如果没选择人员自动弹出人员选择框
+                        $('#select_approve').click();
+                    }
                 });
             }
         }
@@ -570,37 +592,42 @@ function saveAndSsShyj(backObj) {
 
 
 //完成流程,到下一级
-function complete(shjl, shsj, shyj) {
-    loading('open', '审核信息保存中,请稍候...');
-    var param = {
-        'taskId': taskId,
-        'candidateUsers': candidateUsers,
-        'shsj': shsj,
-        'shjl': shjl,
-        'shyj': shyj,
-        'businessKey': businessKey,
-        'isLastTask': isLastTask,
-        'hxshyjbz': hxshyjbzCurrent,
-        'fjrid': fjrid,
-        'fjrxm': fjrxm,
-        'flag': flagText
-    };
-    if (isLastTask) {
-        //param.xwFlwsLajdsZjs = 'd036c36a9fa442518befc0b34824c0d3,511ef8327bfa441c84226d706bcb3c5a';//先写测试数据
-        param.asjzcxwlbdm = asjzcxwlbdm;
-        param.asjflwsdm = asjflwsdm;//+asjflwsdm;
-        param.dxmc = dxmc;
-        param.flwsmc = flwsmc;
-        param.asjbh = asjbh;
-        param.cjsj = cjsj;
-        param.cqbgZj = businessKey;
-        param.ajmc = ajmc;
+function complete(shjl, shsj, shyj,formData) {
+    var formDataParam = new FormData();
+    if(formData){
+        formDataParam = formData;
     }
+    formDataParam.append("taskId", taskId);
+    formDataParam.append("candidateUsers", candidateUsers);
+    formDataParam.append("shsj", shsj);
+    formDataParam.append("shjl", shjl);
+    formDataParam.append("shyj", shyj);
+    formDataParam.append("businessKey", businessKey);
+    formDataParam.append("isLastTask", isLastTask);
+    formDataParam.append("hxshyjbz", hxshyjbzCurrent);
+    formDataParam.append("fjrid", fjrid);
+    formDataParam.append("fjrxm", fjrxm);
+    formDataParam.append("flag", flagText);
+    formDataParam.append("asjflwsdm", asjflwsdm);
+    if (isLastTask) {
+        formDataParam.append("asjzcxwlbdm", asjzcxwlbdm);
+        formDataParam.append("dxmc", dxmc);
+        formDataParam.append("flwsmc", flwsmc);
+        formDataParam.append("asjbh", asjbh);
+        formDataParam.append("cjsj", cjsj);
+        formDataParam.append("cqbgZj", businessKey);
+        formDataParam.append("ajmc", ajmc);
+    }
+    loading('open', '审核信息保存中,请稍候...');
     $.ajax({
         url: ajaxUrl + '/complete',
-        data: param,
+        data: formDataParam,
         type: 'post',
         dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        contentType: false,//必须false才会自动加上正确的Content-Type
+        processData: false,//必须false才会避开jQuery对 formdata 的默认处理XMLHttpRequest会对 formdata 进行正确的处理
         success: function (json) {
             loading('close');
             // console.log('complete:', json);
@@ -827,7 +854,7 @@ function sendMsg(userid, con, msg) {
             if(data.state == 'success'){//发送短信成功
                 alertDiv({
                     title: '提示',
-                    msg: msg+',短信发送成功！',
+                    msg: msg+'短信发送成功！',
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }
@@ -835,7 +862,7 @@ function sendMsg(userid, con, msg) {
             }else if(data.state == 'error'){//发送短信失败
                 alertDiv({
                     title : '提示',
-                    msg: msg+'，短信发送失败：'+data.message,
+                    msg: msg+'短信发送失败：'+data.message,
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }
@@ -866,7 +893,7 @@ function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
             if(data.state == 'success'){//发送短信成功
                 alertDiv({
                     title: '提示',
-                    msg: msg+',短信发送成功！',
+                    msg: msg+'短信发送成功！',
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }
@@ -874,7 +901,7 @@ function sendMsgLast(asjbh, businessKey, asjflwsdm, con, msg) {
             }else if(data.state == 'error'){//发送短信失败
                 alertDiv({
                     title : '提示',
-                    msg: msg+'，短信发送失败：'+data.message,
+                    msg: msg+'短信发送失败：'+data.message,
                     fn: function () {
                         crossCloseTab('refresh_flwstask');
                     }

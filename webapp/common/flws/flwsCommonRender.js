@@ -132,14 +132,27 @@ function cqbgDataXxfy() {
                     value: val
                 })
             } else if (key == 'CQRQ') {//呈请日期
+
                 $('#cqbg_main_con form input.' + key).val(data[key + '_MASTER']);
-                wdateValidate('#cqbg_main_con form input.Wdate');
+
+                if(DATA.FLWS.cqFlwsZj){
+                    $('#cqbg_main_con form input.' + key).attr("disabled", 'disabled');
+                    $('#cqbg_main_con form input.' + key).css({'border': '0', 'background': '#fff'})
+                }else{
+                    wdateValidate('#cqbg_main_con form input.Wdate');
+                }
             } else {
                 if ($node.hasClass('easyuitextbox')) {
                     $node.textbox({value: val})
                 } else if ($node.hasClass('easyuicombobox')) {
+
                     if (key == 'BAMJXM') {
-                        $node.combobox({value: data.BAMJID})
+                        if(!DATA.FLWS.cqFlwsZj){
+                            $node.combobox({value: data.BAMJID})
+                        }else{
+                            $node.val(data.BAMJXM);
+                            $node.attr("readonly", true);
+                        }
                     } else {
                         $node.combobox({value: val})
                     }
@@ -477,12 +490,12 @@ function flwsRightPagePj(flwsData) {
      * checkbox、radio方法调用(jessie)
      * @type {string}
      */
-    var initFun = 'init_'+bm;
-    try{
-        eval(initFun+'()');
-    }catch(e){
-        console.log(initFun+"()不存在！");
-    }
+    //var initFun = 'init_'+bm;
+    //try{
+    //    eval(initFun+'()');
+    //}catch(e){
+    //    console.log(initFun+"()不存在！");
+    //}
 }
 
 /**
@@ -495,7 +508,7 @@ function flwsRightPageRenderForAdd(flwsData) {
     //法律文书页面拼接
     flwsRightPagePj(flwsData);
 
-    if(flwsData.bx && !flwsData.dx && !flwsData.wdx){
+    if(flwsData.bx && !flwsData.wdx){
         $('#flws_main_con_r_mask_'+bm).show();
     }
 
@@ -511,6 +524,17 @@ function flwsRightPageRenderForAdd(flwsData) {
         ajax_request(bm);
     }catch(e){
         console.log("没有ajax_request函数");
+    }
+
+    /**
+     * checkbox、radio方法调用(jessie)
+     * @type {string}
+     */
+    var initFun = 'init_'+bm;
+    try{
+        eval(initFun+'()');
+    }catch(e){
+        console.log(initFun+"()不存在！");
     }
 
     if(DATA.publicJkXx){
@@ -548,7 +572,7 @@ function flwsRightPageRenderForEdit(flwsData) {
     $('#saveFlwsAdd_' + bm).text('法律文书编辑保存');
 
     /****行政案件 行政处罚报告书  执法公开编辑按钮单独处理****/
-    if (bm == 'X020003') {
+    if (bm == 'X020003' || bm == '042164') {
         $('#saveFlwsZfgk_' + bm).show().text('执法公开编辑');
     }
 
@@ -557,6 +581,17 @@ function flwsRightPageRenderForEdit(flwsData) {
     easyuiReset(flwsIpts, false, bm, true);
     //法律文书中类呈请报告呈请内容的信息复用
     flwsLsCqbgNrXxfy(bm);
+
+    /**
+     * checkbox、radio方法调用(jessie)
+     * @type {string}
+     */
+    var initFun = 'init_'+bm;
+    try{
+        eval(initFun+'()');
+    }catch(e){
+        console.log(initFun+"()不存在！");
+    }
 
     if (typeof (DATA.FLWS[bm]) == 'undefined') {
         DATA.FLWS[bm] = {};
@@ -1009,7 +1044,7 @@ function flwsDataXxfy(bm, zj) {
         if (zj == data[i].ZJ) {
             //自定义页面处理
             if (DATA.FLWS[bm].flwsData.customized) {
-                eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]) + "')");
+                eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]).replace(/'/g,"\\'")   + "')");
             }
             //多版本处理（行政案件）
             if(data[i].VERSION){
@@ -1062,57 +1097,89 @@ function flwsDataXxfy(bm, zj) {
                     if (annotation == '/REPLACE/') {
                         $a.parent().next().val(val);
                     } else {
-                        if ($node.hasClass('easyuitextbox')) {
-                            if (bm == '042155' && $node.hasClass('BZR_XM') && val) {//取保候审-人保
-                                $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
-                                    required: false, value: '', readonly: true
-                                }).next().addClass('clear-border');
-                                $node.textbox({value: val});
-                            }else if (bm == '042155' && $node.hasClass('BZJ') && val) {//取保候审-财报
-                                $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
-                                    required: false, value: '', readonly: true
-                                }).next().addClass('clear-border');
-                                $("#flws_cl_area_" + bm + " form a .BZR_CSRQ").addClass('iptreadonly').textbox({
-                                    required: false, value: '', readonly: true
-                                }).next().addClass('clear-border');
-                                $node.textbox({value: data[i][key+'_DX']});
-                            }else{
-                                $node.textbox({value: val});
-                            }
+                        if (annotation) {
+                            if ($node.hasClass('easyuitextbox')) {
+                                if (bm == '042155' && $node.hasClass('BZR_XM') && val) {//取保候审-人保
+                                    $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
+                                        required: false, value: '', readonly: true
+                                    }).next().addClass('clear-border');
+                                    $node.textbox({value: val});
+                                } else if (bm == '042155' && $node.hasClass('BZJ') && val) {//取保候审-财报
+                                    $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
+                                        required: false, value: '', readonly: true
+                                    }).next().addClass('clear-border');
+                                    $("#flws_cl_area_" + bm + " form a .BZR_CSRQ").addClass('iptreadonly').textbox({
+                                        required: false, value: '', readonly: true
+                                    }).next().addClass('clear-border');
+                                    $node.textbox({value: data[i][key + '_DX']});
+                                } else if (bm == '041802' && $node.hasClass('FZXYR_XM') && val) {//未成年人法定代理人--嫌疑人
+                                    var tmpArray = ['ZRHBHRLXDM', 'ZRHBHR_XM', 'ZRHBHR_XBDM'];
+                                    for (var k0 = 0; k0 < tmpArray.length; k0++) {
+                                        if (tmpArray[k0] == 'ZRHBHR_XM') {
+                                            $("#flws_cl_area_" + bm + " form a ." + tmpArray[k0]).textbox('disableValidation').textbox('setValue', '');
+                                        } else if (tmpArray[k0] == 'ZRHBHRLXDM' || tmpArray[k0] == 'ZRHBHR_XBDM') {
+                                            $("#flws_cl_area_" + bm + " form a ." + tmpArray[k0]).combobox('disableValidation').combobox('setValue', '');
+                                        }
+                                    }
+                                    $node.textbox({value: val});
+                                } else if (bm == '020005' && $node.hasClass('FZXYR_XM') && val) {//移送案件通知书 --有嫌疑对象，五联可填写
+                                    var tab_one = $('#flws_cl_area_' + bm);
+                                    tab_one.tabs('enableTab', '五联');
+                                    $('.KSS_GAJGMC').textbox({required: true});
+                                    $node.textbox({value: val});
+                                } else {
+                                    $node.textbox({value: val});
+                                }
 
-                            //money、numbercn赋值后不做校验
-                            if(annotation){
-                                var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                if(textLx == 'MONEY'){
-                                    $node.parent().attr('money',data[i][key+'_MASTER']);
-                                    $node.textbox('disableValidation');
-                                }else if(textLx == 'NUMBERCN'){
-                                    $node.parent().attr('number',data[i][key+'_MASTER']);
-                                    $node.textbox('disableValidation');
+                                //money、numbercn赋值后不做校验
+                                if (annotation) {
+                                    var textLx = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                    if (textLx == 'MONEY') {
+                                        $node.parent().attr('money', data[i][key + '_MASTER']);
+                                        $node.textbox('disableValidation');
+                                    } else if (textLx == 'NUMBERCN') {
+                                        $node.parent().attr('number', data[i][key + '_MASTER']);
+                                        $node.textbox('disableValidation');
+                                    }
                                 }
-                            }
-                        } else if ($node.hasClass('easyuicombobox')) {
-                            if ($node.hasClass('JYCS_GAJGMC')) {
-                                $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
-                            } else if (bm == '042140' && $node.hasClass('QZCSLBDM') && val) {//释放通知书
-                                if(val == '2'){//拘留
-                                    $('#flws_cl_area_'+bm).tabs('disableTab','四联');
-                                    editDisableForAj('RMJCY_DWMC');
-                                }else if(val == '5'){//逮捕
-                                    $('#flws_cl_area_'+bm).tabs('enableTab','四联');
-                                    editEnableForAj('RMJCY_DWMC');
+                            } else if ($node.hasClass('easyuicombobox')) {
+                                if ($node.hasClass('JYCS_GAJGMC')) {
+                                    $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                                } else if (bm == '042140' && $node.hasClass('QZCSLBDM') && val) {//释放通知书
+                                    if (val == '2') {//拘留
+                                        $('#flws_cl_area_' + bm).tabs('disableTab', '四联');
+                                        editDisableForAj('RMJCY_DWMC');
+                                    } else if (val == '5') {//逮捕
+                                        $('#flws_cl_area_' + bm).tabs('enableTab', '四联');
+                                        editEnableForAj('RMJCY_DWMC');
+                                    }
+                                    $node.combobox({value: val})
+                                } else if (bm == '041802' && $node.hasClass('ZRHBHRLXDM') && val) {//证人|被害人
+                                    var tmpObj = {
+                                        FZXYR_XM: 'textbox',
+                                        FZXYR_XBDM: 'combobox'
+                                    };
+                                    for (var k in tmpObj) {
+                                        if (tmpObj[k] == 'textbox') {
+                                            $("#flws_cl_area_" + bm + " form a ." + k).textbox('disableValidation').textbox('setValue', '');
+                                        } else if (tmpObj[k] == 'combobox') {
+                                            $("#flws_cl_area_" + bm + " form a ." + k).combobox('disableValidation').combobox('setValue', '');
+                                        }
+                                    }
+                                    $node.combobox({value: val})
+                                } else {
+                                    $node.combobox({value: val})
                                 }
-                                $node.combobox({value: val})
-                            } else {
-                                $node.combobox({value: val})
+                            } else if ($node.hasClass('easyuicombotree')) {
+                                $node.combotree({value: val})
+                            } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
+                                $node.val(data[i][key + '_MASTER']);
+                                wdateValidate("#flws_cl_area_" + bm + " form ." + key);
+                            } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
+                                $node.val(val).validatebox();
                             }
-                        } else if ($node.hasClass('easyuicombotree')) {
-                            $node.combotree({value: val})
-                        } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
-                            $node.val(data[i][key + '_MASTER']);
-                            wdateValidate("#flws_cl_area_" + bm + " form ." + key);
-                        } else if ($node.hasClass('easyuivalidatebox') && ($node.hasClass('TEXTBOX') || $node.hasClass('TEXTAREA') || $node.hasClass('TEXTAREA_R'))) {//多选 TEXTBOX 的处理
-                            $node.val(val).validatebox();
+                        }else{
+                            $a.find('input[type="hidden"]').val(val);
                         }
                     }
                 }

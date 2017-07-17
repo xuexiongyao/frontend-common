@@ -1724,7 +1724,7 @@ function openCombotree2($box) {
     var dictTreeID = 'dictTree_' + ID;
     var dictMultiple = options.multiple;
     var dictUrl = options.url;
-    if(dictUrl) {
+    if (dictUrl) {
         $box.combotree('hidePanel');
     }
     //本地字典数据
@@ -1798,7 +1798,7 @@ function openCombotree2($box) {
             var roots = $('#' + dictTreeID).tree('getRoots');
             $('#' + dictTreeID).tree('uncheck', roots[0].target);
             var searchKeyValue = value.replace(/(^\s*)|(\s*$)/g, "");
-            $('#' + dictTreeID).tree('doFilter', searchKeyValue);
+            //$('#' + dictTreeID).tree('doFilter', searchKeyValue); //需要搜索非叶子节点所以不作过滤
             if (searchKeyValue != "") {
                 var treeObject = $('#' + dictTreeID);
                 var node = treeObject.tree('searchTreeNode', {searchKey: searchKeyValue.toUpperCase()});
@@ -1820,21 +1820,22 @@ function openCombotree2($box) {
     });
     //初始化字典树
     $('#' + dictTreeID).tree({
+        onlyLeaf: false,
         method: 'get',
         url: dictUrl,
         checkbox: true,
         lines: true,
-        loader: function(param,success,error){
+        loader: function (param, success, error) {
             var opts = $(this).tree('options');
             var dictUrl = opts.url;
-            if(dictUrl){
+            if (dictUrl) {
                 var domain = getThisLocationObj();
                 var hostname = domain.hostname;
                 var randomUrl = dictUrl;
-                if(dictUrl.indexOf('?') == -1){
-                    randomUrl = dictUrl+'?domain='+hostname+'&v='+jwzhVersion;
-                }else{
-                    randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
+                if (dictUrl.indexOf('?') == -1) {
+                    randomUrl = dictUrl + '?domain=' + hostname + '&v=' + jwzhVersion;
+                } else {
+                    randomUrl = dictUrl + '&domain=' + hostname + '&v=' + jwzhVersion;
                 }
                 $.ajax({
                     cache: true,
@@ -1842,17 +1843,17 @@ function openCombotree2($box) {
                     url: randomUrl,
                     data: param,
                     dataType: 'json',
-                    xhrFields: {withCredentials:true},
+                    xhrFields: {withCredentials: true},
                     crossDomain: true,
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.withCredentials = true;
                     },
-                    success: function(data) {
+                    success: function (data) {
                         opts.loaded = true;
                         success(data);
                     },
                     error: function () {
-                        console.log('弹框tree跨域获取字典错误,url:'+dictUrl);
+                        console.log('弹框tree跨域获取字典错误,url:' + dictUrl);
                         error.apply(this, arguments);
                     }
                 });
@@ -1915,3 +1916,464 @@ function openCombotree2($box) {
         }
     });
 }
+
+//导出处理,放在每次生成表格数据后执行
+function exportExcel(options) {
+    console.log('导出参数:', options);
+    var exportZjField = options.exportZjField;//表格主键字段名
+    var exportFileName = options.exportFileName;//导出文件名称
+    var exportBtnId = options.exportBtnId;// 导出按钮ID
+    var exportUrl = options.exportUrl;//导出请求路径
+    var headConfig = options.headConfig; //表头参数,一般通过config文件获取
+    var listTableId = options.listTableId;//表格的ID
+    var queryParams = options.queryParams;//列表查询参数
+    var queryUrl = options.queryUrl;   //请求表格的url
+    var exportPanelId = 'exportPanelId';
+
+    //点击[批量导出]
+    $('#' + exportBtnId).off('click').on('click', function () {
+        if ($('#' + exportPanelId).length == 0) {
+            var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
+                + '<div class="base-info">'
+                + '<div class="title">'
+                + '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+                + '</div>'
+                + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
+                + '</div>'
+                + '<div class="tips" style="color:#999;font-size:12px;">'
+                + '<i class="fa fa-info-circle"></i> '
+                + '<span>请勾选需要导出的数据项</span>'
+                + '</div>'
+                + '</div>';
+            $('body').append(exportHeadSelect);
+            for (var headKey in headConfig) {
+                var headValue = headConfig[headKey];
+                var headText = headValue[1];
+                var html = '<div class="item" style="float:left;min-width:120px;margin-top:3px;"><label><input type="checkbox" rel="' + headKey + '"><span>' + headText + '</span></label></div>';
+                $('#' + exportPanelId + ' .base-info .content').append(html);
+            }
+        }
+
+        //全选事件all-select
+        $('#' + exportPanelId + ' .all-select').off('click').on('click', function () {
+            var checked_status = $(this).prop('checked');
+            $(this).parent().parent().parent().next().find('input:checkbox').prop('checked', checked_status);
+        });
+
+        $('#' + exportPanelId + ' .all-select').attr("checked", false);
+        $('#' + exportPanelId + ' .all-select').click();
+
+        openDivForm({
+            id: exportPanelId,
+            title: exportFileName + '导出选项',
+            width: 700,
+            onClose: function () {
+            }
+        }, [
+            {
+                text: '确定',
+                handler: function () {
+                    //选中的ID
+                    var checkedIdArr = [];
+                    var checkData = $('#' + listTableId).datagrid('getChecked');//下阶段改为获取全局变量的方式获取所有勾选的
+                    for (var i = 0; i < checkData.length; i++) {
+                        checkedIdArr.push(checkData[i][exportZjField]);
+                    }
+
+                    //选中的表头项目
+                    var paramNameArr = [];
+                    var headNameArr = [];
+                    var dictClumns = {};
+                    $('#' + exportPanelId + ' .base-info .content .item input:checked').each(function () {
+                        var rel = $(this).attr('rel');
+                        var dictData = headConfig[rel][2];
+                        if (dictData) dictClumns[rel] = dictData;
+                        paramNameArr.push(rel);
+                        headNameArr.push($(this).next().text());
+                    });
+                    if (headNameArr.length == 0) {
+                        alertDiv({
+                            title: '温馨提示',
+                            msg: '请勾选导出的数据项!'
+                        });
+                        return false;
+                    }
+
+                    var exportParams = {
+                        checkedIdAryStr: checkedIdArr.join('|'),
+                        headNameAryStr: headNameArr.join('|'),
+                        paramNameAryStr: paramNameArr.join('|'),
+                        queryUrl: queryUrl,
+                        queryParams: queryParams,
+                        sheetTitle: exportFileName,
+                        fileName: exportFileName,
+                        dictClumns: JSON.stringify(dictClumns)
+                    };
+                    loading('open', '正在获取导出信息,请稍候...');
+                    $.ajax({
+                        url: exportUrl,
+                        type: 'post',
+                        xhrFields: {withCredentials: true},
+                        crossDomain: true,
+                        data: exportParams,
+                        success: function (json) {
+                            console.log('导出数据信息:', json);
+                            loading('close');
+                            if (json.status == 'success') {
+                                var fileurl = json.message;
+                                if (fileurl.indexOf("http") == -1) {
+                                    fileurl = pathConfig.basePath + '/' + json.message;
+                                }
+                                location.href = fileurl;
+                                $('#' + exportPanelId).dialog('close');
+                            } else {
+                                $.messager.show({
+                                    title: '导出失败',
+                                    msg: json.message
+                                });
+                            }
+                        }
+                    });
+                }
+            }, {
+                text: '关闭',
+                handler: function () {
+                    $('#' + exportPanelId).dialog('close');
+                }
+            }
+        ]);
+
+    });
+}
+
+
+//笔录选择人员框处理
+function selectUser(options) {
+    var userId = options.userId;
+    var userDwId = options.userDwId;
+    var exportPanelId = 'blryInfoPanelId';
+    var sessionBean = options.sessionBean;
+    var userOrgId = sessionBean.userOrgId;
+    var userOrgName = sessionBean.userOrgName;
+    var userName = sessionBean.userName;
+    var userInfoUrl = pathConfig.managePath + '/api/orgUserPublicSelect/expandNode';
+    //点击本人
+    if (options.isBr) {
+        $('#' + userId).textbox('setValue', userName);
+        $('#' + userDwId).textbox('setValue', userOrgName);
+        return false;
+    }
+    //点击选择
+    if ($('#' + exportPanelId).length == 0) {
+        var exportHeadSelect = '<div id="' + exportPanelId + '" style="display:none;padding:5px 15px;">'
+            + '<div class="base-info">'
+            + '<div class="title">'
+                //+ '<div class="title-btn" style="text-align:right;border-bottom:1px dashed #ccc;"><label><input type="checkbox" class="all-select"><span>全选/反选</span></label></div>'
+            + '</div>'
+            + '<div class="content" style="overflow:hidden;margin:5px 0 15px 0;"></div>'
+            + '</div>'
+            + '<div class="tips" style="color:#999;font-size:12px;">'
+            + '<i class="fa fa-info-circle"></i> '
+            + '<span>请选择人员信息,最多勾选3名人员!</span>'
+            + '</div>'
+            + '</div>';
+        $('body').append(exportHeadSelect);
+        $.ajax({
+            type: 'post',
+            url: userInfoUrl,
+            data: {orgid: userOrgId},
+            dataType: 'json',
+            xhrFields: {withCredentials: true},
+            crossDomain: true,
+            success: function (json) {
+                if (json && json.length) {
+                    for (var i = 0; i < json.length; i++) {
+                        var item = json[i];
+                        var headText = item.text;
+                        var headKey = item.id;
+                        var html = '<div class="item" style="float:left;min-width:120px;margin-top:3px;"><label><input type="checkbox" rel="' + headKey + '"><span>' + headText + '</span></label></div>';
+                        $('#' + exportPanelId + ' .base-info .content').append(html);
+                    }
+                }
+            }
+        });
+    }
+    //全选事件all-select
+    $('#' + exportPanelId + ' .all-select').off('click').on('click', function () {
+        var checked_status = $(this).prop('checked');
+        $(this).parent().parent().parent().next().find('input:checkbox').prop('checked', checked_status);
+    });
+    $('#' + exportPanelId + ' input:checkbox').prop("checked", false);
+    openDivForm({
+        id: exportPanelId,
+        title: '选择人员',
+        width: 650,
+        onClose: function () {
+        }
+    }, [
+        {
+            text: '确定',
+            handler: function () {
+                var userArr = [];
+                $('#' + exportPanelId + ' .base-info .content .item input:checked').each(function () {
+                    var rel = $(this).attr('rel');
+                    userArr.push($(this).next().text());
+                });
+                if (userArr.length > 3) {
+                    $.messager.show({
+                        title: '温馨提示',
+                        msg: '最多选择3名人员,请重新勾选!'
+                    });
+                    return false;
+                }
+                $('#' + userId).textbox('setValue', userArr.join(','));
+                $('#' + userDwId).textbox('setValue', userOrgName);
+                $('#' + exportPanelId).dialog('close');
+            }
+        }, {
+            text: '关闭',
+            handler: function () {
+                $('#' + exportPanelId).dialog('close');
+            }
+        }
+    ]);
+
+
+}
+
+/**
+ * 根据出生日期计算年龄
+ * @param strBirthday 出生日期
+ * @returns {*}  年龄
+ */
+function jsGetAge(strBirthday) {
+    var returnAge;
+    var strBirthdayArr = strBirthday.split("-");
+    var birthYear = strBirthdayArr[0];
+    var birthMonth = strBirthdayArr[1];
+    var birthDay = strBirthdayArr[2];
+
+    d = new Date();
+    var nowYear = d.getFullYear();
+    var nowMonth = d.getMonth() + 1;
+    var nowDay = d.getDate();
+
+    if (nowYear == birthYear) {
+        returnAge = 0;//同年 则为0岁
+    } else {
+        var ageDiff = nowYear - birthYear; //年之差
+        if (ageDiff > 0) {
+            if (nowMonth == birthMonth) {
+                var dayDiff = nowDay - birthDay;//日之差
+                if (dayDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff;
+                }
+            } else {
+                var monthDiff = nowMonth - birthMonth;//月之差
+                if (monthDiff < 0) {
+                    returnAge = ageDiff - 1;
+                } else {
+                    returnAge = ageDiff;
+                }
+            }
+        } else {
+            returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天
+        }
+    }
+    return returnAge;//返回周岁年龄
+}
+
+//刑事行政系统材料扫描图片预览
+function previewPic(options) {
+    var picZj = options.picZj;
+    var picXh = options.picXh;
+    var callBack = options.callBack;
+    var imgId = 'imgItem_' + picXh; //选中进来的图片ID
+    var previewPanelId = options.previewPanelId;
+    var lastPicXh = 1;
+    var firstPicXh = 1;
+    //弹框DOM
+    if ($('#' + previewPanelId).length == 0) {
+        var previewPanel = '<div id="' + previewPanelId + '" style="display:none;">'
+            + '<div style="width:100%;height:540px;overflow:hidden;margin-bottom:15px;">'
+            + '<div style="float:left;width:175px;height:100%;border-right:1px #ccc dashed">'
+            + '<ul id="previewImgMenu" style="list-style-type:none;padding:0;margin:0;height:525px;overflow:auto;"></ul>'
+            + '<div class="tips" style="color:#999;font-size:12px;padding-left:10px;">'
+            + '<i class="fa fa-info-circle"></i> '
+            + '<span>点击箭头进行排序</span>'
+            + '</div>'
+            + '</div>'
+            + '<div style="float:left;width:780px;height:100%;background:#ddd;text-align:center">'
+            + '<img id="previewImg" src="" alt="预览图片不存在或者损坏" style="vertical-align:middle;max-width:780px;max-height:540px;position:relative">'
+            + '<div title="上一页" class="img-nav img-prev" id="imgPrevBtn"><i class="fa fa-chevron-left"></i></div>'
+            + '<div title="下一页"class="img-nav img-next" id="imgNextBtn"><i class="fa fa-chevron-right"></i></div>'
+            + '</div>'
+            + '</div>'
+            + '</div>';
+        $('body').append(previewPanel);
+
+        //获取数据生成左边菜单
+        creatImgMenu(imgId);
+
+        //点击查看图片
+        $('#previewImgMenu').off('click.img').on('click.img', '.img-span', function () {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var zj = $parent.attr('zj');
+            picXh = parseInt($parent.attr('xh'));
+            $parent.addClass('active').siblings().removeClass('active');
+            var imgSrc = pathConfig.s3Path + '/' + zj;
+            //var imgSrc = 'http://www.jwzh.online:9016/framework/default/images/bgi_' + zj + '.jpg';
+            console.log('图片路径:', imgSrc);
+            var loadingPath = staticPath + '/framework/default/images/loading.gif';
+            $('#previewImg').prop('src', loadingPath).css('margin-top', '250px');
+            loadImage(imgSrc, function () {
+                $('#previewImg').prop('src', imgSrc).css('margin-top', '0');
+            });
+        });
+        //点击上移下移
+        $('#previewImgMenu').off('click.move').on('click.move', '.move', function () {
+            var $this = $(this);
+            var $parent = $this.parent();
+            var $prev = $parent.prev();
+            var $next = $parent.next();
+            if ($this.hasClass('fa-arrow-up')) {
+                $prev.before($parent);
+            }
+            else {
+                $next.after($parent);
+            }
+        });
+        //点击上一页
+        $('#imgPrevBtn').off('click').on('click', function () {
+            var $lastImg = $('#imgItem_' + lastPicXh);
+            var prevId = 'imgItem_' + (picXh - 1);
+            var $prevImg = $('#' + prevId);
+            if ($prevImg.length == 0) {
+                $prevImg = $lastImg;
+            }
+            $prevImg.click();
+        });
+        //点击下一页
+        $('#imgNextBtn').off('click').on('click', function () {
+            var $firstImg = $('#imgItem_' + firstPicXh);
+            var nextId = 'imgItem_' + (picXh + 1);
+            var $nextImg = $('#' + nextId);
+            if ($nextImg.length == 0) {
+                $nextImg = $firstImg
+            }
+            $nextImg.click();
+        });
+    }
+    else {
+        $('#' + imgId).click();//点击选中进来的图片
+    }
+    openDivForm({
+        id: previewPanelId,
+        title: '材料预览',
+        width: 960,
+        onClose: function () {
+            $('#' + previewPanelId).remove();
+        }
+    }, [
+        {
+            text: '保存顺序',
+            handler: function () {
+                var zjArr = [];
+                var xhArr = [];
+                $('#previewImgMenu .img-li').each(function (index) {
+                    var $this = $(this);
+                    var zj = $this.attr('zj');
+                    var xh = index + 1;
+                    zjArr.push(zj);
+                    xhArr.push(xh);
+                });
+                var param = {
+                    zjs: zjArr.join(','),
+                    xhs: xhArr.join(',')
+                };
+                loading('open','正在保存预览顺序,请稍候');
+                $.ajax({
+                    url: pathConfig.basePath + '/saomiao/updateXh',
+                    type: 'post',
+                    dataType: 'json',
+                    data: param,
+                    success: function(json) {
+                        loading('close');
+                        if (json.status == 'success') {
+                            $('#' + previewPanelId).dialog('close');
+                            callBack();
+                            $.messager.show({
+                                title: '温馨提示',
+                                msg: '保存成功!'
+                            });
+                        }
+                        else {
+                            alertDiv({
+                                title: '错误提示',
+                                msg: json.message
+                            });
+                        }
+                    }
+                });
+            }
+        },
+        {
+            text: '关闭',
+            handler: function () {
+                $('#' + previewPanelId).dialog('close');
+            }
+        }
+    ]);
+    //获取数据生成左边菜单
+    function creatImgMenu() {
+        //获取数据
+        $.ajax({
+            url: pathConfig.basePath + '/saomiao/cl/query',
+            type: 'post',
+            dataType: 'json',
+            data: {smjl_zj: smjl_zj},
+            success: function (json) {
+                var rows = json.rows;
+                if (rows && rows.length) {
+                    $('#previewImgMenu').empty();
+                    for (var i = 0; i < rows.length; i++) {
+                        var imgItem = rows[i];
+                        var xh = imgItem.smj_ys || (i + 1);
+                        var page = '第' + xh + '页';
+                        var zj = imgItem.zj;
+                        //var zj = i + 1;//imgItem.zj
+                        var imgMenu = '<li class="img-li" xh="' + xh + '" zj="' + zj + '" >' +
+                            '<span class="img-span" id="imgItem_' + xh + '" style="display:inline-block;width:100px;padding-left:30px;">' + page + '</span>' +
+                            '<i class="fa fa-arrow-up move" title="上移"></i> ' +
+                            '<i class="fa fa-arrow-down move" title="下移"></i>' +
+                            '</li>';
+                        $('#previewImgMenu').append(imgMenu);
+                    }
+                    firstPicXh = rows[0].smj_ys || 0;                //起始页号
+                    lastPicXh = rows[rows.length - 1].smj_ys || rows.length;   //结束页号
+                    $('#' + imgId).click();//点击选中进来的图片
+                }
+            }
+        });
+    }
+}
+
+//异步加载图片方法
+function loadImage(url, callback) {
+    var img = new Image(); //创建一个Image对象，实现图片的预下载
+    img.src = url;
+
+    if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数
+        callback.call(img);
+        return; // 直接返回，不用再处理onload事件
+    }
+    img.onload = function () { //图片下载完毕时异步调用callback函数。
+        callback.call(img);//将回调函数的this替换为Image对象
+    };
+    img.onerror = function () {
+        callback.call(img);
+    };
+};
