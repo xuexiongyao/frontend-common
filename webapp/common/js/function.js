@@ -2361,6 +2361,164 @@ function previewPic(options) {
     }
 }
 
+
+
+//刑事行政系统材料扫描图片预览_打开新的TAB
+function previewPicTab(picXh) {
+    var imgId = 'imgItem_' + picXh; //选中进来的图片ID
+    var lastPicXh = 1;
+    var firstPicXh = 1;
+    //获取数据
+    $.ajax({
+        url: pathConfig.basePath + '/saomiao/cl/query',
+        type: 'post',
+        dataType: 'json',
+        data: {smjl_zj: smjl_zj},
+        success: function (json) {
+            var rows = json.rows;
+            if (rows && rows.length) {
+                $('#previewImgMenu').empty();
+                for (var i = 0; i < rows.length; i++) {
+                    var imgItem = rows[i];
+                    var xh = imgItem.smj_ys || (i + 1);
+                    var page = '第' + xh + '页';
+                    var zj = imgItem.zj;
+                    //var zj = i + 1;//imgItem.zj
+                    var imgMenu = '<li class="img-li" xh="' + xh + '" zj="' + zj + '" id="imgItem_' + xh + '">' +
+                        '<span class="img-span">' + page + '</span>' +
+                            //'<i class="fa fa-arrow-up move" title="上移"></i> ' +
+                            //'<i class="fa fa-arrow-down move" title="下移"></i>' +
+                        '</li>';
+                    $('#previewImgMenu').append(imgMenu);
+                }
+                firstPicXh = rows[0].smj_ys || 0;                //起始页号
+                lastPicXh = rows[rows.length - 1].smj_ys || rows.length;   //结束页号
+                $('#' + imgId).click();//点击选中进来的图片
+
+                //拖放排序插件
+                $('#previewImgMenu').dragsort({
+                    dragSelector: "li",
+                    dragBetween: true,
+                    //dragEnd: saveOrder,//拖动结束触发函数
+                    placeHolderTemplate: "<li class='img-li' style='border:1px #ccc dashed;'></li>"
+                });
+            }
+        }
+    });
+
+    //点击查看图片
+    $('#previewImgMenu').off('click.img').on('click.img', '.img-li', function () {
+        var $this = $(this);
+        var zj = $this.attr('zj');
+        picXh = parseInt($this.attr('xh'));
+        $this.addClass('active').siblings().removeClass('active');
+        var imgSrc = pathConfig.s3Path + '/' + zj;
+        //var imgSrc = 'http://www.jwzh.online:9016/framework/default/images/bgi_' + zj + '.jpg';
+        console.log('图片路径:', imgSrc);
+        var loadingPath = staticPath + '/framework/default/images/loading.gif';
+        $('#previewImg').prop('src', loadingPath).css({
+            'margin-top': '250px',
+            'width': 'auto',
+            'height': 'auto'
+        });
+        loadImage(imgSrc, function () {
+            $('#previewImg').prop('src', imgSrc).css({
+                'margin-top': '0',
+                'width': 'auto',
+                'height': '100%'
+            });
+        });
+    });
+
+    //点击上一页
+    $('#imgPrevBtn').off('click').on('click', function () {
+        var $lastImg = $('#imgItem_' + lastPicXh);
+        var prevId = 'imgItem_' + (picXh - 1);
+        var $prevImg = $('#' + prevId);
+        if ($prevImg.length == 0) {
+            $prevImg = $lastImg;
+        }
+        $prevImg.click();
+    });
+
+    //点击下一页
+    $('#imgNextBtn').off('click').on('click', function () {
+        var $firstImg = $('#imgItem_' + firstPicXh);
+        var nextId = 'imgItem_' + (picXh + 1);
+        var $nextImg = $('#' + nextId);
+        if ($nextImg.length == 0) {
+            $nextImg = $firstImg
+        }
+        $nextImg.click();
+    });
+
+    //点击放大
+    $('#imgZoomIn').off('click').on('click',function (){
+        imgZoomCommon($('#previewImg'),'zoomIn');
+
+    });
+    //点击缩小
+    $('#imgZoomOut').off('click').on('click',function (){
+        imgZoomCommon($('#previewImg'),'zoomOut');
+    });
+
+    //保存顺序
+    $('#saveSortBtn').off('click').on('click', function() {
+        var zjArr = [],xhArr = [];
+        $('#previewImgMenu .img-li').each(function (index) {
+            var $this = $(this);
+            var zj = $this.attr('zj');
+            var xh = index + 1;
+            zjArr.push(zj);
+            xhArr.push(xh);
+        });
+        var param = {
+            zjs: zjArr.join(','),
+            xhs: xhArr.join(',')
+        };
+        loading('open','正在保存预览顺序,请稍候');
+        $.ajax({
+            url: pathConfig.basePath + '/saomiao/updateXh',
+            type: 'post',
+            dataType: 'json',
+            data: param,
+            success: function(json) {
+                loading('close');
+                if (json.status == 'success') {
+                    $.messager.show({
+                        title: '温馨提示',
+                        msg: '保存成功!'
+                    });
+                }
+                else {
+                    alertDiv({
+                        title: '错误提示',
+                        msg: json.message
+                    });
+                }
+            }
+        });
+    });
+
+    //关闭预览
+    $('#imgCloseBtn').off('click').on('click', function(){
+        crossCloseTab('cl_refresh_list_table');
+    });
+}
+
+//放大缩小
+function imgZoomCommon($img,type) {
+    var imgWidth = $img.width();
+    if (type == 'zoomIn') {
+        imgWidth *= 1.2;
+    }
+    else if (type == 'zoomOut') {
+        imgWidth *= 0.8;
+    }
+    $img.css('width', parseInt(imgWidth) + 'px');
+    $img.css('height', 'auto');
+}
+
 //异步加载图片方法
 function loadImage(url, callback) {
     var img = new Image(); //创建一个Image对象，实现图片的预下载
