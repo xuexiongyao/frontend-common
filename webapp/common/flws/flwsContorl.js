@@ -163,6 +163,22 @@ function getCqbgQtsjEdit() {
                     DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
                 }
                 DATA.CQBG.isValid=true;
+            } else if(DATA.cqgczWsBz){  //呈请过程中呈请报告只能能修改以下字段
+                var cqnr = $('#cqbg_main_con form textarea').val();//呈请内容
+                DATA.CQBG.params = {
+                    XXZJBH: DATA.CQBG.cqgczCqbgZj,//呈请报告主键
+                    CQNR: cqnr,//呈请内容
+                };
+                /*嫌疑人姓名*/
+                if (typeof DATA.CQBG.xyrxms != 'undefined' && DATA.CQBG.xyrxms != null) {
+                    DATA.CQBG.params.XYRXM = DATA.CQBG.xyrxms.join(',');//嫌疑人姓名
+                }
+
+                /*嫌疑人ID*/
+                if (typeof DATA.CQBG.xyrids != 'undefined' && DATA.CQBG.xyrids != null) {
+                    DATA.CQBG.params.XYRID = DATA.CQBG.xyrids.join(',');//嫌疑人ID
+                }
+                DATA.CQBG.isValid=true;
             }else {
                 return false;	// 返回false终止表单提交
             }

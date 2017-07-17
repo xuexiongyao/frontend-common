@@ -70,7 +70,7 @@ function cqbgPageRender() {
     var cqbgIpts = $('#cqbg_main_con form input');
 
     //受案登记表的特殊处理
-    if (DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG' && !DATA.wsxgRwcxWs) {
+    if (DATA.CQBG.cqbgData.tableName != 'TB_ST_ASJ_CQBG' && !DATA.wsxgRwcxWs && !DATA.cqgczWsBz) {
         loading('open', '正在获取数据...');
         $.ajax({
             url: pathConfig.basePath + '/wenshu/source/CQBG/INFO',
@@ -94,7 +94,7 @@ function cqbgPageRender() {
         })
     } else {
         //呈请报告只能做一份儿，并且已呈请的判断
-        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one && !DATA.wsxgRwcxWs) {
+        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one && !DATA.wsxgRwcxWs && !DATA.cqgczWsBz) {
             alertDiv({
                 title: '提示',
                 msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
@@ -147,13 +147,13 @@ function xydxRenderCqbg() {
     var xyrListStr = '';//嫌疑人list字符串
     $('#cqbg_xyr_con').html('');
 
-    //呈请呈请报告修改，嫌疑对象不可操作
-    if(DATA.wsxgRwcxWs){
+    //呈请呈请报告修改，嫌疑对象不可操作| 呈请过程中的呈请报告修改，嫌疑对象也不可操作
+    if(DATA.wsxgRwcxWs || DATA.cqgczWsBz){
         $('#cqbg_xyr_con').hide();
         $('#cqbg_main_con').css('width','100%');
     }
 
-    if (xydxDatas && DATA.DX.dxbm && typeof DATA.CQBG.cqbgData != 'undefined' && !DATA.wsxgRwcxWs) {
+    if (xydxDatas && DATA.DX.dxbm && typeof DATA.CQBG.cqbgData != 'undefined' && !DATA.wsxgRwcxWs && !DATA.cqgczWsBz) {
         for (var k in xydxDatas) {
             for (var key in xyrObj) {
                 if (k == key) {
@@ -686,7 +686,7 @@ function flwsPageRender(bm) {
             flwsPageRenderA(bm);
         }
     } else if (!flwsData.wdx && flwsData.only && !flwsData.dx) {
-        if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
+        if(DATA.wsxgRwcxWs || DATA.cqgczWsBz){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
         }else{
             /**类型B**/
@@ -695,7 +695,7 @@ function flwsPageRender(bm) {
             flwsPageRenderA(bm);
         }
     } else if (!flwsData.wdx && flwsData.dx && flwsData.only) {
-        if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
+        if(DATA.wsxgRwcxWs || DATA.cqgczWsBz){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
         }else {
             /**类型C**/
@@ -704,7 +704,7 @@ function flwsPageRender(bm) {
             flwsPageRenderA(bm);
         }
     } else {
-        if(DATA.wsxgRwcxWs){//法律文书修改任务查询列表文书
+        if(DATA.wsxgRwcxWs || DATA.cqgczWsBz){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
         }else {
             /**其他类型**/
@@ -779,13 +779,13 @@ function flwsPageRenderA(bm) {
         flwsDataXxfy(bm, flwsZj);
 
         //新增页面法律文书的信息复用
-        if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
+        //if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
             try{
-                ajax_request(bm);
+                ajax_request(bm,'','edit');
             }catch(e){
                 console.log("没有ajax_request函数");
             }
-        }
+        //}
 
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
         if(bm == '080002' || bm == '080004'){
@@ -1802,9 +1802,6 @@ function flwsClXyrCheckForCx(bm, $this){
 
         DATA.FLWS[bm].xyrXxzjbh = xyrXxzjbh;
 
-        //嫌疑人勾选其他接口请求信息复用（秀平）
-        //ajax_request(bm, xyrXxzjbh);
-
         //法律文书主键
         if(flwsRow.length>0){
             for(var i=0;i<flwsRow.length;i++){
@@ -1829,6 +1826,8 @@ function flwsClXyrCheckForCx(bm, $this){
             //数据复用
             flwsDataXxfy(bm, flwsZj);
 
+            //嫌疑人勾选其他接口请求信息复用（秀平）
+            ajax_request(bm, xyrXxzjbh,'edit');
 
             //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
             if(bm == '080002' || bm == '080004'){
