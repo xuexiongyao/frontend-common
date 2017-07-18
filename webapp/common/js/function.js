@@ -2365,7 +2365,6 @@ function previewPic(options) {
 
 //刑事行政系统材料扫描图片预览_打开新的TAB
 function previewPicTab2(picXh) {
-    var imgId = 'imgItem_' + picXh; //选中进来的图片ID
     var lastPicXh = 1;
     var firstPicXh = 1;
     var menuPage = 1;
@@ -2524,7 +2523,7 @@ function previewPicTab2(picXh) {
                     }
                     lastPicXh = rows[rows.length - 1].smj_ys;   //结束页号
                     if (type == 'first') {
-                        $('#' + imgId).click();//点击选中进来的图片
+                        $('.img-li:first').click();//点击选中进来的图片
                     }
                 }
             }
