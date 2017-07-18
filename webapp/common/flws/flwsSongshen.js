@@ -32,6 +32,7 @@ var isOver = false;
 var sessionBean = getSessionBean();             //获取登陆者信息
 var role = sessionBean.userOrgBiztype || '04';  //登陆角色 02为法制民警
 var flwsinfoaram = '',str = '';
+var isClickQzbcssBtn = false;//是否点击签章保存送审按钮
 /****************************无签章页面*****************************/
 // flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
 // str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
@@ -305,6 +306,9 @@ function selectApprove(shjl) {
                                     title: '提示',
                                     msg: '审批人选择成功!'
                                 });
+                                if(isClickQzbcssBtn){//直接送审
+                                    $('#saveAndss').click();
+                                }
                             } else {
                                 alertDiv({
                                     title: '提示',
@@ -393,6 +397,9 @@ function selectApprove(shjl) {
                             backObj = backPrev;
                         }
                         saveAndSsShyj(backObj);
+                        if(isClickQzbcssBtn){//直接送审
+                            $('#saveAndss').click();
+                        }
                         $('#next_select_title').text('请选择退回的状态：'+backNodeText).attr('title',backNodeText);
                         $('#next_link_panel').dialog('close');
                     }
@@ -421,7 +428,7 @@ function minDateFun(prevDate) {
 function saveAndSsShyj(backObj) {
     //注册保存按钮事件,保存审核意见
     $('#saveAndss').off('click').on('click', function () {
-        var $report = $('.right-report')
+        var $report = $('.right-report');
         $report.css('visibility','hidden');
         var shjl = $('#shjl').val();
         var shsj = $('#shsj').val();
@@ -461,8 +468,11 @@ function saveAndSsShyj(backObj) {
             return false;
         }
 
-        //同意
+        if(shjl && shsj && shyj){
+            isClickQzbcssBtn = true;
+        }
 
+        //同意
         if (shjl == '1') {
             console.log('是否最后一级isFinally:',isFinally);
             if(!isFinally && !candidateUsers){
@@ -760,7 +770,7 @@ function lctShow() {
 
                     var shsjStr = '<li>\n' +
                         '<span class="pro">审核时间</span>\n' +
-                        '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n' +
+                        '<input class="Wdate" name="shsj" id="shsj" style="width:170px;" placeholder=""\n' +
                         'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \'' + minDateVal + '\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n' +
                         '</li>';
 
