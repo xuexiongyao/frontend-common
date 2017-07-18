@@ -97,7 +97,7 @@ function cqbgFlwsOtherXxfy() {
  * @param bm  法律文书编码
  */
 function flwsTfrXxFy(bm){
-    if(DATA.FLWS[bm].flwsRow){
+    if(DATA.FLWS[bm].flwsRow && DATA.FLWS[bm].flwsRow.length > 0){
         if (DATA.FLWS[bm].flwsRow.TFR_XM){
             var $node = $("#flws_main_con_r_"+bm+" form input.TFR_XM");
             $node.textbox({value:DATA.FLWS[bm].flwsRow.TFR_XM});

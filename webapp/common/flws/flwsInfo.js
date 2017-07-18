@@ -549,16 +549,18 @@ function flwsXxfyB(bm, isCustomized) {
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
 
         //多版本处理（行政案件）
-        data.VERSION = parseInt(data.VERSION);
-        if (DATA.FLWS[bm].flwsData.switchVersion) {
-            var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
-            if (tabs.length > data.VERSION) {
-                for (var index = data.VERSION; index < tabs.length; index++) {
+        if(data.VERSION){
+            data.VERSION = parseInt(data.VERSION);
+            if (DATA.FLWS[bm].flwsData.switchVersion) {
+                var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                if (tabs.length > data.VERSION) {
+                    for (var index = data.VERSION; index < tabs.length; index++) {
+                        $('#flws_cl_area_' + bm).tabs("close", index);
+                    }
+                }
+                for (var index = data.VERSION - 2; index >= 0; index--) {
                     $('#flws_cl_area_' + bm).tabs("close", index);
                 }
-            }
-            for (var index = data.VERSION - 2; index >= 0; index--) {
-                $('#flws_cl_area_' + bm).tabs("close", index);
             }
         }
 
