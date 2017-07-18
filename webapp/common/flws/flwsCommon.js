@@ -559,9 +559,18 @@ function jsGetAge(strBirthday){
 /**
  * textarea中换行、空格的转译处理
  */
-function strEnterSpace(obj){
+function strEnterSpaceA(obj){
     if(typeof obj == 'string'){
-        return obj.replace('\n','\\n').replace('\t','\\t');
+        return obj.replace(/\n/g,"=n=").replace(/\r/g,"=r=").replace(/\t/g,"=t=");
+    }
+}
+
+/**
+ * textarea中换行、空格的转译处理
+ */
+function strEnterSpaceB(obj){
+    if(typeof obj == 'string'){
+        return obj.replace(/=n=/g,"\n").replace(/=r=/g,"\r").replace(/=t=/g,"\t");
     }
 }
 

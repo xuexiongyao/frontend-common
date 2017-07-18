@@ -392,11 +392,18 @@ function queryFlwsData(title, render) {
 
 /**
  * 呈请报告  保存函数
- * @param data
+ * @param url 保存的url
+ * @param param 参数
  */
 function cqbgSave(url, param) {
     if (DATA.CQBG.cqbgData.customized) {
-        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','cqbgSaveComplete');");
+        for(var k in param){
+            if(param[k] && param[k].search(/\n|\r|\t/) != -1){
+                var tmp = strEnterSpaceA(param[k]);
+                param[k] = tmp;
+            }
+        }
+        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" +JSON.stringify(param)+ "','cqbgSaveComplete');");
     } else {
         loading("open","正在保存呈请报告,请稍候...");
 
@@ -497,6 +504,12 @@ function flwsSaveComplete(data, bm) {
  */
 function flwsSave(url, param, bm) {
     if (DATA.FLWS[bm].flwsData.customized) {
+        for(var k in param){
+            if(param[k] && param[k].search(/\n|\r|\t/) != -1){
+                var tmp = strEnterSpaceA(param[k]);
+                param[k] = tmp;
+            }
+        }
         eval("save" + bm + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','flwsSaveComplete', '" + bm + "');");
     } else {
         loading("open","数据处理中...");
