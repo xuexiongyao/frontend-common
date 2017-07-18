@@ -2375,7 +2375,7 @@ function previewPicTab2(picXh) {
 
     //拖放排序插件
     $('#previewImgMenu').dragsort({
-        dragSelector: "li",
+        dragSelector: "i",
         dragBetween: true,
         //dragEnd: saveOrder,//拖动结束触发函数
         placeHolderTemplate: "<li class='img-li' style='background:#ccc;'></li>"
@@ -2516,8 +2516,8 @@ function previewPicTab2(picXh) {
                         var zj = imgItem.zj;
                         //var zj = i + 1;//imgItem.zj
                         var imgMenu = '<li class="img-li" xh="' + xh + '" zj="' + zj + '" id="imgItem_' + xh + '">' +
-                            '<span class="img-span">' + page + '</span>' +
-                                //'<i class="fa fa-arrow-up move" title="上移"></i> ' +
+                            '<span class="img-span" style="display:inline-block;width:110px;">' + page + '</span>' +
+                                '<i class="fa fa-arrows move" title="移动"></i> ' +
                                 //'<i class="fa fa-arrow-down move" title="下移"></i>' +
                             '</li>';
                         $('#previewImgMenu').append(imgMenu);
