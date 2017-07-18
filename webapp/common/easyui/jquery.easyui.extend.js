@@ -1961,18 +1961,48 @@ function getIEVersion() {
 			}
 		},
 		onLoadError: function(jqXHR, textStatus, errorThrown){
+			//jqXHR, textStatus, errorThrown
 			//加载失败时,显示空数据
 			$(this).datagrid('loadData',[]);
-			if(jqXHR.status == 418){
+			switch (jqXHR.status) {
+				case (500):
+					//TODO 服务器系统内部错误
+					status = 500;
+					break;
+				case (418):
+					//TODO 未登录
+					status = 418;
+					break;
+				case (200):
+					status = 200;
+					break;
+				default:
+					status = 1;
+				//TODO 未知错误
+			}
+			if(status == 418){
 				sessionTimeOut();
+			}else if(status == 200){
+
 			}else{
-				try{
-					$.messager.show({
-						title: '列表数据错误',
-						msg: '列表数据加载出错,请检查系统后台数据!'
+				var errorMsg = '数据提交服务失败！';
+				if (jqXHR && (jqXHR.status == 400 || jqXHR.status == 500) && jqXHR.responseText) {
+					errorMsg = jqXHR.responseText;
+					try {
+						var messageJson = eval("(" + errorMsg + ")");
+						if (messageJson.message) {
+							errorMsg = messageJson.message;
+						} else if (messageJson.errors) {
+							errorMsg = messageJson.errors;
+						}
+					} catch (e) {
+					}
+				}
+				if(!this.msgType || this.msgType == 'alert'){
+					$.messager.alert({
+						title: '列表查询错误信息',
+						msg: errorMsg
 					});
-				}catch(e){
-					alert('列表数据加载错误,请检查系统后台数据!');
 				}
 			}
 		}
