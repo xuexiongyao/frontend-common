@@ -458,7 +458,21 @@
 
 		length: {
 			validator : function(value, param) {
-				console.log(value);
+				// data-options="validType:['length[8,16,/',/']']" : 根据逗号分开的字符长度验证
+				if(param[2]){
+					var arr = value.split(param[2]);
+					return arr.length >= param[0] && arr.length <= param[1];
+				}
+
+				var len = $.trim(value).length;
+				return len >= param[0] && len <= param[1];
+			},
+
+			message: "输入长度在 {0} 与 {1} 之间的字符"
+		},
+
+		lengthForAJ: {
+			validator : function(value, param) {
 				// data-options="validType:['length[8,16,/',/']']" : 根据逗号分开的字符长度验证
 				if(param[2]){
 					var arr = value.split(param[2]);
@@ -494,32 +508,36 @@
 
 		minLength: {
 			validator: function (value, param) {
-				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
-				return len>=param[0];
-				//if (param) {
-				//	if (param[0] != undefined) {
-				//		if (value.length < param[0]) {
-				//			return false;
-				//		}
-				//	}
-				//}
-				//return true;
+				if (param) {
+					if (param[0] != undefined) {
+						if (value.length < param[0]) {
+							return false;
+						}
+					}
+				}
+				return true;
 			},
-			message: "最少输入 {0} 个字符,一个汉字等于三个字符"
+			message: "最少输入 {0} 个字符"
 		},
 
 		maxLength: {
 			validator: function (value, param) {
+				if (param) {
+					if (param[0] != undefined) {
+						if (value.length > param[0]) {
+							return false;
+						}
+					}
+				}
+				return true;
+			},
+			message: "最多输入 {0} 个字符"
+		},
+
+		maxLengthForAJ: {
+			validator: function (value, param) {
 				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
 				return len<=param[0];
-				//if (param) {
-				//	if (param[0] != undefined) {
-				//		if (value.length > param[0]) {
-				//			return false;
-				//		}
-				//	}
-				//}
-				//return true;
 			},
 			message: "最多输入 {0} 个字符,一个汉字等于三个字符"
 		},
