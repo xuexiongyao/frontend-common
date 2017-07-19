@@ -471,7 +471,7 @@
 			message: "输入长度在 {0} 与 {1} 之间的字符"
 		},
 
-		lengthForAJ: {
+		lengthThreeChart: {
 			validator : function(value, param) {
 				// data-options="validType:['length[8,16,/',/']']" : 根据逗号分开的字符长度验证
 				if(param[2]){
@@ -534,7 +534,7 @@
 			message: "最多输入 {0} 个字符"
 		},
 
-		maxLengthForAJ: {
+		maxLengthThreeChart: {
 			validator: function (value, param) {
 				var len = value.replace(/[^\x00-\xff]/g,'aaa').length;
 				return len<=param[0];
