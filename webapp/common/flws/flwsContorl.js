@@ -119,13 +119,17 @@ function getCqbgQtsjEdit() {
             var isValid = $(this).form('validate');
             DATA.CQBG.isValid = isValid;
             if (isValid) {
-                var bamjDictUrl = $('#cqbg_main_con form input.BAMJXM').attr('dicturl');//办案民警接口
+                var cqnr = '',cqrq = '',bamjids=[],bamjxms='';
+                if(!DATA.CQBG.cqbgData.customized){
+                    var bamjDictUrl = $('#cqbg_main_con form input.BAMJXM').attr('dicturl');//办案民警接口
 
-                var cqnr = $('#cqbg_main_con form textarea').val();//呈请内容
-                var cqrq = $('#cqbg_main_con form input.CQRQ').val();//呈请日期
-                var bamjids = $('#cqbg_main_con form input.BAMJXM').combobox('getValues');//办案民警ID
+                    cqnr = $('#cqbg_main_con form textarea').val();//呈请内容
+                    cqrq = $('#cqbg_main_con form input.CQRQ').val();//呈请日期
+                    bamjids = $('#cqbg_main_con form input.BAMJXM').combobox('getValues');//办案民警ID
 
-                var bamjxms = getDictName(bamjDictUrl, bamjids.join(','), false);//办案民警名称
+                    bamjxms = getDictName(bamjDictUrl, bamjids.join(','), false);//办案民警名称
+                }
+
                 DATA.CQBG.params = {
                     BAMJXM: bamjxms,//办案民警姓名
                     BAMJID: bamjids.join(','),//办案民警ID
