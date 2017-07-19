@@ -553,7 +553,7 @@ function scflwsRequest(params) {
                 } else if (json.status == 'error') {
                     alertDiv({
                         title: '提示',
-                        msg: '生成法律文书失败',
+                        msg: json.message,
                         fn: function () {
                             crossCloseTab('refresh_table_list');
                         }
