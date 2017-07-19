@@ -6,10 +6,10 @@
 var pathObj = getParamLinkUrl();
 var taskId = pathObj.id;    //rwid
 var name = pathObj.name;    //rwmc
-var businessKey = pathObj.businessKey;
+var businessKey = pathObj.businessKey;//呈请报告主键
 var processInstanceId = pathObj.processInstanceId;
 var asjzcxwlbdm = pathObj.asjzcxwlbdm;
-var asjflwsdm = pathObj.asjflwsdm;
+var asjflwsdm = pathObj.asjflwsdm;//呈请报告编码
 var dxmc = pathObj.dxmc;
 var flwsmc = pathObj.flwsmc;
 var cjsj = pathObj.cjsj;
@@ -19,8 +19,9 @@ var badwGajgmc = pathObj.badwGajgmc;
 var fjrid = pathObj.fjrid;
 var fjrxm = pathObj.fjrxm;
 var lcslId = pathObj.lcslId;
+var lx = pathObj.lx;//文书类型 XSAJ|XZAJ
 var hxshyjbzCurrent = null;  //当前回写审核意见标识
-var candidateUsers;
+var candidateUsers,candidateUsersName,backNodeText;
 var flagText = null;
 var isFinally = false;
 var backInitial = {};
@@ -30,12 +31,24 @@ var isLastTask = true;
 var isOver = false;
 var sessionBean = getSessionBean();             //获取登陆者信息
 var role = sessionBean.userOrgBiztype || '04';  //登陆角色 02为法制民警
-var flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
+var flwsinfoaram = '',str = '';
+var isClickQzbcssBtn = false;//是否点击签章保存送审按钮
+/****************************无签章页面*****************************/
+// flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
+// str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+/**********************************end**************************************/
 
+/**************************签章页面************************************/
 //【注意】 原来引用的是flwsInfo.html,签章审批后使用flwsInfo2.html
-//var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+// flwsinfoaram = 'asjbh=' + asjbh + '&flwsxxzjbh=' + businessKey + '&flwsAsjflwsdm=' + asjflwsdm + '&pageType=info';
+// str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo2.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+/******************************end********************************/
 
-var str = '<iframe src="' + pathConfig.basePath + '/html/flws/flwsInfo2.html?' + flwsinfoaram + '" frameborder="0" style="width: 1168px;min-height: 800px;padding:0 15px;overflow-x: hidden;overflow-y:auto"></iframe>';
+/********************************呈请过程中文书科修改*************************************/
+flwsinfoaram = 'asjbh=' + asjbh + '&cqgczCqbgZj=' + businessKey + '&asjzcxwdm=' + asjzcxwlbdm + "&CQBG_BM=" + asjflwsdm;
+str = '<iframe src="' + pathConfig.basePath + '/html/flws/ssFlwsMain.html?' + flwsinfoaram + '" frameborder="0" style="width: 1198px;min-height: 800px;padding:0;overflow-x: hidden;overflow-y:auto"></iframe>';
+/********************************end*************************************/
+
 $('.right-report').append(str);
 
 $(function () {
@@ -162,6 +175,11 @@ function getPrevAndOri() {
             $('#shjl').combobox({
                 onSelect: function (n, o) {
                     selectApprove(n.id);
+                    if(candidateUsersName && n.id == '1'){
+                        $('#next_select_title').text('下一环节及审批人：'+candidateUsersName).attr('title',candidateUsersName);
+                    }else if(backNodeText && n.id == '3'){
+                        $('#next_select_title').text('请选择退回的状态：'+backNodeText).attr('title',backNodeText);
+                    }
                 }
             });
 
@@ -251,6 +269,9 @@ function selectApprove(shjl) {
     $('#select_approve').off('click').on('click', function () {
         var $report = $('.right-report');
         $report.css('visibility','hidden');
+        //置空
+        $('#role_name').empty();
+        $('#role_name').parent().show();
         //同意,不同意
         if (shjl == '1' || shjl == '2') {
             $('#next_link').show();
@@ -277,13 +298,17 @@ function selectApprove(shjl) {
                                 candidateUsersArr.push($(this).attr('bizID'));
                             });
                             candidateUsers = candidateUsersArr.join(',');
-                            $('#next_select_title').text('下一环节及审批人：'+candidateUsersNameArr.join(',')).attr('title',candidateUsersNameArr.join(','));
+                            candidateUsersName = candidateUsersNameArr.join(',');
+                            $('#next_select_title').text('下一环节及审批人：'+candidateUsersName).attr('title',candidateUsersName);
                             if (candidateUsers) {
                                 $('#next_link_panel').dialog('close');
                                 $.messager.show({
                                     title: '提示',
                                     msg: '审批人选择成功!'
                                 });
+                                if(isClickQzbcssBtn){//直接送审
+                                    $('#saveAndss').click();
+                                }
                             } else {
                                 alertDiv({
                                     title: '提示',
@@ -363,7 +388,7 @@ function selectApprove(shjl) {
                     text: '确定',
                     handler: function () {
                         var val = $('#role_name input:checked').val();//退回节点
-                        var backNodeText = $('#role_name input:checked').parent().text();//退回节点的名称
+                        backNodeText = $('#role_name input:checked').parent().text();//退回节点的名称
                         var backObj;
                         //alert('退回状态:'+val);
                         if (val == 'initial') {
@@ -372,6 +397,9 @@ function selectApprove(shjl) {
                             backObj = backPrev;
                         }
                         saveAndSsShyj(backObj);
+                        if(isClickQzbcssBtn){//直接送审
+                            $('#saveAndss').click();
+                        }
                         $('#next_select_title').text('请选择退回的状态：'+backNodeText).attr('title',backNodeText);
                         $('#next_link_panel').dialog('close');
                     }
@@ -400,7 +428,7 @@ function minDateFun(prevDate) {
 function saveAndSsShyj(backObj) {
     //注册保存按钮事件,保存审核意见
     $('#saveAndss').off('click').on('click', function () {
-        var $report = $('.right-report')
+        var $report = $('.right-report');
         $report.css('visibility','hidden');
         var shjl = $('#shjl').val();
         var shsj = $('#shsj').val();
@@ -440,20 +468,23 @@ function saveAndSsShyj(backObj) {
             return false;
         }
 
-        //同意
+        if(shjl && shsj && shyj){
+            isClickQzbcssBtn = true;
+        }
 
+        //同意
         if (shjl == '1') {
             console.log('是否最后一级isFinally:',isFinally);
             if(!isFinally && !candidateUsers){
-                alertDiv({
-                    title: '提示',
-                    msg: '请选择下一环节及审批人!',
-                    fn: function(){
-                        $report.css('visibility','visible');
-                        //保存并送审时如果没选择人员自动弹出人员选择框
-                        $('#select_approve').click();
-                    }
-                });
+                //alertDiv({
+                //    title: '提示',
+                //    msg: '请选择下一环节及审批人!',
+                //    fn: function(){
+                //        $report.css('visibility','visible');
+                //        //保存并送审时如果没选择人员自动弹出人员选择框
+                //    }
+                //});
+                $('#select_approve').click();
             }else{
                 var wclc = function(formData){
                     //获取选择的审批人
@@ -468,16 +499,14 @@ function saveAndSsShyj(backObj) {
                 //执行签章
                 if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                     //签章送审
-                    /*
-                    alertDiv({
-                        title: '温馨提示',
-                        msg: '立即执行签章送审流程,请耐心等待...',
-                        fn: function(){
-                            $report.css('visibility','visible');
-                            window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
-                        }
-                    });
-                    */
+                    //alertDiv({
+                    //    title: '温馨提示',
+                    //    msg: '立即执行签章送审流程,请耐心等待...',
+                    //    fn: function(){
+                    //        $report.css('visibility','visible');
+                    //        window.frames[0].yjqz(shyj,hxshyjbzCurrent,shsj,wclc);
+                    //    }
+                    //});
                     //选择签章还是送审
                     $.messager.confirm({
                         title: '签章提示',
@@ -512,15 +541,14 @@ function saveAndSsShyj(backObj) {
                     complete(shjl, shsj, shyj);
                     //console.log('不同意,但是选择审批人:',candidateUsers);
                 } else {
-                    alertDiv({
-                        title: '提示',
-                        msg: '请选择处理方式',
-                        fn: function () {
-                            $report.css('visibility','visible');
-                            //保存并送审时如果没选择人员自动弹出人员选择框
-                            $('#select_approve').click();
-                        }
-                    });
+                    //alertDiv({
+                    //    title: '提示',
+                    //    msg: '请选择处理方式',
+                    //    fn: function () {
+                    //        $report.css('visibility','visible');
+                    //    }
+                    //});
+                    $('#select_approve').click();
                 }
             }
         }
@@ -576,15 +604,14 @@ function saveAndSsShyj(backObj) {
                     }
                 });
             } else {
-                alertDiv({
-                    title: '提示',
-                    msg: '请选择退回状态!',
-                    fn: function () {
-                        $report.css('visibility','visible');
-                        //保存并送审时如果没选择人员自动弹出人员选择框
-                        $('#select_approve').click();
-                    }
-                });
+                //alertDiv({
+                //    title: '提示',
+                //    msg: '请选择退回状态!',
+                //    fn: function () {
+                //        $report.css('visibility','visible');
+                //    }
+                //});
+                $('#select_approve').click();
             }
         }
     });
@@ -743,7 +770,7 @@ function lctShow() {
 
                     var shsjStr = '<li>\n' +
                         '<span class="pro">审核时间</span>\n' +
-                        '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n' +
+                        '<input class="Wdate" name="shsj" id="shsj" style="width:170px;" placeholder=""\n' +
                         'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \'' + minDateVal + '\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n' +
                         '</li>';
 

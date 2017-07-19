@@ -2365,7 +2365,6 @@ function previewPic(options) {
 
 //刑事行政系统材料扫描图片预览_打开新的TAB
 function previewPicTab2(picXh) {
-    var imgId = 'imgItem_' + picXh; //选中进来的图片ID
     var lastPicXh = 1;
     var firstPicXh = 1;
     var menuPage = 1;
@@ -2375,10 +2374,10 @@ function previewPicTab2(picXh) {
 
     //拖放排序插件
     $('#previewImgMenu').dragsort({
-        dragSelector: "li",
+        dragSelector: "i",
         dragBetween: true,
         //dragEnd: saveOrder,//拖动结束触发函数
-        placeHolderTemplate: "<li class='img-li' style='border:1px #ccc dashed;'></li>"
+        placeHolderTemplate: "<li class='img-li' style='background:#ccc;'></li>"
     });
 
     //点击查看图片
@@ -2516,15 +2515,15 @@ function previewPicTab2(picXh) {
                         var zj = imgItem.zj;
                         //var zj = i + 1;//imgItem.zj
                         var imgMenu = '<li class="img-li" xh="' + xh + '" zj="' + zj + '" id="imgItem_' + xh + '">' +
-                            '<span class="img-span">' + page + '</span>' +
-                                //'<i class="fa fa-arrow-up move" title="上移"></i> ' +
+                            '<span class="img-span" style="display:inline-block;width:110px;">' + page + '</span>' +
+                                '<i class="fa fa-arrows move" title="移动"></i> ' +
                                 //'<i class="fa fa-arrow-down move" title="下移"></i>' +
                             '</li>';
                         $('#previewImgMenu').append(imgMenu);
                     }
                     lastPicXh = rows[rows.length - 1].smj_ys;   //结束页号
                     if (type == 'first') {
-                        $('#' + imgId).click();//点击选中进来的图片
+                        $('.img-li:first').click();//点击选中进来的图片
                     }
                 }
             }

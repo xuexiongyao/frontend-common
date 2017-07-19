@@ -160,6 +160,12 @@ function queryCqbgData() {
                 //判断是否为自定义页面
                 if (DATA.CQBG.cqbgData.customized) {
                     //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
+                    for(var k in data){
+                        if(data[k] && data[k].search(/\n|\r|\t/) != -1){
+                            var tmp = strEnterSpaceA(data[k]);
+                            data[k] = tmp;
+                        }
+                    }
                     eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(data) + "')");
                 } else {
                     //信息复用
@@ -385,7 +391,14 @@ function flwsPageRender(bm) {
     if (flwsData.wdx) {
         //针对自定义页面
         if (flwsData.customized) {
-            eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
+            var data = DATA.FLWS[bm].flwsRow[0];
+            for(var k in data){
+                if(data[k] && data[k].search(/\n|\r|\t/) != -1){
+                    var tmp = strEnterSpaceA(data[k]);
+                    data[k] = tmp;
+                }
+            }
+            eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
             return;
         }
 
@@ -404,7 +417,14 @@ function flwsPageRender(bm) {
         if (flwsData.dx && flwsData.only) {//有嫌疑对象，并且允许多选，只能出一份儿文书 wdx:false dx:true only:true
             //针对自定义页面
             if (flwsData.customized) {
-                eval("render" + bm + "CustomizedPage('" + JSON.stringify(DATA.FLWS[bm].flwsRow[0]) + "')");
+                var data = DATA.FLWS[bm].flwsRow[0];
+                for(var k in data){
+                    if(data[k] && data[k].search(/\n|\r|\t/) != -1){
+                        var tmp = strEnterSpaceA(data[k]);
+                        data[k] = tmp;
+                    }
+                }
+                eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
                 return;
             }
             /****类型B****/
@@ -540,6 +560,12 @@ function flwsXxfyB(bm, isCustomized) {
 
     if (isCustomized) {
         if (DATA.FLWS[bm].flwsData.customized) {
+            for(var k in data){
+                if(data[k] && data[k].search(/\n|\r|\t/) != -1){
+                    var tmp = strEnterSpaceA(data[k]);
+                    data[k] = tmp;
+                }
+            }
             eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
         }
     }
@@ -549,16 +575,18 @@ function flwsXxfyB(bm, isCustomized) {
         var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
 
         //多版本处理（行政案件）
-        data.VERSION = parseInt(data.VERSION);
-        if (DATA.FLWS[bm].flwsData.switchVersion) {
-            var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
-            if (tabs.length > data.VERSION) {
-                for (var index = data.VERSION; index < tabs.length; index++) {
+        if(data.VERSION){
+            data.VERSION = parseInt(data.VERSION);
+            if (DATA.FLWS[bm].flwsData.switchVersion) {
+                var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                if (tabs.length > data.VERSION) {
+                    for (var index = data.VERSION; index < tabs.length; index++) {
+                        $('#flws_cl_area_' + bm).tabs("close", index);
+                    }
+                }
+                for (var index = data.VERSION - 2; index >= 0; index--) {
                     $('#flws_cl_area_' + bm).tabs("close", index);
                 }
-            }
-            for (var index = data.VERSION - 2; index >= 0; index--) {
-                $('#flws_cl_area_' + bm).tabs("close", index);
             }
         }
 
@@ -752,6 +780,12 @@ function flwsXxfyC1(bm, $this) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
                 zfgkxxData = data[i].WWGKNR;
                 if (DATA.FLWS[bm].flwsData.customized) {
+                    for(var k in data[i]){
+                        if(data[i][k] && data[i][k].search(/\n|\r|\t/) != -1){
+                            var tmp = strEnterSpaceA(data[i][k]);
+                            data[i][k] = tmp;
+                        }
+                    }
                     eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]).replace(/'/g,"\\'")   + "')");
                 }
 

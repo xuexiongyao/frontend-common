@@ -7,6 +7,7 @@
         float: left;
         z-index: 2;
         width:50%;
+        height:190px;
         ul{
             list-style-type: none;
             margin:0;
@@ -38,15 +39,16 @@
         }
     }
     .lct-box{
-        width:50%;
+        width:48.5%;
         min-height:100px;
+        max-height: 190px;
         @include float(left);
         z-index: 2;
-        overflow-x: auto;
+        overflow: auto;
         .lct-container{
             @include clearfix;
             position: relative;
-            margin-right: 40px;
+            //margin-right: 40px;
             //background: #ecf2f4;
             overflow: hidden;
             .lct-node{

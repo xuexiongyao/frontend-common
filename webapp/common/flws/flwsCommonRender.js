@@ -97,16 +97,30 @@ function cqbgFlwsOtherXxfy() {
  * @param bm  法律文书编码
  */
 function flwsTfrXxFy(bm){
-    //登录者填发人字段名：TFR_XM
-    var userData = DATA.OWN;//当前登录者信息
-    if(userData){
-        var $node = $(".flws-main-con-r form input.TFR_XM");
-        $node.textbox({value:userData.userName});
-
+    if(DATA.FLWS[bm].flwsRow && DATA.FLWS[bm].flwsRow.length > 0){
+        if (DATA.FLWS[bm].flwsRow.TFR_XM){
+            var $node = $("#flws_main_con_r_"+bm+" form input.TFR_XM");
+            $node.textbox({value:DATA.FLWS[bm].flwsRow.TFR_XM});
+        }
         //刑事案件、行政案件中：行政处罚告知笔录‘执行告知单位’默认复用当前登录者单位
         if(bm == 'X020001' || bm == '042162'){
-            var $n = $(".flws-main-con-r form input.GZDW");
-            $n.textbox({value:userData.extendMap.UserOrgGzjgmc});
+            if(DATA.FLWS[bm].flwsRow.GZDW){
+                var $n = $("#flws_main_con_r_"+bm+" form input.GZDW");
+                $n.textbox({value:DATA.FLWS[bm].flwsRow.GZDW});
+            }
+        }
+    }else{
+        //登录者填发人字段名：TFR_XM
+        var userData = DATA.OWN;//当前登录者信息
+        if(userData){
+            var $node = $(".flws-main-con-r form input.TFR_XM");
+            $node.textbox({value:userData.userName});
+
+            //刑事案件、行政案件中：行政处罚告知笔录‘执行告知单位’默认复用当前登录者单位
+            if(bm == 'X020001' || bm == '042162'){
+                var $n = $(".flws-main-con-r form input.GZDW");
+                $n.textbox({value:userData.extendMap.UserOrgGzjgmc});
+            }
         }
     }
 }
@@ -135,7 +149,7 @@ function cqbgDataXxfy() {
 
                 $('#cqbg_main_con form input.' + key).val(data[key + '_MASTER']);
 
-                if(DATA.FLWS.cqFlwsZj){
+                if(DATA.FLWS.cqFlwsZj || DATA.CQBG.cqgczCqbgZj){
                     $('#cqbg_main_con form input.' + key).attr("disabled", 'disabled');
                     $('#cqbg_main_con form input.' + key).css({'border': '0', 'background': '#fff'})
                 }else{
@@ -148,7 +162,12 @@ function cqbgDataXxfy() {
 
                     if (key == 'BAMJXM') {
                         if(!DATA.FLWS.cqFlwsZj){
-                            $node.combobox({value: data.BAMJID})
+                            if(DATA.cqgczWsBz){
+                                $node.combobox({value: data.BAMJID,readonly:true}).next().addClass('clear-border');
+                                $node.next().find('span.textbox-addon').hide();
+                            }else{
+                                $node.combobox({value: data.BAMJID})
+                            }
                         }else{
                             $node.val(data.BAMJXM);
                             $node.attr("readonly", true);
@@ -811,13 +830,13 @@ function flwsYclXyDxCheck(bm, $this) {
                 ZJ: flwsZj
             };
 
-            //嫌疑人勾选其他接口请求信息复用（秀平）
-            if(bm == '042155' || bm == '042140' || bm == '042126'){//取保候审 || 释放通知书 || 解除取保候审
-                ajax_request(bm,xyrXxzjbh);
-            }
-
             //法律文书信息复用
             flwsDataXxfy(bm, flwsZj);
+
+            //嫌疑人勾选其他接口请求信息复用（秀平）
+            //if(bm == '042155' || bm == '042140' || bm == '042126' || bm == '042132' || bm == '042131' || bm == '042111'){//取保候审 || 释放通知书 || 解除取保候审
+            ajax_request(bm,xyrXxzjbh,'edit');
+            //}
 
             //绑定执法公开点击事件(行政案件)
             $('#saveFlwsZfgk_' + bm).off('click').on('click', function () {
