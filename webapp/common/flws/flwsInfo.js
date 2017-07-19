@@ -159,14 +159,18 @@ function queryCqbgData() {
                 DATA.CQBG.cqbgRow = data;//呈请报告返回的数据
                 //判断是否为自定义页面
                 if (DATA.CQBG.cqbgData.customized) {
+                    var bm = DATA.CQBG.cqbgData.bianMa;//呈请报告编码
                     //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
-                    for(var k in data){
-                        if(data[k] && data[k].search(/\n|\r|\t/) != -1){
-                            var tmp = strEnterSpaceA(data[k]);
-                            data[k] = tmp;
+                    if(bm == '010001' || bm == 'X010006'){
+                        for(var k in data){
+                            if(data[k] && data[k].search(/\n|\r|\t/) != -1){
+                                var tmp = strEnterSpaceA(data[k]);
+                                data[k] = tmp;
+                            }
                         }
                     }
-                    eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(data) + "')");
+
+                    eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
                 } else {
                     //信息复用
                     var $target = $("#cqbg_main_con form a");
@@ -392,12 +396,6 @@ function flwsPageRender(bm) {
         //针对自定义页面
         if (flwsData.customized) {
             var data = DATA.FLWS[bm].flwsRow[0];
-            for(var k in data){
-                if(data[k] && data[k].search(/\n|\r|\t/) != -1){
-                    var tmp = strEnterSpaceA(data[k]);
-                    data[k] = tmp;
-                }
-            }
             eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
             return;
         }
@@ -418,12 +416,6 @@ function flwsPageRender(bm) {
             //针对自定义页面
             if (flwsData.customized) {
                 var data = DATA.FLWS[bm].flwsRow[0];
-                for(var k in data){
-                    if(data[k] && data[k].search(/\n|\r|\t/) != -1){
-                        var tmp = strEnterSpaceA(data[k]);
-                        data[k] = tmp;
-                    }
-                }
                 eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
                 return;
             }
@@ -560,12 +552,6 @@ function flwsXxfyB(bm, isCustomized) {
 
     if (isCustomized) {
         if (DATA.FLWS[bm].flwsData.customized) {
-            for(var k in data){
-                if(data[k] && data[k].search(/\n|\r|\t/) != -1){
-                    var tmp = strEnterSpaceA(data[k]);
-                    data[k] = tmp;
-                }
-            }
             eval("render" + bm + "CustomizedPage('" + JSON.stringify(data) + "')");
         }
     }
@@ -780,12 +766,6 @@ function flwsXxfyC1(bm, $this) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
                 zfgkxxData = data[i].WWGKNR;
                 if (DATA.FLWS[bm].flwsData.customized) {
-                    for(var k in data[i]){
-                        if(data[i][k] && data[i][k].search(/\n|\r|\t/) != -1){
-                            var tmp = strEnterSpaceA(data[i][k]);
-                            data[i][k] = tmp;
-                        }
-                    }
                     eval("render" + bm + "CustomizedPage('" + JSON.stringify(data[i]).replace(/'/g,"\\'")   + "')");
                 }
 
