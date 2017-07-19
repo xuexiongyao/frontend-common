@@ -191,7 +191,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
                                                     }
                                                 });
                                             }
-                                        } else if(json.status == 'fail'){
+                                        } else if(json.status == 'error'){
                                             loading('close');
                                             alertDiv({
                                                 title : '提示',
@@ -201,7 +201,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
                                     }
                                 });
                             });
-                        } else if(json.status == 'fail'){
+                        } else if(json.status == 'error'){
                             alertDiv({
                                 title : '提示',
                                 msg: json.message
@@ -209,7 +209,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
                         }
                     }
                 });
-            } else if(json.status == 'fail'){
+            } else if(json.status == 'error'){
                 loading('close');
                 alertDiv({
                     title : '提示',
