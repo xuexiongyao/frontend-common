@@ -89,7 +89,7 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                     dataType: 'json',
                                     async: false,
                                     success: function (json) {
-                                        console.log(json);
+                                        // console.log(json);
                                         if (json.state == 'success') {
                                             return true;
                                         }else if(json.state == 'error'){

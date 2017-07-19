@@ -104,6 +104,35 @@ function getNext() {
                                         $('#role_name').append(htmlLabel)
                                     }
                                 }
+                                //审批流程中下一环节审批人的选择,需要检查是否签章
+                                $('#role_name input').off('click').on('click',function () {
+                                    var $this = $(this);
+                                    var id = $this.attr('bizID');//id
+                                    var name = $this.parent().text();//名字
+                                    $.ajax({
+                                        url: pathConfig.basePath + '/wenshu/source/QZ/CHECK',
+                                        data: {
+                                            id: id,
+                                            name:name
+                                        },
+                                        dataType: 'json',
+                                        async: false,
+                                        success: function (json) {
+                                            // console.log(json);
+                                            if (json.state == 'success') {
+                                                return true;
+                                            }else if(json.state == 'error'){
+                                                //错误列表提示语言
+                                                $.messager.show({
+                                                    title: '提示',
+                                                    msg: json.msg+',不能选择【'+name+'】为下一环节审批人！',
+                                                    icon: 'warning'
+                                                });
+                                                $this.prop('checked',false);
+                                            }
+                                        }
+                                    })
+                                })
                             },
                             error:function(){
                                 console.log("ajax error");
