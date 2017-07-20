@@ -1372,6 +1372,15 @@ function getIEVersion() {
 			//combotree获取缓存字典的处理
 			var opts = $(this).tree('options');
 			var dictUrl = opts.url;
+			var loadType = '';
+			try{
+				loadType = opts.loadType;
+			}catch(e){}
+
+			if(loadType == 'open') {
+				return
+			}
+
 			if(dictUrl){
 				var domain = getThisLocationObj();
 				var hostname = domain.hostname;
