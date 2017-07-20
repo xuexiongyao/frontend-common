@@ -426,11 +426,13 @@ function tabSwitch() {
                     }
                 }else{//法律文书
                     var bm = '';//文书编码
+                    var key = '';//文书map数据的key
                     var obj = DATA.FLWS.flwsData;//文书结构化数据
                     if(!jQuery.isEmptyObject(obj)){
                         for(var k in obj){
                             if(title == obj[k].name){
                                 bm = obj[k].bianMa;//编码
+                                key = k;
                                 break;
                             }
                         }
@@ -534,6 +536,10 @@ function tabSwitch() {
                             }
 
                             if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
+                                //呈请报告未做，法律文书为自定义页面
+                                if(DATA.FLWS[bm].status.isAdd && DATA.FLWS.flwsData[key].customized && !DATA.CQBG.cqbgZj){
+                                    return;
+                                }
                                 if((DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx) || (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.only)){//多选 dx:true,only:true
                                     msgWindow('FLWS',title,bm,true,true);//消息提示窗口
                                 }else{//单选
