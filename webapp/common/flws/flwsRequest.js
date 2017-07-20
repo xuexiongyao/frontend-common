@@ -397,13 +397,17 @@ function queryFlwsData(title, render) {
  */
 function cqbgSave(url, param) {
     if (DATA.CQBG.cqbgData.customized) {
-        for(var k in param){
-            if(param[k] && param[k].search(/\n|\r|\t/) != -1){
-                var tmp = strEnterSpaceA(param[k]);
-                param[k] = tmp;
+        var bm = DATA.CQBG.cqbgData.bianMa;//呈请报告编码
+        //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
+        if(bm == '010001' || bm == 'X010006'){
+            for(var k in param){
+                if(param[k] && param[k].search(/\n|\r|\t/) != -1){
+                    var tmp = strEnterSpaceA(param[k]);
+                    param[k] = tmp;
+                }
             }
         }
-        eval("save" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + url + "','" +JSON.stringify(param)+ "','cqbgSaveComplete');");
+        eval("save" + bm + "CustomizedPage('" + url + "','" +JSON.stringify(param)+ "','cqbgSaveComplete');");
     } else {
         loading("open","正在保存呈请报告,请稍候...");
 
@@ -504,12 +508,6 @@ function flwsSaveComplete(data, bm) {
  */
 function flwsSave(url, param, bm) {
     if (DATA.FLWS[bm].flwsData.customized) {
-        for(var k in param){
-            if(param[k] && param[k].search(/\n|\r|\t/) != -1){
-                var tmp = strEnterSpaceA(param[k]);
-                param[k] = tmp;
-            }
-        }
         eval("save" + bm + "CustomizedPage('" + url + "','" + JSON.stringify(param) + "','flwsSaveComplete', '" + bm + "');");
     } else {
         loading("open","数据处理中...");
@@ -555,7 +553,7 @@ function scflwsRequest(params) {
                 } else if (json.status == 'error') {
                     alertDiv({
                         title: '提示',
-                        msg: '生成法律文书失败',
+                        msg: json.message,
                         fn: function () {
                             crossCloseTab('refresh_table_list');
                         }

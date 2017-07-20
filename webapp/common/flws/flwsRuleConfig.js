@@ -78,17 +78,31 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                         $(ipts[i]).combobox({
                             url: comboboxObj.url, multiple: true,
                             required: isTrue, showText: true, valueField: 'id', textField: 'text', method: 'get',
-                            onChange: function (newValue, oldValue) {
-                                if (newValue) {
-                                    var $this = $(this);
-                                    var className = $this.attr('textboxname');//组件class name值
-                                    var val = $this.next().find('input:hidden').val();
-                                    if (val && bm && isFlws) {
-                                        if (DATA.FLWS[bm].flwsData && !DATA.FLWS[bm].flwsData.switchVersion) {
-                                            flwsLdXxfy(bm, className, '', val, 'combobox','');
+                            onSelect:function(r){//呈请报告中办案人的选择，检查是否签章
+                                var $this = $(this);
+                                $.ajax({
+                                    url: pathConfig.basePath + '/wenshu/source/QZ/CHECK',
+                                    data: {
+                                        id: r.id,
+                                        name:r.text
+                                    },
+                                    dataType: 'json',
+                                    async: false,
+                                    success: function (json) {
+                                        // console.log(json);
+                                        if (json.state == 'success') {
+                                            return true;
+                                        }else if(json.state == 'error'){
+                                            //错误列表提示语言
+                                            $.messager.show({
+                                                title: '提示',
+                                                msg: json.msg+',不能选择【'+r.text+'】为办案人！',
+                                                icon: 'warning'
+                                            });
+                                            $this.combobox('unselect',r.id);
                                         }
                                     }
-                                }
+                                })
                             },
                             onHidePanel: function () {
                                 var $this = $(this);

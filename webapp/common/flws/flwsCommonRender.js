@@ -177,6 +177,8 @@ function cqbgDataXxfy() {
                     }
                 } else if ($node.hasClass('easyuicombotree')) {
                     $node.combotree({value: val})
+                } else {
+                    $node.val(val);
                 }
             }
         }
