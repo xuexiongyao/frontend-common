@@ -922,11 +922,11 @@ function clearAllStyle() {
  */
 function lctShow() {
     if (DATA.lcslid && DATA.lcdyid && DATA.lcslid !='undefined' && DATA.lcslid !='null' && DATA.lcdyid !='undefined' && DATA.lcdyid !='null') {
-        $('#process_png').attr('src', pathConfig.basePath + '/manager/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
+        $('#process_png').attr('src', pathConfig.basePath + '/config/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
         if (DATA.lczt == '0') {//流程中
-            getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
+            getLctCord(pathConfig.basePath + '/config/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
         } else if (DATA.lczt == '1') {//流程已结束
-            getLctCord(pathConfig.basePath + '/manager/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
+            getLctCord(pathConfig.basePath + '/config/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
         }
     }
 }
