@@ -445,7 +445,7 @@ function tabSwitch() {
                         var isAddPage;//是否新增
                         var hasEditedData = {};//已经保存过的数据
 
-                        if(DATA.FLWS[bm].flwsData.dx && DATA.FLWS[bm].flwsData.only){//dx:true,only:true
+                        if(DATA.FLWS[bm] && DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx && DATA.FLWS[bm].flwsData.only){//dx:true,only:true
                             getFlwsQtsjEdit(bm);//获取法律文书编辑页面数据
 
                             //多联必填项的校验规则校验
@@ -490,7 +490,7 @@ function tabSwitch() {
                                     }
 
                                     if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
-                                        if(DATA.FLWS[bm].flwsData.dx || DATA.FLWS[bm].flwsData.only){//多选 dx:true,only:true
+                                        if((DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx) || (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.only)){//多选 dx:true,only:true
                                             msgWindow('FLWS',title,bm,true,true);//消息窗口
                                         }else{//单选
                                             msgWindow('FLWS',title,bm,true,false);//消息窗口
@@ -534,7 +534,7 @@ function tabSwitch() {
                             }
 
                             if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
-                                if(DATA.FLWS[bm].flwsData.dx || DATA.FLWS[bm].flwsData.only){//多选 dx:true,only:true
+                                if((DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx) || (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.only)){//多选 dx:true,only:true
                                     msgWindow('FLWS',title,bm,true,true);//消息提示窗口
                                 }else{//单选
                                     msgWindow('FLWS',title,bm,true,false);//消息窗口
