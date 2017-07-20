@@ -165,8 +165,14 @@ function queryCqbgData(render) {
                 XXZJBH: DATA.FLWS.cqFlwsZj
             }
         } else if(DATA.CQBG.cqgczCqbgZj){//呈请过程中的文书 呈请报告主键
-            param = {
-                XXZJBH: DATA.CQBG.cqgczCqbgZj
+            if(DATA.CQBG.cqbgData.customized){//呈请报告自定义页面
+                param = {
+                    CQBG_ZJ:DATA.CQBG.cqgczCqbgZj
+                }
+            }else{
+                param = {
+                    XXZJBH: DATA.CQBG.cqgczCqbgZj
+                }
             }
         } else if (one) {//只能出一份文书
             param = {

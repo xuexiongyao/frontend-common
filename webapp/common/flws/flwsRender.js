@@ -109,8 +109,12 @@ function cqbgPageRender() {
     if (DATA.CQBG.cqbgData.customized) {
         //自定义页面的渲染，由各自的js文件单独单独处理，这里只负责传值
         eval("render" + DATA.CQBG.cqbgData.bianMa + "CustomizedPage('" + JSON.stringify(DATA.CQBG.cqbgRow) + "')");
-        if(DATA.CQBG.cqbgData.bianMa == '010001'){//受案登记表
-            ajax_request(DATA.CQBG.cqbgData.bianMa);
+        if(DATA.CQBG.cqbgData.bianMa == '010001' || DATA.CQBG.cqbgData.bianMa == 'X010006'){//受案登记表
+            if(!DATA.CQBG.cqbgZj){//新增
+                ajax_request(DATA.CQBG.cqbgData.bianMa);
+            }else{
+                ajax_request(DATA.CQBG.cqbgData.bianMa,'','edit');
+            }
         }
     } else {
         if (!DATA.CQBG.cqbgZj) {//新增渲染
