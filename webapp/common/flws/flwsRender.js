@@ -426,11 +426,13 @@ function tabSwitch() {
                     }
                 }else{//法律文书
                     var bm = '';//文书编码
+                    var key = '';//文书map数据的key
                     var obj = DATA.FLWS.flwsData;//文书结构化数据
                     if(!jQuery.isEmptyObject(obj)){
                         for(var k in obj){
                             if(title == obj[k].name){
                                 bm = obj[k].bianMa;//编码
+                                key = k;
                                 break;
                             }
                         }
@@ -445,7 +447,7 @@ function tabSwitch() {
                         var isAddPage;//是否新增
                         var hasEditedData = {};//已经保存过的数据
 
-                        if(DATA.FLWS[bm].flwsData.dx && DATA.FLWS[bm].flwsData.only){//dx:true,only:true
+                        if(DATA.FLWS[bm] && DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx && DATA.FLWS[bm].flwsData.only){//dx:true,only:true
                             getFlwsQtsjEdit(bm);//获取法律文书编辑页面数据
 
                             //多联必填项的校验规则校验
@@ -490,7 +492,7 @@ function tabSwitch() {
                                     }
 
                                     if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
-                                        if(DATA.FLWS[bm].flwsData.dx || DATA.FLWS[bm].flwsData.only){//多选 dx:true,only:true
+                                        if((DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx) || (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.only)){//多选 dx:true,only:true
                                             msgWindow('FLWS',title,bm,true,true);//消息窗口
                                         }else{//单选
                                             msgWindow('FLWS',title,bm,true,false);//消息窗口
@@ -534,7 +536,11 @@ function tabSwitch() {
                             }
 
                             if (isvalid && DATA.FLWS[bm].checkBoxIsChecked) {
-                                if(DATA.FLWS[bm].flwsData.dx || DATA.FLWS[bm].flwsData.only){//多选 dx:true,only:true
+                                //呈请报告未做，法律文书为自定义页面
+                                if(DATA.FLWS[bm].status.isAdd && DATA.FLWS.flwsData[key].customized && !DATA.CQBG.cqbgZj){
+                                    return;
+                                }
+                                if((DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx) || (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.only)){//多选 dx:true,only:true
                                     msgWindow('FLWS',title,bm,true,true);//消息提示窗口
                                 }else{//单选
                                     msgWindow('FLWS',title,bm,true,false);//消息窗口
