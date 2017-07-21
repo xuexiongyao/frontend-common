@@ -535,9 +535,7 @@ function getFlwsQtsjEdit(bm) {
                     var annotation = $(flwsA[a]).attr('annotation');
 
                     if (annotation) {
-                        //只获取可编辑选项的值
-                        var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));//可编辑的
-                        if (isEdit.length > 0) {
+                        var getWsData = function () {
                             //日期插件my97单独处理
                             var dateArry = $(flwsA[a]).find('input.Wdate');
                             for (var j = 0; j < dateArry.length; j++) {
@@ -606,6 +604,15 @@ function getFlwsQtsjEdit(bm) {
                                 var dataname = $(areaArry[l]).attr('name');//参数名
                                 var val = $(areaArry[l]).val();//值
                                 DATA.FLWS[bm].params[dataname] = val;
+                            }
+                        };
+                        if(!DATA.FLWS[bm].flwsData.bx){//嫌疑对象不必选，编辑页面嫌疑对象信息复用，数据拼装
+                            getWsData();
+                        }else{//嫌疑对象必选，只获取可编辑项目的值
+                            //只获取可编辑选项的值
+                            var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));//可编辑的
+                            if (isEdit.length > 0) {
+                                getWsData();
                             }
                         }
                     }else{
