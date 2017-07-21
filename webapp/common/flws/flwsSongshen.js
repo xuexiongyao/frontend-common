@@ -100,7 +100,12 @@ function getNext() {
                                 for (var i = 0; i < data.length; i++) {
                                     var data_i = data[i];
                                     if (data_i.nodeType == 'user') {
-                                        var htmlLabel = '<label><input type="checkbox" bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
+                                        var disabled = '',title = '';
+                                        if(data_i.sfygzj == '0'){//是否已过中级
+                                            disabled = 'disabled = "diasabled"';
+                                            title = 'title="没有中级资格，无法勾选！"';
+                                        }
+                                        var htmlLabel = '<label><input type="checkbox" '+disabled+' '+title+' bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
                                         $('#role_name').append(htmlLabel)
                                     }
                                 }

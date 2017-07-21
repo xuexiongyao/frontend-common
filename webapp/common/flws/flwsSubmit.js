@@ -81,7 +81,12 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
                             $('#role_approve').empty();
                             for(var i=0;i<nameArr.length;i++){
                                 if(nameArr[i]['nodeType'] == 'user'){
-                                    var html_label = '<label><input type="checkbox" class="approve-check" bizID="'+nameArr[i]['bizID']+'">'+nameArr[i]['text']+'</label>';
+                                    var disabled = '',title = '';
+                                    if(nameArr[i].sfygzj == '0'){//是否已过中级
+                                        disabled = 'disabled = "diasabled"';
+                                        title = 'title="没有中级资格，无法勾选！"';
+                                    }
+                                    var html_label = '<label><input type="checkbox" class="approve-check" '+disabled+' '+title+' bizID="'+nameArr[i]['bizID']+'">'+nameArr[i]['text']+'</label>';
                                     $('#role_approve').append(html_label);
                                 }
                             }
