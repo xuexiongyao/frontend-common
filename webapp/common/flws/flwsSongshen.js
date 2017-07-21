@@ -530,6 +530,8 @@ function saveAndSsShyj(backObj) {
                         complete(shjl, shsj, shyj,formData);
                     }
                 };
+                wclc(); //完成流程
+                return;
                 //执行签章
                 if(hxshyjbzCurrent == '1' || hxshyjbzCurrent == '2' || hxshyjbzCurrent == '3'){
                     //签章送审
