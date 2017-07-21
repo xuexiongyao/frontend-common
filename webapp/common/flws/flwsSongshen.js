@@ -105,7 +105,7 @@ function getNext() {
                                             disabled = 'disabled = "diasabled"';
                                             title = 'title="没有中级资格，无法勾选！"';
                                         }
-                                        var htmlLabel = '<label><input type="checkbox" '+disabled+' '+title+' bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
+                                        var htmlLabel = '<label '+title+'><input type="checkbox" '+disabled+' bizID="' + data_i.bizID + '">' + data_i.text + '</label>';
                                         $('#role_name').append(htmlLabel)
                                     }
                                 }

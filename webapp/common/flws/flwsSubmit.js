@@ -86,7 +86,7 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
                                         disabled = 'disabled = "diasabled"';
                                         title = 'title="没有中级资格，无法勾选！"';
                                     }
-                                    var html_label = '<label><input type="checkbox" class="approve-check" '+disabled+' '+title+' bizID="'+nameArr[i]['bizID']+'">'+nameArr[i]['text']+'</label>';
+                                    var html_label = '<label '+title+'><input type="checkbox" class="approve-check" '+disabled+'bizID="'+nameArr[i]['bizID']+'">'+nameArr[i]['text']+'</label>';
                                     $('#role_approve').append(html_label);
                                 }
                             }
