@@ -963,8 +963,6 @@ function getLctCord(url, paramname, param) {
  * 流程日志
  */
 function lcriZs() {
-    var str = '';
-    var spzt = '';//审批状态
     $.ajax({
         url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?lcslId=' + DATA.lcslid,
         type: 'post',
@@ -981,6 +979,9 @@ function lcriZs() {
                         if (json2.status == 'success') {
                             var data = json.data;
                             var data2 = json2.data;
+                            var str = '';
+                            var spzt = '';//审批状态
+                            $('.lct-container').empty();
                             for (var i = 0; i < data.length; i++) {
                                 //审批状态
                                 if (data[i].shjl == '1') {
