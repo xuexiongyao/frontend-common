@@ -898,13 +898,15 @@ function clearAllStyle() {
 /*************************************流程图***********************************/
 /**
  * 流程图的显示
- * cqzt 等于1（已呈请）或2（已审批）
+ * 查看流程,流程中的查看流程lcslid,流程结束查看流程lcdyid,查看流程图的统一使用lcdyid
  */
 function lctShow() {
-    if (DATA.lcslid && DATA.lcdyid && DATA.lcslid !='undefined' && DATA.lcslid !='null' && DATA.lcdyid !='undefined' && DATA.lcdyid !='null') {
+    if(DATA.lcdyid && DATA.lcdyid != 'undefined'){
         $('#process_png').attr('src', pathConfig.basePath + '/config/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
         if (DATA.lczt == '0') {//流程中
-            getLctCord(pathConfig.basePath + '/config/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
+            if(DATA.lcslid && DATA.lcslid != 'undefined'){
+                getLctCord(pathConfig.basePath + '/config/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
+            }
         } else if (DATA.lczt == '1') {//流程已结束
             getLctCord(pathConfig.basePath + '/config/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
         }
