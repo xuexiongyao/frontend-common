@@ -81,27 +81,31 @@ function cqbgPageRender() {
                 loading('close');
                 var json = eval('(' + data + ')');
                 //呈请报告只能做一份儿，并且已呈请的判断(//受案登记表的特殊处理)
-                if (json.cqzt && json.cqzt != '0' && DATA.CQBG.cqbgData.one) {
-                    alertDiv({
-                        title: '提示',
-                        msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
-                        fn: function () {
-                            crossCloseTab();
-                        }
-                    });
+                if (json.cqzt && DATA.CQBG.cqbgData.one) {
+                    if(json.cqzt == '1' || json.cqzt == '2'){//已呈请、已审核提示不能再做
+                        alertDiv({
+                            title: '提示',
+                            msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
+                            fn: function () {
+                                crossCloseTab();
+                            }
+                        });
+                    }
                 }
             }
         })
     } else {
         //呈请报告只能做一份儿，并且已呈请的判断
-        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgRow.CQZT != '0' && DATA.CQBG.cqbgData.one && !DATA.wsxgRwcxWs && !DATA.cqgczWsBz) {
-            alertDiv({
-                title: '提示',
-                msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
-                fn: function () {
-                    crossCloseTab();
-                }
-            });
+        if (DATA.CQBG.cqbgRow.CQZT && DATA.CQBG.cqbgData.one && !DATA.wsxgRwcxWs && !DATA.cqgczWsBz) {
+            if(DATA.CQBG.cqbgRow.CQZT == '1' || DATA.CQBG.cqbgRow.CQZT == '2'){//已呈请、已审核提示不能再做
+                alertDiv({
+                    title: '提示',
+                    msg: DATA.CQBG.cqbgData.name + '：已经呈请，无需再呈请',
+                    fn: function () {
+                        crossCloseTab();
+                    }
+                });
+            }
         }
     }
 
