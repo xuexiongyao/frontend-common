@@ -97,28 +97,17 @@ function cqbgFlwsOtherXxfy() {
  * @param bm  法律文书编码
  */
 function flwsTfrXxFy(bm){
-    if(DATA.FLWS[bm].flwsRow && DATA.FLWS[bm].flwsRow.length > 0){
-        if (DATA.FLWS[bm].flwsRow.TFR_XM){
-            var $node = $("#flws_main_con_r_"+bm+" form input.TFR_XM");
-            $node.textbox({value:DATA.FLWS[bm].flwsRow.TFR_XM});
-        }
-        //刑事案件、行政案件中：行政处罚告知笔录‘执行告知单位’默认复用当前登录者单位
-        if(bm == 'X020001' || bm == '042162'){
-            if(DATA.FLWS[bm].flwsRow.GZDW){
-                var $n = $("#flws_main_con_r_"+bm+" form input.GZDW");
-                $n.textbox({value:DATA.FLWS[bm].flwsRow.GZDW});
-            }
-        }
-    }else{
+    var flwsRow = DATA.FLWS[bm].flwsRow;//法律文书数据
+    if(!flwsRow || flwsRow.length < 1){//新增页面
         //登录者填发人字段名：TFR_XM
         var userData = DATA.OWN;//当前登录者信息
         if(userData){
-            var $node = $(".flws-main-con-r form input.TFR_XM");
+            var $node = $("#flws_main_con_r_"+bm+" form input.TFR_XM");
             $node.textbox({value:userData.userName});
 
             //刑事案件、行政案件中：行政处罚告知笔录‘执行告知单位’默认复用当前登录者单位
             if(bm == 'X020001' || bm == '042162'){
-                var $n = $(".flws-main-con-r form input.GZDW");
+                var $n = $("#flws_main_con_r_"+bm+" form input.GZDW");
                 $n.textbox({value:userData.extendMap.UserOrgGzjgmc});
             }
         }

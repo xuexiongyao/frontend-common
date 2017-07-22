@@ -548,6 +548,9 @@ function tabSwitch() {
                                 if(DATA.FLWS[bm].status.isAdd && DATA.FLWS.flwsData[key].customized && !DATA.CQBG.cqbgZj){
                                     return;
                                 }
+                                if(DATA.cqgczWsBz){//呈请过程中文书不能新增
+                                    return;
+                                }
                                 if((DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.dx) || (DATA.FLWS[bm].flwsData && DATA.FLWS[bm].flwsData.only)){//多选 dx:true,only:true
                                     msgWindow('FLWS',title,bm,true,true);//消息提示窗口
                                 }else{//单选
@@ -688,23 +691,34 @@ function flwsPageRender(bm) {
     DATA.FLWS.fyFlwsData=undefined;
 
     if (flwsData.wdx) {
-        if (flwsData.only) {
-            checkBtflwsRuleSelected(bm);
-            /**类型A**/
+        if(DATA.wsxgRwcxWs || DATA.cqgczWsBz){//法律文书修改任务查询列表文书
+            flwsDxListRenderForCx(bm);
+        }else{
+            if (flwsData.only) {
+                /**类型A**/
                 //法律文书无嫌疑对象，法律文书只能做一份儿（ wdx：true && only：true）
-            flwsDxListRenderA(bm);
-            flwsPageRenderA(bm);
-        } else if (!flwsData.only) {//(无呈请报告，无对象，法律文书可以做多份儿)
-            //法律文书无嫌疑对象，法律文书可以做多份儿（ wdx：true && only：false）
+                checkBtflwsRuleSelected(bm);
+            }
             flwsDxListRenderA(bm);
             flwsPageRenderA(bm);
         }
+        // if (flwsData.only) {
+        //     checkBtflwsRuleSelected(bm);
+        //     /**类型A**/
+        //         //法律文书无嫌疑对象，法律文书只能做一份儿（ wdx：true && only：true）
+        //     flwsDxListRenderA(bm);
+        //     flwsPageRenderA(bm);
+        // } else if (!flwsData.only) {//(无呈请报告，无对象，法律文书可以做多份儿)
+        //     //法律文书无嫌疑对象，法律文书可以做多份儿（ wdx：true && only：false）
+        //     flwsDxListRenderA(bm);
+        //     flwsPageRenderA(bm);
+        // }
     } else if (!flwsData.wdx && flwsData.only && !flwsData.dx) {
         if(DATA.wsxgRwcxWs || DATA.cqgczWsBz){//法律文书修改任务查询列表文书
             flwsDxListRenderForCx(bm);
         }else{
             /**类型B**/
-                //法律文书有嫌疑对象，不能多选,法律文书只能做一份儿（ wdx：false && only：true && dx:false）
+            //法律文书有嫌疑对象，不能多选,法律文书只能做一份儿（ wdx：false && only：true && dx:false）
             flwsDxListRenderB(bm);
             flwsPageRenderA(bm);
         }
@@ -713,7 +727,7 @@ function flwsPageRender(bm) {
             flwsDxListRenderForCx(bm);
         }else {
             /**类型C**/
-                //法律文书有嫌疑对象，可以多选,法律文书只能做一份儿（ wdx：false && only：true && dx:true）
+            //法律文书有嫌疑对象，可以多选,法律文书只能做一份儿（ wdx：false && only：true && dx:true）
             flwsDxListRenderC(bm);
             flwsPageRenderA(bm);
         }
@@ -722,7 +736,7 @@ function flwsPageRender(bm) {
             flwsDxListRenderForCx(bm);
         }else {
             /**其他类型**/
-                //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
+            //法律文书有嫌疑对象，法律文书可以做多份儿（ wdx：false && only：false）
             flwsDxListRenderOther(bm);
         }
     }
@@ -794,11 +808,11 @@ function flwsPageRenderA(bm) {
 
         //新增页面法律文书的信息复用
         //if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
-            try{
-                ajax_request(bm,'','edit');
-            }catch(e){
-                console.log("没有ajax_request函数");
-            }
+        try{
+            ajax_request(bm,'','edit');
+        }catch(e){
+            console.log("没有ajax_request函数");
+        }
         //}
 
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
@@ -1128,8 +1142,8 @@ function flwsDxListRenderOther(bm) {
                     '<ul class="xyrList ' + xyrObjTemp.id + '" ids=' + xyrObjTemp.id + '>' + xyrStr + '</ul></div>';
 
                 /***未处理嫌疑对象列表渲染***/
-                //$('.flws_xyr_area_wcq').html('');
-                //总的嫌疑人数据，删除已经做过的数据
+                    //$('.flws_xyr_area_wcq').html('');
+                    //总的嫌疑人数据，删除已经做过的数据
                 var wcqXyrArry = getDiffer(DATA.FLWS[bm].xyrData, flwsRow, 'xxzjbh', 'CLDX_XXZJBH');
                 //console.log(wcqXyrArry);
 
@@ -1712,7 +1726,7 @@ function flwsDxListRenderForCx(bm){
     var data = flwsRow;
     if (data.length > 0) {//有数据
         for (var i = 0; i < data.length; i++) {
-            if (data[0].CLDXLB) {
+            if (data[0].CLDXLB) {//有嫌疑对象
                 xyrCldxlb = data[0].CLDXLB;
                 for (var k in xyrObj) {
                     if (xyrCldxlb == xyrObj[k].cldxlb) {
@@ -1751,8 +1765,12 @@ function flwsDxListRenderForCx(bm){
                     }
                 }
             } else {
-                checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
-                    '<ul class="xyrList">' + xyrstr + '</ul></div>';
+                if(!DATA.FLWS[bm].flwsData.wdx){
+                    checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
+                        '<ul class="xyrList">' + xyrstr + '</ul></div>';
+                }else{//无嫌疑对象
+                    flwsDxListRenderA(bm);
+                }
             }
         }
 
@@ -1762,28 +1780,60 @@ function flwsDxListRenderForCx(bm){
                     '<ul class="xyrList">' + xyrstr + '</ul></div>';
             }
         }
+
+        //嫌疑对象列表的背景色处理
+        $('#flws_xyr_area_' + bm).css('background', '#f5f5f5').append(checkedXyrStr);
+
+        /**/
+        if(xyrCldxlb){//如果有嫌疑对象
+            //嫌疑对象勾选（单选）
+            if(DATA.FLWS[bm].xyrXxzjbh){
+                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].xyrXxzjbh + "']").prop('checked',true);
+            }
+            var checkIptLen = $('#flws_xyr_area_' + bm + ' ul.xyrList').find('input:checked');
+            if(checkIptLen.length > 0){
+                $('#flws_main_con_r_mask_'+bm).hide();
+            }else{
+                $('#flws_main_con_r_mask_'+bm).show();
+            }
+            //绑定点击事件
+            $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+                flwsClXyrCheckForCx(bm, $(this));
+            });
+        }else{//无嫌疑对象，嫌疑对象非必选（bx=false）
+            flwsPageRenderA(bm);
+        }
     } else {//无数据
-        checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
-            '<ul class="xyrList">' + xyrstr + '</ul></div>';
+        if(!DATA.FLWS[bm].flwsData.wdx){
+            checkedXyrStr = '<div><p><i class="fa fa-bars"></i>嫌疑对象列表</p>' +
+                '<ul class="xyrList">' + xyrstr + '</ul></div>';
+        }else{//无嫌疑对象
+            flwsDxListRenderA(bm);
+        }
+
+        //嫌疑对象列表的背景色处理
+        $('#flws_xyr_area_' + bm).css('background', '#f5f5f5').append(checkedXyrStr);
+
+        //隐藏操作按钮
+        $('#flws_main_con_r_'+bm+' .save-btn-area').hide();
+        cqgczWsNoDataPageRender(bm);
     }
-
-    //嫌疑对象列表的背景色处理
-    $('#flws_xyr_area_' + bm).css('background', '#f5f5f5').append(checkedXyrStr);
-
-    if(xyrCldxlb){//如果有嫌疑对象
-        //绑定点击事件
-        $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
-            flwsClXyrCheckForCx(bm, $(this));
-        });
-    }else{//无嫌疑对象，嫌疑对象非必选（bx=false）
-        flwsPageRenderA(bm);
-    }
-
 
     //保存数据成功后获取法律文书主键，再次点击为编辑
     //if (typeof (DATA.FLWS[bm].status.currentFlwsId) != 'undefined') {
     //    $('#flws_xyr_area_' + bm).find("input[flwsZj='" + DATA.FLWS[bm].status.currentFlwsId + "']").click();
     //}
+}
+
+/**
+ * 呈请过程中文书无数据页面的渲染 详情处理
+ * @param bm  文书编码
+ */
+function cqgczWsNoDataPageRender(bm) {
+    var $target = $('#flws_cl_area_' + bm + ' form a');
+    for(var i=0;i<$target.length;i++){
+        $($target[i]).html('');
+    }
 }
 
 /**
@@ -1853,17 +1903,15 @@ function flwsClXyrCheckForCx(bm, $this){
         }
 
     } else {//未选中
-        if (flwsData.bx) {
-            event.stopPropagation();
-            alertDiv({
-                title: '提示',
-                msg: '必须选择一项',
-                fn: function () {
-                    $this.prop('checked', true);
-                }
-            });
-            return false;
-        }
+        event.stopPropagation();
+        alertDiv({
+            title: '提示',
+            msg: '必须选择一项',
+            fn: function () {
+                $this.prop('checked', true);
+            }
+        });
+        return false;
     }
 }
 
