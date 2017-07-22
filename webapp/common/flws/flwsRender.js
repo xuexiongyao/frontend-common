@@ -1890,6 +1890,11 @@ function flwsClXyrCheckForCx(bm, $this){
             //数据复用
             flwsDataXxfy(bm, flwsZj);
 
+            //绑定执法公开点击事件(行政案件)
+            $('#saveFlwsZfgk_' + bm).off('click').on('click', function () {
+                zfgkEdit(bm, flwsZj);
+            });
+
             //嫌疑人勾选其他接口请求信息复用（秀平）
             ajax_request(bm, xyrXxzjbh,'edit');
 
