@@ -323,6 +323,17 @@ function easyuiReset(ipts, isAdd, bm ,isFlws) {
                                         if (!isNaN(newValue)) {//只有输入数字转化才符合规则
                                             if(newValue){
                                                 iptVal = Number(newValue);//输入框的值
+                                                if(iptVal >= 10000){
+                                                    alertDiv({
+                                                        title: '提示信息',
+                                                        msg: '输入值过大（10000以内的数字）',
+                                                        fn: function () {
+                                                            $this.textbox('clear');
+                                                            $this.next().find('input').focus();
+                                                        }
+                                                    });
+                                                    return;
+                                                }
                                             }
                                             var className = $this.attr('textboxname');//组件class name值
                                             var chNum = NumberToChinese(iptVal);//转化之后的汉字
