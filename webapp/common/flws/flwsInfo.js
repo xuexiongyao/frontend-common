@@ -390,6 +390,7 @@ function queryFlwsData(title, render) {
                         }
                     }
                 });
+                break;
             }
         }
     }
@@ -578,12 +579,13 @@ function flwsXxfyB(bm, isCustomized) {
                 var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
                 if (tabs.length > data.VERSION) {
                     for (var index = data.VERSION; index < tabs.length; index++) {
-                        $('#flws_cl_area_' + bm).tabs("close", index);
+                        $('#flws_cl_area_' + bm).tabs("disableTab", index);
                     }
                 }
                 for (var index = data.VERSION - 2; index >= 0; index--) {
-                    $('#flws_cl_area_' + bm).tabs("close", index);
+                    $('#flws_cl_area_' + bm).tabs("disableTab", index);
                 }
+                $('#flws_cl_area_' + bm).tabs("enableTab", data.VERSION-1).tabs("select",data.VERSION-1);
             }
         }
 
@@ -722,6 +724,7 @@ function xydxListRenderC(bm) {
                                     }
                                 }
                             }
+                            break;
                         }
                     }
                 } else {
@@ -772,7 +775,7 @@ function flwsXxfyC1(bm, $this) {
     $this.parent().siblings().removeClass('active');
 
     var data = DATA.FLWS[bm].flwsRow;
-    if (data) {
+    if (data && data.length>0) {
         for (var i = 0; i < data.length; i++) {
             if (xxzjbh == data[i].CLDX_XXZJBH) {
                 zfgkxxData = data[i].WWGKNR;
@@ -785,18 +788,22 @@ function flwsXxfyC1(bm, $this) {
                     var annotation = $($target[j]).attr('annotation');//a标签的annotation属性
 
                     //多版本处理（行政案件）
-                    data[i].VERSION = parseInt(data[i].VERSION);
-                    if (DATA.FLWS[bm].flwsData.switchVersion) {
-                        var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
-                        if (tabs.length > data[i].VERSION) {
-                            for (var index = data[i].VERSION; index < tabs.length; index++) {
-                                $('#flws_cl_area_' + bm).tabs("close", index);
+                    if(data[i].VERSION){
+                        data[i].VERSION = parseInt(data[i].VERSION);
+                        if (DATA.FLWS[bm].flwsData.switchVersion) {
+                            var tabs = $('#flws_cl_area_' + bm).tabs("tabs");
+                            if (tabs.length > data[i].VERSION) {
+                                for (var index = data[i].VERSION; index < tabs.length; index++) {
+                                    $('#flws_cl_area_' + bm).tabs("disableTab", index);
+                                }
                             }
-                        }
-                        for (var index = data[i].VERSION - 2; index >= 0; index--) {
-                            $('#flws_cl_area_' + bm).tabs("close", index);
+                            for (var index = data[i].VERSION - 2; index >= 0; index--) {
+                                $('#flws_cl_area_' + bm).tabs("disableTab", index);
+                            }
+                            $('#flws_cl_area_' + bm).tabs("enableTab", data[i].VERSION-1).tabs("select",data[i].VERSION-1);
                         }
                     }
+
 
                     //checkbox、radiobox的处理
                     if (typeof aName != 'undefined') {
@@ -836,40 +843,46 @@ function flwsXxfyC1(bm, $this) {
                     for (var a in data[i]) {
                         if (a == aName) {
                             if (annotation) {
-                                //日期的处理
-                                var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
-                                var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
-                                var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
-                                var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
-                                if (textStyle) {
-                                    if (textStyle == 'DATE') {//2016年12月28日
-                                        var val = data[i][a + '_MASTER'];
-                                        var array = val.split('-');
-                                        var newVal = '';
+                                if(annotation == '/REPLACE/'){
+                                    $($target[j]).parent().next().val(data[i][a]);
+                                    $($target[j]).parent().next().attr('readonly','readonly');
+                                    autoTextarea($($target[j]).parent().next()[0]);
+                                }else{
+                                    //日期的处理
+                                    var textStyle = annotation.substring(annotation.indexOf('<') + 1, annotation.indexOf('>'));
+                                    var dictStyle = annotation.substring(annotation.indexOf('{') + 1, annotation.indexOf('}'));
+                                    var treeStyle = annotation.substring(annotation.indexOf('%') + 1, annotation.lastIndexOf('%'));
+                                    var isEdit = annotation.substring(annotation.indexOf('/') + 1, annotation.lastIndexOf('/'));
+                                    if (textStyle) {
+                                        if (textStyle == 'DATE') {//2016年12月28日
+                                            var val = data[i][a + '_MASTER'];
+                                            var array = val.split('-');
+                                            var newVal = '';
 
-                                        for (var m = 0; m < array.length; m++) {
-                                            newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
+                                            for (var m = 0; m < array.length; m++) {
+                                                newVal = array[0] + '年' + array[1] + '月' + array[2] + '日';
+                                            }
+                                            $($target[j]).text(newVal);
+                                        } else if (textStyle == 'DATE_CN') {
+                                            $($target[j]).text(data[i][a]);
+                                        } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
+                                            var strTextbox = "<textarea class='" + aName + " easyuivalidatebox " + textStyle + "' name='" + aName + "' readonly style='border: 0;'>" + data[i][a] + "</textarea>";
+                                            $($target[j]).html(strTextbox);
+                                            autoTextarea($($target[j]).find('textarea')[0]);
+                                        } else if (textStyle == 'MONEY') {
+                                            $($target[j]).text(data[i][a + '_DX']);
+                                        } else {
+                                            $($target[j]).text(data[i][a]);
                                         }
-                                        $($target[j]).text(newVal);
-                                    } else if (textStyle == 'DATE_CN') {
-                                        $($target[j]).text(data[i][a]);
-                                    } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
-                                        var strTextbox = "<textarea class='" + aName + " easyuivalidatebox " + textStyle + "' name='" + aName + "' readonly style='border: 0;'>" + data[i][a] + "</textarea>";
-                                        $($target[j]).html(strTextbox);
-                                        autoTextarea($($target[j]).find('textarea')[0]);
-                                    } else if (textStyle == 'MONEY') {
-                                        $($target[j]).text(data[i][a + '_DX']);
+                                    } else if (dictStyle || treeStyle) {
+                                        if (a == 'JYCS_GAJGMC') {
+                                            $($target[j]).text(data[i][a]);
+                                        } else {
+                                            $($target[j]).text(data[i][a + '_DICTMC']);
+                                        }
                                     } else {
                                         $($target[j]).text(data[i][a]);
                                     }
-                                } else if (dictStyle || treeStyle) {
-                                    if (a == 'JYCS_GAJGMC') {
-                                        $($target[j]).text(data[i][a]);
-                                    } else {
-                                        $($target[j]).text(data[i][a + '_DICTMC']);
-                                    }
-                                } else {
-                                    $($target[j]).text(data[i][a]);
                                 }
                             } else {
                                 $($target[j]).text(data[i][a]);
