@@ -85,7 +85,6 @@ function getCqbgFlwsHtmlPage() {
     var cqbgstr = '';
     var cqbgData = DATA.CQBG.cqbgData;//呈请报告数据
     var cqbgzj = DATA.cqbgzj;
-    console.log('呈请报告数据:',DATA);
     if (!jQuery.isEmptyObject(cqbgData)) {
         /*
         //呈请报告审批签章
@@ -144,13 +143,25 @@ function getCqbgFlwsHtmlPage() {
 function queryCqbgData() {
     loading('open', '正在获取呈请报告数据,请稍等...');
     var cqbgQueryUrl = DATA.CQBG.cqbgData.queryUrl;//query呈请报告url
+    var param = {};
+    var bm = DATA.CQBG.cqbgData.bianMa;
+
+    param = {
+        XXZJBH: DATA.cqbgzj,
+        CQBG_ZJ: DATA.cqbgzj
+    };
+
+    if(pathObj.pageFrom == "cqwsxg"){//呈请文书列表修改中获取数据
+        if(bm == 'X010006' || bm == '010001' || bm == '090006'){//法律文书既是呈请报告又是法律文书
+            param = {
+                ZJ: DATA.cqbgzj
+            }
+        }
+    }
 
     $.ajax({
         url: cqbgQueryUrl,
-        data: {
-            XXZJBH: DATA.cqbgzj,
-            CQBG_ZJ: DATA.cqbgzj
-        },
+        data: param,
         dataType: 'json',
         success: function (json) {
             loading('close');
@@ -898,13 +909,15 @@ function clearAllStyle() {
 /*************************************流程图***********************************/
 /**
  * 流程图的显示
- * cqzt 等于1（已呈请）或2（已审批）
+ * 查看流程,流程中的查看流程lcslid,流程结束查看流程lcdyid,查看流程图的统一使用lcdyid
  */
 function lctShow() {
-    if (DATA.lcslid && DATA.lcdyid && DATA.lcslid !='undefined' && DATA.lcslid !='null' && DATA.lcdyid !='undefined' && DATA.lcdyid !='null') {
+    if(DATA.lcdyid && DATA.lcdyid != 'undefined'){
         $('#process_png').attr('src', pathConfig.basePath + '/config/findResourceAsStream?processDefinitionId=' + DATA.lcdyid);
         if (DATA.lczt == '0') {//流程中
-            getLctCord(pathConfig.basePath + '/config/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
+            if(DATA.lcslid && DATA.lcslid != 'undefined'){
+                getLctCord(pathConfig.basePath + '/config/findProcessDefinitionByProcessInstanceId', 'processInstanceId', DATA.lcslid);//获取流程图坐标位置
+            }
         } else if (DATA.lczt == '1') {//流程已结束
             getLctCord(pathConfig.basePath + '/config/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
         }

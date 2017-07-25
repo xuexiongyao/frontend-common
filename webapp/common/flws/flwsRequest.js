@@ -161,8 +161,15 @@ function queryCqbgData(render) {
         var param = {};
 
         if(DATA.FLWS.cqFlwsZj){//呈请法律文书修改
-            param = {
-                XXZJBH: DATA.FLWS.cqFlwsZj
+            var cqwsBm = DATA.CQBG.cqbgData.bianMa;//呈请文书编码
+            if(cqwsBm == 'X010006' || cqwsBm == '010001' || cqwsBm == '090006'){
+                param = {
+                    ZJ: DATA.FLWS.cqFlwsZj
+                }
+            }else{
+                param = {
+                    XXZJBH: DATA.FLWS.cqFlwsZj
+                }
             }
         } else if(DATA.CQBG.cqgczCqbgZj){//呈请过程中的文书 呈请报告主键
             if(DATA.CQBG.cqbgData.customized){//呈请报告自定义页面
