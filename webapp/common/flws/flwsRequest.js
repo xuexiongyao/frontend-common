@@ -183,6 +183,7 @@ function queryCqbgData(render) {
             }
         } else if (one) {//只能出一份文书
             param = {
+                CQZT: '0',
                 ASJBH: DATA.asjbh,
                 FLWS_ASJFLWSDM: DATA.CQBG.cqbgData.bianMa,
                 XT_ZXBZ: '0'
@@ -290,12 +291,14 @@ function queryFlwsData(title, render) {
                 }else if (only) {//只能出一份文书
                     if(DATA.CQBG.cqbgZj){
                         param = {
+                            CQZT: '0',
                             XT_ZXBZ: '0',
                             ASJBH: DATA.asjbh,
                             CQBG_ZJ: DATA.CQBG.cqbgZj
                         }
                     }else{
                         param = {
+                            CQZT: '0',
                             XT_ZXBZ: '0',
                             ASJBH: DATA.asjbh
                         }
@@ -305,12 +308,14 @@ function queryFlwsData(title, render) {
                         param = {
                             CQBG_ZJ: DATA.CQBG.cqbgZj,
                             XT_ZXBZ: '0',
+                            CQZT: '0',
                             ASJBH: DATA.asjbh
                         }
                     }else if(DATA.FLWS.cqbgZj){
                         param = {
                             CQBG_ZJ: DATA.FLWS.cqbgZj,
                             XT_ZXBZ: '0',
+                            CQZT: '0',
                             ASJBH: DATA.asjbh
                         }
                     }else if(DATA.FLWS[flwsData[k].bianMa].status.currentFlwsId){
