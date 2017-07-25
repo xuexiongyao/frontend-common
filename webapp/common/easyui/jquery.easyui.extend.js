@@ -1390,25 +1390,38 @@ function getIEVersion() {
 				}else{
 					randomUrl = dictUrl+'&domain='+hostname+'&v='+jwzhVersion;
 				}
-				$.ajax({
-					cache: true,
-					type: opts.method,
-					url: randomUrl,
-					data: param,
-					dataType: 'json',
-					xhrFields: {withCredentials:true},
-					crossDomain: true,
-					beforeSend: function(xhr) {
-						xhr.withCredentials = true;
-					},
-					success: function(data) {
-						opts.loaded = true;
-						success(data);
-					},
-					error: function(){
-						console.log('combotree跨域获取字典错误,url:'+dictUrl);
-					}
-				});
+				var dictStorageName = dictUrl+hostname+jwzhVersion;
+				//读取浏览器存储数据
+				if(localStorage[dictStorageName]) {
+					var dictStr = localStorage[dictStorageName];
+					var dictData = JSON.parse(dictStr);
+					success(dictData);
+				}
+				//请求字典数据
+				else{
+					$.ajax({
+						cache: true,
+						type: opts.method,
+						url: randomUrl,
+						data: param,
+						dataType: 'json',
+						xhrFields: {withCredentials:true},
+						crossDomain: true,
+						beforeSend: function(xhr) {
+							xhr.withCredentials = true;
+						},
+						success: function(data) {
+							opts.loaded = true;
+							success(data);
+							//字典数据写进浏览器存储
+							localStorage[dictStorageName] = JSON.stringify(data);
+						},
+						error: function(){
+							console.log('combotree跨域获取字典错误,url:'+dictUrl);
+						}
+					});
+				}
+
 			}
 		},
 		onShowPanel: function(){
