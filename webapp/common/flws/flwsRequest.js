@@ -291,7 +291,6 @@ function queryFlwsData(title, render) {
                 }else if (only) {//只能出一份文书
                     if(DATA.CQBG.cqbgZj){
                         param = {
-                            CQZT: '0',
                             XT_ZXBZ: '0',
                             ASJBH: DATA.asjbh,
                             CQBG_ZJ: DATA.CQBG.cqbgZj
@@ -308,14 +307,12 @@ function queryFlwsData(title, render) {
                         param = {
                             CQBG_ZJ: DATA.CQBG.cqbgZj,
                             XT_ZXBZ: '0',
-                            CQZT: '0',
                             ASJBH: DATA.asjbh
                         }
                     }else if(DATA.FLWS.cqbgZj){
                         param = {
                             CQBG_ZJ: DATA.FLWS.cqbgZj,
                             XT_ZXBZ: '0',
-                            CQZT: '0',
                             ASJBH: DATA.asjbh
                         }
                     }else if(DATA.FLWS[flwsData[k].bianMa].status.currentFlwsId){
