@@ -273,7 +273,7 @@ function getTableData(get_header_info){
         //分页
         pagination : true,
         pageSize : 10,
-        pageList : [10,50,100,1000], //rows
+        pageList : [10,50,100,200,500,1000], //rows
         pageNumber : 1,//显示在第几页
         pagePosition : 'bottom'
     },init.tableOptions);
