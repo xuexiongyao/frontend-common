@@ -486,6 +486,10 @@ function tabSwitch() {
                                 }
                             }
 
+                            if(DATA.cqgczWsBz){//呈请过程中的文书
+                                isAddPage = false;//编辑页面
+                            }
+
                             if(isAddPage){//新增
                                 getFlwsQtsjAdd(bm);//获取法律文书新增页面数据
 
