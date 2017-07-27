@@ -742,7 +742,7 @@ function complete(shjl, shsj, shyj,formData) {
 function end(shjl, shsj, shyj) {
     loading('open', '最后一级,数据提交中...');
     $.ajax({
-        url: ajaxUrl + '/end?taskId=' + taskId + '&sourceName=' + name + '&shjl=' + shjl + '&shsj=' + shsj + '&shyj=' + shyj + '&asjbh=' + asjbh + '&asjflwsdm=' + asjflwsdm + '&businessKey=' + businessKey + '&fjrid=' + fjrid + '&fjrxm=' + fjrxm,
+        url: ajaxUrl + '/end?taskId=' + taskId + '&sourceName=' + name + '&shjl=' + shjl + '&shsj=' + shsj + '&shyj=' + shyj + '&asjbh=' + asjbh + '&asjflwsdm=' + asjflwsdm + '&businessKey=' + businessKey + '&fjrid=' + fjrid + '&fjrxm=' + fjrxm +'&hxshyjbz='+hxshyjbzCurrent,
         type: 'post',
         dataType: 'json',
         success: function (json) {
