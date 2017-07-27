@@ -113,10 +113,15 @@ function queryModule(){
         }else if (list_config[k][0] == 'textbox_org') {
             var orgNameInput = 'query_input_' + k_mark;//机构名显示框
             //生成一个保存机构代码的输入框
-            //var orgCodeInput = k_mark.replace("_orgname", "");
+            var orgCodeInput ='';
+            if(list_config[k].length > 5){
+                orgCodeInput=list_config[k][5];
+            }
             //去掉文字框的name,并添加隐藏字段
-            //$("#" + orgNameInput).removeAttr('name').after('<input type="hidden" class="val" id="' + orgCodeInput + '" name="' + orgCodeInput + '">');
-            initSingleSelectOrg(orgNameInput, {rootOrgCode:init.rootOrgCode || null}, {text: orgNameInput, id: ''}, null);
+            if(orgCodeInput) {
+                $("#" + orgNameInput).removeAttr('name').after('<input type="hidden" class="val" id="' + orgCodeInput + '" name="' + orgCodeInput + '">');
+            }
+            initSingleSelectOrg(orgNameInput, {rootOrgCode:init.rootOrgCode || null}, {text: orgNameInput, id: orgCodeInput}, null);
             //$('#query_input_badw_gajgmc').textbox();
             $('#'+orgNameInput).textbox();
             //$('#query_input_gxdw_orgname').next().width(178);
