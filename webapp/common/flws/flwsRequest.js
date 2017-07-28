@@ -183,6 +183,7 @@ function queryCqbgData(render) {
             }
         } else if (one) {//只能出一份文书
             param = {
+                CQZT: '0',
                 ASJBH: DATA.asjbh,
                 FLWS_ASJFLWSDM: DATA.CQBG.cqbgData.bianMa,
                 XT_ZXBZ: '0'
@@ -296,6 +297,7 @@ function queryFlwsData(title, render) {
                         }
                     }else{
                         param = {
+                            CQZT: '0',
                             XT_ZXBZ: '0',
                             ASJBH: DATA.asjbh
                         }

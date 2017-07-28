@@ -486,6 +486,10 @@ function tabSwitch() {
                                 }
                             }
 
+                            if(DATA.cqgczWsBz){//呈请过程中的文书
+                                isAddPage = false;//编辑页面
+                            }
+
                             if(isAddPage){//新增
                                 getFlwsQtsjAdd(bm);//获取法律文书新增页面数据
 
@@ -741,8 +745,11 @@ function flwsPageRender(bm) {
         }
     }
 
-    cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
-    flwsTfrXxFy(bm);//填发人信息复用
+    if(DATA.FLWS[bm].status && !DATA.FLWS[bm].status.hasDone){
+        cqbgFlwsOtherXxfy();//呈请报告、法律文书其他公共接口数据复用
+        flwsTfrXxFy(bm);//填发人信息复用
+    }
+
 
     //嫌疑对象勾选（单选）
     if(DATA.FLWS[bm].xyrXxzjbh){
@@ -1786,9 +1793,13 @@ function flwsDxListRenderForCx(bm){
 
         /**/
         if(xyrCldxlb){//如果有嫌疑对象
+            //绑定点击事件
+            $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
+                flwsClXyrCheckForCx(bm, $(this));
+            });
             //嫌疑对象勾选（单选）
             if(DATA.FLWS[bm].xyrXxzjbh){
-                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].xyrXxzjbh + "']").prop('checked',true);
+                $('#flws_xyr_area_' + bm).find("input[xxzjbh='" + DATA.FLWS[bm].xyrXxzjbh + "']").prop('checked',false).click();
             }
             var checkIptLen = $('#flws_xyr_area_' + bm + ' ul.xyrList').find('input:checked');
             if(checkIptLen.length > 0){
@@ -1796,10 +1807,6 @@ function flwsDxListRenderForCx(bm){
             }else{
                 $('#flws_main_con_r_mask_'+bm).show();
             }
-            //绑定点击事件
-            $('#flws_xyr_area_' + bm + ' ul.xyrList input:checkbox').off('click').on('click', function () {
-                flwsClXyrCheckForCx(bm, $(this));
-            });
         }else{//无嫌疑对象，嫌疑对象非必选（bx=false）
             flwsPageRenderA(bm);
         }
@@ -1830,9 +1837,24 @@ function flwsDxListRenderForCx(bm){
  * @param bm  文书编码
  */
 function cqgczWsNoDataPageRender(bm) {
-    var $target = $('#flws_cl_area_' + bm + ' form a');
-    for(var i=0;i<$target.length;i++){
-        $($target[i]).html('');
+    if(DATA.FLWS[bm].flwsData.customized){//自定义页面
+        //自定义页面无数据的处理
+        $('.main-list-z').find('span.textbox').css('border','0');
+        $('.main-list-z').find('textarea').attr('readonly','readonly').css('border','0');
+        $('.main-list-z').find('input:checkbox').attr('disabled','disabled');
+        editDisable('easyui-combobox');//字典的处理
+        $('#addSawpBtn').hide();
+        $('#addSawpBtn2').hide();
+        $('.main-list-z .easyui-textbox').textbox({readonly:true}).textbox('disableValidation');
+        $('.main-list-z .easyui-validatebox').validatebox({readonly:true}).validatebox('disableValidation');
+        $('.main-list-z .easyui-numberbox').numberbox({required:false,readonly:true,prompt:''});
+
+        $('#flws_main_con_r_mask_'+bm).hide();
+    }else{
+        var $target = $('#flws_cl_area_' + bm + ' form a');
+        for(var i=0;i<$target.length;i++){
+            $($target[i]).html('');
+        }
     }
 }
 
