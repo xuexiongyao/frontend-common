@@ -782,7 +782,7 @@ function lctShow() {
     var str = '';
     var spzt = '';//审批状态
     $.ajax({
-        url: ajaxUrl + '/findGzlLcrz?lcslId=' + lcslId,
+        url: ajaxUrl + '/findGzlLcrz?businessKey=' + businessKey,
         type: 'post',
         dataType: 'json',
         success: function (json) {

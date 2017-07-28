@@ -974,13 +974,6 @@ function getLctCord(url, paramname, param) {
                 }
             }
             lcriZs();//流程日志的展示
-        },
-        error: function(e){
-            alertDiv({
-                title: '温馨提示',
-                msg: '无法获取流程图坐标信息,请联系管理员!'
-            });
-            console.log('获取流程图坐标信息失败:' + e);
         }
     })
 }
@@ -990,7 +983,7 @@ function getLctCord(url, paramname, param) {
  */
 function lcriZs() {
     $.ajax({
-        url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?lcslId=' + DATA.lcslid,
+        url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?businessKey=' + DATA.cqbgzj,
         type: 'post',
         dataType: 'json',
         success: function (json) {
