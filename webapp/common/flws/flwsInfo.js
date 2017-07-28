@@ -934,6 +934,7 @@ function lctShow() {
         } else if (DATA.lczt == '1') {//流程已结束
             getLctCord(pathConfig.basePath + '/config/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
         }
+        lcriZs();//流程日志的展示
     }
 }
 
@@ -973,7 +974,6 @@ function getLctCord(url, paramname, param) {
                     $('#' + now_data[j].id).css('border-color', 'red');
                 }
             }
-            lcriZs();//流程日志的展示
         }
     })
 }
@@ -989,65 +989,67 @@ function lcriZs() {
         success: function (json) {
             //console.log('流程图展示数据:', json, DATA.lcslid);
             if (json.status == 'success') {
+                var data = json.data;
+                var str = '';
+                var spzt = '';//审批状态
+                $('.lct-container').empty();
 
-                $.ajax({
-                    url: pathConfig.basePath + '/workflowRelated/findHxr?lcslId=' + DATA.lcslid,
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (json2) {
-                        if (json2.status == 'success') {
-                            var data = json.data;
-                            var data2 = json2.data;
-                            var str = '';
-                            var spzt = '';//审批状态
-                            $('.lct-container').empty();
-                            for (var i = 0; i < data.length; i++) {
-                                //审批状态
-                                if (data[i].shjl == '1') {
-                                    spzt = '<i class="fa fa-check"></i>';
-                                } else if (data[i].shjl == '2') {
-                                    spzt = '<i class="fa fa-times"></i>';
-                                } else if (data[i].shjl == '3') {
-                                    spzt = '<i class="fa fa-reply"></i>';
+                for (var i = 0; i < data.length; i++) {
+                    //审批状态
+                    if (data[i].shjl == '1') {
+                        spzt = '<i class="fa fa-check"></i>';
+                    } else if (data[i].shjl == '2') {
+                        spzt = '<i class="fa fa-times"></i>';
+                    } else if (data[i].shjl == '3') {
+                        spzt = '<i class="fa fa-reply"></i>';
+                    }
+
+                    str += '<div class="lct-node" title="' + data[i].shyj + '">' +
+                        '<div class="text">' +
+                        '<span class="lcspr">' + data[i].shrXm + '</span>' +
+                        '<span class="lcspzt">' + spzt +
+                        '</span>' +
+                        '</div>' +
+                        '<div class="point">' +
+                        '<b>' +
+                        '<div class="h-line"></div>' +
+                        '</b>' +
+                        '</div>' +
+                        '<div class="time">' +
+                        '<span>' + data[i].shsj + '</span>' +
+                        '</div>' +
+                        '</div>';
+                }
+                //如果有流程实例ID
+                if(DATA.lcslid && DATA.lcslid != 'undefined' && DATA.lcslid != 'null'){
+                    $.ajax({
+                        url: pathConfig.basePath + '/workflowRelated/findHxr?lcslId=' + DATA.lcslid,
+                        type: 'post',
+                        async: false,
+                        dataType: 'json',
+                        success: function (json2) {
+                            if (json2.status == 'success') {
+                                var data2 = json2.data;
+                                if (data2 && data2.username) {
+                                    str += '<div class="lct-node" title="待审批">' +
+                                        '<div class="text">' +
+                                        '<span class="lcspr">' + data2.username + '</span>' +
+                                        '<span class="lcspzt"><i class="fa fa-map-marker" style="color:#ff0000;"></i>' +
+                                        '</span>' +
+                                        '</div>' +
+                                        '<div class="point">' +
+                                        '<b>';
                                 }
-
-                                str += '<div class="lct-node" title="' + data[i].shyj + '">' +
-                                    '<div class="text">' +
-                                    '<span class="lcspr">' + data[i].shrXm + '</span>' +
-                                    '<span class="lcspzt">' + spzt +
-                                    '</span>' +
-                                    '</div>' +
-                                    '<div class="point">' +
-                                    '<b>' +
-                                    '<div class="h-line"></div>' +
-                                    '</b>' +
-                                    '</div>' +
-                                    '<div class="time">' +
-                                    '<span>' + data[i].shsj + '</span>' +
-                                    '</div>' +
-                                    '</div>';
-                            }
-
-                            if (data2 && data2.username) {
-                                str += '<div class="lct-node" title="待审批">' +
-                                    '<div class="text">' +
-                                    '<span class="lcspr">' + data2.username + '</span>' +
-                                    '<span class="lcspzt"><i class="fa fa-map-marker" style="color:#ff0000;"></i>' +
-                                    '</span>' +
-                                    '</div>' +
-                                    '<div class="point">' +
-                                    '<b>';
-                            }
-
-                            $('.lct-container').append(str);
-                            $('.lct-node').tooltip({position: 'bottom'});
-                            if (!str) {//如果没有流程图，隐藏流程
-                                $('.lct-box').hide();
                             }
                         }
-                    }
-                });
+                    });
+                }
 
+                $('.lct-container').append(str);
+                $('.lct-node').tooltip({position: 'bottom'});
+                if (!str) {//如果没有流程图，隐藏流程
+                    $('.lct-box').hide();
+                }
             } else {
                 alertDiv({
                     title: '提示',
