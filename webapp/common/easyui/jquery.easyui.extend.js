@@ -1373,11 +1373,13 @@ function getIEVersion() {
 			var opts = $(this).tree('options');
 			var dictUrl = opts.url;
 			var loadType = '';
+			var lazyLoad = false;
 			try{
+				lazyLoad = opts.lazyLoad;
 				loadType = opts.loadType;
 			}catch(e){}
 
-			if(loadType == 'open') {
+			if(loadType == 'open' || lazyLoad) {
 				return
 			}
 
