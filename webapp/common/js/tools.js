@@ -639,7 +639,10 @@ function checkSfzh18Bit(sfzh18) {
 			lastAt += bitInt * bitIntTemp;
 		}
 		lastAt %= 11;
-		if ("10X98765432".substring(lastAt, lastAt + 1) == sfzh18.substring(17)) { 
+		var lastChar = sfzh18.substring(17);
+		if(lastChar == 'x')
+			lastChar = 'X';
+		if ("10X98765432".substring(lastAt, lastAt + 1) == ) { 
 			return true;
 		}
 		else {
