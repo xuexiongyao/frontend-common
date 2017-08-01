@@ -22,6 +22,7 @@ var pathConfig = {
     jwrzPath : 'http://jwrz.jwzh.com:9021/jwzh-jwrz',
     anjianPath : 'http://anjian.jwzh.com:9022/jwzh-anjian',
     xzajPath : 'http://xzaj.jwzh.com:9028/jwzh-xzaj',
+    xzxtPath : 'http://xzaj.jwzh.com:9034/jwzh-xzxt',
     workflowPath : 'http://workflow.jwzh.com:9023/jwzh-workflow',
     zhcxPath : 'http://zhcx.jwzh.com:9024/jwzh-zhcx',
     wfmanagePath : 'http://wfmanage.jwzh.com:9025/jwzh-wfmanage',
