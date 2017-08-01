@@ -662,6 +662,7 @@ function complete(shjl, shsj, shyj,formData) {
     }
     formDataParam.append("taskId", taskId);
     formDataParam.append("candidateUsers", candidateUsers);
+    formDataParam.append("asjbh", asjbh);
     formDataParam.append("shsj", shsj);
     formDataParam.append("shjl", shjl);
     formDataParam.append("shyj", shyj);
@@ -677,7 +678,6 @@ function complete(shjl, shsj, shyj,formData) {
         formDataParam.append("asjzcxwlbdm", asjzcxwlbdm);
         formDataParam.append("dxmc", dxmc);
         formDataParam.append("flwsmc", flwsmc);
-        formDataParam.append("asjbh", asjbh);
         formDataParam.append("cjsj", cjsj);
         formDataParam.append("cqbgZj", businessKey);
         formDataParam.append("ajmc", ajmc);
