@@ -541,6 +541,11 @@ function flwsXxfyA(bm) {
             }
         }
     }
+
+    //textarea框高度根据内容自适应
+    $('#flws_cl_area_' + bm + ' textarea').each(function (i,o) {
+        autoTextarea(o);
+    });
 }
 
 /*************************end****************************/
@@ -666,6 +671,11 @@ function flwsXxfyB(bm, isCustomized) {
             }
         }
     }
+
+    //textarea框高度根据内容自适应
+    $('#flws_cl_area_' + bm + ' textarea').each(function (i,o) {
+        autoTextarea(o);
+    });
 }
 /************************end*****************************/
 
@@ -899,6 +909,11 @@ function flwsXxfyC1(bm, $this) {
             zfgkDetail(zfgkxxData);
         });
     }
+
+    //textarea框高度根据内容自适应
+    $('#flws_cl_area_' + bm + ' textarea').each(function (i,o) {
+        autoTextarea(o);
+    });
 }
 
 /**
@@ -934,6 +949,7 @@ function lctShow() {
         } else if (DATA.lczt == '1') {//流程已结束
             getLctCord(pathConfig.basePath + '/config/findProcessDefinitionById', 'id', DATA.lcdyid);//获取流程图坐标位置
         }
+        lcriZs();//流程日志的展示
     }
 }
 
@@ -973,14 +989,6 @@ function getLctCord(url, paramname, param) {
                     $('#' + now_data[j].id).css('border-color', 'red');
                 }
             }
-            lcriZs();//流程日志的展示
-        },
-        error: function(e){
-            alertDiv({
-                title: '温馨提示',
-                msg: '无法获取流程图坐标信息,请联系管理员!'
-            });
-            console.log('获取流程图坐标信息失败:' + e);
         }
     })
 }
@@ -990,71 +998,98 @@ function getLctCord(url, paramname, param) {
  */
 function lcriZs() {
     $.ajax({
-        url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?lcslId=' + DATA.lcslid,
+        url: pathConfig.basePath + '/workflowRelated/findGzlLcrz?businessKey=' + DATA.cqbgzj,
         type: 'post',
         dataType: 'json',
         success: function (json) {
             //console.log('流程图展示数据:', json, DATA.lcslid);
             if (json.status == 'success') {
+                var data = json.data;
+                var str = '';
+                if (data.length > 0) {
+                    var spzt = '';//审批状态
+                    var shrXm = '';//审核人姓名
+                    var shsj = '';//审核时间
+                    var shyj = '';//审核意见
+                    $('.lct-container').empty();
 
-                $.ajax({
-                    url: pathConfig.basePath + '/workflowRelated/findHxr?lcslId=' + DATA.lcslid,
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (json2) {
-                        if (json2.status == 'success') {
-                            var data = json.data;
-                            var data2 = json2.data;
-                            var str = '';
-                            var spzt = '';//审批状态
-                            $('.lct-container').empty();
-                            for (var i = 0; i < data.length; i++) {
-                                //审批状态
-                                if (data[i].shjl == '1') {
-                                    spzt = '<i class="fa fa-check"></i>';
-                                } else if (data[i].shjl == '2') {
-                                    spzt = '<i class="fa fa-times"></i>';
-                                } else if (data[i].shjl == '3') {
-                                    spzt = '<i class="fa fa-reply"></i>';
+                    for (var i = 0; i < data.length; i++) {
+                        //审批状态
+                        if (data[i].shjl == '1') {//同意
+                            spzt = '<i class="fa fa-check"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
+                        } else if (data[i].shjl == '2') {//退回
+                            spzt = '<i class="fa fa-times"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
+                        } else if (data[i].shjl == '3') {//不同意
+                            spzt = '<i class="fa fa-reply"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
+                        } else if (data[i].shjl == '4') {//待审核
+                            spzt = '<i class="fa fa-spin fa-spinner"></i>';
+                            $.ajax({
+                                url:pathConfig.managePath + '/api/user/queryOrgUserList?identitycard='+data[i].shrSfzh,
+                                type: 'get',
+                                dataType: 'json',
+                                async: false,
+                                xhrFields: {withCredentials:true},
+                                crossDomain: true,
+                                success:function (data) {
+                                    if(data.length>0){
+                                        var dspryXmsArry = [];
+                                        for(var j=0;j<data.length;j++){
+                                            dspryXmsArry.push(data[j].username);
+                                        }
+
+                                        if(dspryXmsArry.length>1){
+                                            shrXm = dspryXmsArry.join(',');
+                                        }else{
+                                            shrXm = dspryXmsArry[0]
+                                        }
+                                    }
                                 }
-
-                                str += '<div class="lct-node" title="' + data[i].shyj + '">' +
-                                    '<div class="text">' +
-                                    '<span class="lcspr">' + data[i].shrXm + '</span>' +
-                                    '<span class="lcspzt">' + spzt +
-                                    '</span>' +
-                                    '</div>' +
-                                    '<div class="point">' +
-                                    '<b>' +
-                                    '<div class="h-line"></div>' +
-                                    '</b>' +
-                                    '</div>' +
-                                    '<div class="time">' +
-                                    '<span>' + data[i].shsj + '</span>' +
-                                    '</div>' +
-                                    '</div>';
-                            }
-
-                            if (data2 && data2.username) {
-                                str += '<div class="lct-node" title="待审批">' +
-                                    '<div class="text">' +
-                                    '<span class="lcspr">' + data2.username + '</span>' +
-                                    '<span class="lcspzt"><i class="fa fa-map-marker" style="color:#ff0000;"></i>' +
-                                    '</span>' +
-                                    '</div>' +
-                                    '<div class="point">' +
-                                    '<b>';
-                            }
-
-                            $('.lct-container').append(str);
-                            $('.lct-node').tooltip({position: 'bottom'});
-                            if (!str) {//如果没有流程图，隐藏流程
-                                $('.lct-box').hide();
-                            }
+                            });
+                            shsj = '';
+                            shyj = data[i].shyj;
+                        } else if (data[i].shjl == '5') {//取回
+                            spzt = '<i class="fa fa-rotate-left"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
                         }
-                    }
-                });
 
+                        str += '<div class="lct-node" title="' + shyj + '">' +
+                            '<div class="text">'+
+                            '<span class="lcspr">' + shrXm + '</span>' +
+                            '<span class="lcspzt">' + spzt +
+                            '</span>' +
+                            '</div>' +
+                            '<div class="point">' +
+                            '<b>' +
+                            '<div class="h-line"></div>' +
+                            '</b>' +
+                            '</div>' +
+                            '<div class="time">' +
+                            '<span>' + shsj + '</span>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                    $('.lct-container').append(str);
+                    $('.lct-node').tooltip();
+                } else {
+                    $.messager.alert({
+                        title: '提示',
+                        msg: '请求数据有误，请联系相关工作人员',
+                        fn: function () {
+                            crossCloseTab();
+                        }
+                    });
+                }
             } else {
                 alertDiv({
                     title: '提示',

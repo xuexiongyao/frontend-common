@@ -779,34 +779,45 @@ function end(shjl, shsj, shyj) {
 
 //流程图展示接口
 function lctShow() {
-    var str = '';
-    var spzt = '';//审批状态
     $.ajax({
-        url: ajaxUrl + '/findGzlLcrz?lcslId=' + lcslId,
+        url: ajaxUrl + '/findGzlLcrz?businessKey=' + businessKey,
         type: 'post',
         dataType: 'json',
         success: function (json) {
             // console.log('流程图展示数据:', json, lcslId);
             if (json.status == 'success') {
                 var data = json.data;
+                var str = '';
                 if (data.length > 0) {
+                    var spzt = '';//审批状态
+                    var shrXm = '';//审核人姓名
+                    var shsj = '';//审核时间
+                    var shyj = '';//审核意见
+                    $('.lct-container').empty();
+
                     /**
                      * 获取上级的审核时间，根据上级审核时间，判断当前级别的最小审核时间的范围;
                      * 1、如果审核时间相对于当前系统时间超过三天，minDate=当前时间-3天；
                      * 2、如果审核时间相对于当前系统时间不超过三天，minDate=审核时间；
                      */
-                    var minDateVal, isTrue;
+                    var minDateVal, isTrue, lastData;
                     var dLen = data.length;
-                    isTrue = minDateFun(data[dLen - 1].shsj);
+                    lastData = data[dLen - 1];
+                    if(lastData.shsj){
+                        lastData = data[dLen - 1];
+                    }else if(dLen>1 && !lastData.shsj){
+                        lastData = data[dLen - 2];
+                    }
+                    isTrue = minDateFun(lastData.shsj);
                     if (isTrue) {
-                        minDateVal = data[dLen - 1].shsj;
+                        minDateVal = lastData.shsj;
                     } else {
                         minDateVal = '%y-%M-%d {%H-72}:%m:%s'
                     }
 
                     var shsjStr = '<li>\n' +
                         '<span class="pro">审核时间</span>\n' +
-                        '<input class="Wdate" name="shsj" id="shsj" style="width:170px;" placeholder=""\n' +
+                        '<input class="Wdate" name="shsj" id="shsj" style="" placeholder=""\n' +
                         'onfocus="WdatePicker({skin: \'christ\',dateFmt: \'yyyy-MM-dd HH:mm:ss\',minDate: \'' + minDateVal + '\',maxDate:\'%y-%M-%d {%H+0}:%m:%s\',errDealMode:1,autoPickDate:true});"/>\n' +
                         '</li>';
 
@@ -816,24 +827,57 @@ function lctShow() {
 
                     for (var i = 0; i < data.length; i++) {
                         //审批状态
-                        if (data[i].shjl == '1') {//成功
+                        if (data[i].shjl == '1') {//同意
                             spzt = '<i class="fa fa-check"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
                         } else if (data[i].shjl == '2') {//退回
                             spzt = '<i class="fa fa-times"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
                         } else if (data[i].shjl == '3') {//不同意
                             spzt = '<i class="fa fa-reply"></i>';
-                        }else if (data[i].shjl == '5') {//取回
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
+                        } else if (data[i].shjl == '4') {//待审核
+                            spzt = '<i class="fa fa-spin fa-spinner"></i>';
+                            $.ajax({
+                                url:pathConfig.managePath + '/api/user/queryOrgUserList?identitycard='+data[i].shrSfzh,
+                                type: 'get',
+                                dataType: 'json',
+                                async: false,
+                                xhrFields: {withCredentials:true},
+                                crossDomain: true,
+                                success:function (data) {
+                                    if(data.length>0){
+                                        var dspryXmsArry = [];
+                                        for(var j=0;j<data.length;j++){
+                                            dspryXmsArry.push(data[j].username);
+                                        }
+
+                                        if(dspryXmsArry.length>1){
+                                            shrXm = dspryXmsArry.join(',');
+                                        }else{
+                                            shrXm = dspryXmsArry[0]
+                                        }
+                                    }
+                                }
+                            });
+                            shsj = '';
+                            shyj = data[i].shyj;
+                        } else if (data[i].shjl == '5') {//取回
                             spzt = '<i class="fa fa-rotate-left"></i>';
+                            shrXm = data[i].shrXm;
+                            shsj = data[i].shsj;
+                            shyj = data[i].shyj;
                         }
-                        //else if (data[i].shjl == '4') {//待处理
-                        //    spzt = '<i class="fa fa-spin fa-spinner"></i>';
-                        //}
 
-                        //如果审核人姓名为空，根据id获取审核人姓名
-
-                        str += '<div class="lct-node" title="' + data[i].shyj + '">' +
-                            '<div class="text">' +
-                            '<span class="lcspr">' + data[i].shrXm + '</span>' +
+                        str += '<div class="lct-node" title="' + shyj + '">' +
+                            '<div class="text">'+
+                            '<span class="lcspr">' + shrXm + '</span>' +
                             '<span class="lcspzt">' + spzt +
                             '</span>' +
                             '</div>' +
@@ -843,14 +887,14 @@ function lctShow() {
                             '</b>' +
                             '</div>' +
                             '<div class="time">' +
-                            '<span>' + data[i].shsj + '</span>' +
+                            '<span>' + shsj + '</span>' +
                             '</div>' +
                             '</div>';
                     }
                     $('.lct-container').append(str);
                     $('.lct-node').tooltip();
                 } else {
-                    alertDiv({
+                    $.messager.alert({
                         title: '提示',
                         msg: '请求数据有误，请联系相关工作人员',
                         fn: function () {

@@ -1197,6 +1197,12 @@ function flwsDataXxfy(bm, zj) {
             break;
         }
     }
+
+    //textarea框高度根据内容自适应
+    $('#flws_cl_area_' + bm + ' textarea').each(function (i,o) {
+        autoTextarea(o);
+    });
+
     editSwitch(false, 'clear-border', 'iptreadonly');//清除easyui样式
 }
 
