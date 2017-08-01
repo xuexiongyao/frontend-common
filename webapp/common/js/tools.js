@@ -642,7 +642,7 @@ function checkSfzh18Bit(sfzh18) {
 		var lastChar = sfzh18.substring(17);
 		if(lastChar == 'x')
 			lastChar = 'X';
-		if ("10X98765432".substring(lastAt, lastAt + 1) == ) { 
+		if ("10X98765432".substring(lastAt, lastAt + 1) == lastChar) { 
 			return true;
 		}
 		else {
