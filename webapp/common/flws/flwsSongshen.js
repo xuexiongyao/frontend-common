@@ -672,6 +672,7 @@ function complete(shjl, shsj, shyj,formData) {
     formDataParam.append("fjrxm", fjrxm);
     formDataParam.append("flag", flagText);
     formDataParam.append("asjflwsdm", asjflwsdm);
+    formDataParam.append("rwmc", name);
     if (isLastTask) {
         formDataParam.append("asjzcxwlbdm", asjzcxwlbdm);
         formDataParam.append("dxmc", dxmc);
