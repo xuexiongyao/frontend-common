@@ -15,7 +15,7 @@ var search_config = {
     //url : compositQueryPath + '/bigdata/v1/test2/syrk/s?q=',
     url : compositQueryPath,
 	basePath : basePath,
-    export_url : basePath+'compositQuery/exportExcel2003',
+	export_url : basePath+'cetcQuery/exportExcel2003/zhcxJwrz',
 
     main_type : 'JWRZ_RZXX',
 	primary_key : 'ID',//主键
