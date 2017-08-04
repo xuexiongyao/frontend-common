@@ -481,7 +481,7 @@ function cqbgSaveComplete(data) {
         } else if (json.state == 'error') {
             alertDiv({
                 title: '提示',
-                msg: '呈请报告保存失败'
+                msg: json.msg //hfl
             });
         }
     }
