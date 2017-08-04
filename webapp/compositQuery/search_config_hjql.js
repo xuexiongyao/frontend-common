@@ -14,7 +14,7 @@ var search_config = {
     //查询接口地址
     url : compositQueryPath,
     basePath : basePath,
-    export_url : basePath+'/compositQuery/exportExcel2003',
+    export_url : basePath+'cetcQuery/exportExcel2003/zhcxHjql',
 
     main_type : 'HJQL_HJQLXXB',
     primary_key : 'ID',//主键
