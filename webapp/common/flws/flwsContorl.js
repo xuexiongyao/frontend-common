@@ -1012,7 +1012,7 @@ function especiallyDataFunForFlws(bm) {
             } else {
                 params.ASJFLWSDM = '042161';//行政处罚告知笔录（无听证）
             }
-            //xzcfgzbl();
+            params = xzcfgzbl(params);
             break;
         case '042161'://行政处罚告知笔录-无听证（刑事案件）
             if (params.XX == '1,2') {
@@ -1020,7 +1020,7 @@ function especiallyDataFunForFlws(bm) {
             } else {
                 params.ASJFLWSDM = '042161';//行政处罚告知笔录（无听证）
             }
-            //xzcfgzbl();
+            params = xzcfgzbl(params);
             break;
         case 'X040002'://传唤证（行政案件）
             if (params.CLDXLB == '1') {//对违法嫌疑人传唤

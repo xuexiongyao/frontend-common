@@ -876,6 +876,7 @@ function flwsXxfyC1(bm, $this) {
                                         } else if (textStyle == 'DATE_CN') {
                                             $($target[j]).text(data[i][a]);
                                         } else if (textStyle == 'TEXTBOX' || textStyle == 'TEXTAREA' || textStyle == 'TEXTAREA_R') {//textarea框的处理
+
                                             var strTextbox = "<textarea class='" + aName + " easyuivalidatebox " + textStyle + "' name='" + aName + "' readonly style='border: 0;'>" + data[i][a] + "</textarea>";
                                             $($target[j]).html(strTextbox);
                                             autoTextarea($($target[j]).find('textarea')[0]);
@@ -883,6 +884,13 @@ function flwsXxfyC1(bm, $this) {
                                             $($target[j]).text(data[i][a + '_DX']);
                                         } else {
                                             $($target[j]).text(data[i][a]);
+                                            //行政处罚下的4个文书
+                                            if(bm == 'X020001' || bm == 'X020016' || bm == '042162' || bm == '042161'){
+                                                if(a == 'GZNRCFFDMS' && data[i][a]){
+                                                    $($target[j]).parent().parent().show();
+                                                    $($target[j]).parent().parent().prev().hide();
+                                                }
+                                            }
                                         }
                                     } else if (dictStyle || treeStyle) {
                                         if (a == 'JYCS_GAJGMC') {
