@@ -1194,6 +1194,12 @@ function flwsDataXxfy(bm, zj) {
                     }
                 }
             }
+            var dataInitFun = 'dataInit_'+bm;
+            try{
+                eval(dataInitFun+'()');
+            }catch(e){
+                console.log(dataInitFun+"()不存在！");
+            }
             break;
         }
     }
