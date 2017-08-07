@@ -1,0 +1,57 @@
+.jxyy_icon{
+    margin-left:10px;
+    width:80px;
+    height:26px;
+    line-height:26px;
+    text-align: center;
+    color: colors(white);
+    background: colors(primary);
+    font-size: fontSize(small);
+    font-family:fontFamily(yh);
+    @include prefix(border,radius,3px);
+    padding:0 10px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    span{
+        i{
+            margin-left:5px;
+        }
+    }
+    .jxyy_ul{
+        list-style-type: none;
+        @include attrMarginPadding();
+        @include positionDisplay();
+        z-index: 1;
+        top:0;
+        left:80px;
+        width:calc(40px * 2);
+        background: colors(white);
+        height:100%;
+        @include prefix(border,radius,3px);
+        @include box-shadow(0 10px 35px rgba(0, 0, 0, 0.2));
+        @include clearfix();
+        li{
+            list-style-type: none;
+            width: 40px;
+            height:100%;
+            text-align: center;
+            float: left;
+            color: colors(black);
+            i{
+                font-size: fontSize(base);
+                padding-top:4px;
+            }
+            &:hover{
+                background: colors(red);
+                color: colors(white);
+            }
+        }
+        li:last-child{
+            @include prefix-all-round(border,radius,0,3px,3px,0);
+        }
+    }
+    &:hover .jxyy_ul{
+        display: block;
+    }
+}
