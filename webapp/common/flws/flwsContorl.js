@@ -944,13 +944,13 @@ function xzcfgzbl(params) {
     for (var zi = 0; zi < GZNRTKDMArr.length; zi++) {
         GZNRTKDMDICTMCArr.push(getDictName(dicturl, GZNRTKDMArr[zi], false));
     }
-    params.GZNRTKDM_DICTMC = GZNRTKDMDICTMCArr.join(',');
+    params.GZNRTKDM_DICTMC = GZNRTKDMDICTMCArr.join('和');
     params.GZNRTKDM = GZNRTKDMArr.join(',');
-    params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC + ',' + params.GZNRCFFDDM_DICTMC;
+    params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC + '的规定,对你进行' + params.GZNRCFFDDM_DICTMC;
     if (GZNRTKDMArr.length > 1) {
         params.GZNRCFFDDM = '';
         params.GZNRCFFDDM_DICTMC = '';
-        params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC + ',' + params.GZNRCFFDMS;
+        params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC + '的规定,对你进行' + params.GZNRCFFDMS;
     } else {
         params.GZNRCFFDMS = '';
     }
