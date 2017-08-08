@@ -295,6 +295,10 @@ function queryFlwsData(title, render) {
                             ASJBH: DATA.asjbh,
                             CQBG_ZJ: DATA.CQBG.cqbgZj
                         }
+                    }else if(DATA.wsxgRwcxWs || DATA.FLWS.cqFlwsZj){
+                        param = {
+                            ZJ: DATA.FLWS.cqFlwsZj
+                        }
                     }else{
                         param = {
                             CQZT: '0',

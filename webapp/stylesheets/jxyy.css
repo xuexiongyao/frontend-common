@@ -1,0 +1,141 @@
+@charset "UTF-8";
+/***********************************/
+/**
+ * 获取颜色map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取字体map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取字体大小map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取行高map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取圆角map方法
+ * @param $key 颜色的key值
+ */
+/**
+ * 获取z-index map方法
+ * @param $key 颜色的key值
+ */
+/**!
+ * @author christ
+ * 本配置基于sass框架compass,在运用时请注意是否安装sass,compass
+ */
+/*按钮移入渐变*/
+/*disabled btn*/
+/*selected button*/
+/* line 5, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar {
+  background-color: #fff;
+  width: 5px;
+  height: 10px;
+}
+
+/* line 11, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+/* line 15, ../sass/sass/mixins/_scroll.scss */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.65);
+}
+
+/* line 1, ../sass/sass/_jxyy.scss */
+.jxyy_icon {
+  margin-left: 10px;
+  width: 80px;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+  color: #fff;
+  background: #0e6595;
+  font-size: 12px;
+  font-family: "Microsoft Yahei", "微软雅黑";
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  padding: 0 10px;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+/* line 17, ../sass/sass/_jxyy.scss */
+.jxyy_icon span i {
+  margin-left: 5px;
+}
+/* line 21, ../sass/sass/_jxyy.scss */
+.jxyy_icon .jxyy_ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  display: none;
+  z-index: 1;
+  top: 0;
+  left: 80px;
+  width: calc(40px * 2);
+  background: #fff;
+  height: 100%;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -webkit-box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  *zoom: 1;
+}
+/* line 18, ../sass/sass/mixins/_clearfix.scss */
+.jxyy_icon .jxyy_ul:before, .jxyy_icon .jxyy_ul:after {
+  content: " ";
+  display: table;
+}
+/* line 23, ../sass/sass/mixins/_clearfix.scss */
+.jxyy_icon .jxyy_ul:after {
+  clear: both;
+  overflow: hidden;
+}
+/* line 34, ../sass/sass/_jxyy.scss */
+.jxyy_icon .jxyy_ul li {
+  list-style-type: none;
+  width: 40px;
+  height: 100%;
+  text-align: center;
+  float: left;
+  color: #000;
+}
+/* line 41, ../sass/sass/_jxyy.scss */
+.jxyy_icon .jxyy_ul li i {
+  font-size: 14px;
+  padding-top: 4px;
+}
+/* line 45, ../sass/sass/_jxyy.scss */
+.jxyy_icon .jxyy_ul li:hover {
+  background: #ed4848;
+  color: #fff;
+}
+/* line 50, ../sass/sass/_jxyy.scss */
+.jxyy_icon .jxyy_ul li:last-child {
+  border-radius: 0 3px 3px 0;
+  -webkit-border-radius: 0 3px 3px 0;
+  -moz-border-radius: 0 3px 3px 0;
+  -o-border-radius: 0 3px 3px 0;
+  -ms-border-radius: 0 3px 3px 0;
+}
+/* line 54, ../sass/sass/_jxyy.scss */
+.jxyy_icon:hover .jxyy_ul {
+  display: block;
+}

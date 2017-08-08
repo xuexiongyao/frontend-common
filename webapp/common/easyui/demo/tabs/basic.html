@@ -13,7 +13,7 @@
 	<h2>Basic Tabs</h2>
 	<p>Click tab strip to swap tab panel content.</p>
 	<div style="margin:20px 0 10px 0;"></div>
-	<div class="easyui-tabs" style="width:700px;height:250px">
+	<div class="easyui-tabs" id="tabs" style="width:700px;height:250px">
 		<div title="About" style="padding:10px">
 			<p style="font-size:14px">jQuery EasyUI framework helps you build your web pages easily.</p>
 			<ul>
@@ -33,4 +33,58 @@
 		</div>
 	</div>
 </body>
+<script>
+    var isSave = false;
+    $("#tabs").tabs({
+        onSelect: function (title,index) {
+
+        },
+        onUnselect: function (title,index) {
+            if(isSave){
+                var selected = $("#tabs").tabs('getSelected');
+                console.log(selected);
+            }else{
+                var target = this;
+                $.messager.confirm({
+                    title:'提示',
+                    msg:'['+title+']中的数据还未保存，您确定要切换'+title+'选项卡吗？',
+                    fn: function (r) {
+                        if (r){//确认
+                            var opts = $(target).tabs('options');
+                            var bc = opts.onBeforeClose;
+                            opts.onBeforeClose = function(){};  // 允许现在关闭
+                            $(target).tabs('close',index);
+                            opts.onBeforeClose = bc;  // 还原事件函数
+                        }
+                    }
+                });
+                return false;	// 阻止关闭
+            }
+        },
+        buttons: [//自定义按钮
+            {
+                text: '确认切换',
+                handler: function () {
+                    var form = dlg_div.find('form');
+                    var submitUrl = options.url || form.action;
+                    if (form.length > 0) {
+                        $(form[0]).form('submit', {
+                            url: submitUrl,
+                            onSubmit: beforeSubmit,
+                            success: afterSubmit
+                        });
+                    } else {
+                        alertDiv('提示', '无法获取表单元素,无法提交');
+                    }
+                }
+            }, {
+                text: '',
+                handler: function () {
+                    dlg_div.dialog('close');
+                }
+            }
+        ]
+    })
+
+</script>
 </html>
