@@ -946,11 +946,14 @@ function xzcfgzbl(params) {
     }
     params.GZNRTKDM_DICTMC = GZNRTKDMDICTMCArr.join('和');
     params.GZNRTKDM = GZNRTKDMArr.join(',');
-    params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC + '的规定,对你进行' + params.GZNRCFFDDM_DICTMC;
+    if(params.GZNRTKDM_DICTMC){
+        params.GZNRTKDM_DICTMC = params.GZNRTKDM_DICTMC + '的规定,对你进行';
+    }
+    params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC  + params.GZNRCFFDDM_DICTMC;
     if (GZNRTKDMArr.length > 1) {
         params.GZNRCFFDDM = '';
         params.GZNRCFFDDM_DICTMC = '';
-        params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC + '的规定,对你进行' + params.GZNRCFFDMS;
+        params.CFGZNR = params.GZNR + params.GZNRTKDM_DICTMC  + params.GZNRCFFDMS;
     } else {
         params.GZNRCFFDMS = '';
     }
