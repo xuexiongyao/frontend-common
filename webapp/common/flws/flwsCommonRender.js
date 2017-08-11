@@ -821,13 +821,13 @@ function flwsYclXyDxCheck(bm, $this) {
                 ZJ: flwsZj
             };
 
-            //法律文书信息复用
-            flwsDataXxfy(bm, flwsZj);
-
             //嫌疑人勾选其他接口请求信息复用（秀平）
             //if(bm == '042155' || bm == '042140' || bm == '042126' || bm == '042132' || bm == '042131' || bm == '042111'){//取保候审 || 释放通知书 || 解除取保候审
             ajax_request(bm,xyrXxzjbh,'edit');
             //}
+
+            //法律文书信息复用
+            flwsDataXxfy(bm, flwsZj);
 
             //绑定执法公开点击事件(行政案件)
             $('#saveFlwsZfgk_' + bm).off('click').on('click', function () {
