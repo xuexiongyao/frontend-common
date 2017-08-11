@@ -630,6 +630,15 @@ function saveAndSsShyj(backObj) {
                     dataType: 'json',
                     success: function (json) {
                         loading('close');
+                        sendMessage({
+                            ajmc: ajmc,
+                            asjbh: asjbh,
+                            flwsmc: flwsmc,
+                            flwsdm: asjflwsdm,
+                            cqbgId: businessKey,
+                            nextId: candidateUsers,
+                            shjl: shjl
+                        });
                         alertDiv({
                             title: '提示',
                             msg: json.message,
@@ -694,7 +703,6 @@ function complete(shjl, shsj, shyj,formData) {
         processData: false,//必须false才会避开jQuery对 formdata 的默认处理XMLHttpRequest会对 formdata 进行正确的处理
         success: function (json) {
             loading('close');
-            // console.log('complete:', json);
             if (json.status == 'success') {
                 //发送短信请求
                 var isCheckMsger = $('#sendMsg_btn').prop("checked");//是否勾选发送消息
@@ -711,7 +719,8 @@ function complete(shjl, shsj, shyj,formData) {
                             }
                         });
                     }
-                } else {
+                }
+                else {
                     if (isCheckMsger && candidateUsers) {
                         var content = badwGajgmc + "送审的【" + flwsmc + "】已到审批任务中，请您及时处理。";
                         sendMsg(candidateUsers, content, json.message);
@@ -725,9 +734,18 @@ function complete(shjl, shsj, shyj,formData) {
                         });
                     }
                 }
+                //candidateUsers,candidateUsersName
+                sendMessage({
+                    ajmc: ajmc,
+                    asjbh: asjbh,
+                    flwsmc: flwsmc,
+                    flwsdm: asjflwsdm,
+                    cqbgId: businessKey,
+                    nextId: candidateUsers,
+                    shjl: shjl
+                });
             }
             else {
-                loading('close');
                 alertDiv({
                     title: '提示',
                     msg: json.message,

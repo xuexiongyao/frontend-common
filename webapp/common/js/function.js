@@ -2803,3 +2803,34 @@ function loadImage(url, callback) {
         callback.call(img);
     };
 };
+
+
+function sendMessage(opts){
+    var xmlx = '1000';
+    if(opts.flwsdm.indexOf('X') != -1){
+        xmlx = '2000';
+    }
+    else if(opts.flwsdm.indexOf('J') != -1){
+        xmlx = '3000';
+    }
+    $.ajax({
+        type: 'post',
+        url: pathConfig.anjianPath + '/xx/sendMessage',
+        data: {
+            ajmc: opts.ajmc ||'',
+            asjbh: opts.asjbh ||'',
+            flwsmc: opts.flwsmc ||'',
+            flwsdm: opts.flwsdm ||'',
+            cqbgId: opts.cqbgId ||'',
+            nextId: opts.nextId ||'',
+            shjl: opts.shjl ||'',
+            xmlx: xmlx
+        },
+        dataType: 'json',
+        xhrFields: {withCredentials: true},
+        crossDomain: true,
+        success: function (data) {
+            console.log('发送消息后返回的信息:', data);
+        }
+    });
+}
