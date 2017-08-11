@@ -203,6 +203,16 @@ function selectName(cqbgzj,asjflwsdm,sessionBean,asjbh){
                                                 msg: json.message
                                             });
                                         }
+
+                                        sendMessage({
+                                            ajmc: ajmc,
+                                            asjbh: asjbh,
+                                            flwsmc: flwsmc,
+                                            flwsdm: asjflwsdm,
+                                            cqbgId: businessKey,
+                                            nextId: candidateUsers,
+                                            shjl: shjl
+                                        });
                                     }
                                 });
                             });

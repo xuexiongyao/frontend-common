@@ -866,9 +866,6 @@ function flwsPageRenderA(bm) {
         //编辑渲染
         flwsRightPageRenderForEdit(DATA.FLWS[bm].flwsData);
 
-        //法律文书数据信息复用
-        flwsDataXxfy(bm, flwsZj);
-
         //新增页面法律文书的信息复用
         //if(bm == '040804' || bm == '041802' || bm == '041303' || bm == '020005'){
         try {
@@ -877,6 +874,9 @@ function flwsPageRenderA(bm) {
             console.log("没有ajax_request函数");
         }
         //}
+
+        //法律文书数据信息复用
+        flwsDataXxfy(bm, flwsZj);
 
         //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
         if (bm == '080002' || bm == '080004') {
@@ -1965,8 +1965,6 @@ function flwsClXyrCheckForCx(bm, $this) {
             //编辑渲染
             flwsRightPageRenderForEdit(DATA.FLWS[bm].flwsData);
 
-            //数据复用
-            flwsDataXxfy(bm, flwsZj);
 
             //绑定执法公开点击事件(行政案件)
             $('#saveFlwsZfgk_' + bm).off('click').on('click', function () {
@@ -1975,6 +1973,9 @@ function flwsClXyrCheckForCx(bm, $this) {
 
             //嫌疑人勾选其他接口请求信息复用（秀平）
             ajax_request(bm, xyrXxzjbh, 'edit');
+
+            //数据复用
+            flwsDataXxfy(bm, flwsZj);
 
             //回避和驳回回避可以选嫌疑人可以不选，不选的话就填写，选了嫌疑人不能修改
             if (bm == '080002' || bm == '080004') {
