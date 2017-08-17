@@ -1113,7 +1113,8 @@ function flwsDataXxfy(bm, zj) {
                                     $("#flws_cl_area_" + bm + " form a .BZJ").addClass('iptreadonly').textbox({
                                         required: false, value: '', readonly: true
                                     }).next().addClass('clear-border');
-                                    $node.textbox({value: val});
+                                    // $node.textbox({value: val});
+                                    $node.textbox('setValue',val);
                                 } else if (bm == '042155' && $node.hasClass('BZJ') && val) {//取保候审-财报
                                     $("#flws_cl_area_" + bm + " form a .BZR_XM").addClass('iptreadonly').textbox({
                                         required: false, value: '', readonly: true
@@ -1121,7 +1122,8 @@ function flwsDataXxfy(bm, zj) {
                                     $("#flws_cl_area_" + bm + " form a .BZR_CSRQ").addClass('iptreadonly').textbox({
                                         required: false, value: '', readonly: true
                                     }).next().addClass('clear-border');
-                                    $node.textbox({value: data[i][key + '_DX']});
+                                    // $node.textbox({value: data[i][key + '_DX']});
+                                    $node.textbox('setValue',data[i][key + '_DX']);
                                 } else if (bm == '041802' && $node.hasClass('FZXYR_XM') && val) {//未成年人法定代理人--嫌疑人
                                     var tmpArray = ['ZRHBHRLXDM', 'ZRHBHR_XM', 'ZRHBHR_XBDM'];
                                     for (var k0 = 0; k0 < tmpArray.length; k0++) {
@@ -1131,14 +1133,17 @@ function flwsDataXxfy(bm, zj) {
                                             $("#flws_cl_area_" + bm + " form a ." + tmpArray[k0]).combobox('disableValidation').combobox('setValue', '');
                                         }
                                     }
-                                    $node.textbox({value: val});
+                                    // $node.textbox({value: val});
+                                    $node.textbox('setValue',val);
                                 } else if (bm == '020005' && $node.hasClass('FZXYR_XM') && val) {//移送案件通知书 --有嫌疑对象，五联可填写
                                     var tab_one = $('#flws_cl_area_' + bm);
                                     tab_one.tabs('enableTab', '五联');
                                     $('.KSS_GAJGMC').textbox({required: true});
-                                    $node.textbox({value: val});
+                                    // $node.textbox({value: val});
+                                    $node.textbox('setValue',val);
                                 } else {
-                                    $node.textbox({value: val});
+                                    // $node.textbox({value: val});
+                                    $node.textbox('setValue',val);
                                 }
 
                                 //money、numbercn赋值后不做校验
@@ -1154,7 +1159,8 @@ function flwsDataXxfy(bm, zj) {
                                 }
                             } else if ($node.hasClass('easyuicombobox')) {
                                 if ($node.hasClass('JYCS_GAJGMC')) {
-                                    $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                                    // $node.combobox({value: data[i]['JYCS_GAJGJGDM']})
+                                    $node.combobox('setValue',data[i]['JYCS_GAJGJGDM'])
                                 } else if (bm == '042140' && $node.hasClass('QZCSLBDM') && val) {//释放通知书
                                     if (val == '2') {//拘留
                                         $('#flws_cl_area_' + bm).tabs('disableTab', '四联');
@@ -1163,7 +1169,8 @@ function flwsDataXxfy(bm, zj) {
                                         $('#flws_cl_area_' + bm).tabs('enableTab', '四联');
                                         editEnableForAj('RMJCY_DWMC');
                                     }
-                                    $node.combobox({value: val})
+                                    // $node.combobox({value: val})
+                                    $node.combobox('setValue',val)
                                 } else if (bm == '041802' && $node.hasClass('ZRHBHRLXDM') && val) {//证人|被害人
                                     var tmpObj = {
                                         FZXYR_XM: 'textbox',
@@ -1176,12 +1183,15 @@ function flwsDataXxfy(bm, zj) {
                                             $("#flws_cl_area_" + bm + " form a ." + k).combobox('disableValidation').combobox('setValue', '');
                                         }
                                     }
-                                    $node.combobox({value: val})
+                                    // $node.combobox({value: val})
+                                    $node.combobox('setValue',val)
                                 } else {
-                                    $node.combobox({value: val})
+                                    // $node.combobox({value: val})
+                                    $node.combobox('setValue',val)
                                 }
                             } else if ($node.hasClass('easyuicombotree')) {
-                                $node.combotree({value: val})
+                                // $node.combotree({value: val})
+                                $node.combotree('setValue',val)
                             } else if ($node.hasClass('easyuivalidatebox') && $node.hasClass('Wdate')) {
                                 $node.val(data[i][key + '_MASTER']);
                                 wdateValidate("#flws_cl_area_" + bm + " form ." + key);
