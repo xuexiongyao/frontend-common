@@ -6,7 +6,12 @@
             float: right;
             line-height: 30px;
             cursor: pointer;
-            color: #0e6595;
+            color: colors(primary);
+            a{
+                line-height: 30px;
+                color: colors(primary);
+                text-decoration: none;
+            }
         }
     }
     .query-panel{

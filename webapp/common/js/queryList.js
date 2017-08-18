@@ -7,6 +7,7 @@ $(function(){
     queryModule();  //生成查询条件模块
     getTableData(); //获取表格数据
     setTable();     //表头设置
+    openHelpWindow('asj_manage_help','asj');
 });
 
 var listConfig = init.listConfig || new ListConfig();

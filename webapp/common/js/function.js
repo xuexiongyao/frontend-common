@@ -1418,7 +1418,7 @@ function getSessionBean() {
  */
 function openHelpWindow(tag_id, type) {
     $.ajax({
-        url: managerPath + '/api/sysXtcsGlobal/queryPage',
+        url: pathConfig.managePath + '/api/sysXtcsGlobal/queryPage',
         type: 'post',
         dataType: 'json',
         xhrFields: {withCredentials: true},
