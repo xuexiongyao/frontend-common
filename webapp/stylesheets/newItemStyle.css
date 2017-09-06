@@ -326,3 +326,6 @@ label input {
 label input[type="checkbox"] {
   margin-left: 0;
 }
+.hidden{
+  display: none !important;
+}
